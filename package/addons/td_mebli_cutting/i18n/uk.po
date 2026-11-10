@@ -6,21 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 14:10+0000\n"
-"PO-Revision-Date: 2026-11-10 14:10+0000\n"
+"POT-Creation-Date: 2026-11-10 17:00+0000\n"
+"PO-Revision-Date: 2026-11-10 17:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: uk\n"
 
 #. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/cutting_job.py:0
 msgid "%(job)s: this action is not available in state %(state)s."
 msgstr "%(job)s: ця дія недоступна у стані %(state)s."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "%(kind)s%(lot)s: %(board)s, %(size)s mm, waste %(waste)s%%"
+msgstr "%(kind)s%(lot)s: %(board)s, %(size)s мм, відходи %(waste)s%%"
 
 #. module: td_mebli_cutting
 #. odoo-python
@@ -34,7 +39,9 @@ msgstr "%s не має деталей для розкрою."
 msgid ""
 "%s sheets have no lot in stock: they are not reserved, receive the material "
 "first."
-msgstr "Листів без партії на складі: %s. Вони не зарезервовані, спершу оприбуткуйте матеріал."
+msgstr ""
+"Листів без партії на складі: %s. Вони не зарезервовані, спершу оприбуткуйте "
+"матеріал."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_needaction
@@ -49,6 +56,7 @@ msgstr "Площа, м²"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_area_m2
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
 msgid "Area, m2"
 msgstr "Площа, м²"
 
@@ -110,6 +118,11 @@ msgid "Create cutting job"
 msgstr "Створити завдання розкрою"
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
+msgid "Created"
+msgstr "Створено"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_uid
@@ -126,6 +139,16 @@ msgid "Created on"
 msgstr "Створено"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__currency_id
+msgid "Currency"
+msgstr "Валюта"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__offcut_used_m2
+msgid "Cut from Offcuts, m2"
+msgstr "Розкроєно з обрізків, м²"
+
+#. module: td_mebli_cutting
 #: model:ir.ui.menu,name:td_mebli_cutting.td_mebli_cutting_menu
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.mrp_production_form_td_mebli_cutting
 msgid "Cutting"
@@ -137,6 +160,8 @@ msgid "Cutting File"
 msgstr "Файл розкрою"
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/mrp_production.py:0
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_job
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_cutting_job_id
 msgid "Cutting Job"
@@ -152,9 +177,21 @@ msgid "Cutting Jobs"
 msgstr "Завдання розкрою"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__map_html
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__map_html
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Cutting Map"
+msgstr "Карта розкрою"
+
+#. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_offcut
 msgid "Cutting Offcut"
 msgstr "Обрізок розкрою"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Cutting Parameters"
+msgstr "Параметри розкрою"
 
 #. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_sheet
@@ -168,11 +205,18 @@ msgid "Cutting Sheets"
 msgstr "Листи розкрою"
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
+msgid "Cutting job"
+msgstr "Завдання розкрою"
+
+#. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/cutting_job.py:0
 msgid ""
-"Cutting result received (%(kind)s): %(sheets)s sheets, waste %(waste).1f%%."
-msgstr "Результат розкрою отримано (%(kind)s): листів %(sheets)s, відходи %(waste).1f%%."
+"Cutting result received (%(kind)s): %(sheets)s sheets, waste %(waste)s%%."
+msgstr ""
+"Результат розкрою отримано (%(kind)s): аркушів — %(sheets)s, відходи "
+"%(waste)s%%."
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_search
@@ -187,7 +231,7 @@ msgstr "Декор"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__display_name
 msgid "Display Name"
-msgstr "Назва для показу"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_cutting_job__state__done
@@ -219,6 +263,11 @@ msgstr "Підписники (партнери)"
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
 msgid "Get result (simulation)"
 msgstr "Отримати результат (імітація)"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Get result again"
+msgstr "Отримати результат ще раз"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__has_message
@@ -304,7 +353,7 @@ msgstr "Партія %(lot)s недоступна повністю для %(prod
 #. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_stock_lot
 msgid "Lot/Serial"
-msgstr "Партія/серійний номер"
+msgstr "Партія/Серійний номер"
 
 #. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_mrp_production
@@ -356,6 +405,11 @@ msgstr "Кількість повідомлень, що потребують д�
 #: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "Кількість повідомлень з помилкою доставки"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
+msgid "Offcut"
+msgstr "Обрізок"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__lot_id
@@ -428,8 +482,8 @@ msgstr "Результат отримано"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__rotated
-msgid "Rotated"
-msgstr "Повернуто"
+msgid "Rotated by 90°"
+msgstr "Повернуто на 90°"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_has_sms_error
@@ -437,11 +491,18 @@ msgid "SMS Delivery error"
 msgstr "Помилка доставки SMS"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__offcut_saving
+msgid "Saved by Offcuts"
+msgstr "Економія від обрізків"
+
+#. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/mrp_production.py:0
 msgid ""
 "Select confirmed manufacturing orders that have an order BoM with parts."
-msgstr "Оберіть підтверджені виробничі замовлення зі специфікацією під замовлення, у якій є деталі."
+msgstr ""
+"Оберіть підтверджені виробничі замовлення зі специфікацією під замовлення, у"
+" якій є деталі."
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
@@ -488,7 +549,7 @@ msgstr "Стан"
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_search
 msgid "Status"
-msgstr "Статус"
+msgstr "Стан"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_mrp_production__td_cutting_job_count
@@ -501,7 +562,8 @@ msgstr "Кількість завдань розкрою"
 msgid ""
 "The result is received from a simulation of the cutting program, not from a "
 "real one."
-msgstr "Результат отримано з імітації програми розкрою, а не з реальної програми."
+msgstr ""
+"Результат отримано з імітації програми розкрою, а не з реальної програми."
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
@@ -550,3 +612,57 @@ msgstr "X, мм"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__y_mm
 msgid "Y, mm"
 msgstr "Y, мм"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "business offcut"
+msgstr "діловий обрізок"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "cutting program file"
+msgstr "файл програми розкрою"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "from offcut"
+msgstr "з обрізка"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "new sheet"
+msgstr "новий лист"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "offcut"
+msgstr "обрізок"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "part (colour = order)"
+msgstr "деталь (колір — замовлення)"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "parts"
+msgstr "деталі"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "simulation"
+msgstr "імітація"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "waste"
+msgstr "відхід"

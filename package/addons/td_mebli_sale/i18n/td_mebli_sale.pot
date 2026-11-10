@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 14:10+0000\n"
-"PO-Revision-Date: 2026-11-10 14:10+0000\n"
+"POT-Creation-Date: 2026-11-10 17:00+0000\n"
+"PO-Revision-Date: 2026-11-10 17:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,12 +31,24 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "<i class=\"fa fa-clock-o me-1\"/>to launch:"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "<i class=\"fa fa-hourglass-half me-1\"/>waiting:"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.mrp_bom_form_td_mebli_sale
 msgid "<span class=\"o_stat_text\">Sales Order</span>"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
 msgid "Average"
 msgstr ""
 
@@ -51,15 +63,32 @@ msgid "Build specification"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+msgid "Confirmed orders"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__td_partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_depth
 msgid "Depth, mm"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "From the order to the start of work"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -75,13 +104,64 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
 msgid "ID"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__progress
+msgid "In production"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__done
+msgid "Made"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid "Manufacturing order created: %s."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid "Manufacturing orders of %s"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Margin"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Margin, %"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Materials"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
+msgid "Number"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Order"
 msgstr ""
 
@@ -91,10 +171,31 @@ msgid "Order BoM"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.actions.act_window,name:td_mebli_sale.action_orders_board_td_mebli
+#: model:ir.ui.menu,name:td_mebli_sale.menu_orders_board_td_mebli
+msgid "Order Board"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.actions.act_window,name:td_mebli_sale.sale_order_line_td_cost_action
 #: model:ir.ui.menu,name:td_mebli_sale.sale_order_line_td_cost_menu
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_pivot
 msgid "Order Cost"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_stage
+msgid "Order Stage"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
+msgid "Order to launch, h"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
+msgid "Ordered"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -118,6 +219,38 @@ msgid "Product"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_image
+msgid "Product Image"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_production_count
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Production"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_launch_date
+msgid "Production Started"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Qty"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__quote
+msgid "Quotation"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Revenue"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_sale_order
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_order_id
 msgid "Sales Order"
 msgstr ""
@@ -126,6 +259,11 @@ msgstr ""
 #: model:ir.model,name:td_mebli_sale.model_sale_order_line
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_line_id
 msgid "Sales Order Line"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__sent
+msgid "Sent to customer"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -139,8 +277,18 @@ msgid "Specification"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
+msgid "Status"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model,name:td_mebli_sale.model_stock_rule
 msgid "Stock Rule"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "The order is waiting for the start of work"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -150,11 +298,48 @@ msgid "The specification can be rebuilt only in a quotation."
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.actions.act_window,name:td_mebli_sale.action_orders_launch_td_mebli
+#: model:ir.ui.menu,name:td_mebli_sale.menu_orders_launch_td_mebli
+msgid "Time from Order to Launch"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_hours_to_launch
+msgid "To Launch, h"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Total"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__confirmed
+msgid "Waiting for launch"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_width
 msgid "Width, mm"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Work"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
+msgid "Work started"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "h"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_form_td_mebli_sale
+msgid "Options"
 msgstr ""

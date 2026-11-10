@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_part_rule_salesman,td.mebli.part.rule salesman,td_mebli_mrp.model_td_mebli_part_rule,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_part_salesman,td.mebli.part salesman,td_mebli_mrp.model_td_mebli_part,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_routing_workcenter_salesman,mrp.routing.workcenter salesman,mrp.model_mrp_routing_workcenter,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_workcenter_salesman,mrp.workcenter salesman,mrp.model_mrp_workcenter,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_bom_byproduct_salesman,mrp.bom.byproduct salesman,mrp.model_mrp_bom_byproduct,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_workcenter_capacity_salesman,mrp.workcenter.capacity salesman,mrp.model_mrp_workcenter_capacity,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_production_salesman,mrp.production salesman,mrp.model_mrp_production,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_workorder_salesman,mrp.workorder salesman,mrp.model_mrp_workorder,sales_team.group_sale_salesman,1,0,0,0

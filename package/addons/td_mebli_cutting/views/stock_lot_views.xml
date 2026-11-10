@@ -20,14 +20,13 @@
         <field name="model">stock.lot</field>
         <field name="arch" type="xml">
             <list create="0">
-                <field name="name"/>
-                <field name="product_id"/>
-                <field name="td_length_mm"/>
-                <field name="td_width_mm"/>
-                <field name="td_area_m2"/>
-                <field name="product_qty" sum="Total"/>
-                <field name="td_cutting_job_id"/>
-                <field name="create_date"/>
+                <field name="name" string="Offcut" width="200px"/>
+                <field name="product_id" context="{'display_default_code': False}"/>
+                <field name="td_length_mm" width="120px"/>
+                <field name="td_width_mm" width="120px"/>
+                <field name="product_qty" string="Area, m2" sum="Total" width="150px"/>
+                <field name="td_cutting_job_id" string="Cutting job"/>
+                <field name="create_date" string="Created"/>
             </list>
         </field>
     </record>

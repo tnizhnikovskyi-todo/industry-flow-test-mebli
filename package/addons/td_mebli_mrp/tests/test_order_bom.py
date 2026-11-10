@@ -63,3 +63,29 @@ class TestOrderBom(TdMebliCommon):
             line.product_id.standard_price * line.product_qty for line in bom.bom_line_ids)
         operations = 12.0 / 60 * 600.0 + 60.0 / 60 * 300.0
         self.assertAlmostEqual(cost, materials + operations, places=2)
+
+    def test_workorder_load(self):
+        """The load of a section is the sum of its operations in percent of the weekly capacity."""
+        self.wc_asm.td_capacity_hours = 40.0
+        production = self.env['mrp.production'].create({
+            'product_id': self.cabinet.id, 'product_qty': 1.0, 'bom_id': self._generate().id})
+        production.action_confirm()
+        workorder = production.workorder_ids.filtered(lambda wo: wo.workcenter_id == self.wc_asm)
+        self.assertAlmostEqual(workorder.td_expected_hours, workorder.duration_expected / 60.0, places=2)
+        self.assertAlmostEqual(workorder.td_load_pct, workorder.td_expected_hours / 40.0 * 100.0, places=2)
+        self.assertTrue(workorder.td_load_stage)
+        self.assertEqual(workorder.td_load_zone, 'over' if workorder.td_expected_hours > 40.0 else 'within')
+        self.wc_asm.td_capacity_hours = 0.5  # less than one operation needs: the section is over its capacity
+        self.assertEqual(workorder.td_load_zone, 'over')
+
+    def test_custom_size_name(self):
+        """A typed size reads 'Width, mm: 1800' (the placeholder value name is not shown)."""
+        attribute = self.env['product.attribute'].search([('td_dimension', '=', 'width')], limit=1)
+        self.assertTrue(attribute)
+        value = attribute.value_ids[:1]
+        tmpl = self.env['product.template'].create({
+            'name': 'Dim test', 'attribute_line_ids': [(0, 0, {'attribute_id': attribute.id, 'value_ids': [(6, 0, value.ids)]})]})
+        ptav = tmpl.attribute_line_ids.product_template_value_ids[:1]
+        custom = self.env['product.attribute.custom.value'].create({
+            'custom_product_template_attribute_value_id': ptav.id, 'custom_value': '1800'})
+        self.assertEqual(custom.name, f'{attribute.name}: 1800')

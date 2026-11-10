@@ -17,7 +17,7 @@ class TestCuttingDone(TdMebliCuttingCommon):
         self.assertTrue(job.name.startswith('CUT/'))
         job.action_send()
         self.assertEqual(job.state, 'sent')
-        self.assertIn('draft-format', job.export_attachment_id.name)
+        self.assertTrue(job.export_attachment_id.name.endswith('.csv'))
         self.assertEqual(production.td_cutting_job_ids, job)
         job.action_simulate()
         self.assertEqual(job.state, 'result')
@@ -44,7 +44,7 @@ class TestCuttingDone(TdMebliCuttingCommon):
         for lot in offcut_lots:
             self.assertTrue(lot.td_is_offcut)
             self.assertGreaterEqual(lot.td_length_mm, job.min_offcut_mm)
-            self.assertTrue(lot.name.startswith('OFF-'))
+            self.assertTrue(lot.name.startswith('ОБР-'))
         # offcuts become stock once the manufacturing order is done
         self._finish(production)
         for lot in offcut_lots:

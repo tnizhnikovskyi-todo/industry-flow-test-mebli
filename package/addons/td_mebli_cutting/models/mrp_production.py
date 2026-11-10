@@ -20,7 +20,7 @@ class MrpProduction(models.Model):
         if not productions:
             raise UserError(self.env._("Select confirmed manufacturing orders that have an order BoM with parts."))
         job = self.env['td.mebli.cutting.job'].create({'production_ids': [(6, 0, productions.ids)]})
-        return job._get_records_action()
+        return job._get_records_action(name=self.env._("Cutting Job"))
 
     def action_td_view_cutting_jobs(self):
         self.ensure_one()

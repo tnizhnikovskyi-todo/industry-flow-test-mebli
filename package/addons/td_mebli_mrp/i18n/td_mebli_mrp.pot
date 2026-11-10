@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 14:10+0000\n"
-"PO-Revision-Date: 2026-11-10 14:10+0000\n"
+"POT-Creation-Date: 2026-11-10 17:00+0000\n"
+"PO-Revision-Date: 2026-11-10 17:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -49,6 +49,11 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model,name:td_mebli_mrp.model_product_attribute_value
 msgid "Attribute Value"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid "Available Hours per Week"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -133,7 +138,10 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__display_name
@@ -264,12 +272,25 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
 msgid "ID"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__queue
+msgid "In queue"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__work
+msgid "In work"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -307,6 +328,16 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_w
 msgid "Length: x Width"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid "Load Zone"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid "Load, %"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -394,6 +425,13 @@ msgid "Nominal Width, mm"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
+msgid ""
+"Open work orders by work center: the load of every section in percent of its"
+" weekly capacity."
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_order_bom
 msgid "Order BoM"
 msgstr ""
@@ -403,6 +441,18 @@ msgstr ""
 msgid ""
 "Order BoM: generated from the options of the sales order (not from a CAD file).\n"
 "                    Dimensions:"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__over
+msgid "Over capacity"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid ""
+"Over capacity: the open work of the section needs more hours than the "
+"section has in a week."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -477,6 +527,11 @@ msgid "Per part"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_expected_hours
+msgid "Planned Hours"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_waste_pct
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_waste_pct
 msgid "Planned Waste, %"
@@ -500,6 +555,11 @@ msgid "Product Attribute"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute_custom_value
+msgid "Product Attribute Custom Value"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__qty
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__qty
 msgid "Quantity"
@@ -517,6 +577,13 @@ msgid "Sequence"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid ""
+"Share of the weekly capacity of the section taken by this operation; the sum"
+" over a section is its load."
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_length_mm
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_length_mm
 msgid "Sheet Length, mm"
@@ -526,6 +593,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_width_mm
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_width_mm
 msgid "Sheet Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_stage
+msgid "Shop Status"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -557,6 +629,11 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "Total"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__chain
+msgid "Waits for previous operation"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -596,8 +673,38 @@ msgid "Width: x Width"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__within
+msgid "Within capacity"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_workcenter
+msgid "Work Center"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.actions.act_window,name:td_mebli_mrp.mrp_workorder_td_load_action
+#: model:ir.ui.menu,name:td_mebli_mrp.td_mebli_workcenter_load_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_load_graph
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_load_pivot
+msgid "Work Center Load"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model,name:td_mebli_mrp.model_mrp_routing_workcenter
 msgid "Work Center Usage"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_workorder
+msgid "Work Order"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid ""
+"Working hours the section can give to orders in a week (people x shift "
+"hours); the base of the load, %."
 msgstr ""
 
 #. module: td_mebli_mrp

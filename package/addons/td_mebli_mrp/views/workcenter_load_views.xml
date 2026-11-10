@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_workcenter_form_td_mebli" model="ir.ui.view">
+        <field name="name">mrp.workcenter.form.td.mebli</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//label[@for='costs_hour']" position="before">
+                <field name="td_capacity_hours"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_td_load_graph" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.load.graph</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <graph string="Work Center Load" type="bar" stacked="1" disable_linking="1">
+                <field name="workcenter_id"/>
+                <field name="td_load_zone"/>
+                <field name="td_load_pct" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_td_load_pivot" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.load.pivot</field>
+        <field name="model">mrp.workorder</field>
+        <field name="arch" type="xml">
+            <pivot string="Work Center Load">
+                <field name="workcenter_id" type="row"/>
+                <field name="td_load_stage" type="col"/>
+                <field name="td_expected_hours" type="measure"/>
+                <field name="td_load_pct" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_td_load_action" model="ir.actions.act_window">
+        <field name="name">Work Center Load</field>
+        <field name="res_model">mrp.workorder</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="domain">[('state', 'not in', ('done', 'cancel'))]</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'graph', 'view_id': ref('mrp_workorder_td_load_graph')}),
+                                      (0, 0, {'view_mode': 'pivot', 'view_id': ref('mrp_workorder_td_load_pivot')})]"/>
+        <field name="help">Open work orders by work center: the load of every section in percent of its weekly capacity.</field>
+    </record>
+
+    <menuitem id="td_mebli_workcenter_load_menu" name="Work Center Load" parent="mrp.menu_mrp_reporting"
+              action="mrp_workorder_td_load_action" sequence="30"/>
+</odoo>

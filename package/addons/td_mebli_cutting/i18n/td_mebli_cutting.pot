@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 14:10+0000\n"
-"PO-Revision-Date: 2026-11-10 14:10+0000\n"
+"POT-Creation-Date: 2026-11-10 17:00+0000\n"
+"PO-Revision-Date: 2026-11-10 17:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/cutting_job.py:0
 msgid "%(job)s: this action is not available in state %(state)s."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "%(kind)s%(lot)s: %(board)s, %(size)s mm, waste %(waste)s%%"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -48,6 +54,7 @@ msgstr ""
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_area_m2
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
 msgid "Area, m2"
 msgstr ""
 
@@ -109,6 +116,11 @@ msgid "Create cutting job"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
+msgid "Created"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_uid
@@ -125,6 +137,16 @@ msgid "Created on"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__offcut_used_m2
+msgid "Cut from Offcuts, m2"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.ui.menu,name:td_mebli_cutting.td_mebli_cutting_menu
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.mrp_production_form_td_mebli_cutting
 msgid "Cutting"
@@ -136,6 +158,8 @@ msgid "Cutting File"
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/mrp_production.py:0
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_job
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_cutting_job_id
 msgid "Cutting Job"
@@ -151,8 +175,20 @@ msgid "Cutting Jobs"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__map_html
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__map_html
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Cutting Map"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_offcut
 msgid "Cutting Offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Cutting Parameters"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -167,10 +203,15 @@ msgid "Cutting Sheets"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
+msgid "Cutting job"
+msgstr ""
+
+#. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/cutting_job.py:0
 msgid ""
-"Cutting result received (%(kind)s): %(sheets)s sheets, waste %(waste).1f%%."
+"Cutting result received (%(kind)s): %(sheets)s sheets, waste %(waste)s%%."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -217,6 +258,11 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
 msgid "Get result (simulation)"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Get result again"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -357,6 +403,11 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
+msgid "Offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__lot_id
 msgid "Offcut Lot"
 msgstr ""
@@ -427,12 +478,17 @@ msgstr ""
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__rotated
-msgid "Rotated"
+msgid "Rotated by 90°"
 msgstr ""
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_has_sms_error
 msgid "SMS Delivery error"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__offcut_saving
+msgid "Saved by Offcuts"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -548,4 +604,58 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__y_mm
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__y_mm
 msgid "Y, mm"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "business offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "cutting program file"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "from offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "new sheet"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "part (colour = order)"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "parts"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "simulation"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "waste"
 msgstr ""

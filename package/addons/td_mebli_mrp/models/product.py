@@ -65,3 +65,16 @@ class ProductAttributeValue(models.Model):
     td_component_product_id = fields.Many2one('product.product', string='Component Product', ondelete='set null',
         help='Board or fitting set that this attribute value stands for.')
     td_edge_thickness = fields.Float(string='Edge Thickness, mm')
+
+
+class ProductAttributeCustomValue(models.Model):
+    _inherit = 'product.attribute.custom.value'
+
+    @api.depends('custom_product_template_attribute_value_id.name', 'custom_value')
+    def _compute_name(self):
+        """A size typed by the user reads 'Width, mm: 1800' (not 'Width, mm: Enter size: 1800')."""
+        super()._compute_name()
+        for record in self:
+            attribute = record.custom_product_template_attribute_value_id.attribute_id
+            if attribute.td_dimension:
+                record.name = f'{attribute.name}: {(record.custom_value or "").strip()}'

@@ -7,6 +7,7 @@
     'author': 'ToDo',
     'depends': ['td_mebli_mrp', 'sale_mrp', 'sale_margin'],
     'data': [
+        'security/ir.model.access.csv',
         'views/sale_order_views.xml',
         'views/mrp_bom_views.xml',
         'views/order_cost_report_views.xml',

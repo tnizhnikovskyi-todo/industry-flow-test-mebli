@@ -12,7 +12,7 @@ def _custom(env, tmpl, attr_xmlid, text):
     return (0, 0, {'custom_product_template_attribute_value_id': ptav.id, 'custom_value': str(text)})
 
 
-def make_order(env, product_xmlid, dims, body, facade, edge, fitting):
+def make_order(env, product_xmlid, dims, body, facade, edge, fitting, qty=1.0):
     """Quotation with one configured furniture line. body/facade/edge/fitting are xmlids of attribute values."""
     tmpl = env.ref(f'td_mebli_demo.{product_xmlid}')
     chosen = tmpl.attribute_line_ids.product_template_value_ids.filtered(
@@ -21,7 +21,7 @@ def make_order(env, product_xmlid, dims, body, facade, edge, fitting):
     return env['sale.order'].create({
         'partner_id': env.ref('td_mebli_demo.partner_salon').id,
         'order_line': [(0, 0, {
-            'product_id': tmpl.product_variant_id.id, 'product_uom_qty': 1.0,
+            'product_id': tmpl.product_variant_id.id, 'product_uom_qty': qty,
             'product_custom_attribute_value_ids': [
                 _custom(env, tmpl, 'w', width), _custom(env, tmpl, 'h', height), _custom(env, tmpl, 'd', depth)],
             'product_no_variant_attribute_value_ids': [(6, 0, chosen.ids)],

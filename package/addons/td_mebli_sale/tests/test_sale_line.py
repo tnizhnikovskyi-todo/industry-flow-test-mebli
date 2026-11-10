@@ -28,3 +28,10 @@ class TestSaleLine(TdMebliSaleCommon):
         line.price_unit = 4321.0
         line.td_width = 1100
         self.assertEqual(line.price_unit, 4321.0)
+
+    def test_custom_size_description(self):
+        """A typed size reads 'Name: 1000', without the placeholder value name."""
+        line = self._make_order(width=1000).order_line
+        names = line.product_custom_attribute_value_ids.mapped('name')
+        self.assertIn(f'{self.attr_w.name}: 1000', names)
+        self.assertIn(f'{self.attr_w.name}: 1000', line.name)

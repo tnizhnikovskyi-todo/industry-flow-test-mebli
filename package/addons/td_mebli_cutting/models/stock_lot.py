@@ -4,8 +4,8 @@ from odoo import api, fields, models
 class StockLot(models.Model):
     _inherit = 'stock.lot'
 
-    td_length_mm = fields.Integer(string='Length, mm')
-    td_width_mm = fields.Integer(string='Width, mm')
+    td_length_mm = fields.Integer(string='Length, mm', aggregator=None)
+    td_width_mm = fields.Integer(string='Width, mm', aggregator=None)
     td_is_offcut = fields.Boolean(string='Business Offcut', index=True)
     td_cutting_job_id = fields.Many2one('td.mebli.cutting.job', string='Cutting Job', readonly=True,
                                         copy=False, ondelete='set null')

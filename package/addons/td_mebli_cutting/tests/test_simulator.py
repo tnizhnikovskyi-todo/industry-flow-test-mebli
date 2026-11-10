@@ -62,3 +62,27 @@ class TestSimulator(TdMebliCuttingCommon):
         body_sheets = [s for s in payload['sheets'] if s['product_id'] == self.board_a.id]
         self.assertEqual(body_sheets[0]['lot_id'], offcut_lots.id)
         self.assertTrue(all(0 <= s['lot_id'] for s in body_sheets if s['lot_id']))
+
+    def test_offcut_saving(self):
+        self.board_a.standard_price = 100.0
+        offcut_lot = self._add_lots(self.board_a, 1, length=1200, width=700, offcut=True, prefix='OFF')
+        production = self._make_production()
+        job = self.env['td.mebli.cutting.job'].create({'production_ids': [(6, 0, production.ids)]})
+        job.action_send()
+        job.action_simulate()
+        used = sum(job.sheet_ids.filtered(lambda sheet: sheet.lot_id == offcut_lot).mapped('used_area_m2'))
+        self.assertGreater(used, 0.0)
+        self.assertAlmostEqual(job.offcut_used_m2, used, places=2)
+        self.assertAlmostEqual(job.offcut_saving, used * 100.0, places=2)
+
+    def test_cutting_map_and_message(self):
+        """The cutting map is drawn for every sheet; the chatter names the source in words, not as a key."""
+        production = self._make_production()
+        job = self.env['td.mebli.cutting.job'].create({'production_ids': [(6, 0, production.ids)]})
+        job.action_send()
+        job.action_simulate()
+        self.assertEqual(str(job.map_html).count('<svg'), len(job.sheet_ids))
+        self.assertIn('<rect', str(job.sheet_ids[:1].map_html))
+        body = ' '.join(job.message_ids.mapped('body'))
+        self.assertNotIn('simulated', body)
+        self.assertIn(job.name.replace('/', '-'), job.export_attachment_id.name)

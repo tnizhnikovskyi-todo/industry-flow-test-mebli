@@ -1,3 +1,4 @@
+from odoo import fields
 from odoo.tests import tagged
 
 from .common import TdMebliSaleCommon
@@ -18,6 +19,19 @@ class TestSaleFlow(TdMebliSaleCommon):
         self.assertEqual(mo.sale_line_id, line)
         self.assertEqual(len(mo.workorder_ids), 2)
         self.assertEqual(order.mrp_production_count, 1)
+
+    def test_hours_to_launch(self):
+        order = self._make_order()
+        order.action_confirm()
+        self.assertFalse(order.td_launch_date)
+        self.assertLess(order.td_hours_to_launch, 1.0)  # waiting for launch: counted from the order date so far
+        workorder = order.mrp_production_ids.workorder_ids[:1]
+        workorder.button_start()
+        started = fields.Datetime.add(order.date_order, hours=30)
+        workorder.time_ids.write({'date_start': started})
+        order.invalidate_recordset(['td_launch_date', 'td_hours_to_launch'])
+        self.assertEqual(order.td_launch_date, started)
+        self.assertAlmostEqual(order.td_hours_to_launch, 30.0, places=1)
 
     def test_two_orders_two_boms(self):
         order1 = self._make_order(width=800)
@@ -51,3 +65,25 @@ class TestSaleFlow(TdMebliSaleCommon):
         self.assertAlmostEqual(line.margin, line.price_subtotal - expected, places=2)
         self.assertAlmostEqual(
             line.td_planned_material_cost + line.td_planned_operation_cost, expected, places=2)
+
+    def test_salesperson_builds_and_confirms(self):
+        """A salesperson without manufacturing rights builds the specification and confirms the order."""
+        user = self.env['res.users'].create({
+            'name': 'Salesperson', 'login': 'td_mebli_salesperson',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id, self.env.ref('sales_team.group_sale_salesman').id])]})
+        order = self._make_order()
+        order.user_id = user
+        order = order.with_user(user)
+        order.order_line.action_td_generate_bom()
+        self.assertTrue(order.order_line.td_bom_id)
+        self.assertTrue(order.order_line.td_bom_id.td_part_ids)
+        order.action_confirm()
+        self.assertEqual(order.state, 'sale')
+        self.assertGreaterEqual(order.td_hours_to_launch, 0.0)  # readable without rights on work orders
+        # the salesperson sees the manufacturing order: a button on the order and a line in the chatter
+        self.assertEqual(order.td_production_count, 1)
+        production = order.sudo().mrp_production_ids
+        self.assertTrue(any(production.name in (message.body or '') for message in order.message_ids))
+        action = order.action_td_view_production()
+        self.assertEqual(action['res_model'], 'mrp.production')
+        self.assertEqual(production.td_partner_id, order.partner_id)

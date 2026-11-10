@@ -3,11 +3,17 @@ import csv
 import io
 from collections import defaultdict
 
+from markupsafe import Markup
+
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import float_compare
+from odoo.tools.misc import formatLang
 
-from . import optimizer
+from . import optimizer, sheet_map
+
+# the offcuts of one order take at most this share of its cost: the rest of the sheet is paid by the order
+OFFCUT_COST_SHARE_CAP = 10.0
 
 
 class TdMebliCuttingJob(models.Model):
@@ -35,6 +41,24 @@ class TdMebliCuttingJob(models.Model):
                                      string='Result Source', readonly=True, copy=False)
     waste_pct = fields.Float(string='Waste, %', compute='_compute_waste_pct', digits=(16, 1))
     export_attachment_id = fields.Many2one('ir.attachment', string='Cutting File', readonly=True, copy=False)
+    currency_id = fields.Many2one(related='company_id.currency_id')
+    offcut_used_m2 = fields.Float(string='Cut from Offcuts, m2', compute='_compute_offcut_saving', digits=(16, 2))
+    offcut_saving = fields.Monetary(string='Saved by Offcuts', compute='_compute_offcut_saving')
+
+    map_html = fields.Html(string='Cutting Map', compute='_compute_map_html', sanitize=False)
+
+    @api.depends('sheet_ids.placement_ids', 'sheet_ids.offcut_ids')
+    def _compute_map_html(self):
+        for job in self:
+            # whole sheets first (the typical picture of a cut), then offcuts used up; at most four drawings
+            ordered = job.sheet_ids.sorted(key=lambda sheet: (bool(sheet.lot_id.td_is_offcut), -sheet.length_mm * sheet.width_mm,
+                                                              sheet.sequence))
+            # a whole sheet and a sheet taken from an offcut go side by side first: that is the point of the map
+            first = ordered[:1] | ordered.filtered(lambda sheet: sheet.lot_id.td_is_offcut)[:1]
+            sheets = first + (ordered - first)[:4 - len(first)]
+            job.map_html = Markup('%s<div class="d-flex flex-wrap gap-3">%s</div>') % (
+                sheet_map.legend(self.env._("part (colour = order)"), self.env._("business offcut"), self.env._("waste")),
+                Markup('').join(sheet._td_map_block() for sheet in sheets))
 
     @api.depends('production_ids.bom_id.td_part_ids', 'production_ids.product_qty')
     def _compute_part_ids(self):
@@ -50,6 +74,14 @@ class TdMebliCuttingJob(models.Model):
             total = sum(sheet.length_mm * sheet.width_mm for sheet in job.sheet_ids)
             waste = sum(sheet.length_mm * sheet.width_mm * sheet.waste_pct / 100.0 for sheet in job.sheet_ids)
             job.waste_pct = waste / total * 100.0 if total else 0.0
+
+    @api.depends('sheet_ids.lot_id.td_is_offcut', 'sheet_ids.used_area_m2', 'sheet_ids.product_id.standard_price')
+    def _compute_offcut_saving(self):
+        """Parts cut from a business offcut instead of a new sheet: saved area and its cost at the board price."""
+        for job in self:
+            from_offcuts = job.sheet_ids.filtered(lambda sheet: sheet.lot_id.td_is_offcut)
+            job.offcut_used_m2 = sum(from_offcuts.mapped('used_area_m2'))
+            job.offcut_saving = sum(sheet.used_area_m2 * sheet.product_id.standard_price for sheet in from_offcuts)
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -99,7 +131,7 @@ class TdMebliCuttingJob(models.Model):
                         part.qty * int(production.product_qty), part.edge_long_sides, part.edge_short_sides,
                         production.origin or production.name, part.name])
             attachment = self.env['ir.attachment'].create({
-                'name': f'{job.name.replace("/", "-")}-draft-format.csv',
+                'name': f'{job.name.replace("/", "-")}-{self.env._("parts")}.csv',
                 'datas': base64.b64encode(buffer.getvalue().encode()),
                 'res_model': job._name, 'res_id': job.id, 'mimetype': 'text/csv',
             })
@@ -215,9 +247,10 @@ class TdMebliCuttingJob(models.Model):
                     for o in sheet['offcuts']],
             })
         self.write({'result_source': payload['source'], 'state': 'result'})
+        kind = {'simulated': self.env._("simulation"), 'imported': self.env._("cutting program file")}[payload['source']]
         self.message_post(body=self.env._(
-            "Cutting result received (%(kind)s): %(sheets)s sheets, waste %(waste).1f%%.",
-            kind=payload['source'], sheets=len(self.sheet_ids), waste=self.waste_pct))
+            "Cutting result received (%(kind)s): %(sheets)s sheets, waste %(waste)s%%.",
+            kind=kind, sheets=len(self.sheet_ids), waste=formatLang(self.env, self.waste_pct, digits=1)))
 
     # ------------------------------------------------------------------
     # Done: reserve sheets by lot and create offcuts as by-products
@@ -241,7 +274,8 @@ class TdMebliCuttingJob(models.Model):
                     quantity = sheet.lot_id.td_area_m2 * fraction
                     taken = move._update_reserved_quantity(
                         quantity, move.location_id, lot_id=sheet.lot_id, strict=True)
-                    if float_compare(taken, quantity, precision_digits=3) < 0:
+                    # tolerance 0.01 m2: shares of one sheet between several orders are rounded by the reservation
+                    if float_compare(taken, quantity, precision_digits=2) < 0:
                         raise UserError(self.env._(
                             "Lot %(lot)s is not available in full for %(production)s.",
                             lot=sheet.lot_id.name, production=production.name))
@@ -251,6 +285,7 @@ class TdMebliCuttingJob(models.Model):
             offcut_jobs.extend((main_production, sheet, offcut) for offcut in sheet.offcut_ids)
         # cost share of the by-products: value of the offcut against the material cost consumed by the order
         base = {production: production._td_material_cost() for production in self.production_ids}
+        allocated = defaultdict(float)  # cost share already given to the by-products of one order
         for production, sheet, offcut in offcut_jobs:
             lot = self.env['stock.lot'].create({
                 'name': sheet._td_next_offcut_name(),
@@ -260,7 +295,9 @@ class TdMebliCuttingJob(models.Model):
             })
             offcut.lot_id = lot
             value = offcut.area_m2 * sheet.product_id.standard_price
-            cost_share = min(value / base[production] * 100.0, 100.0) if base[production] else 0.0
+            cost_share = min(value / base[production] * 100.0, OFFCUT_COST_SHARE_CAP - allocated[production]) if base[production] else 0.0
+            cost_share = max(cost_share, 0.0)
+            allocated[production] += cost_share
             self._td_create_byproduct_move(production, lot, offcut.area_m2, uom_m2, cost_share)
         if no_lot_sheets:
             self.message_post(body=self.env._(
@@ -302,6 +339,33 @@ class TdMebliCuttingSheet(models.Model):
     offcut_area_m2 = fields.Float(string='Offcuts, m2', compute='_compute_areas', store=True, digits=(16, 3))
     waste_pct = fields.Float(string='Waste, %', compute='_compute_areas', store=True, digits=(16, 1))
     result_source = fields.Selection(related='job_id.result_source')
+    map_html = fields.Html(string='Cutting Map', compute='_compute_map_html', sanitize=False)
+
+    def _td_map_svg(self):
+        self.ensure_one()
+        productions = self.job_id.production_ids.ids
+        placements = [{
+            'x': p.x_mm, 'y': p.y_mm, 'length': p.length_mm, 'width': p.width_mm, 'production_id': p.production_id.id,
+            'label': p.part_id.name or ''} for p in self.placement_ids]
+        offcuts = [{'x': o.x_mm, 'y': o.y_mm, 'length': o.length_mm, 'width': o.width_mm} for o in self.offcut_ids]
+        return sheet_map.render_svg(self.length_mm, self.width_mm, placements, offcuts, productions,
+                                    self.env._("offcut"))
+
+    def _td_map_block(self):
+        """Heading and drawing of the sheet, for the cutting map of a job."""
+        self.ensure_one()
+        lot = f' · {self.lot_id.name}' if self.lot_id else ''
+        kind = self.env._("from offcut") if self.lot_id.td_is_offcut else self.env._("new sheet")
+        title = self.env._("%(kind)s%(lot)s: %(board)s, %(size)s mm, waste %(waste)s%%",
+                           kind=kind, board=self.product_id.name, lot=lot,
+                           size=f'{self.length_mm}×{self.width_mm}', waste=formatLang(self.env, self.waste_pct, digits=1))
+        return Markup('<div style="flex:1 1 47%%;min-width:380px"><div class="fw-bold small mb-1">%s</div>%s</div>') % (
+            title, self._td_map_svg())
+
+    @api.depends('placement_ids', 'offcut_ids', 'length_mm', 'width_mm')
+    def _compute_map_html(self):
+        for sheet in self:
+            sheet.map_html = sheet._td_map_svg()
 
     @api.depends('sequence', 'product_id')
     def _compute_name(self):
@@ -330,7 +394,7 @@ class TdMebliCuttingSheet(models.Model):
         code = self.product_id.default_code or str(self.product_id.id)
         count = self.env['stock.lot'].search_count([
             ('product_id', '=', self.product_id.id), ('td_is_offcut', '=', True)])
-        return f'OFF-{code}-{count + 1}'
+        return f'ОБР-{code}-{count + 1}'
 
 
 class TdMebliCuttingPlacement(models.Model):
@@ -346,7 +410,7 @@ class TdMebliCuttingPlacement(models.Model):
     y_mm = fields.Integer(string='Y, mm')
     length_mm = fields.Integer(string='Length, mm')
     width_mm = fields.Integer(string='Width, mm')
-    rotated = fields.Boolean()
+    rotated = fields.Boolean(string='Rotated by 90°')
     area_m2 = fields.Float(compute='_compute_area_m2', store=True, digits=(16, 4))
 
     @api.depends('length_mm', 'width_mm')

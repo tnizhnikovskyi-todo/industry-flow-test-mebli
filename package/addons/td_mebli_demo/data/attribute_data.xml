@@ -7,7 +7,7 @@
     </record>
 
     <record id="val_body_sonoma" model="product.attribute.value">
-        <field name="name">Egren E1145 Дуб Сонома</field>
+        <field name="name">ЛДСП Дуб Сонома</field>
         <field name="attribute_id" ref="attr_body"/>
         <field name="td_component_product_id" ref="board_sonoma"/>
         <field name="default_extra_price">0</field>
@@ -15,18 +15,18 @@
     </record>
 
     <record id="val_body_white" model="product.attribute.value">
-        <field name="name">Kronvald K101 Білий гладкий</field>
+        <field name="name">ЛДСП Білий гладкий</field>
         <field name="attribute_id" ref="attr_body"/>
         <field name="td_component_product_id" ref="board_white"/>
-        <field name="default_extra_price">600</field>
+        <field name="default_extra_price">0</field>
         <field name="sequence">2</field>
     </record>
 
     <record id="val_body_anthr" model="product.attribute.value">
-        <field name="name">Kronvald K190 Антрацит</field>
+        <field name="name">ЛДСП Антрацит</field>
         <field name="attribute_id" ref="attr_body"/>
         <field name="td_component_product_id" ref="board_anthr"/>
-        <field name="default_extra_price">900</field>
+        <field name="default_extra_price">0</field>
         <field name="sequence">3</field>
     </record>
 
@@ -37,7 +37,7 @@
     </record>
 
     <record id="val_facade_mdf" model="product.attribute.value">
-        <field name="name">Egren MF-01 Білий матовий (МДФ)</field>
+        <field name="name">МДФ Білий матовий</field>
         <field name="attribute_id" ref="attr_facade"/>
         <field name="td_component_product_id" ref="board_mdf"/>
         <field name="default_extra_price">0</field>
@@ -45,10 +45,10 @@
     </record>
 
     <record id="val_facade_anthr" model="product.attribute.value">
-        <field name="name">Kronvald K190 Антрацит</field>
+        <field name="name">ЛДСП Антрацит</field>
         <field name="attribute_id" ref="attr_facade"/>
         <field name="td_component_product_id" ref="board_anthr"/>
-        <field name="default_extra_price">400</field>
+        <field name="default_extra_price">0</field>
         <field name="sequence">2</field>
     </record>
 
@@ -70,7 +70,7 @@
         <field name="name">ПВХ 2 мм</field>
         <field name="attribute_id" ref="attr_edge"/>
         <field name="td_edge_thickness">2.0</field>
-        <field name="default_extra_price">350</field>
+        <field name="default_extra_price">200</field>
         <field name="sequence">2</field>
     </record>
 
@@ -91,7 +91,7 @@
         <field name="name">Преміум (доводчики)</field>
         <field name="attribute_id" ref="attr_fit"/>
         <field name="td_component_product_id" ref="fit_hinge"/>
-        <field name="default_extra_price">2500</field>
+        <field name="default_extra_price">1800</field>
         <field name="sequence">2</field>
     </record>
 
@@ -102,7 +102,7 @@
     </record>
 
     <record id="val_w_custom" model="product.attribute.value">
-        <field name="name">Вказати розмір</field>
+        <field name="name">Власний розмір</field>
         <field name="attribute_id" ref="attr_w"/>
         <field name="is_custom">True</field>
     </record>
@@ -114,7 +114,7 @@
     </record>
 
     <record id="val_h_custom" model="product.attribute.value">
-        <field name="name">Вказати розмір</field>
+        <field name="name">Власний розмір</field>
         <field name="attribute_id" ref="attr_h"/>
         <field name="is_custom">True</field>
     </record>
@@ -126,7 +126,7 @@
     </record>
 
     <record id="val_d_custom" model="product.attribute.value">
-        <field name="name">Вказати розмір</field>
+        <field name="name">Власний розмір</field>
         <field name="attribute_id" ref="attr_d"/>
         <field name="is_custom">True</field>
     </record>

@@ -106,10 +106,11 @@ class SaleOrderLine(models.Model):
 
     def _td_generate_bom(self):
         """(Re)create the order BoM of the line; a BoM that already has manufacturing orders is kept."""
-        Bom = self.env['mrp.bom']
+        # a salesperson has no manufacturing rights: the specification is built and replaced as the system
+        Bom = self.env['mrp.bom'].sudo()
         for line in self.filtered('td_is_parametric'):
-            old = line.td_bom_id
-            if old and self.env['mrp.production'].search_count([('bom_id', '=', old.id)], limit=1):
+            old = line.td_bom_id.sudo()
+            if old and self.env['mrp.production'].sudo().search_count([('bom_id', '=', old.id)], limit=1):
                 continue
             dims = {axis: line[f'td_{axis}'] for axis in AXES}
             bom = Bom._td_generate_order_bom(line.product_id, dims, line._td_selections())

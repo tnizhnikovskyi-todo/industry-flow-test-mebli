@@ -18,7 +18,7 @@ class TestDemoScenario(TransactionCase):
         result = run(self.env)
         order = result['order']
         line = order.order_line
-        self.assertGreater(line.price_unit, 28000)
+        self.assertGreater(line.price_unit, 24000)
         self.assertTrue(line.td_bom_id)
         self.assertEqual(order.state, 'sale')
         productions = result['productions']

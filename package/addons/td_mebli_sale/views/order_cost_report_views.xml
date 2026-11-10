@@ -4,18 +4,18 @@
         <field name="name">sale.order.line.td.cost.list</field>
         <field name="model">sale.order.line</field>
         <field name="arch" type="xml">
-            <list create="0" edit="0" delete="0">
-                <field name="order_id"/>
+            <list create="0" edit="0" delete="0" default_order="id" decoration-danger="margin_percent &lt; 0.15">
+                <field name="order_id" string="Order"/>
                 <field name="product_id"/>
-                <field name="td_width"/>
-                <field name="td_height"/>
-                <field name="td_depth"/>
-                <field name="product_uom_qty"/>
-                <field name="price_subtotal" sum="Total"/>
-                <field name="td_planned_material_cost" sum="Total"/>
-                <field name="td_planned_operation_cost" sum="Total"/>
-                <field name="margin" sum="Total"/>
-                <field name="margin_percent" avg="Average" widget="percentage"/>
+                <field name="td_width" optional="hide"/>
+                <field name="td_height" optional="hide"/>
+                <field name="td_depth" optional="hide"/>
+                <field name="product_uom_qty" string="Qty"/>
+                <field name="price_subtotal" string="Revenue" sum="Total"/>
+                <field name="td_planned_material_cost" string="Materials" sum="Total"/>
+                <field name="td_planned_operation_cost" string="Work" sum="Total"/>
+                <field name="margin" string="Margin" widget="monetary" sum="Total"/>
+                <field name="margin_percent" string="Margin, %" avg="Average" widget="percentage"/>
                 <field name="currency_id" column_invisible="True"/>
             </list>
         </field>
@@ -42,6 +42,7 @@
             <search>
                 <field name="order_id"/>
                 <field name="product_id"/>
+                <filter name="confirmed" string="Confirmed orders" domain="[('state', '=', 'sale')]"/>
                 <group>
                     <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
                     <filter name="group_order" string="Order" context="{'group_by': 'order_id'}"/>
@@ -56,6 +57,7 @@
         <field name="view_mode">pivot,list</field>
         <field name="domain">[('td_is_parametric', '=', True), ('state', '!=', 'cancel')]</field>
         <field name="search_view_id" ref="sale_order_line_td_cost_search"/>
+        <field name="context">{'search_default_confirmed': 1}</field>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'pivot', 'view_id': ref('sale_order_line_td_cost_pivot')}),
             (0, 0, {'view_mode': 'list', 'view_id': ref('sale_order_line_td_cost_list')})]"/>
