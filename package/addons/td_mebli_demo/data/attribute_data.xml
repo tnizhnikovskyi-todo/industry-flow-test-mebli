@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="attr_body" model="product.attribute">
+        <field name="name">Декор корпусу</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_component_role">body_board</field>
+    </record>
+
+    <record id="val_body_sonoma" model="product.attribute.value">
+        <field name="name">Egren E1145 Дуб Сонома</field>
+        <field name="attribute_id" ref="attr_body"/>
+        <field name="td_component_product_id" ref="board_sonoma"/>
+        <field name="default_extra_price">0</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="val_body_white" model="product.attribute.value">
+        <field name="name">Kronvald K101 Білий гладкий</field>
+        <field name="attribute_id" ref="attr_body"/>
+        <field name="td_component_product_id" ref="board_white"/>
+        <field name="default_extra_price">600</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="val_body_anthr" model="product.attribute.value">
+        <field name="name">Kronvald K190 Антрацит</field>
+        <field name="attribute_id" ref="attr_body"/>
+        <field name="td_component_product_id" ref="board_anthr"/>
+        <field name="default_extra_price">900</field>
+        <field name="sequence">3</field>
+    </record>
+
+    <record id="attr_facade" model="product.attribute">
+        <field name="name">Декор фасаду</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_component_role">facade_board</field>
+    </record>
+
+    <record id="val_facade_mdf" model="product.attribute.value">
+        <field name="name">Egren MF-01 Білий матовий (МДФ)</field>
+        <field name="attribute_id" ref="attr_facade"/>
+        <field name="td_component_product_id" ref="board_mdf"/>
+        <field name="default_extra_price">0</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="val_facade_anthr" model="product.attribute.value">
+        <field name="name">Kronvald K190 Антрацит</field>
+        <field name="attribute_id" ref="attr_facade"/>
+        <field name="td_component_product_id" ref="board_anthr"/>
+        <field name="default_extra_price">400</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="attr_edge" model="product.attribute">
+        <field name="name">Кромка</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_component_role">edge</field>
+    </record>
+
+    <record id="val_edge_04" model="product.attribute.value">
+        <field name="name">ПВХ 0,4 мм</field>
+        <field name="attribute_id" ref="attr_edge"/>
+        <field name="td_edge_thickness">0.4</field>
+        <field name="default_extra_price">0</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="val_edge_2" model="product.attribute.value">
+        <field name="name">ПВХ 2 мм</field>
+        <field name="attribute_id" ref="attr_edge"/>
+        <field name="td_edge_thickness">2.0</field>
+        <field name="default_extra_price">350</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="attr_fit" model="product.attribute">
+        <field name="name">Фурнітура</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_component_role">fitting_set</field>
+    </record>
+
+    <record id="val_fit_std" model="product.attribute.value">
+        <field name="name">Стандарт</field>
+        <field name="attribute_id" ref="attr_fit"/>
+        <field name="default_extra_price">0</field>
+        <field name="sequence">1</field>
+    </record>
+
+    <record id="val_fit_premium" model="product.attribute.value">
+        <field name="name">Преміум (доводчики)</field>
+        <field name="attribute_id" ref="attr_fit"/>
+        <field name="td_component_product_id" ref="fit_hinge"/>
+        <field name="default_extra_price">2500</field>
+        <field name="sequence">2</field>
+    </record>
+
+    <record id="attr_w" model="product.attribute">
+        <field name="name">Ширина, мм</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_dimension">width</field>
+    </record>
+
+    <record id="val_w_custom" model="product.attribute.value">
+        <field name="name">Вказати розмір</field>
+        <field name="attribute_id" ref="attr_w"/>
+        <field name="is_custom">True</field>
+    </record>
+
+    <record id="attr_h" model="product.attribute">
+        <field name="name">Висота, мм</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_dimension">height</field>
+    </record>
+
+    <record id="val_h_custom" model="product.attribute.value">
+        <field name="name">Вказати розмір</field>
+        <field name="attribute_id" ref="attr_h"/>
+        <field name="is_custom">True</field>
+    </record>
+
+    <record id="attr_d" model="product.attribute">
+        <field name="name">Глибина, мм</field>
+        <field name="create_variant">no_variant</field>
+        <field name="td_dimension">depth</field>
+    </record>
+
+    <record id="val_d_custom" model="product.attribute.value">
+        <field name="name">Вказати розмір</field>
+        <field name="attribute_id" ref="attr_d"/>
+        <field name="is_custom">True</field>
+    </record>
+</odoo>

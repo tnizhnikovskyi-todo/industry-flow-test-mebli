@@ -1,0 +1,161 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_sale
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-10 14:10+0000\n"
+"PO-Revision-Date: 2026-11-10 14:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+"Language: uk\n"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid ""
+"%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
+msgstr "%(product)s: %(axis)s %(value)s мм поза межами %(low)s-%(high)s мм."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid ""
+"%(product)s: the %(axis)s must be a whole number of millimetres, got "
+"'%(raw)s'."
+msgstr "%(product)s: %(axis)s має бути цілим числом міліметрів, отримано '%(raw)s'."
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.mrp_bom_form_td_mebli_sale
+msgid "<span class=\"o_stat_text\">Sales Order</span>"
+msgstr "<span class=\"o_stat_text\">Замовлення</span>"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Average"
+msgstr "Середнє"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Специфікація"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Build specification"
+msgstr "Сформувати специфікацію"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_depth
+msgid "Depth, mm"
+msgstr "Глибина, мм"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
+msgid "Display Name"
+msgstr "Назва для показу"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "Generate the specification first."
+msgstr "Спершу сформуйте специфікацію."
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_height
+msgid "Height, mm"
+msgstr "Висота, мм"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+msgid "Order"
+msgstr "Замовлення"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_bom_id
+msgid "Order BoM"
+msgstr "Специфікація під замовлення"
+
+#. module: td_mebli_sale
+#: model:ir.actions.act_window,name:td_mebli_sale.sale_order_line_td_cost_action
+#: model:ir.ui.menu,name:td_mebli_sale.sale_order_line_td_cost_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_pivot
+msgid "Order Cost"
+msgstr "Собівартість замовлень"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_is_parametric
+msgid "Parametric Product"
+msgstr "Параметричний виріб"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_planned_material_cost
+msgid "Planned Materials"
+msgstr "Планові матеріали"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_planned_operation_cost
+msgid "Planned Operations"
+msgstr "Планові операції"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+msgid "Product"
+msgstr "Виріб"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_order_id
+msgid "Sales Order"
+msgstr "Замовлення"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_sale_order_line
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_line_id
+msgid "Sales Order Line"
+msgstr "Рядок замовлення"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_size_factor
+msgid "Size Factor"
+msgstr "Розмірний коефіцієнт"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Specification"
+msgstr "Специфікація"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_stock_rule
+msgid "Stock Rule"
+msgstr "Правило складу"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "The specification can be rebuilt only in a quotation."
+msgstr "Специфікацію можна перебудувати лише в комерційній пропозиції."
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+msgid "Total"
+msgstr "Разом"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_width
+msgid "Width, mm"
+msgstr "Ширина, мм"

@@ -1,0 +1,76 @@
+
+
+async function steps() {
+    // Вхід
+    await page.goto(`${BASE}/web/login?db=${DB}`);
+    await page.fill('input[name=login]', 'admin');
+    await page.fill('input[name=password]', 'admin');
+    await page.click('button[type=submit]');
+    await page.waitForSelector('.o_navbar');
+    await settle();
+
+    // 01 Виріб «Шафа-купе»
+    await openApp('sale.sale_menu_root');
+    await menu('sale.product_menu_catalog', 'sale.menu_product_template_action');
+    await search('Шафа-купе');
+    await page.locator('.o_data_row, .o_kanban_record').filter({ hasText: /Шафа-купе/ }).first().click();
+    await settle();
+    await notebookTab(/Атрибути|Attributes/);
+    await shot('product-attributes');
+    await notebookTab(/Деталі виробу/);
+    await shot('product-form');
+    if (STOP_AT === 1) return;
+
+    // 02 Нове замовлення і конфігуратор
+    await menu('sale.sale_order_menu', 'sale.menu_sale_quotations');
+    await page.locator('.o_list_button_add, .o-kanban-button-new').first().click();
+    await settle();
+    await page.locator('.o_field_widget[name=partner_id] input').fill('Салон');
+    await page.locator('ul.ui-autocomplete > li > a').first().click();
+    await settle();
+    await page.locator('a:has-text("Додати товар"), a:has-text("Add a product")').first().click();
+    await page.locator('div[name="product_template_id"] input').fill('Шафа-купе');
+    await page.locator('ul.ui-autocomplete > li > a').filter({ hasText: /Шафа-купе/ }).first().click();
+    await page.waitForSelector('.o_sale_product_configurator_dialog');
+    await settle();
+    const dlg = page.locator('.o_sale_product_configurator_dialog');
+    const ptal = (label) => dlg.locator('div[name="ptal"]').filter({ has: page.locator('label', { hasText: label }) });
+    await ptal('Декор корпусу').locator('span', { hasText: 'Kronvald K101' }).first().click();
+    await ptal('Декор фасаду').locator('span', { hasText: 'Kronvald K190' }).first().click();
+    await ptal('Кромка').locator('span', { hasText: 'ПВХ 2 мм' }).first().click();
+    await ptal('Фурнітура').locator('span', { hasText: 'Преміум' }).first().click();
+    for (const [label, value] of [['Ширина', '1800'], ['Висота', '2400'], ['Глибина', '600']]) {
+        const inp = ptal(label).locator('input[type="text"]');
+        await inp.fill(value);
+        await dlg.locator('.modal-body').click({ position: { x: 5, y: 5 } });
+        await settle(300);
+    }
+    await shot('configurator');
+    await dlg.locator('button', { hasText: /Підтвердити|Confirm/ }).click();
+    await page.waitForSelector('.o_sale_product_configurator_dialog', { state: 'detached' });
+    await settle(1000);
+    // 03 Чернетка замовлення: ціна з коефіцієнтом розміру і маржа
+    await shot('sale-order-draft');
+    // зберегти замовлення; сформувати специфікацію з рядка
+    await page.locator('.o_form_button_save').click();
+    await settle(1200);
+    if (STOP_AT === 2) return;
+
+    // 04 Специфікація під замовлення
+    await page.locator('.o_data_row button:has(.fa-cogs)').click();
+    await settle(1500);
+    await page.locator('.o_data_row button:has(.fa-list-alt)').click();
+    await settle(1500);
+    await shot('order-bom');
+    await notebookTab(/Деталі/);
+    await shot('order-bom-parts');
+    if (STOP_AT === 3) return;
+
+    // 05 Підтвердження замовлення
+    await page.locator('.o_breadcrumb .o_back_button, .breadcrumb-item a').first().click();
+    await settle(1200);
+    await page.locator('button[name="action_confirm"]').first().click();
+    await settle(2500);
+    await shot('sale-confirmed');
+    if (STOP_AT === 4) return;
+}

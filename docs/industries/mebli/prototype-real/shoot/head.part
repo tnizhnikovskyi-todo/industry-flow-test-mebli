@@ -1,0 +1,71 @@
+// Сценарій показу пакета «меблі» в справжньому Odoo 19 (PLAN.md §6). Запуск: node scenario.mjs [порт]
+// Env: BASE (http://127.0.0.1:18069), DB (mebli_demo), STOP_AT (номер кроку, після якого зупинитись).
+import { createRequire } from 'module';
+import { fileURLToPath } from 'url';
+const require = createRequire(import.meta.url);
+const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const ROOT = path.resolve(__dirname, '..');
+const BASE = process.env.BASE || `http://127.0.0.1:${process.argv[2] || 18069}`;
+const DB = process.env.DB || 'mebli_demo';
+const STOP_AT = parseInt(process.env.STOP_AT || '99', 10);
+const SHOTS = path.join(ROOT, 'screens');
+const VIDEO = path.join(ROOT, 'video');
+fs.mkdirSync(SHOTS, { recursive: true });
+fs.mkdirSync(VIDEO, { recursive: true });
+
+let page;
+let n = 0;
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const T0 = Date.now();
+async function settle(ms = 700) {
+    await page.waitForLoadState('load').catch(() => {});
+    await page.waitForFunction(() => !document.querySelector('.o_loading, .o_blockUI, .o_ui_blocked'), null, { timeout: 8000 }).catch(() => {});
+    await sleep(ms);
+}
+async function shot(name) {
+    n += 1;
+    const file = path.join(SHOTS, `${String(n).padStart(2, '0')}-${name}.png`);
+    await settle(500);
+    await page.screenshot({ path: file });
+    console.log('shot', path.basename(file), new Date().toISOString());
+}
+// Кнопка/вкладка/пункт за видимим текстом (uk або en).
+async function clickText(selector, re, opts = {}) {
+    const loc = page.locator(selector).filter({ hasText: re }).first();
+    await loc.waitFor({ state: 'visible', timeout: 15000 });
+    await loc.click(opts);
+    await settle();
+}
+// Меню Odoo: [секція, пункт] за xmlid.
+async function menu(sectionXmlid, itemXmlid) {
+    if (sectionXmlid) {
+        await page.locator(`.o_menu_sections [data-menu-xmlid="${sectionXmlid}"]`).first().click();
+        await sleep(300);
+    }
+    await page.locator(`[data-menu-xmlid="${itemXmlid}"]`).first().click();
+    await settle();
+}
+async function openApp(xmlid) {
+    await page.locator('.o_navbar_apps_menu button, .o_menu_toggle').first().click();
+    await sleep(300);
+    await page.locator(`.o-dropdown--menu [data-menu-xmlid="${xmlid}"], .o_app[data-menu-xmlid="${xmlid}"]`).first().click();
+    await settle();
+}
+async function notebookTab(re) {
+    await clickText('.o_notebook .nav-link', re);
+}
+async function statButton(re) {
+    await clickText('.o-form-buttonbox .oe_stat_button', re);
+}
+async function search(text) {
+    const input = page.locator('.o_searchview_input');
+    await input.fill(text);
+    await input.press('Enter');
+    await settle();
+}
+

@@ -1,0 +1,18 @@
+{
+    'name': 'ToDo Mebli: parametric product and order BoM',
+    'summary': 'Parametric furniture, part rules and a bill of materials generated per sales order',
+    'version': '19.0.1.0.0',
+    'category': 'Manufacturing/Manufacturing',
+    'license': 'LGPL-3',
+    'author': 'ToDo',
+    'depends': ['mrp_account', 'stock'],
+    'data': [
+        'data/decimal_precision.xml',
+        'security/ir.model.access.csv',
+        'views/product_views.xml',
+        'views/part_rule_views.xml',
+        'views/mrp_bom_views.xml',
+    ],
+    'installable': True,
+    'application': False,
+}

@@ -1,0 +1,28 @@
+
+(async () => {
+    const browser = await chromium.launch();
+    const context = await browser.newContext({
+        viewport: { width: 1440, height: 900 },
+        deviceScaleFactor: 1,
+        recordVideo: { dir: VIDEO, size: { width: 1440, height: 900 } },
+    });
+    page = await context.newPage();
+    browser.on('disconnected', () => console.error('BROWSER DISCONNECTED'));
+    page.on('close', () => console.error('PAGE CLOSED at', new Date().toISOString()));
+    page.setDefaultTimeout(20000);
+    page.on('crash', () => console.error('PAGE CRASH'));
+    page.on('pageerror', (e) => console.error('PAGEERR', String(e).slice(0, 200)));
+    let failed = null;
+    try {
+        await steps();
+    } catch (e) {
+        failed = e;
+        await page.screenshot({ path: '/tmp/claude-0/fail.png' }).catch(() => {});
+        console.error('STACK', e.stack.split('\n').slice(0,6).join(' / ')); console.error('FAIL', e.message.split('\n').slice(0, 8).join('\n'));
+    }
+    const video = page.video();
+    await context.close();
+    if (video) fs.renameSync(await video.path(), path.join(VIDEO, 'scenario.webm'));
+    await browser.close();
+    process.exit(failed ? 1 : 0);
+})();

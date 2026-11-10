@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="wc_cut" model="mrp.workcenter">
+        <field name="name">Розкрій</field>
+        <field name="code">CUT</field>
+        <field name="costs_hour">650</field>
+    </record>
+
+    <record id="wc_edge" model="mrp.workcenter">
+        <field name="name">Крайкування</field>
+        <field name="code">EDG</field>
+        <field name="costs_hour">550</field>
+    </record>
+
+    <record id="wc_drill" model="mrp.workcenter">
+        <field name="name">Присадка</field>
+        <field name="code">DRL</field>
+        <field name="costs_hour">500</field>
+    </record>
+
+    <record id="wc_asm" model="mrp.workcenter">
+        <field name="name">Складання</field>
+        <field name="code">ASM</field>
+        <field name="costs_hour">400</field>
+    </record>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="td_mebli_cutting_menu" name="Cutting" parent="mrp.menu_mrp_root" sequence="35"
+              groups="mrp.group_mrp_user,stock.group_stock_user"/>
+    <menuitem id="td_mebli_cutting_job_menu" name="Cutting Jobs" parent="td_mebli_cutting_menu"
+              action="td_mebli_cutting_job_action" sequence="10"/>
+    <menuitem id="td_mebli_cutting_sheet_menu" name="Cutting Sheets" parent="td_mebli_cutting_menu"
+              action="td_mebli_cutting_sheet_action" sequence="20"/>
+    <menuitem id="td_mebli_offcut_menu" name="Business Offcuts" parent="stock.menu_stock_inventory_control"
+              action="stock_lot_td_offcut_action" sequence="40" groups="stock.group_stock_user"/>
+</odoo>

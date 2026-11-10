@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_lot_form_td_mebli" model="ir.ui.view">
+        <field name="name">stock.lot.form.td.mebli</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="td_length_mm"/>
+                <field name="td_width_mm"/>
+                <field name="td_area_m2"/>
+                <field name="td_is_offcut"/>
+                <field name="td_cutting_job_id" invisible="not td_cutting_job_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_list" model="ir.ui.view">
+        <field name="name">stock.lot.td.offcut.list</field>
+        <field name="model">stock.lot</field>
+        <field name="arch" type="xml">
+            <list create="0">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="td_length_mm"/>
+                <field name="td_width_mm"/>
+                <field name="td_area_m2"/>
+                <field name="product_qty" sum="Total"/>
+                <field name="td_cutting_job_id"/>
+                <field name="create_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_search" model="ir.ui.view">
+        <field name="name">stock.lot.td.offcut.search</field>
+        <field name="model">stock.lot</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="product_id"/>
+                <filter name="in_stock" string="In stock" domain="[('product_qty', '>', 0)]"/>
+                <group>
+                    <filter name="group_product" string="Decor" context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_action" model="ir.actions.act_window">
+        <field name="name">Business Offcuts</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('td_is_offcut', '=', True)]</field>
+        <field name="context">{'search_default_in_stock': 1, 'search_default_group_product': 1}</field>
+        <field name="search_view_id" ref="stock_lot_td_offcut_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('stock_lot_td_offcut_list')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+    </record>
+</odoo>

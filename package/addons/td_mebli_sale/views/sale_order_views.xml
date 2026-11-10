@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_td_mebli" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="before">
+                <field name="td_is_parametric" column_invisible="True"/>
+                <field name="td_bom_id" column_invisible="True"/>
+                <field name="td_width" optional="show" readonly="not td_is_parametric"/>
+                <field name="td_height" optional="show" readonly="not td_is_parametric"/>
+                <field name="td_depth" optional="show" readonly="not td_is_parametric"/>
+                <field name="td_size_factor" optional="show" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
+                <button name="action_td_generate_bom" type="object" icon="fa-cogs" title="Build specification"
+                        invisible="not td_is_parametric or state not in ('draft', 'sent')"/>
+                <button name="action_td_open_bom" type="object" icon="fa-list-alt" title="Specification"
+                        invisible="not td_bom_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

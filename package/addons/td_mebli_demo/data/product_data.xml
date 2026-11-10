@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="prod_wardrobe" model="product.template">
+        <field name="name">Шафа-купе 2-дверна</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="list_price">28000</field>
+        <field name="sale_ok">True</field>
+        <field name="td_is_parametric">True</field>
+        <field name="td_width_nominal">1600</field>
+        <field name="td_height_nominal">2400</field>
+        <field name="td_depth_nominal">600</field>
+        <field name="td_width_min">800</field>
+        <field name="td_width_max">3000</field>
+        <field name="td_height_min">2000</field>
+        <field name="td_height_max">2700</field>
+        <field name="td_depth_min">450</field>
+        <field name="td_depth_max">700</field>
+        <field name="route_ids" eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture'), ref('stock.route_warehouse0_mto')])]"/>
+        <field name="attribute_line_ids" eval="[(0, 0, {'attribute_id': ref('attr_body'), 'value_ids': [(6, 0, [ref('val_body_sonoma'), ref('val_body_white'), ref('val_body_anthr')])]}), (0, 0, {'attribute_id': ref('attr_facade'), 'value_ids': [(6, 0, [ref('val_facade_mdf'), ref('val_facade_anthr')])]}), (0, 0, {'attribute_id': ref('attr_edge'), 'value_ids': [(6, 0, [ref('val_edge_04'), ref('val_edge_2')])]}), (0, 0, {'attribute_id': ref('attr_fit'), 'value_ids': [(6, 0, [ref('val_fit_std'), ref('val_fit_premium')])]}), (0, 0, {'attribute_id': ref('attr_w'), 'value_ids': [(6, 0, [ref('val_w_custom')])]}), (0, 0, {'attribute_id': ref('attr_h'), 'value_ids': [(6, 0, [ref('val_h_custom')])]}), (0, 0, {'attribute_id': ref('attr_d'), 'value_ids': [(6, 0, [ref('val_d_custom')])]})]"/>
+        <field name="td_part_rule_ids" eval="[(0, 0, {'sequence': 10, 'name': 'Бокова панель', 'qty': 2, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_h': 1, 'wid_d': 1}), (0, 0, {'sequence': 20, 'name': 'Дах', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -32, 'wid_d': 1}), (0, 0, {'sequence': 30, 'name': 'Дно', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -32, 'wid_d': 1}), (0, 0, {'sequence': 40, 'name': 'Перегородка', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_h': 1, 'len_const': -64, 'wid_d': 1, 'wid_const': -20}), (0, 0, {'sequence': 50, 'name': 'Полиця', 'qty': 4, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_w': 0.5, 'len_const': -18, 'wid_d': 1, 'wid_const': -20}), (0, 0, {'sequence': 60, 'name': 'Двері-купе', 'qty': 2, 'material_role': 'facade_board', 'edge_long_sides': 2, 'edge_short_sides': 2, 'len_h': 1, 'len_const': -60, 'wid_w': 0.5, 'wid_const': 20}), (0, 0, {'sequence': 70, 'name': 'Задня стінка ДВП', 'qty': 1, 'material_role': 'fixed', 'edge_long_sides': 0, 'edge_short_sides': 0, 'len_h': 1, 'len_const': -10, 'wid_w': 1, 'wid_const': -10, 'fixed_material_id': ref('board_hdf')})]"/>
+    </record>
+
+    <record id="bom_wardrobe" model="mrp.bom">
+        <field name="product_tmpl_id" ref="prod_wardrobe"/>
+        <field name="product_qty">1.0</field>
+        <field name="type">normal</field>
+        <field name="code">Шаблон</field>
+    </record>
+
+    <record id="bomline_wardrobe_slide" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_wardrobe"/>
+        <field name="product_id" ref="fit_slide"/>
+        <field name="product_qty">1.0</field>
+    </record>
+
+    <record id="bomline_wardrobe_legs" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_wardrobe"/>
+        <field name="product_id" ref="fit_legs"/>
+        <field name="product_qty">1.0</field>
+    </record>
+
+    <record id="op_wardrobe_cut" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_wardrobe"/>
+        <field name="name">Розкрій</field>
+        <field name="workcenter_id" ref="wc_cut"/>
+        <field name="sequence">10</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_part</field>
+        <field name="td_time_rate">1.5</field>
+    </record>
+
+    <record id="op_wardrobe_edge" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_wardrobe"/>
+        <field name="name">Крайкування</field>
+        <field name="workcenter_id" ref="wc_edge"/>
+        <field name="sequence">20</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_edge_m</field>
+        <field name="td_time_rate">0.6</field>
+    </record>
+
+    <record id="op_wardrobe_drill" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_wardrobe"/>
+        <field name="name">Присадка</field>
+        <field name="workcenter_id" ref="wc_drill"/>
+        <field name="sequence">30</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_part</field>
+        <field name="td_time_rate">1.0</field>
+    </record>
+
+    <record id="op_wardrobe_asm" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_wardrobe"/>
+        <field name="name">Складання</field>
+        <field name="workcenter_id" ref="wc_asm"/>
+        <field name="sequence">40</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">90</field>
+        <field name="td_time_basis">fixed</field>
+        <field name="td_time_rate">0</field>
+    </record>
+
+    <record id="prod_dresser" model="product.template">
+        <field name="name">Комод 4 шухляди</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="list_price">9500</field>
+        <field name="sale_ok">True</field>
+        <field name="td_is_parametric">True</field>
+        <field name="td_width_nominal">800</field>
+        <field name="td_height_nominal">850</field>
+        <field name="td_depth_nominal">450</field>
+        <field name="td_width_min">400</field>
+        <field name="td_width_max">1200</field>
+        <field name="td_height_min">600</field>
+        <field name="td_height_max">1000</field>
+        <field name="td_depth_min">350</field>
+        <field name="td_depth_max">550</field>
+        <field name="route_ids" eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture'), ref('stock.route_warehouse0_mto')])]"/>
+        <field name="attribute_line_ids" eval="[(0, 0, {'attribute_id': ref('attr_body'), 'value_ids': [(6, 0, [ref('val_body_sonoma'), ref('val_body_white'), ref('val_body_anthr')])]}), (0, 0, {'attribute_id': ref('attr_facade'), 'value_ids': [(6, 0, [ref('val_facade_mdf'), ref('val_facade_anthr')])]}), (0, 0, {'attribute_id': ref('attr_edge'), 'value_ids': [(6, 0, [ref('val_edge_04'), ref('val_edge_2')])]}), (0, 0, {'attribute_id': ref('attr_fit'), 'value_ids': [(6, 0, [ref('val_fit_std'), ref('val_fit_premium')])]}), (0, 0, {'attribute_id': ref('attr_w'), 'value_ids': [(6, 0, [ref('val_w_custom')])]}), (0, 0, {'attribute_id': ref('attr_h'), 'value_ids': [(6, 0, [ref('val_h_custom')])]}), (0, 0, {'attribute_id': ref('attr_d'), 'value_ids': [(6, 0, [ref('val_d_custom')])]})]"/>
+        <field name="td_part_rule_ids" eval="[(0, 0, {'sequence': 10, 'name': 'Бокова панель', 'qty': 2, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_h': 1, 'wid_d': 1}), (0, 0, {'sequence': 20, 'name': 'Верх', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_w': 1, 'wid_d': 1}), (0, 0, {'sequence': 30, 'name': 'Дно', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 0, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -36, 'wid_d': 1, 'wid_const': -20}), (0, 0, {'sequence': 40, 'name': 'Фасад шухляди', 'qty': 4, 'material_role': 'facade_board', 'edge_long_sides': 2, 'edge_short_sides': 2, 'len_w': 1, 'len_const': -4, 'wid_h': 0.25, 'wid_const': -4}), (0, 0, {'sequence': 50, 'name': 'Бокова шухляди', 'qty': 8, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_d': 1, 'len_const': -60, 'wid_const': 90}), (0, 0, {'sequence': 60, 'name': 'Задня стінка ДВП', 'qty': 1, 'material_role': 'fixed', 'edge_long_sides': 0, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -10, 'wid_h': 1, 'wid_const': -10, 'fixed_material_id': ref('board_hdf')})]"/>
+    </record>
+
+    <record id="bom_dresser" model="mrp.bom">
+        <field name="product_tmpl_id" ref="prod_dresser"/>
+        <field name="product_qty">1.0</field>
+        <field name="type">normal</field>
+        <field name="code">Шаблон</field>
+    </record>
+
+    <record id="bomline_dresser_guide" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_dresser"/>
+        <field name="product_id" ref="fit_guide"/>
+        <field name="product_qty">1.0</field>
+    </record>
+
+    <record id="bomline_dresser_legs" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_dresser"/>
+        <field name="product_id" ref="fit_legs"/>
+        <field name="product_qty">1.0</field>
+    </record>
+
+    <record id="op_dresser_cut" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_dresser"/>
+        <field name="name">Розкрій</field>
+        <field name="workcenter_id" ref="wc_cut"/>
+        <field name="sequence">10</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_part</field>
+        <field name="td_time_rate">1.5</field>
+    </record>
+
+    <record id="op_dresser_edge" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_dresser"/>
+        <field name="name">Крайкування</field>
+        <field name="workcenter_id" ref="wc_edge"/>
+        <field name="sequence">20</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_edge_m</field>
+        <field name="td_time_rate">0.6</field>
+    </record>
+
+    <record id="op_dresser_drill" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_dresser"/>
+        <field name="name">Присадка</field>
+        <field name="workcenter_id" ref="wc_drill"/>
+        <field name="sequence">30</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_part</field>
+        <field name="td_time_rate">1.0</field>
+    </record>
+
+    <record id="op_dresser_asm" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_dresser"/>
+        <field name="name">Складання</field>
+        <field name="workcenter_id" ref="wc_asm"/>
+        <field name="sequence">40</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">60</field>
+        <field name="td_time_basis">fixed</field>
+        <field name="td_time_rate">0</field>
+    </record>
+
+    <record id="prod_kitchen" model="product.template">
+        <field name="name">Кухонний модуль нижній 600</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="list_price">5200</field>
+        <field name="sale_ok">True</field>
+        <field name="td_is_parametric">True</field>
+        <field name="td_width_nominal">600</field>
+        <field name="td_height_nominal">720</field>
+        <field name="td_depth_nominal">560</field>
+        <field name="td_width_min">300</field>
+        <field name="td_width_max">1000</field>
+        <field name="td_height_min">700</field>
+        <field name="td_height_max">900</field>
+        <field name="td_depth_min">500</field>
+        <field name="td_depth_max">600</field>
+        <field name="route_ids" eval="[(6, 0, [ref('mrp.route_warehouse0_manufacture'), ref('stock.route_warehouse0_mto')])]"/>
+        <field name="attribute_line_ids" eval="[(0, 0, {'attribute_id': ref('attr_body'), 'value_ids': [(6, 0, [ref('val_body_sonoma'), ref('val_body_white'), ref('val_body_anthr')])]}), (0, 0, {'attribute_id': ref('attr_facade'), 'value_ids': [(6, 0, [ref('val_facade_mdf'), ref('val_facade_anthr')])]}), (0, 0, {'attribute_id': ref('attr_edge'), 'value_ids': [(6, 0, [ref('val_edge_04'), ref('val_edge_2')])]}), (0, 0, {'attribute_id': ref('attr_fit'), 'value_ids': [(6, 0, [ref('val_fit_std'), ref('val_fit_premium')])]}), (0, 0, {'attribute_id': ref('attr_w'), 'value_ids': [(6, 0, [ref('val_w_custom')])]}), (0, 0, {'attribute_id': ref('attr_h'), 'value_ids': [(6, 0, [ref('val_h_custom')])]}), (0, 0, {'attribute_id': ref('attr_d'), 'value_ids': [(6, 0, [ref('val_d_custom')])]})]"/>
+        <field name="td_part_rule_ids" eval="[(0, 0, {'sequence': 10, 'name': 'Бокова панель', 'qty': 2, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_h': 1, 'wid_d': 1}), (0, 0, {'sequence': 20, 'name': 'Дно', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -36, 'wid_d': 1, 'wid_const': -20}), (0, 0, {'sequence': 30, 'name': 'Полиця', 'qty': 1, 'material_role': 'body_board', 'edge_long_sides': 1, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -36, 'wid_d': 1, 'wid_const': -40}), (0, 0, {'sequence': 40, 'name': 'Фасад', 'qty': 1, 'material_role': 'facade_board', 'edge_long_sides': 2, 'edge_short_sides': 2, 'len_h': 1, 'len_const': -4, 'wid_w': 1, 'wid_const': -4}), (0, 0, {'sequence': 50, 'name': 'Задня стінка ДВП', 'qty': 1, 'material_role': 'fixed', 'edge_long_sides': 0, 'edge_short_sides': 0, 'len_w': 1, 'len_const': -10, 'wid_h': 1, 'wid_const': -10, 'fixed_material_id': ref('board_hdf')})]"/>
+    </record>
+
+    <record id="bom_kitchen" model="mrp.bom">
+        <field name="product_tmpl_id" ref="prod_kitchen"/>
+        <field name="product_qty">1.0</field>
+        <field name="type">normal</field>
+        <field name="code">Шаблон</field>
+    </record>
+
+    <record id="bomline_kitchen_legs" model="mrp.bom.line">
+        <field name="bom_id" ref="bom_kitchen"/>
+        <field name="product_id" ref="fit_legs"/>
+        <field name="product_qty">1.0</field>
+    </record>
+
+    <record id="op_kitchen_cut" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_kitchen"/>
+        <field name="name">Розкрій</field>
+        <field name="workcenter_id" ref="wc_cut"/>
+        <field name="sequence">10</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_part</field>
+        <field name="td_time_rate">1.5</field>
+    </record>
+
+    <record id="op_kitchen_edge" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_kitchen"/>
+        <field name="name">Крайкування</field>
+        <field name="workcenter_id" ref="wc_edge"/>
+        <field name="sequence">20</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_edge_m</field>
+        <field name="td_time_rate">0.6</field>
+    </record>
+
+    <record id="op_kitchen_drill" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_kitchen"/>
+        <field name="name">Присадка</field>
+        <field name="workcenter_id" ref="wc_drill"/>
+        <field name="sequence">30</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">30</field>
+        <field name="td_time_basis">per_part</field>
+        <field name="td_time_rate">1.0</field>
+    </record>
+
+    <record id="op_kitchen_asm" model="mrp.routing.workcenter">
+        <field name="bom_id" ref="bom_kitchen"/>
+        <field name="name">Складання</field>
+        <field name="workcenter_id" ref="wc_asm"/>
+        <field name="sequence">40</field>
+        <field name="time_mode">manual</field>
+        <field name="time_cycle_manual">45</field>
+        <field name="td_time_basis">fixed</field>
+        <field name="td_time_rate">0</field>
+    </record>
+</odoo>

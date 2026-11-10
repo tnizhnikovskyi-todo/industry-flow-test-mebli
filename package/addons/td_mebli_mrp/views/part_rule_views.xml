@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_part_rule_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.part.rule.list</field>
+        <field name="model">td.mebli.part.rule</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_tmpl_id"/>
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="qty"/>
+                <field name="material_role"/>
+                <field name="len_w"/>
+                <field name="len_h"/>
+                <field name="len_d"/>
+                <field name="len_const"/>
+                <field name="wid_w"/>
+                <field name="wid_h"/>
+                <field name="wid_d"/>
+                <field name="wid_const"/>
+                <field name="edge_long_sides"/>
+                <field name="edge_short_sides"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_part_rule_view_search" model="ir.ui.view">
+        <field name="name">td.mebli.part.rule.search</field>
+        <field name="model">td.mebli.part.rule</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="product_tmpl_id"/>
+                <group>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_tmpl_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="td_mebli_part_rule_action" model="ir.actions.act_window">
+        <field name="name">Part Rules</field>
+        <field name="res_model">td.mebli.part.rule</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_group_product': 1}</field>
+    </record>
+
+    <menuitem id="td_mebli_part_rule_menu" name="Part Rules" parent="mrp.menu_mrp_configuration"
+              action="td_mebli_part_rule_action" sequence="90" groups="mrp.group_mrp_manager"/>
+</odoo>
