@@ -240,10 +240,10 @@ class TdMebliCuttingJob(models.Model):
                 'length_mm': sheet['length'], 'width_mm': sheet['width'],
                 'placement_ids': [(0, 0, {
                     'part_id': p['part_id'], 'production_id': p['production_id'], 'index': p['index'],
-                    'x_mm': p['x'], 'y_mm': p['y'], 'length_mm': p['length'], 'width_mm': p['width'],
+                    'pos_x_mm': p['x'], 'pos_y_mm': p['y'], 'length_mm': p['length'], 'width_mm': p['width'],
                     'rotated': p['rotated']}) for p in sheet['placements']],
                 'offcut_ids': [(0, 0, {
-                    'x_mm': o['x'], 'y_mm': o['y'], 'length_mm': o['length'], 'width_mm': o['width']})
+                    'pos_x_mm': o['x'], 'pos_y_mm': o['y'], 'length_mm': o['length'], 'width_mm': o['width']})
                     for o in sheet['offcuts']],
             })
         self.write({'result_source': payload['source'], 'state': 'result'})
@@ -345,9 +345,9 @@ class TdMebliCuttingSheet(models.Model):
         self.ensure_one()
         productions = self.job_id.production_ids.ids
         placements = [{
-            'x': p.x_mm, 'y': p.y_mm, 'length': p.length_mm, 'width': p.width_mm, 'production_id': p.production_id.id,
+            'x': p.pos_x_mm, 'y': p.pos_y_mm, 'length': p.length_mm, 'width': p.width_mm, 'production_id': p.production_id.id,
             'label': p.part_id.name or ''} for p in self.placement_ids]
-        offcuts = [{'x': o.x_mm, 'y': o.y_mm, 'length': o.length_mm, 'width': o.width_mm} for o in self.offcut_ids]
+        offcuts = [{'x': o.pos_x_mm, 'y': o.pos_y_mm, 'length': o.length_mm, 'width': o.width_mm} for o in self.offcut_ids]
         return sheet_map.render_svg(self.length_mm, self.width_mm, placements, offcuts, productions,
                                     self.env._("offcut"))
 
@@ -400,14 +400,14 @@ class TdMebliCuttingSheet(models.Model):
 class TdMebliCuttingPlacement(models.Model):
     _name = 'td.mebli.cutting.placement'
     _description = 'Part Placement on a Sheet'
-    _order = 'sheet_id, y_mm, x_mm'
+    _order = 'sheet_id, pos_y_mm, pos_x_mm'
 
     sheet_id = fields.Many2one('td.mebli.cutting.sheet', required=True, ondelete='cascade', index=True)
     part_id = fields.Many2one('td.mebli.part', string='Part', required=True)
     production_id = fields.Many2one('mrp.production', string='Manufacturing Order')
     index = fields.Integer(string='Piece No.')
-    x_mm = fields.Integer(string='X, mm')
-    y_mm = fields.Integer(string='Y, mm')
+    pos_x_mm = fields.Integer(string='X, mm')
+    pos_y_mm = fields.Integer(string='Y, mm')
     length_mm = fields.Integer(string='Length, mm')
     width_mm = fields.Integer(string='Width, mm')
     rotated = fields.Boolean(string='Rotated by 90°')
@@ -425,8 +425,8 @@ class TdMebliCuttingOffcut(models.Model):
     _order = 'sheet_id, id'
 
     sheet_id = fields.Many2one('td.mebli.cutting.sheet', required=True, ondelete='cascade', index=True)
-    x_mm = fields.Integer(string='X, mm')
-    y_mm = fields.Integer(string='Y, mm')
+    pos_x_mm = fields.Integer(string='X, mm')
+    pos_y_mm = fields.Integer(string='Y, mm')
     length_mm = fields.Integer(string='Length, mm')
     width_mm = fields.Integer(string='Width, mm')
     area_m2 = fields.Float(compute='_compute_area_m2', store=True, digits=(16, 4))

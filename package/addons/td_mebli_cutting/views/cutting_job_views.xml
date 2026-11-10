@@ -160,8 +160,8 @@
                                     <field name="part_id"/>
                                     <field name="production_id"/>
                                     <field name="index"/>
-                                    <field name="x_mm"/>
-                                    <field name="y_mm"/>
+                                    <field name="pos_x_mm"/>
+                                    <field name="pos_y_mm"/>
                                     <field name="length_mm"/>
                                     <field name="width_mm"/>
                                     <field name="rotated"/>
@@ -171,8 +171,8 @@
                         <page string="Offcuts" name="offcuts">
                             <field name="offcut_ids">
                                 <list>
-                                    <field name="x_mm"/>
-                                    <field name="y_mm"/>
+                                    <field name="pos_x_mm"/>
+                                    <field name="pos_y_mm"/>
                                     <field name="length_mm"/>
                                     <field name="width_mm"/>
                                     <field name="area_m2" sum="Total"/>
