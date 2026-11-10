@@ -4,6 +4,7 @@
 # Використання: run_all.sh [port]   (потрібні: build_db.sh уже виконано, serve.sh mebli_demo <port> запущено)
 set -uo pipefail
 cd "$(dirname "$0")"
+rm -f ../video/rec/cookies.json
 PORT="${1:-19071}"; export BASE="http://127.0.0.1:$PORT"
 # прохід 1 (змінює базу)
 node scenario.mjs "$PORT"
