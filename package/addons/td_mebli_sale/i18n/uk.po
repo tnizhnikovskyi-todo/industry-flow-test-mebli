@@ -369,3 +369,4 @@ msgstr "Додати розділ"
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Add note"
 msgstr "Додати примітку"
+

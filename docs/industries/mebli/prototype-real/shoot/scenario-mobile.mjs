@@ -102,7 +102,6 @@ await run('m3', async () => {
     await go(page, '/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action');
     const x = page.locator('.o_searchview .o_facet_remove');
     for (let i = (await x.count()) - 1; i >= 0; i--) { await x.nth(i).click().catch(() => {}); await sleep(400); } // без групування: картки одним списком
-    await page.locator('.o_searchview_input').fill('СН16'); await page.keyboard.press('Enter'); await settle(page, 800); // найходовіший декор: Дуб Сонома
     await shot(page, 'm3-obrizky');
     await tall(page, 'm3t-obrizky-tall', 1500);
     const reserved = await rpc(page, 'stock.lot', 'search_read', [[['td_is_offcut', '=', true], ['product_qty', '>', 0]]], { fields: ['name', 'td_reserved_m2'], limit: 200 });
@@ -112,7 +111,7 @@ await run('m3', async () => {
         await go(page, '/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action');
         const rm = page.locator('.o_searchview .o_facet_remove');
         for (let i = (await rm.count()) - 1; i >= 0; i--) { await rm.nth(i).click().catch(() => {}); await sleep(300); }
-        await page.locator('.o_searchview_input').fill(hit.name); await page.keyboard.press('Enter'); await settle(page, 800);
+        await page.locator('.o_kanban_record').filter({ hasText: hit.name }).first().scrollIntoViewIfNeeded().catch(() => {}); await settle(page, 800);
         await shot(page, 'm3b-rezerv');
     }
 });

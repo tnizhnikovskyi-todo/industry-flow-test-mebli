@@ -25,7 +25,8 @@
         <field name="name">sale.order.line.td.cost.kanban</field>
         <field name="model">sale.order.line</field>
         <field name="arch" type="xml">
-            <kanban create="0" edit="0" delete="0" default_order="id desc">
+            <!-- підписи карток — українською в самому поданні: Odoo не перекладає текст усередині kanban-шаблону card з po-файлу -->
+            <kanban create="0" edit="0" delete="0" default_order="margin_percent asc, id desc">
                 <templates>
                     <t t-name="card">
                         <div class="d-flex justify-content-between align-items-baseline">
@@ -35,8 +36,8 @@
                         </div>
                         <div class="text-muted"><field name="product_id"/> · <field name="td_width"/>×<field name="td_height"/>×<field name="td_depth"/></div>
                         <div class="d-flex justify-content-between mt-2">
-                            <span>Revenue: <field name="price_subtotal" widget="monetary"/></span>
-                            <span>Margin: <field name="margin" widget="monetary"/></span>
+                            <span><span>Виручка:</span> <field name="price_subtotal" widget="monetary"/></span>
+                            <span><span>Маржа:</span> <field name="margin" widget="monetary"/></span>
                         </div>
                         <field name="currency_id" invisible="1"/>
                     </t>

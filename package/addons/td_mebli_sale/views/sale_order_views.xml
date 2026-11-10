@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- мобільне подання рядків: кнопки розділу й примітки беруть переклад із цього подання (у стандартному вони лишались англійською) -->
+    <record id="view_order_form_td_mebli_mobile" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.mobile</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- кнопки «розділ» і «примітка» у мобільному поданні лишались англійською — для замовлення виробу вони не потрібні -->
+            <xpath expr="//field[@name='order_line']/kanban/control/create[@name='add_section_control']" position="replace"/>
+            <xpath expr="//field[@name='order_line']/kanban/control/create[@name='add_note_control']" position="replace"/>
+            <!-- на телефоні рядок замовлення — повноекранна форма: розміри виробу редагуються тут, ціна перераховується -->
+            <xpath expr="//field[@name='order_line']/form//div[@name='ordered_qty']" position="after">
+                <field name="td_is_parametric" invisible="1"/>
+                <field name="td_width" invisible="not td_is_parametric"/>
+                <field name="td_height" invisible="not td_is_parametric"/>
+                <field name="td_depth" invisible="not td_is_parametric"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="view_order_form_td_mebli" model="ir.ui.view">
         <field name="name">sale.order.form.td.mebli</field>
         <field name="model">sale.order</field>

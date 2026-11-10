@@ -154,7 +154,7 @@ async function shot(name, hold = 6500) {
     n += 1;
     // таблиця деталей широка: на цих кадрах ховаємо чат справа, щоб колонки не різались
     await page.evaluate((on) => { let el = document.getElementById('td-nochat'); if (!el) { el = document.createElement('style'); el.id = 'td-nochat'; document.head.appendChild(el); }
-        el.textContent = on ? '.o-mail-Form-chatter, .o-mail-ChatterContainer { display: none !important; }' : ''; }, ['specyfikaciya', 'zavdannya-rozkroyu'].includes(name));
+        el.textContent = on ? '.o-mail-Form-chatter, .o-mail-ChatterContainer { display: none !important; }' : ''; }, ['specyfikaciya', 'zavdannya-rozkroyu', 'cina-i-marzha'].includes(name));
     await page.mouse.move(880, 960); // курсор у підписі: жодних підказок і підсвічування в кадрі
     await settle(600);
     const file = path.join(SHOTS, `${String(n).padStart(2, '0')}-${name}.png`);
@@ -186,6 +186,12 @@ const notebookTab = (re) => clickText('.o_notebook .nav-link', re);
 async function removeFacet() {
     const x = page.locator('.o_searchview .o_facet_remove').first();
     if (await x.count()) { await x.click(); await settle(800); }
+}
+async function onlyConfirmed() {
+    await page.locator('.o_searchview_dropdown_toggler').click();
+    await clickText('.o_search_bar_menu .o_menu_item, .o-dropdown--menu .dropdown-item', /Підтверджено/);
+    await page.keyboard.press('Escape');
+    await settle(1000);
 }
 const want = (i) => !ONLY || ONLY.includes(i);
 // ---- факти для SHOW.md: беруться з тієї самої бази й тих самих кадрів, що й зйомка (shoot/facts.json -> make_show.mjs)
@@ -289,8 +295,10 @@ async function steps() {
         await shot('specyfikaciya');
     }
     if (want((s = next()))) { // 4 ціна і маржа
-        await page.locator('.breadcrumb-item:not(.active)').last().click();
-        await settle(1500);
+        const drafts = await rpc('sale.order', 'search_read', [[['state', '=', 'draft'], ['order_line.td_bom_id', '!=', false]]], { fields: ['id'], limit: 1, order: 'id desc' });
+        await goto('/odoo/action-sale.action_quotations/' + drafts[0].id); // пропозиція з параметричним виробом (ще не підтверджена)
+        const dl = await rpc('sale.order.line', 'search_read', [[['order_id', '=', drafts[0].id], ['td_bom_id', '!=', false]]], { fields: ['margin_percent'], limit: 1 });
+        facts.quote_margin = (dl[0].margin_percent * 100).toFixed(2).replace('.', ',');
         await page.locator('.o_optional_columns_dropdown_toggle').first().click();
         await sleep(400);
         const toggle = async (re, on) => {
@@ -300,13 +308,14 @@ async function steps() {
         await toggle(/^\s*Розмірний коефіцієнт/, false);
         await toggle(/^\s*Одиниці/, false);
         await toggle(/^\s*Маржа\s*$/, true);
+        await toggle(/^\s*Маржа \(%\)/, true);
         await page.keyboard.press('Escape');
         await settle(800);
         await page.locator('.o_form_sheet_bg').first().evaluate((el) => { el.scrollTop = el.scrollHeight; });
         await sleep(500);
         await caption('salon', 'PAIN-11', 'маржу замовлення з’ясовують, коли шафа вже виготовлена',
             'Ціна з розмірами й маржа — видно ще в пропозиції, до підтвердження.');
-        await check('маржа у пропозиції', '39,13');
+        await check('маржа у пропозиції', facts.quote_margin);
         await shot('cina-i-marzha');
     }
     if (want((s = next()))) { // 5 комерційна пропозиція з логотипом
@@ -339,6 +348,7 @@ async function steps() {
     if (want((s = next()))) { // 8 список МО
         await goto('/odoo/action-mrp.mrp_production_action');
         await removeFacet();
+        await onlyConfirmed();
         await compact(true);
         await caption('chief', 'PAIN-05', 'незрозуміло, які замовлення чекають на розкрій, а які вже в роботі',
             'Усі виробничі замовлення в одному списку: клієнт, термін, що в роботі, чого не вистачає. Червоним — те, що за планом не встигає в термін.');
@@ -522,7 +532,11 @@ async function steps() {
         await page.screenshot({ path: process.env.FAIL_SHOT || '/tmp/fail.png' }).catch(() => {});
         console.error('FAIL at step', step, e.message.split('\n').slice(0, 6).join('\n'));
     }
-    fs.writeFileSync(path.join(__dirname, 'facts.json'), JSON.stringify(facts, null, 1));
+    { // часткові запуски (ONLY) доповнюють facts.json, а не затирають
+        const fp = path.join(__dirname, 'facts.json'); let old = {}; try { old = JSON.parse(fs.readFileSync(fp, 'utf8')); } catch (e) { /* ще немає */ }
+        const names = new Set((facts.checks || []).map((c) => c.name));
+        fs.writeFileSync(fp, JSON.stringify({ ...old, ...facts, checks: [...(old.checks || []).filter((c) => !names.has(c.name)), ...(facts.checks || [])] }, null, 1));
+    }
     const video = page.video();
     await context.close();
     if (video) fs.renameSync(await video.path(), path.join(VIDEO, ONLY ? 'partial.webm' : 'scenario-raw.webm'));
