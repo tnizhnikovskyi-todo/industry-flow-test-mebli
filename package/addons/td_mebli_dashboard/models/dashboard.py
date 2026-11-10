@@ -34,7 +34,7 @@ class TdMebliDashboard(models.AbstractModel):
         change = (cur - prev) / abs(prev) * 100.0 if kind == 'pct' else cur - prev
         sign = '+' if change > 0 else ''
         unit = '%' if kind == 'pct' else _("p.p.")
-        tone = 'flat' if abs(change) < 0.05 else ('ok' if (change > 0) == good_when_up else 'bad')
+        tone = 'flat' if abs(change) < (0.5 if kind == 'pp' else 1.0) else ('ok' if (change > 0) == good_when_up else 'bad')
         arrow = '▲' if change > 0 else ('▼' if change < 0 else '■')
         return {'text': _("%s %s%s %s vs previous %s days", arrow, sign, self._num(change), unit, PERIOD_DAYS), 'tone': tone}
 
@@ -71,7 +71,8 @@ class TdMebliDashboard(models.AbstractModel):
         env = self.sudo().with_company(self.env.company).env
         company = env.company
         now = fields.Datetime.now()
-        since = now - timedelta(days=PERIOD_DAYS)
+        # whole days: the same boundary as the «last 30 days» filter of the margin report, so the figures agree
+        since = fields.Datetime.to_datetime(fields.Date.context_today(self) - timedelta(days=PERIOD_DAYS))
         before = since - timedelta(days=PERIOD_DAYS)
         cur = self._orders_stats(env, company, since, now + timedelta(days=1))
         prev = self._orders_stats(env, company, before, since)

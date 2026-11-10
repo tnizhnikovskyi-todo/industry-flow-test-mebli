@@ -473,6 +473,10 @@ async function steps() {
         await compact(true);
         await caption('fin', 'PAIN-10 · 11', 'ціни матеріалів змінюються, а маржу замовлень бачать лише після відвантаження',
             'Планова собівартість і маржа кожного замовлення — в одному звіті; замовлення з низькою маржею видно відразу.');
+        const since = new Date(Date.now() - 30 * 864e5).toISOString().slice(0, 10);
+        const [wg] = await rpc('sale.order.line', 'formatted_read_group', [[['td_is_parametric', '=', true], ['state', '=', 'sale'], ['order_id.date_order', '>=', since]], [], ['price_subtotal:sum', 'margin:sum']]);
+        facts.margin_weighted = (wg['margin:sum'] / wg['price_subtotal:sum'] * 100).toFixed(1);
+        facts.margin_total = wg['margin:sum']; facts.revenue_total = wg['price_subtotal:sum'];
         facts.margins = await page.evaluate(() => [...document.querySelectorAll('.o_list_renderer .o_data_row td')].map((t) => t.innerText.trim()).filter((t) => /^-?\d+[,.]\d+\s?%$/.test(t)).map((t) => parseFloat(t.replace(',', '.'))));
         await shot('marzha-zamovlen');
     }

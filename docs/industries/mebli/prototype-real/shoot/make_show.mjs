@@ -11,6 +11,7 @@ const facts = JSON.parse(fs.readFileSync(path.join(here, 'facts.json'), 'utf8'))
 const bad = (facts.checks || []).filter((c) => !c.ok);
 if (bad.length) { console.error('Числа не збігаються з кадрами:', JSON.stringify(bad)); process.exit(1); }
 
+if (!facts.dash.cards.margin.value.startsWith(String(facts.margin_weighted).replace('.', ','))) { console.error('Маржа звіту й дашборда розходяться:', facts.margin_weighted, facts.dash.cards.margin.value); process.exit(1); }
 const D = facts.dash.cards, nb = (s) => String(s).replace(/ /g, ' ').replace('₴', 'грн'); // ₴ немає в Open Sans: у документі — «грн»
 const lines = (c) => c.lines || [];
 const loads = facts.loads || [];
@@ -24,7 +25,7 @@ const vars = {
     d_launch: D.launch.value, d_launch_delta: D.launch.delta.text.replace(/^\S+\s/, ''), d_load: loadText, d_top: D.load.rows.filter((r) => r.over).map((r) => `«${r.name}» ${r.pct}%`).join(', ') || '—',
     d_waste: D.cutting.value, d_saving: nb(lines(D.cutting)[0].replace(/.*: /, '')), d_overrun: D.plan_fact.value, d_plan: nb(D.plan_fact.plan), d_fact: nb(D.plan_fact.fact),
     m_avg: (facts.margin_weighted ?? '').toString().replace('.', ','), cut_m2: facts.cut_m2, cut_saving: facts.cut_saving, cut_waste: facts.cut_waste,
-    plan_cost: nb(facts.plan_cost), real_cost: nb(facts.real_cost), avg_launch: facts.avg_launch, tests: process.env.TESTS || '36', load_text: loadText,
+    plan_cost: nb(facts.plan_cost), real_cost: nb(facts.real_cost), avg_launch: facts.avg_launch, tests: process.env.TESTS || '38', load_text: loadText,
 };
 let md = fs.readFileSync(path.join(ROOT, 'SHOW.tpl.md'), 'utf8').replace(/\{\{(\w+)\}\}/g, (_, k) => { if (vars[k] === undefined) throw new Error('немає факту ' + k); return vars[k]; });
 fs.writeFileSync(path.join(ROOT, 'SHOW.md'), md);

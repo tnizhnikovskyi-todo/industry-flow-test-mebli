@@ -147,14 +147,14 @@ def _bulk_orders(rnd):
         advance = rnd.choice([0, 30, 50]) if advance is None else advance
         rows.append((kind, qty, dims, body, facade, rnd.choice(['04', '2']), rnd.choice(['std', 'std', 'premium']),
                      stage, days, rnd.randrange(len(CUSTOMERS)), rnd.choice(['salon', 'salon2', 'salon3']), discount, advance))
-    for _ in range(40):
+    for _ in range(49):
         one('done', rnd.randint(31, 58), discount=rnd.choice([0, 0, 0, 5, 8, 10]))
     for _ in range(2):
-        one('done', rnd.randint(33, 55), discount=rnd.choice([30, 33]))
+        one('done', rnd.randint(33, 55), discount=-1)
     for _ in range(20):
         one('done', rnd.randint(9, 28), discount=rnd.choice([0, 0, 0, 5, 8, 10]))
     for _ in range(3):
-        one('done', rnd.randint(12, 27), discount=rnd.choice([31, 34]))
+        one('done', rnd.randint(12, 27), discount=-1)
     for _ in range(12):
         one('progress', rnd.randint(2, 8), discount=rnd.choice([0, 0, 5, 8, 10]), advance=rnd.choice([30, 50]))
     for _ in range(6):
@@ -407,6 +407,10 @@ def seed_showcase(env):
                      'note': 'Термін виготовлення — 14 робочих днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж за окремою домовленістю.'})
         order = order.with_user(people[seller])
         order.order_line.action_td_generate_bom()
+        if discount == -1:  # a deal sold almost at cost: the discount that brings the margin down to 6-13%
+            line = order.order_line[:1]
+            target = rnd.choice([0.06, 0.09, 0.13])
+            discount = max(0.0, round((1 - line.purchase_price / (line.price_unit * (1 - target))) * 100.0, 1))
         if discount:
             order.order_line.discount = discount
         if stage == 'sent':
@@ -454,7 +458,7 @@ def seed_showcase(env):
         jobs |= job
         for order in batch:
             production = order.mrp_production_ids
-            launch = rnd.randint(14, 44) if order.date_order >= now - timedelta(days=30) else rnd.randint(34, 70)
+            launch = rnd.randint(14, 44) if order.date_order >= now - timedelta(days=30) else rnd.randint(26, 60)
             levels = 4 if stage == 'done' else rnd.randint(1, 3)
             for position, workorder in enumerate(production.workorder_ids.sorted('id')):
                 if position < levels:
