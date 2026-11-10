@@ -16,7 +16,7 @@
                     <div t-if="c.revenue.target" class="td_target" t-out="c.revenue.target"/>
                     <div class="td_line" t-foreach="c.revenue.lines" t-as="l" t-key="l_index" t-out="l"/>
                 </div>
-                <div t-attf-class="td_card td_#{c.margin.tone}" t-on-click="() => this.open(c.margin.action)">
+                <div t-attf-class="td_card td_#{c.margin.tone}" t-on-click="() => this.openMargin(c.margin)">
                     <div class="td_label" t-out="c.margin.label"/>
                     <div class="td_value" t-out="c.margin.value"/>
                     <div t-if="c.margin.delta" t-attf-class="td_delta td_d_#{c.margin.delta.tone}" t-out="c.margin.delta.text"/>

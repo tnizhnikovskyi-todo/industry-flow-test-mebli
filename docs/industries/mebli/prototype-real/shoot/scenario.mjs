@@ -151,7 +151,7 @@ async function settle(ms = 700) {
 }
 async function goto(url) { await page.goto(BASE + url); await settle(1200); }
 async function shot(name, hold = 6500) {
-    n += 1;
+    n = step; // номер кадру = номер кроку сценарію (і при частковому запуску ONLY)
     // таблиця деталей широка: на цих кадрах ховаємо чат справа, щоб колонки не різались
     await page.evaluate((on) => { let el = document.getElementById('td-nochat'); if (!el) { el = document.createElement('style'); el.id = 'td-nochat'; document.head.appendChild(el); }
         el.textContent = on ? '.o-mail-Form-chatter, .o-mail-ChatterContainer { display: none !important; }' : ''; }, ['specyfikaciya', 'zavdannya-rozkroyu', 'cina-i-marzha'].includes(name));
@@ -329,6 +329,8 @@ async function steps() {
         await goto(`/odoo/action-sale.action_quotations/${orderId}`);
         await page.locator('button[name="action_confirm"]').first().click();
         await settle(2500);
+        await page.addStyleTag({ content: '.o-mail-Form-chatter, .o-mail-ChatterContainer { display: none !important; }' }); // чаттер звужує форму й ховає колонку «Ціна»
+        await settle(600);
         await caption('salon', 'PAIN-05', 'виробництво дізнається про замовлення по телефону й зі слів',
             'Підтвердили — виробниче замовлення створене само, його номер видно прямо в замовленні.');
         await shot('pidtverdzhennya');
@@ -466,7 +468,7 @@ async function steps() {
         await compact(true);
         const footRaw = await page.evaluate(() => [...document.querySelectorAll('.o_list_renderer tfoot td')].map((t) => t.innerText.trim()).find((t) => /^\d+,\d{2}$/.test(t)) || '');
         if (!footRaw) console.error('FACT MISMATCH avg launch: немає підсумку у списку');
-        facts.avg_launch = footRaw.replace(/,(\d)\d$/, ',$1');
+        facts.avg_launch = parseFloat(footRaw.replace(',', '.')).toFixed(1).replace('.', ','); // округлення, як на дашборді
         facts.avg_launch_raw = footRaw;
         await check('avg launch', facts.avg_launch_raw);
         await caption('chief', 'PAIN-05', 'скільки замовлення чекає, перш ніж потрапити у виробництво, ніхто не знає',

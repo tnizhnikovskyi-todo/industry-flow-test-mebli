@@ -18,7 +18,7 @@ const FONT = `@font-face{font-family:'Open Sans';font-weight:400;src:url(data:fo
 const LOGO = 'data:image/png;base64,' + b64('todo-logo.png');
 
 export const DESKTOP = { viewport: { width: 1600, height: 900 }, rec: { width: 1920, height: 1080 } };
-export const MOBILE = { viewport: { width: 390, height: 640 }, rec: { width: 780, height: 1280 } };
+export const MOBILE = { viewport: { width: 390, height: 690 }, rec: { width: 780, height: 1380 } };
 
 // ---------------------------------------------------------------- оверлей у сторінці
 const OVERLAY = (mobile) => `(() => { const boot = () => {
@@ -35,7 +35,7 @@ const OVERLAY = (mobile) => `(() => { const boot = () => {
   #ov-title.on{opacity:1;transform:none}
   #ov-title .k{font-size:\${M ? 12 : 16}px;letter-spacing:.07em;text-transform:uppercase;color:#FE5000;font-weight:700;margin-bottom:2px}
   #ov-title .t{font-size:\${M ? 20 : 30}px;font-weight:700;line-height:1.2} #ov-title .t em{font-style:normal;color:#FE5000}
-  #ov-badge{position:fixed;z-index:2147483645;right:\${M ? 8 : 28}px;bottom:\${M ? 'auto' : '28px'};top:\${M ? 'auto' : 'auto'};display:\${M ? 'none' : 'flex'};background:#fff;border-radius:12px;padding:8px 16px;box-shadow:0 2px 10px rgba(0,0,0,.3);pointer-events:none}
+  #ov-badge{position:fixed;z-index:2147483645;right:\${M ? 8 : 28}px;bottom:\${M ? 'auto' : '28px'};top:\${M ? 'auto' : 'auto'};display:none;background:#fff;border-radius:12px;padding:8px 16px;box-shadow:0 2px 10px rgba(0,0,0,.3);pointer-events:none}
   #ov-badge img{height:38px;display:block}
   #ov-pain{position:fixed;z-index:2147483644;left:0;right:0;top:0;bottom:0;background:rgba(16,24,32,.9);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;
     font-family:'Open Sans',sans-serif;padding:0 \${M ? 24 : 160}px;opacity:0;transition:opacity .4s;pointer-events:none}
@@ -120,7 +120,9 @@ export async function clip(name, { role, mobile = false, url = null, plain = fal
         cdp.on('Page.screencastFrame', (f) => { put(f.metadata.timestamp, f.data); cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }).catch(() => {}); });
         await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 92, maxWidth: dev.rec.width, maxHeight: dev.rec.height, everyNthFrame: 1 });
     }
-    const c = { page, mobile, ready: null, pos: [200, 200] };
+    const tStart = Date.now() / 1000;
+    const c = { page, mobile, ready: null, pos: [200, 200], events: [] };
+    c.t = () => Date.now() / 1000 - (frames[0] ?? tStart);
     c.mark = () => { if (c.ready === null) c.ready = Date.now() / 1000; };
     if (url) await page.goto(url.startsWith('file:') ? url : BASE + url);
     let err = null;
@@ -135,20 +137,23 @@ export async function clip(name, { role, mobile = false, url = null, plain = fal
     execFileSync('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', path.join(dir, 'list.txt'), '-vf', `fps=30,scale=${dev.rec.width}:${dev.rec.height}:flags=lanczos,format=yuv420p`, '-c:v', 'libx264', '-crf', '17', '-preset', 'veryfast', out]);
     fs.rmSync(dir, { recursive: true, force: true });
     const ss = Math.max(0, (c.ready ?? frames[0]) - frames[0]) + 0.15, dur = endT - (c.ready ?? frames[0]) - 0.3;
-    fs.writeFileSync(path.join(REC, `${name}.json`), JSON.stringify({ ss, dur, ok: !err }));
+    fs.writeFileSync(path.join(REC, `${name}.json`), JSON.stringify({ ss, dur, ok: !err, events: c.events }));
     console.log(err ? 'ПОМИЛКА' : 'ok', name, dur.toFixed(1), 'с,', frames.length, 'кадрів');
     return !err;
 }
 export async function settle(page, ms = 600) {
     await page.waitForLoadState('load').catch(() => {});
     await page.waitForFunction(() => !document.querySelector('.o_loading, .o_blockUI, .o_ui_blocked'), null, { timeout: 8000 }).catch(() => {});
+    // не знімаємо порожній екран: чекаємо на зміст подання (список, дошка, графік, форма, зведена, дашборд)
+    await page.waitForSelector('.o_list_renderer, .o_kanban_renderer, .o_graph_renderer canvas, .o_form_view, .o_pivot, .td_dash_grid, .o_content', { timeout: 8000 }).catch(() => {});
     await sleep(ms);
 }
 export async function goto(c, url, ms = 900) { await c.page.goto(BASE + url); await settle(c.page, ms); }
-export const title = (c, k, t) => c.page.evaluate(([k, t]) => window.__title && window.__title(k, t), [k, t]);
-export const titleOff = (c) => c.page.evaluate(() => window.__titleOff && window.__titleOff());
-export async function pain(c, k, t, ms = 2100) { // біль на весь екран поверх живого Odoo, потім плавно зникає
-    await c.page.evaluate(([k, t]) => window.__pain(k, t), [k, t]); await sleep(ms); await c.page.evaluate(() => window.__painOff()); await sleep(450);
+// Титри НЕ малюються в сторінці (їх зрізало б наближення й монтаж): записуємо момент і текст, а накладає їх montage.mjs (ffmpeg overlay)
+export const title = async (c, k, t, short) => { c.events.push({ type: 'title', t: c.t(), k, text: t, short: short || t }); };
+export const titleOff = async (c) => { c.events.push({ type: 'off', t: c.t() }); };
+export async function pain(c, k, t, ms = 2100) { // біль на весь екран поверх живого Odoo (накладає монтаж), потім зникає
+    const t0 = c.t(); await sleep(ms); c.events.push({ type: 'pain', t: t0, t1: c.t(), k, text: t }); await sleep(450);
 }
 // курсор плавно їде до точки (кадри відео бачать рух, а не стрибок)
 export async function glide(c, x, y, ms = 500) {
@@ -182,7 +187,10 @@ export async function hold(c, ms) {
         await sleep(110);
     }
 }
-export const zoom = (c, sel, s = 1.6, ms = 900) => c.page.evaluate(([a, b, d]) => window.__zoom(a, b, d), [sel, s, ms]);
+// на телефоні наближення зрізало б правий край (відсотки): замість нього — плавна прокрутка до елемента
+export const zoom = (c, sel, s = 1.6, ms = 900) => c.mobile
+    ? c.page.evaluate(([a, d]) => { const el = document.querySelector(a); const sc = el && (el.closest('.td_dash, .o_content, .o_action_manager') || document.scrollingElement); if (!el || !sc) return; const r = el.getBoundingClientRect(); const to = sc.scrollTop + r.top - 70; const a0 = sc.scrollTop, t0 = performance.now(); const tick = (n) => { const k = Math.min(1, (n - t0) / d); sc.scrollTop = a0 + (to - a0) * (k * k * (3 - 2 * k)); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, [sel, ms])
+    : c.page.evaluate(([a, b, d]) => window.__zoom(a, b, d), [sel, s, ms]);
 export const zoomOff = (c, ms = 700) => c.page.evaluate((m) => window.__zoomOff(m), ms);
 // прокрутка першого елемента, що справді прокручується (контейнер залежить від подання й ширини екрана); to: число px або 'end'
 export const scrollAny = (c, to, ms = 1500) => c.page.evaluate(([to, ms]) => new Promise((res) => {

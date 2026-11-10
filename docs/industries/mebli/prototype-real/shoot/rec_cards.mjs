@@ -35,7 +35,10 @@ const CARDS = {
         <div class="in" style="--d:2.6s;font-size:22px;color:#808080;margin-top:34px;max-width:1400px">Показ на вигаданих даних · Odoo 19 + модулі пакета «меблі» · розкрій — імітація програми розкрою</div></div>`],
     R_hook: [REEL, 3.4, `<div class="stage" style="padding:250px 56px">
         <div class="in" style="--d:.1s;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#FE5000;font-weight:700;margin-bottom:26px">Власнику меблевої фабрики</div>
-        <div class="in" style="--d:.5s;font-size:76px;font-weight:700;line-height:1.16">Скільки ви втрачаєте, коли <em>маржу</em> бачите вже <em>після відвантаження?</em></div></div>`],
+        <div class="in" style="--d:.5s;font-size:76px;font-weight:700;line-height:1.16">Скільки ви втрачаєте,</div>
+        <div class="in" style="--d:1.2s;font-size:76px;font-weight:700;line-height:1.16">коли <em>маржу</em> бачите</div>
+        <div class="in" style="--d:1.9s;font-size:76px;font-weight:700;line-height:1.16">вже <em>після відвантаження?</em></div>
+        <div class="in" style="--d:2.6s;font-size:34px;color:#BFBFBF;margin-top:30px">Покажемо, як це виглядає в Odoo ↓</div></div>`],
     R_outro: [REEL, 6.5, `<div class="stage" style="padding:250px 56px">${logo(120, 0.1)}
         <div class="in" style="--d:.5s;font-size:66px;font-weight:700;line-height:1.15">ToDo — впровадження Odoo для виробництв</div>
         <div class="in" style="--d:1.1s;margin-top:44px;background:#FE5000;color:#fff;font-weight:700;font-size:62px;padding:14px 54px;border-radius:999px">todo.ltd</div>

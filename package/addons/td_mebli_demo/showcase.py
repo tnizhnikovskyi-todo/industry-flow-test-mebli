@@ -46,14 +46,14 @@ USERS = [
 # name, company type, city, street: end customers of the factory salon (people and small businesses)
 CUSTOMERS = [
     ('Тарас Мельник', 'person', 'Київ', 'вул. Прикладна, 7'), ('Ірина Коваленко', 'person', 'Львів', 'просп. Тестовий, 21'),
-    ('Олег Шевчук', 'person', 'Одеса', 'вул. Умовна, 3'), ('Наталія Гончар', 'person', 'Дніпро', 'вул. Зразкова, 15'),
+    ('Олег Шевчук', 'person', 'Одеса', 'вул. Садова, 3'), ('Наталія Гончар', 'person', 'Дніпро', 'вул. Шевченка, 15'),
     ('Віктор Бойко', 'person', 'Харків', 'вул. Вигадана, 40'), ('Юлія Романюк', 'person', 'Полтава', 'вул. Центральна, 5'),
-    ('Андрій Кравець', 'person', 'Запоріжжя', 'просп. Умовний, 102'), ('Оксана Мороз', 'person', 'Чернівці', 'вул. Зразкова, 9'),
-    ('Дмитро Савченко', 'person', 'Житомир', 'вул. Тестова, 31'), ('Марина Поліщук', 'person', 'Вінниця', 'вул. Умовна, 64'),
+    ('Андрій Кравець', 'person', 'Запоріжжя', 'просп. Перемоги, 102'), ('Оксана Мороз', 'person', 'Чернівці', 'вул. Лесі Українки, 9'),
+    ('Дмитро Савченко', 'person', 'Житомир', 'вул. Франка, 31'), ('Марина Поліщук', 'person', 'Вінниця', 'вул. Соборна, 64'),
     ('Кав\'ярня «Зерно»', 'company', 'Київ', 'вул. Прикладна, 88'), ('Студія йоги «Баланс»', 'company', 'Київ', 'вул. Вигадана, 2'),
-    ('Будинок «Липки» (забудовник)', 'company', 'Київ', 'вул. Умовна, 150'), ('Готель «Затишок»', 'company', 'Львів', 'вул. Тестова, 12'),
+    ('Будинок «Липки» (забудовник)', 'company', 'Київ', 'вул. Незалежності, 150'), ('Готель «Затишок»', 'company', 'Львів', 'вул. Героїв Майдану, 12'),
     ('Офіс-центр «Вузол»', 'company', 'Дніпро', 'просп. Зразковий, 8'), ('Мережа клінік «Здоров\'я»', 'company', 'Одеса', 'вул. Вигадана, 77'),
-    ('ЖК «Сонячний квартал»', 'company', 'Харків', 'вул. Умовна, 3'), ('Хостел «Подорож»', 'company', 'Київ', 'вул. Прикладна, 19'),
+    ('ЖК «Сонячний квартал»', 'company', 'Харків', 'вул. Центральна, 3'), ('Хостел «Подорож»', 'company', 'Київ', 'вул. Прикладна, 19'),
 ]
 
 # product, qty, dims (W, H, D), body, facade, edge, fitting, stage, days ago, customer, salesman, discount %, prepay %
@@ -495,8 +495,18 @@ def seed_showcase(env):
     # work waiting for cutting: planned work orders, so that the work centers show their load
     waiting = orders['confirmed'].mrp_production_ids
     waiting.button_plan()
-    for production in waiting:
-        production.date_deadline = production.sudo().reference_ids.sale_ids[:1].date_order + timedelta(days=14)
+    # the queue of waiting orders is laid out over the next 2-3 weeks (the bottleneck is shown by the load chart, not by a
+    # plan stretched over months): each order starts a day or so after the previous one
+    for index, production in enumerate(waiting.sorted('id')):
+        cursor = _work(now + timedelta(days=1 + index * 1.2), rnd)
+        first = None
+        for workorder in production.workorder_ids.sorted('id'):
+            hours = min(max((workorder.duration_expected or 60.0) / 60.0, 2.0), 7.0)
+            workorder.write({'date_start': cursor, 'date_finished': cursor + timedelta(hours=hours)})
+            first = first or cursor
+            cursor = _work(cursor + timedelta(hours=hours), rnd)
+        if first:
+            production.write({'date_start': first, 'date_finished': production.workorder_ids.sorted('id')[-1].date_finished})
     # extra business offcuts of the main decors on the shelf (from earlier jobs): the next cutting uses them first
     from .hooks import _add_stock
     location = env['stock.warehouse'].search([('company_id', '=', env.company.id)], limit=1).lot_stock_id
@@ -515,10 +525,12 @@ def seed_showcase(env):
     # deadlines against the planned finish: most orders fit, two do not (one already late, one will be late)
     open_productions = env['mrp.production'].search([('state', 'in', ('confirmed', 'progress', 'to_close'))])
     for production in open_productions:
+        sale = production.sudo().reference_ids.sale_ids[:1]
+        base = sale.date_order or now
         finish = production.date_finished or now
-        production.date_deadline = finish + timedelta(days=rnd.randint(2, 6))
+        production.date_deadline = max(base + timedelta(days=rnd.randint(14, 26)), finish + timedelta(days=rnd.randint(1, 4)), now + timedelta(days=3))
     late.date_deadline = now - timedelta(days=2)
-    (waiting[:1]).date_deadline = (waiting[:1].date_finished or now) - timedelta(days=1)
+    waiting[:1].date_deadline = now + timedelta(days=2)  # the one that will not make it: the deadline is close, the plan is longer
     for production in env['mrp.production'].search([('state', '=', 'done')]):
         production.date_deadline = production.date_finished + timedelta(days=rnd.randint(1, 4))
     # who is responsible and what the shop floor wrote down

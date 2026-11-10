@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
@@ -10,7 +11,7 @@ class SaleOrder(models.Model):
     td_stage = fields.Selection(
         [('quote', 'Quotation'), ('sent', 'Sent to customer'), ('confirmed', 'Waiting for launch'),
          ('progress', 'In production'), ('done', 'Made')],
-        string='Order Stage', compute='_compute_td_stage', store=True, readonly=True,
+        string='Order Stage', compute='_compute_td_stage', inverse='_inverse_td_stage', store=True, readonly=False,
         group_expand='_read_group_td_stage')
     td_image = fields.Image(string='Product Image', compute='_compute_td_image', max_width=256, max_height=256)
 
@@ -34,6 +35,22 @@ class SaleOrder(models.Model):
                 order.td_stage = 'progress'
             else:
                 order.td_stage = 'confirmed'
+
+    def _inverse_td_stage(self):
+        """Dragging a card on the board: only «Waiting for launch» -> «In production» is allowed and it really starts the
+        work (the first work order of each manufacturing order); any other move is refused, the stage is derived from the work."""
+        for order in self:
+            if order.td_stage != 'progress':
+                raise UserError(self.env._("The stage follows the production: only moving a waiting order to «In production» is possible."))
+            productions = order.sudo().mrp_production_ids.filtered(lambda p: p.state == 'confirmed')
+            if not productions:
+                raise UserError(self.env._("This order has nothing to start: it is not waiting for launch."))
+            for production in productions:
+                if not production.workorder_ids:
+                    production.button_plan()
+                first = production.workorder_ids.filtered(lambda w: w.state in ('ready', 'waiting', 'pending'))[:1]
+                if first:
+                    first.button_start()
 
     def _compute_td_image(self):
         for order in self:

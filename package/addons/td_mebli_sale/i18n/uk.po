@@ -370,3 +370,15 @@ msgstr "Додати розділ"
 msgid "Add note"
 msgstr "Додати примітку"
 
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid "The stage follows the production: only moving a waiting order to «In production» is possible."
+msgstr "Етап залежить від виробництва: можна лише перенести замовлення, що чекає, у «У виробництві»."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid "This order has nothing to start: it is not waiting for launch."
+msgstr "У цього замовлення немає що запускати: воно не чекає запуску."

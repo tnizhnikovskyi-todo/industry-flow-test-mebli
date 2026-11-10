@@ -121,6 +121,32 @@ class SaleOrderLine(models.Model):
             line.td_bom_id = bom
             old.unlink()
 
+    # the specification (and so the planned cost and the margin) is built as soon as the line is saved in a quotation
+    _TD_BOM_TRIGGERS = {'product_id', 'td_width', 'td_height', 'td_depth', 'product_uom_qty',
+                        'product_no_variant_attribute_value_ids', 'product_custom_attribute_value_ids'}
+
+    def _td_refresh_draft_bom(self):
+        # a quotation is saved even when the specification cannot be built yet (e.g. no edge banding for the board):
+        # the error then appears on confirmation, as before
+        for line in self.filtered(lambda l: l.td_is_parametric and l.state in ('draft', 'sent') and l.order_id):
+            try:
+                with self.env.cr.savepoint():
+                    line._td_generate_bom()
+            except UserError:
+                pass
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        lines._td_refresh_draft_bom()
+        return lines
+
+    def write(self, vals):
+        result = super().write(vals)
+        if self._TD_BOM_TRIGGERS & set(vals):
+            self._td_refresh_draft_bom()
+        return result
+
     def action_td_generate_bom(self):
         if any(line.state not in ('draft', 'sent') for line in self):
             raise UserError(self.env._("The specification can be rebuilt only in a quotation."))

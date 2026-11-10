@@ -119,7 +119,7 @@
         <field name="name">sale.order.kanban.td.mebli</field>
         <field name="model">sale.order</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="td_stage" group_create="false" quick_create="false" records_draggable="false"
+            <kanban default_group_by="td_stage" group_create="false" quick_create="false"
                     class="o_kanban_small_column">
                 <field name="currency_id"/>
                 <field name="td_image"/>
@@ -181,7 +181,8 @@
         <field name="name">Time from Order to Launch</field>
         <field name="res_model">sale.order</field>
         <field name="view_mode">list,form</field>
-        <field name="domain">[('td_stage', 'in', ('progress', 'done'))]</field>
+        <field name="domain">[('td_stage', 'in', ('progress', 'done')),
+                              ('date_order', '&gt;=', (context_today() - relativedelta(days=30)).strftime('%Y-%m-%d'))]</field>
         <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('view_order_launch_list_td_mebli')}),
                                       (0, 0, {'view_mode': 'form'})]"/>
     </record>

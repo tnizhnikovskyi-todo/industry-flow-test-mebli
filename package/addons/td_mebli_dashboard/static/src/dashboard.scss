@@ -7,7 +7,7 @@
     .td_card { background: #fff; border-radius: 10px; padding: 14px 18px; cursor: pointer; border-left: 6px solid #d1d5db;
         box-shadow: 0 1px 3px rgba(0,0,0,.1); min-height: 150px; display: flex; flex-direction: column; justify-content: center;
         &:hover { box-shadow: 0 3px 10px rgba(0,0,0,.18); }
-        &.td_ok { border-left-color: #16a34a; }
+        &.td_ok { border-left-color: #16a34a; .td_value { color: #16a34a; } }
         &.td_warn { border-left-color: #ea7a00; .td_value { color: #ea7a00; } }
         &.td_bad { border-left-color: #dc2626; .td_value { color: #dc2626; } }
         .td_delta { font-size: 1rem; font-weight: 700; &.td_d_ok { color: #16a34a; } &.td_d_bad { color: #dc2626; } &.td_d_flat { color: #6b7280; } }

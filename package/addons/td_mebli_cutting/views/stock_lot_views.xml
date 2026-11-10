@@ -37,18 +37,19 @@
         <field name="arch" type="xml">
             <kanban create="0" default_order="create_date desc, id desc">
                 <templates>
+                    <!-- підписи карток — українською в самому поданні: Odoo не перекладає текст усередині kanban-шаблону card з po-файлу -->
                     <t t-name="card">
                         <div class="d-flex justify-content-between align-items-baseline">
                             <strong class="fs-4"><field name="name"/></strong>
-                            <span class="fs-4 fw-bold"><field name="product_qty"/> m²</span>
+                            <span class="fs-4 fw-bold"><field name="product_qty"/> м²</span>
                         </div>
-                        <div class="fs-5 my-1"><field name="td_length_mm"/> × <field name="td_width_mm"/> mm</div>
+                        <div class="fs-5 my-1"><field name="td_length_mm"/> × <field name="td_width_mm"/> мм</div>
                         <div class="text-muted"><field name="product_id" context="{'display_default_code': False}"/></div>
                         <div class="mt-1" invisible="not td_reserved_m2">
-                            <span class="badge text-bg-warning">Reserved: <field name="td_reserved_m2"/> m²</span>
+                            <span class="badge text-bg-warning">Резерв: <field name="td_reserved_m2"/> м²</span>
                             <field name="td_reserved_for" class="ms-1"/>
                         </div>
-                        <div class="mt-1" invisible="td_reserved_m2"><span class="badge text-bg-success">Free</span>
+                        <div class="mt-1" invisible="td_reserved_m2"><span class="badge text-bg-success">Вільний</span>
                             <span class="text-muted ms-1"><field name="td_cutting_job_id"/></span></div>
                     </t>
                 </templates>

@@ -111,7 +111,7 @@ await run('m3', async () => {
         await go(page, '/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action');
         const rm = page.locator('.o_searchview .o_facet_remove');
         for (let i = (await rm.count()) - 1; i >= 0; i--) { await rm.nth(i).click().catch(() => {}); await sleep(300); }
-        await page.locator('.o_kanban_record').filter({ hasText: hit.name }).first().scrollIntoViewIfNeeded().catch(() => {}); await settle(page, 800);
+        await page.locator('.o_kanban_record').filter({ hasText: /Резерв:/ }).first().click(); await settle(page, 1500); // картка резервованого обрізка: хто й скільки зарезервував
         await shot(page, 'm3b-rezerv');
     }
 });

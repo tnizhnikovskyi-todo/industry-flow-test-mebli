@@ -134,6 +134,7 @@ class TdMebliDashboard(models.AbstractModel):
                     'alert_rows': [f"{o.name} · {self._num(o.margin / o.amount_untaxed * 100)} %" for o in low[:3]],
                     'lines': [_("Margin: %s of %s", self._money(cur['margin']), self._money(cur['revenue']))],
                     'action': 'td_mebli_sale.sale_order_line_td_cost_action',
+                    'low_ids': low.ids,
                 },
                 'launch': {
                     'label': _("Order to launch"), 'value': _("%s h", self._num(cur['launch_avg'])),
@@ -162,7 +163,7 @@ class TdMebliDashboard(models.AbstractModel):
                 },
                 'plan_fact': {
                     'label': _("Cost: plan vs actual"), 'value': f"{'+' if deviation > 0 else ''}{self._num(deviation)} %",
-                    'tone': 'ok' if deviation <= 0 else ('warn' if deviation <= TARGET_OVERRUN_PCT else 'bad'),
+                    'tone': 'ok' if deviation <= TARGET_OVERRUN_PCT else ('warn' if deviation <= 2 * TARGET_OVERRUN_PCT else 'bad'),
                     'target': _("Target: overrun up to %s%%", TARGET_OVERRUN_PCT),
                     'plan': self._money(plan), 'fact': self._money(fact),
                     'plan_label': _("Plan"), 'fact_label': _("Actual"),
