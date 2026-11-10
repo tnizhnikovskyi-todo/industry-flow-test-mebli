@@ -116,7 +116,7 @@ async function steps() {
     // 09 Технолог: МО дня -> завдання розкрою
     await menu('mrp.menu_mrp_manufacturing', 'mrp.menu_mrp_production_action');
     await page.locator('.o_list_renderer thead .o_list_record_selector input').click();
-    await page.locator('.o_cp_action_menus button, .o_cp_action_menus .dropdown-toggle').first().click();
+    await page.locator('.o_cp_action_menus button').filter({ hasText: /Дії/ }).click();
     await clickText('.o-dropdown--menu .o_menu_item, .o-dropdown--menu .dropdown-item', /Створити завдання розкрою/);
     await settle(2000);
     await shot('cutting-job-parts');
