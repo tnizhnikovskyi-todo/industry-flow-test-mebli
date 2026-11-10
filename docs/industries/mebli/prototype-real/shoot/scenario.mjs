@@ -201,6 +201,27 @@ async function steps() {
     await settle(2000);
     await shot('cutting-result');
     if (STOP_AT === 9) return;
+
+    // 11 Карта одного листа
+    await notebookTab(/Листи/);
+    await shot('cutting-sheets');
+    await page.locator('.o_data_row').first().click();
+    await settle(1500);
+    await shot('cutting-sheet');
+    await clickText('.modal .nav-link', /Обрізки/);
+    await shot('cutting-sheet-offcuts');
+    await clickText('.modal-footer button', /Закрити/);
+    await settle(800);
+    if (STOP_AT === 10) return;
+
+    // 12 Провести розкрій: резерв плит, ділові обрізки
+    await clickText('.o_statusbar_buttons button', /Підтвердити/);
+    await settle(2500);
+    await shot('cutting-done');
+    await openApp('stock.menu_stock_root');
+    await menu('stock.menu_stock_inventory_control', 'td_mebli_cutting.td_mebli_offcut_menu');
+    await shot('offcuts');
+    if (STOP_AT === 11) return;
 }
 
 (async () => {
