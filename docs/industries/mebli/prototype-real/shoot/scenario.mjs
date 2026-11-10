@@ -130,20 +130,77 @@ async function steps() {
     // 04 Специфікація під замовлення
     await page.locator('.o_data_row button:has(.fa-cogs)').click();
     await settle(1500);
-    await page.locator('.o_data_row button:has(.fa-list-alt)').click();
-    await settle(1500);
     await shot('order-bom');
     await notebookTab(/Деталі/);
     await shot('order-bom-parts');
     if (STOP_AT === 3) return;
 
-    // 05 Підтвердження замовлення
-    await page.locator('.o_breadcrumb .o_back_button, .breadcrumb-item a').first().click();
-    await settle(1200);
+    // 05 Назад у замовлення: планова собівартість і маржа рядка
+    await page.locator('.breadcrumb-item:not(.active)').last().click();
+    await settle(1500);
+    await page.locator('.o_optional_columns_dropdown_toggle').first().click();
+    await sleep(400);
+    for (const re of [/Маржа/, /Собівартість/]) {
+        const box = page.locator('.o-dropdown--menu .dropdown-item').filter({ hasText: re });
+        for (let i = 0; i < await box.count(); i++) {
+            const cb = box.nth(i).locator('input[type=checkbox]');
+            if (!(await cb.isChecked())) await cb.click();
+        }
+    }
+    await page.keyboard.press('Escape');
+    await settle(800);
+    await page.locator('.o_list_renderer').evaluate((el) => { el.scrollLeft = el.scrollWidth; });
+    await sleep(400);
+    await shot('sale-order-margin');
+    await page.locator('.o_list_renderer').evaluate((el) => { el.scrollLeft = 0; });
+    if (STOP_AT === 4) return;
+
+    // 06 Підтвердження замовлення
     await page.locator('button[name="action_confirm"]').first().click();
     await settle(2500);
     await shot('sale-confirmed');
-    if (STOP_AT === 4) return;
+    if (STOP_AT === 5) return;
+
+    // 07 Виробниче замовлення
+    await page.locator('.o-form-buttonbox .oe_stat_button').filter({ hasText: /Виробництв|Виготовлен/ }).first().click();
+    await settle(2000);
+    await shot('mo-form');
+    await notebookTab(/Робочі|Операц/);
+    await shot('mo-workorders');
+    if (STOP_AT === 6) return;
+
+    // 08 Дільниці
+    await openApp('mrp.menu_mrp_root');
+    await menu('mrp.menu_mrp_configuration', 'mrp.menu_view_resource_search_mrp');
+    await page.locator('button.o_switch_view.o_kanban').click();
+    await settle(1000);
+    await shot('workcenters');
+    await menu('mrp.menu_mrp_manufacturing', 'mrp.menu_mrp_workorder_todo');
+    await page.locator('.o_searchview_dropdown_toggler').click();
+    await clickText('.o_search_bar_menu .o_menu_item, .o-dropdown--menu .dropdown-item', /Робочий центр|Робочі центри/);
+    await page.keyboard.press('Escape');
+    await settle(800);
+    for (let i = 0; i < 4; i++) await page.locator('.o_group_header').nth(i).click().then(() => sleep(400));
+    await shot('workorders-by-workcenter');
+    if (STOP_AT === 7) return;
+
+    // 09 Технолог: МО дня -> завдання розкрою
+    await menu('mrp.menu_mrp_manufacturing', 'mrp.menu_mrp_production_action');
+    await page.locator('.o_list_renderer thead .o_list_record_selector input').click();
+    await page.locator('.o_cp_action_menus button, .o_cp_action_menus .dropdown-toggle').first().click();
+    await clickText('.o-dropdown--menu .o_menu_item, .o-dropdown--menu .dropdown-item', /Створити завдання розкрою/);
+    await settle(2000);
+    await shot('cutting-job-parts');
+    await clickText('.o_statusbar_buttons button', /Передати на розкрій/);
+    await settle(1500);
+    await shot('cutting-job-sent');
+    if (STOP_AT === 8) return;
+
+    // 10 Результат розкрою (імітація)
+    await clickText('.o_statusbar_buttons button', /Отримати результат/);
+    await settle(2000);
+    await shot('cutting-result');
+    if (STOP_AT === 9) return;
 }
 
 (async () => {
