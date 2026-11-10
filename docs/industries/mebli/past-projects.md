@@ -43,32 +43,29 @@
 
 | Модуль (техн. назва) | Шлях | Версія Odoo | Сумісність з 19 | Що закриває | П-xx | Джерело |
 |---|---|---|---|---|---|---|
-| td_factory3d | todo_timur/factory3d/odoo_addons/td_factory3d | 19.0.1.0.2 | так | база комплексу: коди об'єктів, зони цеху, ворота, паспорти обладнання, групи доступу | П-01 | repo:todo_timur/factory3d/odoo_addons/td_factory3d@0976f05 |
-| td_machine_connect | todo_timur/factory3d/odoo_addons/td_machine_connect | 19.0.1.4.5 | так | стани деревообробних верстатів, простої, автостарт робочих завдань, OEE, склад плит порталу, карти розкрою при МО | П-01 | repo:todo_timur/factory3d/odoo_addons/td_machine_connect@0976f05 |
-| td_sale_cost | todo_timur/factory3d/odoo_addons/td_sale_cost | 19.0.1.1.1 | так | фактична собівартість і маржа замовлення продажу з даних виробництва | П-01 | repo:todo_timur/factory3d/odoo_addons/td_sale_cost@0976f05 |
-| td_energy | todo_timur/factory3d/odoo_addons/td_energy | 19.0.1.1.6 | так | енергоспоживання, кВт·год і вартість на робоче завдання, тарифи | П-01 | repo:todo_timur/factory3d/odoo_addons/td_energy@0976f05 |
-| td_energy_resources | todo_timur/factory3d/odoo_addons/td_energy_resources | 19.0.1.0.2 | так | облік газу, тепла, стисненого повітря й води, вартість | П-01 | repo:todo_timur/factory3d/odoo_addons/td_energy_resources@0976f05 |
-| td_energy_analytics | todo_timur/factory3d/odoo_addons/td_energy_analytics | 19.0.1.1.0 | так | енергоаналітика: базова лінія ISO 50001, EnPI, бюджет, звіти | П-01 | repo:todo_timur/factory3d/odoo_addons/td_energy_analytics@0976f05 |
-| td_energy_control | todo_timur/factory3d/odoo_addons/td_energy_control | 19.0.1.0.3 | так | сценарії автоматизації, пріоритети відключення навантаження, команди з блокуваннями | П-01 | repo:todo_timur/factory3d/odoo_addons/td_energy_control@0976f05 |
-| td_energy_mobile | todo_timur/factory3d/odoo_addons/td_energy_mobile | 19.0.1.0.0 | так | мобільний екран чергового енергетика: обходи, чек-листи | П-01 | repo:todo_timur/factory3d/odoo_addons/td_energy_mobile@0976f05 |
-| td_telemetry | todo_timur/factory3d/odoo_addons/td_telemetry | 19.0.1.1.6 | так | збір даних з обладнання: джерела, сигнали, показання, пороги -> заявки на ТО | П-01 | repo:todo_timur/factory3d/odoo_addons/td_telemetry@0976f05 |
-| td_iot_sim | todo_timur/factory3d/odoo_addons/td_iot_sim | 19.0.2.3.0 | так | симулятор обладнання для демо: реєстр пристроїв, каталог сигналів, сценарії | П-01 | repo:todo_timur/factory3d/odoo_addons/td_iot_sim@0976f05 |
-| factory3d_iot_sim | todo_timur/factory3d/odoo_addons/factory3d_iot_sim | 19.0.1.0.0 | так | data-модуль без Python: імітація сигналів обладнання і заявки на ТО за порогом (гілка за замовчуванням) | П-01 | repo:todo_timur/factory3d/odoo_addons/factory3d_iot_sim@adce004 |
-| td_live_production | todo_timur/factory3d/odoo_addons/td_live_production | 19.0.1.0.9 | так | лише демо-стенд: щоденні замовлення, диспетчер робочих завдань, простої й відвантаження в реальному часі | П-01 | repo:todo_timur/factory3d/odoo_addons/td_live_production@0976f05 |
-| td_yard | todo_timur/factory3d/odoo_addons/td_yard | 19.0.1.0.2 | так | двір: рейси фур, бронювання воріт, розпізнавання номерів, шлагбауми, ваги | П-01 | repo:todo_timur/factory3d/odoo_addons/td_yard@0976f05 |
-| td_access | todo_timur/factory3d/odoo_addons/td_access | 19.0.1.1.0 | так | СКУД: відмітки відвідування, картки, турнікети, відвідувачі, люди за зонами | П-01 | repo:todo_timur/factory3d/odoo_addons/td_access@0976f05 |
-| td_viewer3d | todo_timur/factory3d/odoo_addons/td_viewer3d | 19.0.1.1.15 | так | 3D-переглядач заводу в Odoo: живі дані, «Показати в 3D», кіоск цеху | П-01 | repo:todo_timur/factory3d/odoo_addons/td_viewer3d@0976f05 |
-| td_constructor | todo_timur/factory3d/odoo_addons/td_constructor | 19.0.1.4.3 | так | конструктор планування заводу: майданчики, шари, шаблони стелажів, варіанти обладнання в 3D | П-01 | repo:todo_timur/factory3d/odoo_addons/td_constructor@0976f05 |
-| td_bms | todo_timur/factory3d/odoo_addons/td_bms | 19.0.1.0.5 | так | освітлення за нормами, вентиляція й котельня, тепловий баланс | П-01 | repo:todo_timur/factory3d/odoo_addons/td_bms@0976f05 |
-| td_fire_safety | todo_timur/factory3d/odoo_addons/td_fire_safety | 19.0.1.1.4 | так | пожежна сигналізація (читання), іскрогасіння, димовидалення, евакуація | П-01 | repo:todo_timur/factory3d/odoo_addons/td_fire_safety@0976f05 |
-| td_genset | todo_timur/factory3d/odoo_addons/td_genset | 19.0.1.0.1 | так | моніторинг і керування генераторами через реле | П-01 | repo:todo_timur/factory3d/odoo_addons/td_genset@0976f05 |
-| td_chp | todo_timur/factory3d/odoo_addons/td_chp | 19.0.1.0.0 | так | консоль оператора когенераційної установки | П-01 | repo:todo_timur/factory3d/odoo_addons/td_chp@0976f05 |
+| td_sale_cost | todo_timur/factory3d/odoo_addons/td_sale_cost | 19.0.1.1.1 | так | фактична собівартість і маржа замовлення продажу з даних виробництва; залежить від td_factory3d, частина статей (енергія, верстати) — з модулів, які не беремо | П-01 | repo:todo_timur/factory3d/odoo_addons/td_sale_cost@0976f05 |
+| td_factory3d | todo_timur/factory3d/odoo_addons/td_factory3d | 19.0.1.0.2 | так | база комплексу: зони цеху, ворота, паспорти обладнання, групи доступу; прив'язана до кодів 3D-сцени — чи відв'язується, уточнити на A-10 | П-01 | repo:todo_timur/factory3d/odoo_addons/td_factory3d@0976f05 |
 | td_claude_agent | todo_timur/factory3d/odoo_addons/td_claude_agent | 19.0.2.1.1 | так | AI-агент для користувача Odoo (не галузевий) | П-01 | repo:todo_timur/factory3d/odoo_addons/td_claude_agent@0976f05 |
 
-Мости `auto_install` (ставляться разом з основними модулями, окремо не перелічено): `td_access_telemetry`, `td_chp_factory3d`,
-`td_constructor_viewer3d`, `td_energy_resources_bms`, `td_energy_viewer3d`, `td_factory3d_mrp_maintenance`, `td_fire_safety_access`,
-`td_fire_safety_viewer3d`, `td_genset_factory3d`, `td_machine_connect_mrp_workorder`, `td_machine_connect_viewer3d`,
-`td_telemetry_viewer3d`, `td_viewer3d_sale`, `td_yard_gantt` (repo:todo_timur/factory3d/odoo_addons@0976f05). Модулі `test_td_*` — лише для тестів.
+### Не беремо в основну збірку (рішення людини, 2026-11-10)
+
+Рішення Власника продукту в чаті кроку: «3D-модель і підключення обладнання в основну збірку брати не будемо». Модулі лишаються фактом «Що вже робили», але не є кандидатами пакета:
+
+- 3D-модель і переглядач: `td_viewer3d` (repo:todo_timur/factory3d/odoo_addons/td_viewer3d@0976f05), `td_constructor` (repo:todo_timur/factory3d/odoo_addons/td_constructor@0976f05) — і мости `td_constructor_viewer3d`, `td_energy_viewer3d`, `td_fire_safety_viewer3d`, `td_machine_connect_viewer3d`, `td_telemetry_viewer3d`, `td_viewer3d_sale` (П-01).
+- підключення обладнання й телеметрія: `td_machine_connect` (repo:todo_timur/factory3d/odoo_addons/td_machine_connect@0976f05), `td_telemetry` (repo:todo_timur/factory3d/odoo_addons/td_telemetry@0976f05), `td_iot_sim` (repo:todo_timur/factory3d/odoo_addons/td_iot_sim@0976f05), `factory3d_iot_sim` (repo:todo_timur/factory3d/odoo_addons/factory3d_iot_sim@adce004), `td_live_production` (repo:todo_timur/factory3d/odoo_addons/td_live_production@0976f05) — і мости `td_machine_connect_mrp_workorder`, `td_factory3d_mrp_maintenance`, `td_access_telemetry` (П-01).
+- енергетика й інженерні системи (лічильники, датчики, керування): `td_energy` (repo:todo_timur/factory3d/odoo_addons/td_energy@0976f05), `td_energy_resources` (repo:todo_timur/factory3d/odoo_addons/td_energy_resources@0976f05), `td_energy_analytics` (repo:todo_timur/factory3d/odoo_addons/td_energy_analytics@0976f05), `td_energy_control` (repo:todo_timur/factory3d/odoo_addons/td_energy_control@0976f05), `td_energy_mobile` (repo:todo_timur/factory3d/odoo_addons/td_energy_mobile@0976f05), `td_bms` (repo:todo_timur/factory3d/odoo_addons/td_bms@0976f05), `td_fire_safety` (repo:todo_timur/factory3d/odoo_addons/td_fire_safety@0976f05), `td_genset` (repo:todo_timur/factory3d/odoo_addons/td_genset@0976f05), `td_chp` (repo:todo_timur/factory3d/odoo_addons/td_chp@0976f05) — і мости `td_chp_factory3d`, `td_energy_resources_bms`, `td_fire_safety_access`, `td_genset_factory3d` (П-01).
+- СКУД і двір (турнікети, номери, ваги): `td_access` (repo:todo_timur/factory3d/odoo_addons/td_access@0976f05), `td_yard` (repo:todo_timur/factory3d/odoo_addons/td_yard@0976f05) — і міст `td_yard_gantt` (П-01).
+
+### Модулі проду ToDo поза проєктами галузі (Odoo 18, коду в sources.md немає)
+
+Прочитано за дозволом людини лише перелік встановлених модулів (`ir.module.module`: назва, автор, версія) у продуктивній базі ToDo; записів не читали. Це не П-xx і не проєкт галузі; кандидати загального призначення для українського обліку замовлень, потребують міграції 18 → 19 і репозиторію з кодом:
+
+- `td_advance_invoice` 18.0.5.0.1 — «Product-Based Advance Invoicing», авансові рахунки за товаром (чи годиться для передоплати замовлень на виготовлення — перевірити);
+- `td_payment_calendar` 18.0.8.4.7 — платіжний календар;
+- `td_agreement_base` 18.0.2.1.9, `td_agreement` 18.0.1.0.2 — «Agreement» / «Customized Agreement», облік договорів (зміст не перевірявся);
+- `kw_bank_statement`, `kw_bank_statement_api`, `kw_bank_statement_privat24_api` (сторонній автор) — банківські виписки, у т. ч. API українського банку;
+- `kw_currency_rate`, `kw_currency_rate_nbu` (сторонній автор) — курси НБУ (імпортна фурнітура в євро);
+- `l10n_ua` 18.0.1.4 від стороннього автора (не стандартний модуль Odoo S.A.) і `l10n_ua_state` — локалізація й області України.
 
 ## Болі клієнтів
 
