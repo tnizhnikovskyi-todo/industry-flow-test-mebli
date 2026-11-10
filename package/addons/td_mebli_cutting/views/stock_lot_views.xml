@@ -19,14 +19,14 @@
         <field name="name">stock.lot.td.offcut.list</field>
         <field name="model">stock.lot</field>
         <field name="arch" type="xml">
-            <list create="0">
+            <list create="0" default_order="create_date desc, id desc">
                 <field name="name" string="Offcut" width="200px"/>
-                <field name="product_id" context="{'display_default_code': False}"/>
+                <field name="product_id" context="{'display_default_code': False}" width="260px"/>
                 <field name="td_length_mm" width="120px"/>
                 <field name="td_width_mm" width="120px"/>
                 <field name="product_qty" string="Area, m2" sum="Total" width="150px"/>
-                <field name="td_cutting_job_id" string="Cutting job"/>
-                <field name="create_date" string="Created"/>
+                <field name="td_cutting_job_id" string="Cutting job" width="160px"/>
+                <field name="create_date" string="Created" width="170px"/>
             </list>
         </field>
     </record>

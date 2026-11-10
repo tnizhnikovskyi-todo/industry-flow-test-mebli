@@ -8,7 +8,8 @@ It uses only public ORM methods of the packages.
 """
 import base64
 import random
-from datetime import timedelta
+from datetime import timedelta, timezone
+from zoneinfo import ZoneInfo
 
 from odoo import fields
 from odoo.tools import file_open
@@ -96,6 +97,21 @@ NOTES = {
         ('chief', 'Присадку закінчили, передаємо на складання.'),
     ],
 }
+
+
+_KYIV = ZoneInfo('Europe/Kyiv')
+
+
+def _work(when, rnd=None):
+    """Move a naive UTC datetime into factory working hours (Mon-Fri, 8:00-17:00 Kyiv time); returns naive UTC."""
+    local = when.replace(tzinfo=timezone.utc).astimezone(_KYIV)
+    if local.hour >= 17:
+        local = (local + timedelta(days=1)).replace(hour=8, minute=(rnd.randint(5, 50) if rnd else 15))
+    elif local.hour < 8:
+        local = local.replace(hour=8, minute=(rnd.randint(5, 50) if rnd else 15))
+    while local.weekday() >= 5:
+        local = (local + timedelta(days=1)).replace(hour=8, minute=(rnd.randint(5, 50) if rnd else 15))
+    return local.astimezone(timezone.utc).replace(tzinfo=None)
 
 
 def _binary(name):
@@ -229,7 +245,7 @@ def _stock(env, wardrobes):
 
 def _stamp_workorders(production, order_date, launch_hours, rnd, bias=1.0):
     """Realistic dates and durations for a started or finished work order chain (factory working hours)."""
-    cursor = order_date + timedelta(hours=launch_hours)
+    cursor = _work(order_date + timedelta(hours=launch_hours), rnd)
     for workorder in production.workorder_ids.sorted('id'):
         if workorder.state not in ('progress', 'done'):
             continue
@@ -238,7 +254,7 @@ def _stamp_workorders(production, order_date, launch_hours, rnd, bias=1.0):
         start, end = cursor, cursor + timedelta(minutes=real)
         workorder.time_ids.write({'date_start': start, 'date_end': end if workorder.state == 'done' else False})
         workorder.write({'date_start': start, 'date_finished': start + timedelta(minutes=expected)})
-        cursor = end + timedelta(minutes=rnd.randint(20, 90))
+        cursor = _work(end + timedelta(minutes=rnd.randint(20, 90)), rnd)
 
 
 def _invoice(env, order, when, percent):
@@ -313,7 +329,7 @@ def seed_showcase(env):
     for product, qty, dims, body, facade, edge, fitting, stage, days, customer, seller, discount, advance in ORDERS:
         order = make_order(env, product, dims, f'val_body_{body}', f'val_facade_{facade}', f'val_edge_{edge}',
                            f'val_fit_{fitting}', qty=float(qty))
-        ordered = now - timedelta(days=days, hours=rnd.randint(0, 5))
+        ordered = _work(now - timedelta(days=days, hours=rnd.randint(0, 5)), rnd)
         order.write({'partner_id': partners[customer].id, 'user_id': people[seller].id, 'date_order': ordered,
                      'payment_term_id': terms[advance if advance in terms else 0].id, 'validity_date': (ordered + timedelta(days=14)).date(),
                      'note': 'Термін виготовлення — 14 робочих днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж за окремою домовленістю.'})
@@ -353,10 +369,10 @@ def seed_showcase(env):
         job.action_send()
         job.action_simulate()
         job.action_done()
-        when = now - timedelta(days=days, hours=-rnd.randint(1, 4))
+        when = _work(now - timedelta(days=days, hours=-rnd.randint(1, 4)), rnd)
         _backdate(env, 'td_mebli_cutting_job', job, when)
         for lot in job.sheet_ids.offcut_ids.lot_id:  # the offcuts of one job are stocked during the shift, not in one minute
-            _backdate(env, 'stock_lot', lot, when + timedelta(minutes=rnd.randint(5, 420)))
+            _backdate(env, 'stock_lot', lot, _work(when + timedelta(minutes=rnd.randint(5, 420)), rnd))
         _note(job, tech, 'Результат розкрою прийнято, обрізки від листів взято в облік.', when + timedelta(hours=1))
         jobs |= job
         for order in batch:
@@ -413,7 +429,7 @@ def seed_showcase(env):
                               'product_id': product.id, 'td_length_mm': length, 'td_width_mm': width,
                               'td_is_offcut': True, 'td_cutting_job_id': job.id})
             _add_stock(env, location, product, lot.td_area_m2, lot)
-            _backdate(env, 'stock_lot', lot, job.create_date + timedelta(hours=rnd.randint(1, 5), minutes=rnd.randint(0, 59)))
+            _backdate(env, 'stock_lot', lot, _work(job.create_date + timedelta(hours=rnd.randint(1, 5), minutes=rnd.randint(0, 59)), rnd))
     # deadlines against the planned finish: most orders fit, two do not (one already late, one will be late)
     open_productions = env['mrp.production'].search([('state', 'in', ('confirmed', 'progress', 'to_close'))])
     for production in open_productions:

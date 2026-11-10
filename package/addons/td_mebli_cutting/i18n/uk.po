@@ -602,14 +602,14 @@ msgid "Width, mm"
 msgstr "Ширина, мм"
 
 #. module: td_mebli_cutting
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__x_mm
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__x_mm
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__pos_x_mm
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__pos_x_mm
 msgid "X, mm"
 msgstr "X, мм"
 
 #. module: td_mebli_cutting
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__y_mm
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__y_mm
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__pos_y_mm
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__pos_y_mm
 msgid "Y, mm"
 msgstr "Y, мм"
 
