@@ -344,3 +344,28 @@ msgstr "год"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_form_td_mebli_sale
 msgid "Options"
 msgstr "Опції виробу"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban
+msgid "Revenue:"
+msgstr "Виручка:"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban
+msgid "Margin:"
+msgstr "Маржа:"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+msgid "Last 30 days"
+msgstr "Останні 30 днів"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_order_form
+msgid "Add section"
+msgstr "Додати розділ"
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_order_form
+msgid "Add note"
+msgstr "Додати примітку"

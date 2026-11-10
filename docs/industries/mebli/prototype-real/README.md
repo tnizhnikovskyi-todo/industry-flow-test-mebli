@@ -1,4 +1,4 @@
-# Показ пакета «меблі» у справжньому Odoo 19 (прогін №2)
+# Показ пакета «меблі» у справжньому Odoo 19 (прогін №1 із брендингом ToDo, мобільним і дашбордом)
 
 Реальний зріз пакета: модулі `package/addons/td_mebli_{mrp,sale,cutting,demo}` на чистому Odoo 19 Community, без Studio і без `x_`-полів.
 Скриншоти й відео — продаючі матеріали (лендинг, розсилка, демо в тесті попиту A-23). Історія для власника фабрики — `SHOW.md`;
@@ -6,29 +6,35 @@
 
 ## Що показано
 
-16 кроків від імені п'яти ролей фабрики «Меблева фабрика «Демо»» (вигадані люди, логотип, реквізити): менеджер салону, начальник
-виробництва, технолог-конструктор, комірник, фінансист. Кожен кадр має підпис «біль → вигода». У базі 24 замовлення в різних
-стадіях (пропозиції, підтверджені, у виробництві, виконані), 17 виробничих замовлень, три завершені завдання розкрою з ділови­ми обрізками,
-історія в чаттері, зображення виробів (ілюстрації SVG→PNG, без чужих фото й марок).
+16 десктопних кроків від імені п'яти ролей «Меблевої фабрики «Демо»» + крок 17 — **дашборд керівника** (`td_mebli_dashboard`, меню «Керівник»:
+виручка, маржа, час до запуску, дільниці, відхід розкрою, план/факт; на телефоні — одна колонка) + 9 мобільних кадрів (390x844, DPR 3, isMobile, hasTouch).
+Фірмовий стиль ToDo (`brand-todo/`): заставки, титри, плашка з логотипом у відео; інтерфейс Odoo не перефарбовано.
 
-## Як підняти локально
+## Матеріали
+
+| Файл | Що |
+|---|---|
+| `video/mebli-full-16x9.mp4` | 1920x1080, H.264, 3:08, титри; блок «з телефона» (4 ролі) і блок керівника (~10 с дашборда десктоп + телефон) |
+| `video/mebli-reels-9x16.mp4` | 1080x1920, H.264, 55 с: гачок 0–3 с, 5 мобільних вигод (салон, цех, склад, керівник ×2 кадри, фінанси), безпечні поля, заставка ToDo |
+| `video/scenario-raw.webm` | сирий запис десктопного сценарію (1440x900); мобільний сценарій знімає лише скриншоти (запису екрана немає) |
+| `screens/01..17-*.png` | десктоп, x2 |
+| `screens-mobile/m1..m5*.png` | телефон: m1 менеджер, m2 цех, m3 склад, m4 власник/маржа, m5 дашборд (верх і низ) |
+| `SHOW.md`, `SHOW.html`, `SHOW.pdf` | історія «біль → вигода» у стилі ToDo (збираються `shoot/make_show.mjs` з `SHOW.tpl.md` і `shoot/facts.json`) |
+| `shoot/console.log` | консоль браузера: помилок немає |
+
+## Як відтворити
 
 ```bash
-export F3D_ADDONS_DIR=<корінь репо>/package/addons
-T=/home/user/f3d/factory3d/tools/odoo
-$T/new_db.sh mebli_demo
-F3D_TEST_INSTALL=td_mebli_demo $T/update.sh mebli_demo -- --load-language=uk_UA
-# насичені дані (бренд, користувачі, замовлення, МО, обрізки):
-source $T/env.sh && $ODOO_PY $ODOO_BIN shell -c $ODOO_CONF --addons-path=$ODOO_ADDONS_PATH -d mebli_demo --no-http \
-    < package/addons/td_mebli_demo/scripts/seed_showcase.py
-$T/serve.sh mebli_demo <порт>        # admin / admin; ролі: salon|tech|chief|store|fin@demo-fabryka.example / demo
-cd docs/industries/mebli/prototype-real/shoot && node scenario.mjs <порт>   # скриншоти і відео
+export F3D_ADDONS_DIR=<корінь репо>/package/addons; T=/home/user/f3d/factory3d/tools/odoo
+bash shoot/build_db.sh                 # база mebli_demo: td_mebli_{mrp,sale,cutting,dashboard,demo}, uk_UA, дані
+$T/serve.sh mebli_demo                 # без порту: друкує вільний (admin / admin; ролі salon|tech|chief|store|fin@demo-fabryka.example / demo)
+cd shoot && node scenario-mobile.mjs <порт> && node scenario.mjs <порт>   # телефон, потім десктоп
+ONLY=m5 node scenario-mobile.mjs <порт>   # повторно кадри дашборда на телефоні: цифри збігаються з десктопним
+node build_video.mjs all               # обидва відео (сцени — video_spec.mjs, верстка — scenes.mjs, ffmpeg)
+node make_show.mjs                     # SHOW.md/html/pdf
 $T/serve.sh stop mebli_demo
 ```
-
-`scenario.mjs` (Playwright, chromium, 1440x900 (відео 1440x900), скриншоти deviceScaleFactor 2) проходить сценарій справжніми кліками в інтерфейсі
-(не через RPC), накладає підпис ролі й вигоди та позначку «Демо-дані» / «Розкрій — імітація програми». Сценарій змінює базу
-(створює замовлення, завдання розкрою), тому перед повторним прогоном базу треба створити заново.
+Сценарії змінюють базу, тому перед повторним прогоном її треба створити заново. Тривалість відео — `DUR_SCALE=<k> node build_video.mjs`.
 
 ## Що є імітацією
 
@@ -38,7 +44,7 @@ $T/serve.sh stop mebli_demo
 - Маржа — планова (стандартні ціни матеріалів і годин дільниць).
 - Нічого, чого немає в коді, у показі не обіцяється (перелік — у `SHOW.md`).
 
-## Скриншоти (`screens/`) і відео (`video/scenario.webm`, 1440x900, 3:32 (прогін 3))
+## Скриншоти (`screens/`) і відео (`video/`: `mebli-full-16x9.mp4` 1920x1080 і `mebli-reels-9x16.mp4` 1080x1920, збираються `shoot/build_video.mjs`)
 
 | Файл | Роль | Біль | Що видно |
 |---|---|---|---|
@@ -78,3 +84,11 @@ $T/serve.sh stop mebli_demo
 - додано: графік «Завантаження дільниць» (td_mebli_mrp), «До запуску, год» у замовленнях (td_mebli_sale), «Економія від обрізків»
   у завданні розкрою (td_mebli_cutting); позначку «імітація» зроблено компактною; максимальна ширина шафи-купе в демо — 2060 мм
   (задня стінка ДВП одним листом).
+
+
+## Інструменти показу в стилі ToDo (`shoot/`)
+- `scenario.mjs` — десктопна зйомка 16 кадрів; пише `facts.json` (числа з бази й DOM кадрів) і перевіряє, що числа SHOW є на кадрі (`FACT MISMATCH`). Консоль браузера логується (`CONSOLE`/`PAGEERR` зі номером кроку).
+- `scenario-mobile.mjs` — мобільна зйомка (`screens-mobile/`, 390x844, DPR 3, isMobile, hasTouch).
+- `brand.css`, `scenes.mjs`, `video_spec.mjs`, `build_video.mjs` — заставки, титри, плашка ToDo, нейтральна рамка телефона, ffmpeg-збірка обох відео (`DUR_SCALE` підганяє тривалість).
+- `make_show.mjs` — `SHOW.tpl.md` + `facts.json` -> `SHOW.md`, `SHOW.html` (стиль ToDo), `SHOW.pdf`.
+- Порядок: `build_db.sh` -> `serve.sh mebli_demo 19071` -> `node scenario.mjs 19071` -> `node scenario-mobile.mjs 19071` -> `node make_show.mjs` -> `node build_video.mjs`.

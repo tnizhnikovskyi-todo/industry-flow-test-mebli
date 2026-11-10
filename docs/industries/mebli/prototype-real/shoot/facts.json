@@ -1,0 +1,200 @@
+{
+ "checks": [
+  {
+   "name": "маржа у пропозиції",
+   "expected": "39,13",
+   "ok": true
+  },
+  {
+   "name": "розкрій: площа з обрізків",
+   "expected": "5,02",
+   "ok": true
+  },
+  {
+   "name": "розкрій: економія",
+   "expected": "2 303,52",
+   "ok": true
+  },
+  {
+   "name": "розкрій: відходи",
+   "expected": "10,4",
+   "ok": true
+  },
+  {
+   "name": "plan-fakt plan",
+   "expected": "19 339,42 ₴",
+   "ok": true
+  },
+  {
+   "name": "plan-fakt real",
+   "expected": "20 115,37 ₴",
+   "ok": true
+  },
+  {
+   "name": "avg launch",
+   "expected": "50,63",
+   "ok": true
+  },
+  {
+   "name": "дашборд revenue",
+   "expected": "351 386 ₴",
+   "ok": true
+  },
+  {
+   "name": "дашборд margin",
+   "expected": "28,6 %",
+   "ok": true
+  },
+  {
+   "name": "дашборд launch",
+   "expected": "50,6 год",
+   "ok": true
+  },
+  {
+   "name": "дашборд cutting",
+   "expected": "7,7 %",
+   "ok": true
+  },
+  {
+   "name": "дашборд plan_fact",
+   "expected": "+2,4 %",
+   "ok": true
+  }
+ ],
+ "loads": [
+  {
+   "name": "Розкрій",
+   "pct": 86
+  },
+  {
+   "name": "Присадка",
+   "pct": 91
+  },
+  {
+   "name": "Крайкування",
+   "pct": 115
+  },
+  {
+   "name": "Складання",
+   "pct": 142
+  }
+ ],
+ "cut_m2": "5,02",
+ "cut_saving": "2 303,52",
+ "cut_waste": "10,4",
+ "plan_cost": "19 339,42 ₴",
+ "real_cost": "20 115,37 ₴",
+ "avg_launch": "50,6",
+ "avg_launch_raw": "50,63",
+ "margins": [
+  30.81,
+  23.16,
+  24.86,
+  25.85,
+  34.81,
+  34.69,
+  12.05,
+  29.89,
+  14.62,
+  38.05,
+  33.02,
+  32.94,
+  25.3,
+  23.58,
+  22.17,
+  33.22,
+  39.13
+ ],
+ "dash": {
+  "title": "Фабрика на одному екрані",
+  "period": "Останні 30 днів · 10.11.2026",
+  "company": "Меблева фабрика «Демо»",
+  "cards": {
+   "revenue": {
+    "label": "Виручка",
+    "value": "351 386 ₴",
+    "lines": [
+     "Підтверджено замовлень: 18",
+     "У пропозиціях: 6 на 106 138 ₴"
+    ],
+    "action": "td_mebli_sale.action_orders_board_td_mebli"
+   },
+   "margin": {
+    "label": "Середня маржа",
+    "value": "28,6 %",
+    "tone": "ok",
+    "lines": [
+     "Маржа: 100 593 ₴",
+     "Замовлень з маржею нижче 15%: 2",
+     "S00007 · 12,1 %",
+     "S00009 · 14,6 %"
+    ],
+    "action": "td_mebli_sale.sale_order_line_td_cost_action"
+   },
+   "launch": {
+    "label": "Від замовлення до запуску",
+    "value": "50,6 год",
+    "lines": [
+     "У середньому по 12 запущених замовленнях",
+     "Чекають запуску: 6"
+    ],
+    "action": "td_mebli_sale.action_orders_launch_td_mebli"
+   },
+   "load": {
+    "label": "Завантаження дільниць, % тижня",
+    "rows": [
+     {
+      "name": "Складання",
+      "pct": 142,
+      "over": true
+     },
+     {
+      "name": "Крайкування",
+      "pct": 115,
+      "over": true
+     },
+     {
+      "name": "Присадка",
+      "pct": 92,
+      "over": false
+     },
+     {
+      "name": "Розкрій",
+      "pct": 86,
+      "over": false
+     }
+    ],
+    "lines": [
+     "Понад потужність: 2"
+    ],
+    "action": "td_mebli_mrp.mrp_workorder_td_load_action"
+   },
+   "cutting": {
+    "label": "Відхід розкрою",
+    "value": "7,7 %",
+    "lines": [
+     "Економія від ділових обрізків: 11 114 ₴",
+     "Обрізків на складі: 38,1 м²",
+     "Завдань розкрою: 5"
+    ],
+    "action": "td_mebli_cutting.td_mebli_cutting_job_action"
+   },
+   "plan_fact": {
+    "label": "Собівартість: план / факт",
+    "value": "+2,4 %",
+    "tone": "ok",
+    "plan": "81 889 ₴",
+    "fact": "83 873 ₴",
+    "plan_label": "План",
+    "fact_label": "Факт",
+    "fact_ratio": 68,
+    "plan_ratio": 67,
+    "lines": [
+     "Виконаних виробничих замовлень: 6"
+    ],
+    "action": "mrp.mrp_production_action"
+   }
+  },
+  "note": "Демо-дані. Маржа планова: стандартні ціни матеріалів і годин."
+ }
+}

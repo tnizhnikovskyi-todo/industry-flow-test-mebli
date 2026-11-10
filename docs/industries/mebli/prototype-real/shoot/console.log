@@ -1,0 +1,3 @@
+# Консоль браузера, прогін №1 (десктоп: scenario.mjs, телефон: scenario-mobile.mjs, 390x844)
+# Збирається з CONSOLE/PAGEERR (console.error, uncaught). Результат: помилок немає (рядків CONSOLE/PAGEERR: 0).
+# Примітка: перший запуск m1 упав через вікно OdooBot у нового користувача — виправлено (odoobot_state=disabled у seed), повтор чистий.

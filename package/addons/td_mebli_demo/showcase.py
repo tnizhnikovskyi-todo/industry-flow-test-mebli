@@ -36,7 +36,11 @@ USERS = [
     ('store', 'Марія Гнатюк', 'Комірник', 'avatar_store',
      ['stock.group_stock_manager', 'mrp.group_mrp_user']),
     ('fin', 'Наталія Бондар', 'Фінансист', 'avatar_fin',
-     ['sales_team.group_sale_manager', 'account.group_account_user', 'stock.group_stock_user']),
+     ['sales_team.group_sale_manager', 'account.group_account_user', 'stock.group_stock_user',
+      'td_mebli_dashboard.group_td_mebli_director']),
+    ('owner', 'Віталій Остапенко', 'Власник · директор фабрики', 'avatar_owner',
+     ['sales_team.group_sale_manager', 'mrp.group_mrp_manager', 'account.group_account_user', 'stock.group_stock_user',
+      'td_mebli_dashboard.group_td_mebli_director']),
 ]
 
 # name, company type, city, street: end customers of the factory salon (people and small businesses)
@@ -47,6 +51,9 @@ CUSTOMERS = [
     ('Андрій Кравець', 'person', 'Запоріжжя', 'просп. Умовний, 102'), ('Оксана Мороз', 'person', 'Чернівці', 'вул. Зразкова, 9'),
     ('Дмитро Савченко', 'person', 'Житомир', 'вул. Тестова, 31'), ('Марина Поліщук', 'person', 'Вінниця', 'вул. Умовна, 64'),
     ('Кав\'ярня «Зерно»', 'company', 'Київ', 'вул. Прикладна, 88'), ('Студія йоги «Баланс»', 'company', 'Київ', 'вул. Вигадана, 2'),
+    ('Будинок «Липки» (забудовник)', 'company', 'Київ', 'вул. Умовна, 150'), ('Готель «Затишок»', 'company', 'Львів', 'вул. Тестова, 12'),
+    ('Офіс-центр «Вузол»', 'company', 'Дніпро', 'просп. Зразковий, 8'), ('Мережа клінік «Здоров\'я»', 'company', 'Одеса', 'вул. Вигадана, 77'),
+    ('ЖК «Сонячний квартал»', 'company', 'Харків', 'вул. Умовна, 3'), ('Хостел «Подорож»', 'company', 'Київ', 'вул. Прикладна, 19'),
 ]
 
 # product, qty, dims (W, H, D), body, facade, edge, fitting, stage, days ago, customer, salesman, discount %, prepay %
@@ -114,6 +121,51 @@ def _work(when, rnd=None):
     return local.astimezone(timezone.utc).replace(tzinfo=None)
 
 
+def _past(raw, now, rnd=None):
+    """Working-hours time not later than an hour ago: the demo never shows dates from the future."""
+    when = _work(raw, rnd)
+    while when > now - timedelta(hours=1):
+        raw -= timedelta(days=1)
+        when = _work(raw, rnd)
+    return when
+
+
+def _bulk_orders(rnd):
+    """The rest of the order book of a working factory: ~80 orders over two months, in the same tuple format."""
+    rows = []
+
+    def one(stage, days, discount=0, advance=None):
+        kind = rnd.choice(['prod_wardrobe', 'prod_wardrobe', 'prod_kitchen', 'prod_kitchen', 'prod_dresser'])
+        if kind == 'prod_wardrobe':
+            qty, dims = rnd.choice([1, 2, 2, 3]), (rnd.choice(range(1500, 2051, 50)), 2400, 600)
+        elif kind == 'prod_kitchen':
+            qty, dims = rnd.randint(7, 16), (rnd.choice([600, 800, 900]), 720, 560)
+        else:
+            qty, dims = rnd.randint(2, 6), (rnd.choice([800, 900, 1000]), 850, 450)
+        body = rnd.choice(['sonoma', 'white', 'anthr'])
+        facade = 'anthr' if body == 'anthr' else 'mdf'
+        advance = rnd.choice([0, 30, 50]) if advance is None else advance
+        rows.append((kind, qty, dims, body, facade, rnd.choice(['04', '2']), rnd.choice(['std', 'std', 'premium']),
+                     stage, days, rnd.randrange(len(CUSTOMERS)), rnd.choice(['salon', 'salon2', 'salon3']), discount, advance))
+    for _ in range(40):
+        one('done', rnd.randint(31, 58), discount=rnd.choice([0, 0, 0, 5, 8, 10]))
+    for _ in range(2):
+        one('done', rnd.randint(33, 55), discount=rnd.choice([30, 33]))
+    for _ in range(20):
+        one('done', rnd.randint(9, 28), discount=rnd.choice([0, 0, 0, 5, 8, 10]))
+    for _ in range(3):
+        one('done', rnd.randint(12, 27), discount=rnd.choice([31, 34]))
+    for _ in range(12):
+        one('progress', rnd.randint(2, 8), discount=rnd.choice([0, 0, 5, 8, 10]), advance=rnd.choice([30, 50]))
+    for _ in range(6):
+        one('confirmed', rnd.randint(0, 2), advance=rnd.choice([0, 30, 50]))
+    for _ in range(4):
+        one('draft', rnd.randint(0, 3))
+    for _ in range(3):
+        one('sent', rnd.randint(2, 6))
+    return rows
+
+
 def _binary(name):
     with file_open(IMG + name, 'rb') as handle:
         return base64.b64encode(handle.read())
@@ -127,7 +179,7 @@ def _note(record, user, text, when=None):
     values = {'body': text, 'message_type': 'comment', 'subtype_xmlid': 'mail.mt_note',
               'author_id': user.partner_id.id}
     if when:
-        values['date'] = when
+        values['date'] = min(when, fields.Datetime.now() - timedelta(minutes=30))
     # the technologist writes in the product card, though the catalogue itself is edited by the sales manager
     (record.sudo() if record._name == 'product.template' else record.with_user(user)).message_post(**values)
 
@@ -201,7 +253,7 @@ def _users(env):
             'name': name, 'login': f'{login}@demo-fabryka.example', 'password': 'demo', 'lang': 'uk_UA',
             'tz': 'Europe/Kyiv', 'image_1920': _binary(avatar + '.png'), 'email': f'{login}@demo-fabryka.example',
             'group_ids': [(6, 0, [env.ref('base.group_user').id] + [env.ref(g).id for g in groups])],
-            'notification_type': 'inbox',
+            'notification_type': 'inbox', 'odoobot_state': 'disabled',  # no OdooBot onboarding window on the first login
         })
     # the job title is shown in the chatter and in the user menu
     for login, name, job, avatar, groups in USERS:
@@ -233,7 +285,7 @@ def _stock(env, wardrobes):
     """Stock for the show: plenty of everything, the sliding system for wardrobes is short by one set on purpose."""
     from .hooks import _add_stock
     location = env['stock.warehouse'].search([('company_id', '=', env.company.id)], limit=1).lot_stock_id
-    target = {'fit_slide': wardrobes, 'fit_hinge': 120, 'fit_guide': 80, 'fit_legs': 200}
+    target = {'fit_slide': wardrobes, 'fit_hinge': 900, 'fit_guide': 500, 'fit_legs': 1000}
     for xmlid, quantity in target.items():
         product = env.ref(f'td_mebli_demo.{xmlid}')
         have = sum(env['stock.quant'].search([('product_id', '=', product.id), ('location_id', '=', location.id)]).mapped('quantity'))
@@ -241,6 +293,24 @@ def _stock(env, wardrobes):
             _add_stock(env, location, product, quantity - have)
         elif have > quantity:
             _add_stock(env, location, product, quantity - have)
+
+
+def _stock_up(env):
+    """A working factory keeps months of material: the sheets (each with a lot), the edge and the fittings, in bulk."""
+    from .hooks import SHEET_L, SHEET_W, SHEETS, EDGE_METRES, _add_stock
+    location = env['stock.warehouse'].search([('company_id', '=', env.company.id)], limit=1).lot_stock_id
+    Lot, Quant = env['stock.lot'], env['stock.quant'].with_context(inventory_mode=True)
+    more_sheets = {'board_sonoma': 170, 'board_white': 170, 'board_anthr': 120, 'board_mdf': 130, 'board_hdf': 120}
+    quants = []
+    for xmlid, total in more_sheets.items():
+        product = env.ref(f'td_mebli_demo.{xmlid}')
+        lots = Lot.create([{'name': f'{product.default_code}-{index:03d}', 'product_id': product.id,
+                            'td_length_mm': SHEET_L, 'td_width_mm': SHEET_W} for index in range(SHEETS[xmlid] + 1, total + 1)])
+        quants += [Quant.create({'product_id': product.id, 'location_id': location.id, 'lot_id': lot.id,
+                                 'inventory_quantity': lot.td_area_m2}) for lot in lots]
+    env['stock.quant'].browse([q.id for q in quants]).action_apply_inventory()
+    for xmlid, metres in EDGE_METRES.items():
+        _add_stock(env, location, env.ref(f'td_mebli_demo.{xmlid}'), metres * 7)
 
 
 def _stamp_workorders(production, order_date, launch_hours, rnd, bias=1.0):
@@ -320,18 +390,20 @@ def seed_showcase(env):
     _images(env)
     terms = _payment_terms(env)
     partners = _customers(env, terms)
-    wardrobes = sum(1 for row in ORDERS if row[0] == 'prod_wardrobe' and row[7] != 'draft' and row[7] != 'sent')
+    bulk = _bulk_orders(random.Random(7))
+    wardrobes = sum(row[1] for row in ORDERS + bulk if row[0] == 'prod_wardrobe' and row[7] not in ('draft', 'sent'))
+    _stock_up(env)
     _stock(env, wardrobes)
     people = {login: _user(env, login) for login, *_ in USERS}
 
     orders = {'done': env['sale.order'], 'progress': env['sale.order'], 'confirmed': env['sale.order']}
     prepay, drafts = [], env['sale.order']
-    for product, qty, dims, body, facade, edge, fitting, stage, days, customer, seller, discount, advance in ORDERS:
+    for product, qty, dims, body, facade, edge, fitting, stage, days, customer, seller, discount, advance in ORDERS + bulk:
         order = make_order(env, product, dims, f'val_body_{body}', f'val_facade_{facade}', f'val_edge_{edge}',
                            f'val_fit_{fitting}', qty=float(qty))
-        ordered = _work(now - timedelta(days=days, hours=rnd.randint(0, 5)), rnd)
+        ordered = _past(now - timedelta(days=days, hours=rnd.randint(0, 5)), now, rnd)
         order.write({'partner_id': partners[customer].id, 'user_id': people[seller].id, 'date_order': ordered,
-                     'payment_term_id': terms[advance if advance in terms else 0].id, 'validity_date': (ordered + timedelta(days=14)).date(),
+                     'payment_term_id': terms[advance or 30].id, 'validity_date': (ordered + timedelta(days=14)).date(),
                      'note': 'Термін виготовлення — 14 робочих днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж за окремою домовленістю.'})
         order = order.with_user(people[seller])
         order.order_line.action_td_generate_bom()
@@ -351,7 +423,8 @@ def seed_showcase(env):
     # chatter on orders: several roles, dates spread between the order date and now
     for order in (orders['done'] | orders['progress'] | orders['confirmed']):
         span = max((now - order.date_order).total_seconds(), 3600.0)
-        for position, (author, text) in enumerate(rnd.sample(NOTES['sale'], 3)):
+        old = order.date_order < now - timedelta(days=30)
+        for position, (author, text) in enumerate(rnd.sample(NOTES['sale'], 1 if old else 3)):
             when = order.date_order + timedelta(seconds=span * (position + 1) / 4.0)
             # the salesperson writes only in the orders of her own
             _note(order, order.user_id if author == 'salon' else people[author], text, when)
@@ -361,15 +434,19 @@ def seed_showcase(env):
 
     # history: finished orders and orders in progress go through cutting in several jobs, like the live ones
     jobs = env['td.mebli.cutting.job']
-    batches = [(orders['done'][:3], 'done', 28), (orders['done'][3:], 'done', 20),
-               (orders['progress'][:3], 'progress', 9), (orders['progress'][3:], 'progress', 5)]
-    for batch, stage, days in batches:
+    dev_order = orders['done'][3]  # the order that took longer than planned: a deviation worth showing
+    batches = []
+    for stage in ('done', 'progress'):
+        ordered_list = orders[stage].sorted('date_order')
+        for index in range(0, len(ordered_list), 4):
+            batches.append((ordered_list[index:index + 4], stage))
+    for batch, stage in batches:
         tech = people['tech']
         job = env['td.mebli.cutting.job'].with_user(tech).create({'production_ids': [(6, 0, batch.mrp_production_ids.ids)]})
         job.action_send()
         job.action_simulate()
         job.action_done()
-        when = _work(now - timedelta(days=days, hours=-rnd.randint(1, 4)), rnd)
+        when = _past(max(batch.mapped('date_order')) + timedelta(hours=rnd.randint(20, 40)), now, rnd)
         _backdate(env, 'td_mebli_cutting_job', job, when)
         for lot in job.sheet_ids.offcut_ids.lot_id:  # the offcuts of one job are stocked during the shift, not in one minute
             _backdate(env, 'stock_lot', lot, _work(when + timedelta(minutes=rnd.randint(5, 420)), rnd))
@@ -377,7 +454,7 @@ def seed_showcase(env):
         jobs |= job
         for order in batch:
             production = order.mrp_production_ids
-            launch = rnd.randint(14, 44)
+            launch = rnd.randint(14, 44) if order.date_order >= now - timedelta(days=30) else rnd.randint(34, 70)
             levels = 4 if stage == 'done' else rnd.randint(1, 3)
             for position, workorder in enumerate(production.workorder_ids.sorted('id')):
                 if position < levels:
@@ -385,20 +462,21 @@ def seed_showcase(env):
                     if stage == 'done' or position < levels - 1:
                         workorder.button_finish()
             bias = 1.0
-            if stage == 'done' and order == orders['done'][3]:
+            if stage == 'done' and order == dev_order:
                 bias = 1.22  # one order took longer than planned: a deviation worth showing
             _stamp_workorders(production, order.date_order, launch, rnd, bias)
             if stage == 'done':
                 for move in production.move_raw_ids:
                     # the real consumption differs a little from the plan: an extra sheet cut, a longer edge strip
-                    factor = {'ЛДСП': 1.06, 'КР': 1.04, 'МДФ': 0.97}.get((move.product_id.default_code or '').split('-')[0])
-                    if factor and move.product_uom_qty:
+                    # (tracked sheets are consumed by their lots exactly as the cutting job reserved them)
+                    factor = {'КР': 1.08}.get((move.product_id.default_code or '').split('-')[0])
+                    if factor and move.product_uom_qty and move.has_tracking == 'none':
                         move.quantity = round(move.product_uom_qty * factor, 3)
                         move.picked = True
                 production.with_context(skip_consumption=True, skip_backorder=True).button_mark_done()
                 production.write({'date_finished': production.workorder_ids.sorted('id')[-1].date_finished})
             production.date_deadline = order.date_order + timedelta(days=rnd.randint(12, 16))
-            for position, (author, text) in enumerate(rnd.sample(NOTES['mrp'], 3)):
+            for position, (author, text) in enumerate(rnd.sample(NOTES['mrp'], 1 if order.date_order < now - timedelta(days=30) else 3)):
                 _note(production, people[author], text, order.date_order + timedelta(hours=launch + 6 * (position + 1)))
     # one order in production is late: the deadline has passed
     late = orders['progress'][1].mrp_production_ids
@@ -449,6 +527,13 @@ def seed_showcase(env):
                       ('prod_kitchen', 'Фасади лише з МДФ; кромка ПВХ 2 мм обов\'язкова для відкритих торців.'),
                       ('prod_dresser', 'Стандартна висота цоколя 100 мм, регульовані опори в комплекті.')):
         _note(env.ref(f'td_mebli_demo.{key}'), people['tech'], text, now - timedelta(days=rnd.randint(20, 35)))
+    # section load: the capacity of the work centers is set so that the show has a believable picture (one bottleneck)
+    for code, percent in {'CUT': 74, 'EDG': 97, 'DRL': 83, 'ASM': 118}.items():
+        center = env['mrp.workcenter'].search([('code', '=', code)], limit=1)
+        hours = sum(env['mrp.workorder'].search([('workcenter_id', '=', center.id), ('state', 'not in', ('done', 'cancel'))])
+                    .mapped('duration_expected')) / 60.0
+        if center and hours:
+            center.td_capacity_hours = max(1, round(hours / percent * 100.0))
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
     env.cr.execute("""UPDATE mail_message SET date = date - interval '1 day' WHERE date >= (date_trunc('day', now() at time zone 'Europe/Kyiv') - interval '1 day') at time zone 'Europe/Kyiv'

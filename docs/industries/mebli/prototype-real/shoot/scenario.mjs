@@ -25,36 +25,40 @@ const ROLES = {
     chief: { name: 'Ігор Савчук', role: 'Начальник виробництва' },
     store: { name: 'Марія Гнатюк', role: 'Комірник' },
     fin: { name: 'Наталія Бондар', role: 'Фінансист' },
+    owner: { name: 'Віталій Остапенко', role: 'Власник · директор фабрики' },
 };
 for (const [k, r] of Object.entries(ROLES)) {
     r.avatar = 'data:image/png;base64,' + fs.readFileSync(path.join(IMG, `avatar_${k}.png`)).toString('base64');
 }
+const b64 = (f) => fs.readFileSync(path.join(ROOT, 'brand-todo', f)).toString('base64');
+const FONT_CSS = `@font-face{font-family:'Open Sans';font-weight:400;src:url(data:font/ttf;base64,${b64('fonts/OpenSans-regular.ttf')})}@font-face{font-family:'Open Sans';font-weight:700;src:url(data:font/ttf;base64,${b64('fonts/OpenSans-bold.ttf')})}`;
+const TODO_MARK = 'data:image/png;base64,' + b64('todo-mark.png');
 const LOGO = 'data:image/png;base64,' + fs.readFileSync(path.join(IMG, 'logo.png')).toString('base64');
 
 let page, context;
 let n = 0;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const ONLY = process.env.ONLY ? process.env.ONLY.split(',').map(Number) : null;
-const READ = parseFloat(process.env.READ || '1'); // множник часу читання підписів
+const READ = parseFloat(process.env.READ || '0.05'); // множник часу читання підписів
 
 // ---------------------------------------------------------------- підписи на екрані (для відео й скриншотів)
-const OVERLAY_JS = `(() => {
+const OVERLAY_JS = () => `(() => {
   if (window.__capInstalled) return; window.__capInstalled = true;
   const css = document.createElement('style');
-  css.textContent = \`
+  css.textContent = ${JSON.stringify(FONT_CSS)} + \`
     .o_web_client, .o_action_manager { max-height: calc(100vh - 104px); }
     .o_web_client { height: calc(100vh - 104px) !important; }
     #td-cap { position: fixed; left: 0; right: 0; bottom: 0; height: 104px; z-index: 100000; display: flex; align-items: center; gap: 18px;
-      padding: 0 28px; background: #2b2118; color: #fff; font-family: "Inter", "Segoe UI", Roboto, sans-serif; box-sizing: border-box; border-top: 3px solid #c9a06a; }
-    #td-cap img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #c9a06a; flex: none; }
+      padding: 0 28px; background: #101820; color: #fff; font-family: "Open Sans", sans-serif; box-sizing: border-box; border-top: 6px solid #FE5000; }
+    #td-cap img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #FE5000; flex: none; } #td-cap img.mark { width: 40px; height: 40px; border-radius: 8px; border: 0; background: #fff; padding: 3px; }
     #td-cap .who { width: 190px; flex: none; line-height: 1.25; }
-    #td-cap .who b { display: block; font-size: 16px; } #td-cap .who span { font-size: 13px; color: #d9c3a3; }
+    #td-cap .who b { display: block; font-size: 16px; } #td-cap .who span { font-size: 13px; color: #BFBFBF; }
     #td-cap .txt { flex: 1; line-height: 1.3; }
-    #td-cap .pain { font-size: 13.5px; color: #d9c3a3; margin-bottom: 3px; }
+    #td-cap .pain { font-size: 13.5px; color: #BFBFBF; margin-bottom: 3px; }
     #td-cap .gain { font-size: 20px; font-weight: 600; }
     #td-cap .tags { flex: none; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
-    #td-cap .tag.dim { color: #a8916f; border-color: #5b4a36; font-size: 10.5px; }
-    #td-cap .tag { flex: none; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: #d9c3a3; border: 1px solid #7d6648;
+    #td-cap .tag.dim { color: #BFBFBF; border-color: #808080; font-size: 10.5px; }
+    #td-cap .tag { flex: none; font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: #FE5000; border: 1px solid #FE5000;
       border-radius: 20px; padding: 3px 11px; white-space: nowrap; }
     #td-card { position: fixed; inset: 0; z-index: 200000; background: #2b2118; color: #fff; display: flex; flex-direction: column; align-items: center;
       justify-content: center; text-align: center; font-family: "Inter", "Segoe UI", Roboto, sans-serif; padding: 0 120px; }
@@ -74,7 +78,7 @@ const OVERLAY_JS = `(() => {
       if (!c) { css.disabled = true; return; } css.disabled = false;
       el.innerHTML = '<img src="' + c.avatar + '"><div class="who"><b>' + c.name + '</b><span>' + c.role + '</span></div>' +
         '<div class="txt"><div class="pain">Біль: ' + c.pain + '</div><div class="gain">' + c.gain + '</div></div>' +
-        '<div class="tags"><span class="tag">' + (c.pid || '') + '</span><span class="tag dim">' + (c.tag || 'демо-дані') + '</span></div>';
+        '<div class="tags"><span class="tag dim">' + (c.tag || 'демо-дані') + '</span></div><img class="mark" src="${TODO_MARK}">';
     };
     window.__renderCap();
   };
@@ -99,6 +103,8 @@ const CARD_CSS = `<style>
 </style>`;
 // a full-screen standalone page (not injected into Odoo): the video starts and ends on these
 async function card(html, ms) {
+    // setContent over a live Odoo page left its owl code running on a destroyed DOM (pageerror «parentNode of null»): leave the page first
+    await page.goto('about:blank');
     await page.setContent('<!doctype html><html lang="uk"><head><meta charset="utf-8">' + CARD_CSS + '</head><body>' + html + '</body></html>');
     await sleep(ms * READ);
 }
@@ -146,6 +152,9 @@ async function settle(ms = 700) {
 async function goto(url) { await page.goto(BASE + url); await settle(1200); }
 async function shot(name, hold = 6500) {
     n += 1;
+    // таблиця деталей широка: на цих кадрах ховаємо чат справа, щоб колонки не різались
+    await page.evaluate((on) => { let el = document.getElementById('td-nochat'); if (!el) { el = document.createElement('style'); el.id = 'td-nochat'; document.head.appendChild(el); }
+        el.textContent = on ? '.o-mail-Form-chatter, .o-mail-ChatterContainer { display: none !important; }' : ''; }, ['specyfikaciya', 'zavdannya-rozkroyu'].includes(name));
     await page.mouse.move(880, 960); // курсор у підписі: жодних підказок і підсвічування в кадрі
     await settle(600);
     const file = path.join(SHOTS, `${String(n).padStart(2, '0')}-${name}.png`);
@@ -179,6 +188,22 @@ async function removeFacet() {
     if (await x.count()) { await x.click(); await settle(800); }
 }
 const want = (i) => !ONLY || ONLY.includes(i);
+// ---- факти для SHOW.md: беруться з тієї самої бази й тих самих кадрів, що й зйомка (shoot/facts.json -> make_show.mjs)
+const facts = { checks: [] };
+async function rpc(model, method, args, kwargs = {}) {
+    return page.evaluate(async ([model, method, args, kwargs]) => {
+        const r = await fetch(`/web/dataset/call_kw/${model}/${method}`, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ jsonrpc: '2.0', method: 'call', params: { model, method, args, kwargs } }) });
+        const j = await r.json(); if (j.error) throw new Error((j.error.data && j.error.data.message) || 'rpc error'); return j.result;
+    }, [model, method, args, kwargs]);
+}
+const norm = (t) => String(t).replace(/[\u00a0\u202f]/g, ' ').trim();
+const pageText = async () => norm(await page.evaluate(() => document.body.innerText));
+async function check(name, expected) { // число з SHOW.md має бути в DOM кадру
+    const ok = (await pageText()).includes(expected);
+    facts.checks.push({ name, expected, ok });
+    if (!ok) console.error('FACT MISMATCH', name, expected);
+}
 let step = 0;
 const next = () => { step += 1; return step; };
 
@@ -280,7 +305,8 @@ async function steps() {
         await page.locator('.o_form_sheet_bg').first().evaluate((el) => { el.scrollTop = el.scrollHeight; });
         await sleep(500);
         await caption('salon', 'PAIN-11', 'маржу замовлення з’ясовують, коли шафа вже виготовлена',
-            'Ціна з розмірами, собівартість і маржа — видно ще в пропозиції, до підтвердження.');
+            'Ціна з розмірами й маржа — видно ще в пропозиції, до підтвердження.');
+        await check('маржа у пропозиції', '39,13');
         await shot('cina-i-marzha');
     }
     if (want((s = next()))) { // 5 комерційна пропозиція з логотипом
@@ -329,8 +355,10 @@ async function steps() {
     }
     if (want((s = next()))) { // 10 завантаження дільниць
         await goto('/odoo/action-td_mebli_mrp.mrp_workorder_td_load_action');
+        const loads = await rpc('mrp.workorder', 'formatted_read_group', [[['state', 'not in', ['done', 'cancel']]], ['workcenter_id'], ['td_load_pct:sum']]);
+        facts.loads = loads.map((g) => ({ name: g.workcenter_id[1], pct: Math.round(g['td_load_pct:sum']) })).sort((a, b) => a.pct - b.pct);
         await caption('chief', 'PAIN-06', 'не вистачає людей або зникло світло — план летить, а де саме, не видно',
-            'Завантаження кожної дільниці у % від потужності: складання вже понад 100% — вузьке місце видно до зриву термінів.');
+            'Завантаження кожної дільниці у % від потужності: де понад 100% — там вузьке місце, і видно його до зриву термінів.');
         await shot('zavantazhennya-dilnyc');
     }
 
@@ -365,6 +393,11 @@ async function steps() {
         await caption('tech', 'PAIN-04 · 08', 'відходи плити з’ясовуються тільки після розкрою, а обрізки губляться',
             'Карта розкрою з відсотком відходів. Обрізки зі складу беруться першими — економія в гривнях видна одразу.',
             'Розкрій — імітація програми');
+        const jobId = +(/(\d+)$/.exec(page.url()) || [])[1];
+        const [job] = await rpc('td.mebli.cutting.job', 'read', [[jobId], ['waste_pct', 'offcut_used_m2', 'offcut_saving']]);
+        const nf = (x, d) => x.toFixed(d).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        facts.cut_m2 = nf(job.offcut_used_m2, 2); facts.cut_saving = nf(job.offcut_saving, 2); facts.cut_waste = nf(job.waste_pct, 1);
+        await check('розкрій: площа з обрізків', facts.cut_m2); await check('розкрій: економія', facts.cut_saving); await check('розкрій: відходи', facts.cut_waste);
         await shot("karta-rozkroyu", 8000);
         await clickText('.o_statusbar_buttons button', /Підтвердити/);
         await settle(2500);
@@ -409,6 +442,11 @@ async function steps() {
         await opt(/Вартість одиниці/, false);
         await page.keyboard.press('Escape');
         await settle(1200);
+        await page.evaluate(() => { const el = document.createElement('style'); el.textContent = '.o_content table td, .o_content table th { padding-top: 2px !important; padding-bottom: 2px !important; line-height: 1.25; }'; document.head.appendChild(el); });
+        await settle(600);
+        const top = await page.evaluate(() => { const tr = [...document.querySelectorAll('tbody tr')].find((r) => /₴/.test(r.innerText)); const c = [...tr.querySelectorAll('td')].map((x) => x.innerText); return c.slice(-2); });
+        facts.plan_cost = norm(top[0]); facts.real_cost = norm(top[1]);
+        await check('plan-fakt plan', facts.plan_cost); await check('plan-fakt real', facts.real_cost);
         await caption('chief', 'PAIN-11', 'фактична собівартість замовлення відома лише заднім числом',
             'План і факт поруч: вартість матеріалів і годин за специфікацією проти реальної — відхилення видно по рядках.');
         await shot('plan-fakt');
@@ -416,8 +454,13 @@ async function steps() {
     if (want((s = next()))) { // 15 час до запуску
         await goto('/odoo/action-td_mebli_sale.action_orders_launch_td_mebli');
         await compact(true);
+        const footRaw = await page.evaluate(() => [...document.querySelectorAll('.o_list_renderer tfoot td')].map((t) => t.innerText.trim()).find((t) => /^\d+,\d{2}$/.test(t)) || '');
+        if (!footRaw) console.error('FACT MISMATCH avg launch: немає підсумку у списку');
+        facts.avg_launch = footRaw.replace(/,(\d)\d$/, ',$1');
+        facts.avg_launch_raw = footRaw;
+        await check('avg launch', facts.avg_launch_raw);
         await caption('chief', 'PAIN-05', 'скільки замовлення чекає, перш ніж потрапити у виробництво, ніхто не знає',
-            'Скільки годин минуло від замовлення до початку роботи — по кожному й у середньому.');
+            `Годин від замовлення до початку роботи — по кожному замовленню; середнє внизу: ${facts.avg_launch} год.`);
         await shot('chas-do-zapusku');
     }
 
@@ -430,7 +473,21 @@ async function steps() {
         await compact(true);
         await caption('fin', 'PAIN-10 · 11', 'ціни матеріалів змінюються, а маржу замовлень бачать лише після відвантаження',
             'Планова собівартість і маржа кожного замовлення — в одному звіті; замовлення з низькою маржею видно відразу.');
+        facts.margins = await page.evaluate(() => [...document.querySelectorAll('.o_list_renderer .o_data_row td')].map((t) => t.innerText.trim()).filter((t) => /^-?\d+[,.]\d+\s?%$/.test(t)).map((t) => parseFloat(t.replace(',', '.'))));
         await shot('marzha-zamovlen');
+    }
+
+    // ===== Керівник: фабрика на одному екрані (td_mebli_dashboard) =====
+    await asRole('owner', 'Крок 7 · Керівник: вся фабрика на одному екрані', '/odoo/action-td_mebli_dashboard.action_dashboard');
+    if (want((s = next()))) { // 17 дашборд керівника
+        await goto('/odoo/action-td_mebli_dashboard.action_dashboard');
+        await page.waitForSelector('.td_dash_grid', { timeout: 20000 });
+        await sleep(800);
+        facts.dash = await rpc('td.mebli.dashboard', 'get_data', [], { context: { lang: 'uk_UA' } });
+        for (const k of ['revenue', 'margin', 'launch', 'cutting', 'plan_fact']) await check('дашборд ' + k, norm(facts.dash.cards[k].value));
+        await caption('owner', 'PAIN-10 · 11', 'щоб побачити фабрику, власник просить звіти у п’яти людей і збирає їх сам',
+            'Дашборд керівника: виручка, маржа, час до запуску, дільниці, відхід розкрою, план/факт — на одному екрані.');
+        await shot('dashboard-kerivnyka', 9000);
     }
 
     await card(`<img class="logo" src="${LOGO}"><h1>Одна система замість п’яти програм і таблиць</h1>
@@ -438,7 +495,7 @@ async function steps() {
       <li>Специфікація й виробниче замовлення — з опцій, без перенесення вручну</li>
       <li>Розкрій, відходи й ділові обрізки — під обліком</li>
       <li>Завантаження дільниць і план проти факту — на екрані</li></ul>
-      <div class="note">Розкрій у цьому показі — імітація програми розкрою; реальна програма підключається імпортом результату. Усі дані вигадані.</div>`, 8000);
+      <div class="note">Розкрій у цьому показі — імітація програми розкрою; є інтерфейс прийому файлу результату; підключення конкретної програми розкрою тут не показано. Усі дані вигадані.</div>`, 8000);
 }
 
 (async () => {
@@ -447,12 +504,12 @@ async function steps() {
     context = await browser.newContext({
         viewport: { width: 1440, height: 900 }, locale: 'uk-UA', timezoneId: 'Europe/Kyiv',
         deviceScaleFactor: 2,
-        recordVideo: { dir: VIDEO, size: { width: 1440, height: 900 } },
     });
-    await context.addInitScript(OVERLAY_JS);
+    await context.addInitScript(OVERLAY_JS());
     page = await context.newPage();
     page.setDefaultTimeout(20000);
-    page.on('pageerror', (e) => console.error('PAGEERR', String(e).slice(0, 200)));
+    page.on('pageerror', (e) => console.error('PAGEERR step', step, (e.stack || String(e)).replace(/\n/g, ' | ').slice(0, 600)));
+    page.on('console', (m) => { if (m.type() === 'error') console.error('CONSOLE step', step, m.text().slice(0, 300)); });
     let failed = null;
     try {
         await steps();
@@ -461,6 +518,7 @@ async function steps() {
         await page.screenshot({ path: process.env.FAIL_SHOT || '/tmp/fail.png' }).catch(() => {});
         console.error('FAIL at step', step, e.message.split('\n').slice(0, 6).join('\n'));
     }
+    fs.writeFileSync(path.join(__dirname, 'facts.json'), JSON.stringify(facts, null, 1));
     const video = page.video();
     await context.close();
     if (video) fs.renameSync(await video.path(), path.join(VIDEO, ONLY ? 'partial.webm' : 'scenario-raw.webm'));

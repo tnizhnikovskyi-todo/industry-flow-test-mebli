@@ -7,4 +7,9 @@
     <record id="stock.route_warehouse0_mto" model="stock.route">
         <field name="active" eval="True"/>
     </record>
+
+    <record id="dashboard_note" model="ir.config_parameter">
+        <field name="key">td_mebli_dashboard.note</field>
+        <field name="value">Демо-дані вигаданої фабрики. Планова маржа — за стандартними цінами матеріалів і годин. Усі цифри — за останні 30 днів.</field>
+    </record>
 </odoo>

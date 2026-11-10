@@ -52,6 +52,8 @@ const avatars = {
         extra: '<path d="M80 86c0-30 22-46 48-46s48 16 48 46z" fill="#f4c542"/><rect x="72" y="84" width="112" height="12" rx="6" fill="#e1a91b"/>' }),
     store: face({ bg: '#e1efdc', skin: '#f3d0b0', hair: '#a4552c', shirt: '#4f8a4a', hairStyle: 'curly',
         extra: '<path d="M96 170h64v86H96z" fill="#3f7a3a" opacity=".55"/>' }),
+    owner: face({ bg: '#e4e8ee', skin: '#e0b48f', hair: '#8a8f96', shirt: '#1f2a37', hairStyle: 'grey',
+        extra: '<path d="M104 164l24 40 24-40-10-4-14 22-14-22z" fill="#fff"/><path d="M120 176h16l4 70h-24z" fill="#FE5000" opacity=".85"/>' }),
     fin: face({ bg: '#e6e1f0', skin: '#c58d66', hair: '#1f1a18', shirt: '#4b3f72', hairStyle: 'short',
         extra: '<path d="M122 170h12l6 56-12 10-12-10z" fill="#c9a06a"/>' }),
 };

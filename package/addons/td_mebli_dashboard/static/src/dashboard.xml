@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_mebli_dashboard.Dashboard">
+        <div class="o_action td_dash">
+            <t t-set="d" t-value="state.data"/>
+            <div class="td_dash_head">
+                <h1 t-out="d.title"/>
+                <div class="td_dash_period"><span t-out="d.company"/> · <span t-out="d.period"/></div>
+            </div>
+            <div class="td_dash_grid">
+                <t t-set="c" t-value="d.cards"/>
+                <div class="td_card" t-on-click="() => this.open(c.revenue.action)">
+                    <div class="td_label" t-out="c.revenue.label"/>
+                    <div class="td_value" t-out="c.revenue.value"/>
+                    <div t-if="c.revenue.delta" t-attf-class="td_delta td_d_#{c.revenue.delta.tone}" t-out="c.revenue.delta.text"/>
+                    <div t-if="c.revenue.target" class="td_target" t-out="c.revenue.target"/>
+                    <div class="td_line" t-foreach="c.revenue.lines" t-as="l" t-key="l_index" t-out="l"/>
+                </div>
+                <div t-attf-class="td_card td_#{c.margin.tone}" t-on-click="() => this.open(c.margin.action)">
+                    <div class="td_label" t-out="c.margin.label"/>
+                    <div class="td_value" t-out="c.margin.value"/>
+                    <div t-if="c.margin.delta" t-attf-class="td_delta td_d_#{c.margin.delta.tone}" t-out="c.margin.delta.text"/>
+                    <div t-if="c.margin.target" class="td_target" t-out="c.margin.target"/>
+                    <div class="td_line" t-foreach="c.margin.lines" t-as="l" t-key="l_index" t-out="l"/>
+                    <div t-if="c.margin.alert" class="td_alert"><b t-out="c.margin.alert"/>
+                        <span class="td_alert_row" t-foreach="c.margin.alert_rows" t-as="r" t-key="r_index" t-out="r"/></div>
+                </div>
+                <div t-attf-class="td_card td_#{c.launch.tone}" t-on-click="() => this.open(c.launch.action)">
+                    <div class="td_label" t-out="c.launch.label"/>
+                    <div class="td_value" t-out="c.launch.value"/>
+                    <div t-if="c.launch.delta" t-attf-class="td_delta td_d_#{c.launch.delta.tone}" t-out="c.launch.delta.text"/>
+                    <div t-if="c.launch.target" class="td_target" t-out="c.launch.target"/>
+                    <div class="td_line" t-foreach="c.launch.lines" t-as="l" t-key="l_index" t-out="l"/>
+                </div>
+                <div class="td_card" t-on-click="() => this.open(c.load.action)">
+                    <div class="td_label" t-out="c.load.label"/>
+                    <div class="td_target" t-out="c.load.target"/>
+                    <div class="td_bars">
+                        <div class="td_bar_row" t-foreach="c.load.rows" t-as="row" t-key="row.name">
+                            <span class="td_bar_name" t-out="row.name"/>
+                            <span class="td_bar_track"><span t-attf-class="td_bar_fill #{row.over ? 'td_over' : ''}" t-attf-style="width: #{Math.min(row.pct, 150) / 1.5}%"/></span>
+                            <span t-attf-class="td_bar_pct #{row.over ? 'td_over_text' : ''}"><t t-out="row.pct"/>%</span>
+                        </div>
+                    </div>
+                </div>
+                <div t-attf-class="td_card td_#{c.cutting.tone}" t-on-click="() => this.open(c.cutting.action)">
+                    <div class="td_label" t-out="c.cutting.label"/>
+                    <div class="td_value" t-out="c.cutting.value"/>
+                    <div t-if="c.cutting.delta" t-attf-class="td_delta td_d_#{c.cutting.delta.tone}" t-out="c.cutting.delta.text"/>
+                    <div t-if="c.cutting.target" class="td_target" t-out="c.cutting.target"/>
+                    <div class="td_line" t-foreach="c.cutting.lines" t-as="l" t-key="l_index" t-out="l"/>
+                </div>
+                <div t-attf-class="td_card td_#{c.plan_fact.tone}" t-on-click="() => this.open(c.plan_fact.action)">
+                    <div class="td_label" t-out="c.plan_fact.label"/>
+                    <div class="td_value" t-out="c.plan_fact.value"/>
+                    <div class="td_target" t-out="c.plan_fact.target"/>
+                    <div class="td_bars">
+                        <div class="td_bar_row">
+                            <span class="td_bar_name" t-out="c.plan_fact.plan_label"/>
+                            <span class="td_bar_track"><span class="td_bar_fill td_plan" t-attf-style="width: #{c.plan_fact.plan_ratio}%"/></span>
+                            <span class="td_bar_pct" t-out="c.plan_fact.plan"/>
+                        </div>
+                        <div class="td_bar_row">
+                            <span class="td_bar_name" t-out="c.plan_fact.fact_label"/>
+                            <span class="td_bar_track"><span class="td_bar_fill" t-attf-style="width: #{c.plan_fact.fact_ratio}%"/></span>
+                            <span class="td_bar_pct" t-out="c.plan_fact.fact"/>
+                        </div>
+                    </div>
+                    <div class="td_line" t-foreach="c.plan_fact.lines" t-as="l" t-key="l_index" t-out="l"/>
+                </div>
+            </div>
+            <div class="td_dash_note" t-out="d.note"/>
+        </div>
+    </t>
+</templates>

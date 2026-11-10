@@ -182,4 +182,4 @@ class SaleOrderLine(models.Model):
             line = line.with_company(line.company_id)
             materials, operations = line._td_bom_unit_costs()
             cost = line.product_id.uom_id._compute_price(materials + operations, line.product_uom_id)
-            line.purchase_price = line._convert_to_sol_currency(cost, line.company_id.currency_id)
+            line.purchase_price = line.currency_id.round(line._convert_to_sol_currency(cost, line.company_id.currency_id))

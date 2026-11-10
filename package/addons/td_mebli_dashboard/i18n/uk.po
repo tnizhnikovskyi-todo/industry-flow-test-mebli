@@ -1,0 +1,240 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-10 17:00+0000\n"
+"PO-Revision-Date: 2026-11-10 17:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Factory on one screen"
+msgstr "Фабрика на одному екрані"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Last %s days · %s"
+msgstr "Останні %s днів · %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Revenue"
+msgstr "Виручка"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Orders confirmed: %s"
+msgstr "Підтверджено замовлень: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "In quotations: %s for %s"
+msgstr "У пропозиціях: %s на %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Average margin"
+msgstr "Середня маржа"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Margin: %s"
+msgstr "Маржа: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Orders below %s%%: %s"
+msgstr "Замовлень з маржею нижче %s%%: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Order to launch"
+msgstr "Від замовлення до запуску"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "%s h"
+msgstr "%s год"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Average for %s launched orders"
+msgstr "У середньому по %s запущених замовленнях"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Waiting for launch: %s"
+msgstr "Чекають запуску: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Section load, % of week"
+msgstr "Завантаження дільниць, % тижня"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Over capacity: %s"
+msgstr "Понад потужність: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting waste"
+msgstr "Відхід розкрою"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Saved by business offcuts: %s"
+msgstr "Економія від ділових обрізків: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Offcuts in stock: %s m²"
+msgstr "Обрізків на складі: %s м²"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting jobs: %s"
+msgstr "Завдань розкрою: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cost: plan vs actual"
+msgstr "Собівартість: план / факт"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Plan"
+msgstr "План"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Actual"
+msgstr "Факт"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Finished manufacturing orders: %s"
+msgstr "Виконаних виробничих замовлень: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Demo data. Plan margin: standard prices of materials and hours."
+msgstr "Демо-дані. Маржа планова: стандартні ціни матеріалів і годин."
+
+#. module: td_mebli_dashboard
+#: model:ir.ui.menu,name:td_mebli_dashboard.menu_dashboard_root
+msgid "Manager Dashboard"
+msgstr "Керівник"
+
+#. module: td_mebli_dashboard
+#: model:ir.actions.client,name:td_mebli_dashboard.action_dashboard
+msgid "Manager Dashboard"
+msgstr "Керівник"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "no data for the previous %s days"
+msgstr "немає даних за попередні %s днів"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "p.p."
+msgstr "в.п."
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "%s %s%s %s vs previous %s days"
+msgstr "%s %s%s %s до попередніх %s днів"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "The factory dashboard is available to the factory director only."
+msgstr "Дашборд фабрики доступний лише керівнику."
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Orders confirmed: %s (previous period: %s)"
+msgstr "Підтверджено замовлень: %s (було: %s)"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Margin: %s of %s"
+msgstr "Маржа: %s із виручки %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Target: up to %s h"
+msgstr "Ціль: до %s год"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Over 100%: the section is the bottleneck"
+msgstr "Понад 100% — дільниця є вузьким місцем"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Target: up to %s%%"
+msgstr "Ціль: до %s%%"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Target: overrun up to %s%%"
+msgstr "Ціль: перевитрата до %s%%"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Manufacturing orders finished: %s"
+msgstr "Завершено виробничих замовлень: %s"
+
+#. module: td_mebli_dashboard
+#: model:res.groups,name:td_mebli_dashboard.group_td_mebli_director
+msgid "Factory Director (dashboard)"
+msgstr "Керівник фабрики (дашборд)"
+
+#. module: td_mebli_dashboard
+#: model:res.groups,comment:td_mebli_dashboard.group_td_mebli_director
+msgid "Sees the one-screen dashboard of the factory: revenue, margin, cost. Granted to the owner and the finance manager."
+msgstr "Бачить дашборд фабрики на одному екрані: виручка, маржа, собівартість. Надається власнику й фінансисту."

@@ -15,7 +15,7 @@
         <field name="name">mrp.workorder.td.load.graph</field>
         <field name="model">mrp.workorder</field>
         <field name="arch" type="xml">
-            <graph string="Work Center Load" type="bar" stacked="1" disable_linking="1">
+            <graph string="Work Center Load" type="bar" stacked="0" disable_linking="1">
                 <field name="workcenter_id"/>
                 <field name="td_load_zone"/>
                 <field name="td_load_pct" type="measure"/>

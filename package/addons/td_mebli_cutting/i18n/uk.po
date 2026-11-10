@@ -666,3 +666,23 @@ msgstr "імітація"
 #: code:addons/td_mebli_cutting/models/cutting_job.py:0
 msgid "waste"
 msgstr "відхід"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
+msgid "m²"
+msgstr "м²"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
+msgid "mm"
+msgstr "мм"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
+msgid "Reserved:"
+msgstr "Резерв:"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
+msgid "Free"
+msgstr "Вільний"
