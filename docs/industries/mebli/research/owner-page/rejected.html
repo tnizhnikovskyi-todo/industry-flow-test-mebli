@@ -114,6 +114,7 @@ footer.site code{color:var(--ink);word-break:break-word}
 .log dd{margin:0;font-size:15px}
 .keys{font-size:13.5px;color:var(--muted);max-width:76ch}
 @media (max-width:820px){.chg,.log{grid-template-columns:minmax(0,1fr)}.summary a:nth-child(odd){border-left:0}}
+.tbl{border-collapse:collapse;width:100%;font-size:14px}.tbl th,.tbl td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.tbl thead th{font-size:12px;font-weight:700;color:var(--muted);background:var(--surface)}.tbl tr:last-child td{border-bottom:0}.scroll{overflow-x:auto;max-width:100%}
 </style>
 </head>
 <body>
@@ -127,25 +128,26 @@ footer.site code{color:var(--ink);word-break:break-word}
 </header>
 <div class="wrap">
 <header class="masthead">
-  <div class="meta"><span class="num">11.11.2026 · редакція R17</span><span>Ядро пакета на Odoo 19 Community, Enterprise як підсилення</span></div>
+  <div class="meta"><span class="num">11.11.2026 · редакція R18 (рішення власника 11.11.2026)</span><span>Ядро пакета на Odoo 19 Community — основний вхід, Enterprise — апгрейд</span></div>
   <span class="eyebrow">Галузевий пакет «меблі» на Odoo 19 · третя сторінка набору</span>
   <h1>Що ми відкинули під час аналізу і чому</h1>
   <p class="prose">Кожна вимога, яку дослідження прибрало з пакета або з першої версії: причина, доказ, умова, за якої вона повертається в роботу, і де вона зараз живе. Відкинуте не означає «ніколи»: більшість позицій повертається, якщо з'явиться другий тип джерел (розмова з виробником на A-06, тест попиту A-23, пілот).</p>
   <div class="note"><p><b>Правило R12.</b> Функція йде в MVP, лише якщо її біль підтверджено щонайменше двома різними типами джерел або вона обов'язкова за законом. Типи: вакансії, відгуки покупців, публічний голос мебляра, договори, внутрішні дані ToDo, меблеві скарги на конкурентів, норма закону, асоціація чи медіа. Кількість лідів одного типу, навіть 5, це сила одного типу, а не другий тип.</p></div>
   <nav class="summary" aria-label="Групи">
-    <a class="k-out" href="#out"><b class="num">10</b><span>поза пакетом зовсім</span></a>
+    <a class="k-out" href="#out"><b class="num">9</b><span>поза пакетом зовсім</span></a>
     <a class="k-later" href="#later"><b class="num">27</b><span>не в першій версії, після перевірки</span></a>
     <a class="k-seg" href="#segments"><b class="num">9</b><span>інший підсегмент чи профіль</span></a>
     <a class="k-down" href="#concept"><b class="num">3</b><span>понижено в концепції A-20 і зрізі A-21</span></a>
-    <a class="k-own" href="#returned"><b class="num">11</b><span>повернуто рішенням власника</span></a>
-    <a class="k-log" href="#log"><b class="num">2</b><span>зняті рішення власника</span></a>
+    <a class="k-own" href="#returned"><b class="num">11</b><span>повернуто в концепцію рішенням власника</span></a>
+    <a class="k-own" href="#tariff"><b class="num">1</b><span>повернуто окремим тарифом</span></a>
+    <a class="k-log" href="#log"><b class="num">20</b><span>записів журналу знятих рішень</span></a>
   </nav>
   <p class="keys">Внутрішні дані ToDo тут лише знеособлені агрегати: «внутрішні дані ToDo, n клієнтів / лідів», без назв, кодів, ПІБ, контактів, сум угод і цитат клієнтів. Ключі джерел: FM — FUNCTIONAL-MAP.md; IM — industry-model.md; SD — subsegments-deep.md; CF — competitor-features.md; CC:N, PC:N, PV:N, RG:N — рядок N файлів sources/competitor-complaints.md, paid-customizations.md, producer-voice.md (публічна частина), regulation.md.</p>
 </header>
 
 <main>
 <section id="changes">
-  <div class="note"><p><b>Рішення власника 11.11.2026.</b> 11 позицій повернуто в концепцію без доказу попиту: прайси постачальників, контроль якості з фото, пакет міграції, премії й штрафи, фотоархів, ціна з розмірів, конфігуратор, кілька юросіб, дашборд керівника, ділові обрізки, розкрій кількох замовлень. Їх 16 колишніх рядків перенесено з груп 2 і 4 у <a href="#returned">розділ 4а</a>. У групах 1–4 тепер 49 позицій (було 65). Нижче — зміни R12 як історія: фрази «у MVP не йде», «перший кандидат», «не змінилось» про ці позиції більше не діють.</p></div>
+  <div class="note"><p><b>Рішення власника 11.11.2026.</b> 11 позицій повернуто в концепцію без доказу попиту: прайси постачальників, контроль якості з фото, пакет міграції, премії й штрафи, фотоархів, ціна з розмірів, конфігуратор, кілька юросіб, дашборд керівника, ділові обрізки, розкрій кількох замовлень. Їх 16 колишніх рядків перенесено з груп 2 і 4 у <a href="#returned">розділ 4а</a>. <b>R18:</b> ФОП-мікроцехи (OUT-05) повернуто окремим легким тарифом (рішення 4), <a href="#tariff">розділ 4б</a>. У групах 1–4 тепер <b>48</b> позицій; усього в реєстрі 48 + 11 + 1 = 60 (до R17 у групах 1–4 було 65). Нижче — зміни R12 як історія: фрази «у MVP не йде», «перший кандидат», «не змінилось» про ці позиції більше не діють.</p></div>
   <div class="sec-head"><span class="eyebrow">Що змінилось у R12</span><h2>Нові джерела переставили кілька позицій</h2></div>
   <div class="chg">
     <div class="c-out"><h3>Відпало з MVP</h3><ul>
@@ -167,20 +169,19 @@ footer.site code{color:var(--ink);word-break:break-word}
       <li>Розкрій кількох замовлень разом (D-16); R17: повернуто рішенням власника</li>
       <li>AI-розбір рекламацій і AI-чернетки (D-12, D-13)</li>
     </ul>
-    <p class="small">R13 (COMPLETENESS) додала в групу 2 п'ять меж коробки й варіантів сценарію: C-01–C-05 (перерахунок розкроєних деталей, офлайн-форма, кілька юросіб, окремий дашборд, розрахунок пені). Разом було 65 позицій; після R17 — 49 і 11 у розділі 4а.</p>
+    <p class="small">R13 (COMPLETENESS) додала в групу 2 п'ять меж коробки й варіантів сценарію: C-01–C-05 (перерахунок розкроєних деталей, офлайн-форма, кілька юросіб, окремий дашборд, розрахунок пені). Разом було 65 позицій; після R17 — 49 і 11 у розділі 4а; після R18 — 48, 11 і 1 у розділі 4б.</p>
     <p class="small">R12-рецензія додала в групу 2 вісім позицій: P-01 спрощено, P-14 змішаний, P-17, H-08 розірвання, NR-07, HG-01, HG-02, «ФОП без ПРРО». Умови повернення стали перевірюваними: виробник (а) на A-06 / A-23 або пілот. R12-рецензія 3: для N-02, N-09, N-13, NC-02 умова повернення — другий тип джерел для (а), технічна перевірка стандарту лише додаткова; перший кандидат на повернення один — NP-02 (R17: повернуто; перший кандидат за доказом тепер D-17). Разом у групах 1–4 тоді було 60 позицій.</p></div>
   </div>
 </section>
 
 <section id="out">
-  <div class="sec-head"><span class="eyebrow">Група 1 · 10 позицій</span><h2>Поза пакетом: це роблять інші системи або це не потреба</h2></div>
+  <div class="sec-head"><span class="eyebrow">Група 1 · 9 позицій</span><h2>Поза пакетом: це роблять інші системи або це не потреба</h2></div>
   <div class="colhead"><span>Що</span><span>Чому і доказ</span><span>Що поверне в роботу</span></div>
   <div class="items">
     <div class="item"><h3><span class="id">OUT-01</span>Власне 3D-проєктування і рендер</h3><div><p class="why">Ринок PRO100, БАЗИС, ViyarPro, KRONAS MASTER 3D; Bimp із ними теж не конкурує.</p><p class="ev">Доказ: FM §2.3.1; CF:#17; рішення людини на A-04</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи в цьому пакеті. Наша частина: імпорт проєкту (D-01).</p><p class="where">Де зараз: FM §2.3.1; OWNER-BRIEF §5</p></div></div>
     <div class="item"><h3><span class="id">OUT-02</span>Оптимізація розкрою (nesting)</h3><div><p class="why">Її закривають CAD або дистриб'ютор. R12: у виробника розкрій живе в ПЗ верстата (внутрішні дані ToDo, 1 клієнт).</p><p class="ev">Доказ: FM §2.3.1, §4.2; CF:#36; IM §2.3</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи. Наша частина: передати список деталей у програму розкрою або замовити порізку (D-02).</p><p class="where">Де зараз: FM §2.3.1; OWNER-BRIEF §5</p></div></div>
     <div class="item"><h3><span class="id">OUT-03</span>Генерація програм ЧПУ і керування верстатом</h3><div><p class="why">Задача CAM, не обліку. R12: обмін з ЧПУ просив 1 клієнт (внутрішні дані ToDo); список деталей і етикетка йдуть у D-01 / P-09, керування верстатом ні.</p><p class="ev">Доказ: FM §2.3.1; рішення людини на A-04</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи для генерації; обмін статусами див. N-12 (група 2).</p><p class="where">Де зараз: FM §2.3.1, §2.6 N-12</p></div></div>
     <div class="item"><h3><span class="id">OUT-04</span>Розкладка тканин для м'яких меблів</h3><div><p class="why">Це Lectra та подібні системи.</p><p class="ev">Доказ: FM «Що свідомо не робимо»; SD (в)</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи; для профілю (в) лише облік і специфікація.</p><p class="where">Де зараз: OWNER-BRIEF §5</p></div></div>
-    <div class="item"><h3><span class="id">OUT-05</span>ФОП-мікроцехи на 1–5 людей</h3><div><p class="why">74 % виробників ФОП; Odoo з нашими модулями дорожчий за їхній бюджет; є Viyar/KRONAS + KeyCRM чи Bimp Start.</p><p class="ev">Доказ: FM §1.1; IM:S01</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника 4: окремий легкий тариф.</p><p class="where">Де зараз: FM §7 п. 6; OWNER-BRIEF №4</p></div></div>
     <div class="item"><h3><span class="id">OUT-06</span>Повний український бухоблік і зарплата в першій версії</h3><div><p class="why">Облік у фабрик у BAS/BAF. R12: облік лишається в 1С/BAS в обох клієнтів, які це обговорювали (внутрішні дані ToDo, 2 клієнти), тому в MVP обмін H-12.</p><p class="ev">Доказ: FM H-10, H-12, §3.1</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника 5: повний облік в Odoo замість обміну.</p><p class="where">Де зараз: FM §7 п. 5; OWNER-BRIEF №5</p></div></div>
     <div class="item"><h3><span class="id">OUT-07</span>N-06 Пропозиції працівників щодо покращень (kaizen)</h3><div><p class="why">Не меблева специфіка; закривається задачами проєкту.</p><p class="ev">Доказ: внутрішні дані ToDo, 1 лід; FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи як наш модуль; налаштування стандарту за запитом.</p><p class="where">Де зараз: FM §2.6</p></div></div>
     <div class="item"><h3><span class="id">OUT-08</span>Чатбот-консультант для сайту</h3><div><p class="why">Не потреба виробника: це пропозиція нашого продавця. Виробник сумнівався в ефективності для кастомних виробів; роздріб не хоче онлайн-консультанта (лише AI-підсумок, слабко).</p><p class="ev">Доказ: внутрішні дані ToDo, 2 клієнти</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам попросить, і буде другий тип джерел.</p><p class="where">Де зараз: FM §2.5 D-13</p></div></div>
@@ -216,7 +217,7 @@ footer.site code{color:var(--ink);word-break:break-word}
     <div class="item"><h3><span class="id">NR-07</span>Пеня 3 % на день за прострочення (ЗПС ст. 10)</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза до звірки. У MVP лише поле причини зсуву N-03 (виняток з правила).</p><p class="ev">Доказ: RG:14</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист підтвердить кваліфікацію договору (а) як підряду (рішення 17).</p><p class="where">Де зараз: FM §2.6 NR-07</p></div></div>
     <div class="item"><h3><span class="id">HG-01</span>Енергія в собівартості за робочими центрами</h3><div><span class="tag type n0">гіпотеза ToDo</span><p class="why">Рішення менеджера ToDo для внутрішньої моделі; голосу виробника немає.</p><p class="ev">Доказ: внутрішні дані ToDo</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам назве енергію в собівартості болем.</p><p class="where">Де зараз: FM §2.6, у карту не внесено</p></div></div>
     <div class="item"><h3><span class="id">HG-02</span>Приймання плит: ворота, ваги, маси аркушів</h3><div><span class="tag type n0">гіпотеза ToDo</span><p class="why">Рішення менеджера ToDo для внутрішньої моделі; голосу виробника немає.</p><p class="ev">Доказ: внутрішні дані ToDo</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам назве приймання плит болем.</p><p class="where">Де зараз: FM §2.6, у карту не внесено</p></div></div>
-    <div class="item"><h3><span class="id">RG-ФОП</span>Прапорець «ФОП без ПРРО» в налаштуваннях юрособи</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза з регуляторики; поріг звільнення ФОП не підтверджено. Попиту немає; ФОП-мікроцехи поза профілем (OUT-05).</p><p class="ev">Доказ: RG:45, 58</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Бухгалтер чи юрист підтвердить чинний поріг і власник відкриє тариф для ФОП (рішення 4).</p><p class="where">Де зараз: sources/regulation.md §2</p></div></div>
+    <div class="item"><h3><span class="id">RG-ФОП</span>Прапорець «ФОП без ПРРО» в налаштуваннях юрособи</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза з регуляторики; поріг звільнення ФОП не підтверджено. ФОП — у легкому тарифі (рішення 4, <a href="#tariff">розділ 4б</a>); прапорець «ФОП без ПРРО» — кандидат для легкого тарифу.</p><p class="ev">Доказ: RG:45, 58</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Бухгалтер чи юрист підтвердить чинний поріг звільнення ФОП від ПРРО. Тариф для ФОП уже відкрито (рішення 4).</p><p class="where">Де зараз: sources/regulation.md §2</p></div></div>
     <div class="item"><h3><span class="id">D-06 строки</span>Строки в рекламації: ремонт 14 днів, заміна 2 місяці, неустойка 1 % вартості</h3><div><span class="tag type n0">регуляторна гіпотеза</span><p class="why">Джерела вторинні; кваліфікацію договору (а), підряд чи купівля-продаж, не звірено.</p><p class="ev">Доказ: RG:11–13</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист підтвердить норми для договору (а), рішення 17. До того на екрані 12 строк задається вручну <span class="tag hyp">гіпотеза</span>.</p><p class="where">Де зараз: FM §2.5 D-06; екран 12</p></div></div>
     <div class="item"><h3><span class="id">C-01</span>Автоматичний перерахунок уже розкроєних деталей при зміні замовлення <span class="tag">R13</span></h3><div><span class="tag type n0">0 типів для автоматики</span><p class="why">Сама зміна замовлення — у MVP умовно (погодження й зміна). Біль зміни: договір (інтерпретація) і скарга на конкурента (б).</p><p class="ev">Доказ: FM §4.4</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Пілот покаже часті зміни після розкрою.</p><p class="where">Де зараз: У MVP зміна після розкрою — дозамовлення (OWNER-BRIEF §2.1, варіант 3)</p></div></div>
     <div class="item"><h3><span class="id">C-02</span>Офлайн-форма заміру й акта з синхронізацією <span class="tag">R13</span></h3><div><span class="tag type n0">0 типів</span><p class="why">Частота роботи без зв'язку не підтверджена; веб-клієнт Odoo без зв'язку не працює.</p><p class="ev">Доказ: FM R-14</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Розмови чи пілот підтвердять роботу без зв'язку.</p><p class="where">Де зараз: Рішення 13; у коробці онлайн + паперовий бланк із QR (BOX §8)</p></div></div>
@@ -272,6 +273,15 @@ footer.site code{color:var(--ink);word-break:break-word}
   </div>
 </section>
 
+<section id="tariff">
+  <div class="sec-head"><span class="eyebrow">Розділ 4б · 1 позиція · 11.11.2026</span><h2>Повернуто рішенням власника як окремий тариф</h2>
+  <p class="small prose">Позиція з групи 1 «поза пакетом». Власник відкрив для неї окремий легкий тариф; склад, обмеження, ціна-гіпотеза й ризики — на головній сторінці (<a href="index.html#light">«Легкий тариф ФОП»</a>) і в <code>BOX.md</code> §1а.</p></div>
+  <div class="colhead"><span>Що</span><span>Було і доказ</span><span>Рішення і де тепер</span></div>
+  <div class="items">
+    <div class="item"><h3><span class="id">OUT-05</span>ФОП-мікроцехи на 1–5 людей <span class="tag own">рішення власника</span></h3><div><p class="why">Було поза пакетом: 74 % виробників ФОП; Odoo з нашими модулями дорожчий за їхній бюджет; є Viyar / KRONAS + KeyCRM чи Bimp Start.</p><p class="ev">Доказ: FM §1.1; IM:S01. Бюджет і готовність платити не перевірено; ФОП в odb-catalog немає.</p></div><div><p class="back-if"><span class="lbl">Рішення 4</span>Окремий легкий тариф: 7 екранів, до 5 користувачів, наш сервер; запуск ≈20–40 тис. грн, підписка ≈1 500–3 000 грн на місяць (гіпотеза); розробка 60–140 год до накладних.</p><p class="where">Перевірити: A-23, пункт форми «я ФОП, 1–5 людей»; пілот</p></div></div>
+  </div>
+</section>
+
 <section id="log">
   <div class="sec-head"><span class="eyebrow">Журнал знятих рішень</span><h2>Рішення, які власник зняв, і що через це перестало бути вибором</h2></div>
   <div class="log">
@@ -286,14 +296,40 @@ footer.site code{color:var(--ink);word-break:break-word}
     <dl><dt>Коли, ким</dt><dd>11.11.2026, власник продукту <span class="tag own">рішення власника</span></dd></dl>
     <dl><dt>Питання</dt><dd>Чи повертати в концепцію позиції з одним типом джерел або без доказу?</dd></dl>
     <dl><dt>Як знято</dt><dd>11 позицій повернуто в концепцію в обхід правила «щонайменше 2 типи джерел»: NP-02, P-07, D-10, N-04, N-07, P-01 спрощ., C-03, C-04, F-11 / S-09 (D-09), D-16, S-01 (P-01).</dd></dl>
-    <dl style="grid-column:1 / -1"><dt>Наслідок для відкинутого</dt><dd>16 рядків груп 2 і 4 перенесено в <a href="#returned">розділ 4а</a>; у групах 1–4 лишилось 49 позицій (було 65). Концепція тепер 15 екранів; коробки A, B, C і окупність перераховано (<a href="index.html#money">Гроші</a>, <a href="index.html#decisions">рішення 0</a>); зріз A-21 ближчий до концепції (рішення 19).</dd></dl>
+    <dl style="grid-column:1 / -1"><dt>Наслідок для відкинутого</dt><dd>16 рядків груп 2 і 4 перенесено в <a href="#returned">розділ 4а</a>; у групах 1–4 лишилось 49 позицій (було 65; після R18 — 48). Концепція тепер 15 екранів; коробки A, B, C і окупність перераховано (<a href="index.html#money">Гроші</a>, <a href="index.html#decisions">рішення 0</a>); зріз A-21 ближчий до концепції (рішення 19).</dd></dl>
   </div>
+  <h3>R18: відповіді власника 11.11.2026 (журнал <code>flow/decisions.md</code>, рядки 4–27)</h3>
+  <div class="scroll" tabindex="0" aria-label="Рішення R18" style="overflow-x:auto">
+  <table class="tbl" style="min-width:640px;border-collapse:collapse;width:100%">
+    <thead><tr><th>№ (OWNER-BRIEF / FM §7)</th><th>Питання</th><th>Як знято</th><th>Наслідок для відкинутого</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0 / 0</td><td>Продовжувати до A-21: «дешево й з умовами» чи одразу повний пакет?</td><td><b>Одразу повний пакет</b></td><td>рекомендацію AI «дешево й з умовами» і умову «стоп / далі» знято; позиції груп 2 і 4 у перший реліз не переходять</td></tr>
+      <tr><td class="num">1 / 1</td><td>Перший підсегмент</td><td><b>(а) кухні й корпусні</b></td><td>(д) лишається в групі 3 як інший підсегмент</td></tr>
+      <tr><td class="num">2 / 2</td><td>Розмітка 60 компаній</td><td><b>Не робимо</b></td><td>умови «розмітка показала…» (групи 2, 3) перевіряються лише на A-06, A-23 чи в пілоті</td></tr>
+      <tr><td class="num">3а / 3</td><td>Поріг ICP</td><td><b>Від 10 людей (10–249)</b></td><td>—</td></tr>
+      <tr><td class="num">3б / 3</td><td>Тарифи</td><td><b>Community — основний вхід, Enterprise — апгрейд</b></td><td>—</td></tr>
+      <tr><td class="num">4 / 6</td><td>ФОП-мікроцехи</td><td><b>Окремий легкий тариф</b></td><td>OUT-05 → розділ 4б</td></tr>
+      <tr><td class="num">5 / 5</td><td>Облік</td><td><b>BAS/BAF клієнта + наш обмін</b></td><td>«повний облік в Odoo» лишається поза пакетом</td></tr>
+      <tr><td class="num">6 / 8</td><td>Тріали конкурентів</td><td><b>Відкласти</b></td><td>умови повернення, що залежать від тріалів, — без строку</td></tr>
+      <tr><td class="num">7 / 7</td><td>Дистриб&#x27;ютори</td><td><b>Партнерство: доступ до формату й API</b></td><td>—</td></tr>
+      <tr><td class="num">8 / 9</td><td>Крок «Концепція для власника»</td><td><b>Додати крок у флоу</b></td><td>—</td></tr>
+      <tr><td class="num">11 / 11</td><td>CAD+T еталоном</td><td><b>Брати</b></td><td>досліджено кабінетно 11.11.2026 (<code>competitor-features.md</code> §2.19)</td></tr>
+      <tr><td class="num">12 / 12</td><td>«Мости» до Enterprise</td><td><b>Одразу</b></td><td>«мости після першого Enterprise-клієнта» знято</td></tr>
+      <tr><td class="num">15 / 15</td><td>Коробка з фіксованою ціною</td><td><b>Коробка A як вхід</b></td><td>межі коробки A (C-01–C-05, група 2) чинні для A</td></tr>
+      <tr><td class="num">17 / 17</td><td>Підряд чи купівля-продаж</td><td><b>Обидва режими параметром пакета</b></td><td>NR-01, NR-02 — у двох режимах, значення після юриста</td></tr>
+      <tr><td class="num">18 / 18</td><td>Внутрішні першоджерела</td><td><b>Відкрити після рішення про підставу обробки</b></td><td>—</td></tr>
+      <tr><td class="num">19 / 19</td><td>Концепція A-20 і зріз A-21</td><td><b>Повернути A-20 і перезібрати зріз</b></td><td>—</td></tr>
+      <tr><td class="num">20 / 20</td><td>Пілот</td><td><b>Платний зі знижкою за кейс</b></td><td>—</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small prose">Не знято (відкрито): 9 (ціна Enterprise; для розрахунків €27,90), 13, 14 (робоча гіпотеза — ядро без AGPL-залежностей), 16, 21, 22. Разом 24 рішення: 18 вирішено, 6 відкрито.</p>
   <div class="note"><p><b>Зміни статусу R12 не є рішеннями власника.</b> Це пропозиція синтезу; затверджує людина на гейтах A-20 / A-21 (рішення 16): D-08 і P-01 прибрано з MVP; D-17 прибрано з екрана 5; D-14 повернуто переформульованим; P-16 підвищено до окремого екрана (MVP умовно); F-12 переведено в «після перевірки» як NP-02; спрощену ціну з розмірів знято з MVP; NR-01, NR-02 «MVP умовно, до юриста»; вісім нових позицій групи 2.</p></div>
 </section>
 </main>
 
 <footer class="site">
-  <p>Джерело: <code>docs/industries/mebli/research/REJECTED.md</code> (R12 → R17, 11.11.2026) репозиторію тестового флоу; доповнення до <code>FUNCTIONAL-MAP.md</code> і <code>OWNER-BRIEF.md</code>. Повні ключі рядків внутрішніх даних ToDo на сторінку не винесено.</p>
+  <p>Джерело: <code>docs/industries/mebli/research/REJECTED.md</code> (R12 → R18, 11.11.2026) репозиторію тестового флоу; доповнення до <code>FUNCTIONAL-MAP.md</code> і <code>OWNER-BRIEF.md</code>. Повні ключі рядків внутрішніх даних ToDo на сторінку не винесено.</p>
   <p>Підготовлено ToDo · 11.11.2026</p>
 </footer>
 </div>
