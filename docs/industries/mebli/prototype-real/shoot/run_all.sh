@@ -16,3 +16,5 @@ ONLY=7,8,9,10,13,14,15,16,17 node scenario.mjs "$PORT"
 ONLY=m2,m3,m4,m5 node scenario-mobile.mjs "$PORT"
 node rec_clips.mjs D_dash M_dash D_prod D_cut D_store D_margin M_prod M_store M_margin
 node rec_cards.mjs
+
+bash check_english.sh || exit 1

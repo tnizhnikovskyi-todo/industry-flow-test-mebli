@@ -18,6 +18,7 @@ const browser = await chromium.launch();
 const DEVICE = { viewport: { width: 390, height: 844 }, deviceScaleFactor: 3, isMobile: true, hasTouch: true, locale: 'uk-UA', timezoneId: 'Europe/Kyiv' };
 async function ctxFor(login) {
     const ctx = await browser.newContext(DEVICE);
+    await ctx.addInitScript(() => { const add = () => { const s = document.createElement('style'); s.textContent = '.o-mail-Form-chatter,.o-mail-ChatterContainer{display:none!important}'; (document.head || document.documentElement).appendChild(s); }; if (document.head) add(); else document.addEventListener('DOMContentLoaded', add); });
     const page = await ctx.newPage();
     page.setDefaultTimeout(20000);
     page.on('pageerror', (e) => console.error('PAGEERR', login, (e.stack || String(e)).replace(/\n/g, ' | ').slice(0, 400)));

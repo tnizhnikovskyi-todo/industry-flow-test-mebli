@@ -61,7 +61,7 @@ const body = sections.filter((s) => s.title).map((s) => {
 const doc = `<!doctype html><html lang="uk"><head><meta charset="utf-8"><title>Меблева фабрика на Odoo — ToDo</title>
 <link rel="stylesheet" href="shoot/brand.css"><style>
 @page { size: A4; margin: 14mm 12mm 16mm; }
-body { color: #101820; font-size: 10.5pt; line-height: 1.45; max-width: 186mm; margin: 0 auto; }
+body { color: #101820; font-size: 10pt; line-height: 1.45; max-width: 186mm; margin: 0 auto; }
 *, code, pre, kbd, b, strong, i, em, span, h1, h2, p, li { font-family: 'Open Sans', sans-serif !important; }
 header.top { display: flex; align-items: center; justify-content: space-between; border-bottom: 4px solid #FE5000; padding-bottom: 6px; margin-bottom: 10px; }
 header.top img { height: 36px; } header.top span { color: #808080; font-size: 9.5pt; }
@@ -82,15 +82,22 @@ header.top img { height: 36px; } header.top span { color: #808080; font-size: 9.
 .cta { margin-top: 14px; padding: 18px 20px; background: #101820; color: #fff; border-radius: 10px; border-top: 8px solid #FE5000; text-align: center; break-inside: avoid; }
 .cta h2 { font-size: 17pt; margin: 0 0 6px; } .cta p { margin: 4px 0; color: #BFBFBF; } .cta .site { display: inline-block; margin-top: 8px; background: #FE5000; color: #fff; font-weight: 700; font-size: 18pt; padding: 4px 22px; border-radius: 999px; }
 
-/* компактна верстка: текст ліворуч, скриншот(и) праворуч, мобільні — у ряд на всю ширину */
-.blk { display: grid; grid-template-columns: 62mm minmax(0, 1fr); gap: 4mm 6mm; align-items: start; margin: 8px 0; padding-top: 6px; break-inside: avoid; }
+/* компактна верстка: текст ліворуч (~30%), один великий скриншот праворуч (~65%), мобільні — у рамці телефона в ряд; футер із логотипом на кожній сторінці */
+@page { margin: 12mm 12mm 18mm; }
+.blk { display: grid; grid-template-columns: 72mm minmax(0, 1fr); gap: 3mm 5mm; align-items: start; margin: 4px 0; padding-top: 6px; break-inside: avoid; }
+.blk:not(:has(.img.mob)) { break-inside: auto; } .blk .img, .blk .txt { break-inside: avoid; }
 .blk .txt { break-after: auto; } .blk .img { margin-top: 0; grid-template-columns: minmax(0, 1fr) !important; }
-.blk .img:not(.mob) img:nth-child(n+3) { display: none; } .blk .img:not(.mob):has(img:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-.blk:has(.img.mob) { grid-template-columns: 1fr; } .blk .img.mob { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } .blk .img.mob img { display: block !important; }
+.blk .img:not(.mob) img { aspect-ratio: auto !important; object-fit: contain !important; height: auto; }
+.blk .img:not(.mob) img:nth-child(n+2) { display: none; } .blk .img:not(.mob) { max-width: 104mm; }
+.blk:has(.img.mob) { grid-template-columns: 1fr; } .blk .img.mob { grid-template-columns: repeat(4, 31mm) !important; gap: 8mm; padding: 0; justify-content: center; } .blk .img.mob img { display: block !important; border: 5px solid #0b0f14 !important; border-radius: 16px !important; box-shadow: 0 0 0 2px #2a333d, 0 3px 10px rgba(0,0,0,.25); }
+.hero img { max-height: 118mm; object-fit: contain; display: block; margin: 0 auto; }
+.blk:has(.img.mob:not(:has(img:nth-child(3)))) { grid-template-columns: 70mm minmax(0, 1fr); } .blk .img.mob:not(:has(img:nth-child(3))) { grid-template-columns: repeat(2, 40mm) !important; justify-content: start; }
 .cta { break-before: avoid; }
 </style></head><body><header class="top"><img src="brand-todo/todo-logo.png"><span>ToDo — впровадження Odoo для виробництв</span></header>${body}</body></html>`;
 fs.writeFileSync(path.join(ROOT, 'SHOW.html'), doc.replace(/[▲▼■]\s*/g, ''));
 const browser = await chromium.launch(); const page = await browser.newPage();
 await page.goto(pathToFileURL(path.join(ROOT, 'SHOW.html')).href); await page.evaluate(() => document.fonts.ready);
-await page.pdf({ path: path.join(ROOT, 'SHOW.pdf'), format: 'A4', printBackground: true, preferCSSPageSize: true });
+const logo64 = 'data:image/png;base64,' + fs.readFileSync(path.join(ROOT, 'brand-todo', 'todo-logo.png')).toString('base64');
+await page.pdf({ path: path.join(ROOT, 'SHOW.pdf'), format: 'A4', printBackground: true, preferCSSPageSize: true, displayHeaderFooter: true, headerTemplate: '<span></span>',
+    footerTemplate: `<div style="width:100%;margin:0 12mm;padding-top:2mm;border-top:2px solid #FE5000;display:flex;align-items:center;justify-content:space-between;font-family:sans-serif;font-size:8pt;color:#808080"><img src="${logo64}" style="height:7mm"><span>ToDo — впровадження Odoo для виробництв · <b style="color:#FE5000">todo.ltd</b> · розкрій у показі — імітація, дані вигадані</span><span><span class="pageNumber"></span>/<span class="totalPages"></span></span></div>` });
 await browser.close(); console.log('SHOW.md/html/pdf готово');

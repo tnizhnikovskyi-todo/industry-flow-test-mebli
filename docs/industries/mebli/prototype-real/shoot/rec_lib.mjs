@@ -17,8 +17,8 @@ const b64 = (f) => fs.readFileSync(path.join(ROOT, 'brand-todo', f)).toString('b
 const FONT = `@font-face{font-family:'Open Sans';font-weight:400;src:url(data:font/ttf;base64,${b64('fonts/OpenSans-regular.ttf')})}@font-face{font-family:'Open Sans';font-weight:700;src:url(data:font/ttf;base64,${b64('fonts/OpenSans-bold.ttf')})}`;
 const LOGO = 'data:image/png;base64,' + b64('todo-logo.png');
 
-export const DESKTOP = { viewport: { width: 1600, height: 900 }, rec: { width: 1920, height: 1080 } };
-export const MOBILE = { viewport: { width: 390, height: 844 }, rec: { width: 780, height: 1688 } };
+export const DESKTOP = { viewport: { width: 1440, height: 810 }, rec: { width: 1920, height: 1080 } };
+export const MOBILE = { viewport: { width: 390, height: 844 }, rec: { width: 976, height: 2112 } };
 
 // ---------------------------------------------------------------- оверлей у сторінці
 const OVERLAY = (mobile) => `(() => { const boot = () => {
@@ -26,6 +26,7 @@ const OVERLAY = (mobile) => `(() => { const boot = () => {
   const M = ${mobile ? 'true' : 'false'};
   const css = document.createElement('style');
   css.textContent = ${JSON.stringify(FONT)} + \`
+  \${M ? '.o-mail-Form-chatter,.o-mail-ChatterContainer{display:none!important}' : ''}
   #ov-cur{position:fixed;left:0;top:0;width:30px;height:30px;z-index:2147483647;pointer-events:none;display:\${M ? 'none' : 'block'};transform:translate(-100px,-100px);filter:drop-shadow(0 2px 3px rgba(0,0,0,.45))}
   .ov-rip{position:fixed;z-index:2147483646;pointer-events:none;border-radius:50%;border:4px solid #FE5000;background:rgba(254,80,0,.28);width:20px;height:20px;margin:-10px 0 0 -10px;animation:ovrip .6s ease-out forwards}
   .ov-fin{position:fixed;z-index:2147483646;pointer-events:none;border-radius:50%;background:rgba(254,80,0,.45);border:3px solid #fff;width:46px;height:46px;margin:-23px 0 0 -23px;animation:ovfin .7s ease-out forwards}
@@ -73,8 +74,11 @@ const OVERLAY = (mobile) => `(() => { const boot = () => {
     const cx = r.left - cr.left + r.width / 2, cy = r.top - cr.top + r.height / 2;
     const tx = r.width * s > cr.width * .92 ? Math.min(0, -(r.left - cr.left) * s + 6) : Math.min(0, Math.max(cr.width - s * cr.width, cr.width / 2 - s * cx)), ty = Math.min(0, Math.max(cr.height - s * cr.height, cr.height / 2 - s * cy));
     c.style.transformOrigin = '0 0'; c.style.transition = 'transform ' + ms + 'ms cubic-bezier(.45,0,.2,1)'; c.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')'; };
-  window.__pop = (sel, s = 1.12) => { document.querySelectorAll(sel).forEach((el) => { el.style.transition = 'transform .45s cubic-bezier(.3,1.6,.5,1), box-shadow .45s'; el.style.transformOrigin = 'center'; el.style.position = el.style.position || 'relative'; el.style.zIndex = 5; el.style.transform = 'scale(' + s + ')'; el.style.boxShadow = '0 0 0 4px #FE5000, 0 10px 30px rgba(0,0,0,.35)'; }); };
-  window.__popOff = (sel) => { document.querySelectorAll(sel).forEach((el) => { el.style.transform = 'none'; el.style.boxShadow = 'none'; }); };
+  window.__pop = (sel, s = 1.06) => { window.__popBad = false; document.querySelectorAll(sel).forEach((el) => { el.style.transition = 'transform .45s cubic-bezier(.3,1.6,.5,1), box-shadow .45s'; el.style.display = 'inline-block'; el.style.width = 'fit-content'; el.style.alignSelf = 'flex-start'; el.style.padding = '2px 12px'; el.style.borderRadius = '10px';
+    el.style.transformOrigin = 'left center'; el.style.position = el.style.position || 'relative'; el.style.zIndex = 5; el.style.transform = 'scale(' + s + ')'; el.style.boxShadow = '0 0 0 4px #FE5000';
+    setTimeout(() => { const r = el.getBoundingClientRect(); const card = el.closest('.td_card'); const cr = card ? card.getBoundingClientRect() : { left: 0, right: innerWidth };
+      if (r.left < Math.max(0, cr.left) || r.right > Math.min(innerWidth, cr.right) || r.top < 0 || r.bottom > innerHeight) window.__popBad = true; }, 600); }); };
+  window.__popOff = (sel) => { document.querySelectorAll(sel).forEach((el) => { el.style.transform = 'none'; el.style.boxShadow = 'none'; el.style.display = ''; el.style.width = ''; el.style.alignSelf = ''; el.style.padding = ''; }); };
   window.__zoomOff = (ms = 700) => { const c = document.querySelector('.o_action_manager'); if (!c) return; c.style.transition = 'transform ' + ms + 'ms cubic-bezier(.45,0,.2,1)'; c.style.transform = 'none'; };
   window.__scroll = (sel, to, ms = 1500) => new Promise((res) => { const el = document.querySelector(sel); if (!el) return res(false); const a = el.scrollTop;
     const b = to === 'end' ? el.scrollHeight : to; const t0 = performance.now(); const tick = (n) => { const k = Math.min(1, (n - t0) / ms); const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
@@ -106,7 +110,7 @@ import { execFileSync } from 'child_process';
 export async function clip(name, { role, mobile = false, url = null, plain = false, dev: devOverride = null }, fn) {
     const dev = devOverride || (mobile ? MOBILE : DESKTOP);
     const dir = fs.mkdtempSync(path.join(REC, 'tmp-'));
-    const opts = { viewport: dev.viewport, locale: 'uk-UA', timezoneId: 'Europe/Kyiv', deviceScaleFactor: mobile ? dev.rec.width / dev.viewport.width : 1 };
+    const opts = { viewport: dev.viewport, locale: 'uk-UA', timezoneId: 'Europe/Kyiv', deviceScaleFactor: dev.rec.width / dev.viewport.width };
     if (mobile) Object.assign(opts, { isMobile: true, hasTouch: true });
     const ctx = await browser.newContext(opts);
     if (role) await ctx.addCookies(await cookiesFor(role));
@@ -156,7 +160,7 @@ export async function latinWords(page) {
         const ok = /^(mebli|demo|fabryka|example|ToDo|Odoo|todo|ltd|kanban|WH|Out|SO\d*|MO|PDF|RC|HDF|PVC|PS|OK)$/i; const res = new Set();
         document.querySelectorAll(sel).forEach((el) => { if (!el.offsetParent && getComputedStyle(el).position !== 'fixed') return;
             const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const par = n.parentElement; if (!par || par.closest('input,textarea,script,style,[contenteditable]')) continue;
-                (n.textContent.match(/[A-Za-z]{4,}/g) || []).forEach((x) => { if (!ok.test(x) && !/\d/.test(n.textContent.trim()[0] || '') ) res.add(x); }); } });
+                (n.textContent.replace(/\S+@\S+/g, '').match(/[A-Za-z]{4,}/g) || []).forEach((x) => { if (!ok.test(x) && !/\d/.test(n.textContent.trim()[0] || '') ) res.add(x); }); } });
         return [...res];
     }).catch(() => []);
 }
@@ -177,7 +181,7 @@ export async function settle(page, ms = 600) {
 }
 export async function goto(c, url, ms = 900) { await c.page.goto(BASE + url); await settle(c.page, ms); }
 // Титри НЕ малюються в сторінці (їх зрізало б наближення й монтаж): записуємо момент і текст, а накладає їх montage.mjs (ffmpeg overlay)
-export const title = async (c, k, t, short) => { c.events.push({ type: 'title', t: c.t(), k, text: t, short: short || t }); };
+export const title = async (c, k, t, short, proof, top) => { c.events.push({ type: 'title', t: c.t(), k, text: t, short: short || t, proof: proof || null, top: !!top }); };
 export const titleOff = async (c) => { c.events.push({ type: 'off', t: c.t() }); };
 export async function pain(c, k, t, ms = 2100) { // біль на весь екран поверх живого Odoo (накладає монтаж), потім зникає
     const t0 = c.t(); await sleep(ms); c.events.push({ type: 'pain', t: t0, t1: c.t(), k, text: t }); await sleep(450);
@@ -209,8 +213,17 @@ export const scroll = (c, sel, to, ms = 1500) => c.page.evaluate(([s, t, m]) => 
 // «пауза з рухом»: курсор повільно дрейфує (десктоп) або сторінка трохи дихає, щоб кадр не був нерухомим
 export async function hold(c, ms) {
     const end = Date.now() + ms; let i = 0;
+    if (c.mobile) { // телефон: повільна «дихаюча» прокрутка на ~36 px (вниз, а біля низу — вгору), щоб кадр ніколи не був нерухомим
+        await c.page.evaluate((m) => new Promise((res) => {
+            const cand = [...document.querySelectorAll('.o_form_view_container, .o_content, .o_form_sheet_bg, .o_kanban_group, .o_kanban_renderer, .o_action_manager, .td_dash, .o_form_view, .o_view_controller, main, body, html')];
+            const el = cand.find((e) => e.scrollHeight > e.clientHeight + 40 && /auto|scroll/.test(getComputedStyle(e).overflowY)) || document.scrollingElement;
+            const a = el.scrollTop, dir = a + 60 > el.scrollHeight - el.clientHeight ? -1 : 1, t0 = performance.now();
+            const tick = (n) => { const k = Math.min(1, (n - t0) / m); el.scrollTop = a + dir * 36 * k; if (k < 1) requestAnimationFrame(tick); else res(true); }; requestAnimationFrame(tick);
+        }), ms).catch(() => {});
+        return;
+    }
     while (Date.now() < end) {
-        if (!c.mobile) { const [x, y] = c.pos; await c.page.mouse.move(x + Math.sin(i / 3) * 18, y + Math.cos(i / 4) * 10); i++; }
+        const [x, y] = c.pos; await c.page.mouse.move(x + Math.sin(i / 3) * 18, y + Math.cos(i / 4) * 10); i++;
         await sleep(110);
     }
 }
@@ -218,7 +231,25 @@ export async function hold(c, ms) {
 export const zoom = (c, sel, s = 1.6, ms = 900) => c.mobile
     ? c.page.evaluate(([a, d]) => { const el = document.querySelector(a); const sc = el && (el.closest('.td_dash, .o_content, .o_action_manager') || document.scrollingElement); if (!el || !sc) return; const r = el.getBoundingClientRect(); const to = sc.scrollTop + r.top - 70; const a0 = sc.scrollTop, t0 = performance.now(); const tick = (n) => { const k = Math.min(1, (n - t0) / d); sc.scrollTop = a0 + (to - a0) * (k * k * (3 - 2 * k)); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, [sel, ms])
     : c.page.evaluate(([a, b, d]) => window.__zoom(a, b, d), [sel, s, ms]);
-export const pop = (c, sel, s = 1.12) => c.page.evaluate(([a, b]) => window.__pop(a, b), [sel, s]);
+export const pop = async (c, sel, s = 1.06) => { await c.page.evaluate(([a, b]) => window.__pop(a, b), [sel, s]); await sleep(750);
+    if (await c.page.evaluate(() => window.__popBad)) { ERRORS.push('підсвітка виходить за межі картки/екрана: ' + sel); console.error('POPBAD', sel); } };
+// селектор елемента-доказу: «css» або «css@@регвираз» (серед елементів css — той, чий текст підходить; береться останній)
+const PICK = `(q) => { const first = q[0] === '^'; if (first) q = q.slice(1); const [css, re] = q.split('@@'); let els = [...document.querySelectorAll(css)].filter((e) => e.offsetParent !== null || getComputedStyle(e).position === 'fixed');
+    if (re) { const r = new RegExp(re); els = els.filter((e) => r.test(e.innerText || '')); } return (first ? els[0] : els[els.length - 1]) || null; }`;
+// плавно докручує до елемента-доказу (найближчий прокручуваний предок), щоб він був у верхній третині екрана
+export const scrollTo = (c, sel, ms = 1100, frac = 0.28) => c.page.evaluate(([q, P, m, fr]) => new Promise((res) => {
+    const el = eval(P)(q); if (!el) return res(false);
+    let sc = el.parentElement; while (sc && !(sc.scrollHeight > sc.clientHeight + 20 && /auto|scroll/.test(getComputedStyle(sc).overflowY))) sc = sc.parentElement; sc = sc || document.scrollingElement;
+    const a = sc.scrollTop, to = a + el.getBoundingClientRect().top - innerHeight * fr, t0 = performance.now();
+    const tick = (n) => { const k = Math.min(1, (n - t0) / m), e = k * k * (3 - 2 * k); sc.scrollTop = a + (to - a) * e; if (k < 1) requestAnimationFrame(tick); else res(true); }; requestAnimationFrame(tick);
+}), [sel, PICK, ms, frac]);
+// ціль наближення для Reels: bbox елемента-доказу (частки в’юпорта) на момент, коли він на місці; монтаж центрує й наближає саме його
+export async function focus(c, sel) {
+    const box = await c.page.evaluate(([q, P]) => { const el = eval(P)(q); if (!el) return null; const r = el.getBoundingClientRect(); const W = innerWidth, H = innerHeight;
+        return { x: Math.max(0, r.left / W), y: Math.max(0, r.top / H), w: Math.min(1, r.width / W), h: Math.min(1, r.height / H) }; }, [sel, PICK]);
+    if (!box) console.error('FOCUS: немає елемента', sel); else c.events.push({ type: 'focus', t: c.t(), box });
+    return box;
+}
 export const popOff = (c, sel) => c.page.evaluate((a) => window.__popOff(a), sel);
 export const zoomOff = (c, ms = 700) => c.page.evaluate((m) => window.__zoomOff(m), ms);
 // прокрутка першого елемента, що справді прокручується (контейнер залежить від подання й ширини екрана); to: число px або 'end'

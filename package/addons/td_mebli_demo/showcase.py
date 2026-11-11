@@ -265,13 +265,34 @@ def _images(env):
         env.ref(f'td_mebli_demo.{key}').image_1920 = _binary(key + '.png')
 
 
+_CITY_CODE = {'Київ': '44', 'Львів': '32', 'Одеса': '48', 'Дніпро': '56', 'Харків': '57', 'Полтава': '532', 'Запоріжжя': '61',
+              'Чернівці': '372', 'Житомир': '412', 'Вінниця': '432'}
+_TR = dict(zip('абвгґдезийклмнопрстуфцьіїє', 'abvhgdezyyklmnoprstufc\'iie'))
+_TR.update({'ж': 'zh', 'х': 'kh', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ю': 'iu', 'я': 'ia', 'ь': '', "'": '', '\u2019': ''})
+
+
+def _phone(index, city):
+    code = _CITY_CODE.get(city, '44')
+    return f'+380 {code} {(index * 37 + 214) % 900 + 100:03d} {(index * 53 + 17) % 90 + 10:02d} {(index * 29 + 41) % 90 + 10:02d}'
+
+
+def _email(name, kind, index):
+    """Plausible e-mail from the name of a private person (surname@mail), or info@ for a company."""
+    words = name.lower().split()
+    if kind == 'company':
+        return f'office{index + 1}@client-demo.example'
+    latin = ''.join(_TR.get(ch, ch if ch.isascii() and ch.isalnum() else '') for ch in words[-1])
+    first = ''.join(_TR.get(ch, '') for ch in words[0])[:1]
+    return f'{first}.{latin}@mail.example'
+
+
 def _customers(env, terms):
     partners = env['res.partner']
     first = env.ref('td_mebli_demo.partner_salon')
     for index, (name, kind, city, street) in enumerate(CUSTOMERS):
         vals = {'name': name, 'city': city, 'street': street, 'company_type': kind,
-                'country_id': env.ref('base.ua').id, 'phone': f'+380 44 555 02 {index + 10:02d}',
-                'email': f'order{index + 1}@client.example', 'lang': 'uk_UA',
+                'country_id': env.ref('base.ua').id, 'phone': _phone(index, city),
+                'email': _email(name, kind, index), 'lang': 'uk_UA',
                 'property_payment_term_id': terms[50 if index % 2 else 30].id}
         if index == 0:
             first.write(vals)

@@ -396,3 +396,8 @@ msgstr "Виріб"
 msgid "Type to find a product..."
 msgstr "Введіть назву виробу..."
 
+
+#. module: sale
+#: model_terms:ir.ui.view,arch_db:sale.view_order_form
+msgid "Tax Incl."
+msgstr "З податком"

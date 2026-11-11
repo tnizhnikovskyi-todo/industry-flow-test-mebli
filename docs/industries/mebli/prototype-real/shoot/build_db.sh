@@ -13,3 +13,5 @@ F3D_TEST_INSTALL=td_mebli_mrp,td_mebli_sale,td_mebli_cutting,td_mebli_dashboard,
 source "$T/env.sh"
 $ODOO_PY $ODOO_BIN shell -c "$ODOO_CONF" --addons-path="$ODOO_ADDONS_PATH" -d "$DB" --no-http \
     < "$F3D_ADDONS_DIR/td_mebli_demo/scripts/seed_showcase.py" 2>&1 | grep -v " INFO \| WARNING " | tail -15
+# службовий адміністратор — українською (щоб латиниця не потрапляла в кадр)
+runuser -u postgres -- psql -q -d "$DB" -c "UPDATE res_partner SET name='Адміністратор' WHERE id IN (SELECT partner_id FROM res_users WHERE login='admin')" || true

@@ -33,7 +33,7 @@ for (const [k, r] of Object.entries(ROLES)) {
 }
 const b64 = (f) => fs.readFileSync(path.join(ROOT, 'brand-todo', f)).toString('base64');
 const FONT_CSS = `@font-face{font-family:'Open Sans';font-weight:400;src:url(data:font/ttf;base64,${b64('fonts/OpenSans-regular.ttf')})}@font-face{font-family:'Open Sans';font-weight:700;src:url(data:font/ttf;base64,${b64('fonts/OpenSans-bold.ttf')})}`;
-const TODO_MARK = 'data:image/png;base64,' + b64('todo-mark.png');
+const TODO_MARK = 'data:image/png;base64,' + b64('todo-logo.png');
 const LOGO = 'data:image/png;base64,' + fs.readFileSync(path.join(IMG, 'logo.png')).toString('base64');
 
 let page, context;
@@ -51,7 +51,7 @@ const OVERLAY_JS = () => `(() => {
     .o_web_client { height: calc(100vh - 104px) !important; }
     #td-cap { position: fixed; left: 0; right: 0; bottom: 0; height: 104px; z-index: 100000; display: flex; align-items: center; gap: 18px;
       padding: 0 28px; background: #101820; color: #fff; font-family: "Open Sans", sans-serif; box-sizing: border-box; border-top: 6px solid #FE5000; }
-    #td-cap img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #FE5000; flex: none; } #td-cap img.mark { width: 40px; height: 40px; border-radius: 8px; border: 0; background: #fff; padding: 3px; }
+    #td-cap img { width: 56px; height: 56px; border-radius: 50%; border: 2px solid #FE5000; flex: none; } #td-cap img.mark { width: auto; height: 36px; border-radius: 8px; border: 0; background: #fff; padding: 5px 12px; object-fit: contain; }
     #td-cap .who { width: 190px; flex: none; line-height: 1.25; }
     #td-cap .who b { display: block; font-size: 16px; } #td-cap .who span { font-size: 13px; color: #BFBFBF; }
     #td-cap .txt { flex: 1; line-height: 1.3; }
@@ -293,7 +293,7 @@ async function steps() {
         await settle(1800);
         await notebookTab(/Деталі/);
         await caption('salon', 'PAIN-03', 'специфікацію вручну переносять між програмами проєктування, розкрою й обліку',
-            'Покупець попросив ширше — ціна перерахована, а специфікація (плити, кромка, деталі з розмірами) складена сама.');
+            'Покупець попросив ширше — ціна в рядку перерахована, а специфікація (плити, кромка, деталі з розмірами) складена сама.');
         await shot('specyfikaciya');
     }
     if (want((s = next()))) { // 4 ціна і маржа

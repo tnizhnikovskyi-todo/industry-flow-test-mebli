@@ -1,7 +1,7 @@
 // Живі записи екрана Odoo (десктоп 1600x900 -> 1920x1080 і телефон 390x640) для монтажу відео. Запуск: node rec_clips.mjs D_dash M_dash ...
 // Кожен кліп = справжні кліки, набір тексту, прокрутка, zoom/pan, count-up; результат video/rec/<ім'я>.webm + .json. Порядок важливий: D_dash/M_dash
 // знімаються першими — до того, як клипи підтверджують замовлення й змінюють цифри дашборда (щоб збігались зі скриншотами й SHOW.md).
-import { scrollAny, scrollN, pop, popOff, launch, clip, goto, glide, press, typeIn, title, titleOff, pain, hold, scroll, zoom, zoomOff, sleep, settle, BASE } from './rec_lib.mjs';
+import { focus, scrollTo, scrollAny, scrollN, pop, popOff, launch, clip, goto, glide, press, typeIn, title, titleOff, pain, hold, scroll, zoom, zoomOff, sleep, settle, BASE } from './rec_lib.mjs';
 
 const DASH = '/odoo/action-td_mebli_dashboard.action_dashboard';
 const card = (n) => `.td_dash_grid > .td_card:nth-child(${n})`;
@@ -36,7 +36,7 @@ const CLIPS = {
             await hold(c, 2300);
             await title(c, 'Маржа', 'Середня маржа і **замовлення нижче 15 %** — червоним');
             await zoom(c, card(2), 1.8, 1000); await hold(c, 2300);
-            await title(c, 'Дільниці', 'Де понад 100 % — там вузьке місце **до зриву строків**');
+            await title(c, 'Дільниці', 'Понад 100 % — **вузьке місце**');
             await zoom(c, card(4), 1.7, 1000); await hold(c, 2300);
             await title(c, 'План / факт', 'Собівартість: план проти факту, відхід розкрою, економія з обрізків');
             await zoom(c, card(6), 1.7, 1000); await hold(c, 1800);
@@ -54,28 +54,29 @@ const CLIPS = {
             await ev(c, () => { document.querySelectorAll('.td_card').forEach((e) => { e.style.opacity = '0'; }); });
             c.mark();
             await ev(c, () => { window.__reveal('.td_card', 220); window.__bars('.td_bar_fill', 1400); window.__countUp('.td_value', 1500); document.querySelectorAll('.td_line, .td_alert, .td_delta').forEach((e) => { e.style.transition = 'none'; e.style.opacity = '0'; setTimeout(() => { e.style.transition = 'opacity .5s'; e.style.opacity = '1'; }, 1700); }); });
-            await title(c, 'Власник', 'Фабрика — **на екрані телефона**');
+            await title(c, 'Власник', 'Фабрика — **на екрані телефона**', null, { n: '2,77 млн ₴', l: 'виручка за місяць' });
             await hold(c, 2200);
             await zoom(c, card(1), 1.2, 800); await hold(c, 1700);
-            await zoom(c, card(2), 1.2, 800); await title(c, 'Маржа', '**Низьку маржу** видно одразу'); await pop(c, card(2) + ' .td_value', 1.18); await hold(c, 1700);
-            await press(c, p.locator(card(2)), { settleMs: 1500 }); await title(c, 'Один тап', 'Тап — і **список замовлень** з низькою маржею'); await hold(c, 1700);
+            await zoom(c, card(2), 1.2, 800); await title(c, 'Маржа', '**Низьку маржу** видно одразу', null, { n: '31,5 %', l: 'середня маржа; нижче 15 % — червоним' }); await hold(c, 700); await pop(c, card(2) + ' .td_value', 1.06); await focus(c, card(2) + ' .td_value'); await hold(c, 1300);
+            await popOff(c, card(2) + ' .td_value'); await press(c, p.locator(card(2)), { settleMs: 1500 }); await title(c, 'Один тап', 'Тап — і **замовлення** з низькою маржею', null, { n: '7', l: 'замовлень із маржею нижче 15 %' }); await hold(c, 1700);
             await c.page.goBack(); await settle(c.page, 1800); await ev(c, () => { document.querySelectorAll('.td_card').forEach((e) => { e.style.opacity = '1'; }); });
             await zoomOff(c, 500); await scroll(c, '.td_dash', 330, 1300);
-            await zoom(c, card(4), 1.2, 800); await title(c, 'Дільниці', 'Де **понад 100 %** — вузьке місце'); await hold(c, 2000);
+            await zoom(c, card(4), 1.2, 800); await title(c, 'Дільниці', 'Де **понад 100 %** — вузьке місце', null, { n: '129 %', l: 'Складання — вузьке місце' }); await hold(c, 900); await focus(c, card(4) + ' .td_bars'); await hold(c, 1300);
             await zoomOff(c, 500); await scroll(c, '.td_dash', 'end', 1500);
-            await zoom(c, card(6), 1.2, 800); await title(c, 'План / факт', 'Собівартість: **план проти факту**'); await hold(c, 2000);
+            await zoom(c, card(6), 1.2, 800); await title(c, 'План / факт', 'Собівартість: **план проти факту**', null, { n: '+0,6 %', l: 'факт проти плану' }); await hold(c, 900); await focus(c, card(6)); await hold(c, 1300);
         });
     },
     // ---------------------------------------------------------------- салон: замовлення з конфігуратором (десктоп)
     async D_sale() {
         return clip('D_sale', { role: 'salon', url: '/odoo/action-sale.action_quotations' }, async (c) => {
-            const p = c.page; await settle(p, 1200); c.mark();
-            await pain(c, 'Менеджер салону', 'Покупець змінює декор — і **ціну рахують заново** на калькуляторі');
-            await title(c, 'Салон', 'Нове замовлення: клієнт, виріб, опції');
+            const p = c.page; await settle(p, 1200);
             await press(c, p.locator('.o_list_button_add, .o-kanban-button-new').first());
-            await typeIn(c, p.locator('.o_field_widget[name=partner_id] input'), 'Шевчук');
+            await typeIn(c, p.locator('.o_field_widget[name=partner_id] input'), 'Мороз', 40);
             await press(c, p.locator('ul.ui-autocomplete > li > a').first());
             await press(c, p.locator('.o_form_button_save'), { settleMs: 1200 });
+            await hideChatter(c); c.mark();
+            await pain(c, 'Менеджер салону', 'Покупець змінює декор — і **ціну рахують заново** на калькуляторі');
+            await title(c, 'Салон', 'Замовлення збережено — додаємо виріб');
             await press(c, p.locator('a:has-text("Додати товар"), a:has-text("Add a product")').first());
             await typeIn(c, p.locator('div[name="product_template_id"] input'), 'Шафа-купе');
             await press(c, p.locator('ul.ui-autocomplete > li > a').filter({ hasText: /Шафа-купе/ }).first());
@@ -87,15 +88,17 @@ const CLIPS = {
             await press(c, ptal('Декор фасаду').locator('span', { hasText: 'Антрацит' }).first(), { settleMs: 900 });
             await press(c, ptal('Кромка').locator('span', { hasText: 'ПВХ 2 мм' }).first(), { settleMs: 900 });
             await press(c, ptal('Фурнітура').locator('span', { hasText: 'Преміум' }).first(), { settleMs: 900 });
-            await title(c, 'Розміри', 'Покупець називає розміри — менеджер **вводить при ньому**');
+            await title(c, 'Розміри', 'Вводимо **розміри покупця** — при ньому');
             for (const [label, value] of [['Ширина', '1800'], ['Висота', '2400'], ['Глибина', '600']]) {
                 await typeIn(c, ptal(label).locator('input[type="text"]'), value, 110);
                 await press(c, dlg.locator('.modal-body'), { settleMs: 700 });
             }
-            await title(c, 'Ширше?', '«А якщо **трохи ширше**?» — ціна перерахована');
+            await title(c, 'Ширше?', '«А якщо **трохи ширше**?» — вводимо 2000 мм');
             await typeIn(c, ptal('Ширина').locator('input[type="text"]'), '2000', 110);
             await press(c, dlg.locator('.modal-body'), { settleMs: 900 }); await hold(c, 900);
             await press(c, dlg.locator('button', { hasText: /Підтвердити|Confirm/ }), { settleMs: 1200 });
+            await title(c, 'Ціна', 'Ціна перерахована за розмірами: **24 200 → 30 250 ₴**');
+            await focus(c, '.o_data_row [name="price_subtotal"], .o_data_row'); await hold(c, 1400);
             await press(c, p.locator('.o_form_button_save'), { settleMs: 1200 });
             await hideChatter(c);
             // специфікація й собівартість будуються при збереженні рядка: чекаємо реальну маржу, а не 100 % до перерахунку
@@ -108,7 +111,7 @@ const CLIPS = {
             }
             await p.keyboard.press('Escape'); await settle(p, 600);
             await ev(c, () => { const el = document.querySelector('.o_form_sheet_bg'); if (el) window.__scroll('.o_form_sheet_bg', 'end', 900); });
-            await hold(c, 1800);
+            await hold(c, 600); await focus(c, '.oe_subtotal_footer .o_cell_custom@@Маржа'); await hold(c, 1900);
             await title(c, 'Підтвердження', 'Підтвердили — **виробниче замовлення створене само**');
             await press(c, p.locator('button[name="action_confirm"]').first(), { settleMs: 2200 });
             await hold(c, 1800);
@@ -159,10 +162,11 @@ const CLIPS = {
             await press(c, p.locator('.o_data_row').filter({ hasText: /Немає в наявності/ }).first(), { settleMs: 1500 });
             // рядок «Немає в наявності» має бути над плашкою титру: піднімаємо його в верхню частину форми
             await ev(c, () => { const r = [...document.querySelectorAll('tr, .o_data_row')].find((e) => /Немає в наявності/.test(e.innerText)); if (r) r.scrollIntoView({ block: 'start' }); });
-            await ev(c, () => { const r = [...document.querySelectorAll('tr, .o_data_row')].find((e) => /Немає в наявності/.test(e.innerText)); if (r) r.style.outline = '3px solid #FE5000'; });
-            await hold(c, 2400);
-            await title(c, 'Завантаження дільниць', 'Де понад 100 % — **вузьке місце видно до зриву**');
-            await goto(c, '/odoo/action-td_mebli_mrp.mrp_workorder_td_load_action', 2200);
+            await ev(c, () => { const r = [...document.querySelectorAll('tr, .o_data_row')].find((e) => /Немає в наявності/.test(e.innerText)); if (r) { r.style.outline = '3px solid #FE5000'; r.setAttribute('data-tdhl', '1'); } });
+            await focus(c, '[data-tdhl]'); await hold(c, 2400);
+            await goto(c, '/odoo/action-td_mebli_mrp.mrp_workorder_td_load_action', 1200);
+            await p.waitForSelector('.o_graph_renderer canvas'); await sleep(1500);
+            await title(c, 'Завантаження дільниць', 'Де понад 100 % — **вузьке місце видно до зриву**', null, null, true);
             await hold(c, 1500);
             await zoom(c, '.o_graph_renderer', 1.35, 1600); await hold(c, 1900);
         });
@@ -203,21 +207,23 @@ const CLIPS = {
             await press(c, p.locator('button.o_switch_view.o_list'), { settleMs: 1500 });
             await title(c, 'Низька маржа', 'Замовлення нижче 15 % — **червоним**, одразу видно');
             await ev(c, () => window.__scroll('.o_content', 'end', 2600));
-            await hold(c, 1800);
+            await focus(c, '.o_data_row:has(.text-danger)'); await hold(c, 2200);
         });
     },
     // ---------------------------------------------------------------- ТЕЛЕФОН: салон — нове замовлення з конфігуратором
     async M_sale() {
         return clip('M_sale', { role: 'salon', mobile: true, url: '/odoo/action-sale.action_quotations' }, async (c) => {
-            const p = c.page; await settle(p, 1800); c.mark();
-            await title(c, 'Менеджер салону', 'Нове замовлення — **просто з телефона**', 'Замовлення — **з телефона**');
-                        await press(c, p.locator('.o-kanban-button-new, .o_list_button_add').first(), { settleMs: 1200 });
+            const p = c.page; await settle(p, 1800);
+            await press(c, p.locator('.o-kanban-button-new, .o_list_button_add').first(), { settleMs: 700 });
             await choose(c, p.locator('.o_field_widget[name=partner_id] input'), 'Гончар', 'Гончар');
-            await settle(p, 900);
+            await press(c, p.locator('.o_form_button_save'), { settleMs: 1000 });
+            await settle(p, 600); c.mark();
+            await title(c, 'Менеджер салону', 'Нове замовлення — **просто з телефона**', 'Замовлення — **з телефона**');
+            await hold(c, 900);
             await title(c, 'Виріб', 'Додаємо шафу-купе', 'Додаємо **шафу-купе**');
-            await press(c, p.getByText('Додати товар').first(), { settleMs: 1200 });
-            await press(c, p.locator('.modal [name=product_template_id] input').first(), { settleMs: 900 });
-            await press(c, p.locator('.modal .o_kanban_record').filter({ hasText: /Шафа-купе/ }).first(), { settleMs: 2200 });
+            await press(c, p.getByText('Додати товар').first(), { settleMs: 700 });
+            await press(c, p.locator('.modal [name=product_template_id] input').first(), { settleMs: 600 });
+            await press(c, p.locator('.modal .o_kanban_record').filter({ hasText: /Шафа-купе/ }).first(), { settleMs: 1100 });
             await p.waitForSelector('.o_sale_product_configurator_dialog'); await settle(p, 700);
             const dlg = p.locator('.o_sale_product_configurator_dialog');
             const ptal = (label) => dlg.locator('div[name="ptal"]').filter({ has: p.locator('label', { hasText: label }) });
@@ -225,26 +231,28 @@ const CLIPS = {
             await press(c, ptal('Декор корпусу').locator('span', { hasText: 'Антрацит' }).first(), { settleMs: 350 });
             await press(c, ptal('Кромка').locator('span', { hasText: 'ПВХ 2 мм' }).first(), { settleMs: 350 });
             await press(c, ptal('Фурнітура').locator('span', { hasText: 'Преміум' }).first(), { settleMs: 350 });
-            await zoom(c, '.o_sale_product_configurator_dialog .modal-footer, .o_sale_product_configurator_dialog [name="o_sale_product_configurator_price"]', 1.3, 500).catch(() => {});
-            await title(c, 'Розміри', 'Розміри покупця — **і ціна перерахована**', 'Вводимо **розміри**');
+            await focus(c, '.o_sale_product_configurator_dialog .modal-footer');
+            await title(c, 'Розміри', 'Вводимо **розміри покупця**', 'Вводимо **розміри**');
             for (const [label, value] of [['Ширина', '2000'], ['Висота', '2400'], ['Глибина', '600']]) {
                 await typeIn(c, ptal(label).locator('input[type="text"]'), value, 70);
                 await press(c, dlg.locator('.modal-body'), { settleMs: 250 });
             }
-            
-            await press(c, dlg.locator('button', { hasText: /Підтвердити|Confirm/ }), { settleMs: 1500 });
-            await press(c, p.locator('.modal button').filter({ hasText: /^\s*Зберегти та закрити\s*$|Save & Close/ }).first(), { settleMs: 1800 });
+            await focus(c, '.o_sale_product_configurator_dialog .modal-footer'); await hold(c, 600);
+            await press(c, dlg.locator('button', { hasText: /Підтвердити|Confirm/ }), { settleMs: 800 });
+            await title(c, 'Ціна', 'Ціна за розмірами: **26 400 → 33 000 ₴**', null, { n: '33 000 ₴', l: 'ціна після розмірів покупця (було 26 400)' });
+            await focus(c, '.o_data_row, [name="order_line"]'); await hold(c, 1300);
+            await press(c, p.locator('.modal button').filter({ hasText: /^\s*Зберегти та закрити\s*$|Save & Close/ }).first(), { settleMs: 600 });
             await hideChatter(c);
-            await press(c, p.locator('.o_form_button_save'), { settleMs: 1500 });
+            await press(c, p.locator('.o_form_button_save'), { settleMs: 800 });
             await p.waitForFunction(() => !/\(100\s?%\)/.test(document.body.innerText), null, { timeout: 10000 }).catch(() => console.error('WARN M_sale: маржа не перерахована'));
-            await title(c, 'Маржа', 'Ціна й **маржа — ще в пропозиції**');
-            await scrollAny(c, 'end', 1300); await hold(c, 600);
+            await title(c, 'Маржа', 'Ціна й **маржа — ще в пропозиції**', null, { n: '34,4 %', l: 'маржа замовлення — видно до підтвердження' });
+            await scrollTo(c, '.oe_subtotal_footer .o_cell_custom@@Маржа', 1300, 0.45); await focus(c, '.oe_subtotal_footer .o_cell_custom@@Маржа'); await hold(c, 1300);
             await title(c, 'Підтвердження', 'Підтвердили — **цех уже знає**');
             await scrollAny(c, 0, 800);
             await press(c, p.locator('.o_statusbar_buttons .dropdown-toggle, .o_statusbar_buttons button.o_dropdown_button, button[name="action_confirm"]').first(), { settleMs: 700 });
             const ok = p.locator('.o-dropdown--menu button[name="action_confirm"], .o-dropdown--menu .dropdown-item[name="action_confirm"]');
-            if (await ok.count()) await press(c, ok.first(), { settleMs: 2200 });
-            await hold(c, 1300);
+            if (await ok.count()) await press(c, ok.first(), { settleMs: 1100 });
+            await hold(c, 1000);
         });
     },
     // ---------------------------------------------------------------- ТЕЛЕФОН: начальник виробництва — дошка й завантаження
@@ -254,13 +262,15 @@ const CLIPS = {
             await title(c, 'Начальник виробництва', 'Усі замовлення — **за етапами**');
             await scrollN(c, '.o_kanban_group', 0, 'scrollTop', 520, 1300);
             await scrollN(c, '.o_kanban_renderer', 0, 'scrollLeft', 351, 900);
-            await title(c, 'Запуск', 'Що **чекає запуску**, що вже в роботі');
+            await title(c, 'Запуск', 'Що **чекає запуску**, що вже в роботі', null, { n: '13', l: 'замовлень чекають запуску' });
             await scrollN(c, '.o_kanban_group', 1, 'scrollTop', 420, 1200);
             await scrollN(c, '.o_kanban_renderer', 0, 'scrollLeft', 702, 900);
             await scrollN(c, '.o_kanban_group', 2, 'scrollTop', 600, 1100);
             await goto(c, '/odoo/action-td_mebli_mrp.mrp_workorder_td_load_action', 1200);
-            await title(c, 'Дільниці', '**Понад 100 %** — вузьке місце видно до зриву');
-            await hold(c, 2400);
+            await title(c, 'Дільниці', '**Понад 100 %** — вузьке місце', null, { n: '129 %', l: 'Складання — вузьке місце видно до зриву' });
+            await p.waitForSelector('.o_graph_renderer canvas'); await sleep(1600);
+            await focus(c, '.o_graph_renderer canvas'); await hold(c, 700);
+            await press(c, p.locator('.o_graph_renderer canvas'), { settleMs: 600 }); await hold(c, 1300);
         });
     },
     // ---------------------------------------------------------------- ТЕЛЕФОН: комірник — ділові обрізки
@@ -272,8 +282,8 @@ const CLIPS = {
             await title(c, 'Комірник', 'Ділові обрізки: **розмір, площа, резерв**');
             await hold(c, 700); await scrollN(c, '.o_kanban_group', 0, 'scrollTop', 520, 1700);
             await title(c, 'Резерв', 'Наступний розкрій **бере їх першими**');
-            await scrollN(c, '.o_kanban_group', 0, 'scrollTop', 1500, 1900);
-            await hold(c, 700);
+            await scrollTo(c, '^.o_kanban_record:has(.text-bg-warning)', 1500, 0.3); await focus(c, '^.o_kanban_record:has(.text-bg-warning)'); await hold(c, 1100);
+            await scrollTo(c, '.o_kanban_record:has(.text-bg-warning)', 1300, 0.3); await hold(c, 500);
         });
     },
     // ---------------------------------------------------------------- ТЕЛЕФОН: власник/фінансист — маржа замовлень
@@ -286,9 +296,8 @@ const CLIPS = {
             await hold(c, 1400);
             await scrollAny(c, 600, 2000);
             await title(c, 'Низька маржа', 'Нижче 15 % — **червоним**');
-            await hold(c, 1500);
-            await scrollAny(c, 1200, 2000);
-            await hold(c, 800);
+            await scrollTo(c, '^.o_kanban_record:has(.o_field_percentage.text-danger)', 1500, 0.3); await focus(c, '^.o_kanban_record:has(.o_field_percentage.text-danger)'); await hold(c, 1200);
+            await scrollTo(c, '.o_kanban_record:has(.o_field_percentage.text-danger)', 1100, 0.3); await hold(c, 500);
         });
     },
 };
