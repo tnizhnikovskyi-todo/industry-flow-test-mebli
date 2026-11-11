@@ -124,14 +124,14 @@ footer.site code{color:var(--ink);word-break:break-word}
 </header>
 <div class="wrap">
 <header class="masthead">
-  <div class="meta"><span class="num">11.11.2026 · редакція R12</span><span>Ядро пакета на Odoo 19 Community, Enterprise як підсилення</span></div>
+  <div class="meta"><span class="num">11.11.2026 · редакція R13</span><span>Ядро пакета на Odoo 19 Community, Enterprise як підсилення</span></div>
   <span class="eyebrow">Галузевий пакет «меблі» на Odoo 19 · третя сторінка набору</span>
   <h1>Що ми відкинули під час аналізу і чому</h1>
   <p class="prose">Кожна вимога, яку дослідження прибрало з пакета або з першої версії: причина, доказ, умова, за якої вона повертається в роботу, і де вона зараз живе. Відкинуте не означає «ніколи»: більшість позицій повертається, якщо з'явиться другий тип джерел (розмова з виробником на A-06, тест попиту A-23, пілот).</p>
   <div class="note"><p><b>Правило R12.</b> Функція йде в MVP, лише якщо її біль підтверджено щонайменше двома різними типами джерел або вона обов'язкова за законом. Типи: вакансії, відгуки покупців, публічний голос мебляра, договори, внутрішні дані ToDo, меблеві скарги на конкурентів, норма закону, асоціація чи медіа. Кількість лідів одного типу, навіть 5, це сила одного типу, а не другий тип.</p></div>
   <nav class="summary" aria-label="Групи">
     <a class="k-out" href="#out"><b class="num">10</b><span>поза пакетом зовсім</span></a>
-    <a class="k-later" href="#later"><b class="num">34</b><span>не в першій версії, після перевірки</span></a>
+    <a class="k-later" href="#later"><b class="num">39</b><span>не в першій версії, після перевірки</span></a>
     <a class="k-seg" href="#segments"><b class="num">9</b><span>інший підсегмент чи профіль</span></a>
     <a class="k-down" href="#concept"><b class="num">7</b><span>понижено в концепції A-20 і зрізі A-21</span></a>
     <a class="k-log" href="#log"><b class="num">1</b><span>зняте рішення власника</span></a>
@@ -162,6 +162,7 @@ footer.site code{color:var(--ink);word-break:break-word}
       <li>Розкрій кількох замовлень разом (D-16)</li>
       <li>AI-розбір рекламацій і AI-чернетки (D-12, D-13)</li>
     </ul>
+    <p class="small">R13 (COMPLETENESS) додала в групу 2 п'ять меж коробки й варіантів сценарію: C-01–C-05 (перерахунок розкроєних деталей, офлайн-форма, кілька юросіб, окремий дашборд, розрахунок пені). Разом 65 позицій.</p>
     <p class="small">R12-рецензія додала в групу 2 вісім позицій: P-01 спрощено, P-14 змішаний, P-17, H-08 розірвання, NR-07, HG-01, HG-02, «ФОП без ПРРО». Умови повернення стали перевірюваними: виробник (а) на A-06 / A-23 або пілот. R12-рецензія 3: для N-02, N-09, N-13, NC-02 умова повернення — другий тип джерел для (а), технічна перевірка стандарту лише додаткова; перший кандидат на повернення один — NP-02. Разом у групах 1–4 — 60 позицій.</p></div>
   </div>
 </section>
@@ -184,7 +185,7 @@ footer.site code{color:var(--ink);word-break:break-word}
 </section>
 
 <section id="later">
-  <div class="sec-head"><span class="eyebrow">Група 2 · 34 позиції</span><h2>Не в першій версії: спершу перевірити попит</h2>
+  <div class="sec-head"><span class="eyebrow">Група 2 · 39 позицій</span><h2>Не в першій версії: спершу перевірити попит</h2>
   <p class="small prose">Біль має один тип джерел або не підтверджений. Перевірка: розмови з виробниками (A-06), тест попиту A-23, пілот. Позначка біля назви: скільки незалежних типів джерел болю є для (а).</p></div>
   <div class="colhead"><span>Що</span><span>Скільки типів, чому і доказ</span><span>Що поверне в роботу</span></div>
   <div class="items">
@@ -222,6 +223,11 @@ footer.site code{color:var(--ink);word-break:break-word}
     <div class="item"><h3><span class="id">HG-02</span>Приймання плит: ворота, ваги, маси аркушів</h3><div><span class="tag type n0">гіпотеза ToDo</span><p class="why">Рішення менеджера ToDo для внутрішньої моделі; голосу виробника немає.</p><p class="ev">Доказ: внутрішні дані ToDo</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам назве приймання плит болем.</p><p class="where">Де зараз: FM §2.6, у карту не внесено</p></div></div>
     <div class="item"><h3><span class="id">RG-ФОП</span>Прапорець «ФОП без ПРРО» в налаштуваннях юрособи</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза з регуляторики; поріг звільнення ФОП не підтверджено. Попиту немає; ФОП-мікроцехи поза профілем (OUT-05).</p><p class="ev">Доказ: RG:45, 58</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Бухгалтер чи юрист підтвердить чинний поріг і власник відкриє тариф для ФОП (рішення 4).</p><p class="where">Де зараз: sources/regulation.md §2</p></div></div>
     <div class="item"><h3><span class="id">D-06 строки</span>Строки в рекламації: ремонт 14 днів, заміна 2 місяці, неустойка 1 % вартості</h3><div><span class="tag type n0">регуляторна гіпотеза</span><p class="why">Джерела вторинні; кваліфікацію договору (а), підряд чи купівля-продаж, не звірено.</p><p class="ev">Доказ: RG:11–13</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист підтвердить норми для договору (а), рішення 17. До того на екрані 12 строк задається вручну <span class="tag hyp">гіпотеза</span>.</p><p class="where">Де зараз: FM §2.5 D-06; екран 12</p></div></div>
+    <div class="item"><h3><span class="id">C-01</span>Автоматичний перерахунок уже розкроєних деталей при зміні замовлення <span class="tag">R13</span></h3><div><span class="tag type n0">0 типів для автоматики</span><p class="why">Сама зміна замовлення — у MVP умовно (погодження й зміна). Біль зміни: договір (інтерпретація) і скарга на конкурента (б).</p><p class="ev">Доказ: FM §4.4</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Пілот покаже часті зміни після розкрою.</p><p class="where">Де зараз: У MVP зміна після розкрою — дозамовлення (OWNER-BRIEF §2.1, варіант 3)</p></div></div>
+    <div class="item"><h3><span class="id">C-02</span>Офлайн-форма заміру й акта з синхронізацією <span class="tag">R13</span></h3><div><span class="tag type n0">0 типів</span><p class="why">Частота роботи без зв'язку не підтверджена; веб-клієнт Odoo без зв'язку не працює.</p><p class="ev">Доказ: FM R-14</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Розмови чи пілот підтвердять роботу без зв'язку.</p><p class="where">Де зараз: Рішення 13; у коробці онлайн + паперовий бланк із QR (BOX §8)</p></div></div>
+    <div class="item"><h3><span class="id">C-03</span>Кілька юросіб (ТОВ + ФОП) у коробці <span class="tag">R13</span></h3><div><span class="tag type n0">0 типів</span><p class="why">Гіпотеза рецензента.</p><p class="ev">Доказ: FM NG-05</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Розмітка 60 компаній чи розмови покажуть, що це типово.</p><p class="where">Де зараз: Доробка; ризик R-24</p></div></div>
+    <div class="item"><h3><span class="id">C-04</span>Окремий екран «дашборд керівника» <span class="tag">R13</span></h3><div><span class="tag type n0">0 типів для екрана</span><p class="why">KPI підтверджено лише як перелік, без болю ролі.</p><p class="ev">Доказ: IM §3.2</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Керівники на розмовах чи пілоті попросять окремий екран.</p><p class="where">Де зараз: KPI як подання на екранах 6 і 13 (BOX §11)</p></div></div>
+    <div class="item"><h3><span class="id">C-05</span>Розрахунок пені за прострочення в замовленні <span class="tag">R13</span></h3><div><span class="tag type n0">норма — гіпотеза</span><p class="why">Застосовність норми про пеню залежить від кваліфікації договору; текст із вторинного джерела.</p><p class="ev">Доказ: RG:14, NR-07</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист (рішення 17) підтвердить режим підряду.</p><p class="where">Де зараз: Причина й дата зсуву в MVP; пеня поза MVP</p></div></div>
   </div>
   <p class="small prose">Нумерація. NP-01 у реєстрі немає: потребу злито в N-10. N-19 (вікно запуску поза сезоном) не функція, а план продажу й запуску. NC-03 (CRM-воронка) і NC-06 (зміна з частковим рахунком, злито в P-16) уже в MVP, тому не відкинуті.</p>
 </section>
