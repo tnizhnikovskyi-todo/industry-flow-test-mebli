@@ -1,0 +1,62 @@
+# Специфікація перевірок кроку; синтаксис JSON (валідний YAML 1.2). Контракт — ../checks.md
+{
+ "step": "C-08R",
+ "checks": [
+  {
+   "id": "lessons-index",
+   "prim": "exists",
+   "args": {
+    "paths": [
+     "flow/lessons/INDEX.md"
+    ]
+   },
+   "when": "mode:daily|event"
+  },
+  {
+   "id": "script-check-retro",
+   "prim": "manual",
+   "args": {
+    "text": "python3 -I <корінь плагіна flow-core>/skills/skill-retro/scripts/check_retro.py --signals flow/lessons/signals-<дата>.json --lessons flow/lessons/ --today <дата>: RET-coverage, RET-draft, RET-repeat, RET-pii, RET-stale, RET-close, RET-index, RET-signals без FAIL. Кожен сигнал має урок LSN-NNN або «не помилка» з причиною. Скрипт autocheck.py його не запускає: має виконати runner (виконує runner за flow-step-runner, Крок 9 (ж); не виконано → ERROR, не PASS), JSON вставляється у checks[] (FAIL скрипта = FAIL кроку, MANUAL і SKIP лишаються такими).",
+    "cmd": [
+     "python3",
+     "-I",
+     "<корінь плагіна flow-core>/skills/skill-retro/scripts/check_retro.py",
+     "--signals",
+     "flow/lessons/signals-<дата>.json",
+     "--lessons",
+     "flow/lessons/",
+     "--today",
+     "<дата>"
+    ],
+    "who": "runner"
+   }
+  },
+  {
+   "id": "lsn-format",
+   "prim": "manual",
+   "args": {
+    "text": "кожен файл flow/lessons/LSN-NNN.md має ID за шаблоном LSN-\\d{3}, рядок у INDEX.md, посилання на спостереження й правку скіла (PR)",
+    "who": "runner"
+   }
+  },
+  {
+   "id": "no-pii-lessons",
+   "prim": "pii_strict",
+   "args": {
+    "paths": [
+     "flow/lessons/",
+     "observations/"
+    ]
+   }
+  },
+  {
+   "id": "daily-button",
+   "prim": "manual",
+   "args": {
+    "text": "щоденний пакет правок скілів — кнопка Власника продукту; AI скіли без рішення не зливає",
+    "who": "Власник продукту"
+   },
+   "when": "mode:daily"
+  }
+ ]
+}

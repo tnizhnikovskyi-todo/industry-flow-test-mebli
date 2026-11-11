@@ -5,6 +5,12 @@
   utm FILE...        кожне посилання на лендинг (`https://{landing_url}/...`) має utm_campaign, utm_content; з #F-xx -- ще utm_term
   honesty FILE...    фрази з references/forbidden-claims.md (рядки з запереченням пропускаються); потрібні «Прототип» і «пілот з»
   complexity --complexity complexity.md --landing landing.md   F-xx «код/складно» -> «у плані пілоту»
+  risks --features features.md --plan risk-plan.md   кожна F-xx зі статусом owner-decision / «ризик:» має рядок плану перевірки (N-12) з експериментом, порогом і «якщо не підтвердиться»
+  exp --plan risk-plan.md --landing landing.md        експерименти плану (fake-door / pack / price) мають блок у лендингу; тест ціни — лише з позначкою «гіпотеза, не пропозиція»
+  materials --proto prototype-real [--intake OWNER-INTAKE.md] [--landing landing.md] [--plan mailing-plan.md] [--emails emails.md]   без --landing/--plan/--emails: лише «видано A-21c» (передперевірка); з ними — ще й використані (SHOW у emails.md або mailing-plan.md)
+  raw FILE...        посилання на research/sources/ (internal-raw) у файлах скіла заборонені
+  rejected --results results.md [--fail-variants A,C]   розділ «Відкинуто»: 8 колонок, REJ-ID, група, варіанти без порога внесені
+  experiments --signals S.csv --start D --end D        агрегати експериментів групи 8 (колонки `експеримент`, `тариф` у signals.csv)
 Контактів у вивід не друкує. Код виходу 1 при збігу/FAIL."""
 import argparse, csv, json, re, sys
 
@@ -103,14 +109,189 @@ def scan(pats, files, skip=None):
                 print(f"{name}:{p}:{i}"); bad = 1
     return bad
 
+PRICE = re.compile(CLAIMS[5], re.I)
+HEAD = re.compile(r"^#{1,4}\s")
+
+def price_scan(files):
+    """Ціни — лише в розділі «Тест ціни» лендингу й лише з позначкою «гіпотеза» і «не пропозиція»; у листах і поза розділом — заборонено."""
+    bad = 0
+    for p in files:
+        in_price, marks = False, [False, False]; start = 0
+        for i, ln in enumerate(open(p, encoding="utf-8"), 1):
+            if HEAD.match(ln):
+                if in_price and not all(marks): print(f"price-unmarked:{p}:{start}"); bad = 1
+                in_price = bool(re.search(r"Тест ціни", ln)) and p.endswith("landing.md"); marks = [False, False]; start = i
+            if in_price:
+                marks[0] = marks[0] or "гіпотез" in ln.lower(); marks[1] = marks[1] or bool(re.search(r"не\s+пропозиці", ln, re.I)); continue
+            if NEG.search(ln): continue
+            if PRICE.search(ln): print(f"claim:{p}:{i}"); bad = 1
+        if in_price and not all(marks): print(f"price-unmarked:{p}:{start}"); bad = 1
+    return bad
+
+def cells(ln): return [c.strip() for c in ln.strip().strip("|").split("|")]
+
+def table(path, header_key):
+    """Рядки першої таблиці, чий заголовок містить header_key -> (колонки, рядки)."""
+    cols, rows, on = [], [], False
+    for ln in open(path, encoding="utf-8"):
+        if ln.lstrip().startswith("|"):
+            c = cells(ln)
+            if not on and any(header_key in x for x in c): cols, on = c, True; continue
+            if on and not all(set(x) <= set("-: ") for x in c): rows.append(c)
+        elif on and rows: break
+    return cols, rows
+
+def risks(a):
+    feats = open(a.features, encoding="utf-8").read().splitlines(); need = {}
+    for ln in feats:
+        if ln.lstrip().startswith("|") and re.search(r"owner-decision|ризик:", ln):
+            m = FX.search(ln)
+            if m: need[m.group(0)] = 1
+    cols, rows = table(a.plan, "Експеримент"); rc = 0
+    def col(name):
+        for i, c in enumerate(cols):
+            if name in c: return i
+        return None
+    iE, iT, iN, iF = col("Експеримент"), col("поріг"), col("Якщо не підтвердиться"), col("F-xx")
+    if None in (iE, iT, iN, iF): print("risks:plan-header (потрібні колонки F-xx, Експеримент, Сигнал і поріг, Якщо не підтвердиться)"); sys.exit(1)
+    covered = set()
+    for n, r in enumerate(rows, 1):
+        if len(r) <= max(iE, iT, iN, iF): print(f"risks:row-{n}-short"); rc = 1; continue
+        for x in FX.findall(r[iF]): covered.add(x)
+        for name, i in (("експеримент", iE), ("поріг", iT), ("fallback", iN)):
+            if not r[i] or r[i] in ("—", "-", "TODO", "?"): print(f"risks:row-{n}-no-{name}"); rc = 1
+    for x in sorted(need):
+        if x not in covered: print(f"risks:{x}-not-in-plan"); rc = 1
+    if not need: print("risks-info: у features.md немає позицій owner-decision / «ризик:» — перевір SALES §4/§7 вручну")
+    return rc
+
+def exp(a):
+    cols, rows = table(a.plan, "Експеримент"); rc = 0
+    iE = next((i for i, c in enumerate(cols) if "Експеримент" in c), None)
+    if iE is None: print("exp:plan-header"); return 1
+    kinds = {k for r in rows if len(r) > iE for k in ("fake-door", "pack", "price") if k in r[iE].lower()}
+    land = open(a.landing, encoding="utf-8").read()
+    need = {"fake-door": r"(?m)^#{2,3}\s+.*Голосування за функції", "pack": r"(?m)^#{2,3}\s+.*Збери свій пакет", "price": r"(?m)^#{2,3}\s+.*Тест ціни"}
+    for k in sorted(kinds):
+        if not re.search(need[k], land): print(f"exp:{k}-block-missing"); rc = 1
+    return rc
+
+DEFAULT_FORMATS = ["video_16x9", "reels_9x16", "one_pager"]
+
+def intake_formats(path):
+    """Повертає (формати, попередження). Рядковий `formats: [a, b]` або блоковий список `formats:\n  - a`.
+    Не знайдено -> повний набір + попередження (друкується як materials:intake-formats-not-found)."""
+    if not path: return DEFAULT_FORMATS, None
+    t = open(path, encoding="utf-8").read()
+    m = re.search(r"formats:[ \t]*\[([^\]]*)\]", t)
+    if m: fm = [x.strip().strip("'\"") for x in m.group(1).split(",") if x.strip()]
+    else:
+        m = re.search(r"(?m)^([ \t]*)formats:[ \t]*(?:#.*)?\n((?:[ \t]*-[ \t]*[^\n]*\n?)+)", t)
+        fm = [re.sub(r"\s+#.*$", "", x.strip()[1:]).strip().strip("'\"") for x in m.group(2).splitlines() if x.strip().startswith("-")] if m else []
+    if fm: return fm, None
+    return DEFAULT_FORMATS, "materials:intake-formats-not-found (у анкеті немає materials.formats; перевірено повний набір)"
+
+def materials(a):
+    """Фаза 1 (без --landing/--plan/--emails): лише «видано A-21c» (файл існує й не порожній).
+    Фаза 2 (є --landing/--plan/--emails): ще й використання: відео 16x9 і SHOW у лендингу, Reels у плані/листах/лендингу, SHOW (one_pager) у листах або плані."""
+    import glob, os
+    import os as _os
+    if a.intake and not _os.path.isfile(a.intake): print(f"materials:intake-missing:{a.intake}"); return 2
+    fm, warn = intake_formats(a.intake)
+    if warn: print(warn)
+    rd = lambda p: open(p, encoding="utf-8").read() if p else None
+    landing, plan, emails = rd(a.landing), rd(a.plan), rd(a.emails); rc = 0
+    want = []
+    if "video_16x9" in fm: want.append(("video_16x9", "video/*-16x9.mp4"))
+    if "reels_9x16" in fm: want.append(("reels_9x16", "video/*-9x16.mp4"))
+    if "one_pager" in fm: want.append(("one_pager", "SHOW.pdf"))
+    for name, pat in want:
+        hits = [h for h in glob.glob(os.path.join(a.proto, pat)) if not os.path.basename(h).startswith("sample-") and os.path.getsize(h) > 0]
+        if not hits: print(f"materials:{name}-not-delivered (A-21c не віддав непорожній {pat})"); rc = 1; continue
+        base = os.path.basename(hits[0])
+        if name == "video_16x9" and landing is not None and base not in landing: print(f"materials:{name}-not-in-landing:{base}"); rc = 1
+        if name == "reels_9x16" and (plan is not None or emails is not None or landing is not None) and not any(base in (x or "") for x in (plan, emails, landing)): print(f"materials:{name}-not-in-plan:{base}"); rc = 1
+        if name == "one_pager":
+            if landing is not None and base not in landing: print(f"materials:{name}-not-in-landing:{base}"); rc = 1
+            if (emails is not None or plan is not None) and not any(base in (x or "") for x in (emails, plan)): print(f"materials:{name}-not-in-emails-or-plan:{base}"); rc = 1
+    return rc
+
+def raw(files):
+    bad = 0
+    for p, i, ln in lines(files):
+        if re.search(r"research/sources/", ln): print(f"raw:{p}:{i}"); bad = 1
+    return bad
+
+def rejected(a):
+    t = open(a.results, encoding="utf-8").read(); m = re.search(r"(?ms)^##\s+Відкинуто\s*$(.*?)(?=^##\s|\Z)", t)
+    if not m: print("rejected:no-section"); return 1
+    rows = [cells(ln) for ln in m.group(1).splitlines() if ln.lstrip().startswith("|")]
+    rows = [r for r in rows if not all(set(x) <= set("-: ") for x in r)][1:]; rc = 0
+    for n, r in enumerate(rows, 1):
+        if len(r) < 8: print(f"rejected:row-{n}-cols"); rc = 1; continue
+        if not re.fullmatch(r"REJ-\d{3}", r[0]): print(f"rejected:row-{n}-id"); rc = 1
+        if r[2] not in ("G1", "G2", "G3", "G4", "G4\u0430"): print(f"rejected:row-{n}-group"); rc = 1
+        if not r[4]: print(f"rejected:row-{n}-proof"); rc = 1
+    if a.plan:
+        ids = sorted({x for ln in open(a.plan, encoding="utf-8") if ln.lstrip().startswith("|") for x in FX.findall(cells(ln)[0] if cells(ln) else "")})
+        sec = re.search(r"(?ms)^##\s+Перевірка ризиків\s*$(.*?)(?=^##\s|\Z)", t)
+        if not sec: print("rejected:no-risk-check-section"); rc = 1
+        else:
+            body = sec.group(1)
+            for x in ids:
+                ln = next((l for l in body.splitlines() if l.lstrip().startswith("|") and x in l), None)
+                if not ln: print(f"rejected:risk-{x}-not-checked"); rc = 1; continue
+                cs = cells(ln); verdict = cs[-1] if cs else ""; fact = cs[-2] if len(cs) >= 3 else ""
+                if not re.search(r"підтверджено|підтвердилось", verdict, re.I): print(f"rejected:risk-{x}-no-verdict"); rc = 1; continue
+                if not fact.strip(" —-"): print(f"rejected:risk-{x}-no-fact"); rc = 1; continue
+                if re.search(r"не підтверджено|не підтвердилось", ln, re.I) and not any(x in r[1] or x in " ".join(r) for r in rows): print(f"rejected:risk-{x}-unconfirmed-not-in-rejected"); rc = 1
+    for v in [x.strip() for x in (a.fail_variants or "").split(",") if x.strip()]:
+        if not any(re.search(rf"варіант\s+{re.escape(v)}\b", r[1]) for r in rows if len(r) > 1): print(f"rejected:variant-{v}-missing"); rc = 1
+    return rc
+
+def experiments(a):
+    out = {"fake_door": {}, "pack": {"events": 0, "companies": 0}, "price": {"events": {}, "companies": {}}}; best = {}
+    with open(a.signals, encoding="utf-8-sig", newline="") as f:
+        for r in csv.DictReader(f):
+            e = (r.get("експеримент") or "").strip().lower(); d = (r.get("дата") or "").strip()
+            if not e or not (a.start <= d <= a.end): continue
+            lv = LV.get(lvl(r.get("рівень")), 0); n = int((r.get("кількість") or "1").strip() or 1); t = (r.get("тариф") or "—").strip() or "—"
+            if lv <= 2:
+                if e == "fake-door":
+                    for x in FX.findall(r.get("F-xx") or ""): out["fake_door"][x] = out["fake_door"].get(x, 0) + n
+                elif e == "pack": out["pack"]["events"] += n
+                elif e == "price": out["price"]["events"][t] = out["price"]["events"].get(t, 0) + n
+            else:
+                k = (e, (r.get("ЄДРПОУ") or "").strip()); 
+                if k[1] and (k not in best or lv > best[k][0]): best[k] = (lv, t)
+    for (e, _), (lv, t) in best.items():
+        if e == "pack": out["pack"]["companies"] += 1
+        elif e == "price": out["price"]["companies"][t] = out["price"]["companies"].get(t, 0) + 1
+    print(json.dumps(out, ensure_ascii=False, indent=1))
+
 def main():
     ap = argparse.ArgumentParser(); ap.add_argument("cmd"); ap.add_argument("files", nargs="*")
-    for k in ("signals", "calls", "list", "features", "start", "end", "complexity", "landing"): ap.add_argument("--" + k)
-    ap.add_argument("--hot", type=int, default=3); a = ap.parse_args(); rc = 0
+    for k in ("signals", "calls", "list", "features", "start", "end", "complexity", "landing", "plan", "emails", "proto", "intake", "results", "fail-variants"): ap.add_argument("--" + k)
+    ap.add_argument("--hot", type=int, default=3); ap.add_argument("--json", action="store_true"); a = ap.parse_args(); rc = 0
+    if a.json and a.cmd != "aggregate" and a.cmd != "experiments":
+        import io, contextlib
+        buf = io.StringIO(); code = 0
+        try:
+            with contextlib.redirect_stdout(buf): code = run(a)
+        except SystemExit as e: code = e.code or 0
+        msgs = [x for x in buf.getvalue().splitlines() if x]
+        ident = {"materials": "DT-materials", "risks": "DT-risks", "exp": "DT-exp", "raw": "DT-raw", "rejected": "DT-rejected", "pii": "DT-no-pii"}.get(a.cmd, "DT-" + a.cmd)
+        st = "FAIL" if code else ("WARN" if msgs else "PASS")
+        print(json.dumps([{"id": ident, "status": st, "msg": "; ".join(msgs)}], ensure_ascii=False)); sys.exit(code)
+    sys.exit(run(a))
+
+def run(a):
+    rc = 0
     if a.cmd == "aggregate": aggregate(a)
     elif a.cmd == "pii": rc = scan(list(PII.items()), a.files)
     elif a.cmd == "honesty":
-        rc = scan([("claim", "|".join(CLAIMS))], a.files, NEG)
+        rc = scan([("claim", "|".join(CLAIMS[:5] + CLAIMS[6:]))], a.files, NEG)
+        rc |= price_scan(a.files)
         for p in a.files:
             t = open(p, encoding="utf-8").read()
             if p.endswith(("landing.md", "emails.md")) and not ("Прототип" in t and "пілот з" in t):
@@ -124,12 +305,18 @@ def main():
                     continue  # UTM перевіряється лише в посиланнях на лендинг (плейсхолдер)
                 need = ["utm_campaign=", "utm_content="] + (["utm_term=F-"] if "#F-" in u else [])
                 if any(n not in u for n in need): print(f"utm:{p}:{i}"); rc = 1
+    elif a.cmd == "risks": rc = risks(a)
+    elif a.cmd == "exp": rc = exp(a)
+    elif a.cmd == "materials": rc = materials(a)
+    elif a.cmd == "raw": rc = raw(a.files)
+    elif a.cmd == "rejected": rc = rejected(a)
+    elif a.cmd == "experiments": experiments(a)
     elif a.cmd == "complexity":
         hard = {x for ln in open(a.complexity, encoding="utf-8") if re.search(r"код|складно", ln, re.I) for x in FX.findall(ln)}
         blocks = re.split(r"(?m)^#{2,3} ", open(a.landing, encoding="utf-8").read())
         for x in sorted(hard):
             b = [s for s in blocks if s.startswith(x)]
             if not b or "у плані пілоту" not in b[0]: print(f"complexity:{x}"); rc = 1
-    sys.exit(rc)
+    return rc
 
 main()
