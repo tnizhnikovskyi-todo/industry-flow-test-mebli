@@ -1,5 +1,9 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Меблі: що відкинули</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
@@ -51,7 +55,7 @@ code{font-family:var(--mono);font-size:.88em}
 .logo img{height:36px;width:auto;display:block}
 .meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:14px;color:var(--muted)}
 .back{font-weight:700}
-.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border:1px solid var(--line);border-radius:8px;overflow:hidden}
 .summary a{display:flex;flex-direction:column;gap:4px;padding:14px 16px;text-decoration:none;color:var(--ink);min-width:0}
 .summary a+a{border-left:1px solid var(--line)}
 .summary a:hover{background:var(--surface)}
@@ -83,86 +87,194 @@ footer.site code{color:var(--ink);word-break:break-word}
   .summary a:nth-child(3){border-left:0}
   .summary a:nth-child(n+3){border-top:1px solid var(--line)}
 }
-</style>
 
+/* Site nav: три сторінки */
+.sitenav{max-width:1080px;margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding-block:calc(10px + env(safe-area-inset-top,0px)) 10px;border-bottom:1px solid var(--line)}
+.sitenav .logo{display:inline-flex;align-items:center;background:var(--logo-bg);border-radius:8px;padding:4px 8px}
+.sitenav .logo img{height:30px;width:auto;display:block}
+.sitelinks{display:flex;flex-wrap:wrap;gap:4px}
+.sitelinks a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid transparent}
+.sitelinks a:hover{color:var(--ink);background:var(--surface)}
+.sitelinks a[aria-current="page"]{color:var(--bg);background:var(--ink);border-color:var(--ink)}
+.k-log b{color:var(--good)}
+.item .where{font-size:13px;color:var(--muted);margin-top:6px}
+.item .type{display:inline-block;margin-bottom:4px}
+.tag.n0{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.tag.n1{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.chg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.chg div{border-top:4px solid var(--line);padding-top:10px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.chg .c-out{border-top-color:var(--bad)}.chg .c-up{border-top-color:var(--good)}.chg .c-same{border-top-color:var(--muted)}
+.chg ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:6px;font-size:14.5px}
+.log{border:1px solid var(--line);border-radius:8px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px 28px}
+.log dl{margin:0;display:flex;flex-direction:column;gap:2px}
+.log dt{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.log dd{margin:0;font-size:15px}
+.keys{font-size:13.5px;color:var(--muted);max-width:76ch}
+@media (max-width:820px){.chg,.log{grid-template-columns:minmax(0,1fr)}.summary a:nth-child(odd){border-left:0}}
+</style>
+</head>
+<body>
+<header class="sitenav">
+  <a class="logo" href="index.html"><img src="img/todo-logo.png" alt="ToDo" width="77" height="30"></a>
+  <nav class="sitelinks" aria-label="Сторінки набору">
+    <a href="index.html">Концепція</a>
+    <a href="competitors.html">Конкуренти</a>
+    <a href="rejected.html" aria-current="page">Що відкинули</a>
+  </nav>
+</header>
 <div class="wrap">
 <header class="masthead">
-  <div class="brandrow">
-    <span class="logo"><img src="img/todo-logo.png" alt="ToDo" width="92" height="36"></span>
-    <div class="meta"><span class="num">11.11.2026</span><a class="back" href="https://claude.ai/artifact/4US1Hk8R2AkJMN2LbZU675" target="_blank" rel="noopener">← Концепція пакета</a></div>
-  </div>
-  <span class="eyebrow">Галузевий пакет «меблі» на Odoo 19 · доповнення до концепції</span>
+  <div class="meta"><span class="num">11.11.2026 · редакція R12</span><span>Ядро пакета на Odoo 19 Community, Enterprise як підсилення</span></div>
+  <span class="eyebrow">Галузевий пакет «меблі» на Odoo 19 · третя сторінка набору</span>
   <h1>Що ми відкинули під час аналізу і чому</h1>
-  <p class="prose">Кожна вимога, яку дослідження прибрало з пакета або з першої версії, з причиною, доказом і умовою, за якої вона повертається в роботу. Тут же видно, що з поточного прототипу A-21 дослідження вважає непотрібним для першої версії.</p>
+  <p class="prose">Кожна вимога, яку дослідження прибрало з пакета або з першої версії: причина, доказ, умова, за якої вона повертається в роботу, і де вона зараз живе. Відкинуте не означає «ніколи»: більшість позицій повертається, якщо з'явиться другий тип джерел (розмова з виробником на A-06, тест попиту A-23, пілот).</p>
+  <div class="note"><p><b>Правило R12.</b> Функція йде в MVP, лише якщо її біль підтверджено щонайменше двома різними типами джерел або вона обов'язкова за законом. Типи: вакансії, відгуки покупців, публічний голос мебляра, договори, внутрішні дані ToDo, меблеві скарги на конкурентів, норма закону, асоціація чи медіа. Кількість лідів одного типу, навіть 5, це сила одного типу, а не другий тип.</p></div>
   <nav class="summary" aria-label="Групи">
-    <a class="k-out" href="#out"><b class="num">6</b><span>поза пакетом зовсім</span></a>
-    <a class="k-later" href="#later"><b class="num">9</b><span>не в першій версії, після перевірки</span></a>
-    <a class="k-seg" href="#segments"><b class="num">4</b><span>підсегменти не першими</span></a>
-    <a class="k-down" href="#concept"><b class="num">5</b><span>понижено в старій концепції й зрізі A-21</span></a>
+    <a class="k-out" href="#out"><b class="num">10</b><span>поза пакетом зовсім</span></a>
+    <a class="k-later" href="#later"><b class="num">34</b><span>не в першій версії, після перевірки</span></a>
+    <a class="k-seg" href="#segments"><b class="num">9</b><span>інший підсегмент чи профіль</span></a>
+    <a class="k-down" href="#concept"><b class="num">7</b><span>понижено в концепції A-20 і зрізі A-21</span></a>
+    <a class="k-log" href="#log"><b class="num">1</b><span>зняте рішення власника</span></a>
   </nav>
+  <p class="keys">Внутрішні дані ToDo тут лише знеособлені агрегати: «внутрішні дані ToDo, n клієнтів / лідів», без назв, кодів, ПІБ, контактів, сум угод і цитат клієнтів. Ключі джерел: FM — FUNCTIONAL-MAP.md; IM — industry-model.md; SD — subsegments-deep.md; CF — competitor-features.md; CC:N, PC:N, PV:N, RG:N — рядок N файлів sources/competitor-complaints.md, paid-customizations.md, producer-voice.md (публічна частина), regulation.md.</p>
 </header>
 
 <main>
+<section id="changes">
+  <div class="sec-head"><span class="eyebrow">Що змінилось у R12</span><h2>Нові джерела переставили кілька позицій</h2></div>
+  <div class="chg">
+    <div class="c-out"><h3>Відпало з MVP</h3><ul>
+      <li><b>Портал покупця (екран 14, D-08):</b> 0 прямих запитів у 56 меблевих лідах; біль, який звучить, це внутрішня видимість статусу; норма портал не вимагає (RG:51). Онлайн-оплата лишається через стандартний портал.</li>
+      <li><b>Підбір виробу як окремий екран (3, P-01):</b> конфігуратор із правилами для (а) не просив ніхто: підтверджених внутрішніх даних від (а) 0 (одна згадка лише «ймовірно (а)»); спрощена ціна з розмірів теж не в MVP.</li>
+      <li><b>Кнопка «Претензія постачальнику порізки» (D-17):</b> 1 тип джерел; у внутрішніх даних 0. Фіксація відправленої версії специфікації лишається.</li>
+      <li><b>Нова Пошта (H-09):</b> 0 типів; інтеграція за запитом.</li>
+    </ul></div>
+    <div class="c-up"><h3>Повернулось або підвищено</h3><ul>
+      <li><b>Курс (D-14):</b> договори + внутрішні дані ToDo, 2 клієнти. У MVP переформульовано: курс НБУ для цін прайсу й КП, а не маржа відкритих замовлень.</li>
+      <li><b>Зміна замовлення (P-16):</b> з кнопки в окремий екран 15 «Погодження й зміна замовлення», <span class="tag hyp">MVP умовно</span>.</li>
+      <li><b>Ціни сировини (F-12):</b> з «прибрано» в «після перевірки» як NP-02, прайси постачальників з історією цін; <b>перший кандидат на повернення</b>.</li>
+      <li><b>Завантаження дільниць (P-03)</b> у MVP: для (а) 2 типи. <b>Етикетки деталей (P-09)</b> у MVP умовно, 160–320 год.</li>
+      <li><b>Обмін з BAS/1С (H-12):</b> архітектурний виняток, облік на Community поза Odoo; 160–320 год.</li>
+      <li><b>Нове в MVP:</b> причина зсуву (N-03) і кіоск для всіх робітників (N-05) як винятки з правила; гарантійний документ і строк (NR-01, NR-02) умовно, до юриста; чек-лист приймання за специфікацією умовно, 8–16 год.</li>
+    </ul></div>
+    <div class="c-same"><h3>Не змінилось, «проти» посилено</h3><ul>
+      <li>Ділові обрізки (D-09)</li>
+      <li>Розкрій кількох замовлень разом (D-16)</li>
+      <li>AI-розбір рекламацій і AI-чернетки (D-12, D-13)</li>
+    </ul>
+    <p class="small">R12-рецензія додала в групу 2 вісім позицій: P-01 спрощено, P-14 змішаний, P-17, H-08 розірвання, NR-07, HG-01, HG-02, «ФОП без ПРРО». Умови повернення стали перевірюваними: виробник (а) на A-06 / A-23 або пілот. R12-рецензія 3: для N-02, N-09, N-13, NC-02 умова повернення — другий тип джерел для (а), технічна перевірка стандарту лише додаткова; перший кандидат на повернення один — NP-02. Разом у групах 1–4 — 60 позицій.</p></div>
+  </div>
+</section>
+
 <section id="out">
-  <div class="sec-head"><span class="eyebrow">Група 1</span><h2>Поза пакетом: це роблять інші системи</h2>
-  <p class="small prose">Ми інтегруємося з ними, а не замінюємо їх.</p></div>
-  <div class="colhead"><span>Що</span><span>Чому відкинули</span><span>Що поверне в роботу</span></div>
+  <div class="sec-head"><span class="eyebrow">Група 1 · 10 позицій</span><h2>Поза пакетом: це роблять інші системи або це не потреба</h2></div>
+  <div class="colhead"><span>Що</span><span>Чому і доказ</span><span>Що поверне в роботу</span></div>
   <div class="items">
-    <div class="item"><h3>Власне 3D-проєктування і рендер</h3><div><p class="why">Це ринок PRO100, БАЗИС, ViyarPro, KRONAS MASTER 3D. Bimp із ними теж прямо не конкурує.</p><p class="ev">FUNCTIONAL-MAP §2.3.1 · CF:#17 · рішення людини на A-04</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи в цьому пакеті. Наша частина: імпорт проєкту (D-01).</p></div>
-    <div class="item"><h3>Оптимізація розкрою (nesting)</h3><div><p class="why">Її закривають CAD (БАЗИС-Раскрой, PRO100/CUT100) або дистриб'ютор (Viyar, KRONAS, GibLab).</p><p class="ev">FUNCTIONAL-MAP §2.3.1, §4.2 · CF:#36 · IM §2.3</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи. Наша частина: передати деталі в програму розкрою або замовити порізку (D-02).</p></div>
-    <div class="item"><h3>Генерація програм для ЧПУ</h3><div><p class="why">Задача CAM, не обліку.</p><p class="ev">FUNCTIONAL-MAP §2.3.1 · рішення людини на A-04 (обладнання не беремо)</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи.</p></div>
-    <div class="item"><h3>Розкладка тканин для м'яких меблів</h3><div><p class="why">Це Lectra та подібні системи розкрою тканин.</p><p class="ev">FUNCTIONAL-MAP, «Що свідомо не робимо» · subsegments-deep (в)</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи. Для профілю (в) лише облік і специфікація.</p></div>
-    <div class="item"><h3>ФОП-мікроцехи на 1–5 людей</h3><div><p class="why">74 % виробників меблів працюють як ФОП. Odoo з нашими модулями дорожчий за їхній бюджет, а для них уже є Viyar/KRONAS + KeyCRM чи Bimp Start.</p><p class="ev">FUNCTIONAL-MAP §1.1 · IM:S01</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника №4: окремий легкий тариф.</p></div>
-    <div class="item"><h3>Повний український бухоблік і зарплата в першій версії</h3><div><p class="why">У фабрик облік у BAS/BAF («запуск у BAF» у вакансіях). <code>l10n_ua</code> в Odoo дає лише план рахунків і податки, податкові накладні — інтеграція (M.E.Doc, «Вчасно»).</p><p class="ev">FUNCTIONAL-MAP H-10, H-12, §3.1</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника №5: повний облік в Odoo замість обміну з BAS/BAF.</p></div>
+    <div class="item"><h3><span class="id">OUT-01</span>Власне 3D-проєктування і рендер</h3><div><p class="why">Ринок PRO100, БАЗИС, ViyarPro, KRONAS MASTER 3D; Bimp із ними теж не конкурує.</p><p class="ev">Доказ: FM §2.3.1; CF:#17; рішення людини на A-04</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи в цьому пакеті. Наша частина: імпорт проєкту (D-01).</p><p class="where">Де зараз: FM §2.3.1; OWNER-BRIEF §5</p></div></div>
+    <div class="item"><h3><span class="id">OUT-02</span>Оптимізація розкрою (nesting)</h3><div><p class="why">Її закривають CAD або дистриб'ютор. R12: у виробника розкрій живе в ПЗ верстата (внутрішні дані ToDo, 1 клієнт).</p><p class="ev">Доказ: FM §2.3.1, §4.2; CF:#36; IM §2.3</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи. Наша частина: передати список деталей у програму розкрою або замовити порізку (D-02).</p><p class="where">Де зараз: FM §2.3.1; OWNER-BRIEF §5</p></div></div>
+    <div class="item"><h3><span class="id">OUT-03</span>Генерація програм ЧПУ і керування верстатом</h3><div><p class="why">Задача CAM, не обліку. R12: обмін з ЧПУ просив 1 клієнт (внутрішні дані ToDo); список деталей і етикетка йдуть у D-01 / P-09, керування верстатом ні.</p><p class="ev">Доказ: FM §2.3.1; рішення людини на A-04</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи для генерації; обмін статусами див. N-12 (група 2).</p><p class="where">Де зараз: FM §2.3.1, §2.6 N-12</p></div></div>
+    <div class="item"><h3><span class="id">OUT-04</span>Розкладка тканин для м'яких меблів</h3><div><p class="why">Це Lectra та подібні системи.</p><p class="ev">Доказ: FM «Що свідомо не робимо»; SD (в)</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи; для профілю (в) лише облік і специфікація.</p><p class="where">Де зараз: OWNER-BRIEF §5</p></div></div>
+    <div class="item"><h3><span class="id">OUT-05</span>ФОП-мікроцехи на 1–5 людей</h3><div><p class="why">74 % виробників ФОП; Odoo з нашими модулями дорожчий за їхній бюджет; є Viyar/KRONAS + KeyCRM чи Bimp Start.</p><p class="ev">Доказ: FM §1.1; IM:S01</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника 4: окремий легкий тариф.</p><p class="where">Де зараз: FM §7 п. 6; OWNER-BRIEF №4</p></div></div>
+    <div class="item"><h3><span class="id">OUT-06</span>Повний український бухоблік і зарплата в першій версії</h3><div><p class="why">Облік у фабрик у BAS/BAF. R12: облік лишається в 1С/BAS в обох клієнтів, які це обговорювали (внутрішні дані ToDo, 2 клієнти), тому в MVP обмін H-12.</p><p class="ev">Доказ: FM H-10, H-12, §3.1</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника 5: повний облік в Odoo замість обміну.</p><p class="where">Де зараз: FM §7 п. 5; OWNER-BRIEF №5</p></div></div>
+    <div class="item"><h3><span class="id">OUT-07</span>N-06 Пропозиції працівників щодо покращень (kaizen)</h3><div><p class="why">Не меблева специфіка; закривається задачами проєкту.</p><p class="ev">Доказ: внутрішні дані ToDo, 1 лід; FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи як наш модуль; налаштування стандарту за запитом.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">OUT-08</span>Чатбот-консультант для сайту</h3><div><p class="why">Не потреба виробника: це пропозиція нашого продавця. Виробник сумнівався в ефективності для кастомних виробів; роздріб не хоче онлайн-консультанта (лише AI-підсумок, слабко).</p><p class="ev">Доказ: внутрішні дані ToDo, 2 клієнти</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам попросить, і буде другий тип джерел.</p><p class="where">Де зараз: FM §2.5 D-13</p></div></div>
+    <div class="item"><h3><span class="id">OUT-09</span>NR-06 Зберігання історії до 10 років як функція</h3><div><p class="why">Висновок автора збору, а не норма.</p><p class="ev">Доказ: RG:15</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>З'явиться норма з прямим посиланням.</p><p class="where">Де зараз: FM §2.6 NR-06</p></div></div>
+    <div class="item"><h3><span class="id">OUT-10</span>NC-04 Рекурентні замовлення</h3><div><p class="why">Лише переказ пошуку, не звірено: не доказ.</p><p class="ev">Доказ: CC:64</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Дослівний відгук виробника меблів.</p><p class="where">Де зараз: FM §2.6 NC-04</p></div></div>
   </div>
 </section>
 
 <section id="later">
-  <div class="sec-head"><span class="eyebrow">Група 2</span><h2>Не в першій версії: спершу перевірити попит</h2>
-  <p class="small prose">Біль або непідтверджений, або стосується іншого підсегмента. Більшість перевіряється на тесті попиту A-23 або в розмовах із виробниками.</p></div>
-  <div class="colhead"><span>Що</span><span>Чому відклали</span><span>Що поверне в роботу</span></div>
+  <div class="sec-head"><span class="eyebrow">Група 2 · 34 позиції</span><h2>Не в першій версії: спершу перевірити попит</h2>
+  <p class="small prose">Біль має один тип джерел або не підтверджений. Перевірка: розмови з виробниками (A-06), тест попиту A-23, пілот. Позначка біля назви: скільки незалежних типів джерел болю є для (а).</p></div>
+  <div class="colhead"><span>Що</span><span>Скільки типів, чому і доказ</span><span>Що поверне в роботу</span></div>
   <div class="items">
-    <div class="item"><h3><span class="id">D-09</span>Ділові обрізки як облікові одиниці</h3><div><p class="why">Наша гіпотеза: незалежних джерел нуль. БАЗИС веде обрізки в CAD, а не в ERP, і це лише непрямий сигнал. <span class="tag hyp">гіпотеза</span></p><p class="ev">FUNCTIONAL-MAP D-09, §3.4, §4.3</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробники в розмовах або на A-23 підтвердять, що ведуть обрізки і втрачають на цьому гроші.</p></div>
-    <div class="item"><h3><span class="id">D-16</span>Розкрій кількох замовлень разом за декором</h3><div><p class="why">Велика робота (розмір L), попит не перевірено.</p><p class="ev">FUNCTIONAL-MAP §3.4, §4.3</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Підтвердиться, що фабрики пакетують розкрій і роблять це вручну.</p></div>
-    <div class="item"><h3><span class="id">F-12</span>Ціни закупівлі сировини (екран S-10)</h3><div><p class="why">Біль тримається на прогнозі про мораторій; конкуренти не виділяють це як функцію.</p><p class="ev">FUNCTIONAL-MAP §4.1, §4.2</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Мораторій чи стрибок цін стануть фактом і з'являться незалежні джерела болю.</p></div>
-    <div class="item"><h3><span class="id">P-15</span>Маркетплейси, сайт, каса салону</h3><div><p class="why">Потрібно серійним меблям (б), а не кухням на замовлення. Модулі є в стандарті та в UA-інтеграціях.</p><p class="ev">FUNCTIONAL-MAP P-15, §1.1</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Робимо профіль (б).</p></div>
-    <div class="item"><h3><span class="id">D-15</span>Простежуваність партії і пакет даних EUDR</h3><div><p class="why">Потрібно масиву на експорт у ЄС (г). Український виробник не оператор EUDR: декларацію подає імпортер, від виробника потрібен лише пакет даних.</p><p class="ev">FUNCTIONAL-MAP D-15 · Регламент 2023/1115, додаток II</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Робимо профіль «експортер» для (г). Строки EUDR: 30.12.2026 і 30.06.2027.</p></div>
-    <div class="item"><h3><span class="id">D-12</span>AI-розбір рекламації з фото і тексту</h3><div><p class="why">Доказів попиту немає. Ризик розпорошення на AI-функції (R-9). <span class="tag hyp">гіпотеза</span></p><p class="ev">FUNCTIONAL-MAP D-12, R-9</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>На A-23 покупці обирають цю функцію або рекламацій стає багато в пілоті.</p></div>
-    <div class="item"><h3><span class="id">D-13</span>AI-чернетки КП і зведення «що застрягло»</h3><div><p class="why">Доказів попиту немає; у конкурентів AI лише маркетинговий (рендер, планувальник). <span class="tag hyp">гіпотеза</span></p><p class="ev">FUNCTIONAL-MAP D-13, R-9</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Те саме, що D-12. У першій версії з AI лишається тільки D-11: розбір колонок файлу проєкту.</p></div>
-    <div class="item"><h3><span class="id">D-08</span>Портал покупця (понижено, не прибрано)</h3><div><p class="why">Біль «не знаю статусу» є, але форма «портал» не доведена; можливо, вистачить повідомлень у месенджер.</p><p class="ev">FUNCTIONAL-MAP §4.1, екран 14</p></div><p class="back-if"><span class="lbl">Вирішити</span>На A-23: порівняти інтерес до порталу і до сповіщень.</p></div>
-    <div class="item"><h3><span class="id">D-14</span>Перерахунок маржі за курсом EUR (понижено)</h3><div><p class="why">Лише одне джерело: доплата за курсом у договорі виробника.</p><p class="ev">FUNCTIONAL-MAP D-14, §4.1</p></div><p class="back-if"><span class="lbl">Вирішити</span>На A-23. Поки мала функція з позначкою «не перевірено».</p></div>
+    <div class="item"><h3><span class="id">D-09</span>Ділові обрізки як облікові одиниці</h3><div><span class="tag type n1">1 тип</span><p class="why">За: внутрішні дані ToDo, 1 клієнт. Проти: єдиний лід, що згадав обрізки, у мінімальному обсязі просив лише облік листів (внутрішні дані ToDo, 1 лід); у roadmap конкурентів немає; чати обміну обрізками не знайдено; форум про залишки не меблевий.</p><p class="ev">Доказ: CC:71; PV:42; PC:33</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2+ виробники (а) на A-06 / A-23 скажуть, що ведуть обрізки й втрачають на цьому гроші.</p><p class="where">Де зараз: FM D-09; концепція F-11/S-09; зріз A-21 і відео (гр. 4)</p></div></div>
+    <div class="item"><h3><span class="id">D-16</span>Розкрій кількох замовлень разом за декором</h3><div><span class="tag type n1">1 тип для (а)</span><p class="why">За: мебляр (а) на форумі Odoo; 1 серійний лід просив черговість запуску за кольором, це не тотожно. Проти: розкрій живе в ПЗ верстата (внутрішні дані ToDo, 1 клієнт); немає в roadmap конкурентів; розмір L.</p><p class="ev">Доказ: PC:20; CC:72</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Фабрики (а) підтвердять пакетування вручну; або профіль серійних (б).</p><p class="where">Де зараз: FM D-16; зріз A-21 (гр. 4)</p></div></div>
+    <div class="item"><h3><span class="id">D-17</span>Претензія постачальнику порізки</h3><div><span class="tag type n1">1 тип</span><p class="why">За: 3 відгуки меблярів про дистриб'ютора. У внутрішніх даних 0: єдина згадка була пропозицією ToDo дистриб'ютору, а не потребою.</p><p class="ev">Доказ: IM §11.2</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>На A-06 / A-23 мебляр (а) підтвердить спір із порізкою. Наступний кандидат на повернення після NP-02.</p><p class="where">Де зараз: FM D-17, §4.3; екран 5 без кнопки</p></div></div>
+    <div class="item"><h3><span class="id">P-01</span>Конфігуратор виробу з правилами сумісності</h3><div><span class="tag type n0">0 для (а)</span><p class="why">За: внутрішні дані ToDo, 1 клієнт «ймовірно (а)» (умовно) і 1 клієнт м'яких меблів; 1 скарга на конкурента від виробника (б). Проти: ціну з розмірів для (а) ніхто прямо не просив; розмір L.</p><p class="ev">Доказ: IS:45 (лише «ймовірно (а)»), CC:13</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>На A-23 обирають «конфігуратор», або пілотний клієнт має каталог модулів.</p><p class="where">Де зараз: FM P-01; концепція S-01; спрощена ціна — група 2 «P-01 спрощ.», не в екрані 2</p></div></div>
+    <div class="item"><h3><span class="id">D-08</span>Портал покупця</h3><div><span class="tag type n1">1 тип</span><p class="why">0 прямих запитів у 56 лідах (внутрішні дані ToDo). Біль, який звучить, це внутрішній статус (внутрішні дані ToDo, 2 ліди). Норма лише дозволяє електронний документ.</p><p class="ev">Доказ: RG:19</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>На A-23 «портал» обирають частіше, ніж «повідомлення в месенджер».</p><p class="where">Де зараз: FM D-08; концепція S-13; зріз A-21 (гр. 4)</p></div></div>
+    <div class="item"><h3><span class="id">NP-02</span>Прайси постачальників: імпорт, оновлення, контроль ціни проти історії</h3><div><span class="tag type n1">1 тип</span><p class="why">Колишній F-12 «ціни сировини». За: внутрішні дані ToDo, 3 клієнти. Проти: прогнозу цін ніхто не просив, лише оновлення прайсів.</p><p class="ev">Доказ: FM §2.6 NP-02</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Другий тип джерел (вакансія закупівельника, відгук, A-23): тоді повернути як S–M (стандартний імпорт + наш звіт). <b>Перший кандидат на повернення.</b></p><p class="where">Де зараз: FM §2.6; концепція F-12/S-10 (гр. 4)</p></div></div>
+    <div class="item"><h3><span class="id">D-12</span>AI-розбір рекламації</h3><div><span class="tag type n0">0 типів</span><p class="why">Жоден лід не просив (внутрішні дані ToDo, 56 лідів).</p><p class="ev">Доказ: FM D-12</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>На A-23 обирають цю функцію або рекламацій багато в пілоті.</p><p class="where">Де зараз: FM D-12</p></div></div>
+    <div class="item"><h3><span class="id">D-13</span>AI-чернетки КП і зведення «що застрягло»</h3><div><span class="tag type n0">0 типів</span><p class="why">«Проти» посилилось: дашборд пропонують і інші інтегратори; чатбот був пропозицією продавця (внутрішні дані ToDo, 2 клієнти).</p><p class="ev">Доказ: FM D-13</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Те саме, що D-12. У першій версії з AI лише D-11 (мапінг файлу).</p><p class="where">Де зараз: FM D-13</p></div></div>
+    <div class="item"><h3><span class="id">P-07</span>Контроль якості на дільницях з фото</h3><div><span class="tag type n1">1 тип</span><p class="why">Внутрішні дані лише непрямо: фіксація браку з етапом, а це P-06.</p><p class="ev">Доказ: FM P-07</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Пілот покаже повторні дефекти, яких не ловить P-06.</p><p class="where">Де зараз: FM P-07; наш модуль на CE 60–120 год поза MVP</p></div></div>
+    <div class="item"><h3><span class="id">H-09</span>Нова Пошта: ТТН із замовлення</h3><div><span class="tag type n0">0 типів</span><p class="why">Гіпотеза. У внутрішніх даних лише статус доставки (внутрішні дані ToDo, 1 лід).</p><p class="ev">Доказ: FM H-09</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Клієнт продає з доставкою перевізником.</p><p class="where">Де зараз: FM H-09</p></div></div>
+    <div class="item"><h3><span class="id">D-10</span>Міграційний місток із BAS/BAF + БАЗИС як повна міграція</h3><div><span class="tag type ">2 типи, є «проти»</span><p class="why">За: внутрішні дані ToDo, 2 клієнти. Проти: великий виробник вважає повну міграцію недоцільною (внутрішні дані ToDo, 1 клієнт).</p><p class="ev">Доказ: FM D-10, H-12</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Клієнт сам хоче піти з 1С/BAS повністю. У MVP лише обмін H-12.</p><p class="where">Де зараз: FM D-10, H-12</p></div></div>
+    <div class="item"><h3><span class="id">P-12</span>Розподіл непрямих витрат</h3><div><span class="tag type n0">0 типів</span><p class="why">Енергія в собівартості: гіпотеза ToDo, а не голос клієнта.</p><p class="ev">Доказ: FM P-12</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник попросить розподіл за базою.</p><p class="where">Де зараз: FM P-12</p></div></div>
+    <div class="item"><h3><span class="id">P-13</span>Кілька юросіб в одній базі</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo: 2 згадки, меблева належність однієї не підтверджена.</p><p class="ev">Доказ: FM P-13</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Пілотний клієнт чи клієнт (а) на A-23 веде кілька юросіб (ТОВ + ФОП) в одному процесі замовлення: тоді налаштування стандартної мультикомпанії.</p><p class="where">Де зараз: FM P-13</p></div></div>
+    <div class="item"><h3><span class="id">N-01</span>Запуск «точно вчасно» від дати готовності клієнта</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 лід, м'які меблі.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2+ виробники (а) на A-06 / A-23 підтвердять запуск від дати готовності клієнта.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-02</span>Сувора поетапність: блок наступної операції</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 лід, м'які меблі; від (а) немає. Інший лід просив оцифрувати етапи без звітності робітника, це P-04 / P-09, а не блокування.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Другий тип джерел для (а): виробник (а) на A-06 / A-23 або пілот підтвердить потребу блокувати наступну операцію, <b>і</b> стандартні залежності робочих замовлень 19.0 це дають: тоді налаштування екрана 7.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-04</span>Премії й штрафи з причиною</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 лід.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2+ виробники (а) на A-06 / A-23 підтвердять: тоді розширення H-07.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-07</span>Фотоархів об'єктів з акта для реклами</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 лід.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2+ виробники (а) на A-06 / A-23 підтвердять, що беруть фото з актів для реклами: тоді дешеве розширення D-05.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-08</span>Друк КП без цін комплектуючих</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 лід.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник (а) на A-06 / A-23 або в пілоті приховує ціни комплектуючих у КП: тоді S-доробка; спершу перевірити стандарт 19.0.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-09</span>Поетапна видача матеріалів під замовлення</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 2 ліди, не (а); аналогія суміжної галузі.</p><p class="ev">Доказ: PC:37</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Другий тип джерел для (а): виробник (а) на A-06 / A-23 або пілот підтвердить поетапну видачу, <b>і</b> стандарт часткових переміщень не закриє «що вже видано».</p><p class="where">Де зараз: FM §2.6; P-08</p></div></div>
+    <div class="item"><h3><span class="id">N-12</span>Обмін з ЧПУ: статуси деталей з верстата</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 клієнт.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Реальні файли й API верстата в пілоті.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-13</span>Креслення на робочому місці; PDM</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 2 ліди: серійний і масив, не (а).</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Другий тип джерел для (а): виробник (а) на A-06 / A-23 або пілот попросить креслення на робочому місці; дешевизна сама не є підставою для повернення. Чи показує Community вкладення операції, <span class="tag hyp">не перевірено</span>.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-18</span>Аналітика повернень угоди на перерахунок КП</h3><div><span class="tag type n1">1 тип</span><p class="why">внутрішні дані ToDo, 1 лід, не виробник.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2+ виробники (а) на A-06 / A-23 рахують повернення угод на перерахунок КП.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">NC-02</span>Операція без працівників (сушіння)</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Лише changelog вендора, не голос виробника.</p><p class="ev">Доказ: CC:62</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Перший незалежний тип джерел (зараз лише changelog вендора): виробник (а) на A-06 / A-23 або пілот назве операції без працівників (сушіння, витримка клею) <b>і</b> стандарт робочих центрів 19.0 їх дає <span class="tag hyp">не перевірено</span>: тоді налаштування стандарту.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">NR-03</span>Невикуплені вироби: 2 нагадування, 6 місяців</h3><div><span class="tag type ">норма є</span><p class="why">Норма є, але система для неї не обов'язкова.</p><p class="ev">Доказ: RG:21</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист або клієнт попросить облік.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">NR-05</span>Межа повернення виробу на замовлення</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза до звірки чинної редакції.</p><p class="ev">Доказ: RG:29–31</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист підтвердить чинну редакцію.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">P-01 спрощ.</span>Ціна виробу з розмірів у замовленні</h3><div><span class="tag type n0">0 для (а)</span><p class="why">R12-рецензія зняла з екрана 2. За: великий довідник варіантів для прорахунку (внутрішні дані ToDo, 1 клієнт, «ймовірно (а)»). Проти: ціну з розмірів для (а) прямо ніхто не просив.</p><p class="ev">Доказ: FM §1.1 (−60–120 год), §4.4</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2+ виробники (а) на A-06 / A-23 рахують ціну з габаритів вручну й втрачають на цьому час, або другий тип джерел.</p><p class="where">Де зараз: FM §1.1, §4.4</p></div></div>
+    <div class="item"><h3><span class="id">P-14 зміш.</span>MTO і MTS в одній базі: серійні позиції на склад</h3><div><span class="tag type n0">0 для (а)</span><p class="why">внутрішні дані ToDo, 2 змішані виробники. «На замовлення» лишається в MVP як маршрут сценарію (налаштування стандарту).</p><p class="ev">Доказ: FM P-14, §4.4</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Клієнт (а) має ще й складські серійні позиції.</p><p class="where">Де зараз: FM P-14, §4.4</p></div></div>
+    <div class="item"><h3><span class="id">P-17</span>Пошук вузьких місць у плануванні</h3><div><span class="tag type n1">1 тип для (а)</span><p class="why">Вакансії. внутрішні дані ToDo, 2 ліди: м'які й невизначений підсегмент. Стандартні звіти на Community <span class="tag hyp">не перевірено</span>.</p><p class="ev">Доказ: FM P-17</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник (а) на A-06 / A-23 назве вузькі місця болем: тоді звіт на стандартних даних.</p><p class="where">Де зараз: FM P-17</p></div></div>
+    <div class="item"><h3><span class="id">H-08 розір.</span>Розірвання договору й повернення авансу</h3><div><span class="tag type n1">РГ вторинне</span><p class="why">Норма з підсумку пошуку. Внутрішні дані: 0. У MVP лише передоплата й доплата за графіком.</p><p class="ev">Доказ: RG:25</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист (рішення 17) або клієнт попросить облік повернень авансу.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">NR-07</span>Пеня 3 % на день за прострочення (ЗПС ст. 10)</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза до звірки. У MVP лише поле причини зсуву N-03 (виняток з правила).</p><p class="ev">Доказ: RG:14</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист підтвердить кваліфікацію договору (а) як підряду (рішення 17).</p><p class="where">Де зараз: FM §2.6 NR-07</p></div></div>
+    <div class="item"><h3><span class="id">HG-01</span>Енергія в собівартості за робочими центрами</h3><div><span class="tag type n0">гіпотеза ToDo</span><p class="why">Рішення менеджера ToDo для внутрішньої моделі; голосу виробника немає.</p><p class="ev">Доказ: внутрішні дані ToDo</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам назве енергію в собівартості болем.</p><p class="where">Де зараз: FM §2.6, у карту не внесено</p></div></div>
+    <div class="item"><h3><span class="id">HG-02</span>Приймання плит: ворота, ваги, маси аркушів</h3><div><span class="tag type n0">гіпотеза ToDo</span><p class="why">Рішення менеджера ToDo для внутрішньої моделі; голосу виробника немає.</p><p class="ev">Доказ: внутрішні дані ToDo</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробник сам назве приймання плит болем.</p><p class="where">Де зараз: FM §2.6, у карту не внесено</p></div></div>
+    <div class="item"><h3><span class="id">RG-ФОП</span>Прапорець «ФОП без ПРРО» в налаштуваннях юрособи</h3><div><span class="tag type n0">гіпотеза</span><p class="why">Гіпотеза з регуляторики; поріг звільнення ФОП не підтверджено. Попиту немає; ФОП-мікроцехи поза профілем (OUT-05).</p><p class="ev">Доказ: RG:45, 58</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Бухгалтер чи юрист підтвердить чинний поріг і власник відкриє тариф для ФОП (рішення 4).</p><p class="where">Де зараз: sources/regulation.md §2</p></div></div>
+    <div class="item"><h3><span class="id">D-06 строки</span>Строки в рекламації: ремонт 14 днів, заміна 2 місяці, неустойка 1 % вартості</h3><div><span class="tag type n0">регуляторна гіпотеза</span><p class="why">Джерела вторинні; кваліфікацію договору (а), підряд чи купівля-продаж, не звірено.</p><p class="ev">Доказ: RG:11–13</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Юрист підтвердить норми для договору (а), рішення 17. До того на екрані 12 строк задається вручну <span class="tag hyp">гіпотеза</span>.</p><p class="where">Де зараз: FM §2.5 D-06; екран 12</p></div></div>
   </div>
+  <p class="small prose">Нумерація. NP-01 у реєстрі немає: потребу злито в N-10. N-19 (вікно запуску поза сезоном) не функція, а план продажу й запуску. NC-03 (CRM-воронка) і NC-06 (зміна з частковим рахунком, злито в P-16) уже в MVP, тому не відкинуті.</p>
 </section>
 
 <section id="segments">
-  <div class="sec-head"><span class="eyebrow">Група 3</span><h2>Підсегменти, які не беремо першими</h2>
-  <p class="small prose">Першим рекомендовано (а) кухні й корпусні на замовлення. Остаточно залежить від розмітки 60 компаній (рішення власника №1 і №2).</p></div>
-  <div class="seg">
-    <div><span class="lt">(д)</span><b>Офісні й контрактні</b><p class="small">Альтернатива №1: найбільша виручка галузі, локальних конкурентів немає. Відкладено кошторис тендеру, погодження креслень, рахунки за етапами (X-01…X-03).</p><p class="small"><b>Повернути, якщо</b> частка кухонь у розмітці &lt; 30 %.</p></div>
-    <div><span class="lt">(б)</span><b>Серійні на склад і маркетплейси</b><p class="small">Найсильніша локальна конкуренція: Bimp, KeyCRM, Katana.</p><p class="small"><b>Повернути</b> як профіль поверх (а).</p></div>
-    <div><span class="lt">(в)</span><b>М'які меблі</b><p class="small">Доказів замало для рішення (якість 2 з 5).</p><p class="small"><b>Повернути, якщо</b> 3–5 розмов із виробниками покажуть біль.</p></div>
-    <div><span class="lt">(г)</span><b>Масив і столярка</b><p class="small">Висока оцінка лише через EUDR; операційні болі не оцінено.</p><p class="small"><b>Повернути</b> як профіль «експортер».</p></div>
+  <div class="sec-head"><span class="eyebrow">Група 3 · 9 позицій</span><h2>Інший підсегмент чи профіль</h2>
+  <p class="small prose">Першим рекомендовано (а) кухні й корпусні на замовлення. Остаточно: рішення власника 1 і 2 (розмітка 60 компаній). R12: у внутрішніх даних ToDo меблеві ліди змішані (кухні, серійні, м'які, масив, нестандартні, дистриб'ютори, дизайн-студії), тож частина сигналів підтримує інші профілі, а не (а).</p></div>
+  <div class="colhead"><span>Що</span><span>Чому і доказ</span><span>Що поверне в роботу</span></div>
+  <div class="items">
+    <div class="item"><h3><span class="id">(д) X-01…X-03</span>Офісні й контрактні: кошторис тендеру, погодження креслень, рахунки за етапами</h3><div><p class="why">Альтернатива №1: найбільша виручка, локальних конкурентів немає. R12: погодження проєкту з клієнтом для (а) закриває екран 15; X-02 має внутрішні дані ToDo, 3 ліди.</p><p class="ev">Доказ: FM §2.3.1, §1.3</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Частка (а) у розмітці &lt; 30 %.</p><p class="where">Де зараз: OWNER-BRIEF №1, №11</p></div></div>
+    <div class="item"><h3><span class="id">(б) P-15, NC-01, NC-05</span>Серійні на склад: маркетплейси, POS, оптові цінові категорії</h3><div><p class="why">Найсильніша локальна конкуренція (Bimp, KeyCRM, Katana). R12: маркетплейси просили серійні й змішані (внутрішні дані ToDo, 2 ліди), не (а).</p><p class="ev">Доказ: FM P-15; CC:13, 25</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Профіль поверх (а).</p><p class="where">Де зараз: FM P-15, §2.6</p></div></div>
+    <div class="item"><h3><span class="id">(в)</span>М'які меблі</h3><div><p class="why">Доказів замало (якість 2 з 5). R12: у внутрішніх даних 2 ліди м'яких меблів: планування з урахуванням людей, автобронювання.</p><p class="ev">Доказ: SD (в)</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>3–5 розмов із виробниками покажуть біль.</p><p class="where">Де зараз: SD (в)</p></div></div>
+    <div class="item"><h3><span class="id">(г) D-15</span>Масив і столярка, експорт: простежуваність партії й пакет даних EUDR</h3><div><p class="why">Профіль «експортер»: виробник не оператор EUDR, дані для імпортера; строки 30.12.2026 і 30.06.2027. R12: внутрішні дані ToDo, 2 експортери, не (а).</p><p class="ev">Доказ: IM:S32, RG:28; FM D-15</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Робимо профіль «експортер».</p><p class="where">Де зараз: FM D-15</p></div></div>
+    <div class="item"><h3><span class="id">(г) N-15</span>Експорт: інвойси англійською, бізнес-одиниця в ЄС</h3><div><p class="why">внутрішні дані ToDo, 2 ліди: серійні й масив.</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Профіль «експортер».</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">(г) NR-04</span>Клас емісії формальдегіду, сертифікат плити за партією</h3><div><p class="why">Вимога ЄС для експорту.</p><p class="ev">Доказ: RG:27</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Профіль «експортер».</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">(д)/(г) NP-03</span>Сертифікат відповідності на партію (тендер)</h3><div><p class="why">1 тендер, гіпотеза.</p><p class="ev">Доказ: PV:41</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>2–3 тендери з тією ж вимогою.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-14</span>Імпорт комплектуючих: мито, код УКТ ЗЕД, транспорт за вагою, групова націнка</h3><div><p class="why">Профіль дистриб'ютора комплектуючих, а не виробника (внутрішні дані ToDo, 1 лід).</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Окремий пакет для дистриб'юторів.</p><p class="where">Де зараз: FM §2.6</p></div></div>
+    <div class="item"><h3><span class="id">N-10, N-11</span>Нормування часу нестандартних виробів; маршрути через цехи різних технологій</h3><div><p class="why">внутрішні дані ToDo, 1 клієнт, не (а).</p><p class="ev">Доказ: FM §2.6</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Профіль «нестандартні / змішані матеріали»; N-10 як ризик для P-03 перевірити на (а).</p><p class="where">Де зараз: FM §2.6</p></div></div>
   </div>
 </section>
 
 <section id="concept">
-  <div class="sec-head"><span class="eyebrow">Група 4</span><h2>Що понижено в старій концепції A-20 і в поточному зрізі A-21</h2></div>
-  <div class="note">
-    <p><b>Частину того, що вже показано у відео й прототипі A-21, дослідження вважає непотрібним для першої версії.</b> Зріз будували до глибокого аналізу.</p>
-  </div>
-  <div class="colhead"><span>Що</span><span>Що з ним зробили</span><span>Де зараз</span></div>
+  <div class="sec-head"><span class="eyebrow">Група 4 · 7 позицій</span><h2>Понижено в концепції A-20 і в зрізі A-21</h2>
+  <p class="small prose">Частину того, що вже показано у відео й прототипі A-21, дослідження вважає непотрібним для першої версії: зріз будували до глибокого аналізу. Зміни вносить людина (повернення на A-20 / A-21), а не цей синтез.</p></div>
+  <div class="colhead"><span>Що</span><span>Що з ним зробили і доказ</span><span>Що поверне в роботу</span></div>
   <div class="items">
-    <div class="item"><h3>Ділові обрізки (F-11, екран S-09)</h3><p class="why">Друга фаза, до перевірки попиту.</p><p class="back-if"><span class="lbl">Зараз</span>Є в зрізі A-21 і у відео.</p></div>
-    <div class="item"><h3>Розкрій кількох замовлень разом</h3><p class="why">Не в першій версії (D-16).</p><p class="back-if"><span class="lbl">Зараз</span>Є в зрізі A-21 (завдання розкрою на кілька виробничих замовлень).</p></div>
-    <div class="item"><h3>Ціни сировини (F-12, S-10) і сценарій керівника SC-06</h3><p class="why">Прибрано. SC-06 замінити на «керівник бачить зсуви строків і рекламації».</p><p class="back-if"><span class="lbl">Зараз</span>У концепції A-20.</p></div>
-    <div class="item"><h3>Курс EUR (F-13)</h3><p class="why">Лишається малою функцією, біль PAIN-10 позначити «не перевірено».</p><p class="back-if"><span class="lbl">Зараз</span>У концепції A-20.</p></div>
-    <div class="item"><h3>Усі болі старої концепції з одним джерелом</h3><p class="why">PAIN-01…13 спирались лише на брифінг. Переприв'язати до незалежних джерел, решту позначити «гіпотеза».</p><p class="back-if"><span class="lbl">Зараз</span>У концепції A-20.</p></div>
+    <div class="item"><h3><span class="id">F-11 / S-09</span>Ділові обрізки</h3><div><p class="why">Друга фаза, до перевірки (D-09, група 2).</p><p class="ev">Доказ: FM §4.2; внутрішні дані ToDo, 2 ліди</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Як D-09: 2+ виробники (а) ведуть обрізки й втрачають на цьому гроші.</p><p class="where">Де зараз: <b>Є в зрізі A-21 і у відео:</b> прибрати</p></div></div>
+    <div class="item"><h3><span class="id">D-16 у A-21</span>Завдання розкрою на кілька виробничих замовлень</h3><div><p class="why">Не в першій версії (група 2).</p><p class="ev">Доказ: FM §4.3; внутрішні дані ToDo, 1 клієнт</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Як D-16: фабрики (а) підтвердять пакетування вручну, або профіль (б).</p><p class="where">Де зараз: <b>Є в зрізі A-21:</b> прибрати</p></div></div>
+    <div class="item"><h3><span class="id">F-12 / S-10, SC-06</span>Ціни сировини і сценарій керівника «ціни сировини»</h3><div><p class="why">Прибрано з MVP. R12: повернуто в «після перевірки» як NP-02 (прайси постачальників + історія цін); SC-06 замінити на «керівник бачить зсуви строків і рекламації».</p><p class="ev">Доказ: FM §4.2; внутрішні дані ToDo, 3 клієнти</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Як NP-02: другий тип джерел (вакансія закупівельника, відгук, A-23).</p><p class="where">Де зараз: У концепції A-20</p></div></div>
+    <div class="item"><h3><span class="id">F-13</span>Курс EUR</h3><div><p class="why"><b>R12: повернуто в MVP, переформульовано:</b> курс НБУ для цін прайсу й КП (договори + внутрішні дані). Біль переписати з «маржа за курсом» на «ціни продажу не встигають за курсом».</p><p class="ev">Доказ: IM §13.1; внутрішні дані ToDo, 2 клієнти</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Уже в MVP умовно; підтвердити клієнтом (а) на A-06 / A-23.</p><p class="where">Де зараз: У концепції A-20: переформулювати</p></div></div>
+    <div class="item"><h3><span class="id">S-13</span>Портал покупця</h3><div><p class="why"><b>R12: прибрано з MVP</b> (D-08, група 2).</p><p class="ev">Доказ: внутрішні дані ToDo, 56 лідів</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Як D-08: на A-23 «портал» обирають частіше, ніж «повідомлення в месенджер».</p><p class="where">Де зараз: У концепції A-20 і <b>в зрізі A-21:</b> прибрати або позначити «не MVP»</p></div></div>
+    <div class="item"><h3><span class="id">S-01</span>Підбір виробу (конфігуратор)</h3><div><p class="why"><b>R12: окремий екран прибрано;</b> ціна з розмірів теж після перевірки.</p><p class="ev">Доказ: FM §4.4; внутрішні дані ToDo, 1 клієнт</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Як P-01 і P-01 спрощено (група 2).</p><p class="where">Де зараз: У концепції A-20 і в зрізі A-21</p></div></div>
+    <div class="item"><h3><span class="id">PAIN-01…13</span>Усі болі старої концепції з одним джерелом</h3><div><p class="why">Переприв'язати до незалежних джерел за типами R12, решту позначити «гіпотеза».</p><p class="ev">Доказ: FM §4.2, §2.5</p></div><div><p class="back-if"><span class="lbl">Повернути, якщо</span>Біль отримає другий незалежний тип джерел.</p><p class="where">Де зараз: У концепції A-20</p></div></div>
   </div>
 </section>
 
+<section id="log">
+  <div class="sec-head"><span class="eyebrow">Журнал знятих рішень</span><h2>Рішення, які власник зняв, і що через це перестало бути вибором</h2></div>
+  <div class="log">
+    <dl><dt>№ (OWNER-BRIEF / FM §7)</dt><dd>10 / п. 4</dd></dl>
+    <dl><dt>Коли, ким</dt><dd>11.11.2026, власник продукту</dd></dl>
+    <dl><dt>Питання</dt><dd>Пакет: надбудова над <code>custom_furniture</code> (Enterprise) чи незалежна збірка?</dd></dl>
+    <dl><dt>Як знято</dt><dd>Рішенням «пакет одночасно для Community і Enterprise»: незалежне ядро на Community; <code>custom_furniture</code> лише джерело ідей і даних (ролі, операції, етапи, контрольні точки) для Enterprise-варіанта.</dd></dl>
+    <dl style="grid-column:1 / -1"><dt>Наслідок для відкинутого</dt><dd>«Залежність ядра від <code>custom_furniture</code>» записано в «що свідомо не робимо». Годин більше: +40–41 % без «мостів», +51–53 % з «мостами»; зате є Community-тариф.</dd></dl>
+  </div>
+  <div class="note"><p><b>Зміни статусу R12 не є рішеннями власника.</b> Це пропозиція синтезу; затверджує людина на гейтах A-20 / A-21 (рішення 16): D-08 і P-01 прибрано з MVP; D-17 прибрано з екрана 5; D-14 повернуто переформульованим; P-16 підвищено до окремого екрана (MVP умовно); F-12 переведено в «після перевірки» як NP-02; спрощену ціну з розмірів знято з MVP; NR-01, NR-02 «MVP умовно, до юриста»; вісім нових позицій групи 2.</p></div>
+</section>
+</main>
+
 <footer class="site">
-  <p>Джерело: репозиторій <code>tnizhnikovskyi-todo/industry-flow-test-mebli</code>, гілка <code>flow/A-03b-deep</code>, <code>docs/industries/mebli/research/FUNCTIONAL-MAP.md</code> (§1.1, §2.3.1, §3.3–3.4, §4.1–4.3), <code>subsegments-deep.md</code>.</p>
+  <p>Джерело: <code>docs/industries/mebli/research/REJECTED.md</code> (R12, 11.11.2026) репозиторію тестового флоу; доповнення до <code>FUNCTIONAL-MAP.md</code> і <code>OWNER-BRIEF.md</code>. Повні ключі рядків внутрішніх даних ToDo на сторінку не винесено.</p>
   <p>Підготовлено ToDo · 11.11.2026</p>
 </footer>
-</main>
 </div>
+</body>
+</html>
