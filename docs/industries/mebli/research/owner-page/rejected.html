@@ -1,0 +1,168 @@
+<title>Меблі: що відкинули</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+/* Layout: реєстр рішень «не беремо». Зведення зверху, далі 4 групи; кожен пункт — що, чому, доказ, що поверне в роботу. */
+:root{
+  --bg:#FCFBFA;--surface:#F3F1EE;--surface-2:#E9E6E2;--ink:#101820;--muted:#525B64;--line:#DEDAD5;
+  --accent:#FE5000;--accent-text:#B83A00;--accent-soft:#FFE9DE;
+  --good:#1F7A4D;--good-soft:#E2F2E9;--warn:#8A5A00;--warn-soft:#FBF0D9;--bad:#B4232C;--bad-soft:#FBE4E5;
+  --logo-bg:transparent;
+  --font:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+  --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+  --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+  --logo-bg:#F3F1EE;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+  --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+  --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+  --logo-bg:#F3F1EE;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;margin:0;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent-text);text-underline-offset:2px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px}
+h1,h2,h3{text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.4vw,38px);font-weight:800}
+h2{font-size:clamp(22px,3vw,28px);font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+code{font-family:var(--mono);font-size:.88em}
+.wrap{max-width:1080px;margin-inline:auto}
+.prose{max-width:68ch}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.small{font-size:14px;color:var(--muted)}
+.num{font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;line-height:1.6}
+.tag.hyp{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.masthead{padding-block:28px 28px;display:flex;flex-direction:column;gap:18px;border-bottom:1px solid var(--line)}
+.brandrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:inline-flex;align-items:center;background:var(--logo-bg);border-radius:10px;padding:6px 10px}
+.logo img{height:36px;width:auto;display:block}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:14px;color:var(--muted)}
+.back{font-weight:700}
+.summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.summary a{display:flex;flex-direction:column;gap:4px;padding:14px 16px;text-decoration:none;color:var(--ink);min-width:0}
+.summary a+a{border-left:1px solid var(--line)}
+.summary a:hover{background:var(--surface)}
+.summary b{font-size:30px;font-weight:800;line-height:1.1}
+.summary span{font-size:14px;color:var(--muted)}
+.k-out b{color:var(--bad)}.k-later b{color:var(--warn)}.k-seg b{color:var(--muted)}.k-down b{color:var(--accent-text)}
+section{padding-block:40px 4px;display:flex;flex-direction:column;gap:16px;scroll-margin-top:16px}
+section+section{border-top:1px solid var(--line);margin-top:32px}
+.sec-head{display:flex;flex-direction:column;gap:6px}
+.items{display:flex;flex-direction:column}
+.item{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,1fr);gap:8px 28px;padding-block:16px;border-top:1px solid var(--line)}
+.item h3 .id{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--muted);margin-right:6px}
+.item .why{font-size:15px}
+.item .ev{font-size:13px;color:var(--muted);margin-top:6px}
+.item .back-if{font-size:14.5px;background:var(--surface);border-radius:6px;padding:8px 12px;align-self:start}
+.item .back-if .lbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent-text);margin-bottom:2px}
+.colhead{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,1fr);gap:28px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.seg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.seg div{border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.seg .lt{font-size:20px;font-weight:800}
+.note{border-left:4px solid var(--accent);background:var(--surface);padding:14px 18px;border-radius:0 8px 8px 0;max-width:68ch;display:flex;flex-direction:column;gap:6px}
+footer.site{margin-top:48px;border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:10px;font-size:14px;color:var(--muted)}
+footer.site code{color:var(--ink);word-break:break-word}
+@media (max-width:820px){
+  .item,.colhead{grid-template-columns:minmax(0,1fr)}
+  .colhead{display:none}
+  .seg{grid-template-columns:minmax(0,1fr)}
+  .summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .summary a:nth-child(3){border-left:0}
+  .summary a:nth-child(n+3){border-top:1px solid var(--line)}
+}
+</style>
+
+<div class="wrap">
+<header class="masthead">
+  <div class="brandrow">
+    <span class="logo"><img src="img/todo-logo.png" alt="ToDo" width="92" height="36"></span>
+    <div class="meta"><span class="num">11.11.2026</span><a class="back" href="https://claude.ai/artifact/4US1Hk8R2AkJMN2LbZU675" target="_blank" rel="noopener">← Концепція пакета</a></div>
+  </div>
+  <span class="eyebrow">Галузевий пакет «меблі» на Odoo 19 · доповнення до концепції</span>
+  <h1>Що ми відкинули під час аналізу і чому</h1>
+  <p class="prose">Кожна вимога, яку дослідження прибрало з пакета або з першої версії, з причиною, доказом і умовою, за якої вона повертається в роботу. Тут же видно, що з поточного прототипу A-21 дослідження вважає непотрібним для першої версії.</p>
+  <nav class="summary" aria-label="Групи">
+    <a class="k-out" href="#out"><b class="num">6</b><span>поза пакетом зовсім</span></a>
+    <a class="k-later" href="#later"><b class="num">9</b><span>не в першій версії, після перевірки</span></a>
+    <a class="k-seg" href="#segments"><b class="num">4</b><span>підсегменти не першими</span></a>
+    <a class="k-down" href="#concept"><b class="num">5</b><span>понижено в старій концепції й зрізі A-21</span></a>
+  </nav>
+</header>
+
+<main>
+<section id="out">
+  <div class="sec-head"><span class="eyebrow">Група 1</span><h2>Поза пакетом: це роблять інші системи</h2>
+  <p class="small prose">Ми інтегруємося з ними, а не замінюємо їх.</p></div>
+  <div class="colhead"><span>Що</span><span>Чому відкинули</span><span>Що поверне в роботу</span></div>
+  <div class="items">
+    <div class="item"><h3>Власне 3D-проєктування і рендер</h3><div><p class="why">Це ринок PRO100, БАЗИС, ViyarPro, KRONAS MASTER 3D. Bimp із ними теж прямо не конкурує.</p><p class="ev">FUNCTIONAL-MAP §2.3.1 · CF:#17 · рішення людини на A-04</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи в цьому пакеті. Наша частина: імпорт проєкту (D-01).</p></div>
+    <div class="item"><h3>Оптимізація розкрою (nesting)</h3><div><p class="why">Її закривають CAD (БАЗИС-Раскрой, PRO100/CUT100) або дистриб'ютор (Viyar, KRONAS, GibLab).</p><p class="ev">FUNCTIONAL-MAP §2.3.1, §4.2 · CF:#36 · IM §2.3</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи. Наша частина: передати деталі в програму розкрою або замовити порізку (D-02).</p></div>
+    <div class="item"><h3>Генерація програм для ЧПУ</h3><div><p class="why">Задача CAM, не обліку.</p><p class="ev">FUNCTIONAL-MAP §2.3.1 · рішення людини на A-04 (обладнання не беремо)</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи.</p></div>
+    <div class="item"><h3>Розкладка тканин для м'яких меблів</h3><div><p class="why">Це Lectra та подібні системи розкрою тканин.</p><p class="ev">FUNCTIONAL-MAP, «Що свідомо не робимо» · subsegments-deep (в)</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Ніколи. Для профілю (в) лише облік і специфікація.</p></div>
+    <div class="item"><h3>ФОП-мікроцехи на 1–5 людей</h3><div><p class="why">74 % виробників меблів працюють як ФОП. Odoo з нашими модулями дорожчий за їхній бюджет, а для них уже є Viyar/KRONAS + KeyCRM чи Bimp Start.</p><p class="ev">FUNCTIONAL-MAP §1.1 · IM:S01</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника №4: окремий легкий тариф.</p></div>
+    <div class="item"><h3>Повний український бухоблік і зарплата в першій версії</h3><div><p class="why">У фабрик облік у BAS/BAF («запуск у BAF» у вакансіях). <code>l10n_ua</code> в Odoo дає лише план рахунків і податки, податкові накладні — інтеграція (M.E.Doc, «Вчасно»).</p><p class="ev">FUNCTIONAL-MAP H-10, H-12, §3.1</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Рішення власника №5: повний облік в Odoo замість обміну з BAS/BAF.</p></div>
+  </div>
+</section>
+
+<section id="later">
+  <div class="sec-head"><span class="eyebrow">Група 2</span><h2>Не в першій версії: спершу перевірити попит</h2>
+  <p class="small prose">Біль або непідтверджений, або стосується іншого підсегмента. Більшість перевіряється на тесті попиту A-23 або в розмовах із виробниками.</p></div>
+  <div class="colhead"><span>Що</span><span>Чому відклали</span><span>Що поверне в роботу</span></div>
+  <div class="items">
+    <div class="item"><h3><span class="id">D-09</span>Ділові обрізки як облікові одиниці</h3><div><p class="why">Наша гіпотеза: незалежних джерел нуль. БАЗИС веде обрізки в CAD, а не в ERP, і це лише непрямий сигнал. <span class="tag hyp">гіпотеза</span></p><p class="ev">FUNCTIONAL-MAP D-09, §3.4, §4.3</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Виробники в розмовах або на A-23 підтвердять, що ведуть обрізки і втрачають на цьому гроші.</p></div>
+    <div class="item"><h3><span class="id">D-16</span>Розкрій кількох замовлень разом за декором</h3><div><p class="why">Велика робота (розмір L), попит не перевірено.</p><p class="ev">FUNCTIONAL-MAP §3.4, §4.3</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Підтвердиться, що фабрики пакетують розкрій і роблять це вручну.</p></div>
+    <div class="item"><h3><span class="id">F-12</span>Ціни закупівлі сировини (екран S-10)</h3><div><p class="why">Біль тримається на прогнозі про мораторій; конкуренти не виділяють це як функцію.</p><p class="ev">FUNCTIONAL-MAP §4.1, §4.2</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Мораторій чи стрибок цін стануть фактом і з'являться незалежні джерела болю.</p></div>
+    <div class="item"><h3><span class="id">P-15</span>Маркетплейси, сайт, каса салону</h3><div><p class="why">Потрібно серійним меблям (б), а не кухням на замовлення. Модулі є в стандарті та в UA-інтеграціях.</p><p class="ev">FUNCTIONAL-MAP P-15, §1.1</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Робимо профіль (б).</p></div>
+    <div class="item"><h3><span class="id">D-15</span>Простежуваність партії і пакет даних EUDR</h3><div><p class="why">Потрібно масиву на експорт у ЄС (г). Український виробник не оператор EUDR: декларацію подає імпортер, від виробника потрібен лише пакет даних.</p><p class="ev">FUNCTIONAL-MAP D-15 · Регламент 2023/1115, додаток II</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Робимо профіль «експортер» для (г). Строки EUDR: 30.12.2026 і 30.06.2027.</p></div>
+    <div class="item"><h3><span class="id">D-12</span>AI-розбір рекламації з фото і тексту</h3><div><p class="why">Доказів попиту немає. Ризик розпорошення на AI-функції (R-9). <span class="tag hyp">гіпотеза</span></p><p class="ev">FUNCTIONAL-MAP D-12, R-9</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>На A-23 покупці обирають цю функцію або рекламацій стає багато в пілоті.</p></div>
+    <div class="item"><h3><span class="id">D-13</span>AI-чернетки КП і зведення «що застрягло»</h3><div><p class="why">Доказів попиту немає; у конкурентів AI лише маркетинговий (рендер, планувальник). <span class="tag hyp">гіпотеза</span></p><p class="ev">FUNCTIONAL-MAP D-13, R-9</p></div><p class="back-if"><span class="lbl">Повернути, якщо</span>Те саме, що D-12. У першій версії з AI лишається тільки D-11: розбір колонок файлу проєкту.</p></div>
+    <div class="item"><h3><span class="id">D-08</span>Портал покупця (понижено, не прибрано)</h3><div><p class="why">Біль «не знаю статусу» є, але форма «портал» не доведена; можливо, вистачить повідомлень у месенджер.</p><p class="ev">FUNCTIONAL-MAP §4.1, екран 14</p></div><p class="back-if"><span class="lbl">Вирішити</span>На A-23: порівняти інтерес до порталу і до сповіщень.</p></div>
+    <div class="item"><h3><span class="id">D-14</span>Перерахунок маржі за курсом EUR (понижено)</h3><div><p class="why">Лише одне джерело: доплата за курсом у договорі виробника.</p><p class="ev">FUNCTIONAL-MAP D-14, §4.1</p></div><p class="back-if"><span class="lbl">Вирішити</span>На A-23. Поки мала функція з позначкою «не перевірено».</p></div>
+  </div>
+</section>
+
+<section id="segments">
+  <div class="sec-head"><span class="eyebrow">Група 3</span><h2>Підсегменти, які не беремо першими</h2>
+  <p class="small prose">Першим рекомендовано (а) кухні й корпусні на замовлення. Остаточно залежить від розмітки 60 компаній (рішення власника №1 і №2).</p></div>
+  <div class="seg">
+    <div><span class="lt">(д)</span><b>Офісні й контрактні</b><p class="small">Альтернатива №1: найбільша виручка галузі, локальних конкурентів немає. Відкладено кошторис тендеру, погодження креслень, рахунки за етапами (X-01…X-03).</p><p class="small"><b>Повернути, якщо</b> частка кухонь у розмітці &lt; 30 %.</p></div>
+    <div><span class="lt">(б)</span><b>Серійні на склад і маркетплейси</b><p class="small">Найсильніша локальна конкуренція: Bimp, KeyCRM, Katana.</p><p class="small"><b>Повернути</b> як профіль поверх (а).</p></div>
+    <div><span class="lt">(в)</span><b>М'які меблі</b><p class="small">Доказів замало для рішення (якість 2 з 5).</p><p class="small"><b>Повернути, якщо</b> 3–5 розмов із виробниками покажуть біль.</p></div>
+    <div><span class="lt">(г)</span><b>Масив і столярка</b><p class="small">Висока оцінка лише через EUDR; операційні болі не оцінено.</p><p class="small"><b>Повернути</b> як профіль «експортер».</p></div>
+  </div>
+</section>
+
+<section id="concept">
+  <div class="sec-head"><span class="eyebrow">Група 4</span><h2>Що понижено в старій концепції A-20 і в поточному зрізі A-21</h2></div>
+  <div class="note">
+    <p><b>Частину того, що вже показано у відео й прототипі A-21, дослідження вважає непотрібним для першої версії.</b> Зріз будували до глибокого аналізу.</p>
+  </div>
+  <div class="colhead"><span>Що</span><span>Що з ним зробили</span><span>Де зараз</span></div>
+  <div class="items">
+    <div class="item"><h3>Ділові обрізки (F-11, екран S-09)</h3><p class="why">Друга фаза, до перевірки попиту.</p><p class="back-if"><span class="lbl">Зараз</span>Є в зрізі A-21 і у відео.</p></div>
+    <div class="item"><h3>Розкрій кількох замовлень разом</h3><p class="why">Не в першій версії (D-16).</p><p class="back-if"><span class="lbl">Зараз</span>Є в зрізі A-21 (завдання розкрою на кілька виробничих замовлень).</p></div>
+    <div class="item"><h3>Ціни сировини (F-12, S-10) і сценарій керівника SC-06</h3><p class="why">Прибрано. SC-06 замінити на «керівник бачить зсуви строків і рекламації».</p><p class="back-if"><span class="lbl">Зараз</span>У концепції A-20.</p></div>
+    <div class="item"><h3>Курс EUR (F-13)</h3><p class="why">Лишається малою функцією, біль PAIN-10 позначити «не перевірено».</p><p class="back-if"><span class="lbl">Зараз</span>У концепції A-20.</p></div>
+    <div class="item"><h3>Усі болі старої концепції з одним джерелом</h3><p class="why">PAIN-01…13 спирались лише на брифінг. Переприв'язати до незалежних джерел, решту позначити «гіпотеза».</p><p class="back-if"><span class="lbl">Зараз</span>У концепції A-20.</p></div>
+  </div>
+</section>
+
+<footer class="site">
+  <p>Джерело: репозиторій <code>tnizhnikovskyi-todo/industry-flow-test-mebli</code>, гілка <code>flow/A-03b-deep</code>, <code>docs/industries/mebli/research/FUNCTIONAL-MAP.md</code> (§1.1, §2.3.1, §3.3–3.4, §4.1–4.3), <code>subsegments-deep.md</code>.</p>
+  <p>Підготовлено ToDo · 11.11.2026</p>
+</footer>
+</main>
+</div>
