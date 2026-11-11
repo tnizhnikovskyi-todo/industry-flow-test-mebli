@@ -1,0 +1,852 @@
+<title>Меблевий пакет ToDo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+/* Layout: консалтингова записка. Одна колонка тексту ~68ch, ширші блоки (стрічка, матриця, діаграми) до 1120px; липка навігація розділами. */
+:root{
+  --bg:#FCFBFA;
+  --surface:#F3F1EE;
+  --surface-2:#E9E6E2;
+  --ink:#101820;
+  --muted:#525B64;
+  --line:#DEDAD5;
+  --accent:#FE5000;
+  --accent-text:#B83A00;
+  --accent-soft:#FFE9DE;
+  --good:#1F7A4D;
+  --good-soft:#E2F2E9;
+  --warn:#8A5A00;
+  --warn-soft:#FBF0D9;
+  --bad:#B4232C;
+  --bad-soft:#FBE4E5;
+  --logo-bg:transparent;
+  --font:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --wide:1120px;
+  --prose:68ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+    --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+    --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+    --logo-bg:#F3F1EE;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+  --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+  --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+  --logo-bg:#F3F1EE;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 48px;margin:0;
+}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent-text);text-underline-offset:2px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px}
+h1,h2,h3{text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.4vw,40px);font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(23px,3vw,30px);font-weight:700;letter-spacing:-.005em}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+.num,table,.tab{font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--wide);margin-inline:auto}
+.prose{max-width:var(--prose)}
+.stack{display:flex;flex-direction:column;gap:16px}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.lede{font-size:18px;line-height:1.6}
+.small{font-size:14px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;line-height:1.6}
+.tag.hyp{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.tag.std{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+.tag.td{color:var(--accent-text);border-color:var(--accent-text);background:var(--accent-soft)}
+.tag.ee{color:var(--ink);background:var(--surface-2);border-color:var(--surface-2)}
+.mark{font-weight:600;color:var(--warn)}
+
+/* Header */
+.masthead{padding-block:28px 32px;display:flex;flex-direction:column;gap:20px;border-bottom:1px solid var(--line)}
+.brandrow{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:inline-flex;align-items:center;background:var(--logo-bg);border-radius:10px;padding:6px 10px}
+.logo img{height:40px;width:auto;display:block}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:14px;color:var(--muted)}
+.status{font-weight:700;color:var(--accent-text);border:1px solid var(--accent-text);border-radius:999px;padding:2px 10px;font-size:13px}
+.verdict{border-left:4px solid var(--accent);background:var(--surface);padding:16px 20px;border-radius:0 8px 8px 0;max-width:var(--prose)}
+.verdict p+p{margin-top:8px}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);margin-inline:calc(-1 * max(16px,env(safe-area-inset-left,0px)));}
+.nav-inner{max-width:var(--wide);margin-inline:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:thin;padding:8px max(16px,env(safe-area-inset-left,0px));-webkit-overflow-scrolling:touch}
+.nav a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;padding:6px 10px;border-radius:6px;white-space:nowrap}
+.nav a:hover{color:var(--ink);background:var(--surface)}
+.nav a.on{color:var(--ink);background:var(--surface-2)}
+
+section{padding-block:48px 8px;scroll-margin-top:56px;display:flex;flex-direction:column;gap:20px}
+section+section{border-top:1px solid var(--line);margin-top:40px}
+.sec-head{display:flex;flex-direction:column;gap:6px}
+
+/* Pain */
+.seg-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.seg{border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg.rec{border-color:var(--accent);border-width:2px}
+.seg-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.seg-letter{font-size:22px;font-weight:800}
+.meter{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.meter b{display:inline-flex;gap:3px}
+.meter i{width:10px;height:10px;border-radius:2px;background:var(--surface-2);display:inline-block}
+.meter i.on{background:var(--ink)}
+.seg.rec .meter i.on{background:var(--accent)}
+.icp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.icp div{padding:16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.icp div+div{border-left:1px solid var(--line)}
+.icp .big{font-size:34px;font-weight:800;line-height:1.1}
+.icp div:first-child .big{color:var(--accent-text)}
+.quotes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px}
+blockquote{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+blockquote p{font-size:17px;line-height:1.55;border-left:3px solid var(--line);padding-left:14px}
+blockquote footer{font-size:13px;color:var(--muted);padding-left:17px}
+.core{font-size:19px;font-weight:600;max-width:var(--prose)}
+
+/* Scenario */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px;counter-reset:s}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;padding-block:14px;border-top:1px solid var(--line)}
+.step .n{width:36px;height:36px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-weight:800;font-size:15px}
+.step.key .n{border-color:var(--accent);color:var(--accent-text)}
+.step .who{font-weight:700}
+.step .what{color:var(--ink)}
+.step .sys{font-size:14px;color:var(--muted);margin-top:4px}
+.step .chg{font-size:14px;margin-top:6px;background:var(--surface);border-radius:6px;padding:8px 10px}
+.step .chg b{font-weight:700}
+.legend-inline{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:13px;color:var(--muted);align-items:center}
+
+/* Roles */
+.roles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.role{background:var(--surface);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.role h3{font-size:17px}
+.role .now,.role .then{font-size:15px;line-height:1.5}
+.role .lbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:2px}
+.role .then .lbl{color:var(--accent-text)}
+
+/* Screens */
+.screens{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.scr{display:grid;grid-template-columns:32px minmax(0,1fr);gap:10px;padding-block:12px;border-top:1px solid var(--line)}
+.scr .id{font-weight:800;color:var(--muted);font-size:15px}
+.scr h3{font-size:16px}
+.scr p{font-size:14.5px;color:var(--muted);margin-top:2px}
+.scr .base{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.coverage{display:flex;height:28px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.coverage span{display:block;height:100%}
+.cv1{background:var(--good)}
+.cv2{background:var(--good-soft)}
+.cv3{background:var(--accent-soft)}
+.cv4{background:var(--accent)}
+.cov-legend{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;font-size:13.5px}
+.cov-legend div{display:flex;gap:8px;align-items:flex-start;min-width:0}
+.cov-legend i{flex:0 0 12px;height:12px;border-radius:2px;margin-top:4px;border:1px solid var(--line)}
+.cov-legend b{font-size:16px}
+.slice{background:var(--surface);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:20px}
+.shots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+figure{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
+figure img{width:100%;height:auto;border-radius:6px;border:1px solid var(--line);display:block;background:var(--bg)}
+figcaption{font-size:14px;color:var(--muted);line-height:1.5}
+figcaption b{color:var(--ink)}
+.slice-bottom{display:grid;grid-template-columns:200px minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:start}
+.checklist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:15px}
+.checklist li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px}
+.checklist li::before{content:"";width:10px;height:10px;margin-top:7px;border-radius:50%}
+.checklist.yes li::before{background:var(--good)}
+.checklist.no li::before{border:2px solid var(--bad)}
+.checklist.odd li::before{background:var(--warn)}
+
+/* Matrix */
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:8px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+.matrix{min-width:980px}
+.matrix th,.matrix td{padding:8px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.matrix thead th{font-size:12px;font-weight:700;color:var(--muted);background:var(--surface);white-space:nowrap}
+.matrix tbody th{font-weight:600;position:sticky;left:0;background:var(--bg);min-width:170px;max-width:200px;border-right:1px solid var(--line);z-index:1}
+.matrix thead th:first-child{position:sticky;left:0;z-index:2}
+.matrix td{min-width:76px}
+.matrix td small{display:block;font-size:11.5px;color:var(--muted);line-height:1.3}
+.c{font-size:16px;line-height:1}
+.f .c{color:var(--good)}
+.p .c{color:var(--warn)}
+.n .c{color:var(--muted)}
+.u .c{color:var(--muted)}
+.g .c{color:var(--accent-text)}
+.matrix tr.odoo th,.matrix tr.odoo td{background:var(--surface)}
+.matrix tr.ours th,.matrix tr.ours td{background:var(--accent-soft)}
+.matrix tr.sep th,.matrix tr.sep td{border-top:2px solid var(--line)}
+.sym{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13.5px;color:var(--muted)}
+.sym span b{font-size:15px;margin-right:4px}
+.comp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 32px}
+.cc{padding-block:16px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px;min-width:0}
+.cc-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 12px}
+.cc .price{font-size:14px;font-weight:600}
+.cc dl{margin:0;display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 12px;font-size:14.5px}
+.cc dt{color:var(--muted);font-size:13px;padding-top:2px}
+.cc dd{margin:0}
+.cc .src{font-size:12.5px;color:var(--muted);font-family:var(--mono);word-break:break-word}
+.callout{border:2px dashed var(--warn);border-radius:10px;padding:16px 20px;display:flex;flex-direction:column;gap:8px;max-width:var(--prose)}
+
+/* Not doing */
+.nodo{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 32px}
+.nodo li{border-top:1px solid var(--line);padding-top:10px;min-width:0}
+.nodo b{display:block}
+.nodo span{font-size:15px;color:var(--muted)}
+
+/* Money */
+.chart{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:12px;align-items:center}
+.bar-label{font-size:14px;line-height:1.35}
+.bar-label small{display:block;color:var(--muted);font-size:12.5px}
+.track{position:relative;height:26px}
+.bar{position:absolute;left:0;top:3px;height:20px;border-radius:0 3px 3px 0;background:var(--ink)}
+.bar.base{background:var(--muted)}
+.bar.acc{background:var(--accent)}
+.bar-val{position:absolute;top:3px;font-size:13px;font-weight:700;line-height:20px;white-space:nowrap;padding-left:8px}
+.axis{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:12px}
+.ticks{position:relative;height:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.ticks span{position:absolute;top:2px;transform:translateX(-50%);white-space:nowrap}
+.ticks span:first-child{transform:none}
+.ticks span:last-child{transform:translateX(-100%)}
+.band{position:absolute;top:-4px;bottom:-4px;background:var(--bad-soft);border-left:2px dashed var(--bad);border-right:2px dashed var(--bad)}
+.bar-val.in{transform:translateX(-100%);padding:0 8px 0 0;color:var(--bg)}
+.marker{position:absolute;top:1px;width:3px;height:24px;background:var(--accent-text)}
+.chart-legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13px;color:var(--muted)}
+.chart-legend i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border-radius:2px}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px}
+.assump{list-style:none;margin:0;padding:0;font-size:14.5px;display:flex;flex-direction:column;gap:6px}
+.assump li{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:12px;border-top:1px solid var(--line);padding-top:6px}
+.assump li span:first-child{color:var(--muted)}
+.keyfig{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px}
+.keyfig div{display:flex;flex-direction:column;min-width:0}
+.keyfig b{font-size:26px;font-weight:800;line-height:1.2}
+.keyfig span{font-size:13.5px;color:var(--muted)}
+
+/* Risks */
+.risks{display:flex;flex-direction:column}
+.risk{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:8px 32px;padding-block:14px;border-top:1px solid var(--line)}
+.risk h3{font-size:16px}
+.risk p{font-size:15px}
+.risk .todo{font-size:14.5px;color:var(--muted)}
+.risk .todo b{color:var(--ink);font-weight:600}
+.risk.top h3{color:var(--accent-text)}
+
+/* Decisions */
+.dec-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;background:var(--surface);border-radius:8px;padding:12px 16px}
+.btn{font:inherit;font-size:14px;font-weight:700;border-radius:6px;padding:8px 14px;cursor:pointer;border:2px solid var(--ink);background:var(--ink);color:var(--bg)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.ghost:hover{background:var(--surface-2);border-color:var(--ink)}
+.decisions{display:flex;flex-direction:column}
+.dec{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;padding-block:18px;border-top:1px solid var(--line)}
+.dec .n{font-size:20px;font-weight:800;color:var(--muted)}
+.dec .body{display:flex;flex-direction:column;gap:10px;min-width:0}
+.dec .q{font-size:17px;font-weight:700}
+.dec .ctx{font-size:15px;color:var(--muted);max-width:var(--prose)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opt{position:relative}
+.opt input{position:absolute;opacity:0;width:1px;height:1px}
+.opt label{display:block;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:6px 12px;font-size:14.5px;background:var(--bg)}
+.opt input:checked+label{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.opt input:focus-visible+label{outline:3px solid var(--accent);outline-offset:2px}
+.rec{font-size:14.5px;max-width:var(--prose)}
+.rec b{color:var(--accent-text)}
+.note{font:inherit;font-size:14px;width:100%;max-width:var(--prose);border:1px solid var(--line);border-radius:6px;padding:6px 10px;background:var(--bg);color:var(--ink)}
+#copyOut{font-family:var(--mono);font-size:13px;width:100%;min-height:160px;border:1px solid var(--line);border-radius:6px;padding:10px;background:var(--bg);color:var(--ink)}
+#copyMsg{font-size:14px;font-weight:600}
+
+/* Limits */
+.limits{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 32px}
+.limits div{border-top:1px solid var(--line);padding-top:10px;min-width:0;display:flex;flex-direction:column;gap:4px}
+.limits p{font-size:15px}
+.limits .plan{font-size:14.5px;color:var(--muted)}
+.links{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:15px}
+
+footer.site{margin-top:56px;border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:12px;font-size:14px;color:var(--muted)}
+footer.site code{font-family:var(--mono);font-size:12.5px;color:var(--ink);word-break:break-word}
+footer.site ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:2px}
+.foot-brand{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between}
+.foot-brand img{height:28px;width:auto}
+
+@media (max-width:860px){
+  .steps,.screens,.comp,.quotes,.nodo,.limits,.two{grid-template-columns:minmax(0,1fr)}
+  .roles{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .slice-bottom{grid-template-columns:160px minmax(0,1fr)}
+  .slice-bottom .nolist{grid-column:1 / -1}
+  .risk{grid-template-columns:minmax(0,1fr)}
+  .cov-legend{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .roles,.shots{grid-template-columns:minmax(0,1fr)}
+  .icp{grid-template-columns:minmax(0,1fr)}
+  .icp div+div{border-left:0;border-top:1px solid var(--line)}
+  .slice-bottom{grid-template-columns:minmax(0,1fr)}
+  .slice-bottom figure{max-width:200px}
+  .bar-row,.axis{grid-template-columns:minmax(0,1fr)}
+  .axis>div:first-child{display:none}
+  .bar-label{font-size:13.5px}
+  .cc dl{grid-template-columns:minmax(0,1fr)}
+  .cc dt{padding-top:6px}
+  .assump li{grid-template-columns:minmax(0,1fr);gap:0}
+  .lede{font-size:17px}
+  .keyfig{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .keyfig b{font-size:21px}
+}
+</style>
+
+<div class="wrap">
+<header class="masthead" id="top">
+  <div class="brandrow">
+    <span class="logo"><img src="img/todo-logo.png" alt="ToDo" width="102" height="40"></span>
+    <div class="meta"><span class="num">11.11.2026</span><span class="status">Чернетка на рішення власника, перед прототипом A-21</span></div>
+  </div>
+  <div class="stack">
+    <span class="eyebrow">Галузевий пакет «меблі» на Odoo 19 · концепція для власника продукту</span>
+    <h1>Меблева система замовлень: від заміру до акта монтажу й рекламації</h1>
+    <p class="lede prose">Рекомендуємо перший пакет для <b>кухонь і корпусних меблів на замовлення</b>. Клієнт: фабрика або цех-юрособа на 25–249 працівників, яка продає через салон чи сайт, проєктує в CAD, розкроює сама або замовляє порізку й сама монтує. Головна цінність: один ланцюг замовлення, у якому помилку заміру, недокомплект чи зсув порізки видно до того, як вони зірвуть обіцяну покупцю дату. Рекомендація умовна: якщо розмітка 60 компаній покаже частку кухонь нижче 30 %, першим іде сегмент офісних і контрактних меблів.</p>
+  </div>
+  <div class="verdict">
+    <p><b>Головний висновок про гроші.</b> Пакет лише для кухонь і шаф на замовлення і лише в Україні нижче окупності: базовий сценарій дає <b class="num">4,2 млн грн</b> виручки за 3 роки проти <b class="num">4,1–12,7 млн грн</b> вартості розробки.</p>
+    <p>На межі окупності він буде, лише якщо збігаються щонайменше дві умови: нижня оцінка годин (≈2 100), ціна партнера для України на рівні Bimp з розширенням ринку на менші компанії, оптимістична конверсія. Картину поліпшують ті самі модулі для інших підсегментів, менша перша версія і ринки поза Україною <span class="tag hyp">не досліджено</span>.</p>
+  </div>
+  <p class="small prose">Реальних клієнтів не було. Усе нижче: гіпотези з кабінетними доказами, а не підтверджений попит. Позначка <span class="tag hyp">гіпотеза</span> означає нашу тезу, яку джерела прямо не підтверджують.</p>
+</header>
+</div>
+
+<nav class="nav" aria-label="Розділи">
+  <div class="nav-inner">
+    <a href="#pain">Біль</a>
+    <a href="#scenario">Сценарій</a>
+    <a href="#roles">Ролі</a>
+    <a href="#screens">Екрани</a>
+    <a href="#competitors">Конкуренти</a>
+    <a href="#notdoing">Не робимо</a>
+    <a href="#money">Гроші</a>
+    <a href="#risks">Ризики</a>
+    <a href="#decisions">Рішення</a>
+    <a href="#limits">Обмеження</a>
+    <a href="#sources">Джерела</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- PAIN -->
+<section id="pain">
+  <div class="sec-head">
+    <span class="eyebrow">Для кого і який біль</span>
+    <h2>Фабрика на замовлення, де замовлення проходить через 6–8 людей і 3–5 програм</h2>
+  </div>
+  <p class="core">Ніхто не бачить, що помилка заміру, недокомплект чи зсув порізки зірве обіцяну клієнту дату. Замовлення живе в CAD, Excel, месенджері й обліку одночасно.</p>
+
+  <h3>П'ять підсегментів галузі</h3>
+  <p class="small prose">Оцінки 1–5 експертні. Гострота болю й якість доказів розділені, щоб брак даних не знижував оцінку сегмента.</p>
+  <div class="seg-list">
+    <div class="seg rec">
+      <div class="seg-top"><span class="seg-letter">(а)</span><span class="tag td">рекомендовано першим</span></div>
+      <b>Кухні й корпусні на замовлення</b>
+      <div class="meter">Біль <b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></b> 5</div>
+      <div class="meter">Докази <b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></b> 4</div>
+      <p class="small">Біль чути від покупців, виробників у вакансіях, меблярів і в договорах. Частку в ринку не перевірено.</p>
+    </div>
+    <div class="seg">
+      <div class="seg-top"><span class="seg-letter">(д)</span><span class="tag">альтернатива</span></div>
+      <b>Офісні й контрактні</b>
+      <div class="meter">Біль <b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></b> 4</div>
+      <div class="meter">Докази <b><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></b> 3</div>
+      <p class="small">Найбільша виручка галузі (КВЕД 31.01: 20,4 млрд грн), локальних конкурентів немає, шаблон Odoo <code>custom_furniture</code> зроблено під них.</p>
+    </div>
+    <div class="seg">
+      <div class="seg-top"><span class="seg-letter">(б)</span><span class="tag">не першим</span></div>
+      <b>Серійні: склад, маркетплейси</b>
+      <div class="meter">Біль <b><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></b> 3</div>
+      <div class="meter">Докази <b><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></b> 3</div>
+      <p class="small">Найсильніша локальна конкуренція: Bimp, KeyCRM, Katana. Профіль поверх (а).</p>
+    </div>
+    <div class="seg">
+      <div class="seg-top"><span class="seg-letter">(в)</span><span class="tag">не першим</span></div>
+      <b>М'які меблі</b>
+      <div class="meter">Біль <b><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></b> 3</div>
+      <div class="meter">Докази <b><i class="on"></i><i class="on"></i><i></i><i></i><i></i></b> 2</div>
+      <p class="small">Доказів замало для рішення. Потрібні 3–5 розмов з виробниками.</p>
+    </div>
+    <div class="seg">
+      <div class="seg-top"><span class="seg-letter">(г)</span><span class="tag">не першим</span></div>
+      <b>Масив, столярка</b>
+      <div class="meter">Біль <b><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></b> 4*</div>
+      <div class="meter">Докази <b><i class="on"></i><i class="on"></i><i></i><i></i><i></i></b> 2</div>
+      <p class="small">*Оцінка 4 стосується лише EUDR; операційні болі не оцінено. Кандидат на профіль «експортер».</p>
+    </div>
+  </div>
+
+  <h3>Розмір ринку</h3>
+  <div class="icp">
+    <div><span class="big num">120</span><b>компаній у цільовому профілі</b><span class="small">КВЕД 31.01, 31.02, 31.09; 25–249 працівників; виручка 10–500 млн грн</span></div>
+    <div><span class="big num">225</span><b>якщо додати смугу 10–24 працівники</b><span class="small">+105 компаній; має сенс лише за ціни Odoo на рівні Bimp</span></div>
+    <div><span class="big num">349</span><b>якщо додати ще й смугу 0–9</b><span class="small">+124 компанії з виручкою 10–500 млн грн; частина персоналу, імовірно, на ФОП <span class="tag hyp">гіпотеза</span></span></div>
+  </div>
+  <p class="small prose">Джерело: odb-catalog, знімок реєстру серпня 2026, агрегатні запити 11.11.2026. ФОП у каталозі немає, а вони становлять 74 % виробників меблів; для пакета на Odoo вони свідомо поза профілем. Скільки з 120 компаній саме «кухні на замовлення», <b>невідомо</b>: у назвах ознаки кухонь немає в жодної, у пілоті 22 сайтів чітких (а) знайдено 0.</p>
+
+  <h3>Біль голосами з джерел</h3>
+  <div class="quotes">
+    <blockquote>
+      <p>«Обіцяли два місяці, вийшло три. … Погоджували параметри техніки, яка має бути, в т.ч. і холодильник. Менеджер сказав, все ок, все підходить. … В результаті - зверніть увагу, наскільки холодильник виступає з пеналу.»</p>
+      <footer>Покупець кухні на замовлення, відгук на <a href="https://www.vidhuk.ua/mebelka?rating=2" target="_blank" rel="noopener">vidhuk.ua</a>, 23.10.2024 (IM:S23, прочитано 11.11.2026)</footer>
+    </blockquote>
+    <blockquote>
+      <p>«контролювати строки, якість і комплектацію»; «контрольні заміри»; «вирішення рекламаційних питань»</p>
+      <footer>Меблеві фабрики у вакансіях керівника виробництва, robota.ua, 2026 (IM §11.1)</footer>
+    </blockquote>
+    <blockquote>
+      <p>Постачальник порізки відповідає, що зробив «за вашою картою крою», а порізка приходить «аж через місяць».</p>
+      <footer>Меблярі про порізку в дистриб'ютора, відгуки 2026 (IM §11.2)</footer>
+    </blockquote>
+    <blockquote>
+      <p>«Підписавши доповнення, Замовник бере на себе зобов'язання не змінювати ескіз товару, його габаритні і внутрішні розміри.»</p>
+      <footer>Договір виробника корпусних меблів, п. 7.3 (<a href="https://mebelart.kiev.ua/uk/dogovor" target="_blank" rel="noopener">mebelart.kiev.ua</a>, IM §13.1). Наше прочитання <span class="tag hyp">гіпотеза</span>: заборона змін замінює процедуру зміни замовлення з перерахунком ціни й строку, якої в процесі немає.</footer>
+    </blockquote>
+  </div>
+</section>
+
+<!-- SCENARIO -->
+<section id="scenario">
+  <div class="sec-head">
+    <span class="eyebrow">Як це працює</span>
+    <h2>Кухня від заміру до рекламації: 12 кроків</h2>
+  </div>
+  <p class="prose">Один наскрізний сценарій MVP. Два варіанти виробництва: власний розкрій або порізка в дистриб'ютора. Номер екрана посилається на список екранів нижче. Помаранчевим виділено кроки, яких у Bimp не заявлено.</p>
+  <ol class="steps">
+    <li class="step"><span class="n">1</span><div><div class="who">Менеджер салону</div><div class="what">Приймає заявку, записує на замір.</div><div class="sys">Картка клієнта, воронка, календар замірника · CRM, стандарт Odoo</div></div></li>
+    <li class="step key"><span class="n">2</span><div><div class="who">Замірник</div><div class="what">На об'єкті заповнює замір-лист на планшеті.</div><div class="sys">Ніші, комунікації, техніка, фото, нахил підлоги й кути стін · екран 1</div><div class="chg"><b>Що змінюється:</b> зараз блокнот і фото в месенджері, помилку видно лише на монтажі. З пакетом замір одразу в замовленні.</div></div></li>
+    <li class="step key"><span class="n">3</span><div><div class="who">Дизайнер, конструктор</div><div class="what">Проєктує в PRO100, БАЗИС або ViyarPro, завантажує файл.</div><div class="sys">Специфікація деталей з розмірами, кромкою й декором; AI підказує, яка колонка файлу що означає · екран 4</div><div class="chg"><b>Що змінюється:</b> зараз проєкт деталізують і переносять у порізку вручну. З пакетом імпорт файлу й перевірка перед відправкою. <span class="tag hyp">формати не підтверджено файлами</span></div></div></li>
+    <li class="step"><span class="n">4</span><div><div class="who">Менеджер</div><div class="what">Складає пропозицію.</div><div class="sys">Собівартість і маржа до запуску, графік оплат, обіцяна дата · екрани 2, 3</div><div class="chg"><b>Що змінюється:</b> зараз маржу видно після закриття замовлення. З пакетом до запуску.</div></div></li>
+    <li class="step"><span class="n">5</span><div><div class="who">Покупець</div><div class="what">Погоджує проєкт, платить передоплату онлайн.</div><div class="sys">Пропозиція, рахунок, оплата · екран 2, портал</div></div></li>
+    <li class="step key"><span class="n">6</span><div><div class="who">Менеджер</div><div class="what">Клієнт змінив фасади після погодження.</div><div class="sys">Нова версія специфікації, нова ціна й дата на погодження клієнту · кнопка «Зміна» на екрані 2</div><div class="chg"><b>Що змінюється:</b> зараз договори просто забороняють змінювати ескіз. З пакетом зміна оформлюється з перерахунком ціни й дати.</div></div></li>
+    <li class="step"><span class="n">7</span><div><div class="who">Технолог</div><div class="what">Відправляє на розкрій: у свій цех або на порізку в дистриб'ютора.</div><div class="sys">Перевірка специфікації перед відправкою, відправлена версія, кнопка «Претензія постачальнику» · екран 5</div><div class="chg"><b>Що змінюється:</b> зараз суперечка «за вашою картою крою» без доказів. З пакетом зафіксована версія й претензія.</div></div></li>
+    <li class="step"><span class="n">8</span><div><div class="who">Майстер цеху, робітники</div><div class="what">Ведуть замовлення по дільницях.</div><div class="sys">Планшет «Взято / Зроблено / Пауза з причиною»; дефіцит матеріалів веде в закупівлю; на дошці замовлення, що зсувають дату · екрани 6, 7, 8</div><div class="chg"><b>Що змінюється:</b> зараз про дефіцит фурнітури дізнаються під час збирання. З пакетом забезпеченість видно до запуску.</div></div></li>
+    <li class="step key"><span class="n">9</span><div><div class="who">Комплектувальник</div><div class="what">Збирає замовлення по місцях.</div><div class="sys">Комплектувальний лист зі специфікації; відвантаження лише повного комплекту · екран 9</div><div class="chg"><b>Що змінюється:</b> зараз збирають «на око», недокомплект виявляє монтажник.</div></div></li>
+    <li class="step key"><span class="n">10</span><div><div class="who">Бригада монтажу</div><div class="what">Монтує, підписує акт із клієнтом.</div><div class="sys">Календар монтажів; акт із фото, підписом і недоліками; % бригаді рахується з акта · екрани 10, 11</div><div class="chg"><b>Що змінюється:</b> зараз % бригаді рахують в Excel. З пакетом з підписаного акта.</div></div></li>
+    <li class="step key"><span class="n">11</span><div><div class="who">Сервіс</div><div class="what">Клієнт скаржиться на фасад.</div><div class="sys">Рекламація до конкретної деталі, повторне виготовлення з причиною й терміном · екран 12</div><div class="chg"><b>Що змінюється:</b> у відгуках рекламацію не закривали понад 4 місяці (IM:S23). З пакетом у неї є деталь, причина й термін.</div></div></li>
+    <li class="step"><span class="n">12</span><div><div class="who">Керівник</div><div class="what">Закриває місяць.</div><div class="sys">Собівартість план і факт по кожному замовленню, маржа, рекламації, зсуви дат · екран 13</div><div class="chg"><b>Що змінюється:</b> маржа видна до запуску й після кожної зміни, а не після закриття.</div></div></li>
+  </ol>
+</section>
+
+<!-- ROLES -->
+<section id="roles">
+  <div class="sec-head">
+    <span class="eyebrow">Ролі</span>
+    <h2>День з життя шести людей</h2>
+  </div>
+  <div class="roles">
+    <div class="role"><h3>Замірник</h3><p class="small">3–4 виїзди на день</p><p class="now"><span class="lbl">Зараз</span>Блокнот і фото в месенджері. Помилку заміру видно лише на монтажі.</p><p class="then"><span class="lbl">З пакетом</span>Замір-лист одразу в замовленні: ніші, техніка, фото, геометрія.</p></div>
+    <div class="role"><h3>Конструктор-технолог</h3><p class="small">Деталювання, карти розкрою, заявки на фурнітуру</p><p class="now"><span class="lbl">Зараз</span>Вручну деталізує проєкт і переносить у порізку.</p><p class="then"><span class="lbl">З пакетом</span>Імпорт файлу проєкту й перевірка перед відправкою.</p></div>
+    <div class="role"><h3>Майстер цеху</h3><p class="small">Дільниці, черга, дефіцит</p><p class="now"><span class="lbl">Зараз</span>Про дефіцит фурнітури дізнається, коли вже збирає.</p><p class="then"><span class="lbl">З пакетом</span>Бачить забезпеченість матеріалами до запуску.</p></div>
+    <div class="role"><h3>Комплектувальник</h3><p class="small">Пакування й відвантаження</p><p class="now"><span class="lbl">Зараз</span>Збирає «на око». Недокомплект виявляє монтажник.</p><p class="then"><span class="lbl">З пакетом</span>Комплектувальний лист по місцях, відвантаження лише повного комплекту.</p></div>
+    <div class="role"><h3>Бригадир монтажу</h3><p class="small">Бригада, акт, оплата</p><p class="now"><span class="lbl">Зараз</span>% бригаді рахують в Excel.</p><p class="then"><span class="lbl">З пакетом</span>Нарахування з підписаного акта монтажу.</p></div>
+    <div class="role"><h3>Керівник</h3><p class="small">Маржа, строки, рекламації</p><p class="now"><span class="lbl">Зараз</span>Маржу бачить після закриття замовлення.</p><p class="then"><span class="lbl">З пакетом</span>Маржу видно до запуску й після кожної зміни.</p></div>
+  </div>
+</section>
+
+<!-- SCREENS -->
+<section id="screens">
+  <div class="sec-head">
+    <span class="eyebrow">Екрани MVP для прототипу A-21</span>
+    <h2>14 екранів: що бачить користувач і на чому це зроблено</h2>
+  </div>
+  <div class="legend-inline"><span class="tag std">Стандарт</span> Odoo 19 дає функцію сам, потрібне налаштування <span class="tag td">Наш модуль</span> будуємо (td_) <span class="tag ee">EE</span> лише Enterprise</div>
+  <div class="screens">
+    <div class="scr"><span class="id num">1</span><div><h3>Замір-лист</h3><p>Ніші, комунікації, техніка, фото й геометрія приміщення в картці замовлення</p><div class="base"><span class="tag std">Field Service</span><span class="tag ee">EE</span><span class="tag td">Наш модуль</span></div></div></div>
+    <div class="scr"><span class="id num">2</span><div><h3>Замовлення клієнта</h3><p>Калькуляція, маржа, графік оплат, обіцяна й прогнозна дата; кнопка «Зміна замовлення»</p><div class="base"><span class="tag std">Продажі, передоплати</span><span class="tag td">Маржа зі специфікації, дати</span></div></div></div>
+    <div class="scr"><span class="id num">3</span><div><h3>Підбір виробу</h3><p>Модуль, розміри й декор дають ціну (спрощено). Варіанти Odoo не працюють для довільних розмірів</p><div class="base"><span class="tag td">Наш модуль або сторонній</span></div></div></div>
+    <div class="scr"><span class="id num">4</span><div><h3>Специфікація замовлення</h3><p>Деталі Д×Ш×Т, кромка, декор; імпорт з PRO100, БАЗИС, ViyarPro, KRONAS. <span class="mark">Макет: формати не підтверджено файлами</span></p><div class="base"><span class="tag std">BoM</span><span class="tag td">Розміри, імпорт, AI-мапінг</span></div></div></div>
+    <div class="scr"><span class="id num">5</span><div><h3>Розкрій або порізка</h3><p>Свій розкрій або замовлення порізки; перевірка; претензія постачальнику</p><div class="base"><span class="tag std">Субпідряд</span><span class="tag td">Наш модуль</span></div></div></div>
+    <div class="scr"><span class="id num">6</span><div><h3>Дошка замовлень</h3><p>Етапи до монтажу; червоним замовлення, що зсувають дату</p><div class="base"><span class="tag std">Етапи</span><span class="tag td">Прогноз дати</span></div></div></div>
+    <div class="scr"><span class="id num">7</span><div><h3>Планшет цеху</h3><p>Свої завдання: «Взято / Зроблено / Пауза з причиною»</p><div class="base"><span class="tag std">Shop Floor</span><span class="tag ee">EE</span></div></div></div>
+    <div class="scr"><span class="id num">8</span><div><h3>Дефіцит і закупівля</h3><p>Чого бракує під замовлення, кнопка закупівлі</p><div class="base"><span class="tag std">Стандарт</span></div></div></div>
+    <div class="scr"><span class="id num">9</span><div><h3>Комплектувальний лист</h3><p>Що в яке місце пакувати, що вже зібрано</p><div class="base"><span class="tag std">Пакування</span><span class="tag td">Наш модуль</span></div></div></div>
+    <div class="scr"><span class="id num">10</span><div><h3>Календар монтажів і акт</h3><p>Графік бригад; акт із фото, підписом і недоліками. Підпис клієнта в 19.0 не перевірено</p><div class="base"><span class="tag std">Field Service</span><span class="tag ee">EE</span><span class="tag td">Наш модуль</span></div></div></div>
+    <div class="scr"><span class="id num">11</span><div><h3>Нарахування бригаді й цеху</h3><p>Відрядна за операціями й % бригаді за актом. Правила поділу дає клієнт</p><div class="base"><span class="tag td">Наш модуль</span></div></div></div>
+    <div class="scr"><span class="id num">12</span><div><h3>Рекламація до деталі</h3><p>Причина, деталь, повторне виготовлення, термін</p><div class="base"><span class="tag std">Helpdesk, Repairs</span><span class="tag ee">EE</span><span class="tag td">Наш модуль</span></div></div></div>
+    <div class="scr"><span class="id num">13</span><div><h3>Собівартість замовлення</h3><p>План і факт по матеріалах, роботах і порізці</p><div class="base"><span class="tag std">Вартість виробництва</span><span class="tag td">Звіт по замовленню</span></div></div></div>
+    <div class="scr"><span class="id num">14</span><div><h3>Портал покупця</h3><p>Етап, дата монтажу, документи, оплата. Біль «не знаю статусу» є, форму «портал» не перевірено: можливо, вистачить повідомлення в месенджер (перевірити на A-23)</p><div class="base"><span class="tag std">Портал і налаштування</span></div></div></div>
+  </div>
+
+  <h3>Скільки дає стандарт Odoo 19</h3>
+  <p class="small prose">Розрахунок на 49 рядках функціональної карти. Меблева цінність зосереджена в 10–12 модулях td_.</p>
+  <div class="coverage" role="img" aria-label="Покриття: 24,5 % стандарт підтверджено, 6,1 % стандарт без перевірки, 44,9 % стандарт плюс наш модуль, 24,5 % лише наш модуль">
+    <span class="cv1" style="width:24.5%"></span><span class="cv2" style="width:6.1%"></span><span class="cv3" style="width:44.9%"></span><span class="cv4" style="width:24.5%"></span>
+  </div>
+  <div class="cov-legend">
+    <div><i class="cv1"></i><span><b class="num">24,5 %</b><br>стандарт повністю, підтверджено документацією 19.0 або кодом</span></div>
+    <div><i class="cv2"></i><span><b class="num">6,1 %</b><br>стандарт, документацією не перевірено</span></div>
+    <div><i class="cv3"></i><span><b class="num">44,9 %</b><br>стандарт плюс наш модуль</span></div>
+    <div><i class="cv4"></i><span><b class="num">24,5 %</b><br>лише наш модуль або інтеграція</span></div>
+  </div>
+
+  <div class="slice">
+    <div class="sec-head">
+      <span class="eyebrow">Що вже є в реальному зрізі A-21</span>
+      <h3>Скріни з Odoo 19 на демо-даних «Меблева фабрика «Демо»»</h3>
+    </div>
+    <div class="shots">
+      <figure><img src="img/02-konfigurator.jpg" alt="Конфігуратор шафи-купе в комерційній пропозиції" width="1200" height="750"><figcaption><b>Конфігуратор у пропозиції (екран 3).</b> Менеджер обирає декор корпусу й фасаду, кромку, фурнітуру з доплатами і вводить ширину, висоту, глибину. Ціна рахується одразу.</figcaption></figure>
+      <figure><img src="img/07-doshka-zamovlen.jpg" alt="Дошка замовлень за етапами" width="1200" height="750"><figcaption><b>Дошка замовлень (екран 6, частково 2).</b> Етапи від пропозиції до виготовлення, сума, маржа у відсотках і скільки годин замовлення чекає запуску.</figcaption></figure>
+      <figure><img src="img/12-karta-rozkroyu.jpg" alt="Завдання розкрою з картою розкрою і відсотком відходів" width="1200" height="750"><figcaption><b>Карта розкрою (екран 5, власний розкрій).</b> Одне завдання на кілька виробничих замовлень, відходи 7,9 %, ділові обрізки й економія в гривнях. Результат отримано з імітації програми розкрою, а не з реальної.</figcaption></figure>
+      <figure><img src="img/17-dashboard-kerivnyka.jpg" alt="Дашборд керівника" width="1200" height="750"><figcaption><b>Дашборд керівника (близько до екрана 13).</b> Виручка, середня маржа й замовлення з маржею нижче 15 %, час до запуску, завантаження дільниць, відхід розкрою, собівартість план і факт по фабриці.</figcaption></figure>
+    </div>
+    <div class="slice-bottom">
+      <figure><img src="img/m2-doshka.jpg" alt="Дошка замовлень на телефоні" width="416" height="900"><figcaption><b>Дошка на телефоні.</b> Той самий канбан у мобільному браузері.</figcaption></figure>
+      <div class="stack">
+        <h3>Що в зрізі є</h3>
+        <ul class="checklist yes">
+          <li><span>Каталог виробів і підбір з опцій і розмірами (екран 3)</span></li>
+          <li><span>Специфікація виробу, ціна й маржа, комерційна пропозиція, підтвердження (екрани 2 і 4, без імпорту з CAD)</span></li>
+          <li><span>Дошка замовлень з маржею й очікуванням запуску (екран 6)</span></li>
+          <li><span>Виробничі замовлення, нестача матеріалів, завантаження дільниць (екран 8, частково 7)</span></li>
+          <li><span>Власний розкрій з картою й відходами (екран 5, частково)</span></li>
+          <li><span>План і факт собівартості, маржа замовлень, дашборд керівника (екран 13)</span></li>
+        </ul>
+        <p class="small">17 екранів, 5 модулів td_, 39 автотестів, Odoo 19 Community.</p>
+        <h3>Що є, хоча MVP цього не просить</h3>
+        <ul class="checklist odd">
+          <li><span>Ділові обрізки й розкрій кількох замовлень разом. У рекомендованому MVP обидва винесено за межі першої версії, бо попит не перевірено.</span></li>
+        </ul>
+      </div>
+      <div class="stack nolist">
+        <h3>Чого в зрізі немає</h3>
+        <ul class="checklist no">
+          <li><span>Замір-лист (1)</span></li>
+          <li><span>Імпорт проєкту з CAD (4) і кнопка «Зміна замовлення»</span></li>
+          <li><span>Порізка в дистриб'ютора, перевірка й претензія (5)</span></li>
+          <li><span>Планшет цеху (7)</span></li>
+          <li><span>Комплектувальний лист (9)</span></li>
+          <li><span>Календар монтажів, акт і % бригаді (10, 11)</span></li>
+          <li><span>Рекламація до деталі (12) і портал покупця (14)</span></li>
+        </ul>
+        <p class="small">Саме ці екрани несуть відмінність від Bimp і стандартного Odoo. Поточний зріз показує облікову частину від пропозиції до цеху; ланцюг до монтажу й рекламації треба додати після рішень на цій сторінці.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPETITORS -->
+<section id="competitors">
+  <div class="sec-head">
+    <span class="eyebrow">Ланцюг і хто його закриває</span>
+    <h2>Від заміру до рекламації ланцюг не закриває жодна з перевірених систем</h2>
+  </div>
+  <div class="sym">
+    <span><b class="c" style="color:var(--good)">●</b>є з доказом (документація, відео, довідка)</span>
+    <span><b class="c" style="color:var(--warn)">◐</b>частково, або доказ лише маркетинг чи сніпети</span>
+    <span><b class="c">—</b>немає або не заявлено</span>
+    <span><b class="c">?</b>не перевірено</span>
+    <span><b class="c" style="color:var(--accent-text)">◎</b>ціль пакета, ще не збудовано</span>
+  </div>
+  <div class="scroll" tabindex="0" aria-label="Матриця етапів і систем, прокручується горизонтально">
+  <table class="matrix">
+    <thead><tr><th>Система</th><th>Замір</th><th>Проєкт (CAD)</th><th>Кошторис</th><th>Специфікація</th><th>Розкрій, порізка</th><th>Цех</th><th>Комплектація</th><th>Монтаж</th><th>Рекламація</th><th>Облік, зарплата</th></tr></thead>
+    <tbody>
+      <tr><th>Bimp (UA)</th><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="f"><span class="c">●</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span><small>послуга</small></td><td class="p"><span class="c">◐</span></td><td class="p"><span class="c">◐</span><small>пакування</small></td><td class="p"><span class="c">◐</span><small>статус</small></td><td class="p"><span class="c">◐</span><small>сервіс</small></td><td class="f"><span class="c">●</span></td></tr>
+      <tr><th>KeyCRM (UA)</th><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span><small>статуси</small></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span><small>статуси</small></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span><small>оплати, ПРРО</small></td></tr>
+      <tr><th>Katana (лише англ.)</th><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span><small>субпідряд</small></td><td class="f"><span class="c">●</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span><small>повернення</small></td><td class="p"><span class="c">◐</span><small>без UA</small></td></tr>
+      <tr><th>Viyar, Kronas (дистриб'ютори)</th><td class="n"><span class="c">—</span></td><td class="f"><span class="c">●</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span></td><td class="f"><span class="c">●</span><small>послуга</small></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span></td><td class="n"><span class="c">—</span></td></tr>
+      <tr><th>БАЗИС + 1С-БАЗИС (РФ)</th><td class="n"><span class="c">—</span></td><td class="f"><span class="c">●</span></td><td class="f"><span class="c">●</span></td><td class="f"><span class="c">●</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span></td><td class="f"><span class="c">●</span><small>у CAD</small></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="p"><span class="c">◐</span></td></tr>
+      <tr><th>PRO100 (PL)</th><td class="n"><span class="c">—</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td><td class="n"><span class="c">—</span></td></tr>
+      <tr class="sep"><th>Еталон INNERGY (США)</th><td class="p"><span class="c">◐</span><small>takeoff, не виїзний</small></td><td class="p"><span class="c">◐</span><small>окремий продукт</small></td><td class="p"><span class="c">◐</span></td><td class="p"><span class="c">◐</span><small>BOM з CAD</small></td><td class="p"><span class="c">◐</span><small>через Microvellum</small></td><td class="p"><span class="c">◐</span><small>MES</small></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span><small>job costing, payroll США</small></td></tr>
+      <tr><th>Еталон Cyncly Insight</th><td class="u"><span class="c">?</span></td><td class="n"><span class="c">—</span><small>Mozaik окремо</small></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span></td><td class="n"><span class="c">—</span><small>Mozaik окремо</small></td><td class="p"><span class="c">◐</span></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span></td><td class="p"><span class="c">◐</span></td><td class="p"><span class="c">◐</span><small>розподіл праці</small></td></tr>
+      <tr><th>Еталон TRIMIT (DK)</th><td class="u"><span class="c">?</span></td><td class="n"><span class="c">—</span></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span><small>динамічна BOM</small></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span></td><td class="u"><span class="c">?</span></td><td class="u"><span class="c">?</span></td><td class="p"><span class="c">◐</span></td><td class="u"><span class="c">?</span></td></tr>
+      <tr class="odoo sep"><th>Odoo 19: стандарт уже дає</th><td class="p"><span class="c">◐</span><small>EE</small></td><td class="n"><span class="c">—</span></td><td class="f"><span class="c">●</span></td><td class="p"><span class="c">◐</span><small>без розмірів</small></td><td class="p"><span class="c">◐</span><small>субпідряд</small></td><td class="f"><span class="c">●</span><small>EE</small></td><td class="p"><span class="c">◐</span><small>пакування</small></td><td class="f"><span class="c">●</span><small>EE</small></td><td class="p"><span class="c">◐</span><small>EE</small></td><td class="p"><span class="c">◐</span><small>план рахунків</small></td></tr>
+      <tr class="ours"><th>Наш пакет: треба побудувати</th><td class="g"><span class="c">◎</span></td><td class="g"><span class="c">◎</span><small>імпорт</small></td><td class="g"><span class="c">◎</span><small>маржа</small></td><td class="g"><span class="c">◎</span><small>розміри, імпорт</small></td><td class="g"><span class="c">◎</span><small>претензія</small></td><td class="n"><span class="c">—</span><small>дає стандарт</small></td><td class="g"><span class="c">◎</span><small>по місцях</small></td><td class="g"><span class="c">◎</span><small>акт, % бригаді</small></td><td class="g"><span class="c">◎</span><small>до деталі</small></td><td class="g"><span class="c">◎</span><small>відрядна</small></td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="small prose">Еталони розбито по системах. Їхні докази: маркетинг і сніпети довідки, тому повних ● у них немає. Genesis, Plugit, BAS/1С і ECOSIRE у схему не внесено: це проєкти під клієнта або модулі без публічної документації, порівнювати їх за клітинками некоректно.</p>
+
+  <div class="callout">
+    <span class="eyebrow">Біла пляма <span class="tag hyp">гіпотеза</span></span>
+    <p><b>Наскрізну зв'язку «деталь специфікації → комплектація → акт монтажу → рекламація до деталі» публічно не описує ніхто.</b> Серед перевірених документацією систем (Bimp, KeyCRM, Katana, Viyar, БАЗИС, PRO100) ланцюг від заміру до рекламації не закриває жодна. За кордоном закриті окремі ланки.</p>
+    <p class="small">Відсутність у маркетингу не доводить відсутності в продукті. Перевіряється тріалами (рішення 6).</p>
+  </div>
+
+  <h3>Головні конкуренти коротко</h3>
+  <div class="comp">
+    <article class="cc"><div class="cc-head"><h3>Bimp ERP <span class="small">(UA)</span></h3><span class="price num">$1 490 / 2 390 / 5 490 на рік · 5 / 10 / 25 корист.</span></div>
+      <dl><dt>Що це</dt><dd>Хмарна облікова ERP, найглибша задокументована. Головний еталон паритету.</dd><dt>Сильне</dt><dd>Відрядна за статусом етапу, ліміти перевитрат із блокуванням, ремонт компонента з собівартістю, НЗВ, UA-інтеграції, ціна.</dd><dt>Чого немає</dt><dd>Замір, комплектація зі специфікації, акт монтажу, рекламація до деталі, зміна замовлення, імпорт із CAD: «не заявлено».</dd></dl>
+      <span class="src">competitors/bimp-erp.md · FUNCTIONAL-MAP §3.1</span></article>
+    <article class="cc"><div class="cc-head"><h3>KeyCRM <span class="small">(UA)</span></h3><span class="price num">$19 на місяць + $9 за кожні 200 замовлень</span></div>
+      <dl><dt>Що це</dt><dd>CRM з модулем «Виробництво» для товарів під замовлення: розподіл між виробниками, статуси. Користувачі безкоштовно, інтеграції +$19.</dd><dt>Сильне</dt><dd>Продаж, маркетплейси, банки, ПРРО, Нова Пошта; ціна.</dd><dt>Чого немає</dt><dd>Специфікації, списання матеріалів, собівартості виробу, відрядної: у 225 статтях довідки не заявлено. Цеху й монтажу теж.</dd></dl>
+      <span class="src">competitor-features.md §2.17 · keycrm.app/pricing, 11.11.2026</span></article>
+    <article class="cc"><div class="cc-head"><h3>Katana <span class="small">(легка MRP)</span></h3><span class="price num">$97–359 на місяць (група легких MRP)</span></div>
+      <dl><dt>Що це</dt><dd>Легка MRP, офіційно лише англійською. Поруч Prodio, MRPeasy.</dd><dt>Сильне</dt><dd>BOM з напівфабрикатами, застосунок цеху, наявність матеріалів, замовлення порізки в підрядника, повернення.</dd><dt>Чого немає</dt><dd>UA-банків, ПРРО, Нової Пошти, заміру, монтажу, відрядної, якості. Для цехів 10–25 людей без UA-вимог реальна альтернатива.</dd></dl>
+      <span class="src">competitor-features.md §2.17 · FUNCTIONAL-MAP §3.1</span></article>
+    <article class="cc"><div class="cc-head"><h3>Viyar, Kronas <span class="small">(дистриб'ютори)</span></h3><span class="price num">порізка ДСП 29,16 грн/п.м. · конструктор <span class="mark">не перевірено</span></span></div>
+      <dl><dt>Що це</dt><dd>Постачальник плит з онлайн-конструктором (ViyarPro, KRONAS MASTER 3D) і порізкою. Поруч GibLab.</dd><dt>Сильне</dt><dd>Для мікроцеху замінює CAD, розкрій і обладнання.</dd><dt>Чого немає</dt><dd>Облікової частини; перевірки й претензії постачальнику. Для нас партнери. Загроза: добудують облік.</dd></dl>
+      <span class="src">competitors/viyar-viyarpro.md · competitors/kronas-master-3d.md</span></article>
+    <article class="cc"><div class="cc-head"><h3>БАЗИС + 1С-БАЗИС <span class="small">(РФ)</span></h3><span class="price num">модулі 5–132 тис. руб.</span></div>
+      <dl><dt>Що це</dt><dd>Повний CAD/CAM (посібники 2023–2026) і ERP на 1С.</dd><dt>Сильне</dt><dd>Найповніший ланцюг: CAD, розкрій з обрізками, ЧПУ, пакування.</dd><dt>Чого немає</dt><dd>Монтажу й рекламацій в одній системі з обліком; походження з РФ. Для нас міграційний сегмент через імпорт CSV/XML.</dd></dl>
+      <span class="src">competitors/bazis.md</span></article>
+    <article class="cc"><div class="cc-head"><h3>PRO100 <span class="small">(PL)</span></h3><span class="price">офіційного прайсу немає</span></div>
+      <dl><dt>Що це</dt><dd>CAD-візуалізація для дизайнера в салоні.</dd><dt>Сильне</dt><dd>Простий і поширений; звіти матеріалів і ціни прямо з проєкту.</dd><dt>Чого немає</dt><dd>Обліку. Для нас інтеграція, а не заміна.</dd></dl>
+      <span class="src">competitors/pro100.md</span></article>
+    <article class="cc"><div class="cc-head"><h3>Odoo <code>custom_furniture</code></h3><span class="price">у ціні Enterprise</span></div>
+      <dl><dt>Що це</dt><dd>Офіційна демо-конфігурація під проєктні меблі: 4 робочі центри, 6 операцій, атрибут «Color», ролі архітектора, 3D-дизайнера, монтажника.</dd><dt>Сильне</dt><dd>Офіційна, безкоштовна для партнерів.</dd><dt>Чого немає</dt><dd>Розмірної специфікації, CAD і дистриб'юторів, комплектації, % бригаді, UA-локалізації. Ризик: базу має кожен партнер Odoo.</dd></dl>
+      <span class="src">odoo-ecosystem.md §6.3</span></article>
+    <article class="cc"><div class="cc-head"><h3>Зарубіжні еталони</h3><span class="price">ціни не публікуються</span></div>
+      <dl><dt>Що це</dt><dd>INNERGY, Cyncly Insight, TRIMIT, imos, MRPeasy: зрілі системи для меблів на замовлення.</dd><dt>Сильне</dt><dd>Глибина, MES, зміни замовлення, проєктний цикл.</dd><dt>Чого немає</dt><dd>Локалізації, української мови; доступної ціни. Для нас орієнтир функцій.</dd></dl>
+      <span class="src">competitor-features.md §2.15</span></article>
+  </div>
+</section>
+
+<!-- NOT DOING -->
+<section id="notdoing">
+  <div class="sec-head">
+    <span class="eyebrow">Межі</span>
+    <h2>Що свідомо не робимо</h2>
+  </div>
+  <ul class="nodo">
+    <li><b>Власне 3D-проєктування і рендер</b><span>Інтегруємося з PRO100, БАЗИС і конструкторами дистриб'юторів, а не замінюємо їх.</span></li>
+    <li><b>Оптимізацію розкрою і програми ЧПУ</b><span>Це шар CAD/CAM: БАЗИС, GibLab, сервіси дистриб'юторів.</span></li>
+    <li><b>Розкладку тканин для м'яких меблів</b><span>Це Lectra.</span></li>
+    <li><b>Повний український бухоблік і зарплату в MVP</b><span>Облік у BAS/BAF клієнта або локалізація Odoo: рішення 5.</span></li>
+    <li><b>ФОП-мікроцехи на 1–5 людей</b><span>Для них дешевші Bimp, KeyCRM або конструктор дистриб'ютора.</span></li>
+    <li><b>У MVP не входять</b><span>Маркетплейси й POS; пакет даних EUDR для покупця в ЄС; ділові обрізки; ціни сировини; пакетування розкрою кількох замовлень; AI, крім мапінгу файлу.</span></li>
+  </ul>
+</section>
+
+<!-- MONEY -->
+<section id="money">
+  <div class="sec-head">
+    <span class="eyebrow">Гроші</span>
+    <h2>Ліцензія від паритету з Bimp до ×2,5. Розробка для одного підсегмента не окупається</h2>
+  </div>
+
+  <h3>Ліцензія за рік, 10 користувачів, долари США</h3>
+  <p class="small prose">6 повних користувачів і 4 Light User для монтажників, складу й цеху. Євро Plugit перераховано за курсом НБУ на 11.11.2026: 1 € = 1,1226 $. Light User оформлює лише радник Odoo за індивідуальною пропозицією; $8,90 на місяць зі сторінки цін узято як орієнтир.</p>
+  <div class="chart" role="img" aria-label="Ліцензія на рік: Bimp 2390, Plugit 2680, odoo.com річна 4820, odoo.com помісячна 5910 доларів">
+    <div class="bar-row"><div class="bar-label">Bimp, 10 користувачів<small>річний тариф</small></div><div class="track"><span class="bar base" style="width:39.83%"></span><span class="bar-val num" style="left:39.83%">$2 390 · база</span></div></div>
+    <div class="bar-row"><div class="bar-label">Odoo: ціна партнера для України<small>Plugit, €27,90 за повного, річна оплата</small></div><div class="track"><span class="bar acc" style="width:44.67%"></span><span class="bar-val num" style="left:44.67%">≈$2 680 · ×1,1</span></div></div>
+    <div class="bar-row"><div class="bar-label">Odoo: odoo.com, річна оплата<small>$61,00 за повного; сторінка показала ціни для США</small></div><div class="track"><span class="bar" style="width:80.33%"></span><span class="bar-val in num" style="left:80.33%">≈$4 820 · ×2,0</span></div></div>
+    <div class="bar-row"><div class="bar-label">Odoo: odoo.com, помісячна оплата<small>$76,20 за повного</small></div><div class="track"><span class="bar" style="width:98.5%"></span><span class="bar-val in num" style="left:98.5%">≈$5 910 · ×2,5</span></div></div>
+    <div class="axis"><div></div><div class="ticks num"><span style="left:0">$0</span><span style="left:33.33%">2 000</span><span style="left:66.67%">4 000</span><span style="left:100%">6 000</span></div></div>
+  </div>
+  <p class="small prose num">Для 25 користувачів розрив від ×1,07 до ×2,25. Яка ціна діє для українського клієнта, <b>не з'ясовано</b>. Хостинг Odoo.sh для власних модулів і впровадження не враховано ні в Odoo, ні в Bimp.</p>
+
+  <h3>Рамка окупності за 3 роки, млн грн</h3>
+  <p class="small prose">Груба рамка, а не бізнес-план. Смуга показує вартість розробки пакета для кухонь і шаф за ринковою ставкою партнера. Стовпчик показує нашу виручку за 3 роки. Риска на стовпчику: те саме, якщо для нових смуг чек 0,5 млн грн.</p>
+  <div class="chart" role="img" aria-label="Виручка за 3 роки проти вартості розробки 4,1–12,7 млн грн">
+    <div class="bar-row"><div class="bar-label">Песимістичний<small>120 компаній, ≈1 клієнт</small></div><div class="track"><span class="band" style="left:29.29%;width:61.43%"></span><span class="bar" style="width:8.57%"></span><span class="bar-val num" style="left:8.57%">1,2</span></div></div>
+    <div class="bar-row"><div class="bar-label"><b>Базовий</b><small>120 компаній, ≈4 клієнти</small></div><div class="track"><span class="band" style="left:29.29%;width:61.43%"></span><span class="bar acc" style="width:30%"></span><span class="bar-val num" style="left:30%"><b>4,2</b></span></div></div>
+    <div class="bar-row"><div class="bar-label">Оптимістичний<small>120 компаній, ≈9 клієнтів</small></div><div class="track"><span class="band" style="left:29.29%;width:61.43%"></span><span class="bar" style="width:64.29%"></span><span class="bar-val in num" style="left:64.29%">9,0</span></div></div>
+    <div class="bar-row"><div class="bar-label">Базовий + смуга 10–24<small>225 компаній, ≈8 клієнтів</small></div><div class="track"><span class="band" style="left:29.29%;width:61.43%"></span><span class="bar base" style="width:56.43%"></span><span class="marker" style="left:42.86%"></span><span class="bar-val num" style="left:56.43%">7,9 (6,0)</span></div></div>
+    <div class="bar-row"><div class="bar-label">Базовий + смуги 10–24 і 0–9<small>349 компаній, ≈12 клієнтів</small></div><div class="track"><span class="band" style="left:29.29%;width:61.43%"></span><span class="bar base" style="width:87.14%"></span><span class="marker" style="left:58.57%"></span><span class="bar-val in num" style="left:87.14%">12,2 (8,2)</span></div></div>
+    <div class="axis"><div></div><div class="ticks num"><span style="left:0">0</span><span style="left:14.29%">2</span><span style="left:28.57%">4</span><span style="left:42.86%">6</span><span style="left:57.14%">8</span><span style="left:71.43%">10</span><span style="left:85.71%">12</span><span style="left:100%">14</span></div></div>
+    <div class="chart-legend"><span><i style="background:var(--bad-soft);border:1px dashed var(--bad)"></i>вартість розробки 4,1–12,7</span><span><i style="background:var(--accent)"></i>базовий сценарій</span><span><i style="background:var(--muted)"></i>ширший ринок, лише за ціни на рівні Bimp</span><span><i style="background:var(--accent-text);width:3px"></i>чек 0,5 млн для нових смуг</span></div>
+  </div>
+  <div class="keyfig">
+    <div><b class="num">≈2 100–5 300 год</b><span>розробка пакета для кухонь і шаф</span></div>
+    <div><b class="num">0,3–1,0</b><span>виручка ÷ вартість, базовий сценарій</span></div>
+    <div><b class="num">4–13</b><span>клієнтів до беззбитковості, повний чек</span></div>
+    <div><b class="num">8–25</b><span>клієнтів, якщо половина чека йде на впровадження</span></div>
+  </div>
+
+  <div class="two">
+    <div class="stack">
+      <h3>Явні припущення</h3>
+      <ul class="assump">
+        <li><span>Клієнтів</span><span>N × s × c: компанії профілю × частка підсегмента × частка, яку виграємо за 3 роки</span></li>
+        <li><span>N</span><span>120 / 225 / 349 компаній (odb-catalog, серпень 2026); єдиний параметр з даних</span></li>
+        <li><span>s, частка (а)</span><span>20 / 35 / 50 % <span class="tag hyp">припущення</span></span></li>
+        <li><span>c, конверсія</span><span>5 / 10 / 15 % за 3 роки <span class="tag hyp">припущення</span></span></li>
+        <li><span>Чек</span><span>1 млн грн з клієнта: впровадження й підписка на td_, без ліцензії Odoo; ≈2 % річної виручки компанії на 25–49 людей <span class="tag hyp">не перевірено</span></span></li>
+        <li><span>Години</span><span>17 рядків карти «стандарт + наш модуль», 10 рядків «лише наш модуль», конфігурація, +30–50 % на архітектуру, тести, реліз <span class="tag hyp">припущення, не кошторис</span></span></li>
+        <li><span>Ставка</span><span>1 975–2 400 грн/год: ринкова ціна години партнера (Plugit), а не наша собівартість</span></li>
+      </ul>
+    </div>
+    <div class="stack">
+      <h3>Що змінює висновок</h3>
+      <ul class="assump">
+        <li><span>Спільні модулі</span><span>Ті самі модулі для серійних (б) і офісних (д): частина рядків карти спільна</span></li>
+        <li><span>Менша версія</span><span>Перша версія лише в межах MVP-зрізу</span></li>
+        <li><span>Собівартість</span><span>Наша година дешевша за ринкову ставку</span></li>
+        <li><span>Ринки</span><span>Поза Україною <span class="tag hyp">не досліджено</span></span></li>
+      </ul>
+      <h3>Як продаємо дорожче за Bimp <span class="tag hyp">гіпотеза, тест попиту A-23</span></h3>
+      <p class="prose">Продаємо ланцюг, а не облік. Одна переробка кухні через помилку заміру або місяць незакритої рекламації коштують більше за річну різницю в ліцензії: $0,3–2,4 тис. для 10 користувачів. Альтернатива клієнта: Bimp разом з Excel, месенджерами й CAD, а не один Bimp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RISKS -->
+<section id="risks">
+  <div class="sec-head">
+    <span class="eyebrow">Ризики</span>
+    <h2>Що може зламати концепцію</h2>
+  </div>
+  <div class="risks">
+    <div class="risk top"><div><h3>Головна перевага не підтверджена файлами</h3><p>Імпорт проєкту з БАЗИС, PRO100, ViyarPro і KRONAS MASTER 3D спирається на непідтверджені формати. Є лише неофіційна структура файлу ViyarPro з GitHub 2021 року.</p></div><p class="todo"><b>Що робити:</b> 3–5 реальних знеособлених файлів до A-08; тріали (рішення 6).</p></div>
+    <div class="risk top"><div><h3>Розмір не доведено</h3><p>Частка кухонь на замовлення серед 120 компаній невідома. Пілот сайтів не знайшов жодної чіткої.</p></div><p class="todo"><b>Що робити:</b> розмітка 60 компаній до рішення про підсегмент (рішення 2).</p></div>
+    <div class="risk top"><div><h3>Ціна</h3><p>Замір, монтаж, цех, якість і сервіс в Odoo є лише в Enterprise. Залежно від ціни для України: від паритету до ×2,5 до Bimp.</p></div><p class="todo"><b>Що робити:</b> з'ясувати ціну для України й Light User (рішення 9); перевірити реакцію в тесті попиту A-23.</p></div>
+    <div class="risk"><div><h3>UA-інтеграції для Odoo 19 від сторонніх авторів</h3><p>Нова Пошта, Checkbox, банки. Якість і підтримку не перевірено.</p></div><p class="todo"><b>Що робити:</b> тест-встановлення на A-12; запасний автор на кожну інтеграцію.</p></div>
+    <div class="risk"><div><h3>Голос виробника непрямий</h3><p>Він узятий з вакансій, відгуків, договорів і кейсів, а не з інтерв'ю.</p></div><p class="todo"><b>Що робити:</b> 5 розмов з виробниками кухонь і офісних меблів на A-06 або A-23.</p></div>
+    <div class="risk"><div><h3>Шаблон <code>custom_furniture</code> є в кожного партнера Odoo</h3><p>Налаштування легко скопіювати.</p></div><p class="todo"><b>Що робити:</b> відмінність тримати на наших модулях і UA-інтеграціях.</p></div>
+    <div class="risk"><div><h3>Конкуренти добудують своє</h3><p>Bimp може додати замір, монтаж, рекламації чи імпорт з CAD; дистриб'ютори можуть добудувати облік.</p></div><p class="todo"><b>Що робити:</b> швидкість і зв'язка «деталь → комплектація → монтаж → рекламація»; профіль від 25 людей.</p></div>
+  </div>
+</section>
+
+<!-- DECISIONS -->
+<section id="decisions">
+  <div class="sec-head">
+    <span class="eyebrow">Рішення власника</span>
+    <h2>11 рішень перед прототипом</h2>
+  </div>
+  <div class="dec-tools">
+    <p class="small" style="max-width:52ch">Позначки й нотатки зберігаються лише у вашому браузері як особиста чернетка. Ніхто інший їх не бачить, і вони нікуди не надсилаються.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn" id="copyBtn" type="button">Скопіювати мої відповіді</button>
+      <button class="btn ghost" id="clearBtn" type="button">Очистити</button>
+    </div>
+  </div>
+  <p id="copyMsg" role="status" aria-live="polite"></p>
+  <textarea id="copyOut" readonly hidden aria-label="Текст відповідей для копіювання"></textarea>
+  <div class="decisions" id="decList"></div>
+</section>
+
+<!-- LIMITS -->
+<section id="limits">
+  <div class="sec-head">
+    <span class="eyebrow">Обмеження дослідження</span>
+    <h2>Що не перевірено і як перевірити</h2>
+  </div>
+  <div class="limits">
+    <div><h3>Тріали конкурентів</h3><p>Bimp, ViyarPro, PRO100, БАЗИС, KRONAS MASTER 3D не проходили: потрібні e-mail і персональні дані людини.</p><p class="plan">План: людина проходить тріали за чек-листом (≈2–3 години на продукт), знімає екрани й вивантажує файли. Рішення 6.</p></div>
+    <div><h3>Файли експорту</h3><p>Зразків CSV/XML БАЗИС і відкритих парсерів PRO100 не знайдено. Від ViyarPro є лише неофіційна структура XML з GitHub 2021 року.</p><p class="plan">План: 3–5 реальних знеособлених файлів до A-08, з тріалів або від виробників.</p></div>
+    <div><h3>Інтерв'ю з виробниками</h3><p>Форуми й інтерв'ю недоступні (403). Голос виробника: 190 вакансій robota.ua, відгуки меблярів про порізку, договори.</p><p class="plan">План: 5 розмов з виробниками кухонь і офісних меблів на A-06 або A-23.</p></div>
+    <div><h3>Ціна Odoo для України</h3><p>odoo.com віддав ціни для відвідувача зі США. Ціну Odoo.sh не зафіксовано; ціну Light User дає лише радник Odoo.</p><p class="plan">План: відкрити сторінку цін з української IP-адреси або запросити пропозицію в Odoo чи партнера. Рішення 9.</p></div>
+    <div><h3>Частка підсегментів</h3><p>Автоматичний пілот на 22 сайтах висновків про частки не дає.</p><p class="plan">План: ручна розмітка 60 випадкових компаній профілю за готовим протоколом, ≈3 години. Рішення 2.</p></div>
+    <div><h3>Інше відкрите</h3><p>Підпис клієнта в Field Service 19.0; якість UA-модулів 19.0; правила поділу % бригаді; тендери Prozorro для офісних меблів; чи потрібен покупцю портал, а не месенджер.</p><p class="plan">План: тест попиту A-23 і тест-встановлення на A-12.</p></div>
+  </div>
+  <h3>Подивитися самому, 10–15 хвилин</h3>
+  <ul class="links">
+    <li>Bimp: виробниче замовлення і відрядна, відео 1,5–2 хв: <a href="https://www.youtube.com/watch?v=U0FuEMiyxKk" target="_blank" rel="noopener">відео 1</a>, <a href="https://www.youtube.com/watch?v=OXhkY_Bc4xs" target="_blank" rel="noopener">відео 2</a>, <a href="https://bimpsoft.com/en/help/production/specifications/" target="_blank" rel="noopener">довідка про специфікації</a></li>
+    <li>KeyCRM: <a href="https://help.keycrm.app/en/orders/how-to-use-the-manufacturing-module" target="_blank" rel="noopener">модуль «Виробництво»</a>, довідка, 3 хв</li>
+    <li>ViyarPro Меблі: <a href="https://www.youtube.com/watch?v=jB15n1nE_Xk" target="_blank" rel="noopener">огляд конструктора</a>, 12 хв</li>
+    <li>KRONAS MASTER 3D: <a href="https://www.youtube.com/watch?v=q7BjRH-Ntyo" target="_blank" rel="noopener">конструктор дистриб'ютора</a>, 2,5 хв</li>
+    <li>БАЗИС-Раскрой: <a href="https://cdn.bazissoft.ru/documentation/ru/Cutting.pdf" target="_blank" rel="noopener">карта розкрою з обрізками</a>, посібник, розд. 6.4 і 10.3</li>
+    <li>Еталон MRPeasy: <a href="https://www.mrpeasy.com/demo-videos/make-to-order-manufacturing/" target="_blank" rel="noopener">замовлення під конфігурацію з датою готовності</a></li>
+    <li>Договір виробника кухонь: <a href="https://mebelart.kiev.ua/uk/dogovor" target="_blank" rel="noopener">монтаж, акт із претензіями, заборона змін ескізу</a></li>
+  </ul>
+</section>
+
+<footer class="site" id="sources">
+  <div class="foot-brand"><span class="logo"><img src="img/todo-logo.png" alt="ToDo" width="72" height="28"></span><span>Підготовлено ToDo · 11.11.2026</span></div>
+  <p>Джерела: репозиторій <code>tnizhnikovskyi-todo/industry-flow-test-mebli</code>, гілка <code>flow/A-03b-deep</code>, тека <code>docs/industries/mebli/research/</code>:</p>
+  <ul>
+    <li><code>OWNER-BRIEF.md</code> · концепція для власника, розділи 1–9</li>
+    <li><code>FUNCTIONAL-MAP.md</code> · §1.1 ринок і окупність, §1.3 рекомендація, §3.1–3.3 позиціонування, ціна, ризики, §4.1 MVP-зріз, §6 обмеження, §7 рішення</li>
+    <li><code>competitor-features.md</code> · матриця функцій, §2.15–2.18</li>
+    <li><code>competitors/*.md</code> · профілі Bimp, БАЗИС, Viyar, Kronas, PRO100, Genesis, Plugit, BAS/1С, ECOSIRE</li>
+    <li><code>subsegments-deep.md</code>, <code>industry-model.md</code>, <code>odoo-ecosystem.md</code></li>
+  </ul>
+  <p>Цифри ринку: odb-catalog, знімок серпня 2026. Скріни зрізу A-21: демо-база Odoo 19, вигадані дані.</p>
+</footer>
+</main>
+
+<script>
+(function(){
+  var DEC=[
+    {q:"Перший підсегмент",ctx:"(а) кухні й корпусні: найкращі докази болю. (д) офісні й контрактні: найбільша виручка галузі, локальних конкурентів немає, шаблон Odoo custom_furniture зроблено під них.",opts:["(а) кухні й корпусні","(д) офісні й контрактні","За правилом після розмітки"],rec:"Правило: (а), якщо розмітка покаже частку (а) ≥ 30 %; інакше (д), якщо (д) ≥ (а)."},
+    {q:"Розмітка 60 компаній (≈3 години людини)",ctx:"Протокол готовий. Без розмітки рішення 1 спирається лише на силу болю.",opts:["Робимо до рішення 1","Не робимо"],rec:"Зробити до рішення 1: частка кухонь серед 120 компаній невідома."},
+    {q:"Ціна",ctx:"Діапазон від паритету до ×2,5 до Bimp. Від ціни залежить і окупність: лише за ціни на рівні Bimp ринок ширшає на смуги 10–24 і 0–9.",opts:["Верхня межа, профіль від 25 людей","Спершу з'ясувати ціну для України (рішення 9)"],rec:"Дослідження радить з'ясувати ціну для України; тоді вирішувати про поріг профілю й легшу збірку на Community."},
+    {q:"ФОП-мікроцехи",ctx:"74 % виробників меблів працюють як ФОП. Для них уже є Viyar, KRONAS MASTER 3D, KeyCRM, Bimp Start.",opts:["Поза пакетом","Окремий легкий тариф"],rec:"Поза пакетом."},
+    {q:"Облік",ctx:"У вакансіях фабрик «запуск у BAF». У MVP повного українського бухобліку немає в жодному варіанті.",opts:["Повний облік в Odoo","Обмін з BAS/BAF клієнта"],rec:"Явної рекомендації дослідження немає."},
+    {q:"Тріали конкурентів",ctx:"Хто проходить Bimp, ViyarPro, PRO100, БАЗИС, KRONAS MASTER 3D (≈2–3 години на продукт). Чек-лист екранів, файлів і рядків матриці готовий.",opts:["Призначити людину зараз","Відкласти"],rec:"Без файлів експорту головна перевага не доведена: файли потрібні до A-08."},
+    {q:"Дистриб'ютори (Viyar, Kronas, GibLab)",ctx:"Для мікроцеху вони замінюють CAD, розкрій і обладнання. Загроза: можуть добудувати облік.",opts:["Партнерство: доступ до формату й API","Лише обмін файлами"],rec:"Дослідження бачить їх партнерами, а не конкурентами. Формат співпраці вирішує власник."},
+    {q:"Окремий крок флоу перед A-21 «Концепція для власника»",ctx:"Чернетка пропозиції є: вхід, вихід, формат, хто затверджує. У пакет флоу не внесено.",opts:["Так, додати крок","Ні"],rec:"Питання до власників пакета флоу. Ця сторінка показує, як такий артефакт може виглядати."},
+    {q:"Ціна Odoo для України",ctx:"odoo.com з сервера в США показує $61,00 / $76,20, партнер Plugit: €27,90 при річній оплаті. Заодно потрібні ціни Odoo.sh і Light User.",opts:["Відкрити сторінку цін з української IP","Запросити пропозицію в Odoo чи партнера"],rec:"З'ясувати до рішення 3: від відповіді залежать ціна, поріг профілю й окупність."},
+    {q:"Надбудова над custom_furniture чи незалежна збірка",ctx:"Надбудова: швидший старт, але клієнт прив'язаний до Enterprise і плану «Індивідуальний», без варіанта Community; базу має кожен партнер. Незалежна збірка: лишає дешевший варіант Community, але замір, монтаж, планування й якість будуємо самі, годин більше й окупність гірша.",opts:["Надбудова","Незалежна збірка"],rec:"Явної рекомендації немає; остаточно вирішується на A-08/A-10."},
+    {q:"CAD+T шостим еталоном для (д)",ctx:"CAD+T заявляє ланцюг від заміру до ЧПУ, кошторис тендеру й B2B-портал.",opts:["Брати","Не брати"],rec:"Брати лише якщо в рішенні 1 обрано (д). Для (а) не потрібен."}
+  ];
+  var KEY="mebli-owner-decisions-v1";
+  var state={};
+  try{var raw=localStorage.getItem(KEY);if(raw){state=JSON.parse(raw)||{};}}catch(e){state={};}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  var list=document.getElementById("decList");
+  var html="";
+  DEC.forEach(function(d,i){
+    var n=i+1,opts="";
+    d.opts.forEach(function(o,j){
+      var id="d"+n+"o"+j;
+      opts+='<span class="opt"><input type="radio" name="d'+n+'" id="'+id+'" value="'+j+'"><label for="'+id+'">'+esc(o)+'</label></span>';
+    });
+    html+='<div class="dec"><span class="n num">'+n+'</span><div class="body"><span class="q">'+esc(d.q)+'</span><p class="ctx">'+esc(d.ctx)+'</p><div class="opts" role="radiogroup" aria-label="'+esc(d.q)+'">'+opts+'</div><p class="rec"><b>Рекомендація:</b> '+esc(d.rec)+'</p><input class="note" type="text" id="note'+n+'" placeholder="Моя нотатка" aria-label="Нотатка до рішення '+n+'"></div></div>';
+  });
+  list.innerHTML=html;
+  DEC.forEach(function(d,i){
+    var n=i+1,s=state["d"+n]||{};
+    if(s.o!==undefined&&s.o!==null){var el=document.getElementById("d"+n+"o"+s.o);if(el)el.checked=true;}
+    if(s.t){document.getElementById("note"+n).value=s.t;}
+  });
+  list.addEventListener("change",function(e){
+    var t=e.target;
+    if(t.type==="radio"){var n=t.name.slice(1);state["d"+n]=state["d"+n]||{};state["d"+n].o=+t.value;save();}
+  });
+  list.addEventListener("input",function(e){
+    var t=e.target;
+    if(t.classList.contains("note")){var n=t.id.slice(4);state["d"+n]=state["d"+n]||{};state["d"+n].t=t.value;save();}
+  });
+  function buildText(){
+    var out=["Рішення власника: меблевий пакет ToDo (концепція від 11.11.2026)",""];
+    DEC.forEach(function(d,i){
+      var n=i+1,s=state["d"+n]||{};
+      var choice=(s.o!==undefined&&s.o!==null)?d.opts[s.o]:"не вирішено";
+      out.push(n+". "+d.q+": "+choice+(s.t?" | нотатка: "+s.t:""));
+    });
+    return out.join("\n");
+  }
+  var msg=document.getElementById("copyMsg"),out=document.getElementById("copyOut");
+  function fallback(text){
+    out.hidden=false;out.value=text;out.focus();out.select();
+    try{out.setSelectionRange(0,text.length);}catch(e){}
+    msg.textContent="Автоматичне копіювання недоступне. Текст виділено: натисніть Ctrl+C або Cmd+C.";
+  }
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var text=buildText();
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){out.hidden=true;msg.textContent="Скопійовано: "+DEC.length+" рішень.";},function(){fallback(text);});
+    }else{fallback(text);}
+  });
+  document.getElementById("clearBtn").addEventListener("click",function(){
+    state={};save();
+    list.querySelectorAll("input[type=radio]").forEach(function(r){r.checked=false;});
+    list.querySelectorAll(".note").forEach(function(r){r.value="";});
+    out.hidden=true;msg.textContent="Позначки очищено.";
+  });
+
+  var links=[].slice.call(document.querySelectorAll(".nav a"));
+  var secs=links.map(function(a){return document.getElementById(a.getAttribute("href").slice(1));});
+  function onScroll(){
+    var y=window.scrollY+90,cur=-1;
+    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
+    links.forEach(function(a,i){
+      var on=i===cur;
+      if(on!==a.classList.contains("on")){
+        a.classList.toggle("on",on);
+        if(on){var p=a.parentNode;var l=a.offsetLeft-p.offsetLeft-24;if(l<p.scrollLeft||a.offsetLeft+a.offsetWidth-p.offsetLeft>p.scrollLeft+p.clientWidth){p.scrollLeft=Math.max(0,l);}}
+      }
+    });
+  }
+  window.addEventListener("scroll",onScroll,{passive:true});
+  onScroll();
+})();
+</script>
