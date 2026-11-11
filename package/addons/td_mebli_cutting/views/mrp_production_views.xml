@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_production_form_td_mebli_cutting" model="ir.ui.view">
+        <field name="name">mrp.production.form.td.mebli.cutting</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_td_view_cutting_jobs" type="object" class="oe_stat_button" icon="fa-scissors"
+                        invisible="not td_cutting_job_count">
+                    <field name="td_cutting_job_count" widget="statinfo" string="Cutting"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_td_create_cutting_job" model="ir.actions.server">
+        <field name="name">Create cutting job</field>
+        <field name="model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.action_td_create_cutting_job()</field>
+    </record>
+</odoo>

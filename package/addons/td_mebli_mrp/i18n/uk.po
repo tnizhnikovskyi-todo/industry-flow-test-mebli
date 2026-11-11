@@ -1,0 +1,743 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_mrp
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-10 17:00+0000\n"
+"PO-Revision-Date: 2026-11-10 17:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "%(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
+msgstr "%(axis)s %(value)s мм поза межами %(low)s-%(high)s мм."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/product.py:0
+msgid ""
+"%(product)s: the %(axis)s must satisfy min <= nominal <= max (%(low)s <= "
+"%(nominal)s <= %(high)s)."
+msgstr ""
+"%(product)s: %(axis)s має задовольняти мін <= номінал <= макс (%(low)s <= "
+"%(nominal)s <= %(high)s)."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "%(w)sx%(h)sx%(d)s order BoM"
+msgstr "Специфікація під замовлення %(w)sx%(h)sx%(d)s"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "%s is not a parametric product."
+msgstr "%s не є параметричним виробом."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__area_m2
+msgid "Area, m2"
+msgstr "Площа, м²"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute_value
+msgid "Attribute Value"
+msgstr "Значення атрибутів"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid "Available Hours per Week"
+msgstr "Доступно годин на тиждень"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_bom
+msgid "Bill of Material"
+msgstr "Специфікація"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__bom_id
+msgid "Bill of Materials"
+msgstr "Специфікація"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__board
+msgid "Board"
+msgstr "Плита"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_board_area_m2
+msgid "Board Area, m2"
+msgstr "Площа плит, м²"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_attribute_value__td_component_product_id
+msgid "Board or fitting set that this attribute value stands for."
+msgstr "Плита або комплект фурнітури, яку означає це значення атрибута."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__body_board
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__body_board
+msgid "Body board"
+msgstr "Плита корпусу"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "Choose a body decor for %s."
+msgstr "Оберіть декор корпусу для %s."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__td_component_product_id
+msgid "Component Product"
+msgstr "Товар-компонент"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__td_component_role
+msgid "Component Role"
+msgstr "Роль компонента"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__depth
+msgid "Depth"
+msgstr "Глибина"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Depth min / max"
+msgstr "Глибина мін / макс"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_depth
+msgid "Depth, mm"
+msgstr "Глибина, мм"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Dimensions, mm"
+msgstr "Розміри, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__display_name
+msgid "Display Name"
+msgstr "Назва для відображення"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_edge_allowance_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_edge_allowance_mm
+msgid "Edge Allowance, mm"
+msgstr "Припуск кромки, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_product_id
+msgid "Edge Banding"
+msgstr "Кромка"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__td_edge_thickness
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_edge_thickness
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_edge_thickness
+msgid "Edge Thickness, mm"
+msgstr "Товщина кромки, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__edge
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__edge
+msgid "Edge banding"
+msgstr "Кромка"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_edge_length_m
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_length_m
+msgid "Edge, m"
+msgstr "Кромка, м"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_long_sides
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__edge_long_sides
+msgid "Edged Long Sides"
+msgstr "Кромкованих довгих сторін"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_short_sides
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__edge_short_sides
+msgid "Edged Short Sides"
+msgstr "Кромкованих коротких сторін"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_edge_allowance_mm
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_edge_allowance_mm
+msgid "Extra edge banding length added for every edged side of a part."
+msgstr "Додаткова довжина кромки на кожну кромковану сторону деталі."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__facade_board
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__facade_board
+msgid "Facade board"
+msgstr "Плита фасаду"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__fitting
+msgid "Fitting"
+msgstr "Фурнітура"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__fitting_set
+msgid "Fitting set"
+msgstr "Комплект фурнітури"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__fixed
+msgid "Fixed"
+msgstr "Фіксовано"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__fixed_material_id
+msgid "Fixed Material"
+msgstr "Постійний матеріал"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__fixed
+msgid "Fixed material"
+msgstr "Постійний матеріал"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_matches_board_id
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_matches_board_id
+msgid "For edge banding: the board decor this edge goes with."
+msgstr "Для кромки: декор плити, до якого вона підходить."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__td_dimension
+msgid "Furniture Dimension"
+msgstr "Розмір виробу"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_part_rule
+msgid "Furniture Part Rule"
+msgstr "Правило деталі виробу"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_part
+msgid "Furniture Part of an Order BoM"
+msgstr "Деталь виробу зі специфікації замовлення"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Furniture Parts"
+msgstr "Деталі виробу"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__height
+msgid "Height"
+msgstr "Висота"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Height min / max"
+msgstr "Висота мін / макс"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_height
+msgid "Height, mm"
+msgstr "Висота, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__queue
+msgid "In queue"
+msgstr "У черзі"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__work
+msgid "In work"
+msgstr "У роботі"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_uid
+msgid "Last Updated by"
+msgstr "Востаннє оновив"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_date
+msgid "Last Updated on"
+msgstr "Востаннє оновлено"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__length_mm
+msgid "Length, mm"
+msgstr "Довжина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_const
+msgid "Length: constant, mm"
+msgstr "Довжина: стала, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_d
+msgid "Length: x Depth"
+msgstr "Довжина: × глибина"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_h
+msgid "Length: x Height"
+msgstr "Довжина: × висота"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_w
+msgid "Length: x Width"
+msgstr "Довжина: × ширина"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid "Load Zone"
+msgstr "Зона навантаження"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid "Load, %"
+msgstr "Завантаження, %"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_matches_board_id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_matches_board_id
+msgid "Matches Board"
+msgstr "Підходить до плити"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__material_id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__material_role
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Material"
+msgstr "Матеріал"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_material_kind
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_material_kind
+msgid "Material Kind"
+msgstr "Вид матеріалу"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_max
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_max
+msgid "Max Depth, mm"
+msgstr "Макс. глибина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_height_max
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_height_max
+msgid "Max Height, mm"
+msgstr "Макс. висота, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_max
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_max
+msgid "Max Width, mm"
+msgstr "Макс. ширина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_min
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_min
+msgid "Min Depth, mm"
+msgstr "Мін. глибина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_height_min
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_height_min
+msgid "Min Height, mm"
+msgstr "Мін. висота, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_min
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_min
+msgid "Min Width, mm"
+msgstr "Мін. ширина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_time_rate
+msgid "Minutes per Basis Unit"
+msgstr "Хвилин на одиницю бази"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "No edge banding %(thickness)s mm found for %(board)s."
+msgstr "Не знайдено кромки %(thickness)s мм для %(board)s."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_nominal
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_nominal
+msgid "Nominal Depth, mm"
+msgstr "Номінальна глибина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_height_nominal
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_height_nominal
+msgid "Nominal Height, mm"
+msgstr "Номінальна висота, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_nominal
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_nominal
+msgid "Nominal Width, mm"
+msgstr "Номінальна ширина, мм"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
+msgid ""
+"Open work orders by work center: the load of every section in percent of its"
+" weekly capacity."
+msgstr ""
+"Відкриті операції за дільницями: завантаження кожної дільниці у відсотках "
+"від її тижневої потужності. Понад 100% означає вузьке місце."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_order_bom
+msgid "Order BoM"
+msgstr "Специфікація під замовлення"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid ""
+"Order BoM: generated from the options of the sales order (not from a CAD file).\n"
+"                    Dimensions:"
+msgstr ""
+"Специфікація під замовлення: згенерована з опцій замовлення (не з файлу програми проєктування).\n"
+"                    Розміри:"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__over
+msgid "Over capacity"
+msgstr "Понад потужність"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid ""
+"Over capacity: the open work of the section needs more hours than the "
+"section has in a week."
+msgstr ""
+"Понад потужність: відкрита робота дільниці потребує більше годин, ніж у "
+"дільниці є на тиждень."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_is_parametric
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_is_parametric
+msgid "Parametric Product"
+msgstr "Параметричний виріб"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Parametric product"
+msgstr "Параметричний виріб"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__name
+msgid "Part"
+msgstr "Деталь"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/part_rule.py:0
+msgid ""
+"Part %(part)s has non-positive size at nominal dimensions (%(length)s x "
+"%(width)s mm)."
+msgstr ""
+"Деталь %(part)s має недодатний розмір при номінальних розмірах (%(length)s x"
+" %(width)s мм)."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "Part %s has a non-positive size."
+msgstr "Деталь %s має недодатний розмір."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "Part %s has no material."
+msgstr "Для деталі %s не задано матеріал."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_part_count
+msgid "Part Count"
+msgstr "Кількість деталей"
+
+#. module: td_mebli_mrp
+#: model:ir.actions.act_window,name:td_mebli_mrp.td_mebli_part_rule_action
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_part_rule_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_part_rule_ids
+#: model:ir.ui.menu,name:td_mebli_mrp.td_mebli_part_rule_menu
+msgid "Part Rules"
+msgstr "Правила деталей"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_part_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Parts"
+msgstr "Деталі"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_board_m2
+msgid "Per m2 of board"
+msgstr "На м² плити"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_edge_m
+msgid "Per metre of edge"
+msgstr "На метр кромки"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_part
+msgid "Per part"
+msgstr "На деталь"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_expected_hours
+msgid "Planned Hours"
+msgstr "Планові години"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_waste_pct
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_waste_pct
+msgid "Planned Waste, %"
+msgstr "Плановий відхід, %"
+
+#. module: td_mebli_mrp
+#: model:ir.model.constraint,message:td_mebli_mrp.constraint_product_template_td_waste_pct_range
+msgid "Planned waste must be between 0 and 100 percent."
+msgstr "Плановий відхід має бути від 0 до 100 відсотків."
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_template
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__product_tmpl_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_part_rule_view_search
+msgid "Product"
+msgstr "Товар"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute
+msgid "Product Attribute"
+msgstr "Атрибут товару"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute_custom_value
+msgid "Product Attribute Custom Value"
+msgstr "Власне значення атрибуту товару"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__qty
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__qty
+msgid "Quantity"
+msgstr "Кількість"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__rule_id
+msgid "Rule"
+msgstr "Правило"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__sequence
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__sequence
+msgid "Sequence"
+msgstr "Послідовність"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid ""
+"Share of the weekly capacity of the section taken by this operation; the sum"
+" over a section is its load."
+msgstr ""
+"Частка тижневої потужності дільниці, яку займає ця операція; сума по "
+"дільниці — її завантаження."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_length_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_length_mm
+msgid "Sheet Length, mm"
+msgstr "Довжина листа, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_width_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_width_mm
+msgid "Sheet Width, mm"
+msgstr "Ширина листа, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_stage
+msgid "Shop Status"
+msgstr "Стан у цеху"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_template_bom_id
+msgid "Template BoM"
+msgstr "Шаблонна специфікація"
+
+#. module: td_mebli_mrp
+#: model:ir.model.constraint,message:td_mebli_mrp.constraint_td_mebli_part_rule_edge_sides_range
+msgid "The number of edged sides must be between 0 and 2."
+msgstr "Кількість кромкованих сторін має бути від 0 до 2."
+
+#. module: td_mebli_mrp
+#: model:ir.model.constraint,message:td_mebli_mrp.constraint_td_mebli_part_rule_qty_positive
+msgid "The part quantity must be positive."
+msgstr "Кількість деталей має бути додатною."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_thickness_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_thickness_mm
+msgid "Thickness, mm"
+msgstr "Товщина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_time_basis
+msgid "Time Basis"
+msgstr "База часу"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Total"
+msgstr "Разом"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__chain
+msgid "Waits for previous operation"
+msgstr "Чекає попередньої операції"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__width
+msgid "Width"
+msgstr "Ширина"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Width min / max"
+msgstr "Ширина мін / макс"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_width
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__width_mm
+msgid "Width, mm"
+msgstr "Ширина, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_const
+msgid "Width: constant, mm"
+msgstr "Ширина: стала, мм"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_d
+msgid "Width: x Depth"
+msgstr "Ширина: × глибина"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_h
+msgid "Width: x Height"
+msgstr "Ширина: × висота"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_w
+msgid "Width: x Width"
+msgstr "Ширина: × ширина"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__within
+msgid "Within capacity"
+msgstr "У межах потужності"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_workcenter
+msgid "Work Center"
+msgstr "Робочий центр"
+
+#. module: td_mebli_mrp
+#: model:ir.actions.act_window,name:td_mebli_mrp.mrp_workorder_td_load_action
+#: model:ir.ui.menu,name:td_mebli_mrp.td_mebli_workcenter_load_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_load_graph
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_load_pivot
+msgid "Work Center Load"
+msgstr "Завантаження дільниць"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr "Використання робочого центру"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_workorder
+msgid "Work Order"
+msgstr "Робоче замовлення"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid ""
+"Working hours the section can give to orders in a week (people x shift "
+"hours); the base of the load, %."
+msgstr ""
+"Скільки годин на тиждень дільниця може віддати під ці замовлення (люди × "
+"години зміни); основа для «Завантаження, %»."
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "mm."
+msgstr "мм."
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "x"
+msgstr "x"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Designation"
+msgstr "Позначення"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Reserved / consumed"
+msgstr "Зарезервовано / спожито"
+

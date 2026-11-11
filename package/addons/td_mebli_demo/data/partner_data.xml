@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="partner_salon" model="res.partner">
+        <field name="name">Салон «Демо», покупець 1</field>
+        <field name="company_type">company</field>
+    </record>
+</odoo>

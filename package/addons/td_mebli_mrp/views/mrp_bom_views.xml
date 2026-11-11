@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_bom_form_td_mebli" model="ir.ui.view">
+        <field name="name">mrp.bom.form.td.mebli</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-info mb-0" role="status" invisible="not td_order_bom">
+                    Order BoM: generated from the options of the sales order (not from a CAD file).
+                    Dimensions: <field name="td_width" class="oe_inline"/> x <field name="td_height" class="oe_inline"/> x
+                    <field name="td_depth" class="oe_inline"/> mm.
+                    <field name="td_order_bom" invisible="1"/>
+                </div>
+            </xpath>
+            <field name="code" position="attributes">
+                <attribute name="string">Designation</attribute>
+            </field>
+            <xpath expr="//div[hasclass('o_row')]/field[@name='product_uom_id']" position="attributes">
+                <!-- an order BoM always makes one piece: the unit next to the quantity is noise -->
+                <attribute name="invisible">td_order_bom</attribute>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Parts" name="td_parts" invisible="not td_order_bom">
+                    <group>
+                        <group>
+                            <field name="td_part_count"/>
+                        </group>
+                        <group>
+                            <field name="td_board_area_m2"/>
+                            <field name="td_edge_length_m"/>
+                        </group>
+                    </group>
+                    <field name="td_part_ids" readonly="1">
+                        <list>
+                            <field name="name" width="150px"/>
+                            <field name="material_id" context="{'display_default_code': False}" width="170px"/>
+                            <field name="qty" width="80px"/>
+                            <field name="length_mm" width="120px"/>
+                            <field name="width_mm" width="120px"/>
+                            <field name="area_m2" sum="Total" width="100px"/>
+                            <field name="edge_product_id" context="{'display_default_code': False}" width="170px"/>
+                            <field name="edge_length_m" sum="Total" width="100px"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="mrp_routing_workcenter_list_td_mebli" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.list.td.mebli</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="workcenter_id" position="after">
+                <field name="td_time_basis" optional="show"/>
+                <field name="td_time_rate" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_routing_workcenter_form_td_mebli" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.form.td.mebli</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <field name="workcenter_id" position="after">
+                <field name="td_time_basis"/>
+                <field name="td_time_rate" invisible="td_time_basis == 'fixed'"/>
+            </field>
+        </field>
+    </record>
+</odoo>
