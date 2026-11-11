@@ -8,9 +8,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101820}
 .out{opacity:0;transform:translateY(46px);animation:in .7s cubic-bezier(.2,.8,.2,1) forwards var(--d,0s), out .6s ease-in forwards var(--o,3s)}
 @keyframes in{to{opacity:1;transform:none}}@keyframes out{to{opacity:0;transform:translateY(-30px)}}
 em{font-style:normal;color:#FE5000}.drift{animation:drift 10s linear forwards}@keyframes drift{from{transform:scale(1)}to{transform:scale(1.06)}}
-</style></head><body><div class="bg"></div><div class="bar"></div><div class="stage" style="padding:250px 56px">
-        <div class="in" style="--d:.1s;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#FE5000;font-weight:700;margin-bottom:26px">Власнику меблевої фабрики</div>
-        <div class="in" style="--d:.5s;font-size:76px;font-weight:700;line-height:1.16">Скільки ви втрачаєте,</div>
-        <div class="in" style="--d:1.2s;font-size:76px;font-weight:700;line-height:1.16">коли <em>маржу</em> бачите</div>
-        <div class="in" style="--d:1.9s;font-size:76px;font-weight:700;line-height:1.16">вже <em>після відвантаження?</em></div>
-        <div class="in" style="--d:2.6s;font-size:34px;color:#BFBFBF;margin-top:30px">Покажемо, як це виглядає в Odoo ↓</div></div></body></html>
+.hl{color:#fff;animation:hl .35s ease-out forwards var(--d,0s)}@keyframes hl{to{color:#FE5000}}</style></head><body><div class="bg"></div><div class="bar"></div><div class="stage" style="padding:250px 56px">
+        <div style="font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#FE5000;font-weight:700;margin-bottom:26px">Власнику меблевої фабрики</div>
+        <div style="font-size:78px;font-weight:700;line-height:1.16">Скільки ви втрачаєте, коли <span class="hl" style="--d:.4s">маржу</span> бачите вже <span class="hl" style="--d:1.2s">після відвантаження?</span></div>
+        <div style="font-size:36px;color:#BFBFBF;margin-top:34px">Покажемо, як це виглядає в Odoo ↓</div></div></body></html>

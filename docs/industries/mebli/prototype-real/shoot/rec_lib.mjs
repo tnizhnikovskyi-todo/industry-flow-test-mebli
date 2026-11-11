@@ -18,7 +18,7 @@ const FONT = `@font-face{font-family:'Open Sans';font-weight:400;src:url(data:fo
 const LOGO = 'data:image/png;base64,' + b64('todo-logo.png');
 
 export const DESKTOP = { viewport: { width: 1600, height: 900 }, rec: { width: 1920, height: 1080 } };
-export const MOBILE = { viewport: { width: 390, height: 690 }, rec: { width: 780, height: 1380 } };
+export const MOBILE = { viewport: { width: 390, height: 844 }, rec: { width: 780, height: 1688 } };
 
 // ---------------------------------------------------------------- оверлей у сторінці
 const OVERLAY = (mobile) => `(() => { const boot = () => {
@@ -62,7 +62,7 @@ const OVERLAY = (mobile) => `(() => { const boot = () => {
     setTimeout(() => { el.style.transition = 'opacity .5s, transform .5s'; el.style.opacity = '1'; el.style.transform = 'none'; }, 60 + i * step); }); };
   window.__bars = (sel, ms = 1200) => { document.querySelectorAll(sel).forEach((el) => { const w = el.style.width; el.style.transition = 'none'; el.style.width = '0'; void el.offsetWidth;
     setTimeout(() => { el.style.transition = 'width ' + ms + 'ms ease-out'; el.style.width = w; }, 60); }); };
-  window.__countUp = (sel, ms = 1400) => { document.querySelectorAll(sel).forEach((el) => {
+  window.__countUp = (sel, ms = 800) => { document.querySelectorAll(sel).forEach((el) => {
     const orig = el.textContent; const m = orig.match(/[-+]?\\d[\\d\\s\\u00a0\\u202f]*(?:,\\d+)?/); if (!m) return;
     const num = m[0]; const dec = (num.split(',')[1] || '').length; const val = parseFloat(num.replace(/[\\s\\u00a0\\u202f]/g, '').replace(',', '.')); const plus = num[0] === '+';
     const fmt = (v) => { const [i, f] = Math.abs(v).toFixed(dec).split('.'); return (v < 0 ? '-' : plus ? '+' : '') + i.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ' ') + (f ? ',' + f : ''); };
@@ -73,6 +73,8 @@ const OVERLAY = (mobile) => `(() => { const boot = () => {
     const cx = r.left - cr.left + r.width / 2, cy = r.top - cr.top + r.height / 2;
     const tx = r.width * s > cr.width * .92 ? Math.min(0, -(r.left - cr.left) * s + 6) : Math.min(0, Math.max(cr.width - s * cr.width, cr.width / 2 - s * cx)), ty = Math.min(0, Math.max(cr.height - s * cr.height, cr.height / 2 - s * cy));
     c.style.transformOrigin = '0 0'; c.style.transition = 'transform ' + ms + 'ms cubic-bezier(.45,0,.2,1)'; c.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')'; };
+  window.__pop = (sel, s = 1.12) => { document.querySelectorAll(sel).forEach((el) => { el.style.transition = 'transform .45s cubic-bezier(.3,1.6,.5,1), box-shadow .45s'; el.style.transformOrigin = 'center'; el.style.position = el.style.position || 'relative'; el.style.zIndex = 5; el.style.transform = 'scale(' + s + ')'; el.style.boxShadow = '0 0 0 4px #FE5000, 0 10px 30px rgba(0,0,0,.35)'; }); };
+  window.__popOff = (sel) => { document.querySelectorAll(sel).forEach((el) => { el.style.transform = 'none'; el.style.boxShadow = 'none'; }); };
   window.__zoomOff = (ms = 700) => { const c = document.querySelector('.o_action_manager'); if (!c) return; c.style.transition = 'transform ' + ms + 'ms cubic-bezier(.45,0,.2,1)'; c.style.transform = 'none'; };
   window.__scroll = (sel, to, ms = 1500) => new Promise((res) => { const el = document.querySelector(sel); if (!el) return res(false); const a = el.scrollTop;
     const b = to === 'end' ? el.scrollHeight : to; const t0 = performance.now(); const tick = (n) => { const k = Math.min(1, (n - t0) / ms); const e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
@@ -111,7 +113,8 @@ export async function clip(name, { role, mobile = false, url = null, plain = fal
     if (!plain) await ctx.addInitScript(OVERLAY(mobile));
     const page = await ctx.newPage();
     page.setDefaultTimeout(20000);
-    page.on('pageerror', (e) => console.error('PAGEERR', name, String(e.message).slice(0, 200)));
+    page.on('pageerror', (e) => { console.error('PAGEERR', name, String(e.message).slice(0, 200)); ERRORS.push('pageerror ' + String(e.message).slice(0, 100)); });
+    page.on('console', (m) => { if (m.type() === 'error' && !/favicon|Failed to load resource.*(404|net::)/.test(m.text())) ERRORS.push('console.error ' + m.text().slice(0, 100)); });
     const cdp = await ctx.newCDPSession(page); const frames = []; let writing = Promise.resolve(), stop = false, loop = Promise.resolve();
     const put = (ts, b64d) => { const idx = frames.length; frames.push(ts); writing = writing.then(() => fs.promises.writeFile(path.join(dir, `${String(idx).padStart(6, '0')}.jpg`), Buffer.from(b64d, 'base64'))); };
     if (mobile) { // телефон: цикл знімків у фізичних пікселях (DSF 2 -> 780x1280); screencast віддає лише CSS-розмір
@@ -137,9 +140,31 @@ export async function clip(name, { role, mobile = false, url = null, plain = fal
     execFileSync('ffmpeg', ['-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', path.join(dir, 'list.txt'), '-vf', `fps=30,scale=${dev.rec.width}:${dev.rec.height}:flags=lanczos,format=yuv420p`, '-c:v', 'libx264', '-crf', '17', '-preset', 'veryfast', out]);
     fs.rmSync(dir, { recursive: true, force: true });
     const ss = Math.max(0, (c.ready ?? frames[0]) - frames[0]) + 0.15, dur = endT - (c.ready ?? frames[0]) - 0.3;
-    fs.writeFileSync(path.join(REC, `${name}.json`), JSON.stringify({ ss, dur, ok: !err, events: c.events }));
+    const errs = ERRORS.splice(0); const lg = path.join(ROOT, 'shoot', 'console.log');
+    fs.appendFileSync(lg, `${name}: ${dur.toFixed(1)} с; ${frames.length} кадрів; діалогів помилок: ${errs.length}${errs.length ? ' -> ' + errs.join(' | ') : ''}; латиниця на екрані: ${LATIN.size ? [...LATIN].join(', ') : 'немає'}; ${err ? 'ЗБІЙ ' + String(err.message).slice(0, 80) : 'ok'}\n`);
+    LATIN.clear(); fs.writeFileSync(path.join(REC, `${name}.json`), JSON.stringify({ ss, dur, ok: !err && !errs.length, events: c.events }));
+    if (errs.length) process.exitCode = 3;
     console.log(err ? 'ПОМИЛКА' : 'ok', name, dur.toFixed(1), 'с,', frames.length, 'кадрів');
     return !err;
+}
+export const ERRORS = [];
+export const LATIN = new Set();
+// неперекладені англійські підписи на екрані (заголовки колонок, label, кнопки, вкладки, картки): слово з ≥4 латинських літер, крім дозволених
+export async function latinWords(page) {
+    return page.evaluate(() => {
+        const sel = '.o_list_table thead th, .o_form_label, label, .o_kanban_record, .o_control_panel, .o_statusbar_buttons button, .o_notebook_headers a, .o_pivot th, .o_cp_buttons button, .o_searchview_facet, .modal-header, .modal-footer button, .o_navbar';
+        const ok = /^(mebli|demo|fabryka|example|ToDo|Odoo|todo|ltd|kanban|WH|Out|SO\d*|MO|PDF|RC|HDF|PVC|PS|OK)$/i; const res = new Set();
+        document.querySelectorAll(sel).forEach((el) => { if (!el.offsetParent && getComputedStyle(el).position !== 'fixed') return;
+            const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); let n; while ((n = w.nextNode())) { const par = n.parentElement; if (!par || par.closest('input,textarea,script,style,[contenteditable]')) continue;
+                (n.textContent.match(/[A-Za-z]{4,}/g) || []).forEach((x) => { if (!ok.test(x) && !/\d/.test(n.textContent.trim()[0] || '') ) res.add(x); }); } });
+        return [...res];
+    }).catch(() => []);
+}
+export async function checkLatin(page) { (await latinWords(page)).forEach((x) => LATIN.add(x)); }
+export async function checkErr(page, where = '') { // діалог помилки Odoo (RPC, доступ) — зйомка негодна
+    const n = await page.locator('.o_error_dialog, .modal:has-text("Помилка"), .modal:has-text("Error"), .o_notification.border-danger').count().catch(() => 0);
+    if (n) { const m = (await page.locator('.o_error_dialog, .modal').first().innerText().catch(() => '')).replace(/\s+/g, ' ').slice(0, 160); ERRORS.push(where + ': ' + m); console.error('ERRDIALOG', where, m); }
+    return n;
 }
 export async function settle(page, ms = 600) {
     await page.waitForLoadState('load').catch(() => {});
@@ -147,6 +172,8 @@ export async function settle(page, ms = 600) {
     // не знімаємо порожній екран: чекаємо на зміст подання (список, дошка, графік, форма, зведена, дашборд)
     await page.waitForSelector('.o_list_renderer, .o_kanban_renderer, .o_graph_renderer canvas, .o_form_view, .o_pivot, .td_dash_grid, .o_content', { timeout: 8000 }).catch(() => {});
     await sleep(ms);
+    await checkErr(page, 'settle');
+    await checkLatin(page);
 }
 export async function goto(c, url, ms = 900) { await c.page.goto(BASE + url); await settle(c.page, ms); }
 // Титри НЕ малюються в сторінці (їх зрізало б наближення й монтаж): записуємо момент і текст, а накладає їх montage.mjs (ffmpeg overlay)
@@ -176,7 +203,7 @@ export async function press(c, loc, { pause = 220, settleMs = 700 } = {}) {
 }
 export async function typeIn(c, loc, text, delay = 85) {
     await press(c, loc, { settleMs: 200 });
-    await c.page.keyboard.press('Control+A'); await loc.first().pressSequentially(text, { delay }); await sleep(900);
+    await c.page.keyboard.press('Control+A'); await loc.first().pressSequentially(text, { delay }); await sleep(300);
 }
 export const scroll = (c, sel, to, ms = 1500) => c.page.evaluate(([s, t, m]) => window.__scroll(s, t, m), [sel, to, ms]);
 // «пауза з рухом»: курсор повільно дрейфує (десктоп) або сторінка трохи дихає, щоб кадр не був нерухомим
@@ -191,6 +218,8 @@ export async function hold(c, ms) {
 export const zoom = (c, sel, s = 1.6, ms = 900) => c.mobile
     ? c.page.evaluate(([a, d]) => { const el = document.querySelector(a); const sc = el && (el.closest('.td_dash, .o_content, .o_action_manager') || document.scrollingElement); if (!el || !sc) return; const r = el.getBoundingClientRect(); const to = sc.scrollTop + r.top - 70; const a0 = sc.scrollTop, t0 = performance.now(); const tick = (n) => { const k = Math.min(1, (n - t0) / d); sc.scrollTop = a0 + (to - a0) * (k * k * (3 - 2 * k)); if (k < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); }, [sel, ms])
     : c.page.evaluate(([a, b, d]) => window.__zoom(a, b, d), [sel, s, ms]);
+export const pop = (c, sel, s = 1.12) => c.page.evaluate(([a, b]) => window.__pop(a, b), [sel, s]);
+export const popOff = (c, sel) => c.page.evaluate((a) => window.__popOff(a), sel);
 export const zoomOff = (c, ms = 700) => c.page.evaluate((m) => window.__zoomOff(m), ms);
 // прокрутка першого елемента, що справді прокручується (контейнер залежить від подання й ширини екрана); to: число px або 'end'
 export const scrollAny = (c, to, ms = 1500) => c.page.evaluate(([to, ms]) => new Promise((res) => {
@@ -200,3 +229,10 @@ export const scrollAny = (c, to, ms = 1500) => c.page.evaluate(([to, ms]) => new
     const tick = (n) => { const k = Math.min(1, (n - t0) / ms), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; el.scrollTop = a + (b - a) * e; if (k < 1) requestAnimationFrame(tick); else res(true); };
     requestAnimationFrame(tick);
 }), [to, ms]);
+// плавна прокрутка n-го елемента за селектором: prop 'scrollTop' | 'scrollLeft'
+export const scrollN = (c, sel, idx, prop, to, ms = 1500) => c.page.evaluate(([s, i, pr, t, m]) => new Promise((res) => {
+    const el = document.querySelectorAll(s)[i]; if (!el) return res(false);
+    const a = el[pr], t0 = performance.now();
+    const tick = (n) => { const k = Math.min(1, (n - t0) / m), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; el[pr] = a + (t - a) * e; if (k < 1) requestAnimationFrame(tick); else res(true); };
+    requestAnimationFrame(tick);
+}), [sel, idx, prop, to, ms]);

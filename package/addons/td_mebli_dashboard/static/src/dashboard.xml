@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="td_mebli_dashboard.Dashboard">
-        <div class="o_action td_dash">
+        <Layout display="{ controlPanel: {} }" className="'overflow-auto h-100'"><div class="o_action td_dash">
             <t t-set="d" t-value="state.data"/>
             <div class="td_dash_head">
                 <h1 t-out="d.title"/>
@@ -71,5 +71,6 @@
             </div>
             <div class="td_dash_note" t-out="d.note"/>
         </div>
+        </Layout>
     </t>
 </templates>

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 17:00+0000\n"
-"PO-Revision-Date: 2026-11-10 17:00+0000\n"
+"POT-Creation-Date: 2026-11-11 01:50+0000\n"
+"PO-Revision-Date: 2026-11-11 01:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -128,6 +128,11 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_depth
 msgid "Depth, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Designation"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -566,6 +571,11 @@ msgid "Quantity"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Reserved / consumed"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__rule_id
 msgid "Rule"
 msgstr ""
@@ -715,9 +725,4 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "x"
-msgstr ""
-
-#. module: td_mebli_mrp
-#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
-msgid "Designation"
 msgstr ""

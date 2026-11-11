@@ -13,6 +13,7 @@
         'views/part_rule_views.xml',
         'views/mrp_bom_views.xml',
         'views/workcenter_load_views.xml',
+        'views/mrp_production_views.xml',
     ],
     'installable': True,
     'application': False,

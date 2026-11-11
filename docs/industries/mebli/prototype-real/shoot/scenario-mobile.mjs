@@ -2,6 +2,7 @@
 // у screens-mobile/ (рамку телефона малює scenes.mjs у CSS). Використання: node scenario-mobile.mjs [порт] ; ONLY=m1,m3 — вибрані кадри.
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
+import { latinWords } from './rec_lib.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 import fs from 'fs'; import path from 'path';
@@ -43,6 +44,7 @@ async function rpc(page, model, method, args, kwargs = {}) {
 const want = (k) => !ONLY || ONLY.includes(k);
 async function shot(page, name) {
     await settle(page, 800);
+    { const lw = await latinWords(page); if (lw.length) { console.log('ЛАТИНИЦЯ', name, lw.join(', ')); fs.appendFileSync(path.join(here, 'console.log'), `екран ${name}: латиниця: ${lw.join(', ')}\n`); } }
     await page.screenshot({ path: path.join(OUT, `${name}.png`) });
     console.log('shot', name);
 }

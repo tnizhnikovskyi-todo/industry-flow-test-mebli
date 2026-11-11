@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 17:00+0000\n"
-"PO-Revision-Date: 2026-11-10 17:00+0000\n"
+"POT-Creation-Date: 2026-11-11 01:50+0000\n"
+"PO-Revision-Date: 2026-11-11 01:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -46,7 +46,18 @@ msgid "<span class=\"o_stat_text\">Sales Order</span>"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_kanban
+msgid "<span>Виручка:</span>"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_kanban
+msgid "<span>Маржа:</span>"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
 msgid "Average"
@@ -140,11 +151,13 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin, %"
 msgstr ""
 
@@ -156,6 +169,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
 msgid "Number"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_form_td_mebli_sale
+msgid "Options"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -215,6 +233,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_mobile
 msgid "Product"
 msgstr ""
 
@@ -246,6 +265,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Revenue"
 msgstr ""
 
@@ -298,6 +318,20 @@ msgid "The specification can be rebuilt only in a quotation."
 msgstr ""
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid ""
+"The stage follows the production: only moving a waiting order to «In "
+"production» is possible."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid "This order has nothing to start: it is not waiting for launch."
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.actions.act_window,name:td_mebli_sale.action_orders_launch_td_mebli
 #: model:ir.ui.menu,name:td_mebli_sale.menu_orders_launch_td_mebli
 msgid "Time from Order to Launch"
@@ -310,8 +344,14 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Total"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_mobile
+msgid "Type to find a product..."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -340,6 +380,6 @@ msgid "h"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_form_td_mebli_sale
-msgid "Options"
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+msgid "Останні 30 днів"
 msgstr ""

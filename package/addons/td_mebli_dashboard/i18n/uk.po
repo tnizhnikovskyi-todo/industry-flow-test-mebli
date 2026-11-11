@@ -238,3 +238,4 @@ msgstr "Керівник фабрики (дашборд)"
 #: model:res.groups,comment:td_mebli_dashboard.group_td_mebli_director
 msgid "Sees the one-screen dashboard of the factory: revenue, margin, cost. Granted to the owner and the finance manager."
 msgstr "Бачить дашборд фабрики на одному екрані: виручка, маржа, собівартість. Надається власнику й фінансисту."
+

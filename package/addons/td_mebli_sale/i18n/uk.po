@@ -141,11 +141,13 @@ msgstr "Виробничі замовлення %s"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin"
 msgstr "Маржа"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin, %"
 msgstr "Маржа, %"
 
@@ -247,6 +249,7 @@ msgstr "Пропозиція"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Revenue"
 msgstr "Виручка"
 
@@ -357,8 +360,8 @@ msgstr "Маржа:"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
-msgid "Last 30 days"
-msgstr "Останні 30 днів"
+msgid "Orders of the last 30 days"
+msgstr "Замовлення за 30 днів"
 
 #. module: sale
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
@@ -382,3 +385,14 @@ msgstr "Етап залежить від виробництва: можна ли
 #: code:addons/td_mebli_sale/models/sale_order.py:0
 msgid "This order has nothing to start: it is not waiting for launch."
 msgstr "У цього замовлення немає що запускати: воно не чекає запуску."
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_mobile
+msgid "Product"
+msgstr "Виріб"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_mobile
+msgid "Type to find a product..."
+msgstr "Введіть назву виробу..."
+

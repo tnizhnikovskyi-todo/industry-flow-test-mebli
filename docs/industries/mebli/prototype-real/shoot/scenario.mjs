@@ -3,6 +3,7 @@
 // Усі дії - справжні кліки в інтерфейсі Odoo (не RPC). Користувачі й дані - з td_mebli_demo/showcase.py.
 import { createRequire } from 'module';
 import { fileURLToPath } from 'url';
+import { latinWords } from './rec_lib.mjs';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -157,6 +158,7 @@ async function shot(name, hold = 6500) {
         el.textContent = on ? '.o-mail-Form-chatter, .o-mail-ChatterContainer { display: none !important; }' : ''; }, ['specyfikaciya', 'zavdannya-rozkroyu', 'cina-i-marzha'].includes(name));
     await page.mouse.move(880, 960); // курсор у підписі: жодних підказок і підсвічування в кадрі
     await settle(600);
+    { const lw = await latinWords(page); if (lw.length) { console.log('ЛАТИНИЦЯ', name, lw.join(', ')); fs.appendFileSync(path.join(__dirname, 'console.log'), `екран ${name}: латиниця: ${lw.join(', ')}\n`); } }
     const file = path.join(SHOTS, `${String(n).padStart(2, '0')}-${name}.png`);
     await page.screenshot({ path: file });
     console.log('shot', path.basename(file));
@@ -353,7 +355,7 @@ async function steps() {
         await onlyConfirmed();
         await compact(true);
         await caption('chief', 'PAIN-05', 'незрозуміло, які замовлення чекають на розкрій, а які вже в роботі',
-            'Усі виробничі замовлення в одному списку: клієнт, термін, що в роботі, чого не вистачає. Червоним — те, що за планом не встигає в термін.');
+            'Усі виробничі замовлення в одному списку: клієнт, термін, що в роботі, чого не вистачає. Червоним — прострочене та що не встигає в термін; статус «Немає в наявності» — нестача компонентів.');
         await shot('spysok-vyrobnytstva');
     }
     if (want((s = next()))) { // 9 форма МО із нестачею
@@ -400,7 +402,7 @@ async function steps() {
         await notebookTab(/Карта розкрою/).catch(() => {});
         await page.locator('.o_form_sheet_bg').first().evaluate((el) => {
             const nb = el.querySelector('.o_notebook');
-            el.scrollTop = Math.max(0, nb.getBoundingClientRect().top - el.getBoundingClientRect().top + el.scrollTop - 285);
+            el.scrollTop = Math.max(0, nb.getBoundingClientRect().top - el.getBoundingClientRect().top + el.scrollTop - 400);
         });
         await caption('tech', 'PAIN-04 · 08', 'відходи плити з’ясовуються тільки після розкрою, а обрізки губляться',
             'Карта розкрою з відсотком відходів. Обрізки зі складу беруться першими — економія в гривнях видна одразу.',

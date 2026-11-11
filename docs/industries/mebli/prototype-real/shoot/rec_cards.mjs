@@ -33,12 +33,11 @@ const CARDS = {
         <div class="in" style="--d:1.3s;margin-top:44px;background:#FE5000;color:#fff;font-weight:700;font-size:56px;padding:16px 56px;border-radius:999px">todo.ltd</div>
         <div class="in" style="--d:1.9s;font-size:40px;margin-top:34px">Покажемо на <em>ваших даних</em></div>
         <div class="in" style="--d:2.6s;font-size:22px;color:#808080;margin-top:34px;max-width:1400px">Показ на вигаданих даних · Odoo 19 + модулі пакета «меблі» · розкрій — імітація програми розкрою</div></div>`],
-    R_hook: [REEL, 3.4, `<div class="stage" style="padding:250px 56px">
-        <div class="in" style="--d:.1s;font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#FE5000;font-weight:700;margin-bottom:26px">Власнику меблевої фабрики</div>
-        <div class="in" style="--d:.5s;font-size:76px;font-weight:700;line-height:1.16">Скільки ви втрачаєте,</div>
-        <div class="in" style="--d:1.2s;font-size:76px;font-weight:700;line-height:1.16">коли <em>маржу</em> бачите</div>
-        <div class="in" style="--d:1.9s;font-size:76px;font-weight:700;line-height:1.16">вже <em>після відвантаження?</em></div>
-        <div class="in" style="--d:2.6s;font-size:34px;color:#BFBFBF;margin-top:30px">Покажемо, як це виглядає в Odoo ↓</div></div>`],
+    R_hook: [REEL, 3.3, `<div class="stage" style="padding:250px 56px">
+        <div style="font-size:30px;letter-spacing:.08em;text-transform:uppercase;color:#FE5000;font-weight:700;margin-bottom:26px">Власнику меблевої фабрики</div>
+        <div style="font-size:78px;font-weight:700;line-height:1.16">Скільки ви втрачаєте, коли <span class="hl" style="--d:.4s">маржу</span> бачите вже <span class="hl" style="--d:1.2s">після відвантаження?</span></div>
+        <div style="font-size:36px;color:#BFBFBF;margin-top:34px">Покажемо, як це виглядає в Odoo ↓</div></div>`,
+        `.hl{color:#fff;animation:hl .35s ease-out forwards var(--d,0s)}@keyframes hl{to{color:#FE5000}}`],
     R_outro: [REEL, 6.5, `<div class="stage" style="padding:250px 56px">${logo(120, 0.1)}
         <div class="in" style="--d:.5s;font-size:66px;font-weight:700;line-height:1.15">ToDo — впровадження Odoo для виробництв</div>
         <div class="in" style="--d:1.1s;margin-top:44px;background:#FE5000;color:#fff;font-weight:700;font-size:62px;padding:14px 54px;border-radius:999px">todo.ltd</div>
@@ -47,7 +46,7 @@ const CARDS = {
 };
 await launch();
 for (const n of process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(CARDS)) {
-    const [dev, secs, body] = CARDS[n]; const url = write(n, page(body));
+    const [dev, secs, body, extra] = CARDS[n]; const url = write(n, page(body, extra || ''));
     await clip(n, { plain: true, url, dev }, async (c) => { await sleep(300); c.mark(); await sleep(secs * 1000); });
 }
 process.exit(0);

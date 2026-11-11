@@ -686,3 +686,4 @@ msgstr "Резерв:"
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
 msgid "Free"
 msgstr "Вільний"
+

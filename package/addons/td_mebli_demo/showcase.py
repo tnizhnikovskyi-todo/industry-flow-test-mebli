@@ -45,15 +45,15 @@ USERS = [
 
 # name, company type, city, street: end customers of the factory salon (people and small businesses)
 CUSTOMERS = [
-    ('Тарас Мельник', 'person', 'Київ', 'вул. Прикладна, 7'), ('Ірина Коваленко', 'person', 'Львів', 'просп. Тестовий, 21'),
+    ('Тарас Мельник', 'person', 'Київ', 'вул. Липова, 7'), ('Ірина Коваленко', 'person', 'Львів', 'просп. Стрийська, 21'),
     ('Олег Шевчук', 'person', 'Одеса', 'вул. Садова, 3'), ('Наталія Гончар', 'person', 'Дніпро', 'вул. Шевченка, 15'),
-    ('Віктор Бойко', 'person', 'Харків', 'вул. Вигадана, 40'), ('Юлія Романюк', 'person', 'Полтава', 'вул. Центральна, 5'),
+    ('Віктор Бойко', 'person', 'Харків', 'вул. Берестейська, 40'), ('Юлія Романюк', 'person', 'Полтава', 'вул. Центральна, 5'),
     ('Андрій Кравець', 'person', 'Запоріжжя', 'просп. Перемоги, 102'), ('Оксана Мороз', 'person', 'Чернівці', 'вул. Лесі Українки, 9'),
     ('Дмитро Савченко', 'person', 'Житомир', 'вул. Франка, 31'), ('Марина Поліщук', 'person', 'Вінниця', 'вул. Соборна, 64'),
-    ('Кав\'ярня «Зерно»', 'company', 'Київ', 'вул. Прикладна, 88'), ('Студія йоги «Баланс»', 'company', 'Київ', 'вул. Вигадана, 2'),
+    ('Кав\'ярня «Зерно»', 'company', 'Київ', 'вул. Липова, 88'), ('Студія йоги «Баланс»', 'company', 'Київ', 'вул. Берестейська, 2'),
     ('Будинок «Липки» (забудовник)', 'company', 'Київ', 'вул. Незалежності, 150'), ('Готель «Затишок»', 'company', 'Львів', 'вул. Героїв Майдану, 12'),
-    ('Офіс-центр «Вузол»', 'company', 'Дніпро', 'просп. Зразковий, 8'), ('Мережа клінік «Здоров\'я»', 'company', 'Одеса', 'вул. Вигадана, 77'),
-    ('ЖК «Сонячний квартал»', 'company', 'Харків', 'вул. Центральна, 3'), ('Хостел «Подорож»', 'company', 'Київ', 'вул. Прикладна, 19'),
+    ('Офіс-центр «Вузол»', 'company', 'Дніпро', 'просп. Науки, 8'), ('Мережа клінік «Здоров\'я»', 'company', 'Одеса', 'вул. Берестейська, 77'),
+    ('ЖК «Сонячний квартал»', 'company', 'Харків', 'вул. Центральна, 3'), ('Хостел «Подорож»', 'company', 'Київ', 'вул. Липова, 19'),
 ]
 
 # product, qty, dims (W, H, D), body, facade, edge, fitting, stage, days ago, customer, salesman, discount %, prepay %
@@ -528,8 +528,9 @@ def seed_showcase(env):
         sale = production.sudo().reference_ids.sale_ids[:1]
         base = sale.date_order or now
         finish = production.date_finished or now
-        production.date_deadline = max(base + timedelta(days=rnd.randint(14, 26)), finish + timedelta(days=rnd.randint(1, 4)), now + timedelta(days=3))
+        production.date_deadline = now + timedelta(days=rnd.randint(3, 20) if production.state == 'confirmed' else rnd.randint(2, 9))
     late.date_deadline = now - timedelta(days=2)
+    open_productions.filtered(lambda p: p.state == 'confirmed')[-1:].date_deadline = now - timedelta(days=1)
     waiting[:1].date_deadline = now + timedelta(days=2)  # the one that will not make it: the deadline is close, the plan is longer
     for production in env['mrp.production'].search([('state', '=', 'done')]):
         production.date_deadline = production.date_finished + timedelta(days=rnd.randint(1, 4))
@@ -554,5 +555,6 @@ def seed_showcase(env):
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
     env.cr.execute("""UPDATE mail_message SET date = date - interval '1 day' WHERE date >= (date_trunc('day', now() at time zone 'Europe/Kyiv') - interval '1 day') at time zone 'Europe/Kyiv'
                       AND date < date_trunc('day', now() at time zone 'Europe/Kyiv') at time zone 'Europe/Kyiv'""")
+    env.cr.execute("UPDATE mail_notification SET is_read = true, read_date = now() WHERE is_read IS NOT TRUE")  # no «94 unread» badge in the header
     env.flush_all()
     return {'orders': env['sale.order'].search_count([]), 'productions': env['mrp.production'].search_count([])}

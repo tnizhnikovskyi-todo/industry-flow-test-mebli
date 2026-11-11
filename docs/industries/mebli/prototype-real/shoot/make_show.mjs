@@ -18,8 +18,12 @@ const loads = facts.loads || [];
 const over = loads.filter((l) => l.pct > 100).reverse(), within = loads.filter((l) => l.pct <= 100);
 const nm = (l) => l.name.toLowerCase();
 const loadText = (over.length ? over.map((l) => `${nm(l)} — ${l.pct}%`).join(', ') + ' (червоним), ' : '') + (within.length ? `решта — ${within[0].pct}–${within[within.length - 1].pct}%` : '');
+const num = (s) => parseInt(String(s).replace(/\D+/g, '') || '0', 10);
+const pl = (n, a, b, c) => { const m10 = n % 10, m100 = n % 100; return m10 === 1 && m100 !== 11 ? a : (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) ? b : c; };
 const f1 = (x) => x.toFixed(1).replace('.', ',');
+const _o = num(lines(D.revenue)[0].replace(/\(.*\)/, '').replace(/.*: /, '')), _l = num((D.margin.alert || '').replace(/.*: /, ''));
 const vars = {
+    d_orders_txt: `${_o} ${pl(_o, 'замовлення', 'замовлення', 'замовлень')}`, d_low_txt: `${_l} ${pl(_l, 'замовлення', 'замовлення', 'замовлень')}`,
     d_revenue: nb(D.revenue.value), d_revenue_delta: nb(D.revenue.delta.text).replace(/^\S+\s/, ''), d_orders: lines(D.revenue)[0].replace(/\(.*\)/, '').replace(/.*: /, '').trim(),
     d_margin: D.margin.value, d_margin_delta: D.margin.delta.text.replace(/^\S+\s/, ''), d_low: (D.margin.alert || '').replace(/.*: /, ''), d_low_text: D.margin.alert || '',
     d_launch: D.launch.value, d_launch_delta: D.launch.delta.text.replace(/^\S+\s/, ''), d_load: loadText, d_top: D.load.rows.filter((r) => r.over).map((r) => `«${r.name}» ${r.pct}%`).join(', ') || '—',
@@ -65,15 +69,25 @@ header.top img { height: 36px; } header.top span { color: #808080; font-size: 9.
 .big { display: flex; gap: 10px; margin: 10px 0 8px; } .big div { flex: 1; background: #101820; color: #fff; border-radius: 8px; padding: 10px 12px; border-left: 6px solid #FE5000; }
 .big b { display: block; font-size: 20pt; line-height: 1.1; } .big span { display: block; color: #BFBFBF; font-size: 9pt; text-transform: uppercase; letter-spacing: .04em; } .big i { display: block; font-style: normal; font-size: 9pt; color: #FE5000; margin-top: 4px; font-weight: 700; }
 .hero img { width: 100%; border: 1px solid #BFBFBF; border-radius: 6px; }
-.blk { break-inside: avoid; display: block; margin: 14px 0; padding-top: 10px; border-top: 1px solid #e5e5e5; }
+.blk { display: block; margin: 12px 0; padding-top: 8px; border-top: 1px solid #e5e5e5; }
 .blk .txt { break-inside: avoid; break-after: avoid; }
 .blk h2 { font-size: 12.5pt; margin: 0 0 4px; border-left: 6px solid #FE5000; padding-left: 8px; line-height: 1.2; }
 .blk p { margin: 4px 0; } .blk ul { margin: 4px 0; padding-left: 16px; } .blk b { color: #101820; }
-.blk .img { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; align-items: start; } .blk .img img { display: block; width: 100%; max-width: 100%; height: auto; object-fit: contain; border: 1px solid #BFBFBF; border-radius: 4px; break-inside: avoid; }
-.blk .img img:first-child:nth-last-child(1), .blk .img img:first-child:nth-last-child(3) { grid-column: 1 / -1; }
+.blk .img { break-inside: avoid; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; align-items: start; } .blk .img img { display: block; width: 100%; max-width: 100%; height: auto; object-fit: contain; border: 1px solid #BFBFBF; border-radius: 4px; break-inside: avoid; }
+.blk .img img:not(:first-child):not([src*='screens-mobile']) { aspect-ratio: 16 / 10; object-fit: cover; object-position: center 35%; }
+.blk .img img:first-child:nth-last-child(1) { grid-column: 1 / -1; }
+.blk .img:has(img:nth-child(3)) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.blk .img img[src*='screens/'] { aspect-ratio: 16 / 10; object-fit: cover; object-position: center 30%; }
 .blk .img.mob { grid-template-columns: repeat(4, minmax(0, 1fr)); } .blk .img img[src*='screens-mobile'] { width: 100%; height: auto; border-radius: 10px; grid-column: auto !important; }
 .cta { margin-top: 14px; padding: 18px 20px; background: #101820; color: #fff; border-radius: 10px; border-top: 8px solid #FE5000; text-align: center; break-inside: avoid; }
 .cta h2 { font-size: 17pt; margin: 0 0 6px; } .cta p { margin: 4px 0; color: #BFBFBF; } .cta .site { display: inline-block; margin-top: 8px; background: #FE5000; color: #fff; font-weight: 700; font-size: 18pt; padding: 4px 22px; border-radius: 999px; }
+
+/* компактна верстка: текст ліворуч, скриншот(и) праворуч, мобільні — у ряд на всю ширину */
+.blk { display: grid; grid-template-columns: 62mm minmax(0, 1fr); gap: 4mm 6mm; align-items: start; margin: 8px 0; padding-top: 6px; break-inside: avoid; }
+.blk .txt { break-after: auto; } .blk .img { margin-top: 0; grid-template-columns: minmax(0, 1fr) !important; }
+.blk .img:not(.mob) img:nth-child(n+3) { display: none; } .blk .img:not(.mob):has(img:nth-child(2)) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+.blk:has(.img.mob) { grid-template-columns: 1fr; } .blk .img.mob { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; } .blk .img.mob img { display: block !important; }
+.cta { break-before: avoid; }
 </style></head><body><header class="top"><img src="brand-todo/todo-logo.png"><span>ToDo — впровадження Odoo для виробництв</span></header>${body}</body></html>`;
 fs.writeFileSync(path.join(ROOT, 'SHOW.html'), doc.replace(/[▲▼■]\s*/g, ''));
 const browser = await chromium.launch(); const page = await browser.newPage();

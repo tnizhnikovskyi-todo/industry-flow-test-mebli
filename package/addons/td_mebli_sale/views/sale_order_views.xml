@@ -9,6 +9,29 @@
             <!-- кнопки «розділ» і «примітка» у мобільному поданні лишались англійською — для замовлення виробу вони не потрібні -->
             <xpath expr="//field[@name='order_line']/kanban/control/create[@name='add_section_control']" position="replace"/>
             <xpath expr="//field[@name='order_line']/kanban/control/create[@name='add_note_control']" position="replace"/>
+            <!-- на телефоні стандартна форма рядка вибирає лише варіант (product_id) і не відкриває конфігуратор: додаємо вибір шаблону з тим самим
+                 віджетом, що в списку на комп'ютері — тоді відкривається адаптивний діалог конфігуратора (декор, кромка, фурнітура) -->
+            <xpath expr="//field[@name='order_line']/form//label[@for='product_id']" position="before">
+                <label for="product_template_id" string="Product"/>
+                <field name="product_template_id" widget="sol_product_many2one" readonly="not product_updatable" required="not display_type and not is_downpayment"
+                       context="{'default_list_price': price_unit, 'default_uom_id': product_uom_id, 'partner_id': parent.partner_id}"
+                       options="{'show_label_warning': True}" placeholder="Type to find a product..."/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//label[@for='product_id']" position="before">
+                <!-- поля, які конфігуратор записує в рядок: у формі їх немає, без них застосування вибору падає -->
+                <field name="product_custom_attribute_value_ids" invisible="1">
+                    <list><field name="custom_product_template_attribute_value_id"/><field name="custom_value"/></list>
+                </field>
+                <field name="product_no_variant_attribute_value_ids" invisible="1"/>
+                <field name="technical_price_unit" invisible="1"/>
+                <field name="linked_line_id" invisible="1"/>
+                <field name="combo_item_id" invisible="1"/>
+                <field name="selected_combo_items" invisible="1"/>
+                <field name="virtual_id" invisible="1"/>
+                <field name="linked_virtual_id" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']/form//label[@for='product_id']" position="attributes"><attribute name="invisible">1</attribute></xpath>
+            <xpath expr="//field[@name='order_line']/form//field[@name='product_id']/.." position="attributes"><attribute name="invisible">1</attribute></xpath>
             <!-- на телефоні рядок замовлення — повноекранна форма: розміри виробу редагуються тут, ціна перераховується -->
             <xpath expr="//field[@name='order_line']/form//div[@name='ordered_qty']" position="after">
                 <field name="td_is_parametric" invisible="1"/>

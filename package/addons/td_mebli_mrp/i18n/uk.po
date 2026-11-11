@@ -735,3 +735,9 @@ msgstr "x"
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "Designation"
 msgstr "Позначення"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Reserved / consumed"
+msgstr "Зарезервовано / спожито"
+

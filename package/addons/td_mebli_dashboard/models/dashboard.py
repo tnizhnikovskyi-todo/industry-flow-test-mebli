@@ -135,6 +135,8 @@ class TdMebliDashboard(models.AbstractModel):
                     'lines': [_("Margin: %s of %s", self._money(cur['margin']), self._money(cur['revenue']))],
                     'action': 'td_mebli_sale.sale_order_line_td_cost_action',
                     'low_ids': low.ids,
+                    'low_view_id': self.env.ref('td_mebli_sale.sale_order_td_low_margin_list').sudo().id,
+                    'low_kanban_id': self.env.ref('td_mebli_sale.sale_order_td_low_margin_kanban').sudo().id,
                 },
                 'launch': {
                     'label': _("Order to launch"), 'value': _("%s h", self._num(cur['launch_avg'])),
