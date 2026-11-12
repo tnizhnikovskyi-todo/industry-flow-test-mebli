@@ -27,12 +27,12 @@
                     <field name="td_item_ids" readonly="state == 'cancel' or locked">
                         <list editable="bottom" decoration-danger="is_late" decoration-muted="state == 'received'">
                             <field name="sequence" widget="handle"/>
-                            <field name="name"/>
-                            <field name="supplier_id" width="190px"/>
-                            <field name="state" width="130px"/>
-                            <field name="date_supplier" width="180px"/>
-                            <field name="lead_days" optional="hide" width="120px"/>
-                            <field name="date_ready" width="120px"/>
+                            <field name="name" width="280px"/>
+                            <field name="supplier_id" width="150px"/>
+                            <field name="state" width="110px"/>
+                            <field name="date_supplier" width="130px"/>
+                            <field name="lead_days" optional="hide" width="110px"/>
+                            <field name="date_ready" width="105px"/>
                             <field name="is_late" column_invisible="True"/>
                         </list>
                     </field>

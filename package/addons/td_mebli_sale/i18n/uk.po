@@ -531,7 +531,7 @@ msgstr "Постачальник"
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__date_supplier
 msgid "Supplier Date"
-msgstr "Дата постачальника"
+msgstr "Дата постачання"
 
 #. module: td_mebli_sale
 #: model:ir.model.constraint,message:td_mebli_sale.constraint_td_mebli_order_item_lead_days_positive

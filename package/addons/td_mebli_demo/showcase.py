@@ -231,7 +231,7 @@ def _payment_terms(env):
             'name': f'Prepayment {percent}%',
             'line_ids': [(0, 0, {'value': 'percent', 'value_amount': percent, 'delay_type': 'days_after', 'nb_days': 0}),
                          (0, 0, {'value': 'percent', 'value_amount': 100 - percent, 'delay_type': 'days_after', 'nb_days': 14})]})
-        term.with_context(lang='uk_UA').name = f'Передоплата {percent}%, решта перед доставкою'
+        term.with_context(lang='uk_UA').name = f'Передоплата {percent}%'  # the rest before delivery: the term lines say it
         terms[percent] = term
     terms[0] = env.ref('account.account_payment_term_immediate')
     return terms

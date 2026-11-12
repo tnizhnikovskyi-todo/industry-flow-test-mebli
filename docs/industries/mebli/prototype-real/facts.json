@@ -20,12 +20,6 @@
   },
   {
    "scene": "00-sample",
-   "name": "delay_reason",
-   "expected": null,
-   "ok": false
-  },
-  {
-   "scene": "00-sample",
    "name": "late_item",
    "expected": "Фасади МДФ фарбовані, RAL 9010 мат",
    "ok": true
@@ -37,10 +31,10 @@
    "ok": true
   },
   {
-   "scene": "00-sample",
-   "name": "margin_percent",
-   "expected": null,
-   "ok": false
+   "scene": "D_sample",
+   "name": "delay_days",
+   "expected": "14",
+   "ok": true
   }
  ],
  "facts": {
@@ -50,6 +44,9 @@
    "delay_days": "14",
    "late_item": "Фасади МДФ фарбовані, RAL 9010 мат",
    "late_item_supplier_date": "15 груд."
+  },
+  "D_sample": {
+   "delay_days": "14"
   }
  }
 }

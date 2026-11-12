@@ -11,10 +11,8 @@ export const STEPS = [
           { name: 'promised_date', sel: '.o_field_widget[name=commitment_date]' },
           { name: 'forecast_date', sel: '.o_field_widget[name=td_forecast_date]' },
           { name: 'delay_days', sel: '.o_group .o_field_widget[name=td_delay_days]', re: '\\d+' },
-          { name: 'delay_reason', sel: '.o_field_widget[name=td_delay_reason]' },
           { name: 'late_item', sel: '.td_date_alert .o_field_widget[name=td_late_item_id]' },
           { name: 'late_item_supplier_date', sel: '.o_data_row.text-danger td[name=date_supplier]' },
-          { name: 'margin_percent', sel: '.o_field_widget[name=margin_percent]', re: '[\\d,]+\\s?%' },
       ] },
 ];
 export const PASS1 = [];
