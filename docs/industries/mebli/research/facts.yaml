@@ -1,0 +1,101 @@
+# facts.yaml — єдине джерело чисел пакета «меблі» (OWNER-BRIEF, BOX, SALES, concept/*).
+# Створено кроком A-20 (спроба 2, recalc), 2026-11-12: A-03b виконано за старим флоу (R18) і facts.yaml не створював.
+# Нових чисел тут немає: кожне значення взято з уже затверджених у R18 документів (рядок-джерело — у коментарі).
+# Ключ змінюється лише разом із документом-джерелом; текст із маркером <!--fact:ключ--> має збігатися зі значенням.
+# Ключі джерел: FM — research/FUNCTIONAL-MAP.md; OB — research/OWNER-BRIEF.md; BOX — research/BOX.md; SALES — research/SALES.md;
+# OE — research/odoo-ecosystem.md; REUSE — research/REUSE.md; INTAKE — OWNER-INTAKE.md; DEC — flow/decisions.md.
+
+meta:
+  galuz: mebli
+  date: "2026-11-12"
+  step: A-20
+  attempt: 2
+  base: "51fbf07"
+  note: "числа R18; A-03c (REUSE-01) враховано лише для H-06"
+
+pricing:
+  ce_entry: true                 # INTAKE pricing.ce_entry (рішення №3б)
+  ee_upgrade: true               # INTAKE pricing.ee_upgrade (рішення №3б)
+  box_fixed_price: "коробка A"   # INTAKE pricing.box_fixed_price (рішення №15)
+  box_a_price_uah: null          # ціну коробки A власник ще не назвав (рішення №15) — відкрите, не вигадувати
+  pilot: "платний зі знижкою"    # INTAKE pricing.pilot (рішення №20)
+
+market:
+  companies_10_249: 225          # OB §1, §7 R-10; FM §1.1 (odb-catalog, знімок серпня 2026)
+  companies_25_249: 120          # OB §1; FM §1.1
+  clients_3y_base: 8             # OB §6 «R18» — ринок (а) за 3 роки, базово (припущення)
+
+ee:
+  full_user_eur_month: 27.9      # DEC №9 (нотатка власника); OB §6 «R18»; OE §7.9
+  full_user_usd_month: 31.32     # OB §6: €27,90 за курсом НБУ 11.11.2026
+  light_usd_month: 8.9           # OB §6; OE §7.9 — орієнтир odoo.com, не підтверджено
+  light_usd_year: 107            # OB §6: $8,90 × 12
+  full6_usd_year: 2255           # OB §6: 6 повних × $31,32 × 12
+  license_usd_year:
+    n10: 2680                    # OB §6 «R18», таблиця; FM §4.6
+    n25: 4280
+    n50: 6950
+    n100: 12290
+  more_full_usd_year:
+    n50: 8030                    # OB §6: 10 повних на 50 людей
+    n100: 14720                  # OB §6: 15 повних на 100 людей
+  r17_overestimate_usd: 1070     # OB §6: завищення попередньої оцінки R17
+
+fx:
+  eur_usd: 1.1226                # OB §6 (курс НБУ 11.11.2026)
+  usd_uah: 45.5013               # OB §6; SALES §3
+
+rate:
+  uah_hour_min: 1975             # OB §6; BOX §1; FM §4.6 — ставка продажу партнера
+  uah_hour_max: 2400
+  uah_hour_avg: 2190             # OB §6; BOX §1а — середня ставка для маржі легкого тарифу
+
+bimp:
+  n10_usd_year: 2390             # OB §6; FM §3.2
+  n25_usd_year: 5490             # OB §6
+  n10_3y_usd: 7170               # SALES §3
+
+keycrm:
+  usd_year: 228                  # SALES §3; FM §3.1
+  usd_month: 19                  # OB §6; SALES §4; BOX §1а
+
+ce:
+  server_admin_usd_year:
+    n10_max: 2880                # OB §6; BOX §1 — сервер + адміністрування (припущення)
+    n25_max: 4400
+  version_upgrade_usd_year_max: 1400   # OB §6 — груба оцінка R11 (припущення)
+
+hosting:
+  hetzner_eur_month_from: 5.49   # BOX §1а; FM §3.2
+
+tco:
+  ce_3y_usd_max: 12840           # SALES §3 — коробка CE, 3 роки без впровадження
+
+fop:
+  subscription_uah_month_max: 3000   # OB §6; BOX §1а — ціна-гіпотеза легкого тарифу (до A-23)
+
+integrations:
+  nova_post_usd_max: 335         # BOX §10; OE §6.5
+
+hours:                           # години до накладних, [оцінка / припущення] з FM §1.1, §4.5, §4.6
+  full_package: {min: 2528, max: 5544}            # OB §6 «R18»; FM §4.6
+  full_package_overhead: {min: 3540, max: 9150}   # OB §6 «R18»; BOX §1 — з накладними
+  returned_11: {min: 668, max: 1404}              # FM §4.5; REJECTED §4а
+  bridges_ee: {min: 168, max: 408}                # FM §4.6
+  h06_scratch: {min: 24, max: 64}                 # FM §2.1 H-06, §4.4; REUSE «Реєстр» — розробка з нуля
+  h06_adapt: {min: 16, max: 32}                   # REUSE «Реєстр» — адаптація td_sale_cost (REUSE-01)
+  h06_saving: {min: 8, max: 32, mid: 20}          # REUSE «Вплив на години» — економія ≈20 год (8–32)
+
+money:                           # млн грн, з накладними за ставкою 1 975–2 400 грн/год (FM §4.6)
+  full_package_mln_uah: {min: 7.0, max: 22.0, mid: 14.5}   # OB §6 «R18»; BOX §1
+
+reuse:
+  adapted:
+    - "REUSE-01 td_sale_cost"    # REUSE — рішення «адаптуємо» (основа H-06 = ToDo-готовий)
+  rejected_count: 5              # REUSE «Відкинуто»: REJ-001…005
+
+concept:                         # concept/* v2 (A-20, спроба 2)
+  screens: 15                    # R18: екрани 1–13, 15, 16 (OB §3; FM §4.5)
+  roles: 8
+  scenarios: 8
+  returned_positions: 11         # DEC запис 27; REJECTED §4а; REJECTED §6 REJ-006…016
