@@ -2,6 +2,7 @@
 
 | Дата | Режим | URL | Що | Підстава |
 |---|---|---|---|---|
+| 2026-11-12 | full | https://claude.ai/artifact/RMKQLpFxP6D2cwzkCCDakD | повний обсяг A-20c: index, competitors, rejected (версія 2, той самий URL, що й зразок) | дозвіл власника, `flow/decisions.md` запис 29 |
 | 2026-11-12 | sample | https://claude.ai/artifact/RMKQLpFxP6D2cwzkCCDakD | зразок `index.html` (A-20c, перший екран і каркас) | дозвіл власника в чаті 2026-11-12 («Делай пуш утверждаю»); `flow/decisions.md` запис 29 |
 | 2026-11-11 | full (R18, попередній флоу) | https://claude.ai/artifact/4US1Hk8R2AkJMN2LbZU675 | 3 сторінки R18 | — ; не перезаписано зразком, щоб не втратити повну версію; оновити повним обсягом A-20c |
 
