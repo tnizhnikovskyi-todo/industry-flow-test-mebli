@@ -401,3 +401,185 @@ msgstr "Введіть назву виробу..."
 #: model_terms:ir.ui.view,arch_db:sale.view_order_form
 msgid "Tax Incl."
 msgstr "З податком"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid ") or the last made-to-order item is fitted."
+msgstr ") або останню замовну позицію встановлено."
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid ""
+"<i class=\"fa fa-exclamation-triangle\" title=\"Date at risk\"/>\n"
+"                    <span>The forecast date is later than the promised one by</span>"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle\" title=\"Дата під загрозою\"/>\n"
+"                    <span>Прогнозна дата пізніша за обіцяну на</span>"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid ""
+"<span>days.</span>\n"
+"                    <span invisible=\"not td_late_item_id\">It is moved by the made-to-order item</span>"
+msgstr ""
+"<span>дн.</span>\n"
+"                    <span invisible=\"not td_late_item_id\">Її зсуває замовна позиція</span>"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__company_id
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__company
+msgid "Company"
+msgstr "Компанія"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__confirmed
+msgid "Confirmed by Supplier"
+msgstr "Підтверджено постачальником"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_td_mebli_order_item__date_supplier
+msgid "Date when the supplier delivers the item to the factory."
+msgstr "Дата, коли постачальник привезе позицію на фабрику."
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_td_mebli_order_item__lead_days
+msgid ""
+"Days from the receipt of the item to the order being ready (fitting, "
+"packing)."
+msgstr "Днів від отримання позиції до готовності замовлення (встановлення, пакування)."
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__lead_days
+msgid "Days to Fit"
+msgstr "Днів на встановлення"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_forecast_date
+msgid "Forecast Date"
+msgstr "Прогнозна дата"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__name
+msgid "Item"
+msgstr "Позиція"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_late_item_id
+msgid "Item that Moves the Date"
+msgstr "Позиція, що зсуває дату"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__write_uid
+msgid "Last Updated by"
+msgstr "Останнє оновлення"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__write_date
+msgid "Last Updated on"
+msgstr "Останнє оновлення"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_item_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "Made-to-order Items"
+msgstr "Замовні позиції"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_td_mebli_order_item
+msgid "Made-to-order item"
+msgstr "Замовна позиція"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__is_late
+msgid "Moves the Date"
+msgstr "Зсуває дату"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli_dates
+msgid "Promised Date"
+msgstr "Обіцяна дата"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__date_ready
+msgid "Ready by Item"
+msgstr "Готово за позицією"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_shop_date
+msgid "Ready by Workshop"
+msgstr "Готовність цеху"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__received
+msgid "Received"
+msgstr "Отримано"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__sequence
+msgid "Sequence"
+msgstr "Послідовність"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_reason
+msgid "Shift Reason"
+msgstr "Причина зсуву"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_days
+msgid "Shift, days"
+msgstr "Зсув, дн."
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__supplier_id
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__supplier
+msgid "Supplier"
+msgstr "Постачальник"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__date_supplier
+msgid "Supplier Date"
+msgstr "Дата постачальника"
+
+#. module: td_mebli_sale
+#: model:ir.model.constraint,message:td_mebli_sale.constraint_td_mebli_order_item_lead_days_positive
+msgid "The days to fit cannot be negative."
+msgstr "Кількість днів на встановлення не може бути від’ємною."
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid ""
+"The forecast date of the order is the later of the two: the workshop is ready\n"
+"                        ("
+msgstr ""
+"Прогнозна дата замовлення — пізніша з двох: готовність цеху\n"
+"                        ("
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_forecast_date
+msgid ""
+"The later of the two: the workshop is ready, the last made-to-order item is "
+"fitted."
+msgstr "Пізніша з двох: готовність цеху або встановлення останньої замовної позиції."
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__to_order
+msgid "To Order"
+msgstr "Замовити"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_delay_reason
+msgid ""
+"Who moved the date: suggested from the forecast, the manager may set "
+"«Customer» for a change asked by the customer."
+msgstr "Хто зсунув дату: підказка з прогнозу; менеджер може вказати «Клієнт», якщо зміну попросив клієнт."

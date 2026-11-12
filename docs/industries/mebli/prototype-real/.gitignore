@@ -1,0 +1,5 @@
+shoot/.cookies.json
+shoot/.db_stamp
+shoot/odoo-serve.log
+shoot/fail/
+video/rec/tmp-*/

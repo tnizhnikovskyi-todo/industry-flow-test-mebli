@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- S-02 «Замовлення клієнта»: обіцяна й прогнозна дата, зсув і причина, замовні позиції (F-23, F-31, NG-01) -->
+    <record id="view_order_form_td_mebli_dates" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.dates</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <field name="td_late_item_id" invisible="1"/>
+                <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 td_date_alert" role="alert"
+                     invisible="td_delay_days &lt;= 0 or state == 'cancel'">
+                    <i class="fa fa-exclamation-triangle" title="Date at risk"/>
+                    <span>The forecast date is later than the promised one by</span>
+                    <field name="td_delay_days" class="fw-bold oe_inline"/>
+                    <span>days.</span>
+                    <span invisible="not td_late_item_id">It is moved by the made-to-order item</span>
+                    <field name="td_late_item_id" class="fw-bold oe_inline" invisible="not td_late_item_id" readonly="1"
+                           options="{'no_open': True}"/>
+                </div>
+            </xpath>
+            <xpath expr="//group[@name='order_details']" position="inside">
+                <field name="commitment_date" string="Promised Date" widget="date" readonly="state == 'cancel' or locked"/>
+                <field name="td_forecast_date" decoration-danger="td_delay_days &gt; 0" decoration-success="td_delay_days == 0"
+                       invisible="not td_forecast_date"/>
+                <field name="td_delay_days" invisible="td_delay_days == 0" decoration-danger="td_delay_days &gt; 0"/>
+                <field name="td_delay_reason" invisible="td_delay_days == 0 and td_delay_reason != 'customer'"/>
+            </xpath>
+            <xpath expr="//page[@name='order_lines']" position="after">
+                <page string="Made-to-order Items" name="td_items">
+                    <field name="td_item_ids" readonly="state == 'cancel' or locked">
+                        <list editable="bottom" decoration-danger="is_late" decoration-muted="state == 'received'">
+                            <field name="sequence" widget="handle"/>
+                            <field name="name"/>
+                            <field name="supplier_id"/>
+                            <field name="state"/>
+                            <field name="date_supplier"/>
+                            <field name="lead_days" optional="show"/>
+                            <field name="date_ready"/>
+                            <field name="is_late" column_invisible="True"/>
+                        </list>
+                    </field>
+                    <div class="text-muted small">The forecast date of the order is the later of the two: the workshop is ready
+                        (<field name="td_shop_date" class="oe_inline" readonly="1"/>) or the last made-to-order item is fitted.</div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_quotation_tree_td_mebli_dates" model="ir.ui.view">
+        <field name="name">sale.order.list.td.mebli.dates</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.sale_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="commitment_date" position="attributes">
+                <attribute name="string">Promised Date</attribute>
+                <attribute name="widget">date</attribute>
+            </field>
+            <field name="commitment_date" position="after">
+                <field name="td_forecast_date" optional="hide" decoration-danger="td_delay_days &gt; 0"/>
+                <field name="td_delay_days" optional="hide" decoration-danger="td_delay_days &gt; 0"/>
+            </field>
+        </field>
+    </record>
+</odoo>

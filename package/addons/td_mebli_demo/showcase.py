@@ -14,13 +14,14 @@ from zoneinfo import ZoneInfo
 from odoo import fields
 from odoo.tools import file_open
 
+from .dates import seed_dates
 from .scenario import make_order
 
 IMG = 'td_mebli_demo/static/img/'
 
 COMPANY = {
     'name': 'Меблева фабрика «Демо»', 'street': 'вул. Заводська, 12', 'city': 'Київ', 'zip': '02000',
-    'phone': '+380 44 555 01 00', 'email': 'office@demo-fabryka.example', 'website': 'https://demo-fabryka.example',
+    'phone': '+380 00 000 00 01', 'email': 'office@demo-fabryka.example', 'website': 'https://demo-fabryka.example',
     'primary_color': '#3d2b1f', 'secondary_color': '#c9a06a',
 }
 
@@ -240,9 +241,8 @@ def _brand(env):
     company = env.company
     company.write({**COMPANY, 'logo': _binary('logo.png'), 'country_id': env.ref('base.ua').id})
     company.partner_id.write({'image_1920': _binary('logo.png')})
-    company.write({'company_registry': '41234567', 'vat': 'UA412345678901'})
-    env['res.partner.bank'].create({'acc_number': 'UA21 3223 1300 0002 6007 2335 6600 1', 'partner_id': company.partner_id.id,
-                                    'bank_id': env['res.bank'].create({'name': 'Банк «Приклад»', 'bic': 'DEMOUA2K'}).id})
+    # registry code of a fictional format (no real EDRPOU check passes), no bank account (demo-data-rules.md)
+    company.write({'company_registry': 'ДЕМО-0001'})
     env.ref('base.user_admin').write({'lang': 'uk_UA', 'tz': 'Europe/Kyiv'})
 
 
@@ -272,8 +272,8 @@ _TR.update({'ж': 'zh', 'х': 'kh', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ю': 
 
 
 def _phone(index, city):
-    code = _CITY_CODE.get(city, '44')
-    return f'+380 {code} {(index * 37 + 214) % 900 + 100:03d} {(index * 53 + 17) % 90 + 10:02d} {(index * 29 + 41) % 90 + 10:02d}'
+    # fictional numbers of the format +380 00 000 00 NN (demo-data-rules.md): no real subscriber is reached
+    return f'+380 00 000 00 {(index + 10) % 100:02d}'
 
 
 def _email(name, kind, index):
@@ -572,6 +572,7 @@ def seed_showcase(env):
                     .mapped('duration_expected')) / 60.0
         if center and hours:
             center.td_capacity_hours = max(1, round(hours / percent * 100.0))
+    seed_dates(env, people, partners, rnd)
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
     env.cr.execute("""UPDATE mail_message SET date = date - interval '1 day' WHERE date >= (date_trunc('day', now() at time zone 'Europe/Kyiv') - interval '1 day') at time zone 'Europe/Kyiv'

@@ -7,3 +7,6 @@ access_mrp_bom_byproduct_salesman,mrp.bom.byproduct salesman,mrp.model_mrp_bom_b
 access_mrp_workcenter_capacity_salesman,mrp.workcenter.capacity salesman,mrp.model_mrp_workcenter_capacity,sales_team.group_sale_salesman,1,0,0,0
 access_mrp_production_salesman,mrp.production salesman,mrp.model_mrp_production,sales_team.group_sale_salesman,1,0,0,0
 access_mrp_workorder_salesman,mrp.workorder salesman,mrp.model_mrp_workorder,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_order_item_salesman,td.mebli.order.item salesman,model_td_mebli_order_item,sales_team.group_sale_salesman,1,1,1,1
+access_td_mebli_order_item_mrp_user,td.mebli.order.item mrp user,model_td_mebli_order_item,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_order_item_stock_user,td.mebli.order.item stock user,model_td_mebli_order_item,stock.group_stock_user,1,1,0,0
