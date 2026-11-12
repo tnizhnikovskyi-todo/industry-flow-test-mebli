@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_measure_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.measure.form</field>
+        <field name="model">td.mebli.measure</field>
+        <field name="arch" type="xml">
+            <form string="Measurement Sheet">
+                <header>
+                    <button name="action_check" type="object" string="Check against the Design" class="btn-primary"
+                            invisible="state == 'checked'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger" role="alert" invisible="issue_count == 0">
+                        <strong>Does not fit: </strong><field name="issue_text" class="d-inline"/>
+                    </div>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="lead_id"/>
+                            <field name="order_id"/>
+                            <field name="customer"/>
+                            <field name="room"/>
+                        </group>
+                        <group>
+                            <field name="measurer_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="floor_slope_mm"/>
+                            <field name="wall_angle_deg"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Niches and Sizes" name="niches">
+                            <field name="niche_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="width_mm"/>
+                                    <field name="height_mm"/>
+                                    <field name="depth_mm"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Appliances of the Customer" name="appliances">
+                            <field name="appliance_ids">
+                                <list editable="bottom" decoration-danger="not fits">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="niche_id"/>
+                                    <field name="width_mm"/>
+                                    <field name="height_mm"/>
+                                    <field name="depth_mm"/>
+                                    <field name="fits" column_invisible="True"/>
+                                    <field name="issue"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Utilities and Photos" name="photos">
+                            <group>
+                                <field name="utilities"/>
+                                <field name="photo_ids" widget="many2many_binary"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_measure_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.measure.list</field>
+        <field name="model">td.mebli.measure</field>
+        <field name="arch" type="xml">
+            <list string="Measurement Sheets" decoration-danger="issue_count &gt; 0">
+                <field name="name"/>
+                <field name="customer"/>
+                <field name="room"/>
+                <field name="measurer_id" widget="many2one_avatar_user"/>
+                <field name="order_id"/>
+                <field name="issue_count"/>
+                <field name="state" widget="badge" decoration-success="state == 'checked'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_measure_view_search" model="ir.ui.view">
+        <field name="name">td.mebli.measure.search</field>
+        <field name="model">td.mebli.measure</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="order_id"/>
+                <field name="measurer_id"/>
+                <filter name="my" string="My Measurements" domain="[('measurer_id', '=', uid)]"/>
+                <separator/>
+                <filter name="to_check" string="To Check" domain="[('state', '=', 'draft')]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="td_mebli_measure_action" model="ir.actions.act_window">
+        <field name="name">Measurement Sheets</field>
+        <field name="res_model">td.mebli.measure</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="view_order_form_td_mebli_measure" model="ir.ui.view">
+        <field name="name">sale.order.form.td_mebli_measure</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_td_view_measures" type="object" class="oe_stat_button" icon="fa-arrows-alt"
+                        invisible="td_measure_count == 0">
+                    <field name="td_measure_count" widget="statinfo" string="Measurements"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <menuitem id="td_mebli_measure_menu" name="Measurement Sheets" parent="sale.sale_order_menu"
+              action="td_mebli_measure_action" sequence="3"/>
+</odoo>

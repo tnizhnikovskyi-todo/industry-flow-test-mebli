@@ -1,0 +1,580 @@
+{
+ "checks": [
+  {
+   "scene": "03-csv-import",
+   "name": "parts_in_file",
+   "expected": "4",
+   "ok": true
+  },
+  {
+   "scene": "05-tablet",
+   "name": "in_work",
+   "expected": "Олег Дорошенко",
+   "ok": true
+  },
+  {
+   "scene": "D_csv",
+   "name": "part_count",
+   "expected": "13",
+   "ok": true
+  },
+  {
+   "scene": "D_csv",
+   "name": "mo_part_count",
+   "expected": "117",
+   "ok": true
+  },
+  {
+   "scene": "D_tablet",
+   "name": "part_count",
+   "expected": "13",
+   "ok": true
+  },
+  {
+   "scene": "M_tablet",
+   "name": "cut_queue",
+   "expected": "13",
+   "ok": true
+  },
+  {
+   "scene": "D_kit",
+   "name": "missing_part",
+   "expected": "Задня стінка ДВП ",
+   "ok": true
+  },
+  {
+   "scene": "D_cutting",
+   "name": "job_orders",
+   "expected": "WH/MO/00109 WH/MO/00110",
+   "ok": true
+  },
+  {
+   "scene": "M_act",
+   "name": "act_state",
+   "expected": "Підписано",
+   "ok": true
+  },
+  {
+   "scene": "M_act",
+   "name": "crew_amount",
+   "expected": "345,60 ₴",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "margin",
+   "expected": "30,3 %",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "shift",
+   "expected": "Замовлень: 3",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "on_time",
+   "expected": "97,1 %",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "prices",
+   "expected": "3 575 ₴",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "claims",
+   "expected": "5,9",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "margin_orders",
+   "expected": "60",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "margin_orders",
+   "expected": "60",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "revenue_total",
+   "expected": "2 603 787,18 ₴",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "margin_total",
+   "expected": "788 516,17 ₴",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "plan_cost_total",
+   "expected": "1 815 271,01 ₴",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "promised_date",
+   "expected": "4 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "forecast_date",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "delay_days",
+   "expected": "14",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "late_item",
+   "expected": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "late_item_supplier_date",
+   "expected": "6 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "late_item_ready",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-late-facades",
+   "name": "late_purchase",
+   "expected": "P00001",
+   "ok": true
+  },
+  {
+   "scene": "01-measure",
+   "name": "issue",
+   "expected": "Холодильник, вбудований: глибше на 30 мм",
+   "ok": true
+  },
+  {
+   "scene": "01-measure",
+   "name": "fridge_check",
+   "expected": "глибше на 30 мм",
+   "ok": true
+  },
+  {
+   "scene": "02-price-from-size",
+   "name": "line_price",
+   "expected": "5 200,00",
+   "ok": true
+  },
+  {
+   "scene": "02-price-from-size",
+   "name": "margin_percent",
+   "expected": "20,02%",
+   "ok": true
+  },
+  {
+   "scene": "17-quotation-margin",
+   "name": "state",
+   "expected": "Комерційна пропозиція",
+   "ok": true
+  },
+  {
+   "scene": "17-quotation-margin",
+   "name": "margin_percent",
+   "expected": "25,06%",
+   "ok": true
+  },
+  {
+   "scene": "18-mo-parts",
+   "name": "part_count",
+   "expected": "13",
+   "ok": true
+  },
+  {
+   "scene": "18-mo-parts",
+   "name": "board_area_m2",
+   "expected": "16,986",
+   "ok": true
+  },
+  {
+   "scene": "19-mo-from-parts",
+   "name": "from_parts_first",
+   "expected": "[КР-БМ-2] Кромка ПВХ Білий матовий 2×22 мм",
+   "ok": true
+  },
+  {
+   "scene": "04-change",
+   "name": "change_shift_days",
+   "expected": "7",
+   "ok": true
+  },
+  {
+   "scene": "04-change",
+   "name": "change_amount_delta",
+   "expected": "8 400,00 ₴",
+   "ok": true
+  },
+  {
+   "scene": "06-kit",
+   "name": "missing_rows",
+   "expected": "Задня стінка ДВП 16,00 ​ ​ ​ ​",
+   "ok": true
+  },
+  {
+   "scene": "20-tablet-parts",
+   "name": "part_count",
+   "expected": "117",
+   "ok": true
+  },
+  {
+   "scene": "07-offcuts",
+   "name": "offcut_lots",
+   "expected": "18",
+   "ok": true
+  },
+  {
+   "scene": "08-quality",
+   "name": "failed_check",
+   "expected": "WH/MO/00063",
+   "ok": true
+  },
+  {
+   "scene": "09-install-calendar",
+   "name": "show_visits",
+   "expected": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці",
+   "ok": true
+  },
+  {
+   "scene": "10-acts",
+   "name": "crew_total",
+   "expected": "61 198,53 ",
+   "ok": true
+  },
+  {
+   "scene": "11-accruals",
+   "name": "accrual_total",
+   "expected": "84 666,49 ₴",
+   "ok": true
+  },
+  {
+   "scene": "12-claims",
+   "name": "overdue",
+   "expected": "Прострочено",
+   "ok": true
+  },
+  {
+   "scene": "13-plan-fact",
+   "name": "fact_total",
+   "expected": "2 461 861,86 ₴",
+   "ok": true
+  },
+  {
+   "scene": "14-prices",
+   "name": "overpay_total",
+   "expected": "3 574,93 ₴",
+   "ok": true
+  },
+  {
+   "scene": "m1-measure",
+   "name": "issue",
+   "expected": "Холодильник, вбудований: глибше на 30 мм",
+   "ok": true
+  },
+  {
+   "scene": "m2-tablet",
+   "name": "cut_queue",
+   "expected": "13",
+   "ok": true
+  },
+  {
+   "scene": "m2-tablet",
+   "name": "in_work",
+   "expected": "Олег Дорошенко",
+   "ok": true
+  },
+  {
+   "scene": "m3-act",
+   "name": "act_state",
+   "expected": "Підписано",
+   "ok": true
+  },
+  {
+   "scene": "m4-order",
+   "name": "forecast_date",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "m5-dashboard",
+   "name": "margin",
+   "expected": "30,3 %",
+   "ok": true
+  },
+  {
+   "scene": "m6-tablet-parts",
+   "name": "part_count",
+   "expected": "117",
+   "ok": true
+  },
+  {
+   "scene": "D_dashboard",
+   "name": "margin",
+   "expected": "30,3 %",
+   "ok": true
+  },
+  {
+   "scene": "D_dashboard",
+   "name": "margin_orders",
+   "expected": "60",
+   "ok": true
+  },
+  {
+   "scene": "D_dashboard",
+   "name": "drill_orders",
+   "expected": "60",
+   "ok": true
+  },
+  {
+   "scene": "M_dashboard",
+   "name": "margin",
+   "expected": "30,3 %",
+   "ok": true
+  },
+  {
+   "scene": "M_dashboard",
+   "name": "revenue",
+   "expected": "2 603 787 ₴",
+   "ok": true
+  },
+  {
+   "scene": "M_dashboard",
+   "name": "drill_revenue",
+   "expected": "2 603 787,18",
+   "ok": true
+  },
+  {
+   "scene": "D_late",
+   "name": "margin_percent",
+   "expected": "20,02%",
+   "ok": true
+  },
+  {
+   "scene": "D_late",
+   "name": "delay_days",
+   "expected": "14",
+   "ok": true
+  },
+  {
+   "scene": "D_late",
+   "name": "late_item_ready",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "M_late",
+   "name": "forecast_date",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "D_measure",
+   "name": "fridge_check",
+   "expected": "глибше на 30 мм",
+   "ok": true
+  },
+  {
+   "scene": "M_measure",
+   "name": "issue",
+   "expected": "Холодильник, вбудований: глибше на 30 мм",
+   "ok": true
+  },
+  {
+   "scene": "D_change",
+   "name": "shift_days",
+   "expected": "7",
+   "ok": true
+  },
+  {
+   "scene": "D_install",
+   "name": "crew_amount",
+   "expected": "438,73 ₴",
+   "ok": true
+  },
+  {
+   "scene": "D_accruals",
+   "name": "piece_rate",
+   "expected": "10,50 ₴",
+   "ok": true
+  }
+ ],
+ "facts": {
+  "03-csv-import": {
+   "parts_in_file": "4"
+  },
+  "05-tablet": {
+   "in_work": "Олег Дорошенко"
+  },
+  "D_csv": {
+   "part_count": "13",
+   "mo_part_count": "117"
+  },
+  "D_tablet": {
+   "part_count": "13"
+  },
+  "M_tablet": {
+   "cut_queue": "13"
+  },
+  "D_kit": {
+   "missing_part": "Задня стінка ДВП "
+  },
+  "D_cutting": {
+   "job_orders": "WH/MO/00109 WH/MO/00110"
+  },
+  "M_act": {
+   "act_state": "Підписано",
+   "crew_amount": "345,60 ₴"
+  },
+  "15-dashboard": {
+   "margin": "30,3 %",
+   "shift": "Замовлень: 3",
+   "on_time": "97,1 %",
+   "prices": "3 575 ₴",
+   "claims": "5,9",
+   "margin_orders": "60"
+  },
+  "16-dashboard-drill-margin": {
+   "margin_orders": "60",
+   "revenue_total": "2 603 787,18 ₴",
+   "margin_total": "788 516,17 ₴",
+   "plan_cost_total": "1 815 271,01 ₴"
+  },
+  "00-late-facades": {
+   "promised_date": "4 груд.",
+   "forecast_date": "18 груд.",
+   "delay_days": "14",
+   "late_item": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "late_item_supplier_date": "6 груд.",
+   "late_item_ready": "18 груд.",
+   "late_purchase": "P00001"
+  },
+  "01-measure": {
+   "issue": "Холодильник, вбудований: глибше на 30 мм",
+   "fridge_check": "глибше на 30 мм"
+  },
+  "02-price-from-size": {
+   "line_price": "5 200,00",
+   "margin_percent": "20,02%"
+  },
+  "17-quotation-margin": {
+   "state": "Комерційна пропозиція",
+   "margin_percent": "25,06%"
+  },
+  "18-mo-parts": {
+   "part_count": "13",
+   "board_area_m2": "16,986"
+  },
+  "19-mo-from-parts": {
+   "from_parts_first": "[КР-БМ-2] Кромка ПВХ Білий матовий 2×22 мм"
+  },
+  "04-change": {
+   "change_shift_days": "7",
+   "change_amount_delta": "8 400,00 ₴"
+  },
+  "06-kit": {
+   "missing_rows": "Задня стінка ДВП 16,00 ​ ​ ​ ​"
+  },
+  "20-tablet-parts": {
+   "part_count": "117"
+  },
+  "07-offcuts": {
+   "offcut_lots": "18"
+  },
+  "08-quality": {
+   "failed_check": "WH/MO/00063"
+  },
+  "09-install-calendar": {
+   "show_visits": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці"
+  },
+  "10-acts": {
+   "crew_total": "61 198,53 "
+  },
+  "11-accruals": {
+   "accrual_total": "84 666,49 ₴"
+  },
+  "12-claims": {
+   "overdue": "Прострочено"
+  },
+  "13-plan-fact": {
+   "fact_total": "2 461 861,86 ₴"
+  },
+  "14-prices": {
+   "overpay_total": "3 574,93 ₴"
+  },
+  "m1-measure": {
+   "issue": "Холодильник, вбудований: глибше на 30 мм"
+  },
+  "m2-tablet": {
+   "cut_queue": "13",
+   "in_work": "Олег Дорошенко"
+  },
+  "m3-act": {
+   "act_state": "Підписано"
+  },
+  "m4-order": {
+   "forecast_date": "18 груд."
+  },
+  "m5-dashboard": {
+   "margin": "30,3 %"
+  },
+  "m6-tablet-parts": {
+   "part_count": "117"
+  },
+  "D_dashboard": {
+   "margin": "30,3 %",
+   "margin_orders": "60",
+   "drill_orders": "60"
+  },
+  "M_dashboard": {
+   "margin": "30,3 %",
+   "revenue": "2 603 787 ₴",
+   "drill_revenue": "2 603 787,18"
+  },
+  "D_late": {
+   "margin_percent": "20,02%",
+   "delay_days": "14",
+   "late_item_ready": "18 груд."
+  },
+  "M_late": {
+   "forecast_date": "18 груд."
+  },
+  "D_measure": {
+   "fridge_check": "глибше на 30 мм"
+  },
+  "M_measure": {
+   "issue": "Холодильник, вбудований: глибше на 30 мм"
+  },
+  "D_change": {
+   "shift_days": "7"
+  },
+  "D_install": {
+   "crew_amount": "438,73 ₴"
+  },
+  "D_accruals": {
+   "piece_rate": "10,50 ₴"
+  }
+ }
+}

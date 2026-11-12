@@ -38,17 +38,22 @@ class SaleOrder(models.Model):
 
     def _inverse_td_stage(self):
         """Dragging a card on the board: only «Waiting for launch» -> «In production» is allowed and it really starts the
-        work (the first work order of each manufacturing order); any other move is refused, the stage is derived from the work."""
+        work (the first work order of each manufacturing order); any other move is refused, the stage is derived from the work.
+
+        Only a manufacturing user may start the work, with his own rights (no sudo): a salesperson gets an error and the
+        button «Start» stays in the manufacturing order."""
+        if not (self.env.su or self.env.user.has_group('mrp.group_mrp_user')):
+            raise UserError(self.env._("Only a manufacturing user can start the production of an order."))
         for order in self:
             if order.td_stage != 'progress':
                 raise UserError(self.env._("The stage follows the production: only moving a waiting order to «In production» is possible."))
-            productions = order.sudo().mrp_production_ids.filtered(lambda p: p.state == 'confirmed')
+            productions = order.mrp_production_ids.filtered(lambda p: p.state == 'confirmed')
             if not productions:
                 raise UserError(self.env._("This order has nothing to start: it is not waiting for launch."))
             for production in productions:
                 if not production.workorder_ids:
                     production.button_plan()
-                first = production.workorder_ids.filtered(lambda w: w.state in ('ready', 'waiting', 'pending'))[:1]
+                first = production.workorder_ids.filtered(lambda w: w.state in ('ready', 'blocked'))[:1]
                 if first:
                     first.button_start()
 

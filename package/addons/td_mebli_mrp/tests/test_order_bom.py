@@ -64,9 +64,26 @@ class TestOrderBom(TdMebliCommon):
         operations = 12.0 / 60 * 600.0 + 60.0 / 60 * 300.0
         self.assertAlmostEqual(cost, materials + operations, places=2)
 
+    def _calendar(self, weekly_hours):
+        return self.env['resource.calendar'].create({
+            'name': f'Section {weekly_hours} h', 'attendance_ids': [(5, 0, 0)] + [
+                (0, 0, {'name': f'Day {day}', 'dayofweek': str(day), 'hour_from': 8.0, 'hour_to': 8.0 + weekly_hours / 5.0,
+                        'day_period': 'morning'}) for day in range(5)]})
+
+    def test_capacity_from_calendar(self):
+        """The weekly capacity is read from the working calendar of the section times its parallel capacity; nothing is entered."""
+        field = self.env['mrp.workcenter']._fields['td_capacity_hours']
+        self.assertTrue(field.compute and not field.store)
+        self.wc_asm.resource_calendar_id = self._calendar(30)
+        self.assertAlmostEqual(self.wc_asm.td_capacity_hours, 30.0, places=2)
+        self.wc_asm.time_efficiency = 50.0  # the efficiency is in the expected duration, not in the capacity
+        self.assertAlmostEqual(self.wc_asm.td_capacity_hours, 30.0, places=2)
+        self.wc_asm.capacity_ids = [(0, 0, {'product_uom_id': self.env.ref('uom.product_uom_unit').id, 'capacity': 2.0})]
+        self.assertAlmostEqual(self.wc_asm.td_capacity_hours, 60.0, places=2)
+
     def test_workorder_load(self):
-        """The load of a section is the sum of its operations in percent of the weekly capacity."""
-        self.wc_asm.td_capacity_hours = 40.0
+        """The load of a section is the sum of its operations in percent of the weekly capacity of its calendar."""
+        self.wc_asm.resource_calendar_id = self._calendar(40)
         production = self.env['mrp.production'].create({
             'product_id': self.cabinet.id, 'product_qty': 1.0, 'bom_id': self._generate().id})
         production.action_confirm()
@@ -74,14 +91,42 @@ class TestOrderBom(TdMebliCommon):
         self.assertAlmostEqual(workorder.td_expected_hours, workorder.duration_expected / 60.0, places=2)
         self.assertAlmostEqual(workorder.td_load_pct, workorder.td_expected_hours / 40.0 * 100.0, places=2)
         self.assertTrue(workorder.td_load_stage)
-        self.assertEqual(workorder.td_load_zone, 'over' if workorder.td_expected_hours > 40.0 else 'within')
-        self.wc_asm.td_capacity_hours = 0.5  # less than one operation needs: the section is over its capacity
+        self.assertEqual(workorder.td_load_zone, 'within')
+        self.assertAlmostEqual(self.wc_asm.workcenter_load, workorder.duration_expected, places=2)
+        # a section that has less than one operation needs in a week is over its capacity
+        self.wc_asm.resource_calendar_id = self._calendar(0.5)
         self.assertEqual(workorder.td_load_zone, 'over')
+        self.assertAlmostEqual(workorder.td_load_pct, workorder.td_expected_hours / 0.5 * 100.0, places=2)
+
+    def test_bought_facade_is_not_cut(self):
+        """Ready-made fronts bought by a template line for the chosen facade value: no facade part under cutting
+        (no double counting); another facade value still cuts the doors from board."""
+        fronts = self.env['product.product'].create({
+            'name': 'Painted fronts', 'type': 'consu', 'standard_price': 900.0, 'td_material_kind': 'facade'})
+        val_g = self.env['product.attribute.value'].create({
+            'name': 'G', 'attribute_id': self.attr_facade.id, 'td_component_product_id': self.board_a.id})
+        self.cabinet_tmpl.attribute_line_ids = [
+            (0, 0, {'attribute_id': self.attr_facade.id, 'value_ids': [(6, 0, (self.val_f | val_g).ids)]})]
+        ptav_f = self.cabinet_tmpl.attribute_line_ids.product_template_value_ids.filtered(
+            lambda v: v.product_attribute_value_id == self.val_f)
+        self.template_bom.bom_line_ids = [(0, 0, {
+            'product_id': fronts.id, 'product_qty': 2.0, 'bom_product_template_attribute_value_ids': [(6, 0, ptav_f.ids)]})]
+        bom = self._generate()
+        self.assertFalse(bom.td_part_ids.filtered(lambda part: part.name == 'Door'))
+        self.assertEqual(bom.td_part_count, 4)
+        products = bom.bom_line_ids.product_id
+        self.assertIn(fronts, products)
+        self.assertNotIn(self.facade, products)
+        self.assertNotIn(self.edge_f, products)
+        other = self._generate(selections=self.val_a | val_g | self.val_e04 | self.val_fit)
+        self.assertNotIn(fronts, other.bom_line_ids.product_id, "the line applies to the painted facade value only")
+        self.assertTrue(other.td_part_ids.filtered(lambda part: part.name == 'Door'))
 
     def test_custom_size_name(self):
         """A typed size reads 'Width, mm: 1800' (the placeholder value name is not shown)."""
-        attribute = self.env['product.attribute'].search([('td_dimension', '=', 'width')], limit=1)
-        self.assertTrue(attribute)
+        attribute = self.env['product.attribute'].create({
+            'name': 'Width, mm', 'create_variant': 'no_variant', 'td_dimension': 'width',
+            'value_ids': [(0, 0, {'name': 'Enter size', 'is_custom': True})]})
         value = attribute.value_ids[:1]
         tmpl = self.env['product.template'].create({
             'name': 'Dim test', 'attribute_line_ids': [(0, 0, {'attribute_id': attribute.id, 'value_ids': [(6, 0, value.ids)]})]})

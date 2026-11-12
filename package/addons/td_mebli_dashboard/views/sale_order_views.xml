@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_td_dash_list" model="ir.ui.view">
+        <field name="name">sale.order.td.dash.list</field>
+        <field name="model">sale.order</field>
+        <field name="priority">95</field>
+        <field name="arch" type="xml">
+            <list string="Orders" create="0" decoration-danger="td_delay_days &gt; 0">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="amount_untaxed" sum="Total"/>
+                <field name="commitment_date" string="Promised Date" options="{'show_time': false}"/>
+                <field name="td_forecast_date"/>
+                <field name="td_delay_days"/>
+                <field name="td_delay_reason"/>
+                <field name="td_stage" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_order_td_dash_due_list" model="ir.ui.view">
+        <field name="name">sale.order.td.dash.due.list</field>
+        <field name="model">sale.order</field>
+        <field name="priority">95</field>
+        <field name="arch" type="xml">
+            <list string="Payments due" create="0">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount_total" sum="Total"/>
+                <field name="td_dash_paid" sum="Total"/>
+                <field name="td_dash_due" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- drill-down of the margin card: the same orders and the same two totals as the card (margin ÷ revenue);
+         no actual-cost columns: most orders of the period are not finished yet (plan vs actual is the report S-11) -->
+    <record id="sale_order_td_dash_margin_list" model="ir.ui.view">
+        <field name="name">sale.order.td.dash.margin.list</field>
+        <field name="model">sale.order</field>
+        <field name="priority">95</field>
+        <field name="arch" type="xml">
+            <list string="Margin of the orders" create="0">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount_untaxed" string="Revenue" sum="Total"/>
+                <field name="margin" string="Margin" sum="Total"/>
+                <field name="td_cost_plan" sum="Total"/>
+                <field name="td_margin_plan_pct" string="Margin, %"/>
+                <field name="date_order" string="Order Date" options="{'show_time': false}" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+</odoo>

@@ -3,6 +3,7 @@ from collections import defaultdict
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 from odoo.fields import Domain
+from odoo.tools import float_compare
 
 
 class MrpBom(models.Model):
@@ -80,6 +81,10 @@ class MrpBom(models.Model):
                     "%(axis)s %(value)s mm is out of range %(low)s-%(high)s mm.",
                     axis=axis, value=dims[axis], low=low, high=high))
         template_bom = self._bom_find(product)[product]
+        template_lines = template_bom._td_applicable_lines(product, selections)
+        # ready-made fronts (painted MDF) are bought by a line of the template: the facade parts are not cut, else they
+        # would be counted twice (board under cutting + bought fronts)
+        bought_facade = bool(template_lines.filtered(lambda line: line.product_id.td_material_kind == 'facade'))
         picked = self._td_pick_components(selections)
         if not picked['body_board']:
             raise UserError(self.env._("Choose a body decor for %s.", product.display_name))
@@ -87,6 +92,8 @@ class MrpBom(models.Model):
 
         part_vals = []
         for rule in tmpl.td_part_rule_ids:
+            if bought_facade and rule.material_role == 'facade_board':
+                continue
             if rule.material_role == 'fixed':
                 material = rule.fixed_material_id
             elif rule.material_role == 'facade_board':
@@ -119,42 +126,57 @@ class MrpBom(models.Model):
             'code': self.env._("%(w)sx%(h)sx%(d)s order BoM", w=dims['width'], h=dims['height'], d=dims['depth']),
             'td_order_bom': True,
             'td_template_bom_id': template_bom.id,
+            # standard lead times of the template: the end of the manufacturing order follows from them
+            'produce_delay': template_bom.produce_delay,
+            'days_to_prepare_mo': template_bom.days_to_prepare_mo,
             'td_width': dims['width'], 'td_height': dims['height'], 'td_depth': dims['depth'],
             'td_part_ids': [(0, 0, vals) for vals in part_vals],
         })
         bom.write({
-            'bom_line_ids': bom._td_prepare_component_lines(template_bom, picked),
+            'bom_line_ids': bom._td_prepare_component_lines(template_lines, picked),
         })
         bom.write({
             'operation_ids': bom._td_prepare_operations(template_bom),
         })
         return bom
 
-    def _td_prepare_component_lines(self, template_bom, picked):
+    def _td_applicable_lines(self, product, selections):
+        """Lines of the template BoM that apply to the chosen attribute values (standard «Apply on Variants»,
+        mrp.bom.line._skip_bom_line; the furniture attributes are no_variant, so the values are passed as never values)."""
+        if not self:
+            return self.env['mrp.bom.line']
         self.ensure_one()
-        uom_m2 = self.env.ref('uom.product_uom_square_meter')
-        uom_m = self.env.ref('uom.product_uom_meter')
+        chosen = self.product_tmpl_id.attribute_line_ids.product_template_value_ids.filtered(
+            lambda ptav: ptav.product_attribute_value_id in selections)
+        return self.bom_line_ids.filtered(lambda line: not line._skip_bom_line(product, never_attribute_values=chosen))
+
+    def _td_part_quantities(self):
+        """Board (m2, with the planned waste) and edge banding (m) needed by the parts: {product: quantity}."""
+        self.ensure_one()
         area = defaultdict(float)
         edge = defaultdict(float)
         for part in self.td_part_ids:
             area[part.material_id] += part.area_m2
             if part.edge_product_id:
                 edge[part.edge_product_id] += part.edge_length_m
+        quantities = {board: round(square_meters * (1 + board.td_waste_pct / 100.0), 4)
+                      for board, square_meters in area.items()}
+        quantities.update({product: round(metres, 3) for product, metres in edge.items()})
+        return quantities
+
+    def _td_prepare_component_lines(self, template_lines, picked):
+        self.ensure_one()
+        uom_m2 = self.env.ref('uom.product_uom_square_meter')
+        uom_m = self.env.ref('uom.product_uom_meter')
         lines = []
-        for board, square_meters in area.items():
-            waste = board.td_waste_pct
+        for product, qty in self._td_part_quantities().items():
             lines.append((0, 0, {
-                'product_id': board.id,
-                'product_qty': round(square_meters * (1 + waste / 100.0), 4),
-                'product_uom_id': uom_m2.id,
-            }))
-        for product, metres in edge.items():
-            lines.append((0, 0, {
-                'product_id': product.id, 'product_qty': round(metres, 3), 'product_uom_id': uom_m.id,
+                'product_id': product.id, 'product_qty': qty,
+                'product_uom_id': (uom_m if product.td_material_kind == 'edge' else uom_m2).id,
             }))
         for fitting in picked['fittings']:
             lines.append((0, 0, {'product_id': fitting.id, 'product_qty': 1.0, 'product_uom_id': fitting.uom_id.id}))
-        for line in template_bom.bom_line_ids:
+        for line in template_lines:
             lines.append((0, 0, {
                 'product_id': line.product_id.id, 'product_qty': line.product_qty,
                 'product_uom_id': line.product_uom_id.id,
@@ -177,5 +199,42 @@ class MrpBom(models.Model):
                 'name': op.name, 'workcenter_id': op.workcenter_id.id, 'sequence': op.sequence,
                 'time_mode': 'manual', 'time_cycle_manual': duration,
                 'td_time_basis': op.td_time_basis, 'td_time_rate': op.td_time_rate,
+                'td_piece_rate': op.td_piece_rate,
             }))
         return operations
+
+
+class MrpBomLine(models.Model):
+    _inherit = 'mrp.bom.line'
+
+    # read only marker: the quantity of a board or an edge banding line of a bill of materials with parts is the sum of
+    # the parts (area plus planned waste, edge length) — see MrpBom._td_prepare_component_lines; nothing is entered here
+    td_from_parts = fields.Boolean(
+        string='From Parts', compute='_compute_td_from_parts',
+        help="Read only: the quantity of this board or edge banding is calculated from the parts of the bill of "
+             "materials (tab Parts): area of the parts plus the planned waste, length of the edged sides. Not marked "
+             "when the quantity differs from what the parts need.")
+
+    @api.depends('product_id.td_material_kind', 'product_id.td_waste_pct', 'product_qty', 'product_uom_id',
+                 'bom_id.td_part_ids.material_id', 'bom_id.td_part_ids.edge_product_id',
+                 'bom_id.td_part_ids.area_m2', 'bom_id.td_part_ids.edge_length_m')
+    def _compute_td_from_parts(self):
+        """Marked when the line is a board or an edge banding of the parts AND its quantity is the one the parts need
+        (a line edited by hand, or parts added later without recalculation, is not marked)."""
+        uom_m2 = self.env.ref('uom.product_uom_square_meter')
+        uom_m = self.env.ref('uom.product_uom_meter')
+        needed_by_bom = {}
+        for line in self:
+            line.td_from_parts = False
+            bom = line.bom_id
+            kind = line.product_id.td_material_kind
+            if not bom.td_part_ids or kind not in ('board', 'edge'):
+                continue
+            if bom not in needed_by_bom:
+                needed_by_bom[bom] = bom._td_part_quantities()
+            needed = needed_by_bom[bom].get(line.product_id)
+            if needed is None:
+                continue
+            uom = uom_m if kind == 'edge' else uom_m2
+            qty = line.product_uom_id._compute_quantity(line.product_qty, uom) if line.product_uom_id else line.product_qty
+            line.td_from_parts = float_compare(qty, needed, precision_digits=3) == 0

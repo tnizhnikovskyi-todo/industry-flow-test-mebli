@@ -7,6 +7,7 @@ written by different roles. Everything is fictional: company, people, customers,
 It uses only public ORM methods of the packages.
 """
 import base64
+import math
 import random
 from datetime import timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -14,18 +15,21 @@ from zoneinfo import ZoneInfo
 from odoo import fields
 from odoo.tools import file_open
 
+from .dates import seed_dates
 from .scenario import make_order
 
 IMG = 'td_mebli_demo/static/img/'
 
 COMPANY = {
     'name': 'Меблева фабрика «Демо»', 'street': 'вул. Заводська, 12', 'city': 'Київ', 'zip': '02000',
-    'phone': '+380 44 555 01 00', 'email': 'office@demo-fabryka.example', 'website': 'https://demo-fabryka.example',
+    'phone': '+380 00 000 00 01', 'email': 'office@demo-fabryka.example', 'website': 'https://demo-fabryka.example',
     'primary_color': '#3d2b1f', 'secondary_color': '#c9a06a',
 }
 
 # login, name, job, avatar, groups (xmlids)
 USERS = [
+    # the salon manager reads the purchases of her orders read only (td_mebli_sale: access rule «purchases of my orders»);
+    # no Purchase group: the smart button of sale_purchase stays with the buyers, as in the standard
     ('salon', 'Олена Мартинюк', 'Менеджер салону', 'avatar_salon', ['sales_team.group_sale_salesman']),
     ('salon2', 'Роман Лисенко', 'Менеджер салону', 'avatar_salon2', ['sales_team.group_sale_salesman']),
     ('salon3', 'Світлана Прокопенко', 'Менеджер салону', 'avatar_salon3', ['sales_team.group_sale_salesman']),
@@ -34,13 +38,19 @@ USERS = [
     ('chief', 'Ігор Савчук', 'Начальник виробництва', 'avatar_chief',
      ['mrp.group_mrp_manager', 'sales_team.group_sale_salesman_all_leads', 'stock.group_stock_user']),
     ('store', 'Марія Гнатюк', 'Комірник', 'avatar_store',
-     ['stock.group_stock_manager', 'mrp.group_mrp_user']),
+     ['stock.group_stock_manager', 'mrp.group_mrp_user', 'purchase.group_purchase_user', 'stock.group_stock_user']),
     ('fin', 'Наталія Бондар', 'Фінансист', 'avatar_fin',
      ['sales_team.group_sale_manager', 'account.group_account_user', 'stock.group_stock_user',
       'td_mebli_dashboard.group_td_mebli_director']),
     ('owner', 'Віталій Остапенко', 'Власник · директор фабрики', 'avatar_owner',
      ['sales_team.group_sale_manager', 'mrp.group_mrp_manager', 'account.group_account_user', 'stock.group_stock_user',
-      'td_mebli_dashboard.group_td_mebli_director']),
+      'purchase.group_purchase_manager', 'project.group_project_manager', 'td_mebli_dashboard.group_td_mebli_director']),
+    # full scope (A-21, wave 1): measurer, installers, the shared tablet of the shop (no picture: initials avatar)
+    ('measure', 'Тетяна Олійник', 'Замірник', None, ['sales_team.group_sale_salesman_all_leads']),
+    ('fitter', 'Микола Демченко', 'Бригадир монтажників', None,
+     ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
+    ('fitter2', 'Іван Кушнір', 'Монтажник', None, ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
+    ('tablet', 'Планшет цеху', 'Планшет дільниць', None, ['mrp.group_mrp_user']),
 ]
 
 # name, company type, city, street: end customers of the factory salon (people and small businesses)
@@ -107,6 +117,22 @@ NOTES = {
 
 
 _KYIV = ZoneInfo('Europe/Kyiv')
+
+
+def _section_calendar(env, center, weekly_hours):
+    """A standard working calendar of a section: Mon-Fri from 8:00, the same share of the day every day."""
+    per_day = weekly_hours / 5.0
+    calendar = env['resource.calendar'].create({
+        'name': f'{center.name}: {weekly_hours} год на тиждень', 'tz': 'Europe/Kyiv',
+        'company_id': center.company_id.id or env.company.id})
+    # the default attendances of a new calendar (company calendar) are replaced, not added to
+    calendar.write({
+        'attendance_ids': [(5, 0, 0)] + [
+            (0, 0, {'name': f'{center.name} {day + 1}', 'dayofweek': str(day), 'hour_from': 8.0, 'hour_to': 8.0 + per_day,
+                    'day_period': 'morning'})
+            for day in range(5)],
+    })
+    return calendar
 
 
 def _work(when, rnd=None):
@@ -230,7 +256,7 @@ def _payment_terms(env):
             'name': f'Prepayment {percent}%',
             'line_ids': [(0, 0, {'value': 'percent', 'value_amount': percent, 'delay_type': 'days_after', 'nb_days': 0}),
                          (0, 0, {'value': 'percent', 'value_amount': 100 - percent, 'delay_type': 'days_after', 'nb_days': 14})]})
-        term.with_context(lang='uk_UA').name = f'Передоплата {percent}%, решта перед доставкою'
+        term.with_context(lang='uk_UA').name = f'Передоплата {percent}%'  # the rest before delivery: the term lines say it
         terms[percent] = term
     terms[0] = env.ref('account.account_payment_term_immediate')
     return terms
@@ -240,9 +266,8 @@ def _brand(env):
     company = env.company
     company.write({**COMPANY, 'logo': _binary('logo.png'), 'country_id': env.ref('base.ua').id})
     company.partner_id.write({'image_1920': _binary('logo.png')})
-    company.write({'company_registry': '41234567', 'vat': 'UA412345678901'})
-    env['res.partner.bank'].create({'acc_number': 'UA21 3223 1300 0002 6007 2335 6600 1', 'partner_id': company.partner_id.id,
-                                    'bank_id': env['res.bank'].create({'name': 'Банк «Приклад»', 'bic': 'DEMOUA2K'}).id})
+    # registry code of a fictional format (no real EDRPOU check passes), no bank account (demo-data-rules.md)
+    company.write({'company_registry': 'ДЕМО-0001'})
     env.ref('base.user_admin').write({'lang': 'uk_UA', 'tz': 'Europe/Kyiv'})
 
 
@@ -251,7 +276,8 @@ def _users(env):
     for login, name, job, avatar, groups in USERS:
         Users.create({
             'name': name, 'login': f'{login}@demo-fabryka.example', 'password': 'demo', 'lang': 'uk_UA',
-            'tz': 'Europe/Kyiv', 'image_1920': _binary(avatar + '.png'), 'email': f'{login}@demo-fabryka.example',
+            'tz': 'Europe/Kyiv', 'image_1920': _binary(avatar + '.png') if avatar else False,
+            'email': f'{login}@demo-fabryka.example',
             'group_ids': [(6, 0, [env.ref('base.group_user').id] + [env.ref(g).id for g in groups])],
             'notification_type': 'inbox', 'odoobot_state': 'disabled',  # no OdooBot onboarding window on the first login
         })
@@ -272,8 +298,8 @@ _TR.update({'ж': 'zh', 'х': 'kh', 'ч': 'ch', 'ш': 'sh', 'щ': 'shch', 'ю': 
 
 
 def _phone(index, city):
-    code = _CITY_CODE.get(city, '44')
-    return f'+380 {code} {(index * 37 + 214) % 900 + 100:03d} {(index * 53 + 17) % 90 + 10:02d} {(index * 29 + 41) % 90 + 10:02d}'
+    # fictional numbers of the format +380 00 000 00 NN (demo-data-rules.md): no real subscriber is reached
+    return f'+380 00 000 00 {(index + 10) % 100:02d}'
 
 
 def _email(name, kind, index):
@@ -357,7 +383,8 @@ def _invoice(env, order, when, percent):
     invoice.write({'invoice_date': when.date(), 'invoice_date_due': when.date()})
     invoice.action_post()
     register = env['account.payment.register'].with_context(
-        active_model='account.move', active_ids=invoice.ids).create({'payment_date': when.date()})
+        active_model='account.move', active_ids=invoice.ids).create(
+        {'payment_date': when.date(), 'amount': sum(invoice.mapped('amount_residual'))})  # all installments, not the first
     register._create_payments()
 
 
@@ -405,6 +432,10 @@ def seed_showcase(env):
     now = fields.Datetime.now()
     if env['sale.order'].search_count([('state', '!=', 'cancel')], limit=1):
         return {}
+    # the company currency is UAH before the first document (the post-init hook may run before the chart of accounts
+    # is loaded, which sets USD): without it the dashboard and the payments are in dollars
+    from .hooks import _set_company_currency
+    _set_company_currency(env)
     _localize(env)
     _brand(env)
     _users(env)
@@ -417,6 +448,8 @@ def seed_showcase(env):
     _stock(env, wardrobes)
     people = {login: _user(env, login) for login, *_ in USERS}
 
+    from .full import _installation_project, seed_full
+    _project, install = _installation_project(env)
     orders = {'done': env['sale.order'], 'progress': env['sale.order'], 'confirmed': env['sale.order']}
     prepay, drafts = [], env['sale.order']
     for product, qty, dims, body, facade, edge, fitting, stage, days, customer, seller, discount, advance in ORDERS + bulk:
@@ -434,6 +467,8 @@ def seed_showcase(env):
             discount = max(0.0, round((1 - line.purchase_price / (line.price_unit * (1 - target))) * 100.0, 1))
         if discount:
             order.order_line.discount = discount
+        # delivery and installation are in the price of the order; the service line makes the visit task (sale_project)
+        order.order_line = [(0, 0, {'product_id': install.id, 'product_uom_qty': 1.0})]
         if stage == 'sent':
             order.action_quotation_sent()
             drafts |= order.with_env(env)
@@ -506,13 +541,14 @@ def seed_showcase(env):
     # one order in production is late: the deadline has passed
     late = orders['progress'][1].mrp_production_ids
     # invoices and payments: delivered orders are paid in full, many orders in work have a prepayment
-    for order in orders['done']:
-        _deliver(order)
-        _invoice(env, order, order.date_order + timedelta(days=rnd.randint(8, 12)), 0)
+    # the prepayment comes first, the final invoice of a delivered order deducts it (standard down payment)
     for order, percent in prepay:
         _invoice(env, order, order.date_order + timedelta(hours=26), percent)
         _note(order, people['fin'], f'Передоплату {percent}% отримано, замовлення можна запускати.',
               order.date_order + timedelta(hours=27))
+    for order in orders['done']:
+        _deliver(order)
+        _invoice(env, order, order.date_order + timedelta(days=rnd.randint(8, 12)), 0)
     # work waiting for cutting: planned work orders, so that the work centers show their load
     waiting = orders['confirmed'].mrp_production_ids
     waiting.button_plan()
@@ -565,13 +601,22 @@ def seed_showcase(env):
                       ('prod_kitchen', 'Фасади лише з МДФ; кромка ПВХ 2 мм обов\'язкова для відкритих торців.'),
                       ('prod_dresser', 'Стандартна висота цоколя 100 мм, регульовані опори в комплекті.')):
         _note(env.ref(f'td_mebli_demo.{key}'), people['tech'], text, now - timedelta(days=rnd.randint(20, 35)))
-    # section load: the capacity of the work centers is set so that the show has a believable picture (one bottleneck)
+    # section load: the working calendar of each section (standard resource.calendar) gives the hours the section has for
+    # these orders in a week; they are set so that the show has a believable picture (one bottleneck). The calendars are
+    # given after the work orders are planned, so the dates of the order book do not change.
     for code, percent in {'CUT': 74, 'EDG': 97, 'DRL': 83, 'ASM': 118}.items():
         center = env['mrp.workcenter'].search([('code', '=', code)], limit=1)
-        hours = sum(env['mrp.workorder'].search([('workcenter_id', '=', center.id), ('state', 'not in', ('done', 'cancel'))])
-                    .mapped('duration_expected')) / 60.0
+        hours = center.workcenter_load / 60.0 if center else 0.0
         if center and hours:
-            center.td_capacity_hours = max(1, round(hours / percent * 100.0))
+            weekly = max(1, round(hours / percent * 100.0))
+            # more than one shift of 40 h: parallel places of the section (standard capacity without a product)
+            parallel = max(1, math.ceil(weekly / 40.0))
+            if parallel > 1:
+                center.capacity_ids = [(5, 0, 0), (0, 0, {'product_uom_id': env.ref('uom.product_uom_unit').id,
+                                                          'capacity': parallel})]
+            center.resource_calendar_id = _section_calendar(env, center, round(weekly / parallel, 1))
+    show = seed_dates(env, people, partners, rnd, install)
+    seed_full(env, people, partners, orders, show, rnd)
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
     env.cr.execute("""UPDATE mail_message SET date = date - interval '1 day' WHERE date >= (date_trunc('day', now() at time zone 'Europe/Kyiv') - interval '1 day') at time zone 'Europe/Kyiv'

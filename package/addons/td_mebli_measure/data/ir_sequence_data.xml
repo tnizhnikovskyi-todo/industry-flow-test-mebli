@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_td_mebli_measure" model="ir.sequence">
+        <field name="name">Measurement Sheet</field>
+        <field name="code">td.mebli.measure</field>
+        <field name="prefix">ЗМ-</field>
+        <field name="padding">4</field>
+    </record>
+</odoo>

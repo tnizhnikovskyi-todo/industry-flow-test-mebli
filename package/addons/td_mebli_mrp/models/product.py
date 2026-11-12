@@ -20,8 +20,10 @@ class ProductTemplate(models.Model):
     td_part_rule_ids = fields.One2many('td.mebli.part.rule', 'product_tmpl_id', string='Part Rules', copy=True)
 
     td_material_kind = fields.Selection(
-        [('board', 'Board'), ('edge', 'Edge banding'), ('fitting', 'Fitting')],
-        string='Material Kind')
+        [('board', 'Board'), ('edge', 'Edge banding'), ('fitting', 'Fitting'), ('facade', 'Ready-made facade')],
+        string='Material Kind',
+        help="Ready-made facade: fronts bought or made outside (e.g. painted MDF); when such a line of the template bill of "
+             "materials applies to the chosen attribute values, the facade parts are not cut from board.")
     td_sheet_length_mm = fields.Integer(string='Sheet Length, mm')
     td_sheet_width_mm = fields.Integer(string='Sheet Width, mm')
     td_thickness_mm = fields.Float(string='Thickness, mm')

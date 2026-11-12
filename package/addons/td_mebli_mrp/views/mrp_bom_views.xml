@@ -20,6 +20,21 @@
                 <!-- an order BoM always makes one piece: the unit next to the quantity is noise -->
                 <attribute name="invisible">td_order_bom</attribute>
             </xpath>
+            <!-- board and edge banding lines are calculated from the parts: marked, nothing new to enter -->
+            <xpath expr="//page[@name='components']/field[@name='bom_line_ids']" position="before">
+                <div class="alert alert-info py-2 mb-2" role="status" invisible="not td_part_ids">
+                    <i class="fa fa-calculator me-1" title="From parts"/>
+                    Board and edge banding marked «From parts» are calculated from the parts (tab Parts): area plus
+                    planned waste, length of the edged sides.
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']/list/field[@name='product_qty']" position="attributes">
+                <attribute name="decoration-info">td_from_parts</attribute>
+                <attribute name="decoration-bf">td_from_parts</attribute>
+            </xpath>
+            <xpath expr="//field[@name='bom_line_ids']/list/field[@name='product_qty']" position="after">
+                <field name="td_from_parts" string="From parts" invisible="not td_from_parts" optional="show" width="110px"/>
+            </xpath>
             <xpath expr="//notebook" position="inside">
                 <page string="Parts" name="td_parts" invisible="not td_order_bom">
                     <group>
@@ -56,6 +71,8 @@
             <field name="workcenter_id" position="after">
                 <field name="td_time_basis" optional="show"/>
                 <field name="td_time_rate" optional="show"/>
+                <field name="td_piece_rate" optional="show"/>
+                <field name="td_currency_id" column_invisible="True"/>
             </field>
         </field>
     </record>
@@ -68,6 +85,8 @@
             <field name="workcenter_id" position="after">
                 <field name="td_time_basis"/>
                 <field name="td_time_rate" invisible="td_time_basis == 'fixed'"/>
+                <field name="td_piece_rate"/>
+                <field name="td_currency_id" invisible="1"/>
             </field>
         </field>
     </record>

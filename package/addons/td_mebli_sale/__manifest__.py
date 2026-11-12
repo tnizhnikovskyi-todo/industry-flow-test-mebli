@@ -5,12 +5,15 @@
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['td_mebli_mrp', 'sale_mrp', 'sale_margin'],
+    'depends': ['td_mebli_mrp', 'sale_mrp', 'sale_margin', 'sale_purchase_stock', 'purchase_mrp'],
     'data': [
         'security/ir.model.access.csv',
+        'security/purchase_security.xml',
         'views/sale_order_views.xml',
         'views/mrp_bom_views.xml',
         'views/order_cost_report_views.xml',
+        'views/sale_order_dates_views.xml',
+        'views/order_change_views.xml',
     ],
     'assets': {
         'web.assets_tests': [

@@ -1,0 +1,7 @@
+# DEPENDS.yaml — залежності артефактів галузі «меблі» (перерахунок N-07, check_stale.py).
+# Схема: flow-research/references/templates/DEPENDS.yaml — `artifacts: {<шлях від docs/industries/mebli/>: {depends_on: [...], sha: <коміт|null>}}`.
+# Файл створено кроком A-21 (спроба 2): записи інших артефактів сюди не вносились (їх ведуть A-03b/A-20/A-20c).
+artifacts:
+  prototype-real/:
+    depends_on: [research/FUNCTIONAL-MAP.md, research/BOX.md, research/SALES.md, research/REUSE.md, OWNER-INTAKE.md]
+    sha: f54c6f8  # зразок (sample: true); runner ставить `git rev-parse HEAD` після коміту результату A-21

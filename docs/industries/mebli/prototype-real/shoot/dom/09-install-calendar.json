@@ -1,0 +1,26 @@
+{
+ "screen": "09-install-calendar",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Стадія"
+  },
+  {
+   "kind": "label",
+   "text": "Невизначений"
+  },
+  {
+   "kind": "label",
+   "text": "Проєкт Проєкти Завдання Монтаж Звітність 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Календар монтажів"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Календар монтажів"
+  }
+ ]
+}

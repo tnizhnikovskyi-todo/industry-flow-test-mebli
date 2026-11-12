@@ -1,0 +1,133 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_claim
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 14:37+0000\n"
+"PO-Revision-Date: 2026-11-12 14:37+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_claim_order_id
+msgid "Claimed Order"
+msgstr "Замовлення, на яке скарга"
+
+#. module: td_mebli_claim
+#: model:ir.actions.act_window,name:td_mebli_claim.td_mebli_claim_action
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__td_claim_count
+#: model:ir.ui.menu,name:td_mebli_claim.td_mebli_claim_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_order_form_td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+msgid "Claims"
+msgstr "Рекламації"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__td_claim_ids
+msgid "Claims of the Order"
+msgstr "Рекламації замовлення"
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+msgid "Claims on Orders"
+msgstr "Рекламації на замовлення"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_days_open
+msgid "Days Open"
+msgstr "Днів відкрито"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Назва для відображення"
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+msgid "Factory Pays"
+msgstr "За рахунок фабрики"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__id
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_overdue
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
+msgid "Overdue"
+msgstr "Прострочено"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_part_id
+msgid "Part"
+msgstr "Деталь"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_photo
+msgid "Photo"
+msgstr "Фото"
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+msgid "Reason"
+msgstr "Причина"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_remake_production_id
+msgid "Remake"
+msgstr "Повторне виготовлення"
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "Remake in Production"
+msgstr "Повторне виготовлення"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Remake started: %s"
+msgstr "Запущено повторне виготовлення: %s"
+
+#. module: td_mebli_claim
+#: model:ir.model,name:td_mebli_claim.model_repair_order
+msgid "Repair Order"
+msgstr "Замовлення на ремонт"
+
+#. module: td_mebli_claim
+#: model:ir.model,name:td_mebli_claim.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_claim_order_id
+msgid ""
+"The furniture order the customer complains about (the standard «Sale Order» "
+"of a repair is the order the repair was sold from, a different thing)."
+msgstr ""
+"Замовлення меблів, на яке скаржиться клієнт (стандартне «Замовлення на "
+"продаж» ремонту — це замовлення, з якого продано ремонт, інше)."
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid ""
+"The product of the claim has no bill of materials: it is bought, not made. "
+"Order it again in Purchase."
+msgstr ""
+"Товар рекламації не має специфікації: його купують, а не виготовляють. "
+"Замовте повторно в Закупівлях."
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
+msgid "days"
+msgstr "дн."

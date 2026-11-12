@@ -1,0 +1,375 @@
+{
+ "screen": "08-quality",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Дата"
+  },
+  {
+   "kind": "header",
+   "text": "Виробниче замовлення"
+  },
+  {
+   "kind": "header",
+   "text": "Дільниця"
+  },
+  {
+   "kind": "header",
+   "text": "Крок якості"
+  },
+  {
+   "kind": "header",
+   "text": "Працівник"
+  },
+  {
+   "kind": "header",
+   "text": "Результат"
+  },
+  {
+   "kind": "header",
+   "text": "Фото"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Перевірки якості 1-51 / 51"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Перевірки якості"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "12 лист., 20:34",
+   "label": "create_date"
+  },
+  {
+   "kind": "cell",
+   "text": "WH/MO/00097",
+   "label": "production_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Крайкування",
+   "label": "workcenter_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Кромка без сколів і щілин, фото торця",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Василь Ткач",
+   "label": "employee_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Пройдено",
+   "label": "result"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "photo"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "12 лист., 20:34",
+   "label": "create_date"
+  },
+  {
+   "kind": "cell",
+   "text": "WH/MO/00100",
+   "label": "production_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Крайкування",
+   "label": "workcenter_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Кромка без сколів і щілин, фото торця",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Василь Ткач",
+   "label": "employee_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Пройдено",
+   "label": "result"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "photo"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "12 лист., 20:34",
+   "label": "create_date"
+  },
+  {
+   "kind": "cell",
+   "text": "WH/MO/00096",
+   "label": "production_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Крайкування",
+   "label": "workcenter_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Кромка без сколів і щілин, фото торця",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Василь Ткач",
+   "label": "employee_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Пройдено",
+   "label": "result"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "photo"
+  }
+ ]
+}

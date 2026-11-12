@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Installation act: visible as its visit (the standard task visibility, rule project.task_visibility_rule);
+         the crew of the visit edits a draft act; a signed act is read only for everybody (the system signs it) -->
+    <record id="td_mebli_install_act_rule_user_read" model="ir.rule">
+        <field name="name">Installation act: as visible as its visit</field>
+        <field name="model_id" ref="model_td_mebli_install_act"/>
+        <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('task_id.project_id', '!=', False),
+                    '|',
+                        ('task_id.project_id.privacy_visibility', 'in', ['employees', 'portal']),
+                        ('task_id.project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('task_id.message_partner_ids', 'in', [user.partner_id.id]),
+                    ('task_id.user_ids', 'in', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user')), (4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_install_act_rule_crew_write" model="ir.rule">
+        <field name="name">Installation act: the crew of the visit edits a draft act</field>
+        <field name="model_id" ref="model_td_mebli_install_act"/>
+        <field name="domain_force">[('state', '=', 'draft'), ('task_id.user_ids', 'in', user.id)]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="td_mebli_install_act_rule_manager_read" model="ir.rule">
+        <field name="name">Installation act: the project manager sees all acts</field>
+        <field name="model_id" ref="model_td_mebli_install_act"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_manager'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_install_act_rule_manager_write" model="ir.rule">
+        <field name="name">Installation act: the project manager edits draft acts only</field>
+        <field name="model_id" ref="model_td_mebli_install_act"/>
+        <field name="domain_force">[('state', '=', 'draft')]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_manager'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="td_mebli_install_act_rule_sale_all" model="ir.rule">
+        <field name="name">Installation act: sales managers and «all documents» salespeople read all acts</field>
+        <field name="model_id" ref="model_td_mebli_install_act"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- defects are read as their act: the same visibility as the act (the rules of the act do not cover its lines) -->
+    <record id="td_mebli_install_defect_rule_user_read" model="ir.rule">
+        <field name="name">Defect of an installation act: as visible as its act</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('act_id.task_id.project_id', '!=', False),
+                    '|',
+                        ('act_id.task_id.project_id.privacy_visibility', 'in', ['employees', 'portal']),
+                        ('act_id.task_id.project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('act_id.task_id.message_partner_ids', 'in', [user.partner_id.id]),
+                    ('act_id.task_id.user_ids', 'in', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user')), (4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_install_defect_rule_all_read" model="ir.rule">
+        <field name="name">Defect of an installation act: project managers and «all documents» salespeople read all</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_manager')), (4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <!-- defects follow their act: the crew edits them while the act is a draft -->
+    <record id="td_mebli_install_defect_rule_write" model="ir.rule">
+        <field name="name">Defect of an installation act: editable while the act is a draft</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="domain_force">[('act_id.state', '=', 'draft')]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- accruals: the companies of the user (multi-company) -->
+    <record id="td_mebli_accrual_rule_company" model="ir.rule">
+        <field name="name">Accrual: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_accrual"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

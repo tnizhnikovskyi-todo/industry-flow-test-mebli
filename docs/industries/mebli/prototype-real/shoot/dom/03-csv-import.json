@@ -1,0 +1,451 @@
+{
+ "screen": "03-csv-import",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Компонент"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": "З деталей"
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Товар"
+  },
+  {
+   "kind": "label",
+   "text": "Варіант товару?"
+  },
+  {
+   "kind": "label",
+   "text": "Кількість?"
+  },
+  {
+   "kind": "label",
+   "text": "Позначення"
+  },
+  {
+   "kind": "label",
+   "text": "Тип специфікації"
+  },
+  {
+   "kind": "label",
+   "text": "Виготовляти цей товар"
+  },
+  {
+   "kind": "label",
+   "text": "Комплект"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Специфікація"
+  },
+  {
+   "kind": "label",
+   "text": "Файл CSV"
+  },
+  {
+   "kind": "label",
+   "text": "Розпізнані колонки"
+  },
+  {
+   "kind": "label",
+   "text": "Деталей у файлі"
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Специфікації S00123/391 600x720x560: Кухонний модуль нижній 600 Виконання операцій Огляд специфікації Замовлення 1 / 1"
+  },
+  {
+   "kind": "label",
+   "text": "Імпорт деталей"
+  },
+  {
+   "kind": "button",
+   "text": "Компоненти"
+  },
+  {
+   "kind": "button",
+   "text": "Операції"
+  },
+  {
+   "kind": "button",
+   "text": "Побічні товари"
+  },
+  {
+   "kind": "button",
+   "text": "Інші"
+  },
+  {
+   "kind": "button",
+   "text": "Деталі"
+  },
+  {
+   "kind": "button",
+   "text": "Імпортувати"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Специфікації"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00123/391 600x720x560: Кухонний модуль нижній 600"
+  },
+  {
+   "kind": "field",
+   "text": "Виконання операцій",
+   "label": "",
+   "name": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "600",
+   "label": "td_width",
+   "name": "td_width",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "720",
+   "label": "td_height",
+   "name": "td_height",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "560",
+   "label": "td_depth",
+   "name": "td_depth",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Кухонний модуль нижній 600",
+   "label": "Товар",
+   "name": "product_tmpl_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Кухонний модуль нижній 600",
+   "label": "Варіант товару?",
+   "name": "product_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1,000",
+   "label": "Кількість?",
+   "name": "product_qty",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "S00123/391 600x720x560",
+   "label": "Позначення",
+   "name": "code",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "on",
+   "label": "Виготовляти цей товар",
+   "name": "type",
+   "required": true
+  },
+  {
+   "kind": "flag",
+   "text": "true",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "S00123/391 600x720x560: Кухонний модуль нижній 600",
+   "label": "Специфікація",
+   "name": "bom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "kitchen-spec.csv",
+   "label": "Файл CSV",
+   "name": "file",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "«Деталь» → деталь «Довжина» → довжина, мм «Ширина» → ширина, мм «К-сть» → кількість «Матеріал» → матеріал «Кромка довж» → кромка довгих сторін «Кромка шир» → кромка коротких сторін",
+   "label": "Розпізнані колонки",
+   "name": "mapping",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "4",
+   "label": "Деталей у файлі",
+   "name": "preview_count",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "[ЛДСП-БЛ16] ЛДСП Білий гладкий 16 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "attachments_count"
+  },
+  {
+   "kind": "cell",
+   "text": "1,615",
+   "label": "product_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "[ДВП-3] ДВП біла 3 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "attachments_count"
+  },
+  {
+   "kind": "cell",
+   "text": "0,440",
+   "label": "product_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "[КР-БЛ-2] Кромка ПВХ Білий гладкий 2×22 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "attachments_count"
+  },
+  {
+   "kind": "cell",
+   "text": "2,688",
+   "label": "product_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "м",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

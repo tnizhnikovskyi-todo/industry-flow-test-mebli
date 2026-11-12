@@ -1,0 +1,157 @@
+{
+ "screen": "m3-act",
+ "viewport": "mobile",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Виїзд"
+  },
+  {
+   "kind": "label",
+   "text": "Замовлення?"
+  },
+  {
+   "kind": "label",
+   "text": "Вид"
+  },
+  {
+   "kind": "label",
+   "text": "Бригада"
+  },
+  {
+   "kind": "label",
+   "text": "Бригаді, %?"
+  },
+  {
+   "kind": "label",
+   "text": "Сума бригаді"
+  },
+  {
+   "kind": "label",
+   "text": "У фотоархіві?"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Підписано"
+  },
+  {
+   "kind": "label",
+   "text": "Фото"
+  },
+  {
+   "kind": "label",
+   "text": "Чек-лист"
+  },
+  {
+   "kind": "label",
+   "text": "АКТ-0002 2"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "button",
+   "text": "Недоліки"
+  },
+  {
+   "kind": "button",
+   "text": "Фото й чек-лист"
+  },
+  {
+   "kind": "button",
+   "text": "Підпис"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "АКТ-0002"
+  },
+  {
+   "kind": "field",
+   "text": "Підписано",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "АКТ-0002",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "S00057: монтаж",
+   "label": "Виїзд",
+   "name": "task_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "S00057",
+   "label": "Замовлення?",
+   "name": "order_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Фінальний акт",
+   "label": "Вид",
+   "name": "kind",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Іван Кушнір Микола Демченко",
+   "label": "Бригада",
+   "name": "crew_user_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "2,00",
+   "label": "Бригаді, %?",
+   "name": "crew_pct",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "438,73 ₴",
+   "label": "Сума бригаді",
+   "name": "crew_amount",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "У фотоархіві?",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "19 жовт., 11:40",
+   "label": "Підписано",
+   "name": "signed_on",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Недолік: дверка.png PNG Кухня після монтажу.png PNG",
+   "label": "Фото",
+   "name": "photo_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Фасади відрегульовано Зазори рівні Техніку підключає майстер клієнта Робоче місце прибрано",
+   "label": "Чек-лист",
+   "name": "checklist",
+   "required": false
+  }
+ ]
+}

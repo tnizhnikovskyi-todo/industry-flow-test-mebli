@@ -1,0 +1,112 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_cost
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 14:38+0000\n"
+"PO-Revision-Date: 2026-11-12 14:38+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_fact
+msgid "Actual Cost"
+msgstr "Фактична собівартість"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_margin_fact
+msgid "Actual Margin"
+msgstr "Фактична маржа"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_margin_fact_pct
+msgid "Actual Margin, %"
+msgstr "Фактична маржа, %"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_material
+msgid "Actual Materials"
+msgstr "Матеріали (факт)"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_work
+msgid "Actual Work"
+msgstr "Роботи (факт)"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_deviation_pct
+msgid "Cost Deviation, %"
+msgstr "Відхилення собівартості, %"
+
+#. module: td_mebli_cost
+#: model:ir.actions.act_window,name:td_mebli_cost.sale_order_td_cost_fact_action
+#: model:ir.ui.menu,name:td_mebli_cost.sale_order_td_cost_fact_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Cost: Plan vs Actual"
+msgstr "Собівартість: план і факт"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Назва для відображення"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.actions.act_window,help:td_mebli_cost.sale_order_td_cost_fact_action
+msgid ""
+"Orders with finished production: planned cost of the quotation against the "
+"consumed materials and the real hours."
+msgstr ""
+"Замовлення із завершеним виробництвом: планова собівартість пропозиції проти"
+" спожитих матеріалів і фактичних годин."
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.view_order_form_td_mebli_cost
+msgid "Plan vs Actual"
+msgstr "План і факт"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_plan
+msgid "Planned Cost"
+msgstr "Планова собівартість"
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Planned Margin"
+msgstr "Маржа план"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_margin_plan_pct
+msgid "Planned Margin, %"
+msgstr "Планова маржа, %"
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_has_fact
+msgid "Production Finished"
+msgstr "Виробництво завершено"
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Revenue"
+msgstr "Виручка"
+
+#. module: td_mebli_cost
+#: model:ir.model,name:td_mebli_cost.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Total"
+msgstr "Разом"

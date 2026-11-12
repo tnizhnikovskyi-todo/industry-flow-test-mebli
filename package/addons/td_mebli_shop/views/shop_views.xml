@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- tablet of a section: the standard work orders with the buttons of the tablet -->
+    <record id="mrp_workorder_td_tablet_list" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.tablet.list</field>
+        <field name="model">mrp.workorder</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Shop Floor Tablet" create="0" decoration-info="state == 'progress'" decoration-muted="state == 'done'"
+                  decoration-warning="td_pause_reason">
+                <field name="workcenter_id"/>
+                <field name="production_id"/>
+                <field name="name"/>
+                <field name="td_expected_hours" string="Plan, h" sum="Total"/>
+                <field name="state" widget="badge" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
+                <field name="td_worker_names"/>
+                <field name="td_pause_reason"/>
+                <field name="td_quality_state" widget="badge" decoration-success="td_quality_state == 'pass'"
+                       decoration-danger="td_quality_state == 'fail'" decoration-warning="td_quality_state == 'todo'"
+                       invisible="td_quality_state == 'none'"/>
+                <field name="td_part_count" column_invisible="True"/>
+                <button name="action_td_parts" type="object" string="Parts" icon="fa-th-list"
+                        invisible="not td_part_count"/>
+                <button name="action_td_kiosk" type="object" string="Taken" icon="fa-play" class="btn-primary"
+                        context="{'td_action': 'start'}" invisible="state in ('done', 'cancel', 'progress') and not td_pause_reason"/>
+                <button name="action_td_kiosk" type="object" string="Pause" icon="fa-pause"
+                        context="{'td_action': 'pause'}" invisible="state != 'progress' or td_pause_reason"/>
+                <button name="action_td_kiosk" type="object" string="Quality" icon="fa-camera"
+                        context="{'td_action': 'quality'}" invisible="td_quality_state in ('none', 'pass') or state in ('done', 'cancel')"/>
+                <button name="action_td_kiosk" type="object" string="Done" icon="fa-check" class="btn-success"
+                        context="{'td_action': 'done'}" invisible="state != 'progress'"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- the same tablet on a phone (390 px): a card per work order with the worker and the buttons
+         (the action opens it first on small screens: mobile_view_mode = kanban by default) -->
+    <record id="mrp_workorder_td_tablet_kanban" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.tablet.kanban</field>
+        <field name="model">mrp.workorder</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <kanban create="0" class="o_td_tablet_kanban">
+                <field name="state"/>
+                <field name="td_pause_reason"/>
+                <field name="td_quality_state"/>
+                <field name="td_part_count"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-grow-1">
+                                <field name="production_id" class="fw-bold"/>
+                                <div><field name="name"/></div>
+                            </div>
+                            <field name="state" widget="badge" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 text-muted small">
+                            <span><span>Plan, h</span> <field name="td_expected_hours"/></span>
+                            <button name="action_td_parts" type="object" class="btn btn-link btn-sm p-0 align-baseline td_parts_link"
+                                    invisible="not td_part_count">
+                                <i class="fa fa-th-list me-1" title="Parts"/><span>Parts:</span> <field name="td_part_count"/>
+                            </button>
+                            <field name="td_quality_state" widget="badge" decoration-success="td_quality_state == 'pass'"
+                                   decoration-danger="td_quality_state == 'fail'" decoration-warning="td_quality_state == 'todo'"
+                                   invisible="td_quality_state == 'none'"/>
+                        </div>
+                        <div class="td_workers" invisible="not td_worker_names"><i class="fa fa-user me-1" title="Worker"/><field name="td_worker_names"/></div>
+                        <div class="text-warning" invisible="not td_pause_reason"><i class="fa fa-pause me-1" title="Pause"/><field name="td_pause_reason"/></div>
+                        <footer class="d-flex flex-wrap gap-1 pt-1">
+                            <button name="action_td_kiosk" type="object" string="Taken" icon="fa-play" class="btn btn-primary"
+                                    context="{'td_action': 'start'}" invisible="state in ('done', 'cancel', 'progress') and not td_pause_reason"/>
+                            <button name="action_td_kiosk" type="object" string="Pause" icon="fa-pause" class="btn btn-secondary"
+                                    context="{'td_action': 'pause'}" invisible="state != 'progress' or td_pause_reason"/>
+                            <button name="action_td_kiosk" type="object" string="Quality" icon="fa-camera" class="btn btn-secondary"
+                                    context="{'td_action': 'quality'}" invisible="td_quality_state in ('none', 'pass') or state in ('done', 'cancel')"/>
+                            <button name="action_td_kiosk" type="object" string="Done" icon="fa-check" class="btn btn-success"
+                                    context="{'td_action': 'done'}" invisible="state != 'progress'"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_td_tablet_search" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.tablet.search</field>
+        <field name="model">mrp.workorder</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="workcenter_id"/>
+                <field name="production_id"/>
+                <filter name="open" string="To Do" domain="[('state', 'not in', ('done', 'cancel'))]"/>
+                <group>
+                    <filter name="group_workcenter" string="Work Center" context="{'group_by': 'workcenter_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="mrp_workorder_td_tablet_action" model="ir.actions.act_window">
+        <field name="name">Shop Floor Tablet</field>
+        <field name="res_model">mrp.workorder</field>
+        <field name="view_mode">list,kanban</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('mrp_workorder_td_tablet_list')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('mrp_workorder_td_tablet_kanban')})]"/>
+        <field name="search_view_id" ref="mrp_workorder_td_tablet_search"/>
+        <field name="context">{'search_default_open': 1, 'search_default_group_workcenter': 1}</field>
+        <field name="help">Work orders of the sections; the worker presses «Taken», «Pause» or «Done» and confirms with the PIN.</field>
+    </record>
+
+    <record id="mrp_routing_workcenter_form_td_mebli_shop" model="ir.ui.view">
+        <field name="name">mrp.routing.workcenter.form.td_mebli_shop</field>
+        <field name="model">mrp.routing.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+        <field name="arch" type="xml">
+            <field name="workcenter_id" position="after">
+                <field name="td_quality_point"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_workcenter_productivity_list_td_mebli_shop" model="ir.ui.view">
+        <field name="name">mrp.workcenter.productivity.list.td_mebli_shop</field>
+        <field name="model">mrp.workcenter.productivity</field>
+        <field name="inherit_id" ref="mrp.oee_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="user_id" position="after">
+                <field name="td_employee_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="td_mebli_quality_check_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.quality.check.list</field>
+        <field name="model">td.mebli.quality.check</field>
+        <field name="arch" type="xml">
+            <list string="Quality Checks" create="0" decoration-danger="result == 'fail'">
+                <field name="create_date" string="Date"/>
+                <field name="production_id"/>
+                <field name="workcenter_id"/>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="result" widget="badge" decoration-success="result == 'pass'" decoration-danger="result == 'fail'"/>
+                <field name="photo" widget="image" options="{'size': [48, 48]}"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_quality_check_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.quality.check.form</field>
+        <field name="model">td.mebli.quality.check</field>
+        <field name="arch" type="xml">
+            <form string="Quality Check" create="0">
+                <sheet>
+                    <field name="photo" widget="image" class="oe_avatar"/>
+                    <group>
+                        <field name="workorder_id"/>
+                        <field name="name"/>
+                        <field name="result"/>
+                        <field name="employee_id"/>
+                        <field name="note"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_quality_check_action" model="ir.actions.act_window">
+        <field name="name">Quality Checks</field>
+        <field name="res_model">td.mebli.quality.check</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="td_mebli_tablet_menu" name="Shop Floor Tablet" parent="mrp.menu_mrp_root"
+              action="mrp_workorder_td_tablet_action" sequence="5"/>
+    <menuitem id="td_mebli_quality_check_menu" name="Quality Checks" parent="mrp.menu_mrp_manufacturing"
+              action="td_mebli_quality_check_action" sequence="40"/>
+</odoo>

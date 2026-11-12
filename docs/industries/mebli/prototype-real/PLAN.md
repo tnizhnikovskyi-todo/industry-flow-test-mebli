@@ -1,252 +1,370 @@
-# План еталонного зрізу «меблі» в Odoo 19 CE (A-21-real, заготовка A-11)
+# План зрізу A-21 (спроба 2) — пакет «меблі» на базі Odoo 19 CE
 
-Дата: 2026-11-10. Гілка `flow/A-21-real`. Автор: Архітектор рішення (AI). Статус: чернетка, рішення приймає людина.
-Вихідники Odoo: `ODOO_HOME=/home/user/odoo19` (19.0, коміт `ab862495`, 2026-11-10). Усі посилання `файл:рядок` нижче — відносно `$ODOO_HOME/addons`.
-Мета: справжні модулі `td_mebli_*` (Python + XML + дані), без Studio і без `x_`-полів, на чистій базі Odoo 19 CE.
-Цей зріз показує, що реально буде в системі, і став заготовкою для A-11. Обсяг розраховано на кілька годин роботи.
+Дата: 2026-11-12 · гілка `flow/A-21-2-test` · автор: AI (prototype-builder 0.2.1; переробка зразка за 0.2.1 — зворотна перевірка стандарту, §23) · **статус: повний обсяг, хвиля 3 з 3 — готово до гейта зрізу; виправлено за рецензією Архітектора, коло 2 (N1–N6 + 2 minor), перезйомка всіх кліпів і кадрів одним прогоном (хвиля 1 — модулі й демо-дані; хвиля 2 — живий запис десктопа; хвиля 3 — мобільний запис, перекалібрування, `complexity.md`, README, передача A-21c; зразок прийнято — `flow/decisions.md` запис 36)** ·
+`demo_edition: ce` (OWNER-INTAKE) · SHA входів: `413e82a` (OWNER-INTAKE, `concept/*`, `research/*`) · `ODOO_HOME` = `/home/user/odoo19/src` @ `40e9be2b5ab8828bdab450fb6c8c40f2104a36a6` (19.0, 2026-11-10).
+Мета: справжні модулі `package/addons/td_mebli_*` (Python + XML + дані), без Studio й полів `x_`, на чистій базі Odoo 19 CE; EE — лише окремою позначкою (`td_mebli_*_ee` з `auto_install`), без EE-залежностей ядра.
+Вхід (К-05): `research/FUNCTIONAL-MAP.md` §4.5–4.6, `research/BOX.md` §1, §11.1, §12–13, `research/SALES.md` §2, §4, §6, `research/REUSE.md`, `concept/{features,screens,scenarios}.md` (v2), рішення власника `flow/decisions.md` 23, 30, 31, 35. Попередній зріз (`prototype-real/` і 5 модулів `td_mebli_*` від A-21-real) — **матеріал, не вхід**: код перевикористовується, екрани беруться з концепції v2.
+Режим наряду: `params.mode: recalc`. Зроблено: Крок 1–2 (зразок, прийнято, запис 36). **Хвиля 1 повного обсягу (цей запуск):** Кроки 3–5 — модулі під усі сцени SALES §6, демо-дані, база `demo-mebli-full`, тести; кроки й кліпи зйомки підготовлено, не знято. Хвиля 2 — запис десктопа; хвиля 3 — мобільний запис, `facts.json`, `complexity.md`, README.
+**Замовчування запису 36:** порядок демо — за SALES §6 (S-02 першим, дашборд S-19 у кінці); кіоск цеху за PIN і курс НБУ — свої `td_` з верхньою межею годин (стандарт CE їх не має — «Перевірка №13»); права продавця на закупівлі — як у зразку. Склад коробки A — рішення №16 (запис 31).
+**Переробка зразка (власник у чаті: «Переделывай сейчас по 0.2.1»; зауваження «зачем закупка в сейл ордере?»).** Попередній зразок мав модель `td.mebli.order.item` у замовленні на продаж із ручним постачальником і датою — паралельний облік закупівлі (за 0.2.1 — FAIL). Тепер замовні позиції купує стандарт (MTO + «Купити» → замовлення на купівлю), дату постачальника вводять лише в модулі Закупівлі, `td_` лише читає й рахує (таблиця «Модель даних» нижче).
 
 ## 1. Що показуємо (зв'язок із концепцією)
 
-Наскрізний сценарій: менеджер салону збирає виріб у конфігураторі й бачить ціну → підтверджує замовлення →
-для замовлення створюється власна специфікація (BoM) → виробниче замовлення (МО) проходить дільниці «розкрій →
-крайкування → присадка → складання» → деталі передаються на розкрій, повертається карта розкрою (імітація) →
-плити й обрізки резервуються за партіями, нові ділові обрізки стають залишком із розмірами → планова собівартість
-і маржа замовлення.
+**Наскрізний сценарій (SALES §6, 20–25 хв):** одне замовлення «кухня + шафа-купе» в одному договорі. Замірник вносить ніші й техніку, система підсвічує невміщення (сцена 1); менеджер підбирає шафу в конфігураторі, ціна з розмірів іде в рядок (1а); імпорт специфікації з CSV, маржа до запуску, графік оплат, підпис версії (2); клієнт змінює фасади — нова версія, ціна, дата, причина «клієнт» (3); фарбовані фасади від постачальника запізнюються — прогнозна дата пізніша за обіцяну, причина «постачальник» (4, NG-01 у коробці A — запис 31); цех за PIN «Взято / Зроблено», комплектувальний лист не відпускає неповний комплект (5); пакет розкрою за декором, ділові обрізки, крок якості з фото (5а); два виїзди монтажу з актом і % бригаді (6); рекламація й собівартість план ↔ факт (7); дашборд керівника (8).
 
-| Концепція | Що входить у зріз | Чим закрито |
+| S-xx (екран брифу) | Сцени SALES §6 | Що входить у зріз | Чим закрито |
+|---|---|---|---|
+| S-15 Замір-лист (1) | 1 | ніші, техніка, фото, перевірка «не вміщається» | стандарт CRM (заявка → зустріч, F-48) + `td_` модель заміру на замовленні |
+| S-02 Замовлення клієнта (2) | 1а, 2, 4 | ціна з розмірів, маржа до запуску, графік оплат, **обіцяна/прогнозна дата, закупівлі під замовлення (лише читання), причина зсуву** (зразок), статус обміну з BAS (імітація) | стандарт `sale_margin`, `sale_mrp`, `commitment_date`, `sale_purchase_stock` (закупівлі замовлення) + `td_mebli_sale` (лише compute) |
+| S-01 Конфігуратор (3) | 1а | модель, розміри, декор, фурнітура, кромка; правила сумісності | стандартний конфігуратор атрибутів + `td_mebli_sale` (розміри), правила — `td_` |
+| S-03 Специфікація (4) | 2 | деталі Д×Ш×Т, матеріал, кромка; імпорт CSV з розпізнаванням колонок; версія | `td_mebli_mrp` (деталі, BoM замовлення) + `td_` імпорт; CAD — лише CSV-вивантаження (імітація формату); **запит власника:** деталі видно й у виробничому замовленні — вкладка «Деталі» МО (related без store, підсумки на все МО), рядки плити й кромки у «Компонентах» специфікації й МО позначено «З деталей» (compute без store) |
+| S-04 Розкрій і порізка (5) | 5а | пакет розкрою кількох МО за декором, вкладка «Ділові обрізки», замовлення порізки | `td_mebli_cutting`; **імітацію оптимізатора не показуємо** (OUT-02) |
+| S-05 Дошка замовлень (6) | 3, 4 | етапи, обіцяна й прогнозна дата, причина зсуву, «очікує клієнта» | канбан `td_mebli_sale` (є) + поля зразка |
+| S-06 Планшет цеху (7) | 5, 5а | робочі завдання дільниць, «Взято / Зроблено / Пауза з причиною», кіоск за PIN, крок якості з фото, завантаження | стандарт робочих замовлень `mrp` + `td_` кіоск і точки якості (див. §2, №13); **запит власника:** «Деталі» завдання на планшеті — кнопка в рядку (десктоп) і «Деталей: N» у картці (телефон) відкривають діалог лише читання: деталь, матеріал, к-сть, Д×Ш, кромка |
+| S-08 Дефіцит і прайси (8) | 4, 8 | нестача під замовлення, замовні позиції, ціна постачальника проти історії | стандарт `purchase_stock` (MTO, прайси постачальника) + `td_` звіт «ціна ↔ історія» |
+| S-16 Комплектувальний лист (9) | 5 | місця, деталі, зібрано / бракує, блок відвантаження | стандарт складу + `td_` лист і перевірка комплекту |
+| S-12 Календар монтажів і акт (10) | 6, 8 | виїзди бригад (календар без Ганта), акт з фото, підписом і недоліками, фотоархів | стандарт `project` (календар задач) + `td_` акт |
+| S-17 Нарахування (11) | 6, 8 | відрядна за операціями, % бригаді з акта, премії й штрафи з причиною | `td_` (Payroll — лише EE і без України, FM §4.5) |
+| S-14 Рекламація (12) | 7 | реєстрація, повторне виготовлення / ремонт | стандарт `repair` + `td_` зв'язок із замовленням і деталлю |
+| S-11 Собівартість план ↔ факт (13) | 7 | план і факт по замовленню | стандарт аналітики МО (див. §2, №13) + адаптований `td_sale_cost` (REUSE-01) |
+| S-18 Погодження й зміна (15) | 2, 3 | версія на підпис, зміна з ціною, датою й причиною | стандарт порталу й підпису пропозиції + `td_` версія специфікації |
+| S-19 Дашборд керівника (16) | 8 | 11 показників коробки A (BOX §11.1 KPI 1–10 + ціни постачальників), картка = звіт drill-down | `td_mebli_dashboard` (клієнтська дія; переписати під KPI BOX §11.1) |
+
+**Повний обсяг (хвиля 1): сцена → екран → роль → що в Odoo → основа.** Порядок показу — SALES §6 (запис 36): сцена 4 / S-02 першою (прийнятий зразок), далі 1 → 1а → 2 → 3 → 5 → 5а → 6 → 7, дашборд S-19 — у кінці.
+
+| # | Сцена SALES §6 | Екран (меню) | Роль (логін демо) | Кроки в кадрі | Стд CE | `td_` (модуль) | Інтегр / імітація |
+|---|---|---|---|---|---|---|---|
+| 4 | Замовні фасади затримуються | S-02 Замовлення S00123; S-08 закупівлі | менеджер салону (`salon`) | банер «прогнозна пізніша на N днів», вкладка «Закупівлі під замовлення», причина «Постачальник» | MTO + «Купити», `purchase.order.line.date_planned`, смарт-кнопка `sale_purchase` | `td_mebli_sale` (лише compute) | — |
+| 1 | Замір із помилкою | S-15 «Замір-листи» (Продажі) → ЗМ замовлення S00123 | замірник (`measure`) | ніші й техніка; «Холодильник: глибше на 30 мм» червоним; «Звірити з проєктом» | CRM-нагода (`sale_crm`), зустріч — календар | `td_mebli_measure` (`td.mebli.measure`, ніші, техніка) | — |
+| 1а | Підбір виробу й ціна з розмірів | S-01 → S-02 рядок | менеджер салону | конфігуратор, ціна з розмірів у рядку | атрибути товару, `sale_margin` | `td_mebli_sale` (є зі зрізу) | — |
+| 2 | Пропозиція й погодження | S-03 специфікація → «Імпорт деталей» (CSV) → S-02 маржа, графік оплат, підпис порталом | технолог (`tech`), менеджер | розпізнавання колонок CSV, деталі в специфікації; маржа до підтвердження; умови оплати «Передоплата 50%» | `account.payment.term` (графік оплат), підпис пропозиції порталом | `td_mebli_mrp` (`td.mebli.spec.import`) | формати CAD-програм — лише CSV-вивантаження (імітації читання CAD немає) |
+| 3 | Зміна фасадів (B) | S-02 вкладка «Зміни», кнопки «Створити зміну» / «Зафіксувати зміну» | менеджер салону | версія 2, причина «Клієнт», ціна +, обіцяна дата +7 дн. | `commitment_date`, рядки замовлення (ввід — у стандарті) | `td_mebli_sale` (`td.mebli.order.change`: причина + знімки «до/після») | підпис версії клієнтом — B, не в зрізі |
+| 5 | Цех і комплектація | S-06 «Планшет цеху» (Виробництво); S-16 «Комплектувальні листи» (Склад) | планшет (`tablet`) + PIN працівника; комірник (`store`) | «Взято / Пауза з причиною / Зроблено» з PIN; «Підтвердити» відвантаження → «Комплект неповний: бракує … (місце N)» | робочі замовлення, таймер і причини простою `mrp.workcenter.productivity(.loss)`, відвантаження `stock.picking` | `td_mebli_shop` (кіоск, лист, блок відвантаження) | — |
+| 5а | Розкрій пакетом, обрізки, якість (B) | S-04 «Розкрій»; S-06 «Якість» з фото | технолог; оператор кромкування | пакет за декором, ділові обрізки; крок якості з фото до «Зроблено» | партії `stock.lot` | `td_mebli_cutting` (є), `td_mebli_shop` (`td.mebli.quality.check`) | оптимізатор розкрою **не показуємо** (OUT-02) |
+| 6 | Монтаж і акт | S-12 «Календар монтажів» (Проєкт) → задача → «Акти» | бригадир (`fitter`), телефон | два виїзди S00123 (корпуси → стільниця); акт з недоліком, фото, підпис пальцем; % бригаді | задачі `project` з рядка-послуги `sale_project`, календар (без Ганта) | `td_mebli_install` (`td.mebli.install.act`, недоліки) | — |
+| 6/8 | Нарахування | S-17 «Нарахування» (Виробництво › Звітність) | фінансист (`fin`) | «Нарахувати»: відрядна = розцінка операції × база (деталі, м кромки) × кількість, частка — за часом планшета (AI-08), % бригаді з акта, премія/штраф з причиною | час робіт `mrp.workcenter.productivity` | `td_mebli_install` (`td.mebli.accrual`), `td_mebli_mrp` (`td_piece_rate` на операції) | передача в BAS — імітація статусу |
+| 7 | Рекламація і план ↔ факт | S-14 «Рекламації» (Ремонт); S-11 «Собівартість: план і факт» (Продажі › Звітність) | начальник виробництва (`chief`), фінансист | канбан рекламацій, «Прострочено», причина й хто платить; план ↔ факт по замовленнях | `repair.order`, `sale_margin`, дані МО (як «Огляд МО») | `td_mebli_claim`, `td_mebli_cost` | — |
+| 8 | Дашборд керівника | S-19 «Дашборд керівника» | власник (`owner`) | 11 карток BOX §11.1 (KPI 1–10 + ціни постачальників); картка → записи, які вона порахувала | — | `td_mebli_dashboard`, `td_mebli_purchase` (ціни ↔ історія) | рядок «невідповідності якості» — B/C, не показується |
+| — | Курс НБУ, обмін з BAS | валюти; S-02 поле «Обмін з BAS» | фінансист | курси в стандартних `res.currency.rate` з позначкою джерела | `res.currency.rate` | `td_mebli_ua` | **імітація:** курси демо без мережі (`td_source = nbu_imitation`), статус BAS ставить кнопка «Передати в BAS (імітація)» |
+
+**Кіоск за PIN і курс НБУ — `td_` з верхньою межею годин (запис 36, «Перевірка №13»):** кіоск — спільний користувач-планшет + PIN стандартного `hr.employee` (зразок перевірки PIN — `hr_attendance/controllers/main.py:203-208`), без окремого публічного контролера; курс НБУ — завантаження в стандартну таблицю курсів, онлайн вимкнено параметром `td_mebli_ua.nbu_online`. Межі годин для A-08 — у `complexity.md` (хвиля 3).
+
+**Поза зрізом (свідомо; піде в README «Відкинуто»):** імітація оптимізатора розкрою (OUT-02, SALES §6); мости EE (`_shopfloor`, `_quality`, `_fsm`, `_helpdesk`, `_sign`, `_planning`) — немає доступу до EE, ризик R-14 «не змішувати інтерфейси»; рядок «невідповідності якості» на S-19 — лише B / C (BOX §11.1); справжній обмін з BAS/BAF (F-47) — у зрізі лише статус обміну як імітація; пакет міграції (F-46, D-10) і кілька юросіб з ПРРО (F-25, C-03) — не екрани (R18); кабінет покупця (REJ-017), портал D-08, маржа за курсом EUR (REJ-018) — відкидання підтверджено (запис 34); претензія постачальнику порізки D-17 — після A-06 (запис 34).
+
+**Зразок (Крок 2):** S-02 «Замовлення клієнта» — блок дат, банер і вкладка «Закупівлі під замовлення» (рядки стандартних замовлень на купівлю, лише читання; смарт-кнопка «Купівлі» модуля `sale_purchase`) (F-23, F-31, F-36; SC-01.7; NG-01). Чому цей екран першим: це **варіант цінності 1** («Дата, яку ви обіцяли клієнту, — під контролем: видно, що її зірве, до того як зірве», SALES §4), відповідь на заперечення 5 «Нам вистачає Excel і Viber» (SALES §2), єдиний біль ROLE-02 із прямою цитатою (PAIN-16 «Обіцяли два місяці, вийшло три») і коробка A (запис 31). Дашборд S-19 як зразок відкладено: 7 з 11 його показників спираються на екрани, яких у зрізі ще немає (замір, акт, рекламація, нарахування), — зразок показав би заглушки.
+
+## 2. Стандарт Odoo 19, на який спираємось (перевірено у вихідниках 19.0 CE @ `40e9be2b`)
+
+| Припущення | Підтвердження (файл:рядок) | Як використовуємо |
 |---|---|---|
-| F-03 / S-01 | Виріб з опцій: декор, кромка, фурнітура, розміри + ціна | стандартний конфігуратор `sale` + розмірний коефіцієнт (код) |
-| F-04, F-02 / S-02, S-03 | Специфікація з опцій, одна для продажу, розкрою й собівартості | BoM під замовлення (код-генератор поверх стандартного `mrp.bom`) |
-| F-06 / S-06, S-07 | МО з власною специфікацією і маршрутом дільниць | стандарт `mrp` (робочі центри, операції, робочі завдання) |
-| F-05 / S-04 | Передати деталі на розкрій і отримати карту з відходами | модель `td.mebli.cutting.job`; **розрахунок — імітація** зовнішньої програми |
-| F-10 / S-08 | Резерв плити, кромки, фурнітури під замовлення; видно нестачу | стандарт резервування МО + «Стан компонентів»; вибір партій плит — код |
-| F-11 / S-09 | Ділові обрізки як залишок із розмірами | стандартні партії `stock.lot` + поля розмірів; обрізки — побічна продукція МО |
-| F-14 (план) / S-11 | Планова собівартість і маржа замовлення; план/факт у МО | `sale_margin` + собівартість BoM із `mrp_account` + стандартний «Огляд МО» |
-| SC-01 кроки 1–3, SC-02 кроки 4–5, SC-03 (МО), SC-04 кроки 2, 4, 5, SC-05 (план) | Кроки сценаріїв ролей | §6 |
+| Обіцяна клієнту дата — стандартне поле замовлення | `addons/sale/models/sale_order.py:88` (`commitment_date`, help «delivery date promised to the customer»); очікувана дата `:302` | «Обіцяна дата» на S-02 і S-05 — це `commitment_date` з власним підписом у поданні; на формі одне поле: стандартне (`addons/sale_stock/views/sale_order_views.xml:36`) переміщено (`position="move"`) з «Іншої інформації» до прогнозної дати, не додано вдруге |
+| Тривалість виробництва — стандартне поле специфікації; кінець МО рахується від нього | `addons/mrp/models/mrp_bom.py:89` (`produce_delay`); `addons/mrp/models/mrp_production.py:786-795` (`_compute_date_finished`), `:255` (`is_planned`) | готовність цеху = кінець МО (запланованих робочих замовлень або `date_start + produce_delay`) |
+| Замовлення продажу бачить свої МО | `addons/sale_mrp/models/sale_order.py:14` (`mrp_production_ids`) | прогнозна дата й етап дошки |
+| Маржа замовлення до підтвердження | `addons/sale_margin/models/sale_order.py:11` (`margin_percent`) | маржа на S-02 (планова собівартість — з BoM замовлення `td_mebli_sale`) |
+| Купівля під замовлення (MTO + «Купити») — стандарт; постачальник і його строк — у прайсі постачальника | маршрути `addons/stock/data/stock_data.xml:42` (`route_warehouse0_mto`), `addons/purchase_stock/data/purchase_stock_data.xml:10` (`route_warehouse0_buy`); правило купівлі `addons/purchase_stock/models/stock_rule.py:59` (`_run_buy`); прайс `addons/product/models/product_supplierinfo.py:13` (`partner_id`), `:51` (`delay`) | замовні позиції (фасади фарбовані, стільниця, профіль купе) — товари з маршрутами MTO + «Купити» і рядком `product.supplierinfo`, компоненти специфікації; підтвердження замовлення на продаж → МО → замовлення на купівлю (перевірено тестом `test_confirmation_creates_the_purchase_by_the_standard`) |
+| Дата постачальника — рядок замовлення на купівлю (ввід лише в модулі Закупівлі) | `addons/purchase/models/purchase_order_line.py:25` (`date_planned`), `:72` (`qty_received`), `:91` (`partner_id`) | прогнозна дата S-02 читає `date_planned` і `qty_received`; у `sale.order` дата не вводиться |
+| Зв'язок замовлення на продаж ↔ закупівлі в 19.0 — через `stock.reference` (не procurement group) | `addons/sale_stock/models/sale_order.py:48` (`stock_reference_ids`); значення закупівлі несуть `reference_ids` з руху МО `addons/stock/models/stock_move.py:1843`, `:1877`; закупівля успадковує їх `addons/purchase_stock/models/stock_rule.py:117-121`; нова закупівля отримує `reference_ids` у `_prepare_purchase_order` — `addons/purchase_stock/models/stock_rule.py:355`; злиття запитів зберігає посилання обох — `addons/purchase_stock/models/purchase_order.py:478` (`_merge_po_post_process`); поле `addons/purchase_stock/models/purchase_order.py:28`; `addons/purchase_stock/models/stock_reference.py:7` (`purchase_ids`); `addons/sale_purchase/models/sale_order.py:54` + `addons/sale_purchase_stock/models/sale_order.py:14` (`_get_purchase_orders` = рядки сервісів ∪ `stock_reference_ids.purchase_ids`) | вкладка S-02 = `_get_purchase_orders().order_line`, відфільтровані до рядків, що живлять МО цього замовлення (compute, лише читання); правило доступу «закупівлі моїх замовлень» — за тим самим `reference_ids.sale_ids` |
+| Закупівля живить компонент МО | `addons/purchase_stock/models/purchase_order_line.py:30` (`move_dest_ids`), `addons/mrp/models/stock_move.py:33` (`raw_material_production_id`); `addons/purchase_mrp/models/mrp_production.py:46` (`_get_purchase_orders` МО); ланцюг руху при прийманні у 2–3 кроки — `addons/stock/models/stock_move.py:2697` (`_rollup_move_dests`), так само читає `addons/purchase_mrp/report/mrp_report_mo_overview.py:23` (тест `test_two_step_receipt_follows_the_chain`) | «готовність за позицією» = `date_planned` + `produce_delay` специфікації МО, що споживає позицію |
+| Смарт-кнопка закупівель на замовленні на продаж — стандарт | `addons/sale_purchase/models/sale_order.py:10` (`purchase_order_count`, група `purchase.group_purchase_user`), `addons/sale_purchase/views/sale_order_views.xml:15`; `sale_purchase_stock` — `auto_install` (`addons/sale_purchase_stock/__manifest__.py:12,17`) | кнопка «Купівлі» лишається закупівельникам (стандарт); менеджер салону групи «Закупівлі» не має — читає закупівлі своїх замовлень на вкладці (правило `td_mebli_sale`) |
+| «Днів на обробку» після отримання позиції — стандартний аналог `produce_delay` | `addons/mrp/models/mrp_bom.py:89` (`produce_delay`, час виготовлення від старту МО); `:92` (`days_to_prepare_mo` — дні на збір компонентів ДО старту, інший зміст); стандартне планування МО вважає, що компоненти потрібні на старті (`addons/mrp/models/mrp_production.py:786`) | нового поля немає: готовність за позицією = дата поставки + `produce_delay` специфікації замовлення (специфікація замовлення копіює `produce_delay`/`days_to_prepare_mo` шаблону — `td_mebli_mrp`) |
+| Аналітика на виробничих замовленнях у CE | `addons/project_mrp/models/mrp_production.py:9` (`project_id`); `addons/project_mrp_account/models/mrp_production.py:10-16`; `addons/mrp_account/models/mrp_workorder.py:10` (`mo_analytic_account_line_ids`); `addons/project_mrp_account/models/mrp_workorder.py:9-14`; категорія `manufacturing_order` — `addons/mrp_account/models/analytic_account.py:79` | S-11 план ↔ факт: проєкт замовлення з аналітичним рахунком → рядки аналітики з робіт МО (тест №13 нижче) |
+| Календар задач у CE — без Ганта | `addons/project/views/project_task_views.xml:829` (`<calendar date_start="date_deadline" …>`); типи подань `odoo/addons/base/models/ir_ui_view.py:149-153` — `gantt` немає; каталогу `addons/web_gantt` у 19.0 CE немає | S-12: графік бригад — календар задач `project` або наш список |
+| Час на робочому замовленні в CE пишеться на користувача, не на працівника | `addons/mrp/models/mrp_workcenter.py:531` (`mrp.workcenter.productivity.user_id`); `addons/mrp/models/mrp_workorder.py:122` (`working_user_ids`) | кіоск цеху за PIN без користувача Odoo — `td_` (див. №13) |
+| Вхід за PIN без користувача в CE є лише для кіоску відвідувань | `addons/hr/models/hr_employee.py:211` (`pin`); `addons/hr_attendance/models/res_company.py:34` (`attendance_kiosk_use_pin`); `addons/hr_attendance/controllers/main.py:139` (`auth='public'`), `:203-208` (перевірка PIN) | взірець для `td_` кіоску цеху (працівник `hr.employee` без користувача) |
+| Модулі Shop Floor, Quality, Studio, Sign, Field Service, Planning, Helpdesk — лише EE | `odoo/addons/base/data/ir_module_module.xml:257` (`mrp_workorder`), `:131` (`quality_control`), `:5` (`web_studio`), `:187` (`sign`), `:61` (`industry_fsm`), `:159` (`planning`), `:75` (`helpdesk`) — записи-заглушки з `to_buy`, у базі CE стан `uninstallable`, ліцензія OEEL-1 | у ядрі не залежимо; мости — окремі `td_mebli_*_ee` |
+| Автоматичного курсу валют (і НБУ) у CE немає | у `addons/` 19.0 CE немає `currency_rate_live` (і заглушки в `ir_module_module.xml`); у базі CE з `l10n_ua` немає полів постачальника курсу в `res.company` і cron курсу; модель курсу — `odoo/addons/base/models/res_currency.py:346-347` | F-26 курс НБУ — `td_` (завантаження курсу в `res.currency.rate`); у зрізі — імітація без мережі |
+| Набір дашбордів CE — `spreadsheet_dashboard` + 12 тематичних, виробничого немає | каталоги `addons/spreadsheet_dashboard*` (13), `spreadsheet_dashboard_mrp` відсутній; редагування таблиць (`spreadsheet_edition`) — не в CE | S-19 — власна клієнтська дія `td_mebli_dashboard` |
+| Адаптивний інтерфейс і підпис пальцем — у веб-клієнті CE | `addons/web/static/src/core/ui/ui_service.js:154` (`isSmall`); `addons/web/static/src/views/fields/signature/signature_field.js:14` | екрани 1, 7, 10 на телефоні — стандартний мобільний UI; `web_responsive` не потрібен (рішення №14 відкрите) |
+| Конвенції 19.0 | `odoo/orm/table_objects.py:79` (`models.Constraint`); `odoo/addons/base/models/res_users.py:257` (`group_ids`), `:247` (`company_ids`); `odoo/addons/base/models/res_groups.py:36` (`privilege_id`) | код зрізу: `models.Constraint`, `group_ids`, без `attrs=`/`states=`, корінь list-view `<list>` |
+| Ремонт і проєкти — CE, LGPL-3 | `addons/repair/__manifest__.py:52`, `addons/project/__manifest__.py:250`, `addons/hr_attendance/__manifest__.py:96` | S-14 на `repair`, S-12 на `project`, кіоск — за зразком `hr_attendance` |
 
-Поза зрізом (свідомо): F-01 (імпорт з PRO100), F-07, F-08, F-09, F-12, F-13 (курс євро), F-15–F-18, S-05, S-10,
-S-12–S-14, аналітика (див. §2, рядок «analytic»), імпорт файлу результату реальної програми розкрою (інтерфейс
-передбачено, див. §3.3).
+EE-твердження: окремого `research/edition-claims.md` немає (див. `concept/screens.md`); у цьому плані EE не обіцяється як факт — «не перевірено».
 
-## 2. Стандарт Odoo 19, на який спираємось (перевірено у вихідниках)
+### Не перевірено вихідниками і закрито тестом
+- Ланцюг «замовлення на продаж → МО → компонент MTO + «Купити» → замовлення на купівлю, пов'язане із замовленням на продаж» — тест модуля `td_mebli_sale/tests/test_order_dates.py` (7 сценаріїв: пропозиція — вирішує цех; підтвердження створює закупівлю стандартом і смарт-кнопка її рахує; пізня `date_planned` зсуває прогноз — причина «Постачальник»; отримана позиція не зсуває; цех пізніше — «Компанія»; продавець без прав на закупівлі бачить прогноз і причину; поля дат лише compute/readonly, моделі `td.mebli.order.item` немає) і база показу `demo-mebli-sample` (3 закупівлі `P00001…3` створено підтвердженням замовлення S00123).
+- Причина «Клієнт» (зміна на прохання клієнта) прибрана зі зразка: ручний ввід причини в `sale.order` не потрібен для показу сцени 4; джерело для неї — версія пропозиції/зміна (S-18, повний обсяг).
 
-| Припущення | Підтвердження | Як використовуємо |
-|---|---|---|
-| Конфігуратор продукту вбудовано в `sale` (окремого `sale_product_configurator` у 19 немає) | `sale/__manifest__.py:73` (assets `product_configurator_dialog`), `sale/controllers/product_configurator.py:10` | діалог вибору опцій у рядку SO |
-| Атрибути без варіантів і надбавка до ціни | `product/models/product_attribute.py:24` (`create_variant`), `product/models/product_template_attribute_value.py:36` (`price_extra`) | декор, кромка, фурнітура — `no_variant` з `price_extra` |
-| Вільне значення атрибута (поле вводу в конфігураторі) | `product/models/product_attribute_value.py:36` (`is_custom`), `product/models/product_attribute_custom_value.py:17` (`custom_value`, Char), `sale/models/sale_order_line.py:107` (`product_custom_attribute_value_ids`) | ширина / висота / глибина, мм |
-| Атрибут з одним вільним значенням показується в діалозі | `sale/static/src/js/product_template_attribute_line/product_template_attribute_line.xml:7`; конфігуратор відкривається, якщо є вільне значення: `product/models/product_template.py:232–245` | 3 атрибути розмірів по одному значенню |
-| Ціна рядка рахується в `_compute_price_unit` / `_get_display_price` | `sale/models/sale_order_line.py:589`, `:642` | розмірний коефіцієнт — override `_get_display_price` + доп. depends |
-| Процурмент зі SO можна направити на конкретний BoM | `mrp/models/stock_rule.py:138–140` (`values['bom_id']`), `sale_stock/models/sale_order_line.py:284` (`_prepare_procurement_values`) | BoM під замовлення передаємо в `bom_id` |
-| МО пов'язане з рядком SO | `sale_mrp/models/mrp_production.py:14` (`sale_line_id`), `sale_mrp/models/stock_rule.py:9`, лічильник `sale_mrp/models/sale_order.py:10` | смарт-кнопка «Виробництво» у SO |
-| Пошук BoM фільтрується доменом, який можна розширити | `mrp/models/mrp_bom.py:370` (`_bom_find_domain`), `:385` (`_bom_find`) | BoM під замовлення не знаходяться для інших замовлень |
-| MTO-маршрут є, але архівний; маршрут «Виготовити» є | `stock/data/stock_data.xml:42–45`, `mrp/data/mrp_data.xml:10` | дані зрізу активують MTO і ставлять обидва маршрути на вироби |
-| Операції на робочих центрах, тривалість, вартість години | `mrp/models/mrp_routing.py:19`, `:27`, `:33`, `:65`; `mrp/models/mrp_workcenter.py:41` | 4 дільниці, тривалість за деталями / метрами кромки |
-| Робочі завдання з кнопками старт/стоп є в CE (`mrp_workorder` — Enterprise) | `mrp/models/mrp_workorder.py:667`, `:716`; ENV.md «Недоступні модулі» | дільниці в МО без Enterprise |
-| Собівартість BoM з операціями | `mrp_account/models/product.py:63–99` (`_compute_bom_price`, рядок 70 — `opt.cost`) | планова собівартість рядка SO |
-| Маржа рядка SO | `sale_margin/models/sale_order_line.py:10–24`; `sale_stock_margin` (auto_install) викликає super для рядків без оцінених рухів: `sale_stock_margin/models/sale_order_line.py:11–17` | `purchase_price` = собівартість BoM замовлення |
-| Огляд МО: план / BoM / факт | `mrp/report/mrp_report_mo_overview.py:56–64`, `:485` | план/факт по МО без коду |
-| Партії, відстеження | `stock/models/stock_lot.py:42–61`, `stock/models/product.py:851` (`tracking`) | плити й обрізки — партії з розмірами |
-| Побічна продукція МО (може бути тим самим товаром, що й компонент; заборонено лише = готовий виріб) | `mrp/models/mrp_bom.py:198–204`, `mrp/models/mrp_production.py:980`, налаштування `mrp/models/res_config_settings.py:10` | обрізок повертається на склад як побічний продукт МО |
-| Резервування / зняття резерву | `stock/models/stock_move.py:1034` (`_do_unreserve`), `:2064` (`_action_assign`); стан компонентів МО `mrp/models/mrp_production.py:277`, `:389` | резерв конкретних партій після розкрою |
-| Одиниці м² і м (у 19 без категорій, `relative_uom_id`) | `uom/models/uom_uom.py:36–43`, `uom/data/uom_data.xml:55`, `:68` | плита — м², кромка — м |
-| Робочі завдання / BoM-ціни групою «Work Orders» | `mrp/models/res_config_settings.py:17` (`group_mrp_routings`) | дані вмикають групу для `base.group_user` |
-| Конвенції 19: `models.Constraint`, `res.users.group_ids`, `res.groups.privilege_id`, `lot_producing_ids` | `product/models/product_attribute.py:14`, `odoo/addons/base/models/res_users.py:257`, `odoo/addons/base/models/res_groups.py:36`, `mrp/models/mrp_production.py:120` | код і тести пишемо під 19 |
-| analytic: аналітика МО є лише через проєкт (`project_mrp_account`), МО ↔ аналітичний рахунок | `project_mrp_account/__manifest__.py:8`, `mrp_account/models/analytic_account.py:11` | **у зріз не беремо**: собівартість замовлення без проєктів; аналітику — на A-08/A-10 |
-| Мова uk_UA, `l10n_ua` є | `base` i18n, каталог `addons/l10n_ua` | інтерфейс — uk_UA через `.po`, `l10n_ua` у зріз не ставимо |
+### Перевірка №13 (CE) — рішення власника №13, записи 30, 35
+Чиста база `demo-check13` (Odoo 19.0 CE @ `40e9be2b`, без демо-даних; модулі `mrp_account`, `project_mrp_account`, `project`, `hr_attendance`, `l10n_ua`, `sale_management`, `purchase_stock`, `sale_margin`, `repair`). Перевірка — запитами `odoo-bin shell` і HTTP/Playwright до локального сервера. EE — доступу немає.
 
-Не перевірено вихідниками і закрито тестом (не вигадуємо): поведінка діалогу конфігуратора з трьома вільними
-значеннями (тур `TestConfiguratorTour`), оцінка побічного продукту за стандартною ціною (тест `test_offcut_valuation`).
+| Пункт №13 | CE: як перевірено | CE: статус | EE |
+|---|---|---|---|
+| Аналітика на виробничих замовленнях без EE | створено аналітичний план і рахунок, проєкт з рахунком, МО з `project_id` і операцією; робоче замовлення 1 год на дільниці з вартістю години → `has_analytic_account = True`, 1 рядок аналітики МО на суму роботи (від'ємна, витрата) | **підтверджено** | не перевірено (EE) |
+| Календар задач CE без Ганта | типи подань `project.task` у базі: activity, calendar, form, graph, kanban, list, pivot, search; типу `gantt` у `ir.ui.view` немає | **підтверджено** (календар є, Ганта немає) | Гант / Planning — не перевірено (EE) |
+| Кіоск цеху за PIN без користувача Odoo | `hr.employee.pin` є, `user_id` працівника необов'язковий; кіоск відвідувань `/hr_attendance/<ключ>` відкривається без сесії (HTTP 200); але час робочого замовлення пишеться лише на `res.users` (`mrp.workcenter.productivity.user_id`), полів працівника в `mrp.workorder` немає | **не підтверджено** для цеху (у CE лише кіоск відвідувань) → `td_` кіоск, чутливість FM §4.6 «+40–80» до години A-08 | Shop Floor за PIN — не перевірено (EE) |
+| Курс НБУ в CE | модулів автоматичного курсу в CE немає, полів постачальника курсу й cron у базі з `l10n_ua` немає | **не підтверджено** (стандарту немає) → `td_` F-26 | `currency_rate_live` — не перевірено (EE) |
+| Телефон і планшет | Playwright 390×844, `isMobile`, DPR 3, вхід адміністратором: задачі й МО відкриваються мобільним канбаном, бургер-меню є, горизонтальної прокрутки немає, помилок консолі немає | **підтверджено** (веб-клієнт); камера, підпис пальцем, слабкий зв'язок на пристрої — **не перевірено** (немає пристрою) | не перевірено (EE) |
+| Онлайн-оплата українськими картками | сторонній модуль, мережі до платіжних систем немає | не перевірено | не перевірено |
+| Наш екран сканування поруч із Barcode EE | Barcode — EE | не перевірено (EE-частина) | не перевірено |
+
+Висновок для годин A-08: два пункти «лише CE» не підтвердились (кіоск за PIN для цеху, курс НБУ) — їхні рядки лишаються `td_` з верхньою межею годин; аналітика МО і календар без Ганта підтверджені — S-11 і S-12 спираються на стандарт.
+
+### REUSE-01 `td_sale_cost` (план; у зразок не входить)
+Код: `repo:tnizhnikovskyi-todo/todo_timur/factory3d/odoo_addons/td_sale_cost@0976f05` (версія `19.0.1.1.1`, LGPL-3, `depends: sale_mrp, td_factory3d`, `auto_install`).
+Сумісність з 19.0 CE: `sale_mrp` — CE; жорстка прив'язка до `td_factory3d` — `depends` і група `td_factory3d.group_td_manager` у `views/sale_order_views.xml:12, 33-42`, `models/td_sale_cost.py:15, 57`; статті «енергія / верстати» (`models/td_sale_cost_calc.py:134-145, 193-229`) працюють лише за наявності модулів Factory 3D. План адаптації (`REUSE.md`: 16–32 за оцінкою): копія в `td_mebli_cost` (LGPL-3 сумісна), група — власна `td_mebli`, статті енергії й верстатів прибрати, додати статтю «порізка» й «відрядна / % бригаді», тести `tests/test_calc.py`, `test_cost.py` перенести. Ризик: оцінку AI не перевірено установкою на чистій базі — у A-11.
+
+### Модель даних (зворотна перевірка стандарту, §23)
+Охоплення — усі `package/addons/td_mebli_*` (вивід `check_data_model.py`: нові `td.*`-моделі й поля на стандартних моделях). Питання до кожного рядка: чи не дублює це дані, які веде стандартний модуль? Шляхи — від `ODOO_HOME/addons/` (19.0 CE @ `40e9be2b`). Ввід, якого немає в стандарті, позначено «ввід»; усе інше — compute/related (лише читання).
+
+**Зразок S-02 (`td_mebli_sale`, переробка за 0.2.1)**
+
+| Модель / поле | Нова чи розширення (`_inherit`) | Стандартний аналог (файл:рядок 19.0) | Чому не стандарт |
+|---|---|---|---|
+| `td.mebli.order.item` | **видалено** | закупівля під замовлення: `stock/data/stock_data.xml:42` + `purchase_stock/data/purchase_stock_data.xml:10` (MTO + «Купити»), `purchase/models/purchase_order_line.py:25` (`date_planned`), `product/models/product_supplierinfo.py:13` | паралельний облік закупівлі в замовленні на продаж (FAIL за 0.2.1) — модель прибрано, дані веде модуль Закупівлі |
+| `sale.order.td_purchase_line_ids` | розширення, compute (не збережене), лише читання; групи — продавець і закупівельник | `sale_purchase/models/sale_order.py:54` + `sale_purchase_stock/models/sale_order.py:14` (`_get_purchase_orders`) — читаємо їхні `order_line`, лише рядки, що живлять МО цього замовлення (`move_dest_ids` → `_rollup_move_dests` `stock/models/stock_move.py:2697` → `raw_material_production_id`; злиття запитів — `purchase_stock/models/purchase_order.py:478`) | — |
+| `sale.order.td_shop_date` | розширення, compute | `mrp/models/mrp_production.py:786` (`_compute_date_finished`), `mrp/models/mrp_bom.py:89` (`produce_delay`); `sale_mrp/models/sale_order.py:14` (`mrp_production_ids`) | — |
+| `sale.order.td_forecast_date` | розширення, compute | `purchase/models/purchase_order_line.py:25` (`date_planned`, читаємо) + `td_shop_date` | — |
+| `sale.order.td_delay_days` | розширення, compute | `sale/models/sale_order.py:88` (`commitment_date`) проти прогнозної дати | — |
+| `sale.order.td_late_line_id` | розширення, compute; групи — продавець і закупівельник | рядок із `_get_purchase_orders()` (`sale_purchase/models/sale_order.py:54`) | — |
+| `sale.order.td_late_item` | розширення, compute | `purchase/models/purchase_order_line.py:91` (`partner_id`) + товар рядка (читаємо) | — |
+| `sale.order.td_delay_reason` | розширення, compute (не збережене; ручного «клієнт» більше немає) | немає (у стандарті причини зсуву дати немає) | вибір «Постачальник / Компанія» виводиться з дат закупівлі й МО, не вводиться |
+| `purchase.order.line.td_date_ready` | розширення, compute | `purchase/models/purchase_order_line.py:25` (`date_planned`), `:72` (`qty_received`), `mrp/models/mrp_bom.py:89` (`produce_delay` специфікації МО через `purchase_stock/models/purchase_order_line.py:30` `move_dest_ids` → `mrp/models/stock_move.py:33`) | — |
+
+**Права S-02 (рецензія Архітектора, коло 1).** Менеджер салону (`sales_team.group_sale_salesman`) не має групи «Закупівлі». `td_mebli_sale/security/ir.model.access.csv` дає продавцю лише читання `purchase.order` і `purchase.order.line` (без write/create/unlink); `security/purchase_security.xml` — правила: продавець — «закупівлі моїх замовлень» (`reference_ids.sale_ids.user_id = user`, той самий зв'язок, що й `_get_purchase_orders`), «Усі документи» — закупівлі будь-якого замовлення, групи, які за стандартом уже читають усі закупівлі (Закупівлі, Склад, Облік — `purchase/security/ir.model.access.csv`, `purchase_stock/security/ir.model.access.csv`), — без обмеження (правила груп у Odoo поєднуються через АБО). Вкладку «Закупівлі під замовлення» бачать продавець і закупівельник; смарт-кнопка `sale_purchase` — лише закупівельник (стандарт). `sudo` у compute — лише читання: `_td_purchase_lines` (рядки закупівель і МО замовлення, щоб прогноз і причину бачив будь-який продавець), `_td_productions` (рухи складу, яких продавець не читає), `produce_delay` специфікації; у поля віддаються записи без `sudo` (`sudo(False)`), тож рядки вкладки браузер читає з правами продавця; запису через `sudo` немає. Інверсія `td_stage` — без `sudo`, лише для `mrp.group_mrp_user`. Перевірено тестами `test_salesperson_reads_the_purchases_of_his_orders_only`, `test_stage_drag_needs_manufacturing_rights`.
+
+**Решта пакета (попередній зріз, у зразку без змін — для повноти охоплення скрипта)**
+
+| Модель / поле | Нова чи розширення (`_inherit`) | Стандартний аналог (файл:рядок 19.0) | Чому не стандарт |
+|---|---|---|---|
+| `sale.order.td_launch_date` | розширення, compute | `mrp/models/mrp_workcenter.py:531` (`mrp.workcenter.productivity`, `date_start` — читаємо) | — |
+| `sale.order.td_hours_to_launch` | розширення, compute | `sale/models/sale_order.py` `date_order` + час робіт МО (читаємо) | — |
+| `sale.order.td_production_count` | розширення, compute | `sale_mrp/models/sale_order.py:14` (`mrp_production_ids`) | — |
+| `sale.order.td_stage` | розширення, compute (збережене для групування дошки), inverse лише викликає стандартний `button_start` — з правами самого користувача (без `sudo`) і лише для групи `mrp.group_mrp_user`; продавцю — помилка, кнопка «Почати» лишається в МО | `sale/models/sale_order.py:71` (`state`), `mrp/models/mrp_production.py:177` (`state`) | етап дошки виводиться зі станів замовлення й МО; ручного вводу етапу немає (inverse відмовляє в усьому, крім «почати роботу») |
+| `sale.order.td_image` | розширення, compute | `image_256` товару першого рядка (читаємо) | — |
+| `sale.order.line.td_is_parametric` | розширення, related/compute | `td_is_parametric` товару (читаємо) | — |
+| `sale.order.line.td_width` | розширення, compute | `product/models/product_attribute_custom_value.py:17` (`custom_value`, читаємо) | — |
+| `sale.order.line.td_height` | розширення, compute | `product/models/product_attribute_custom_value.py:17` | — |
+| `sale.order.line.td_depth` | розширення, compute | `product/models/product_attribute_custom_value.py:17` | — |
+| `sale.order.line.td_size_factor` | розширення, compute | немає | коефіцієнт ціни від розмірів — у стандарті ціна лише від варіанта й доплат |
+| `sale.order.line.td_bom_id` | розширення, ставить система (специфікація замовлення) | `sale_mrp/models/mrp_production.py:14` (`sale_line_id` МО); специфікацію МО шукає `mrp/models/mrp_bom.py` `_bom_find` | у стандарті немає специфікації на рядок замовлення (параметричний виріб за розмірами клієнта) |
+| `sale.order.line.td_planned_material_cost` | розширення, compute | `sale_margin/models/sale_order_line.py:15` (`purchase_price`) — розклад тієї самої собівартості | — |
+| `sale.order.line.td_planned_operation_cost` | розширення, compute | `sale_margin/models/sale_order_line.py:15` | — |
+| `mrp.bom.td_sale_line_id` | розширення, ставить система | `sale_mrp/models/mrp_production.py:14` (`sale_line_id` — на МО, не на специфікації) | зв'язок специфікації замовлення з рядком продажу; у стандарті специфікації замовлення немає |
+| `mrp.bom.td_sale_order_id` | розширення, related | `td_sale_line_id.order_id` | — |
+| `mrp.production.td_partner_id` | розширення, compute | `mrp/models/stock_reference.py:7` (`production_ids` ↔ `sale_ids`), `sale_mrp/models/mrp_production.py:14` | — |
+| `mrp.bom.td_order_bom` | розширення, ставить система | немає | ознака специфікації одного замовлення (параметричний виріб) |
+| `mrp.bom.td_template_bom_id` | розширення, ставить система | немає | посилання специфікації замовлення на шаблон |
+| `mrp.bom.td_width` | розширення, ставить система | немає (розмірів у `mrp.bom` немає) | розміри виробу замовлення |
+| `mrp.bom.td_height` | розширення, ставить система | немає | розміри виробу замовлення |
+| `mrp.bom.td_depth` | розширення, ставить система | немає | розміри виробу замовлення |
+| `mrp.bom.td_part_ids` | розширення | немає (деталей Д×Ш×Т у стандарті немає) | деталі розкрою — сутність без аналога |
+| `mrp.bom.td_part_count` | розширення, compute | — | підсумок деталей |
+| `mrp.bom.td_board_area_m2` | розширення, compute | — | підсумок площі плити з деталей |
+| `mrp.bom.td_edge_length_m` | розширення, compute | — | підсумок кромки з деталей |
+| `td.mebli.part` | нова | немає | деталь розкрою (Д×Ш, матеріал, кромка) — у стандарті немає |
+| `td.mebli.part.rule` | нова | немає | правило деталі параметричного виробу від розмірів |
+| `mrp.routing.workcenter.td_time_basis` | розширення, ввід | `mrp/models/mrp_routing.py:27` (`time_mode`: вручну / за фактом) | база нормування «на деталь / на м кромки / на м² плити» — у стандарті немає |
+| `mrp.routing.workcenter.td_time_rate` | розширення, ввід | `mrp/models/mrp_routing.py:33` (`time_cycle_manual` — хвилин на виріб; його й заповнюємо в специфікації замовлення) | норма на одиницю бази (деталь, м, м²) — у стандарті немає |
+| `mrp.routing.workcenter.td_piece_rate` | розширення, ввід (хвиля 2, AI-08) | `mrp/models/mrp_routing.py:65,134-136` (`cost` = години × `mrp.workcenter.costs_hour`, `mrp_workcenter.py:41`), `hr_hourly_cost/models/hr_employee.py:9` (`hourly_cost`) — лише погодинні | розцінка відрядної за операцію (Monetary, валюта — `td_currency_id`; рецензія Архітектора, коло 1) (за деталь, м кромки, м² плити або за операцію) — у CE немає; рішення AI-08: відрядна в пакеті — розцінка за операцію, не години × ставка |
+| `mrp.routing.workcenter.td_currency_id` | розширення, compute | валюта компанії операції (`mrp/models/mrp_routing.py:26` `company_id`; у специфікації без компанії — компанія користувача) | валюта розцінки — у моделі операції поля валюти немає |
+| `mrp.workcenter.td_capacity_hours` | розширення, **compute без store** (ввід прибрано) | `mrp/models/mrp_workcenter.py:81` (`resource_calendar_id` → `resource/models/resource_calendar.py:104` `hours_per_week`) × паралельність (`:78` `capacity_ids`, потужність без товару; як `_get_capacity` `:427`); `time_efficiency` не множимо — вона вже в `duration_expected` (`mrp/models/mrp_workorder.py:847`) | — (лише підсумок стандартних даних для %; у стандарті поля «годин на тиждень» дільниці немає) |
+| `mrp.workorder.td_expected_hours` | розширення, compute | `mrp/models/mrp_workorder.py:88` (`duration_expected`, читаємо) | — |
+| `mrp.workorder.td_load_pct` | розширення, compute | `duration_expected` проти потужності дільниці; у звіті сумується за дільницею й тижнем `date_start` (`interval="week"` у graph/pivot) | — |
+| `mrp.workorder.td_load_stage` | розширення, compute | — | групування завантаження |
+| `mrp.workorder.td_load_zone` | розширення, compute | сума відкритих годин — стандартне `workcenter_load` (`mrp/models/mrp_workcenter.py:67`, `_compute_workorder_count` `:169`) проти `td_capacity_hours` | зона «понад потужність» (у стандарті ознаки немає; потрібна для групування) |
+| `mrp.production.td_part_ids` | розширення, **related без store** (запит власника «чому деталі окремою сторінкою»), лише читання | `mrp/models/mrp_production.py:160` (`bom_id`) → `mrp.bom.td_part_ids` | — (показ деталей специфікації замовлення у вкладці «Деталі» МО; нового вводу немає) |
+| `mrp.production.td_part_count` | розширення, related без store | `mrp/models/mrp_production.py:160` (`bom_id`) → `mrp.bom.td_part_count` | — |
+| `mrp.production.td_board_area_m2` | розширення, related без store | `bom_id` → `mrp.bom.td_board_area_m2` | — |
+| `mrp.production.td_edge_length_m` | розширення, related без store | `bom_id` → `mrp.bom.td_edge_length_m` | — |
+| `mrp.workorder.td_part_ids` | розширення, related без store, лише читання | `mrp/models/mrp_workorder.py:44` (`production_id`) → `mrp/models/mrp_production.py:160` (`bom_id`) → `td_part_ids` | — (деталі МО операції в діалозі «Деталі» планшета цеху) |
+| `mrp.workorder.td_part_count` | розширення, related без store | те саме → `td_part_count` | — |
+| `mrp.bom.line.td_from_parts` | розширення, **compute без store** (позначка, не ввід) | кількість рядка — стандартна `mrp/models/mrp_bom.py:703` (`product_qty`); її ставить генератор специфікації замовлення з деталей (`td_mebli_mrp` `_td_prepare_component_lines`) | ознаки «кількість розраховано з деталей» у стандарті немає (`td_material_kind` плита/кромка + матеріал чи кромка є в деталях специфікації) |
+| `stock.move.td_from_parts` | розширення, compute без store | `mrp/models/stock_move.py:49` (`bom_line_id`) → `mrp.bom.line.td_from_parts` | — (та сама позначка у вкладці «Компоненти» МО) |
+| `mrp.production.td_cutting_job_ids` | розширення | немає | зв'язок МО з пакетом розкрою (сутність без аналога) |
+| `mrp.production.td_cutting_job_count` | розширення, compute | — | лічильник |
+| `td.mebli.cutting.job` | нова | немає (розкрою в CE немає) | пакет розкрою кількох МО за декором |
+| `td.mebli.cutting.sheet` | нова | `stock/models/stock_lot.py:42` (лист = партія; посилаємось на `stock.lot`, не дублюємо) | аркуш у пакеті розкрою |
+| `td.mebli.cutting.placement` | нова | немає | розміщення деталі на аркуші |
+| `td.mebli.cutting.offcut` | нова | `stock/models/stock_lot.py:42` (обрізок обліковується партією `stock.lot`) | рядок результату розкрою; запас обрізка — у стандартній партії |
+| `stock.lot.td_length_mm` | розширення, ввід | немає (розмірів у `stock.lot` і `product.template` немає: `product/models/product_template.py:112-115` — лише об'єм і вага; розміри — лише `stock/models/stock_package_type.py:22-23`) | розмір листа/обрізка — дані без аналога |
+| `stock.lot.td_width_mm` | розширення, ввід | немає (див. рядок вище) | розмір листа/обрізка |
+| `stock.lot.td_is_offcut` | розширення, ввід | немає | ознака ділового обрізка |
+| `stock.lot.td_cutting_job_id` | розширення | немає | з якого розкрою обрізок |
+| `stock.lot.td_area_m2` | розширення, compute | — | площа з розмірів |
+| `stock.lot.td_reserved_m2` | розширення, compute | — | резерв під розкрій |
+| `stock.lot.td_reserved_for` | розширення, compute | — | для якого розкрою резерв |
+| `td.mebli.dashboard` | нова | `spreadsheet_dashboard` (CE, 13 тематичних, виробничого немає) | екран керівника з KPI коробки A — клієнтська дія |
+| `product.template.td_is_parametric` | розширення, ввід | немає | ознака параметричного виробу |
+| `product.template.td_width_nominal` | розширення, ввід | немає (розмірів товару в CE немає) | номінальні розміри виробу |
+| `product.template.td_height_nominal` | розширення, ввід | немає | номінальні розміри |
+| `product.template.td_depth_nominal` | розширення, ввід | немає | номінальні розміри |
+| `product.template.td_width_min` | розширення, ввід | немає | допустимий діапазон розмірів |
+| `product.template.td_width_max` | розширення, ввід | немає | допустимий діапазон |
+| `product.template.td_height_min` | розширення, ввід | немає | допустимий діапазон |
+| `product.template.td_height_max` | розширення, ввід | немає | допустимий діапазон |
+| `product.template.td_depth_min` | розширення, ввід | немає | допустимий діапазон |
+| `product.template.td_depth_max` | розширення, ввід | немає | допустимий діапазон |
+| `product.template.td_edge_allowance_mm` | розширення, ввід | немає | припуск кромки |
+| `product.template.td_part_rule_ids` | розширення | немає | правила деталей |
+| `product.template.td_material_kind` | розширення, ввід | немає (є лише категорія товару) | вид матеріалу (плита / кромка / фурнітура / готовий фасад) для розкрою; «готовий фасад» — рядок шаблонної специфікації з «Застосувати до варіантів» (`mrp/models/mrp_bom.py:777` `_skip_bom_line`) замінює правило деталі «Фасад»: фасади не рахуються двічі |
+| `product.template.td_sheet_length_mm` | розширення, ввід | немає | формат листа плити |
+| `product.template.td_sheet_width_mm` | розширення, ввід | немає | формат листа плити |
+| `product.template.td_thickness_mm` | розширення, ввід | немає | товщина плити |
+| `product.template.td_waste_pct` | розширення, ввід | немає (у рядку специфікації немає % відходу) | норма відходу розкрою |
+| `product.template.td_matches_board_id` | розширення, ввід | немає | кромка до декору плити |
+| `product.template.td_edge_thickness` | розширення, ввід | немає | товщина кромки |
+| `product.attribute.td_dimension` | розширення, ввід | `product/models/product_attribute.py:24` (`create_variant`); власне значення — `product_attribute_custom_value.py:17` | який розмір задає атрибут (ширина / висота / глибина) |
+| `product.attribute.td_component_role` | розширення, ввід | `mrp/models/mrp_bom.py:777` (`_skip_bom_line` за значеннями атрибутів) | роль значення (декор корпусу / фасаду / кромка / фурнітура) як параметр деталей розкрою, не лише рядок специфікації |
+| `product.attribute.value.td_component_product_id` | розширення, ввід | `mrp/models/mrp_bom.py:777` (рядок специфікації за значенням атрибута) | значення атрибута → матеріал деталей (площа рахується з розмірів), не фіксована кількість рядка |
+| `product.attribute.value.td_edge_thickness` | розширення, ввід | немає | товщина кромки значення |
+
+**Повний обсяг, хвиля 1 (нові `td_`-моделі й поля).** Ввід стандартних даних у `td_` заборонено (0.2.1): усе, що веде стандартний модуль (закупівля, склад, виробництво, рахунки, задачі, ремонти, курси), вводиться там; `td_` — сутності без аналога або compute/related. Шляхи — від `ODOO_HOME/addons/` (19.0 CE @ `40e9be2b`).
+
+| Модель / поле | Нова чи розширення (`_inherit`) | Стандартний аналог (файл:рядок 19.0) | Чому не стандарт |
+|---|---|---|---|
+| `td.mebli.measure` | нова (S-15) | нагода й зустріч — `crm/models/crm_lead.py:85`, `sale_crm/models/sale_order.py:10` (`opportunity_id`); вкладення — `mail` | замір-лист (ніші, кути, комунікації) — у CRM полів немає; нагода й зустріч лишаються стандартними: `lead_id` береться з `order_id.opportunity_id` (compute, рецензія коло 1), `company_id` — з замовлення/нагоди; правила: свій замірник або продавець замовлення/нагоди, «усі документи», керівник продажу й цех — усі |
+| `td.mebli.measure.niche` | нова | немає | розміри ніші об'єкта клієнта — сутність без аналога |
+| `td.mebli.measure.appliance` | нова | немає | техніка клієнта з розмірами й перевіркою «вміщається» — без аналога |
+| `sale.order.td_measure_ids` | розширення, обернений зв'язок (One2many) | — | показ замір-листів замовлення |
+| `sale.order.td_measure_count` | розширення, compute | — | лічильник смарт-кнопки |
+| `crm.lead.td_measure_ids` | розширення, обернений зв'язок | — | замір-листи нагоди |
+| `mrp.workcenter.productivity.td_employee_id` | розширення, ставить система (кіоск) | `mrp/models/mrp_workcenter.py:531` (`user_id` — лише користувач Odoo) | у CE час пишеться на користувача; працівник цеху без користувача (PIN `hr/models/hr_employee.py:211`) — «Перевірка №13», кіоск не підтверджено |
+| `mrp.routing.workcenter.td_quality_point` | розширення, ввід | `quality_control` — лише EE (`odoo/addons/base/data/ir_module_module.xml:131`) | крок якості операції в CE відсутній |
+| `mrp.workorder.td_quality_point` | розширення, related | `operation_id` (`mrp/models/mrp_workorder.py:102`) | — |
+| `mrp.workorder.td_quality_ids` | розширення, обернений зв'язок | — | перевірки якості робочого замовлення |
+| `mrp.workorder.td_quality_state` | розширення, compute | — | стан кроку якості з перевірок |
+| `mrp.workorder.td_worker_names` | розширення, compute | `time_ids` (`mrp/models/mrp_workorder.py:118`) | — |
+| `mrp.workorder.td_pause_reason` | розширення, compute | `loss_id` відкритого рядка часу (`mrp/models/mrp_workcenter.py:534`) | — |
+| `td.mebli.quality.check` | нова | `quality_control` — лише EE (`odoo/addons/base/data/ir_module_module.xml:131`) | перевірка з фото й результатом на CE |
+| `td.mebli.kiosk` | нова (TransientModel) | кіоск відвідувань `hr_attendance/controllers/main.py:139`, `:203-208` — лише відвідування | діалог PIN планшета; час — стандартні `button_start`/`button_finish` (`mrp/models/mrp_workorder.py:667`, `:716`), пауза закриває рядок саме цього працівника; **один працівник на робочому замовленні за раз** і один таймер працівника: у CE `button_start` продовжує відкритий рядок користувача-планшета (`mrp_workorder.py:671-672`), а `end_previous` закриває рядок користувача (`:756-758`) — другий працівник втратив би час, тому кіоск відмовляє з поясненням (рецензія коло 1) |
+| `td.mebli.kit.line` | нова (S-16) | пакунки `stock/models/stock_package.py:18` — на товари складу, не на деталі | деталі розкрою не є товарами складу; місце й «зібрано» по деталі — без аналога |
+| `sale.order.td_kit_line_ids` | розширення, обернений зв'язок | — | лист комплектації замовлення |
+| `sale.order.td_kit_missing` | розширення, compute | — | лічильник незібраного |
+| `sale.order.td_kit_places` | розширення, compute | — | кількість місць |
+| `td.mebli.install.act` | нова (S-12) | задача-виїзд `project/models/project_task.py:183` (`date_deadline`), `sale_project/models/project_task.py:25` (`sale_order_id`); підпис — віджет `web/static/src/views/fields/signature/signature_field.js:14` | акт етапу/фінальний з чек-листом, підписом клієнта, % бригаді — у CE немає (Field Service — EE) |
+| `td.mebli.install.defect` | нова | немає | недолік акта з фото |
+| `project.task.td_act_ids` | розширення, обернений зв'язок | — | акти виїзду |
+| `project.task.td_act_count` | розширення, compute | — | смарт-кнопка |
+| `td.mebli.accrual` | нова (S-17) | Payroll — лише EE і без України (FM §4.5); розцінка — `mrp.routing.workcenter.td_piece_rate` (AI-08; погодинна `hourly_cost` `hr_hourly_cost/models/hr_employee.py:9` більше не використовується), частка працівника — за часом `mrp/models/mrp_workcenter.py:542` (`duration`) | нарахування відрядної, % бригаді, премій і штрафів з причиною для передачі в облік клієнта |
+| `repair.order.td_claim_order_id` | розширення, ввід | `repair/models/repair.py:168` (`sale_order_id` — замовлення, з якого продано ремонт, інший зміст) | замовлення меблів, на яке скарга |
+| `repair.order.td_part_id` | розширення, ввід | немає | деталь специфікації замовлення |
+| `repair.order.td_photo` | розширення, ввід | вкладення чату (`mail`) | фото в картці канбана |
+| `repair.order.td_remake_production_id` | розширення, ставить система | `mrp.production` створюється стандартом (`origin` = рекламація) | посилання на повторне виготовлення |
+| `repair.order.td_days_open` | розширення, compute | `repair/models/repair.py:67` (`schedule_date`), `create_date` | — |
+| `repair.order.td_overdue` | розширення, compute | `repair/models/repair.py:67` | — |
+| `sale.order.td_claim_ids` | розширення, обернений зв'язок | — | рекламації замовлення |
+| `sale.order.td_claim_count` | розширення, compute | — | смарт-кнопка |
+| `sale.order.td_cost_plan` | розширення, compute | `sale_margin/models/sale_order.py:10` (`margin`): план = виручка − маржа | — |
+| `sale.order.td_cost_material` | розширення, compute | як `mrp/report/mrp_report_mo_overview.py:227` (спожите × `standard_price`) | — |
+| `sale.order.td_cost_work` | розширення, compute | як `mrp/report/mrp_report_mo_overview.py:385` (години × `costs_hour`) | — |
+| `sale.order.td_cost_fact` | розширення, compute | сума двох рядків вище | — |
+| `sale.order.td_margin_fact` | розширення, compute | — | — (похідна) |
+| `sale.order.td_margin_fact_pct` | розширення, compute | — | — (похідна) |
+| `sale.order.td_margin_plan_pct` | розширення, compute | `sale_margin/models/sale_order.py:11` (`margin_percent`) | — (та сама зважена формула) |
+| `sale.order.td_cost_deviation_pct` | розширення, compute | — | — (похідна) |
+| `sale.order.td_cost_has_fact` | розширення, compute | стан МО `mrp/models/mrp_production.py:177` | — |
+| `purchase.order.line.td_history_price` | розширення, compute (збережене для фільтра) | `purchase/models/purchase_order_line.py:46` (`price_unit` попередніх закупівель, читаємо) | — |
+| `purchase.order.line.td_price_delta_pct` | розширення, compute | те саме | — |
+| `purchase.order.line.td_overpay` | розширення, compute | те саме | — |
+| `purchase.order.line.td_over_history` | розширення, compute | те саме | — |
+| `res.currency.rate.td_source` | розширення, ставить система | `odoo/addons/base/models/res_currency.py:353-355` (дата й курс — стандарт; джерела немає) | позначка «НБУ / імітація» |
+| `sale.order.td_bas_state` | розширення, ставить система (імітація) | немає (обміну з BAS у CE немає) | статус обміну H-12 |
+| `td.mebli.order.change` | нова (S-18) | трекінг змін `mail` (`commitment_date`, сума) — без причини й версії | версія зміни з причиною «Клієнт/Компанія/Постачальник»; ціна й дата «до/після» — знімки стандартних полів, ставить система, не ввід |
+| `td.mebli.order.change.wizard` | нова (TransientModel) | — | діалог «Створити зміну» |
+| `sale.order.td_change_ids` | розширення, обернений зв'язок | — | вкладка «Зміни» |
+| `sale.order.td_change_open` | розширення, compute | — | кнопки |
+| `td.mebli.spec.import` | нова (TransientModel) | стандартний імпорт CSV `base_import` — без розпізнавання назв колонок CAD-вивантажень і без деталей | розпізнавання колонок за синонімами заголовків → `td.mebli.part` |
+| `sale.order.td_dash_paid` | розширення, compute | `account/models/account_move.py:565` (`amount_residual` рахунків) | — |
+| `sale.order.td_dash_due` | розширення, compute | `amount_total` − оплачене | — |
+
+**Рецензія Архітектора Odoo 19, коло 1 — що змінено в моделі даних:** `repair.order.td_reason` і `repair.order.td_payer` **прибрано** (дублювали стандарт): причина рекламації — стандартні теги `repair.order.tag_ids` (`repair/models/repair.py:63`, модель `repair.tags` `:781`; набір причин — дані конфігурації, у демо — 5 тегів «Виробництво», «Монтаж», «Постачальник», «Транспорт», «Клієнт»), «хто платить» — стандартне `repair.order.under_warranty` (`repair/models/repair.py:64`: гарантія — фабрика, ціна запчастин 0; без гарантії — клієнт; відшкодування постачальником — тег «Постачальник», окремого поля немає — рішення AI, ризик). `td_piece_rate` (операція) і `td.mebli.accrual.piece_rate` — Monetary з валютою. Нові правила доступу (`ir.rule`): акт — за видимістю виїзду (дзеркало `project.task_visibility_rule`), редагує бригада виїзду лише чернетку, підписаний акт — лише читання для всіх; замір-лист — свій замірник / продавець, керівники й цех — усі, multi-company; нарахування — multi-company.
+**Рецензія Архітектора Odoo 19, коло 2 — що змінено в моделі даних:** `td.mebli.install.act.crew_amount_signed` (нове збережене поле нової моделі; пишеться під час підпису) замінює читання суми підписаного акта SQL-запитом у compute; `mrp.workcenter.productivity.copy()` переносить працівника рядка на копію при розщепленні таймера (`mrp/models/mrp_workcenter.py:594-605`); `mrp.workorder.td_worker_names` — лише відкриті рядки часу; `td.mebli.accrual.hours` — лише читання; `td.mebli.quality.check` — створення лише планшетом після PIN (права створення в `mrp.group_mrp_user` прибрано); правила читання `td.mebli.install.defect` — як в акта. Нових моделей і полів на стандартних моделях немає (DM-table без змін).
 
 ## 3. Модулі
 
-Мова: рядки коду й подань — англійською, переклад `i18n/uk.po` у кожному модулі; демо-дані — українською (це дані, не
-інтерфейс). База показу ставиться з `--load-language=uk_UA`. Версії — `19.0.1.0.0`, ліцензія LGPL-3, автор — ToDo.
-Залежності лише від Community; жодних `mrp_workorder`, `web_gantt`, `mrp_maintenance`.
+Граф (стрілка — `depends`; лише CE): `mrp_account, stock` → **`td_mebli_mrp`** → **`td_mebli_sale`** (`+ sale_mrp, sale_margin`) → **`td_mebli_cutting`** → **`td_mebli_dashboard`** → **`td_mebli_demo`**. Нові (повний обсяг): `td_mebli_measure` (S-15; `crm, sale`), `td_mebli_shop` (S-06 кіоск за PIN, точки якості з фото, S-16; `mrp, hr, stock`), `td_mebli_purchase` (S-08 ціна ↔ історія; `purchase_stock`), `td_mebli_install` (S-12, S-17 нарахування; `project`), `td_mebli_claim` (S-14; `repair`), `td_mebli_cost` (S-11; адаптований REUSE-01; `sale_mrp, project_mrp_account`), `td_mebli_bas` (статус обміну — імітація). EE — `td_mebli_*_ee` (`auto_install`) лише після доступу до EE.
+Усі модулі: версія `19.0.1.0.0`, ліцензія LGPL-3 (за замовчуванням; остаточно — рішення власника, №14 відкрите), AGPL-залежностей немає, OCA — лише ідеї. Рядки коду й подань англійською, переклад у `i18n/uk.po`.
 
+**Повний обсяг, хвиля 1 — фактичний граф (лише CE, без EE/AGPL-залежностей):**
+`td_mebli_mrp` (+ `td.mebli.spec.import`, S-03) → `td_mebli_sale` (+ `td.mebli.order.change`, S-18) → `td_mebli_cutting` (S-04);
+`td_mebli_sale` + `sale_crm` → **`td_mebli_measure`** (S-15); `td_mebli_sale` + `hr_hourly_cost`, `sale_stock` → **`td_mebli_shop`** (S-06 кіоск, якість; S-16 лист і блок відвантаження) → **`td_mebli_install`** (+ `sale_project`; S-12 акти, S-17 нарахування);
+`td_mebli_sale` + `repair` → **`td_mebli_claim`** (S-14); `td_mebli_sale` → **`td_mebli_cost`** (S-11, ідея REUSE-01 без копіювання коду: репо REUSE-01 у сесії не читалось); `purchase_stock` → **`td_mebli_purchase`** (S-08 ціни ↔ історія); `sale` → **`td_mebli_ua`** (F-26 курс НБУ, F-47 статус BAS);
+усі → **`td_mebli_dashboard`** (S-19, переписано: 11 карток BOX §11.1, корінь `.td_dash_grid`, картка `.td_card`, кожна картка відкриває рівно ті записи, які порахувала; одна зважена маржа) → **`td_mebli_demo`**.
+Окремого `td_mebli_bas` і `td_mebli_*_ee` немає (EE недоступна — «не перевірено»). Плитку завантаження виправлено (відкладений minor Архітектора): відкрита робота з плановим стартом до +7 днів ÷ тижневих годин календаря дільниці (не вся черга); вся черга — окремим рядком «Відкрита черга, тижнів роботи».
+
+**Зразок змінює:**
+- `td_mebli_sale` — `depends` + `sale_purchase_stock`, `purchase_mrp` (CE, `auto_install`-ланки стандарту); **моделі `td.mebli.order.item` немає** (видалено разом із правами); лише compute-поля (не збережені, лише читання): `sale.order.td_purchase_line_ids`, `td_shop_date`, `td_forecast_date`, `td_delay_days`, `td_late_line_id`, `td_late_item`, `td_delay_reason`; `purchase.order.line.td_date_ready`; подання: банер «дата під загрозою», блок дат у формі, вкладка «Закупівлі під замовлення» (рядки стандартних замовлень на купівлю, `readonly`, без створення/видалення; група `purchase.group_purchase_user`), колонки в списку; переклад `i18n/uk.po`; тести `tests/test_order_dates.py`.
+- `td_mebli_mrp` — специфікація замовлення копіює стандартні `produce_delay` і `days_to_prepare_mo` шаблону (раніше 0 → кінець МО «місяці»).
+- `td_mebli_demo` — `dates.py`: вигадані постачальники; замовні позиції як стандартні товари (MTO + «Купити», `product.supplierinfo` з постачальником і строком), рядки специфікацій-шаблонів кухні й шафи-купе, `produce_delay` 12 дн. шаблонів; замовлення показу «кухня + шафа-купе» підтверджується — стандарт створює МО і 3 закупівлі; комірник у модулі Закупівлі підтверджує їх, вводить перенесену фарбоцехом дату (`date_planned`) і приймає профіль купе; `showcase.py` — менеджеру салону й комірнику група «Закупівлі: користувач».
+
+**Вимога до модуля дашборда:** корінь екрана — `td_dash_grid`, картка — `td_card` (переписування `td_mebli_dashboard` під KPI BOX §11.1 — повний обсяг).
+
+## 4. Продаючі вимоги (обов'язково)
+- Історія «біль → вигода» на кожен крок: зразок — PAIN-16 (ROLE-02, «обіцяли два місяці, вийшло три») → банер і червона прогнозна дата **до** зриву, причина «постачальник» і позиція, що зсуває.
+- Брендинг демо-клієнта: «Меблева фабрика «Демо»» з логотипом (вигадана, `OWNER-INTAKE.brand.demo_client: вигаданий`); ролі-користувачі з логінами `<роль>@demo-fabryka.example` і аватарами (менеджер салону, технолог, начальник виробництва, комірник, фінансист, власник).
+- Калібровані дані: маржа замовлень з розкидом і нижчими за поріг (замовлення показу з урахуванням закуплених позицій — близько 20 %); замовлення показу має 3 закупівлі: фасади — пізно, стільниця — вчасно, профіль купе — отримано; у книзі замовлень одне відкрите замовлення із зсувом через цех («Компанія»). Закупівель у старих замовленнях книги немає (вони підтверджені до появи закуплених позицій у специфікаціях-шаблонах).
+- Видимий ефект у кадрі: дні зсуву, прогнозна дата, закупівля й постачальник, смарт-кнопка «Купівлі»; без «Новий», без порожніх обов'язкових полів, без англійських підписів, текст не обрізаний.
+- Чесні позначки імітацій (§5) — компактно, на екрані й у README.
+
+## 5. Імітації
+- Зразок (S-02): імітацій немає — закупівлі, дати постачальника й отримання — стандартні документи Закупівель.
+- **Курс НБУ (F-26):** код завантаження в стандартні `res.currency.rate` справжній, онлайн вимкнено (`td_mebli_ua.nbu_online`); у демо курси EUR/USD записано з таблиці демо (не реальні) з позначкою джерела «НБУ (імітація, без мережі)». Причина: мережі до НБУ в середовищі зрізу немає, а реальні курси в кадрі — дані з пам'яті.
+- **Обмін з BAS (F-47):** лише статус на замовленні й кнопка «Передати в BAS (імітація)»; самого обміну немає (інтеграція H-12, окремий проєкт).
+- **Файли CAD (F-27):** справжній імпорт CSV-вивантаження з розпізнаванням колонок за заголовками; читання форматів самих програм — не в зрізі (позначено в діалозі).
+- **Підпис і фото на телефоні:** стандартний віджет підпису й завантаження файлу; камера й підпис пальцем на реальному пристрої — не перевірено (немає пристрою).
+- **Оптимізатор розкрою** — не показується (OUT-02); код попереднього зрізу лишився в `td_mebli_cutting`, у сценах не відкривається.
+
+## 6. Сценарії зйомки
+| Крок SALES §6 | Екран | Роль | PAIN-xx | Рядок SALES §2 | Що видно (ефект) | Мобільний |
+|---|---|---|---|---|---|---|
+| **0 (зразок) — сцена 4 «Замовні фасади затримуються»** | S-02 | ROLE-02 менеджер салону (`salon`) | PAIN-16 | 5 «Нам вистачає Excel і Viber» | обіцяна 4 груд.<!--fact:facts.00-late-facades.promised_date--> і прогнозна 18 груд.<!--fact:facts.00-late-facades.forecast_date--> дата, зсув на 14<!--fact:facts.00-late-facades.delay_days--> днів, причина «Постачальник», закупівля «Фасади МДФ фарбовані…» від «Фарбоцех «Палітра»», дата постачальника в закупівлі 6 груд.<!--fact:facts.00-late-facades.late_item_supplier_date-->, готовність за позицією 18 груд.<!--fact:facts.00-late-facades.late_item_ready-->, закупівля P00001<!--fact:facts.00-late-facades.late_purchase-->; менеджер салону — лише читання закупівель свого замовлення (без групи «Закупівлі», смарт-кнопки немає); планова маржа 20,02%<!--fact:facts.D_late.margin_percent--> | ні (повний обсяг — так) |
+| 1 Замір | S-15 | ROLE-09 замірник (`measure`) | IM:S23 «холодильник виступає» | 1 | «Холодильник: глибше на 30 мм» до виробництва | m1 |
+| 1а Ціна з розмірів | S-01 → S-02 | ROLE-02 (`salon`) | ручний прорахунок | — | ціна з розмірів у рядку, маржа | — |
+| 2 Пропозиція | S-03 імпорт CSV, S-02 | ROLE-01 технолог (`tech`) | ручне перенесення деталей | — | колонки розпізнано, деталі в специфікації | — |
+| 3 Зміна фасадів (B) | S-02 «Зміни» | ROLE-02 | договір | — | версія 2, причина «Клієнт», ціна й дата | — |
+| 5 Цех і комплектація | S-06, S-16 | планшет + PIN; ROLE-05 комірник (`store`) | контроль комплектації | — | «Взято» за PIN; «Не запаковано: задня стінка» | m2 |
+| 5а Розкрій і якість (B) | S-04, S-06 | ROLE-01 | обрізки, пакет | — | пакет за декором, обрізки, крок якості з фото | — |
+| 6 Монтаж і акт | S-12, S-17 | ROLE-10 бригадир (`fitter`), ROLE-06 (`fin`) | «монтаж тягнеться тижнями»; % бригаді в Excel | — | два виїзди S00123; акт з недоліком; % бригаді; премії й штрафи | m3 |
+| 7 Рекламація, план ↔ факт | S-14, S-11 | ROLE-03 (`chief`), ROLE-06 | «рекламацію не виконували 4 місяці» | — | канбан, «Прострочено»; план ↔ факт | — |
+| 8 Дашборд | S-19 (+ S-08 ціни) | ROLE-08 власник (`owner`) | KPI перелік IM §3.2 | — | 11 карток, картка = drill-down | m5 (+ m4 S-02) |
+
+**Перезйомка на запит власника «деталі там, де працюють» (2026-11-12):** база перестворена, `run_all.sh --no-build` одним прогоном (прохід 1 -> `fix_dates` -> прохід 2), перезнято всі кліпи й кадри, крім прийнятого зразка. Нові кадри (PASS2, лише читання): `18-mo-parts` (МО шафи-купе WH/MO/00110, вкладка «Деталі»), `19-mo-from-parts` (те саме МО, «Компоненти» з позначкою «З деталей»), `20-tablet-parts` (планшет, діалог «Деталі» завдання розкрою WH/MO/00109), мобільний `m6-tablet-parts` (картки деталей з картки планшета). Кліпи: `D_csv` — після імпорту перехід у МО WH/MO/00109, вкладка «Деталі»; `D_tablet` — після «Взято» кнопка «Деталі»; `M_tablet` — «Деталей: N» у картці перед «Зроблено». Кадр `05-tablet` — кнопки «Деталі» в рядках планшета.
+
+**Хвиля 3 (знято, 2026-11-12):** база `demo-mebli-full` перестворена після перекалібрування (README §8а «Хвиля 3»), повна зйомка `run_all.sh --no-build` (прохід 1 -> `fix_dates.sh mrp_workcenter_productivity date_start` -> прохід 2) — десктоп перезнято разом з телефоном, щоб цифри збігались. `scenario-mobile.steps.mjs` — m1 замір-лист, m2 планшет (група «Розкрій»), m3 акт `АКТ-0002` (фото й чек-лист), m4 замовлення S00123, m5 дашборд (PASS2). `clips.mjs` — 5 мобільних кліпів: PASS1 += `M_tablet` («Зроблено» за PIN, після `D_tablet`), `M_act` (фото, підпис, «Підписати акт»); PASS2 += `M_dashboard` (після `D_dashboard`), `M_late`, `M_measure`. Факти кроків 8 і 9 замінено на значущі (`failed_check`, `show_visits`) замість усього тексту списку.
+
+**Хвиля 2 (знято, 2026-11-12):** `shoot/scenario.steps.mjs` — 18 кроків (0–17; новий крок 17 `quotation-margin` — маржа пропозиції до підтвердження; крок 7 — `offcuts`, ділові обрізки, бо форма завдання розкрою показує карту-імітацію, OUT-02; крок 0 перейменовано на `late-facades`, щоб не перезаписати прийнятий кадр `00-sample.png`); PASS1 = 3, 5; PASS2 = 15, 16 (дашборд першим), 0, 1, 2, 17, 4, 6–14; `STEPS` експортується в порядку проходів. `shoot/clips.mjs` — 11 кліпів: PASS1 = `D_csv`, `D_tablet`, `D_kit`, `D_cutting` (нове завдання розкрою з двох МО S00123, чернетка без результату оптимізатора); PASS2 = `D_dashboard` (першим), `D_late` (сцена 4 повного обсягу), `D_measure`, `D_change`, `D_install`, `D_accruals`, `D_claims`; `D_sample` не перезнімається (§7). Звірка селекторів на живій базі виправила: клік рядка заміру (аватар відкривав картку користувача), пошук специфікації `S00123/391` перед відкриттям, розгортання групи «Розкрій» і рядок `WH/MO/00109`/`00110` на планшеті, кнопку «Дії», закриття випадного меню фільтрів, підсумок план ↔ факт, пару DASH-drill (кількість замовлень картки маржі = записів drill-down). Дефекти модулів, знайдені зйомкою й виправлені: імпорт CSV технологом (група «Користувач» виробництва) падав на записі в чаті специфікації (`td_mebli_mrp/wizard/spec_import.py`: запис у чат — від імені системи з автором-користувачем, тест); картки дашборда налізали одна на одну у вікні 1440×810 (`td_mebli_dashboard/static/src/dashboard.scss`: сітка без стискання рядків, компактніші шрифти). Запуск — рівнозначно `run_all.sh --no-build` без мобільного проходу (хвиля 3): база перестворена командами нижче; сервер `--workers=0 --no-database-list`; `LATIN_OK=mebli,full` (назва бази в прихованому `.oe_topbar_name` меню користувача, `web/static/src/webclient/user_menu/user_menu.xml:10-13`, `d-none` поза режимом розробника — хибне спрацювання `latinWords`); `fix_dates.sh demo-mebli-full mrp_workcenter_productivity date_start` (рядки часу планшета «Взято»). `shoot/data/kitchen-spec.csv` — вигаданий CSV сцени 2.
+
+**База показу `demo-mebli-full` (Крок 5; C-00 `tools/odoo/` у репо немає — прямі команди, рівнозначні `build_db.sh`):**
 ```
-td_mebli_mrp ──► td_mebli_sale ──┐
-      └────────► td_mebli_cutting ┴─► td_mebli_demo
+dropdb --if-exists demo-mebli-full
+$ODOO_PY $ODOO_BIN -c $ODOO_CONF -d demo-mebli-full -i td_mebli_demo --load-language uk_UA --without-demo=True --stop-after-init
+$ODOO_PY $ODOO_BIN -c $ODOO_CONF -d demo-mebli-full -u td_mebli_mrp,td_mebli_sale,td_mebli_cutting,td_mebli_measure,td_mebli_shop,td_mebli_install,td_mebli_claim,td_mebli_cost,td_mebli_purchase,td_mebli_ua,td_mebli_dashboard,td_mebli_demo --load-language uk_UA --i18n-overwrite --stop-after-init
+$ODOO_PY $ODOO_BIN shell -c $ODOO_CONF -d demo-mebli-full < package/addons/td_mebli_demo/scripts/seed_showcase.py   # seed_showcase -> seed_dates -> seed_full, commit
+psql -d demo-mebli-full -c "SELECT count(*) FROM td_mebli_install_act"   # > 0, інакше seed не закомічено (--check-table td_mebli_install_act)
 ```
 
-### 3.1 `td_mebli_mrp` — параметричний виріб і BoM під замовлення
-`depends: mrp_account, stock`. Без залежності від `sale`: генератор приймає розміри словником і тестується окремо.
+Зразок: прохід 1 порожній; прохід 2 — крок 0 і кліп `D_sample`. Повний обсяг (хвиля 2): сцени `facts.json` — `NN-<крок>` (скриншот-кроки) і `D_*` (кліпи); маркери README/PLAN зразка переведено на `facts.00-late-facades.*` і `facts.D_late.*` (той самий екран S-02, ті самі значення).
 
-Моделі й поля:
-- `product.template` (inherit): `td_is_parametric` (Bool), `td_width_nominal/td_height_nominal/td_depth_nominal`
-  (Int, мм), `td_width_min/max`, `td_height_min/max`, `td_depth_min/max` (Int), `td_part_rule_ids` (O2m),
-  `td_edge_allowance_mm` (Int, default 30). Для матеріалів: `td_material_kind` (Selection: board / edge / fitting),
-  `td_sheet_length_mm`, `td_sheet_width_mm`, `td_thickness_mm` (Int), `td_waste_pct` (Float, default 15).
-  Constraint (`models.Constraint`): min ≤ nominal ≤ max.
-- `product.attribute` (inherit): `td_dimension` (Selection: width / height / depth), `td_component_role`
-  (Selection: body_board / facade_board / edge / fitting_set).
-- `product.attribute.value` (inherit): `td_component_product_id` (M2o `product.product`) — яку плиту, кромку чи
-  комплект фурнітури означає значення.
-- `td.mebli.part.rule` (нова; `_order = sequence`): `product_tmpl_id`, `sequence`, `name` (Боковина, Дах…), `qty`,
-  `material_role` (body_board / facade_board / fixed), `fixed_material_id` (для ДВП задньої стінки),
-  лінійні формули без `safe_eval`: `length = len_w·W + len_h·H + len_d·D + len_const`, так само `width_*`;
-  `edge_long_sides`, `edge_short_sides` (0–2). Constraint: результат > 0 на номінальних розмірах.
-- `td.mebli.part` (нова, рядки специфікації деталей замовлення): `bom_id`, `rule_id`, `name`, `material_id`, `qty`,
-  `length_mm`, `width_mm`, `area_m2` (compute, stored), `edge_product_id`, `edge_length_m` (compute, stored),
-  `cutting_job_id` (додає `td_mebli_cutting`).
-- `mrp.bom` (inherit): `td_order_bom` (Bool, readonly), `td_template_bom_id`, `td_width/td_height/td_depth`,
-  `td_part_ids` (O2m), `td_part_count`, `td_board_area_m2`, `td_edge_length_m`. Override `_bom_find_domain`
-  (`mrp/models/mrp_bom.py:370`): `& Domain('td_order_bom', '=', False)`.
-- `mrp.routing.workcenter` (inherit): `td_time_basis` (fixed / per_part / per_edge_m / per_board_m2),
-  `td_time_rate` (хв на одиницю бази).
-- Метод `mrp.bom._td_generate_order_bom(product, dims, selections)` → новий BoM: копія шаблонного BoM виробу
-  (операції й постійні рядки), деталі за правилами, рядки плит (м² = Σ площ × (1 + `td_waste_pct`)), рядки кромки
-  (м = Σ сторін + припуск), фурнітура з атрибута; `time_cycle_manual` операцій за `td_time_basis`.
+## 7. Складність і ризики
+`complexity.md` — повний обсяг (Крок 8). Відомі ризики й дефекти для **беклогу A-11**:
+- **Ризик переходу клієнта на EE (рецензія Архітектора, коло 1):** `mrp.workcenter.productivity.td_employee_id` + кіоск `td.mebli.kiosk`, `td.mebli.quality.check` і `td.mebli.install.act` на EE дублюватимуть Shop Floor (працівник на рядку часу), Quality (перевірки з фото) і Field Service (звіт виїзду з підписом). При переході — перенесення даних `td_` → стандартні моделі EE (працівник рядків часу, перевірки якості, звіти виїздів) і вимкнення UI `td_` (меню, кнопки планшета, форми актів); мостів `td_mebli_*_ee` у зрізі не будуємо (EE не перевірено). Рядок беклогу A-11: «Міграція td_ → EE (Shop Floor / Quality / Field Service) і вимкнення td_ UI» — обсяг оцінює A-08/A-11 (без годин у зрізі, 0.3.x).
+- Перерахунок `_compute_date_finished` (`mrp_production.py:786-795`) при `produce_delay = 0` зсуває кінець МО за вільністю дільниць — виправлено в зразку: специфікація замовлення копіює `produce_delay` шаблону; у шаблонах кухні й шафи-купе демо — 12 дн., решта шаблонів — 0 (заповнити в повному обсязі).
+- Закрито (рецензія Архітектора, коло 1): `mrp.workcenter.td_capacity_hours` — compute з календаря дільниці (`hours_per_week` × паралельність), у демо дільниці отримують стандартні календарі `resource.calendar`; відкриті години — `workcenter_load`.
+- Закрито (рецензія Архітектора, коло 2): N1 (major) — «Пауза»/«Зроблено» на замовленні з перевищенням планового часу падали з AccessError (копія таймера стандартом несла працівника) — `copy()` переносить того самого працівника, тести від користувача-планшета й `mrp_user` не-менеджера; N2 — працівник у планшеті лише з відкритим рядком часу; N3 — drill-down картки маржі без порожніх колонок факту; N4 — калібрування рекламацій і «Готове, не відвантажене»; N5 — планшет на телефоні картками; N6 — години нарахування лише читання, перевірка якості лише через кіоск; minor — правило читання недоліків акта, сума акта — збережене поле підпису. Рішення — README §10 R2-1…R2-9.
+- Готовність за закупленою позицією = дата поставки + `produce_delay` усієї специфікації (стандартне припущення планування МО: компоненти потрібні на старті). Для фасадів, що монтуються наприкінці, це песимістично; точніше — від операції, у якій компонент споживається (`mrp.bom.line.operation_id`, стандарт), — уточнення для повного обсягу, нових полів не потребує.
+- Старі замовлення книги не мають закупівель (підтверджені до додавання закуплених компонентів у шаблони) — для дошки S-05 у повному обсязі seed треба підтверджувати замовлення після налаштування шаблонів.
+- Заголовок колонки «Одиниця» у рядках замовлення стандартного подання обрізано до «Один» (ширина колонки `sale.view_order_form`) — правка ширини в A-11.
+- Попередження Odoo «Access Rights Inconsistency» (поле `margin_percent`) у списках `td_mebli_sale/views/order_cost_report_views.xml` — з попереднього зрізу, не зразка.
 
-Подання: вкладка «Деталі виробу» на формі товару (`invisible="not td_is_parametric"`), поля матеріалу на вкладці
-«Запаси»; поля атрибута й колонка компонента у списку значень атрибута; на формі BoM — банер «Специфікація під
-замовлення», вкладка «Деталі» (список `td.mebli.part`), підсумки площі/кромки; у списку операцій — база й норма часу.
-Меню: «Виробництво → Налаштування → Правила деталей» (список `td.mebli.part.rule`, групування за виробом).
-Права: `mrp.group_mrp_user` — читання правил і деталей, запис деталей; `mrp.group_mrp_manager` — повні.
+- **Прийнятий екран S-02 (N-11, було / стало):** було — шапка форми зі стандартними кнопками; стало — додано кнопки «Створити зміну» (сцена 3) і «Передати в BAS (імітація)», поле «Обмін з BAS» біля умов оплати, смарт-кнопки «Заміри», «Не запаковано»; банер, блок дат і вкладка «Закупівлі під замовлення» не змінювались. Перезйомку `D_sample` у хвилі 2 — лише після згоди людини (або сховати нові кнопки для ролі в кадрі).
+- **Рішення AI (0.3.x, хвиля 2) щодо `D_sample`:** прийнятий зразок `D_sample` (і кадр `screens/00-sample.png`) НЕ перезнімається; у кліпі сцени 4 повного обсягу (`D_late`, крок `00-late-facades`) екран S-02 показується як є — з кнопками «Створити зміну», «Передати в BAS (імітація)» і полем «Обмін з BAS».
+- **Застаріле — ВИДАЛЕНО в хвилі 3 (рішення AI; 102 файли, близько 98,6 МБ, перелік — README §11; файли в історії git до `bee9933`). Список хвилі 2:** `video/rec/D_board|D_cut|D_dash|D_margin|D_prod|D_sale|D_store.{mp4,json}` (десктоп старого зрізу; нові кліпи — `D_late`, `D_measure`, `D_csv`, `D_change`, `D_tablet`, `D_kit`, `D_cutting`, `D_install`, `D_accruals`, `D_claims`, `D_dashboard`); `video/rec/M_dash|M_margin|M_prod|M_sale|M_store.{mp4,json}` (мобільні старого зрізу — замінить хвиля 3); `video/rec/F_intro|F_outro|R_hook|R_outro.{mp4,json}` (заставки A-21c старого зрізу); **`video/rec/cookies.json`** (кеш сесій старого зрізу в теці передачі A-21c — порушує recording.md, видалити першим); `video/mebli-full-16x9.mp4`, `video/mebli-reels-9x16.mp4`; `screens/01-katalog-vyrib.png` … `screens/17-dashboard-kerivnyka.png` (17 кадрів старого зрізу; нові — `screens/00-late-facades.png` … `17-quotation-margin.png`; `00-sample.png` — прийнятий кадр, не застарілий); `screens-mobile/*` (27 файлів старого зрізу — хвиля 3); `SHOW.md`, `SHOW.html`, `SHOW.pdf`, `SHOW.tpl.md`; `shoot/_card_F_intro.html`, `_card_F_outro.html`, `_card_R_hook.html`, `_card_R_outro.html`, `shoot/brand.css`, `build_video.mjs`, `montage.mjs`, `make_show.mjs`, `make_images.mjs`, `rec_cards.mjs`, `check_english.sh`, `verify_video.sh` (інструменти монтажу A-21c старого зрізу); `brand-todo/` (копія бренду для A-21c).
+- **Хвиля 3 — рішення AI щодо розбіжностей хвилі 2 (README §10):** (1) імпорт CSV — у майстрі A-11 вибір «Замінити / Додати», типово «Замінити» (W3-3, ризик: втрата ручних правок); (3) дашборд — компактна верстка, 11 карток на одному екрані 1440×810 (W3-1); «% бригаді» ~84 тисячі на місяць — наслідок помилки seed (дата підпису актів затиралась ORM-записом) і одного складальника/бригади на весь обсяг: виправлено дату, частка 2.0, 4 складальники -> по 16–30 тисяч (W3-2); `D_accruals`, `D_install` і весь десктоп перезнято.
+- **Хвиля 2 — ризики й дефекти для A-11:** (1) імпорт CSV додає деталі до вже згенерованих з опцій (у `S00123/391` після імпорту 13 шт. замість заміни) — потрібне рішення «замінити / додати» в майстрі; (2) усі 25 завдань розкрою демо мають результат-імітацію (`result_source = simulated`): картка «Відхід розкрою» і її drill-down показують колонку «Джерело результату: Імітація» — у кліпах не відкривається (OUT-02), сцену 5а знято через нове завдання-чернетку й ділові обрізки; (3) дашборд у вікні 1440×810 не вміщається на один екран (третій ряд карток нижче згину) — для A-21c прокрутка або менший масштаб; (4) `fix_dates.sh … mrp_workcenter_productivity date_start` зсуває й 3 рядки seed, створені сьогодні (збережена тривалість не перераховується; в кадрі не видно); (5) обрізані заголовки стандартних колонок («Замовлення на вир…», «Планова собі…», «Не вміщ…») — ширини в A-11; (6) UI-empty WARN: рядок-послуга монтажу з нульовою ціною «у вартості замовлення» і «Отримано 0,000» у закупівлях S00123 — так задумано (AI-08), не помилка; (7) латиниця: назва бази в прихованому меню користувача — `LATIN_OK=mebli,full`, зауваження до `latinWords` (перевіряє видимість контейнера, а не тексту).
+- **Хвиля 1 (нове):** ~~відрядна = години × `hourly_cost`~~ → **хвиля 2 (AI-08):** відрядна = розцінка операції (`mrp.routing.workcenter.td_piece_rate`, за одиницю бази або за операцію) × кількість бази специфікації замовлення × кількість зробленого, лише для завершених робочих замовлень; частка працівника — за часом рядків планшета; методику перевірити на пілоті (A-06); кіоск — спільний користувач-планшет і PIN, без публічного маршруту (безпечніше, але потрібна сесія планшета); у CE таймер робочого замовлення один на користувача — двоє працівників на одному замовленні через один планшет одночасно не працюють (межа `td_` кіоску, години A-08); «Застряглі» — без руху понад 5 днів (параметр у коді, у A-11 — налаштування); фото в демо — зображення товарів-заглушки.
 
-### 3.2 `td_mebli_sale` — конфігуратор, ціна, передача у виробництво, планова собівартість
-`depends: td_mebli_mrp, sale_mrp, sale_margin` (`sale_stock_margin` ставиться сам — auto_install).
+- **Зміни на запит власника «А почему в производстве детали отдельной страницей?» (2026-11-12, власник: «Делай»).** Модель не змінено: `td.mebli.part` — деталі розкрою специфікації замовлення, не товари складу (таблиця «Модель даних»). Деталі показано там, де працюють, лише читанням: (1) вкладка «Деталі» у виробничому замовленні — `mrp.production.td_part_ids` (related `bom_id.td_part_ids`, без store), підсумки «Кількість деталей / Площа плит / Кромка» — на все МО (деталі одного виробу × кількість МО; список деталей — на один виріб, підпис у вкладці); (2) планшет цеху — `mrp.workorder.td_part_ids` / `td_part_count` (related через МО, без store), кнопка «Деталі» в рядку списку й «Деталей: N» у картці телефона відкривають діалог (форма `td_mebli_mrp.mrp_workorder_td_parts_form`: на телефоні — картки деталей, канбан планшета не ламається); (3) позначка «З деталей» — `mrp.bom.line.td_from_parts` і `stock.move.td_from_parts` (compute без store): плита чи кромка, яку ріжуть із деталей специфікації, **і** кількість рядка дорівнює потрібній деталям (площа + плановий відхід, довжина кромки); рядок, змінений вручну, або деталі, додані імпортом без перерахунку, позначки не мають (правда, а не ярлик). Підказка над «Компонентами» специфікації. Нового вводу немає; DM-table PASS (+8 рядків). Тести `td_mebli_mrp/tests/test_parts_view.py` (8). **Ризик/беклог A-11:** імпорт CSV додає деталі, але не перераховує рядки плити й кромки специфікації (у `S00123/391` після імпорту плита ЛДСП без позначки, а «Площа плит» МО більша за «Спожити») — разом із W3-3 «Замінити / Додати» в майстрі імпорту перераховувати рядки з деталей (зачіпає плановану собівартість і маржу).
 
-- `sale.order.line` (inherit): `td_width/td_height/td_depth` (Int, compute stored з
-  `product_custom_attribute_value_ids` за `td_dimension`, readonly=False), `td_size_factor` (Float, compute stored:
-  (W·H)/(W₀·H₀), межі задає min/max виробу), `td_bom_id` (M2o `mrp.bom`, copy=False),
-  `td_planned_material_cost`, `td_planned_operation_cost` (Monetary, stored).
-  `@api.constrains`: розміри в межах min/max виробу, вільне значення — ціле число мм.
-  Override `_get_display_price` (`sale/models/sale_order_line.py:642`): ціна прайсу (з `price_extra`) × `td_size_factor`;
-  `_compute_price_unit` — додати `@api.depends('td_width','td_height')`.
-  `action_td_generate_bom()` — кнопка «Сформувати специфікацію» в рядку (чернетка); при підтвердженні —
-  автоматично в `_action_launch_stock_rule` (`sale_stock/models/sale_order_line.py:387`) до super.
-  `_prepare_procurement_values` (`sale_stock/models/sale_order_line.py:284`): `values['bom_id'] = td_bom_id`.
-  `_compute_purchase_price` (`sale_margin/models/sale_order_line.py:21`): для параметричних рядків —
-  `product._compute_bom_price(td_bom_id)` (`mrp_account/models/product.py:63`).
-- `mrp.bom` (inherit): `td_sale_line_id` (M2o, readonly, index), `td_sale_order_id` (related).
-- Подання: у рядках SO — необов'язкові колонки розмірів і коефіцієнта, кнопка «Специфікація» (відкриває BoM);
-  на формі BoM — посилання на замовлення. Звіт «Собівартість замовлень» (pivot + list по `sale.order.line`,
-  домен — параметричні вироби; міри: сума, планові матеріали, планові операції, маржа, маржа %).
-  Меню: «Продажі → Звітність → Собівартість замовлень». Права: читання звіту — `sales_team.group_sale_salesman`.
+## 8. Відкриті питання до людини
+**Рецензія Архітектора, коло 2 (RETURN):** нових питань до людини немає; дрібні рішення — README §10, R2-1…R2-9.
+**Рецензія Архітектора, коло 1 (RETURN):** нових питань до людини немає; дрібні рішення — рішеннями AI з ризиком (README §10, R1-1…R1-8: один працівник на замовленні в кіоску, працівник цеху = без користувача Odoo, лічильник PIN у пам'яті, «Нарахувати» — начальник виробництва/бухгалтер, підписаний акт лише читання, «хто платить» = «Гарантія», маржа — одна цифра + підсумки звіту S-11, правило заміру в демо не звужує). Ризик переходу на EE — §7.
+**Хвиля 3:** нових питань до людини немає; дрібні рішення — рішеннями AI з ризиком (README §10, W3-1…W3-7), власник — вето.
+**Хвиля 1:** питання 1–4 закрито записом 36 (зразок прийнято, порядок — SALES §6, кіоск і курс НБУ — `td_` з межею годин, права — як у зразку). Нові:
+5. ~~Відрядна: години × ставка чи розцінка за операцію?~~ Закрито рішенням AI-08 (A-20-4): розцінка за операцію; зроблено в хвилі 2 (`td_piece_rate`).
+6. ~~Монтаж у вартості чи окремою позицією?~~ Закрито рішенням AI-08: параметр `answers.yaml` («у вартості замовлення» — як у демо, або окремий рядок-послуга); задача виїзду — стандартом в обох режимах.
 
-### 3.3 `td_mebli_cutting` — розкрій і ділові обрізки
-`depends: td_mebli_mrp, stock`.
-
-- `td.mebli.cutting.job` (нова, `mail.thread`): `name` (послідовність `CUT/`), `state`
-  (draft → sent → result → done / cancel), `production_ids` (M2m `mrp.production`), `part_ids` (O2m деталей з
-  BoM вибраних МО), `sheet_ids` (O2m), `kerf_mm` (4), `trim_mm` (10), `min_offcut_mm` (300),
-  `result_source` (Selection: simulated / imported) — **показується банером «Результат отримано з імітації програми
-  розкрою»**, `waste_pct` (compute), `export_attachment_id`.
-  Кнопки: «Передати на розкрій» (`action_send`: CSV деталей у форматі, близькому до поширених програм розкрою —
-  матеріал, довжина, ширина, к-сть, кромки, замовлення; файл — `ir.attachment`), «Отримати результат (імітація)»
-  (`action_simulate`), «Провести» (`action_done`).
-  Єдина точка входу результату — `_td_apply_result(payload: dict)`; імітатор і майбутній імпорт реальної програми
-  (A-11) подають однаковий `payload` — заміна імітації не змінює моделі.
-- `_td_simulate_optimizer()` — **імітація**: детермінований смуговий розкрій «спершу найбільші», пропил і обрізка
-  країв; спершу пробує наявні ділові обрізки того ж матеріалу, потім цілі листи; залишок ≥ `min_offcut_mm` по обох
-  сторонах — діловий обрізок, решта — відхід. Не претендує на оптимальність (концепція: «оптимізація власними засобами
-  Odoo — поза концепцією»).
-- `td.mebli.cutting.sheet`: `job_id`, `product_id` (плита), `lot_id` (лист або обрізок, з якого кроїмо),
-  `length_mm`, `width_mm`, `used_area_m2`, `waste_pct`, `placement_ids` (деталь, x, y, поворот),
-  `offcut_ids` (O2m `td.mebli.cutting.offcut`: length, width, area, `lot_id` після проведення).
-- `stock.lot` (inherit): `td_length_mm`, `td_width_mm`, `td_is_offcut`, `td_cutting_job_id`, `td_area_m2` (compute).
-- `mrp.production` (inherit): `td_cutting_job_ids`, смарт-кнопка «Розкрій».
-- `action_done`: для кожного МО — зняти резерв плит (`_do_unreserve`), створити рядки руху на партії листів/обрізків
-  пропорційно площі деталей, додати побічні рухи (`move_byproduct_ids`) з новими партіями-обрізками
-  (`td_is_offcut=True`, розміри, назва `OFF-<декор>-<N>`); кромка й фурнітура резервуються стандартно.
-- Подання: список/форма/пошук завдань (фільтри за станом, матеріалом), форма листа з розміщенням (таблиця, без
-  графіки), список «Ділові обрізки» (`stock.lot`, домен `td_is_offcut`, колонки довжина × ширина, площа, залишок,
-  групування за товаром-декором), розміри на формі партії.
-  Меню: «Виробництво → Розкрій → Завдання розкрою», «Склад → Продукти → Ділові обрізки». Кнопка «Створити
-  завдання розкрою» — дія сервера на списку МО.
-- Права: `mrp.group_mrp_user` — створення й робота із завданнями; `stock.group_stock_user` — читання завдань і
-  обрізків; `mrp.group_mrp_manager` — скасування й видалення.
-
-### 3.4 `td_mebli_demo` — каталог і склад для показу
-`depends: td_mebli_sale, td_mebli_cutting`. Дані в ключі `data` (шаблон баз — без демо, `--without-demo=True`);
-модуль клієнтам не ставиться (позначити в `description` і README). Усі назви брендів **вигадані**.
-
-- Налаштування: група `mrp.group_mrp_routings`, `mrp.group_mrp_byproducts`, `stock.group_production_lot`,
-  `product.group_product_variant` для `base.group_user`; активувати `stock.route_warehouse0_mto`; валюта компанії
-  UAH (у `post_init_hook`, лише якщо ще немає проводок).
-- Плити ДСП 16 мм (м², партії, лист 2800×2070, відходи 15 %): «Egren E1145 Дуб Сонома», «Kronvald K101 Білий
-  гладкий», «Kronvald K190 Антрацит»; МДФ 18 мм фасадна «Egren MF-01 Білий матовий»; ДВП 3 мм біла. Ціни 85–950 грн/м².
-- Кромка ПВХ (м): 0,4×19 і 2×22 під кожен декор (6–22 грн/м).
-- Фурнітура (шт): «Bluma — комплект петель з доводчиком», «Hetta Slide — розсувна система для шафи-купе»,
-  «Bluma — напрямні повного висування, к-т для комода», «Опори регульовані к-т». Одну позицію заведено з нестачею,
-  щоб у МО було видно «Немає в наявності».
-- Атрибути: «Декор корпусу» (3, `price_extra` 0 / +600 / +900), «Декор фасаду» (2), «Кромка» (0,4 мм / 2 мм +350),
-  «Фурнітура» (Стандарт / Преміум +2500), «Ширина, мм», «Висота, мм», «Глибина, мм» (вільні значення).
-- Вироби (маршрути «Виготовити» + MTO, `td_is_parametric`): «Шафа-купе 2-дверна» 1600×2400×600 (28 000 грн,
-  7 правил деталей), «Комод 4 шухляди» 800×850×450 (9 500 грн, 6 правил), «Кухонний модуль нижній 600»
-  600×720×560 (5 200 грн, 5 правил). Шаблонний BoM кожного — 4 операції.
-- Робочі центри: Розкрій (650 грн/год, на деталь 1,5 хв), Крайкування (550, 0,6 хв/м), Присадка (500, 1 хв/деталь),
-  Складання (400, фіксовано 45–90 хв).
-- Залишки (через `stock.quant` + `action_apply_inventory`, `stock/models/stock_quant.py:441`): по 6–10 листів на
-  декор (партії листів), 2 ділові обрізки «Дуб Сонома» (1200×700, 900×450), кромка 300–500 м.
-- Покупець: «Салон «Демо», покупець 1» (без ПІБ і контактів).
-- `scripts/show_scenario.py` (запуск через `odoo-bin shell`): відтворює сценарій §6 до кожного кроку — щоб
-  скриншоти можна було перезняти на чистій базі.
-
-## 4. Тести
-
-Запуск: `F3D_ADDONS_DIR=/home/user/industry-flow-test-mebli/package/addons F3D_TEST_INSTALL=td_mebli_demo
-/home/user/f3d/factory3d/tools/odoo/run_tests.sh mebli_t1 /td_mebli_mrp,/td_mebli_sale,/td_mebli_cutting`.
-Тести мають власні фікстури (не залежать від `td_mebli_demo`); тести, що зачіпають модулі поза `depends`, —
-`@tagged('post_install', '-at_install')` (ENV.md «Особливості Odoo 19»). Перед здачею — `boost:odoo19-lint`.
-
-| Модуль | Клас / тест | Що перевіряє |
-|---|---|---|
-| mrp | `TestPartRules.test_dims` | довжина/ширина деталей за лінійними формулами на номінальних і крайніх розмірах; правило з результатом ≤ 0 — ValidationError |
-| mrp | `TestOrderBom.test_generate` | рядки плит (м² з відходом), кромки (м з припуском), фурнітура; операції скопійовано, `time_cycle_manual` за базою |
-| mrp | `TestOrderBom.test_bom_find_excludes_order_bom` | `_bom_find` повертає шаблонний BoM, а не BoM замовлення |
-| mrp | `TestOrderBom.test_bom_cost` | `_compute_bom_price` = матеріали + операції (ручний розрахунок) |
-| sale | `TestSaleLine.test_dims_from_custom_values` | розміри з вільних значень; нечислове значення чи вихід за межі — ValidationError |
-| sale | `TestSaleLine.test_price` | ціна = (ціна + `price_extra`) × коефіцієнт розміру; ручна ціна не перезаписується |
-| sale | `TestSaleFlow.test_confirm_creates_mo` | після підтвердження: BoM замовлення, МО з `bom_id` і `sale_line_id`, 4 робочі завдання, лічильник МО в SO |
-| sale | `TestSaleFlow.test_two_orders_two_boms` | два замовлення того самого виробу з різними розмірами → два BoM, два МО, без змішування |
-| sale | `TestSaleFlow.test_margin` | `purchase_price` = собівартість BoM замовлення; маржа рядка |
-| sale | `TestConfiguratorTour` (HttpCase, post_install) | у формі SO діалог конфігуратора показує 3 поля розмірів, рядок отримує розміри й ціну |
-| cutting | `TestSimulator.test_deterministic` | однакові деталі → однакова карта; пропил і обрізка враховані; % відходу в межах |
-| cutting | `TestSimulator.test_offcut_reuse_first` | деталь, що вміщується в наявний обрізок, кроїться з нього, а не з нового листа |
-| cutting | `TestCuttingDone.test_reserve_and_offcuts` | після «Провести»: рухи плит на вибрані партії, нові партії-обрізки з розмірами як побічна продукція; після завершення МО обрізок є в залишку |
-| cutting | `TestCuttingDone.test_offcut_valuation` | оцінка обрізка за стандартною ціною плити (перевіряє припущення §2) |
-| cutting | `TestAccess.test_stock_user_readonly` | комірник читає завдання, але не проводить |
-
-Критерій готовності зрізу: усі тести зелені, `boost:odoo19-lint` без помилок, модулі встановлюються на чисту базу
-шаблону, сценарій §6 проходить вручну в uk_UA без повідомлень про помилки.
-
-## 5. Що позначено як імітація
-
-| Що | Як позначено в інтерфейсі | Що буде в A-11 |
-|---|---|---|
-| Розрахунок карти розкрою (`_td_simulate_optimizer`) | банер на формі завдання й листа «Результат отримано з імітації програми розкрою», поле «Джерело результату = Імітація» | імпорт файлу реальної програми в той самий `_td_apply_result` |
-| Файл «Передати на розкрій» | у назві вкладення «формат-чернетка» | формат обраної клієнтом програми |
-| Специфікація з правил деталей замість файлу програми проєктування (F-01) | у банері BoM «згенеровано з опцій замовлення» | імпорт PRO100/ін. — окрема функція |
-| Каталог, бренди, ціни, залишки | модуль `td_mebli_demo`, у назвах брендів — вигадані марки | майстер-дані A-13 |
-
-## 6. Сценарій показу і скриншоти
-
-Фактичний показ — 16 кроків від імені п'яти ролей (деталі й зв'язок із болями PAIN-xx — таблиця в `README.md`, історія для власника — `SHOW.md`).
-Збірка: `shoot/build_db.sh mebli_demo` (модулі, uk_UA, `seed_showcase`), `serve.sh mebli_demo 19071`, `node shoot/scenario.mjs 19071`
-(Playwright, viewport 1440x900, скриншоти deviceScaleFactor 2, відео 1440x900 (webm; вхід кожної ролі — з попередньо збережених сесій, сторінка входу в кадр не потрапляє; заставки — окремі повноекранні сторінки)). Файли — `screens/NN-<назва>.png`.
-
-Кроки: 1 виріб і опції; 2 конфігуратор; 3 «а якщо ширше» + специфікація; 4 ціна й маржа; 5 комерційна пропозиція; 6 підтвердження і МО в замовленні;
-7 дошка замовлень; 8 список МО; 9 нестача фурнітури; 10 завантаження дільниць; 11 завдання розкрою; 12 карта розкрою й економія; 13 ділові обрізки;
-14 план/факт («Огляд МО»); 15 час до запуску; 16 маржа замовлень.
-
-## 7. Розкладка коду й порядок робіт
-
-`package/addons/td_mebli_{mrp,sale,cutting,demo}/` — стандартна структура (`__manifest__.py`, `models/`, `views/`,
-`security/ir.model.access.csv`, `data/`, `i18n/uk.po`, `tests/`, `README.md`). `tests` не імпортувати з `__init__.py`.
-
-1. `td_mebli_mrp` + тести (генератор BoM — ядро зрізу).
-2. `td_mebli_sale` + тести, включно з туром конфігуратора.
-3. `td_mebli_cutting` + тести (паралельно з п. 2 після п. 1).
-4. `td_mebli_demo` + `show_scenario.py`, база `mebli_show`, скриншоти, `SHOW.md`.
-5. `boost:odoo19-lint`, `.po`, повний прогін тестів; git і PR — менеджер.
-
-## 8. Відкриті питання (до людини)
-
-1. Ціна від розміру: коефіцієнт за площею фасаду (W·H) — прийнятне спрощення чи потрібна ціна за прайсом розмірних
-   кроків? У зрізі — коефіцієнт.
-2. Ціна в діалозі конфігуратора показується без розмірного коефіцієнта (діалог — стандартний OWL); повна ціна — у
-   рядку після додавання. Розширювати діалог у A-11 чи лишити?
-3. Обрізок як побічна продукція МО з партією проти окремого товару «Обрізок» — у зрізі перше (пошук за декором).
-4. Аналітика (`project_mrp_account`, проєкт на замовлення) у зріз не входить — чи потрібна на показі?
+Попередні (зразок):
+1. Чи приймаєте зразок (екран S-02 «дата під загрозою» і запис 15 с) як напрям для повного обсягу? Стиль кадру, роль у кадрі, швидкість.
+2. Чи перший екран демо — саме S-02 (варіант цінності 1), а дашборд S-19 — у кінці показу (сцена 8), як у SALES §6?
+3. Перевірка №13: два пункти CE не підтвердились (кіоск цеху за PIN, курс НБУ) — лишаємо `td_` з верхньою межею годин чи переносимо в «умовно»? EE-частина — хто й коли дасть доступ до чистої бази EE?
+4. Закрито рецензією Архітектора (коло 1): менеджер салону без групи «Закупівлі»; `td_mebli_sale` дає продавцю лише читання `purchase.order`/`purchase.order.line` своїх замовлень (правило за `reference_ids.sale_ids.user_id`), вкладку бачить, смарт-кнопка — лише закупівельникам (стандарт). Залишається: чи має менеджер з «Усі документи» (`group_sale_salesman_all_leads`) читати закупівлі всіх замовлень (так зроблено зараз)?

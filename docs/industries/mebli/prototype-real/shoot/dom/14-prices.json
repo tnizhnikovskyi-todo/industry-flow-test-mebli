@@ -1,0 +1,176 @@
+{
+ "screen": "14-prices",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Дата замовлення"
+  },
+  {
+   "kind": "header",
+   "text": "Посилання на замовлення"
+  },
+  {
+   "kind": "header",
+   "text": "Постачальник"
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": "Ціна одиниці"
+  },
+  {
+   "kind": "header",
+   "text": "Середня попередня ціна"
+  },
+  {
+   "kind": "header",
+   "text": "Проти історії, %"
+  },
+  {
+   "kind": "header",
+   "text": "Переплата"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Купівля Замовлення Товари Звітність Налаштування 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Ціни постачальників проти історії Підтверджено Понад історію 1-2 / 2"
+  },
+  {
+   "kind": "label",
+   "text": "Підтверджено"
+  },
+  {
+   "kind": "label",
+   "text": "Понад історію"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Ціни постачальників проти історії"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "3 лист., 16:39",
+   "label": "date_order"
+  },
+  {
+   "kind": "cell",
+   "text": "P00033",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Фурнітура Плюс",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "[ФР-РС2] Розсувна система РС-2 для шафи-купе",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "6,000",
+   "label": "product_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "3 526,29",
+   "label": "price_unit"
+  },
+  {
+   "kind": "cell",
+   "text": "3 343,17 ₴",
+   "label": "td_history_price"
+  },
+  {
+   "kind": "cell",
+   "text": "5,5",
+   "label": "td_price_delta_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "1 098,73 ₴",
+   "label": "td_overpay"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "3 лист., 15:39",
+   "label": "date_order"
+  },
+  {
+   "kind": "cell",
+   "text": "P00027",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Фурнітура Плюс",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "[ФР-ПЕТ] Петлі з доводчиком, комплект",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "300,000",
+   "label": "product_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "70,60",
+   "label": "price_unit"
+  },
+  {
+   "kind": "cell",
+   "text": "62,35 ₴",
+   "label": "td_history_price"
+  },
+  {
+   "kind": "cell",
+   "text": "13,2",
+   "label": "td_price_delta_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "2 476,20 ₴",
+   "label": "td_overpay"
+  }
+ ]
+}
