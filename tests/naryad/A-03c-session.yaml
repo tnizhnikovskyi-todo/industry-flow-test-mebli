@@ -1,0 +1,31 @@
+# ТЕСТОВИЙ наряд A-03c, режим session (після inventory). Склала сесія; власник делегував рішення AI (чат 2026-11-11).
+# Власник дозволив власні дані ToDo лише на читання; до прод-баз клієнтів не ходити. odoo-mcp у тесті заборонено (CLAUDE.md п.4):
+# alias own-erp не підключено — перелік модулів проду ToDo береться з past-projects.md (A-04), де його прочитано раніше за дозволом людини.
+# Анкета A-02b на момент запуску — prepare (reuse.* = «уточнити»): обсяг пошуку — джерела, вже названі в A-04; підтвердження — питання власнику.
+step: A-03c
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: research-internal
+skill_ref: ["flow-research:reuse-modules@0.2.0"]
+model: sonnet
+effort: medium
+inputs:
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: c8f0116}
+  - {name: reuse-inventory.md, from: A-03c, path: docs/industries/mebli/research/reuse-inventory.md, sha: 6b39932}
+  - {name: FUNCTIONAL-MAP.md, from: A-03b, path: docs/industries/mebli/research/FUNCTIONAL-MAP.md, sha: HEAD}
+  - {name: past-projects.md, from: A-04, path: docs/industries/mebli/past-projects.md, sha: HEAD}
+where: docs/industries/mebli/research/reuse-session.md
+template: "references/reuse-template.md скіла reuse-modules"
+done: "reuse-session.md: таблиця кандидатів і ≤10 питань з рекомендацією й замовчуванням"
+check: {mode: human, how: "MANUAL: ≤10 питань, кожне з рекомендацією й замовчуванням; без INT-dup", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 10, context_budget_tokens: 120000}
+client_data: internal-aggregated
+data_rule: "package/DATA_POLICY.md — внутрішні дані ToDo лише читання, агрегати; без назв клієнтів, ПІБ, сум"
+review: {checklists: [], max_rounds: 2}
+odoo_connections: []
+params: {mode: session, sample: false, resume: "чат власника 2026-11-11: «Принимай решение сам» (делегування; flow/decisions.md запис 28)"}
+repo: {url: origin, base_branch: flow/A-03c-test, branch: flow/A-03c-decide-test}
+attempt: 1
+returned_from: null
+git: {base: 6b39932, head: null, prev_tag: null}
+date: 2026-11-11
