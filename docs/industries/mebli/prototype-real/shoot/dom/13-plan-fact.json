@@ -1,0 +1,548 @@
+{
+ "screen": "13-plan-fact",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Посилання на замовлення"
+  },
+  {
+   "kind": "header",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "header",
+   "text": "Виручка"
+  },
+  {
+   "kind": "header",
+   "text": "Планова собівартість"
+  },
+  {
+   "kind": "header",
+   "text": "Матеріали (факт)"
+  },
+  {
+   "kind": "header",
+   "text": "Роботи (факт)"
+  },
+  {
+   "kind": "header",
+   "text": "Фактична собівартість"
+  },
+  {
+   "kind": "header",
+   "text": "Планова маржа, %"
+  },
+  {
+   "kind": "header",
+   "text": "Фактична маржа, %"
+  },
+  {
+   "kind": "header",
+   "text": "Відхилення собівартості, %"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Продажі Замовлення До включення у рахунок Товари Звітність Налаштування 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Собівартість: план і факт 1-80 / 84"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Собівартість: план і факт"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00009",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Кав'ярня «Зерно»",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "17 280,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "14 753,64 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "8 740,34 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "6 935,01 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "15 675,35 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "14,6",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "9,3",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "6,2",
+   "label": "td_cost_deviation_pct"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00008",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Дмитро Савченко",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "9 787,50 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "6 862,14 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "4 753,08 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "2 492,02 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "7 245,09 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "29,9",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "26,0",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "5,6",
+   "label": "td_cost_deviation_pct"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00102",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Дмитро Савченко",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "73 600,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "49 357,44 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "33 033,97 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "19 835,48 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "52 869,45 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "32,9",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "28,2",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "7,1",
+   "label": "td_cost_deviation_pct"
+  }
+ ]
+}

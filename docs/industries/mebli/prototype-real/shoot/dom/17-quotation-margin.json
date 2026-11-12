@@ -1,0 +1,427 @@
+{
+ "screen": "17-quotation-margin",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Ширина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Висота, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Глибина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": "Ціна одиниці"
+  },
+  {
+   "kind": "header",
+   "text": "Податки"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Термін дії?"
+  },
+  {
+   "kind": "label",
+   "text": "Прайс-лист?"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Обіцяна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Прогнозна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Сума без податків"
+  },
+  {
+   "kind": "label",
+   "text": "ПДВ 20%"
+  },
+  {
+   "kind": "label",
+   "text": "Разом"
+  },
+  {
+   "kind": "label",
+   "text": "Маржа"
+  },
+  {
+   "kind": "label",
+   "text": "CRM Продажі Звітність 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Комерційні пропозиції S00117 1 Заміри 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Надіслати"
+  },
+  {
+   "kind": "button",
+   "text": "Друк"
+  },
+  {
+   "kind": "button",
+   "text": "Підтвердити"
+  },
+  {
+   "kind": "button",
+   "text": "Попередній перегляд"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Рядки замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Інша інформація"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Комерційні пропозиції"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00117"
+  },
+  {
+   "kind": "field",
+   "text": "1 Заміри",
+   "label": "td_measure_count",
+   "name": "td_measure_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Комерційна пропозиція",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00117",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Хостел «Подорож»",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "25 лист.",
+   "label": "Термін дії?",
+   "name": "validity_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Роздрібний, грн (UAH)",
+   "label": "Прайс-лист?",
+   "name": "pricelist_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Передоплата 30%",
+   "label": "Термін оплати",
+   "name": "payment_term_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Обіцяна дата?",
+   "name": "commitment_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "26 лист., 15:20",
+   "label": "Обіцяна дата?",
+   "name": "expected_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "25 лист.",
+   "label": "Прогнозна дата?",
+   "name": "td_forecast_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Товар Ширина, мм Висота, мм Глибина, мм Кількість Одиниці Ціна одиниці Податки Сума Шафа-купе 2-дверна Декор корпусу: ЛДСП Дуб Сонома Декор фасаду: МДФ Білий матовий Кромка: ПВХ 2 мм Фурнітура: Стандарт Ширина, мм: 1700 Висота, мм: 2400 Глибина, мм: 600 1 700 2 400 600 1,000 шт 26 775,00 26 775,00 ₴ [МОНТАЖ] Доставка й монтаж (у вартості замовлення) 0 0 0 1,000 шт 0,00 ПДВ 20% 0,00 ₴ Додати товарДодати розділДодати приміткуКаталог ​",
+   "label": "order_line",
+   "name": "order_line",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Шафа-купе 2-дверна Декор корпусу: ЛДСП Дуб Сонома Декор фасаду: МДФ Білий матовий Кромка: ПВХ 2 мм Фурнітура: Стандарт Ширина, мм: 1700 Висота, мм: 2400 Глибина, мм: 600",
+   "label": "product_template_id",
+   "name": "product_template_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "tax_ids",
+   "name": "tax_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "[МОНТАЖ] Доставка й монтаж (у вартості замовлення)",
+   "label": "product_template_id",
+   "name": "product_template_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "ПДВ 20%",
+   "label": "tax_ids",
+   "name": "tax_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Термін виготовлення — 14 робочих днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж за окремою домовленістю.",
+   "label": "note",
+   "name": "note",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Сума без податків 26 775,00 ₴ ПДВ 20% 0,00 ₴ Разом 26 775,00 ₴",
+   "label": "tax_totals",
+   "name": "tax_totals",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "6 708,50 ₴",
+   "label": "Сума без податків",
+   "name": "margin",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "25,06%",
+   "label": "Сума без податків",
+   "name": "margin_percent",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Шафа-купе 2-дверна Декор корпусу: ЛДСП Дуб Сонома Декор фасаду: МДФ Білий матовий Кромка: ПВХ 2 мм Фурнітура: Стандарт Ширина, мм: 1700 Висота, мм: 2400 Глибина, мм: 600",
+   "label": "product_template_id"
+  },
+  {
+   "kind": "cell",
+   "text": "1 700",
+   "label": "td_width"
+  },
+  {
+   "kind": "cell",
+   "text": "2 400",
+   "label": "td_height"
+  },
+  {
+   "kind": "cell",
+   "text": "600",
+   "label": "td_depth"
+  },
+  {
+   "kind": "cell",
+   "text": "1,000",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "шт",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "26 775,00",
+   "label": "price_unit"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "tax_ids"
+  },
+  {
+   "kind": "cell",
+   "text": "26 775,00 ₴",
+   "label": "price_subtotal"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "[МОНТАЖ] Доставка й монтаж (у вартості замовлення)",
+   "label": "product_template_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "td_width"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "td_height"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "td_depth"
+  },
+  {
+   "kind": "cell",
+   "text": "1,000",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "шт",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0,00",
+   "label": "price_unit"
+  },
+  {
+   "kind": "cell",
+   "text": "ПДВ 20%",
+   "label": "tax_ids"
+  },
+  {
+   "kind": "cell",
+   "text": "0,00 ₴",
+   "label": "price_subtotal"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

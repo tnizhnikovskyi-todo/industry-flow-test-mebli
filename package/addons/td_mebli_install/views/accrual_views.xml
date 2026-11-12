@@ -13,8 +13,8 @@
                 <field name="kind"/>
                 <field name="workcenter_id" optional="show"/>
                 <field name="order_ref"/>
-                <field name="hours" sum="Total" optional="show"/>
-                <field name="piece_rate" optional="show"/>
+                <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'"/>
+                <field name="piece_rate" optional="show" invisible="kind != 'piece'"/>
                 <field name="amount" sum="Total"/>
                 <field name="reason"/>
                 <field name="currency_id" column_invisible="True"/>

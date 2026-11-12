@@ -7,9 +7,9 @@ const row = (c, text) => c.page.locator('.o_data_row, .o_kanban_record', { hasTe
 const btn = (c, text) => c.page.locator('button', { hasText: text });
 const CSV = new URL('./data/kitchen-spec.csv', import.meta.url).pathname;
 
-export const PASS1 = ['D_csv', 'D_tablet', 'D_kit'];
+export const PASS1 = ['D_csv', 'D_tablet', 'D_kit', 'D_cutting'];
 // прохід 2 — дашборд першим (recording.md, після fix_dates); D_sample (прийнятий зразок) НЕ перезнімається — сцена 4 повного обсягу = D_late
-export const PASS2 = ['D_dashboard', 'D_late', 'D_measure', 'D_change', 'D_cutting', 'D_install', 'D_accruals', 'D_claims'];
+export const PASS2 = ['D_dashboard', 'D_late', 'D_measure', 'D_change', 'D_install', 'D_accruals', 'D_claims'];
 export const CLIPS = {
     // сцена 4 — екран прийнятого зразка як є (нові кнопки S-02 у кадрі; D_sample не перезнімається — PLAN §7)
     async D_late() {
@@ -58,7 +58,8 @@ export const CLIPS = {
         return clip('D_csv', { role: 'tech', url: '/odoo/action-mrp.mrp_bom_form_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Технолог', 'Специфікація з програми проєктування — **без ручного перенесення**');
-            await press(c, row(c, 'S00123/391').locator('td').nth(1));
+            await typeIn(c, c.page.locator('.o_searchview_input'), 'S00123/391'); await c.page.keyboard.press('Enter'); await settle(c.page, 700);
+          await press(c, row(c, 'S00123/391').locator('td').nth(1));
             await press(c, c.page.locator('.o_cp_action_menus .dropdown-toggle').first());
             await press(c, c.page.locator('.dropdown-item', { hasText: 'Імпорт деталей' }));
             await c.page.locator('.modal input[type=file]').setInputFiles(CSV);
@@ -78,7 +79,7 @@ export const CLIPS = {
             await settle(c.page, 900); c.mark();
             await press(c, tab(c, 'Зміни'));
             await title(c, 'Зміна від клієнта', 'Нова версія: **ціна й дата** з причиною «Клієнт»');
-            await focus(c, '.o_data_row'); await hold(c, 3000); await titleOff(c);
+            await focus(c, '.o_data_row'); await zoom(c, '.o_data_row', 1.4, 900); await hold(c, 3500); await zoomOff(c); await hold(c, 800); await titleOff(c);
             await fact(c.page, 'D_change', 'shift_days', '.o_data_row td[name=shift_days]');
         });
     },
@@ -111,13 +112,24 @@ export const CLIPS = {
             await fact(c.page, 'D_kit', 'missing_part', '.o_data_row.text-danger', { re: 'Задня стінка[^0-9]*' });
         });
     },
-    // сцена 5а — пакет розкрою і ділові обрізки (без оптимізатора, OUT-02)
+    // сцена 5а — пакет розкрою за декором (змінює дані: нове завдання з двох МО замовлення показу) і ділові обрізки;
+    // результат оптимізатора-імітації в кадр не йде (OUT-02): завдання лишається чернеткою, вкладка «Деталі»
     async D_cutting() {
-        return clip('D_cutting', { role: 'tech', url: '/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action' }, async (c) => {
+        return clip('D_cutting', { role: 'tech', url: '/odoo/action-mrp.mrp_production_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
-            await title(c, 'Розкрій пакетом', 'Кілька замовлень одного декору — **одне завдання**, обрізки в облік');
-            await press(c, c.page.locator('.o_data_row').first());
-            await hold(c, 3000); await titleOff(c);
+            await title(c, 'Розкрій пакетом', 'Кілька виробничих замовлень одного декору — **одне завдання розкрою**');
+            await typeIn(c, c.page.locator('.o_searchview_input'), 'S00123'); await c.page.keyboard.press('Enter'); await settle(c.page, 700);
+            await press(c, c.page.locator('thead .o_list_record_selector input'));
+            await press(c, c.page.locator('.o_cp_action_menus button, .o_control_panel_actions .dropdown-toggle', { hasText: 'Дії' }).first());
+            await press(c, c.page.locator('.o-dropdown-item, .dropdown-item', { hasText: 'Створити завдання розкрою' }));
+            await settle(c.page, 900);
+            await press(c, tab(c, 'Деталі'));
+            await focus(c, '.o_field_widget[name=production_ids]'); await hold(c, 2500); await titleOff(c);
+            await fact(c.page, 'D_cutting', 'job_orders', '.o_field_widget[name=production_ids]');
+            await c.page.goto(c.page.url().split('/odoo')[0] + '/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action');
+            await settle(c.page, 900);
+            await title(c, 'Ділові обрізки', 'Залишок листа — **в облік за декором**, а не у відходи');
+            await focus(c, '.o_list_renderer'); await hold(c, 3000); await titleOff(c);
         });
     },
     // сцена 6 — монтаж: календар, акт з недоліком і % бригаді
@@ -129,14 +141,31 @@ export const CLIPS = {
             await c.page.goto(c.page.url().split('/odoo')[0] + '/odoo/action-td_mebli_install.td_mebli_install_act_action');
             await settle(c.page, 900);
             await title(c, 'Акт', 'Фото, недолік, підпис клієнта — **% бригаді рахується з акта**');
-            await focus(c, '.o_list_renderer'); await hold(c, 3000); await titleOff(c);
+            await focus(c, '.o_list_renderer'); await hold(c, 2000);
+            await typeIn(c, c.page.locator('.o_searchview_input'), 'АКТ-0002'); await c.page.keyboard.press('Enter'); await settle(c.page, 700);
+            await press(c, row(c, 'АКТ-0002').locator('td[name=name]'));
+            await settle(c.page, 900);
+            await focus(c, '.o_field_widget[name=defect_ids]'); await hold(c, 2500);
+            await focus(c, '.o_field_widget[name=crew_amount]'); await hold(c, 2000); await titleOff(c);
+            await fact(c.page, 'D_install', 'crew_amount', '.o_field_widget[name=crew_amount]');
         });
     },
     async D_accruals() {
         return clip('D_accruals', { role: 'fin', url: '/odoo/action-td_mebli_install.td_mebli_accrual_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Нарахування', 'Відрядна, % бригаді, **премії й штрафи з причиною**');
-            await hold(c, 3500); await titleOff(c);
+            await hold(c, 2500);
+            await press(c, c.page.locator('.o_switch_view.o_list'));
+            await settle(c.page, 700);
+            await press(c, c.page.locator('.o_searchview_dropdown_toggler').first());
+            await press(c, c.page.locator('.o-dropdown-item, .dropdown-item', { hasText: 'Вид' }));
+            await c.page.keyboard.press('Escape'); await settle(c.page, 600);
+            await press(c, c.page.locator('.o_group_header', { hasText: 'Відрядна' }));
+            await title(c, 'Відрядна за операцію', 'Розцінка операції × деталі чи метри кромки — **не години × ставка**');
+            await focus(c, '.o_data_row td[name=piece_rate]'); await hold(c, 3000);
+            await press(c, c.page.locator('.o_group_header', { hasText: 'Штраф' }));
+            await focus(c, '.o_data_row.text-danger'); await hold(c, 2500); await titleOff(c);
+            await fact(c.page, 'D_accruals', 'piece_rate', '.o_data_row td[name=piece_rate]');
         });
     },
     // сцена 7 — рекламації і план ↔ факт

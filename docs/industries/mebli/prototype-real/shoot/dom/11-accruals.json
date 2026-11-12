@@ -1,0 +1,98 @@
+{
+ "screen": "11-accruals",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Разом"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Премія"
+  },
+  {
+   "kind": "header",
+   "text": "% бригаді"
+  },
+  {
+   "kind": "header",
+   "text": "Штраф"
+  },
+  {
+   "kind": "header",
+   "text": "Відрядна"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": "Разом"
+  },
+  {
+   "kind": "header",
+   "text": "Іван Кушнір"
+  },
+  {
+   "kind": "header",
+   "text": "Василь Ткач"
+  },
+  {
+   "kind": "header",
+   "text": "Микола Демченко"
+  },
+  {
+   "kind": "header",
+   "text": "Оксана Литвин"
+  },
+  {
+   "kind": "header",
+   "text": "Петро Гуменюк"
+  },
+  {
+   "kind": "header",
+   "text": "Сергій Бондаренко"
+  },
+  {
+   "kind": "label",
+   "text": "2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Нарахування цеху й бригадам Цей місяць"
+  },
+  {
+   "kind": "label",
+   "text": "Цей місяць"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Нарахування цеху й бригадам"
+  }
+ ]
+}

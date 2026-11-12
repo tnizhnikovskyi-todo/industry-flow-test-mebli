@@ -1,0 +1,242 @@
+{
+ "screen": "05-tablet",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Робочий центр"
+  },
+  {
+   "kind": "header",
+   "text": "Замовлення на виробництво"
+  },
+  {
+   "kind": "header",
+   "text": "Робоче замовлення"
+  },
+  {
+   "kind": "header",
+   "text": "План, год"
+  },
+  {
+   "kind": "header",
+   "text": "Статус"
+  },
+  {
+   "kind": "header",
+   "text": "Працівники"
+  },
+  {
+   "kind": "header",
+   "text": "Причина паузи"
+  },
+  {
+   "kind": "header",
+   "text": "Якість"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Планшет цеху До виконання Дільниця 1-4 / 4"
+  },
+  {
+   "kind": "label",
+   "text": "До виконання"
+  },
+  {
+   "kind": "label",
+   "text": "Дільниця"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Планшет цеху"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "Розкрій",
+   "label": "workcenter_id"
+  },
+  {
+   "kind": "cell",
+   "text": "WH/MO/00100",
+   "label": "production_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Розкрій",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "4,4",
+   "label": "td_expected_hours"
+  },
+  {
+   "kind": "cell",
+   "text": "В процесі",
+   "label": "state"
+  },
+  {
+   "kind": "cell",
+   "text": "Петро Гуменюк",
+   "label": "td_worker_names"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_pause_reason"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_quality_state"
+  },
+  {
+   "kind": "cell",
+   "text": "Пауза Зроблено"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "Розкрій",
+   "label": "workcenter_id"
+  },
+  {
+   "kind": "cell",
+   "text": "WH/MO/00094",
+   "label": "production_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Розкрій",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "2,6",
+   "label": "td_expected_hours"
+  },
+  {
+   "kind": "cell",
+   "text": "В процесі",
+   "label": "state"
+  },
+  {
+   "kind": "cell",
+   "text": "Петро Гуменюк",
+   "label": "td_worker_names"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_pause_reason"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_quality_state"
+  },
+  {
+   "kind": "cell",
+   "text": "Пауза Зроблено"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

@@ -1,0 +1,329 @@
+{
+ "screen": "04-change",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Версія"
+  },
+  {
+   "kind": "header",
+   "text": "Причина"
+  },
+  {
+   "kind": "header",
+   "text": "Що змінюється"
+  },
+  {
+   "kind": "header",
+   "text": "Ціна до"
+  },
+  {
+   "kind": "header",
+   "text": "Ціна після"
+  },
+  {
+   "kind": "header",
+   "text": "Зміна ціни"
+  },
+  {
+   "kind": "header",
+   "text": "Обіцяна до"
+  },
+  {
+   "kind": "header",
+   "text": "Обіцяна після"
+  },
+  {
+   "kind": "header",
+   "text": "Зсув, дн."
+  },
+  {
+   "kind": "header",
+   "text": "Стан"
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Дата замовлення?"
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво розпочато"
+  },
+  {
+   "kind": "label",
+   "text": "До запуску, год"
+  },
+  {
+   "kind": "label",
+   "text": "Прайс-лист?"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Обмін з BAS?"
+  },
+  {
+   "kind": "label",
+   "text": "Обіцяна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Прогнозна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Зсув, дн."
+  },
+  {
+   "kind": "label",
+   "text": "Причина зсуву?"
+  },
+  {
+   "kind": "label",
+   "text": "Продажі Замовлення До включення у рахунок Товари 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замовлення на продаж S00123 2 Виробництво 1 Заміри 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Створити рахунок"
+  },
+  {
+   "kind": "button",
+   "text": "Надіслати"
+  },
+  {
+   "kind": "button",
+   "text": "Попередній перегляд"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Передати в BAS (імітація)"
+  },
+  {
+   "kind": "button",
+   "text": "Створити зміну"
+  },
+  {
+   "kind": "button",
+   "text": "Рядки замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Закупівлі під замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Інша інформація"
+  },
+  {
+   "kind": "button",
+   "text": "Зміни"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замовлення на продаж"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00123"
+  },
+  {
+   "kind": "field",
+   "text": "2 Виробництво",
+   "label": "td_production_count",
+   "name": "td_production_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 Заміри",
+   "label": "td_measure_count",
+   "name": "td_measure_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Замовлення на продаж",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "td_delay_days",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "label": "td_late_item",
+   "name": "td_late_item",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00123",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Ірина Коваленко просп. Стрийська, 21 Львів Україна",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "6 лист., 12:16",
+   "label": "Дата замовлення?",
+   "name": "date_order",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "11 лист., 08:42",
+   "label": "Виробництво розпочато",
+   "name": "td_launch_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "116,4",
+   "label": "До запуску, год",
+   "name": "td_hours_to_launch",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Роздрібний, грн (UAH)",
+   "label": "Прайс-лист?",
+   "name": "pricelist_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Передоплата 50%",
+   "label": "Термін оплати",
+   "name": "payment_term_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Не передано",
+   "label": "Обмін з BAS?",
+   "name": "td_bas_state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "4 груд.",
+   "label": "Обіцяна дата?",
+   "name": "commitment_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "18 груд.",
+   "label": "Прогнозна дата?",
+   "name": "td_forecast_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "Зсув, дн.",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Постачальник",
+   "label": "Причина зсуву?",
+   "name": "td_delay_reason",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Версія Причина Що змінюється Ціна до Ціна після Зміна ціни Обіцяна до Обіцяна після Зсув, дн. Стан 2 Клієнт Фасади кухні — фарбований МДФ RAL 9010 замість плівкового 67 425,00 ₴ 75 825,00 ₴ 8 400,00 ₴ 27 лист. 4 груд. 7 Зафіксовано ​ ​ ​",
+   "label": "td_change_ids",
+   "name": "td_change_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Зафіксовано",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "2",
+   "label": "version"
+  },
+  {
+   "kind": "cell",
+   "text": "Клієнт",
+   "label": "reason"
+  },
+  {
+   "kind": "cell",
+   "text": "Фасади кухні — фарбований МДФ RAL 9010 замість плівкового",
+   "label": "note"
+  },
+  {
+   "kind": "cell",
+   "text": "67 425,00 ₴",
+   "label": "amount_before"
+  },
+  {
+   "kind": "cell",
+   "text": "75 825,00 ₴",
+   "label": "amount_after"
+  },
+  {
+   "kind": "cell",
+   "text": "8 400,00 ₴",
+   "label": "amount_delta"
+  },
+  {
+   "kind": "cell",
+   "text": "27 лист.",
+   "label": "date_before"
+  },
+  {
+   "kind": "cell",
+   "text": "4 груд.",
+   "label": "date_after"
+  },
+  {
+   "kind": "cell",
+   "text": "7",
+   "label": "shift_days"
+  },
+  {
+   "kind": "cell",
+   "text": "Зафіксовано",
+   "label": "state"
+  }
+ ]
+}

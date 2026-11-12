@@ -40,7 +40,8 @@ const ALL = [
       ] },
     // сцена 2 — імпорт специфікації з CSV (S-03): розпізнавання колонок (змінює дані — PASS1)
     { n: 3, role: 'tech', url: '/odoo/action-mrp.mrp_bom_form_action', name: 'csv-import',
-      act: async (c, { press }) => {
+      act: async (c, { press, typeIn }) => {
+          await typeIn(c, c.page.locator('.o_searchview_input'), 'S00123/391'); await c.page.keyboard.press('Enter'); await c.page.waitForTimeout(1200);
           await press(c, row(c, 'S00123/391').locator('td').nth(1));
           await press(c, c.page.locator('.o_cp_action_menus button, .o_cp_action_menus .dropdown-toggle').first());
           await press(c, c.page.locator('.dropdown-item', { hasText: 'Імпорт деталей' }));
@@ -76,10 +77,10 @@ const ALL = [
           await c.page.keyboard.press('Escape');
       },
       facts: [{ name: 'missing_rows', sel: '.o_list_renderer', re: 'Задня стінка[^\\n]*' }] },
-    // сцена 5а — пакет розкрою за декором і ділові обрізки (без імітації оптимізатора, OUT-02)
-    { n: 7, role: 'tech', url: '/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action', name: 'cutting',
-      act: async (c, { press }) => { await press(c, c.page.locator('.o_data_row').first()); },
-      facts: [{ name: 'job_orders', sel: '.o_field_widget[name=production_ids]' }] },
+    // сцена 5а — ділові обрізки в обліку за декором (OUT-02: форма завдання з картою розкрою-імітацією в кадр не йде;
+    // пакет розкрою за декором — у кліпі D_cutting: нове завдання з кількох МО, без результату оптимізатора)
+    { n: 7, role: 'tech', url: '/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action', name: 'offcuts',
+      facts: [{ name: 'offcut_lots', sel: '.o_pager_limit, .o_group_header', re: '\\d+' }] },
     { n: 8, role: 'tech', url: '/odoo/action-td_mebli_shop.td_mebli_quality_check_action', name: 'quality',
       facts: [{ name: 'checks', sel: '.o_list_renderer tbody' }] },
     // сцена 6 — календар монтажів, два виїзди S00123; акти

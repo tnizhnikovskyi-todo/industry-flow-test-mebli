@@ -1,0 +1,353 @@
+{
+ "screen": "00-late-facades",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Постачальник"
+  },
+  {
+   "kind": "header",
+   "text": "Закупівля"
+  },
+  {
+   "kind": "header",
+   "text": "Дата постачання"
+  },
+  {
+   "kind": "header",
+   "text": "Отримано"
+  },
+  {
+   "kind": "header",
+   "text": "Готовність"
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Дата замовлення?"
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво розпочато"
+  },
+  {
+   "kind": "label",
+   "text": "До запуску, год"
+  },
+  {
+   "kind": "label",
+   "text": "Прайс-лист?"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Обмін з BAS?"
+  },
+  {
+   "kind": "label",
+   "text": "Обіцяна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Прогнозна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Зсув, дн."
+  },
+  {
+   "kind": "label",
+   "text": "Причина зсуву?"
+  },
+  {
+   "kind": "label",
+   "text": "Продажі Замовлення До включення у рахунок Товари 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замовлення на продаж S00123 2 Виробництво 1 Заміри 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Створити рахунок"
+  },
+  {
+   "kind": "button",
+   "text": "Надіслати"
+  },
+  {
+   "kind": "button",
+   "text": "Попередній перегляд"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Передати в BAS (імітація)"
+  },
+  {
+   "kind": "button",
+   "text": "Створити зміну"
+  },
+  {
+   "kind": "button",
+   "text": "Рядки замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Закупівлі під замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Інша інформація"
+  },
+  {
+   "kind": "button",
+   "text": "Зміни"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замовлення на продаж"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00123"
+  },
+  {
+   "kind": "field",
+   "text": "2 Виробництво",
+   "label": "td_production_count",
+   "name": "td_production_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 Заміри",
+   "label": "td_measure_count",
+   "name": "td_measure_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Замовлення на продаж",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "td_delay_days",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "label": "td_late_item",
+   "name": "td_late_item",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00123",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Ірина Коваленко просп. Стрийська, 21 Львів Україна",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "6 лист., 12:16",
+   "label": "Дата замовлення?",
+   "name": "date_order",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "11 лист., 08:42",
+   "label": "Виробництво розпочато",
+   "name": "td_launch_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "116,4",
+   "label": "До запуску, год",
+   "name": "td_hours_to_launch",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Роздрібний, грн (UAH)",
+   "label": "Прайс-лист?",
+   "name": "pricelist_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Передоплата 50%",
+   "label": "Термін оплати",
+   "name": "payment_term_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Не передано",
+   "label": "Обмін з BAS?",
+   "name": "td_bas_state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "4 груд.",
+   "label": "Обіцяна дата?",
+   "name": "commitment_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "18 груд.",
+   "label": "Прогнозна дата?",
+   "name": "td_forecast_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "Зсув, дн.",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Постачальник",
+   "label": "Причина зсуву?",
+   "name": "td_delay_reason",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Товар Постачальник Закупівля Дата постачання Отримано Готовність Профіль шафи-купе, алюміній шампань Профіль-Систем P00003 11 лист. 1,000 Стільниця кварцова 38 мм Камінь-Майстер P00002 15 лист. 0,000 27 лист. Фасади МДФ фарбовані, RAL 9010 мат Фарбоцех «Палітра» P00001 6 груд. 0,000 18 груд. ​",
+   "label": "td_purchase_line_ids",
+   "name": "td_purchase_line_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "24 лист.",
+   "label": "td_shop_date",
+   "name": "td_shop_date",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "Профіль шафи-купе, алюміній шампань",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Профіль-Систем",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "P00003",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "11 лист.",
+   "label": "date_planned"
+  },
+  {
+   "kind": "cell",
+   "text": "1,000",
+   "label": "qty_received"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_date_ready"
+  },
+  {
+   "kind": "cell",
+   "text": "Стільниця кварцова 38 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Камінь-Майстер",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "P00002",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "15 лист.",
+   "label": "date_planned"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "qty_received"
+  },
+  {
+   "kind": "cell",
+   "text": "27 лист.",
+   "label": "td_date_ready"
+  },
+  {
+   "kind": "cell",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Фарбоцех «Палітра»",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "P00001",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "6 груд.",
+   "label": "date_planned"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "qty_received"
+  },
+  {
+   "kind": "cell",
+   "text": "18 груд.",
+   "label": "td_date_ready"
+  }
+ ]
+}
