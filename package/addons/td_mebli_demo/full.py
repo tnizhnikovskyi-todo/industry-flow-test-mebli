@@ -354,7 +354,12 @@ def _calibrate_load(env, targets):
             continue
         weekly = max(1.0, hours / percent * 100.0)
         parallel = max(1, math.ceil(weekly / 40.0))
-        center.capacity_ids = [(5, 0, 0), (0, 0, {'product_uom_id': env.ref('uom.product_uom_unit').id, 'capacity': parallel})]
+        general = center.capacity_ids.filtered(lambda c: not c.product_id)
+        if general:
+            general[:1].capacity = parallel
+            general[1:].unlink()
+        else:
+            center.capacity_ids = [(0, 0, {'product_uom_id': env.ref('uom.product_uom_unit').id, 'capacity': parallel})]
         center.resource_calendar_id = _section_calendar(env, center, round(weekly / parallel, 1))
 
 
