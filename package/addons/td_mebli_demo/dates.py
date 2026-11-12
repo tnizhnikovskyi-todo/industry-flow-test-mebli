@@ -18,12 +18,12 @@ SUPPLIERS = [
     ('Фарбоцех «Палітра»', 'Біла Церква'), ('Камінь-Майстер', 'Житомир'), ('Профіль-Систем', 'Київ'),
 ]
 
-# key, name, unit xmlid, cost (UAH), supplier index, supplier lead time (days), template BoM, quantity per unit,
+# key, name, unit xmlid, cost (UAH; painted front of a 600 module ~0.43 m2 — the planned margin of the show order stays ~20 %), supplier index, supplier lead time (days), template BoM, quantity per unit,
 # material kind (td_mebli_mrp), facade value the line applies to (standard «Apply on Variants» of the BoM line; None = always)
 # The painted fronts are ready-made facades: for the facade «МДФ Білий матовий» the kitchen buys them and the part rule
 # «Фасад» is not cut from board (td_mebli_mrp: no double counting of the facades).
 COMPONENTS = [
-    ('fronts_9010', 'Фасади МДФ фарбовані, RAL 9010 мат', 'uom.product_uom_unit', 380.0, 0, 14, 'prod_kitchen', 1.0,
+    ('fronts_9010', 'Фасади МДФ фарбовані, RAL 9010 мат', 'uom.product_uom_unit', 1100.0, 0, 14, 'prod_kitchen', 1.0,
      'facade', 'val_facade_mdf'),
     ('worktop_quartz', 'Стільниця кварцова 38 мм', 'uom.product_uom_meter', 1600.0, 1, 10, 'prod_kitchen', 0.6, False, None),
     ('profile_champagne', 'Профіль шафи-купе, алюміній шампань', 'uom.product_uom_unit', 2400.0, 2, 5, 'prod_wardrobe', 1.0,

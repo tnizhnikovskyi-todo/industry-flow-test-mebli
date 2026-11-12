@@ -64,7 +64,7 @@
   },
   {
    "kind": "label",
-   "text": "Новий Замовлення на продаж S00123 3 Купівлі 2 Виробництво 1 / 1"
+   "text": "Новий Замовлення на продаж S00123 2 Виробництво 1 / 1"
   },
   {
    "kind": "button",
@@ -101,13 +101,6 @@
   {
    "kind": "breadcrumb",
    "text": "S00123"
-  },
-  {
-   "kind": "field",
-   "text": "3 Купівлі",
-   "label": "purchase_order_count",
-   "name": "purchase_order_count",
-   "required": false
   },
   {
    "kind": "field",
@@ -153,7 +146,7 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 09:01",
+   "text": "6 лист., 09:46",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true

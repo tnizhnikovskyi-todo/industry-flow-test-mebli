@@ -38,8 +38,14 @@
   },
   {
    "scene": "00-sample",
-   "name": "purchase_count",
-   "expected": "3",
+   "name": "late_purchase",
+   "expected": "P00001",
+   "ok": true
+  },
+  {
+   "scene": "D_sample",
+   "name": "margin_percent",
+   "expected": "20,02%",
    "ok": true
   },
   {
@@ -63,9 +69,10 @@
    "late_item": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
    "late_item_supplier_date": "6 груд.",
    "late_item_ready": "18 груд.",
-   "purchase_count": "3"
+   "late_purchase": "P00001"
   },
   "D_sample": {
+   "margin_percent": "20,02%",
    "delay_days": "14",
    "late_item_ready": "18 груд."
   }
