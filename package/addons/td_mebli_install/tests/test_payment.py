@@ -49,8 +49,9 @@ class TestPaymentControl(TransactionCase):
         self.assertAlmostEqual(order.td_pay_missing, 4000.0)
         self.assertFalse(order.tasks_ids.td_pay_ok)
         self._pay(order, 40)
-        order.invalidate_recordset()
-        self.assertTrue(order.td_pay_ok)
+        self.env.invalidate_all()
+        self.assertTrue(order.td_pay_ok, (order.td_pay_received, order.td_pay_before_install,
+                                          order.invoice_ids.mapped(lambda m: (m.amount_total, m.payment_state, m.amount_residual))))
         self.assertTrue(order.tasks_ids.td_pay_ok)
 
     def test_terms_without_milestones_ask_the_whole_amount(self):

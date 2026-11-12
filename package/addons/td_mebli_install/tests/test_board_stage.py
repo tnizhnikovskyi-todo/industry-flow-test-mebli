@@ -58,8 +58,8 @@ class TestBoardStages(TdMebliSaleCommon):
         act.action_sign()
         self.assertEqual(order.td_stage, 'install')  # signed, but not paid in full
         self._pay_all(order)
-        order.invalidate_recordset()
-        order._compute_td_stage()
+        self.env.flush_all()
+        self.env.invalidate_all()
         self.assertEqual(order.td_stage, 'closed')
 
     def test_board_shows_all_stages(self):
