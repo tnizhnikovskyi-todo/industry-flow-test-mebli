@@ -6,3 +6,5 @@ access_td_mebli_measure_niche_user,td.mebli.measure.niche user,model_td_mebli_me
 access_td_mebli_measure_niche_mrp,td.mebli.measure.niche workshop,model_td_mebli_measure_niche,mrp.group_mrp_user,1,0,0,0
 access_td_mebli_measure_appliance_user,td.mebli.measure.appliance user,model_td_mebli_measure_appliance,sales_team.group_sale_salesman,1,1,1,1
 access_td_mebli_measure_appliance_mrp,td.mebli.measure.appliance workshop,model_td_mebli_measure_appliance,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_measure_booking_user,td.mebli.measure.booking user,model_td_mebli_measure_booking,sales_team.group_sale_salesman,1,1,1,1
+access_td_mebli_measure_slot_user,td.mebli.measure.slot user,model_td_mebli_measure_slot,sales_team.group_sale_salesman,1,1,1,1

@@ -81,9 +81,20 @@ class TdMebliMeasureNiche(models.Model):
     width_mm = fields.Integer(string='Width, mm')
     height_mm = fields.Integer(string='Height, mm')
     depth_mm = fields.Integer(string='Depth, mm')
+    # position 28: what the measurer saw in the niche and what is planned for it — the rules check the design against them
+    protrusion_mm = fields.Integer(string='Protrusion, mm',
+                                   help='A pipe, a duct or a ledge that takes depth off the niche along its wall.')
+    order_line_id = fields.Many2one('sale.order.line', string='Product in the Niche', ondelete='set null',
+                                    domain="[('order_id', '=', parent.order_id), ('td_is_parametric', '=', True)]")
 
-    _positive = models.Constraint('CHECK(width_mm >= 0 AND height_mm >= 0 AND depth_mm >= 0)',
+    _positive = models.Constraint('CHECK(width_mm >= 0 AND height_mm >= 0 AND depth_mm >= 0 AND protrusion_mm >= 0)',
                                   'Sizes of a niche cannot be negative.')
+
+    def _td_usable(self):
+        """Width, height and depth that the furniture can take: the depth minus the protrusion."""
+        self.ensure_one()
+        depth = max(self.depth_mm - self.protrusion_mm, 0) if self.depth_mm else 0
+        return {'width_mm': self.width_mm, 'height_mm': self.height_mm, 'depth_mm': depth}
 
 
 class TdMebliMeasureAppliance(models.Model):
@@ -102,7 +113,8 @@ class TdMebliMeasureAppliance(models.Model):
     fits = fields.Boolean(string='Fits', compute='_compute_fits')
     issue = fields.Char(string='Check', compute='_compute_fits')
 
-    @api.depends('width_mm', 'height_mm', 'depth_mm', 'niche_id.width_mm', 'niche_id.height_mm', 'niche_id.depth_mm')
+    @api.depends('width_mm', 'height_mm', 'depth_mm', 'niche_id.width_mm', 'niche_id.height_mm', 'niche_id.depth_mm',
+                 'niche_id.protrusion_mm')
     def _compute_fits(self):
         _ = self.env._
         labels = {'width_mm': _("wider"), 'height_mm': _("higher"), 'depth_mm': _("deeper")}
@@ -110,8 +122,9 @@ class TdMebliMeasureAppliance(models.Model):
             if not item.niche_id:
                 item.fits, item.issue = True, _("no niche")
                 continue
-            over = [(labels[f], item[f] - item.niche_id[f]) for f in ('width_mm', 'height_mm', 'depth_mm')
-                    if item.niche_id[f] and item[f] > item.niche_id[f]]
+            usable = item.niche_id._td_usable()
+            over = [(labels[f], item[f] - usable[f]) for f in ('width_mm', 'height_mm', 'depth_mm')
+                    if usable[f] and item[f] > usable[f]]
             item.fits = not over
             item.issue = ', '.join(_("%(what)s by %(mm)s mm", what=what, mm=mm) for what, mm in over) if over else _("fits")
 
@@ -121,6 +134,45 @@ class SaleOrder(models.Model):
 
     td_measure_ids = fields.One2many('td.mebli.measure', 'order_id', string='Measurement Sheets')
     td_measure_count = fields.Integer(string='Measurements', compute='_compute_td_measure_count')
+    td_measure_problems = fields.Text(string='Design against the Measurement', compute='_compute_td_measure_problems',
+                                      help="Rules, no AI: every appliance against its niche; the product placed in a niche "
+                                           "(width, height, depth minus the protrusion); the longest part of its "
+                                           "specification against the niche. Shown before the parts go to cutting.")
+
+    def _td_measure_problem_list(self):
+        """Position 28: the design of the order against its measurement sheets — fixed rules, no guessing."""
+        self.ensure_one()
+        _ = self.env._
+        problems = []
+        # sudo: read only — the workshop sees the result of the check, not necessarily the sheets of a salesperson
+        for sheet in self.sudo().td_measure_ids:
+            for appliance in sheet.appliance_ids.filtered(lambda a: not a.fits):
+                problems.append(_("%(sheet)s: %(item)s — %(issue)s", sheet=sheet.name, item=appliance.name,
+                                  issue=appliance.issue))
+            for niche in sheet.niche_ids.filtered('order_line_id'):
+                line = niche.order_line_id
+                usable = niche._td_usable()
+                labels = {'width_mm': (_("width"), line.td_width), 'height_mm': (_("height"), line.td_height),
+                          'depth_mm': (_("depth"), line.td_depth)}
+                for key, (what, size) in labels.items():
+                    if usable[key] and size and size > usable[key]:
+                        problems.append(_("%(sheet)s: %(product)s — %(what)s %(size)s mm, the niche «%(niche)s» takes "
+                                          "%(usable)s mm", sheet=sheet.name, product=line.product_id.name, what=what,
+                                          size=size, niche=niche.name, usable=usable[key]))
+                longest = max(usable['width_mm'], usable['height_mm'])
+                for part in line.sudo().td_bom_id.td_part_ids:
+                    if longest and max(part.length_mm, part.width_mm) > longest:
+                        problems.append(_("%(sheet)s: part «%(part)s» %(size)s mm is longer than the niche «%(niche)s» "
+                                          "(%(longest)s mm)", sheet=sheet.name, part=part.name,
+                                          size=int(max(part.length_mm, part.width_mm)), niche=niche.name, longest=longest))
+        return problems
+
+    @api.depends('td_measure_ids.appliance_ids.fits', 'td_measure_ids.niche_ids.order_line_id',
+                 'td_measure_ids.niche_ids.protrusion_mm', 'order_line.td_width', 'order_line.td_height',
+                 'order_line.td_depth')
+    def _compute_td_measure_problems(self):
+        for order in self:
+            order.td_measure_problems = '\n'.join(order._td_measure_problem_list()) if order.id else False
 
     @api.depends('td_measure_ids')
     def _compute_td_measure_count(self):
@@ -137,7 +189,32 @@ class SaleOrder(models.Model):
         return action
 
 
+class MrpProduction(models.Model):
+    _inherit = 'mrp.production'
+
+    td_measure_problems = fields.Text(string='Design against the Measurement', compute='_compute_td_measure_problems')
+
+    def _td_sale_orders(self):
+        # sudo: read only — the order of a manufacturing order (standard links: references and the sale line)
+        return self.sudo().reference_ids.sale_ids | self.sudo().sale_line_id.order_id
+
+    def _compute_td_measure_problems(self):
+        for production in self:
+            problems = []
+            for order in production._td_sale_orders():
+                problems += order._td_measure_problem_list()
+            production.td_measure_problems = '\n'.join(dict.fromkeys(problems)) or False
+
+
 class CrmLead(models.Model):
     _inherit = 'crm.lead'
 
     td_measure_ids = fields.One2many('td.mebli.measure', 'lead_id', string='Measurement Sheets')
+
+    def action_td_book_measure(self):
+        """Position 9: book a measurement visit in a free window of the measurer (standard calendar meeting)."""
+        self.ensure_one()
+        wizard = self.env['td.mebli.measure.booking'].create({'lead_id': self.id})
+        wizard._td_fill_slots()
+        return {'type': 'ir.actions.act_window', 'res_model': wizard._name, 'res_id': wizard.id, 'view_mode': 'form',
+                'target': 'new', 'name': self.env._("Book a Measurement")}

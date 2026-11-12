@@ -23,16 +23,35 @@ class TdMebliSpecImport(models.TransientModel):
     _description = 'Import of the Parts of a Specification from CSV'
 
     bom_id = fields.Many2one('mrp.bom', string='Specification', required=True)
-    file = fields.Binary(string='CSV File', required=True)
+    file = fields.Binary(string='CSV or Excel File', required=True)
     filename = fields.Char(string='File Name')
     mapping = fields.Text(string='Recognized Columns', readonly=True)
     preview_count = fields.Integer(string='Parts in the File', readonly=True)
 
     def _rows(self):
         raw = base64.b64decode(self.file or b'')
+        if raw[:2] == b'PK' or (self.filename or '').lower().endswith('.xlsx'):
+            return self._td_xlsx_rows(raw)
         text = raw.decode('utf-8-sig', errors='replace')
         dialect = csv.Sniffer().sniff(text[:2048], delimiters=';,\t')
         return list(csv.reader(io.StringIO(text), dialect))
+
+    @api.model
+    def _td_xlsx_rows(self, raw):
+        """Position 4: the first sheet of an Excel file (.xlsx) as rows of text, read with openpyxl — the library the
+        standard import of Odoo already uses (base_import, requirements of Odoo 19)."""
+        try:
+            import openpyxl  # noqa: PLC0415
+            book = openpyxl.load_workbook(io.BytesIO(raw), read_only=True, data_only=True)
+        except Exception as error:  # noqa: BLE001 — any broken file is a user error, not a crash
+            raise UserError(self.env._("The Excel file cannot be read: %s", error)) from error
+        rows = []
+        for values in book.worksheets[0].iter_rows(values_only=True):
+            cells = ['' if v is None else str(int(v)) if isinstance(v, float) and v.is_integer() else str(v) for v in values]
+            if any(c.strip() for c in cells):
+                rows.append(cells)
+        book.close()
+        return rows
 
     @api.model
     def _td_map_header(self, header):

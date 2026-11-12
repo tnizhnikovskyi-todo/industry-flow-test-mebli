@@ -38,6 +38,8 @@
                                     <field name="width_mm"/>
                                     <field name="height_mm"/>
                                     <field name="depth_mm"/>
+                                    <field name="protrusion_mm" optional="show"/>
+                                    <field name="order_line_id" optional="show" options="{'no_create': True}"/>
                                 </list>
                             </field>
                         </page>
@@ -121,4 +123,31 @@
 
     <menuitem id="td_mebli_measure_menu" name="Measurement Sheets" parent="sale.sale_order_menu"
               action="td_mebli_measure_action" sequence="3"/>
+
+    <!-- Position 28: the design against the measurement before cutting (rules, no AI) — on the manufacturing order -->
+    <record id="mrp_production_form_td_measure_check" model="ir.ui.view">
+        <field name="name">mrp.production.form.td.mebli.measure.check</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning mb-0 td_measure_alert" role="alert"
+                     invisible="not td_measure_problems or state in ('done', 'cancel')">
+                    <i class="fa fa-exclamation-triangle me-2" title="Check before cutting"/>
+                    <strong>Check the design against the measurement before cutting:</strong>
+                    <field name="td_measure_problems" class="d-block mt-1"/>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Position 9: meetings of the measurer (standard calendar), booked from the opportunity -->
+    <record id="td_mebli_measure_calendar_action" model="ir.actions.act_window">
+        <field name="name">Measurement Calendar</field>
+        <field name="res_model">calendar.event</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="domain">[('opportunity_id', '!=', False)]</field>
+    </record>
+    <menuitem id="td_mebli_measure_calendar_menu" name="Measurement Calendar" parent="sale.sale_order_menu"
+              action="td_mebli_measure_calendar_action" sequence="4"/>
 </odoo>

@@ -1,3 +1,4 @@
+from collections import defaultdict
 from datetime import timedelta
 
 from odoo import fields, models
@@ -12,9 +13,14 @@ class PurchaseOrderLine(models.Model):
 
     td_date_ready = fields.Date(
         string='Order Ready by Item', compute='_compute_td_date_ready',
-        help="Read only. The expected delivery date of the line (Purchase) plus the manufacturing lead time of the "
-             "bill of materials that consumes it: when the sales order can be ready if only this item is waited for. "
-             "Empty when the item is received or the purchase is cancelled.")
+        help="Read only. The expected delivery date of the line (Purchase), plus the average delay of this supplier in "
+             "the history of receipts, plus the manufacturing lead time of the bill of materials that consumes it: when "
+             "the sales order can be ready if only this item is waited for. Empty when the item is received or the "
+             "purchase is cancelled.")
+    td_supplier_delay = fields.Integer(
+        string='Supplier Delay by History, days', compute='_compute_td_date_ready',
+        help="Read only: the average delay of the supplier over the past year (received purchase lines: the receipt "
+             "date against the expected arrival), rounded to days; early deliveries count as on time.")
 
     def _td_productions(self):
         """The manufacturing orders that consume the purchased item (standard MTO chain: the purchase line feeds the
@@ -36,13 +42,61 @@ class PurchaseOrderLine(models.Model):
                 and self.qty_received < self.product_qty and bool(self.date_planned))
 
     def _compute_td_date_ready(self):
+        delays = self.partner_id._td_supplier_delays()
         for line in self:
+            line.td_supplier_delay = int(delays.get(line.partner_id.id, (0.0, 0))[0] + 0.5)
             if not line._td_is_open():
                 line.td_date_ready = False
                 continue
-            arrival = fields.Date.context_today(line, line.date_planned)
+            arrival = fields.Date.context_today(line, line.date_planned) + timedelta(days=line.td_supplier_delay)
             # sudo: the bill of materials of the manufacturing order is read only (produce_delay)
             line.td_date_ready = arrival + timedelta(days=line._td_production().sudo().bom_id.produce_delay or 0)
+
+
+class ResPartner(models.Model):
+    """Position 29: reliability of a supplier from the history of purchases (read only, nothing is entered).
+
+    The standard keeps the on-time rate of a vendor (purchase_stock: res.partner.on_time_rate, the share of the ordered
+    quantity received by the expected arrival); the forecast date needs days, so the same history (received purchase lines
+    of the past year, the receipt date of the done stock move against the expected arrival of the line) gives the average
+    delay in days."""
+    _inherit = 'res.partner'
+
+    td_supplier_delay_avg = fields.Float(
+        string='Average Delay, days', compute='_compute_td_supplier_delay', digits=(16, 1),
+        groups='purchase.group_purchase_user,sales_team.group_sale_salesman',
+        help="Read only: received purchase lines of the past year, the receipt date against the expected arrival; "
+             "early deliveries count as on time. Added to the supplier date in the forecast date of the order.")
+    td_supplier_delay_lines = fields.Integer(
+        string='Receipts in the Statistics', compute='_compute_td_supplier_delay',
+        groups='purchase.group_purchase_user,sales_team.group_sale_salesman')
+
+    def _td_supplier_delays(self):
+        """{partner id: (average delay in days, number of received purchase lines)} over the past year."""
+        partners = self.filtered('id')
+        if not partners:
+            return {}
+        days = int(self.env['ir.config_parameter'].sudo().get_param('purchase_stock.on_time_delivery_days', default='365'))
+        # sudo: read only — the forecast date of a sales order is computed for a salesperson too
+        moves = self.env['stock.move'].sudo().search_fetch([
+            ('purchase_line_id.partner_id', 'in', partners.ids),
+            ('purchase_line_id.date_order', '>', fields.Date.today() - timedelta(days=days)),
+            ('state', '=', 'done'), ('location_dest_id.usage', '=', 'internal'),
+        ], ['purchase_line_id', 'date'])
+        last = {}
+        for move in moves:  # the last receipt of a line closes it
+            line = move.purchase_line_id
+            if line.date_planned and (line.id not in last or move.date > last[line.id][1]):
+                last[line.id] = (line, move.date)
+        stats = defaultdict(list)
+        for line, done in last.values():
+            stats[line.partner_id.id].append(max(0, (done.date() - line.date_planned.date()).days))
+        return {pid: (sum(values) / len(values), len(values)) for pid, values in stats.items()}
+
+    def _compute_td_supplier_delay(self):
+        delays = self._td_supplier_delays()
+        for partner in self:
+            partner.td_supplier_delay_avg, partner.td_supplier_delay_lines = delays.get(partner.id, (0.0, 0))
 
 
 class SaleOrder(models.Model):

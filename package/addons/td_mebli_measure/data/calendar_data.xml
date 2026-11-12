@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Position 9: the reminder to the customer a day before the measurement — a standard e-mail alarm of the meeting
+         (the standard calendar sends calendar_template_meeting_reminder to the attendees) -->
+    <record id="alarm_mail_measure_1day" model="calendar.alarm">
+        <field name="name">Email - 1 Day</field>
+        <field name="duration" eval="1"/>
+        <field name="interval">days</field>
+        <field name="alarm_type">email</field>
+    </record>
+</odoo>

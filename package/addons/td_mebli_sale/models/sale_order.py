@@ -14,6 +14,10 @@ class SaleOrder(models.Model):
         string='Order Stage', compute='_compute_td_stage', inverse='_inverse_td_stage', store=True, readonly=False,
         group_expand='_read_group_td_stage')
     td_image = fields.Image(string='Product Image', compute='_compute_td_image', max_width=256, max_height=256)
+    # position 6: the visual of the designer goes into the standard quotation PDF (sale.report_saleorder_document)
+    td_design_image = fields.Image(string='Design Visual', max_width=1600, max_height=1600, copy=False,
+                                   help="The visual of the project from the designer: printed in the quotation under the "
+                                        "order details.")
 
     @api.model
     def _read_group_td_stage(self, values, domain):

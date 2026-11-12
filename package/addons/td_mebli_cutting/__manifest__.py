@@ -5,7 +5,7 @@
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['td_mebli_mrp', 'td_mebli_sale', 'purchase', 'stock'],
+    'depends': ['td_mebli_mrp', 'td_mebli_sale', 'td_mebli_measure', 'purchase', 'stock'],
     'data': [
         'security/ir.model.access.csv',
         'data/ir_sequence_data.xml',
@@ -13,6 +13,7 @@
         'views/stock_lot_views.xml',
         'views/mrp_production_views.xml',
         'views/distributor_views.xml',
+        'views/measure_check_views.xml',
         'views/menus.xml',
     ],
     'installable': True,

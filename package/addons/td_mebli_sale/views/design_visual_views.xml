@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Position 6: the visual of the designer on the order and in the standard quotation PDF -->
+    <record id="view_order_form_td_design" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.design</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Design Visual" name="td_design">
+                    <field name="td_design_image" widget="image" class="td_design_image" options="{'size': [640, 0]}"/>
+                    <div class="text-muted small">The visual is printed in the quotation (Print › Quotation / Order) under the
+                        order details.</div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <template id="report_saleorder_document_td_design" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@id='informations']" position="after">
+            <div t-if="doc.td_design_image" class="td_design_visual mb-4 text-center" style="page-break-inside: avoid;">
+                <h5 class="text-start">Design Visual</h5>
+                <img t-att-src="image_data_uri(doc.td_design_image)" style="max-width: 100%; max-height: 110mm;" alt="Design Visual"/>
+            </div>
+        </xpath>
+    </template>
+</odoo>

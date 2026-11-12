@@ -49,12 +49,14 @@
                             <field name="order_id" string="Purchase" width="95px"/>
                             <field name="date_planned" string="Supplier Date" options="{'show_time': false}" width="125px"/>
                             <field name="qty_received" string="Received" width="100px"/>
+                            <field name="td_supplier_delay" string="Delay by History" width="120px" decoration-warning="td_supplier_delay > 0"/>
                             <field name="td_date_ready" string="Order Ready" width="120px"/>
                         </list>
                     </field>
                     <div class="text-muted small">Read only: the supplier date is kept in the purchase order. The forecast date
                         of the order is the later of the two: the workshop is ready (<field name="td_shop_date" class="oe_inline"
-                        readonly="1"/>) or the last purchased item arrives and is made into the product.</div>
+                        readonly="1"/>) or the last purchased item arrives and is made into the product. «Delay by History» — the average delay of the
+                        supplier over the past year (days), added to the supplier date.</div>
                 </page>
             </xpath>
         </field>
@@ -73,6 +75,26 @@
                 <field name="td_forecast_date" optional="hide" decoration-danger="td_delay_days &gt; 0"/>
                 <field name="td_delay_days" optional="hide" decoration-danger="td_delay_days &gt; 0"/>
             </field>
+        </field>
+    </record>
+
+    <!-- Position 29: reliability of the supplier next to the standard on-time rate (purchase_stock) -->
+    <record id="res_partner_view_td_supplier_delay" model="ir.ui.view">
+        <field name="name">res.partner.td.mebli.supplier.delay</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="purchase.view_partner_property_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='purchase_order_count']/.." position="after">
+                <button class="oe_stat_button" name="%(purchase_stock.action_purchase_vendor_delay_report)d" type="action"
+                        groups="purchase.group_purchase_user" icon="fa-clock-o" context="{'search_default_partner_id': id}"
+                        invisible="not td_supplier_delay_lines">
+                    <div class="o_form_field o_stat_info">
+                        <span class="o_stat_value"><field name="td_supplier_delay_avg" digits="[42, 1]"/></span>
+                        <span class="o_stat_text">Average Delay, days</span>
+                        <field name="td_supplier_delay_lines" invisible="1"/>
+                    </div>
+                </button>
+            </xpath>
         </field>
     </record>
 </odoo>
