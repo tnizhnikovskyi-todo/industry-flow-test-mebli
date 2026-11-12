@@ -52,7 +52,7 @@
   },
   {
    "kind": "label",
-   "text": "Новий"
+   "text": ""
   },
   {
    "kind": "button",
@@ -121,27 +121,27 @@
   },
   {
    "kind": "field",
-   "text": "438,73",
+   "text": "438,73 ₴",
    "label": "Сума бригаді",
    "name": "crew_amount",
    "required": false
   },
   {
    "kind": "flag",
-   "text": "false",
+   "text": "true",
    "label": "У фотоархіві?",
    "required": false
   },
   {
    "kind": "field",
-   "text": "16 жовт., 11:29",
+   "text": "16 жовт., 15:48",
    "label": "Підписано",
    "name": "signed_on",
    "required": false
   },
   {
    "kind": "field",
-   "text": "Недолік: дверка.png PNG × Кухня після монтажу.png PNG × Фото",
+   "text": "Недолік: дверка.png PNG Кухня після монтажу.png PNG",
    "label": "Фото",
    "name": "photo_ids",
    "required": false

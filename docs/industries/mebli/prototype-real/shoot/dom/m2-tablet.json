@@ -61,7 +61,7 @@
   },
   {
    "kind": "cell",
-   "text": "WH/MO/00093",
+   "text": "WH/MO/00100",
    "label": "production_id"
   },
   {
@@ -71,7 +71,7 @@
   },
   {
    "kind": "cell",
-   "text": "0,9",
+   "text": "4,4",
    "label": "td_expected_hours"
   },
   {
@@ -81,7 +81,7 @@
   },
   {
    "kind": "cell",
-   "text": "Петро Гуменюк",
+   "text": "Олег Дорошенко",
    "label": "td_worker_names"
   },
   {
@@ -109,7 +109,7 @@
   },
   {
    "kind": "cell",
-   "text": "WH/MO/00012",
+   "text": "WH/MO/00101",
    "label": "production_id"
   },
   {
@@ -119,7 +119,7 @@
   },
   {
    "kind": "cell",
-   "text": "0,8",
+   "text": "2,6",
    "label": "td_expected_hours"
   },
   {

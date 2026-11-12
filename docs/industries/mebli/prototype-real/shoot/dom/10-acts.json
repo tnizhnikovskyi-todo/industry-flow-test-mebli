@@ -612,7 +612,7 @@
   },
   {
    "kind": "label",
-   "text": "Новий Акти монтажу 1-70 / 70"
+   "text": "Акти монтажу 1-70 / 70"
   },
   {
    "kind": "breadcrumb",
@@ -649,7 +649,7 @@
   },
   {
    "kind": "cell",
-   "text": "0,00",
+   "text": "0,00 ₴",
    "label": "crew_amount"
   },
   {
@@ -677,12 +677,12 @@
   },
   {
    "kind": "cell",
-   "text": "S00102",
+   "text": "S00008",
    "label": "order_id"
   },
   {
    "kind": "cell",
-   "text": "S00102: монтаж",
+   "text": "S00008: монтаж",
    "label": "task_id"
   },
   {
@@ -697,7 +697,7 @@
   },
   {
    "kind": "cell",
-   "text": "1 472,00",
+   "text": "195,75 ₴",
    "label": "crew_amount"
   },
   {
@@ -745,7 +745,7 @@
   },
   {
    "kind": "cell",
-   "text": "345,60",
+   "text": "345,60 ₴",
    "label": "crew_amount"
   },
   {

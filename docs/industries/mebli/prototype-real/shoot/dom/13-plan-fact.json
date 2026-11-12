@@ -20,7 +20,15 @@
   },
   {
    "kind": "header",
+   "text": "Маржа план"
+  },
+  {
+   "kind": "header",
    "text": "Планова собівартість"
+  },
+  {
+   "kind": "header",
+   "text": "Планова маржа, %"
   },
   {
    "kind": "header",
@@ -33,10 +41,6 @@
   {
    "kind": "header",
    "text": "Фактична собівартість"
-  },
-  {
-   "kind": "header",
-   "text": "Планова маржа, %"
   },
   {
    "kind": "header",
@@ -388,60 +392,6 @@
   },
   {
    "kind": "cell",
-   "text": "S00102",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Дмитро Савченко",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "73 600,00 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "49 357,44 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "33 033,97 ₴",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "18 882,86 ₴",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "51 916,83 ₴",
-   "label": "td_cost_fact"
-  },
-  {
-   "kind": "cell",
-   "text": "32,9",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "29,5",
-   "label": "td_margin_fact_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "5,2",
-   "label": "td_cost_deviation_pct"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
    "text": "S00008",
    "label": "name"
   },
@@ -457,23 +407,13 @@
   },
   {
    "kind": "cell",
+   "text": "2 925,36 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
    "text": "6 862,14 ₴",
    "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "4 753,08 ₴",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "2 489,63 ₴",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "7 242,70 ₴",
-   "label": "td_cost_fact"
   },
   {
    "kind": "cell",
@@ -482,12 +422,86 @@
   },
   {
    "kind": "cell",
+   "text": "4 753,08 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "2 567,88 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "7 320,96 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "25,2",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "6,7",
+   "label": "td_cost_deviation_pct"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00102",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Дмитро Савченко",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "73 600,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "24 242,56 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "49 357,44 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "32,9",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "33 033,97 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "21 438,84 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "54 472,80 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
    "text": "26,0",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "5,5",
+   "text": "10,4",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -511,23 +525,13 @@
   },
   {
    "kind": "cell",
+   "text": "2 526,36 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
    "text": "14 753,64 ₴",
    "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "8 740,34 ₴",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "7 439,98 ₴",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "16 180,33 ₴",
-   "label": "td_cost_fact"
   },
   {
    "kind": "cell",
@@ -536,12 +540,27 @@
   },
   {
    "kind": "cell",
-   "text": "6,4",
+   "text": "8 740,34 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "6 849,52 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "15 589,86 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "9,8",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "9,7",
+   "text": "5,7",
    "label": "td_cost_deviation_pct"
   }
  ]
