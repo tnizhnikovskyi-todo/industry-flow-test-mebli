@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 08:44+0000\n"
-"PO-Revision-Date: 2026-11-12 08:44+0000\n"
+"POT-Creation-Date: 2026-11-12 09:41+0000\n"
+"PO-Revision-Date: 2026-11-12 09:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid ") or the last made-to-order item is fitted."
+msgid ") or the last purchased item arrives and is made into the product."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -84,14 +84,8 @@ msgid "Build specification"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__company_id
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__company
 msgid "Company"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__confirmed
-msgid "Confirmed by Supplier"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -100,36 +94,8 @@ msgid "Confirmed orders"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__td_partner_id
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__customer
 msgid "Customer"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,help:td_mebli_sale.field_td_mebli_order_item__date_supplier
-msgid "Date when the supplier delivers the item to the factory."
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,help:td_mebli_sale.field_td_mebli_order_item__lead_days
-msgid ""
-"Days from the receipt of the item to the order being ready (fitting, "
-"packing)."
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__lead_days
-msgid "Days to Fit"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -140,10 +106,10 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -171,10 +137,10 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__id
 msgid "ID"
 msgstr ""
 
@@ -185,45 +151,17 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid ""
-"It is moved by the made-to-order item\n"
-"                        «"
+msgid "It is moved by the purchase «"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__name
-msgid "Item"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_late_item_id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_late_item
 msgid "Item that Moves the Date"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__write_date
-msgid "Last Updated on"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__done
 msgid "Made"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_item_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid "Made-to-order Items"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model,name:td_mebli_sale.model_td_mebli_order_item
-msgid "Made-to-order item"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -261,11 +199,6 @@ msgid "Materials"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__is_late
-msgid "Moves the Date"
-msgstr ""
-
-#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
 msgid "Number"
 msgstr ""
@@ -276,7 +209,6 @@ msgid "Options"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__order_id
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
@@ -302,6 +234,11 @@ msgid "Order Cost"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_date_ready
+msgid "Order Ready by Item"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_stage
 msgid "Order Stage"
 msgstr ""
@@ -312,7 +249,7 @@ msgid "Order to launch, h"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__ordered
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Ordered"
 msgstr ""
@@ -361,6 +298,31 @@ msgid "Promised Date"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "Purchase"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_late_line_id
+msgid "Purchase that Moves the Date"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_purchase_line_ids
+msgid "Purchased for the Order"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "Purchases for the Order"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 msgid "Qty"
 msgstr ""
@@ -371,8 +333,26 @@ msgid "Quotation"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__date_ready
-msgid "Ready by Item"
+#: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_date_ready
+msgid ""
+"Read only. The expected delivery date of the line (Purchase) plus the "
+"manufacturing lead time of the bill of materials that consumes it: when the "
+"sales order can be ready if only this item is waited for. Empty when the "
+"item is received or the purchase is cancelled."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid ""
+"Read only: the supplier date is kept in the purchase order. The forecast date\n"
+"                        of the order is the later of the two: the workshop is ready ("
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_delay_reason
+msgid ""
+"Read only: «Supplier» when a purchased item arrives too late for the "
+"promised date, «Company» when the workshop is late."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -381,7 +361,7 @@ msgid "Ready by Workshop"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__received
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Received"
 msgstr ""
 
@@ -409,11 +389,6 @@ msgid "Sent to customer"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__sequence
-msgid "Sequence"
-msgstr ""
-
-#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_reason
 msgid "Shift Reason"
 msgstr ""
@@ -434,7 +409,7 @@ msgid "Specification"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__state
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
 msgid "Status"
 msgstr ""
@@ -445,19 +420,14 @@ msgid "Stock Rule"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__supplier_id
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__supplier
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__date_supplier
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier Date"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.constraint,message:td_mebli_sale.constraint_td_mebli_order_item_lead_days_positive
-msgid "The days to fit cannot be negative."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -466,17 +436,11 @@ msgid "The forecast date is later than the promised one by"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid ""
-"The forecast date of the order is the later of the two: the workshop is ready\n"
-"                        ("
-msgstr ""
-
-#. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_forecast_date
 msgid ""
-"The later of the two: the workshop is ready, the last made-to-order item is "
-"fitted."
+"The later of the two: the workshop is ready, the last purchased item arrives"
+" and is made into the product (manufacturing lead time of the bill of "
+"materials)."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -516,11 +480,6 @@ msgid "To Launch, h"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__to_order
-msgid "To Order"
-msgstr ""
-
-#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
@@ -533,15 +492,13 @@ msgid "Type to find a product..."
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__confirmed
-msgid "Waiting for launch"
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "Unit"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_delay_reason
-msgid ""
-"Who moved the date: suggested from the forecast, the manager may set "
-"«Customer» for a change asked by the customer."
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__confirmed
+msgid "Waiting for launch"
 msgstr ""
 
 #. module: td_mebli_sale

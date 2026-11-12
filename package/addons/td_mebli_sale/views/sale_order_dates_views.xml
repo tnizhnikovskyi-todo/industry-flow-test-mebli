@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- S-02 «Замовлення клієнта»: обіцяна й прогнозна дата, зсув і причина, замовні позиції (F-23, F-31, NG-01) -->
+    <!-- S-02 «Замовлення клієнта»: обіцяна й прогнозна дата, зсув і причина (F-23, F-31, NG-01).
+         Усе — лише читання: замовні позиції купуються стандартом (MTO + «Купити» -> замовлення постачальнику),
+         дата постачальника вводиться в модулі Закупівлі (purchase.order.line.date_planned). -->
     <record id="view_order_form_td_mebli_dates" model="ir.ui.view">
         <field name="name">sale.order.form.td.mebli.dates</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="before">
-                <field name="td_late_item_id" invisible="1"/>
                 <div class="alert alert-danger mb-0 td_date_alert" role="alert" invisible="td_delay_days &lt;= 0 or state == 'cancel'">
                     <i class="fa fa-exclamation-triangle me-2" title="Date at risk"/>
                     <strong>The forecast date is later than the promised one by <field name="td_delay_days" class="oe_inline"/> days.</strong>
-                    <span invisible="not td_late_item_id"> It is moved by the made-to-order item
-                        «<field name="td_late_item_id" class="oe_inline" readonly="1" options="{'no_open': True}"/>».</span>
+                    <span invisible="not td_late_item"> It is moved by the purchase «<field name="td_late_item" class="oe_inline"/>».</span>
                 </div>
             </xpath>
             <xpath expr="//group[@name='order_details']" position="inside">
@@ -20,24 +20,28 @@
                 <field name="td_forecast_date" decoration-danger="td_delay_days &gt; 0" decoration-success="td_delay_days == 0"
                        invisible="not td_forecast_date"/>
                 <field name="td_delay_days" invisible="td_delay_days == 0" decoration-danger="td_delay_days &gt; 0"/>
-                <field name="td_delay_reason" invisible="td_delay_days == 0 and td_delay_reason != 'customer'"/>
+                <field name="td_delay_reason" invisible="td_delay_days == 0"/>
             </xpath>
             <xpath expr="//page[@name='order_lines']" position="after">
-                <page string="Made-to-order Items" name="td_items">
-                    <field name="td_item_ids" readonly="state == 'cancel' or locked">
-                        <list editable="bottom" decoration-danger="is_late" decoration-muted="state == 'received'">
-                            <field name="sequence" widget="handle"/>
-                            <field name="name" width="280px"/>
-                            <field name="supplier_id" width="150px"/>
-                            <field name="state" width="110px"/>
-                            <field name="date_supplier" width="130px"/>
-                            <field name="lead_days" optional="hide" width="110px"/>
-                            <field name="date_ready" width="105px"/>
-                            <field name="is_late" column_invisible="True"/>
+                <page string="Purchases for the Order" name="td_purchases" groups="purchase.group_purchase_user"
+                      invisible="not td_purchase_line_ids">
+                    <field name="td_late_line_id" invisible="1"/>
+                    <field name="td_purchase_line_ids" readonly="1">
+                        <list decoration-danger="id == parent.td_late_line_id" decoration-muted="not td_date_ready" create="0" delete="0">
+                            <field name="product_id" width="300px"/>
+                            <field name="partner_id" string="Supplier" width="170px"/>
+                            <field name="order_id" string="Purchase" width="110px"/>
+                            <field name="state" string="Status" width="120px"/>
+                            <field name="date_planned" string="Supplier Date" widget="date" width="120px"/>
+                            <field name="product_qty" string="Ordered" width="90px"/>
+                            <field name="qty_received" string="Received" width="90px"/>
+                            <field name="product_uom_id" string="Unit" width="80px"/>
+                            <field name="td_date_ready" width="120px"/>
                         </list>
                     </field>
-                    <div class="text-muted small">The forecast date of the order is the later of the two: the workshop is ready
-                        (<field name="td_shop_date" class="oe_inline" readonly="1"/>) or the last made-to-order item is fitted.</div>
+                    <div class="text-muted small">Read only: the supplier date is kept in the purchase order. The forecast date
+                        of the order is the later of the two: the workshop is ready (<field name="td_shop_date" class="oe_inline"
+                        readonly="1"/>) or the last purchased item arrives and is made into the product.</div>
                 </page>
             </xpath>
         </field>

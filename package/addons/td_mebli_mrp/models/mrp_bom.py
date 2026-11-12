@@ -119,6 +119,9 @@ class MrpBom(models.Model):
             'code': self.env._("%(w)sx%(h)sx%(d)s order BoM", w=dims['width'], h=dims['height'], d=dims['depth']),
             'td_order_bom': True,
             'td_template_bom_id': template_bom.id,
+            # standard lead times of the template: the end of the manufacturing order follows from them
+            'produce_delay': template_bom.produce_delay,
+            'days_to_prepare_mo': template_bom.days_to_prepare_mo,
             'td_width': dims['width'], 'td_height': dims['height'], 'td_depth': dims['depth'],
             'td_part_ids': [(0, 0, vals) for vals in part_vals],
         })

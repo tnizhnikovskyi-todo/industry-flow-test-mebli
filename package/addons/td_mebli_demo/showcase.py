@@ -27,7 +27,8 @@ COMPANY = {
 
 # login, name, job, avatar, groups (xmlids)
 USERS = [
-    ('salon', 'Олена Мартинюк', 'Менеджер салону', 'avatar_salon', ['sales_team.group_sale_salesman']),
+    # the salon manager reads the purchases of her orders (the smart button of sale_purchase needs the Purchase user group)
+    ('salon', 'Олена Мартинюк', 'Менеджер салону', 'avatar_salon', ['sales_team.group_sale_salesman', 'purchase.group_purchase_user']),
     ('salon2', 'Роман Лисенко', 'Менеджер салону', 'avatar_salon2', ['sales_team.group_sale_salesman']),
     ('salon3', 'Світлана Прокопенко', 'Менеджер салону', 'avatar_salon3', ['sales_team.group_sale_salesman']),
     ('tech', 'Андрій Ковальчук', 'Технолог-конструктор', 'avatar_tech',
@@ -35,7 +36,7 @@ USERS = [
     ('chief', 'Ігор Савчук', 'Начальник виробництва', 'avatar_chief',
      ['mrp.group_mrp_manager', 'sales_team.group_sale_salesman_all_leads', 'stock.group_stock_user']),
     ('store', 'Марія Гнатюк', 'Комірник', 'avatar_store',
-     ['stock.group_stock_manager', 'mrp.group_mrp_user']),
+     ['stock.group_stock_manager', 'mrp.group_mrp_user', 'purchase.group_purchase_user']),
     ('fin', 'Наталія Бондар', 'Фінансист', 'avatar_fin',
      ['sales_team.group_sale_manager', 'account.group_account_user', 'stock.group_stock_user',
       'td_mebli_dashboard.group_td_mebli_director']),

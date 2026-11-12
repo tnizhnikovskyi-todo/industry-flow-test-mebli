@@ -1,9 +1,11 @@
-"""Promised and forecast dates of the demo order book, made-to-order items (S-02, F-23, F-31, NG-01).
+"""Promised and forecast dates of the demo order book; made-to-order items bought by the standard (S-02, F-23, F-31, NG-01).
 
-seed_dates(env, people, partners, rnd) runs at the end of seed_showcase: it sets the promised date of every order,
-adds made-to-order items (painted fronts, stone worktops, glass, sliding-door profiles) from fictional suppliers and
-creates the order of the sales demo (SALES §6, scene 4): a kitchen and a wardrobe in one contract, where the painted
-fronts come two weeks late and move the forecast date past the promised one. Everything is fictional.
+seed_dates(env, people, partners, rnd) runs at the end of seed_showcase. The made-to-order items (painted fronts, a quartz
+worktop, a sliding-door profile) are products with the routes «Replenish on Order (MTO)» and «Buy» and a vendor pricelist
+line (product.supplierinfo); they are components of the kitchen and wardrobe bills of materials. The order of the sales
+demo (SALES §6, scene 4) is confirmed: the standard creates the manufacturing orders and, for the components, the purchase
+orders. The buyer then works in Purchase only: confirms the orders, enters the date the paint shop moved (date_planned)
+and receives the profile. The sales order shows it read only. Everything is fictional.
 """
 from datetime import timedelta
 
@@ -13,18 +15,18 @@ from .scenario import _custom
 
 # name, city: fictional suppliers of made-to-order items; phones of the format +380 00 000 00 NN
 SUPPLIERS = [
-    ('Фарбоцех «Палітра»', 'Біла Церква'), ('Камінь-Майстер', 'Житомир'),
-    ('Профіль-Систем', 'Київ'), ('Скло-Лайн', 'Вінниця'),
+    ('Фарбоцех «Палітра»', 'Біла Церква'), ('Камінь-Майстер', 'Житомир'), ('Профіль-Систем', 'Київ'),
 ]
 
-# item, supplier index, kind of product it goes with
-ITEMS = {
-    'prod_kitchen': [('Фасади МДФ фарбовані, RAL 9010 мат', 0), ('Стільниця кварцова 38 мм', 1), ('Скло для вітрини, загартоване', 3)],
-    'prod_wardrobe': [('Профіль шафи-купе, алюміній шампань', 2), ('Дзеркало для дверей купе', 3)],
-    'prod_dresser': [('Фасади МДФ фарбовані, RAL 7044 мат', 0)],
-}
+# key, name, unit xmlid, cost (UAH, the planned margin of the show order stays ~20 %), supplier index, supplier lead time (days), template BoM, quantity per unit
+COMPONENTS = [
+    ('fronts_9010', 'Фасади МДФ фарбовані, RAL 9010 мат', 'uom.product_uom_unit', 380.0, 0, 14, 'prod_kitchen', 1.0),
+    ('worktop_quartz', 'Стільниця кварцова 38 мм', 'uom.product_uom_meter', 1600.0, 1, 10, 'prod_kitchen', 0.6),
+    ('profile_champagne', 'Профіль шафи-купе, алюміній шампань', 'uom.product_uom_unit', 2400.0, 2, 5, 'prod_wardrobe', 1.0),
+]
 
-STATES = ['to_order', 'ordered', 'confirmed', 'confirmed', 'received']
+# standard manufacturing lead time of the template bills of materials (mrp.bom.produce_delay), days
+PRODUCE_DELAY = {'prod_kitchen': 12, 'prod_wardrobe': 12}
 
 
 def _suppliers(env):
@@ -36,6 +38,27 @@ def _suppliers(env):
             'phone': f'+380 00 000 00 {60 + index:02d}', 'email': f'orders{index + 1}@supplier-demo.example',
             'lang': 'uk_UA', 'supplier_rank': 1,
         })
+    return found
+
+
+def _components(env, suppliers):
+    """Made-to-order items as standard products: MTO + Buy, the supplier and his lead time in the vendor pricelist,
+    a line of the template bill of materials. From now on every kitchen and wardrobe order buys them on confirmation."""
+    routes = [env.ref('stock.route_warehouse0_mto').id, env.ref('purchase_stock.route_warehouse0_buy').id]
+    found = {}
+    for key, name, uom, cost, supplier, delay, template, qty in COMPONENTS:
+        product = env['product.product'].create({
+            'name': name, 'type': 'consu', 'is_storable': True, 'uom_id': env.ref(uom).id,
+            'standard_price': cost, 'purchase_ok': True, 'sale_ok': False, 'route_ids': [(6, 0, routes)],
+            'seller_ids': [(0, 0, {'partner_id': suppliers[supplier].id, 'price': cost, 'delay': delay})],
+        })
+        bom = env['mrp.bom']._bom_find(env.ref(f'td_mebli_demo.{template}').product_variant_id)[
+            env.ref(f'td_mebli_demo.{template}').product_variant_id]
+        bom.write({'bom_line_ids': [(0, 0, {'product_id': product.id, 'product_qty': qty, 'product_uom_id': product.uom_id.id})]})
+        found[key] = product
+    for template, days in PRODUCE_DELAY.items():
+        variant = env.ref(f'td_mebli_demo.{template}').product_variant_id
+        env['mrp.bom']._bom_find(variant)[variant].produce_delay = days
     return found
 
 
@@ -52,47 +75,32 @@ def _line(env, product_xmlid, dims, body, facade, edge, fitting, qty):
     })
 
 
-def _today(env):
-    return fields.Date.context_today(env.user)
-
-
-def _book(env, suppliers, rnd):
-    """Promised dates and made-to-order items of the existing order book: most orders keep the date."""
-    today = _today(env)
+def _book(env, rnd):
+    """Promised dates of the existing order book: most orders keep the date; one open order is late because of the
+    workshop (the reason «Company»)."""
     orders = env['sale.order'].search([('state', '=', 'sale')], order='date_order')
     for order in orders:
         shop = order._td_shop_date()
         ordered = fields.Date.context_today(order, order.date_order)
-        kind = order.order_line[:1].product_id.product_tmpl_id
-        key = next((k for k in ITEMS if env.ref(f'td_mebli_demo.{k}') == kind), None)
-        open_order = order.td_stage in ('confirmed', 'progress')
         promised = max(shop + timedelta(days=rnd.randint(2, 6)), ordered + timedelta(days=rnd.randint(21, 30)))
-        if open_order and key and rnd.random() < 0.6:
-            for position, (name, supplier) in enumerate(ITEMS[key][:rnd.randint(1, len(ITEMS[key]))]):
-                earliest = max(today + timedelta(days=rnd.randint(1, 12)), ordered + timedelta(days=7))
-                arrive = min(promised - timedelta(days=rnd.randint(4, 9)), earliest)
-                env['td.mebli.order.item'].create({
-                    'order_id': order.id, 'sequence': position, 'name': name, 'supplier_id': suppliers[supplier].id,
-                    'date_supplier': arrive, 'lead_days': rnd.choice([1, 2, 2, 3]),
-                    'state': 'received' if arrive < today else rnd.choice(STATES[1:4]),
-                })
         order.commitment_date = fields.Datetime.to_datetime(promised) + timedelta(hours=15)
-    # two open orders do not make it: one because of the workshop (the reason «Company»), one because of a supplier
     late = orders.filtered(lambda o: o.td_stage == 'progress')
     if late:
         first = late[0]
         first.commitment_date = fields.Datetime.to_datetime(first._td_shop_date() - timedelta(days=3)) + timedelta(hours=15)
-    if len(late) > 2:
-        second = late[2]
-        promised = fields.Date.context_today(second, second.commitment_date)
-        env['td.mebli.order.item'].create({
-            'order_id': second.id, 'sequence': 9, 'name': 'Стільниця кварцова 38 мм', 'supplier_id': suppliers[1].id,
-            'date_supplier': promised + timedelta(days=4), 'lead_days': 2, 'state': 'confirmed'})
 
 
-def _show_order(env, people, partners, suppliers):
+def _receive(picking):
+    for move in picking.move_ids:
+        move.quantity = move.product_uom_qty
+        move.picked = True
+    picking.with_context(skip_backorder=True, skip_sms=True).button_validate()
+
+
+def _show_order(env, people, partners, components):
     """The order of the demo: a kitchen and a sliding wardrobe in one contract; the painted fronts are late."""
     salon = people['salon']
+    store = people['store']
     now = fields.Datetime.now()
     order = env['sale.order'].create({
         'partner_id': partners[1].id,
@@ -108,25 +116,32 @@ def _show_order(env, people, partners, suppliers):
                          'Доставка й монтаж — за графіком монтажів.'})
     order = order.with_user(salon)
     order.order_line.action_td_generate_bom()
+    # the standard: MTO -> manufacturing orders for the products, MTO + Buy -> requests for quotation for the components
     order.action_confirm()
     order = order.with_env(env)
     order.date_order = ordered
-    # the workshop needs 12 days for this order (standard lead time of the BoM, set after the confirmation regenerated the
-    # order BoM): the manufacturing orders end well before the promise
-    order.order_line.td_bom_id.write({'produce_delay': 12})
-    # the workshop starts in four days (after the prepayment); the end follows from the lead time of the BoM
+    # the workshop starts in four days (after the prepayment); the end follows from the lead time of the BoM (12 days)
     order.mrp_production_ids.write({'date_start': now + timedelta(days=4)})
     promised = fields.Date.context_today(order, ordered) + timedelta(days=28)
     order.commitment_date = fields.Datetime.to_datetime(promised) + timedelta(hours=15)
-    Item = env['td.mebli.order.item']
-    Item.create([
-        {'order_id': order.id, 'sequence': 1, 'name': 'Фасади МДФ фарбовані, RAL 9010 мат', 'supplier_id': suppliers[0].id,
-         'date_supplier': promised + timedelta(days=11), 'lead_days': 3, 'state': 'confirmed'},
-        {'order_id': order.id, 'sequence': 2, 'name': 'Стільниця кварцова 38 мм', 'supplier_id': suppliers[1].id,
-         'date_supplier': promised - timedelta(days=8), 'lead_days': 2, 'state': 'ordered'},
-        {'order_id': order.id, 'sequence': 3, 'name': 'Профіль шафи-купе, алюміній шампань', 'supplier_id': suppliers[2].id,
-         'date_supplier': _today(env) - timedelta(days=1), 'lead_days': 1, 'state': 'received'},
-    ])
+    # the buyer works in Purchase: confirms the requests, enters the supplier dates, receives what came
+    purchases = order._get_purchase_orders()
+    dates = {
+        # the paint shop moved the fronts two days past the promise: + 12 days of the workshop = two weeks of shift
+        components['fronts_9010']: fields.Datetime.to_datetime(promised + timedelta(days=2)) + timedelta(hours=10),
+        components['worktop_quartz']: now + timedelta(days=3),
+        components['profile_champagne']: now - timedelta(days=1, hours=2),
+    }
+    for purchase in purchases:
+        purchase.write({'user_id': store.id})
+        purchase.button_confirm()
+        purchase.write({'date_order': ordered + timedelta(hours=26), 'date_approve': ordered + timedelta(hours=26)})
+        for line in purchase.order_line:
+            if line.product_id in dates:
+                line.date_planned = dates[line.product_id]
+    profile = purchases.order_line.filtered(lambda l: l.product_id == components['profile_champagne']).order_id
+    for picking in profile.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel')):
+        _receive(picking)
     return order
 
 
@@ -135,11 +150,15 @@ def seed_dates(env, people, partners, rnd):
     # the system bot writes the tracking messages in the chatter: a Ukrainian name, no Latin in the frame
     env.ref('base.partner_root').name = 'Система'
     suppliers = _suppliers(env)
-    _book(env, suppliers, rnd)
-    order = _show_order(env, people, partners, suppliers)
-    fronts = order.td_item_ids.sorted('sequence')[:1]
+    _book(env, rnd)
+    components = _components(env, suppliers)
+    order = _show_order(env, people, partners, components)
+    fronts = order._get_purchase_orders().order_line.filtered(lambda l: l.product_id == components['fronts_9010'])
+    moved = fields.Date.context_today(fronts, fronts.date_planned)
     _note(order, people['salon'], 'Клієнт погодив кухню й шафу-купе в одному договорі, фасади — фарбовані RAL 9010 мат.',
           order.date_order + timedelta(hours=2))
-    _note(order, people['store'], f'Фарбоцех «Палітра» переніс фасади на {fronts.date_supplier.strftime("%d.%m.%Y")}: черга на фарбування.',
+    _note(fronts.order_id, people['store'], f'Фарбоцех «Палітра» переніс фасади на {moved.strftime("%d.%m.%Y")}: черга на фарбування.',
+          fields.Datetime.now() - timedelta(hours=3))
+    _note(order, people['store'], f'Фарбоцех «Палітра» переніс фасади на {moved.strftime("%d.%m.%Y")} (закупівля {fronts.order_id.name}).',
           fields.Datetime.now() - timedelta(hours=2))
     return order
