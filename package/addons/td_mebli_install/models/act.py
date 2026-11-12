@@ -34,12 +34,19 @@ class TdMebliInstallAct(models.Model):
     crew_amount = fields.Monetary(string='Crew Amount', compute='_compute_crew_amount', store=True)
     crew_amount_signed = fields.Monetary(string='Crew Amount at the Signature', readonly=True, copy=False,
                                          help='Written when the act is signed; the amount of a signed act.')
+    # F-22: the payment due before the installation (read only, from the invoices of the order)
+    pay_ok = fields.Boolean(related='order_id.td_pay_ok', string='Paid before Installation')
+    pay_missing = fields.Monetary(related='order_id.td_pay_missing', string='Missing before Installation')
+    pay_control = fields.Selection(related='order_id.td_pay_control')
 
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get('name', '/') == '/':
                 vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.install.act') or '/'
+        # the act is opened when the crew starts at the customer: the payment control of the order (warn or block)
+        tasks = self.env['project.task'].browse([vals['task_id'] for vals in vals_list if vals.get('task_id')])
+        tasks.sale_order_id._td_check_payment(self.env._("Start the installation"))
         acts = super().create(vals_list)
         for act, vals in zip(acts, vals_list):  # an act created signed (import, data): the amount of the moment
             if vals.get('state') == 'signed' and 'crew_amount_signed' not in vals:
@@ -81,6 +88,7 @@ class TdMebliInstallAct(models.Model):
         for act in self:
             if not act.signature:
                 raise UserError(self.env._("The customer signs the act with a finger on the screen first."))
+            act.order_id._td_check_payment(self.env._("Sign the act"))
             act.write({'state': 'signed', 'signed_on': fields.Datetime.now()})
             if act.kind == 'final':
                 act.task_id.state = '1_done'
