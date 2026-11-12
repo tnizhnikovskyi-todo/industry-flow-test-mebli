@@ -98,6 +98,9 @@ class TdMebliSpecImport(models.TransientModel):
                          'edge_long_sides': int(number(row, 'edge_long_sides')),
                          'edge_short_sides': int(number(row, 'edge_short_sides'))})
         parts = self.env['td.mebli.part'].create(vals)
-        self.bom_id.message_post(body=self.env._("Imported from %(file)s: %(count)s parts.",
-                                                 file=self.filename or 'CSV', count=len(parts)))
+        # the technologist (mrp user) may add parts but only reads the BoM: the log line in the chatter is written by
+        # the system on behalf of the user (posting needs write access on the BoM)
+        self.bom_id.sudo().message_post(body=self.env._("Imported from %(file)s: %(count)s parts.",
+                                                        file=self.filename or 'CSV', count=len(parts)),
+                                        author_id=self.env.user.partner_id.id)
         return {'type': 'ir.actions.act_window_close'}

@@ -23,3 +23,14 @@ class TestSpecImport(TdMebliCommon):
         side = bom.td_part_ids[0]
         self.assertEqual((side.length_mm, side.width_mm, side.qty, side.edge_long_sides), (720, 560, 2, 1))
         self.assertEqual(side.material_id, self.board_a)
+
+    def test_workshop_user_imports_without_write_on_the_bom(self):
+        bom = self.env['mrp.bom'].create({'product_tmpl_id': self.cabinet_tmpl.id,
+                                          'bom_line_ids': [(0, 0, {'product_id': self.board_a.id, 'product_qty': 1})]})
+        user = self.env['res.users'].with_context(no_reset_password=True).create(
+            {'name': 'Technologist', 'login': 'td_tech', 'group_ids': [(6, 0, [self.env.ref('mrp.group_mrp_user').id])]})
+        wizard = self.env['td.mebli.spec.import'].with_user(user).create(
+            {'bom_id': bom.id, 'filename': 'kitchen.csv', 'file': base64.b64encode(CSV.encode())})
+        wizard.action_import()
+        self.assertEqual(len(bom.td_part_ids), 2)
+        self.assertEqual(bom.message_ids[:1].author_id, user.partner_id)

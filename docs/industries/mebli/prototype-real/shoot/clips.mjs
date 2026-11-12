@@ -44,7 +44,7 @@ export const CLIPS = {
         return clip('D_measure', { role: 'measure', url: '/odoo/action-td_mebli_measure.td_mebli_measure_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Замірник', 'Ніші й техніка клієнта — **у картці замовлення**');
-            await press(c, row(c, 'Кухня й передпокій'));
+            await press(c, row(c, 'Кухня й передпокій').locator('td[name=name]'));
             await press(c, tab(c, 'Техніка клієнта'));
             await focus(c, '.o_data_row.text-danger');
             await zoom(c, '.o_data_row.text-danger', 1.5, 900);
@@ -58,14 +58,17 @@ export const CLIPS = {
         return clip('D_csv', { role: 'tech', url: '/odoo/action-mrp.mrp_bom_form_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Технолог', 'Специфікація з програми проєктування — **без ручного перенесення**');
-            await press(c, row(c, 'S00'));
+            await press(c, row(c, 'S00123/391').locator('td').nth(1));
             await press(c, c.page.locator('.o_cp_action_menus .dropdown-toggle').first());
             await press(c, c.page.locator('.dropdown-item', { hasText: 'Імпорт деталей' }));
             await c.page.locator('.modal input[type=file]').setInputFiles(CSV);
             await press(c, btn(c, 'Розпізнати колонки'));
             await focus(c, '.modal .o_field_widget[name=mapping]'); await hold(c, 2500);
-            await press(c, btn(c, 'Імпортувати'));
-            await titleOff(c);
+            await press(c, c.page.locator('.modal-footer button', { hasText: 'Імпортувати' }));
+            await settle(c.page, 900);
+            await press(c, tab(c, 'Деталі'));
+            await title(c, 'Деталі в специфікації', 'Розміри, матеріал і кромка — **з файла, без ручного вводу**');
+            await focus(c, '.o_field_widget[name=td_part_ids]'); await hold(c, 3000); await titleOff(c);
             await fact(c.page, 'D_csv', 'part_count', '.o_field_widget[name=td_part_count]');
         });
     },
@@ -84,10 +87,11 @@ export const CLIPS = {
         return clip('D_tablet', { role: 'tablet', url: '/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Цех', '«Взято» — **за PIN працівника**, без окремого користувача');
-            await press(c, c.page.locator('.o_data_row button', { hasText: 'Взято' }).first());
-            await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Сергій');
+            await press(c, c.page.locator('.o_group_header', { hasText: 'Розкрій' }));
+            await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00110' }).locator('button', { hasText: 'Взято' }));
+            await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Петро');
             await press(c, c.page.locator('.o-autocomplete--dropdown-item').first());
-            await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '4444');
+            await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
             await press(c, btn(c, 'Підтвердити'));
             await hold(c, 2000); await titleOff(c);
         });
@@ -97,8 +101,14 @@ export const CLIPS = {
         return clip('D_kit', { role: 'store', url: '/odoo/action-td_mebli_shop.td_mebli_kit_line_action' }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Комірник', 'Комплектувальний лист: **що в яке місце**');
-            await hold(c, 2500);
-            await focus(c, '.o_data_row.text-danger'); await hold(c, 2000); await titleOff(c);
+            await hold(c, 2000);
+            await press(c, c.page.locator('.o_searchview_facet .o_facet_remove').first());
+            await press(c, c.page.locator('.o_searchview_dropdown_toggler').first());
+            await press(c, c.page.locator('.o-dropdown-item, .dropdown-item', { hasText: 'Не запаковано' }));
+            await c.page.keyboard.press('Escape'); await settle(c.page, 600);
+            await title(c, 'Не запаковано', 'Без **задньої стінки** комплект не відвантажиться');
+            await focus(c, '.o_data_row.text-danger'); await hold(c, 3000); await titleOff(c);
+            await fact(c.page, 'D_kit', 'missing_part', '.o_data_row.text-danger', { re: 'Задня стінка[^0-9]*' });
         });
     },
     // сцена 5а — пакет розкрою і ділові обрізки (без оптимізатора, OUT-02)
@@ -147,11 +157,14 @@ export const CLIPS = {
             await settle(c.page, 1200); c.mark();
             await title(c, 'Власник', 'Фабрика **на одному екрані**');
             await fact(c.page, 'D_dashboard', 'margin', '.td_card.td_k_margin .td_value');
+            await fact(c.page, 'D_dashboard', 'margin_orders', '.td_card.td_k_margin', { re: '(?<=замовлень )\\d+' });
             await hold(c, 3000);
             await zoom(c, '.td_card.td_k_shift', 1.5, 900); await hold(c, 2500); await zoomOff(c);
             await press(c, c.page.locator('.td_card.td_k_margin'));
+            await settle(c.page, 900);
             await title(c, 'Картка = звіт', 'Ті самі замовлення й та сама **зважена маржа**');
-            await hold(c, 3000); await titleOff(c);
+            await focus(c, 'tfoot'); await hold(c, 3000); await titleOff(c);
+            await fact(c.page, 'D_dashboard', 'drill_orders', '.o_pager_limit');
         });
     },
 };

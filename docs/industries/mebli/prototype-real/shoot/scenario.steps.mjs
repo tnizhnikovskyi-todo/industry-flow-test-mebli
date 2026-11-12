@@ -8,7 +8,7 @@ const row = (c, text) => c.page.locator('.o_data_row', { hasText: text });
 const tab = (c, text) => c.page.locator('.o_notebook_headers a', { hasText: text });
 const btn = (c, text) => c.page.locator('button', { hasText: text });
 
-export const STEPS = [
+const ALL = [
     // сцена 4 — замовні фасади затримуються (зразок, прийнято)
     // ім'я кроку — не 'sample': прийнятий кадр зразка screens/00-sample.png не перезаписується (рішення AI 0.3.x, PLAN §7)
     { n: 0, role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}`, name: 'late-facades',
@@ -25,7 +25,7 @@ export const STEPS = [
     // сцена 1 — замір із помилкою (S-15): холодильник глибший за нішу пенала
     { n: 1, role: 'measure', url: '/odoo/action-td_mebli_measure.td_mebli_measure_action', name: 'measure',
       act: async (c, { press }) => {
-          await press(c, row(c, 'Кухня й передпокій'));
+          await press(c, row(c, 'Кухня й передпокій').locator('td[name=name]'));
           await press(c, tab(c, 'Техніка клієнта'));
       },
       facts: [
@@ -41,7 +41,7 @@ export const STEPS = [
     // сцена 2 — імпорт специфікації з CSV (S-03): розпізнавання колонок (змінює дані — PASS1)
     { n: 3, role: 'tech', url: '/odoo/action-mrp.mrp_bom_form_action', name: 'csv-import',
       act: async (c, { press }) => {
-          await press(c, row(c, 'S00'));
+          await press(c, row(c, 'S00123/391').locator('td').nth(1));
           await press(c, c.page.locator('.o_cp_action_menus button, .o_cp_action_menus .dropdown-toggle').first());
           await press(c, c.page.locator('.dropdown-item', { hasText: 'Імпорт деталей' }));
           await c.page.locator('.modal input[type=file]').setInputFiles(CSV);
@@ -58,20 +58,22 @@ export const STEPS = [
     // сцена 5 — планшет цеху: «Взято» з PIN (PASS1)
     { n: 5, role: 'tablet', url: '/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action', name: 'tablet',
       act: async (c, { press, typeIn }) => {
-          await press(c, c.page.locator('.o_data_row button', { hasText: 'Взято' }).first());
+          await press(c, c.page.locator('.o_group_header', { hasText: 'Розкрій' }));
+          await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00109' }).locator('button', { hasText: 'Взято' }));
           await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));
-          await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Сергій');
+          await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Петро');
           await press(c, c.page.locator('.o-autocomplete--dropdown-item').first());
-          await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '4444');
+          await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
           await press(c, btn(c, 'Підтвердити'));
       },
-      facts: [{ name: 'in_work', sel: '.o_data_row.text-info td[name=td_worker_names]' }] },
+      facts: [{ name: 'in_work', sel: '.o_data_row:has-text("WH/MO/00109") td[name=td_worker_names]' }] },
     // сцена 5 — комплектувальний лист: неповний комплект не відвантажується (PASS1: спроба «Перевірити»)
     { n: 6, role: 'store', url: '/odoo/action-td_mebli_shop.td_mebli_kit_line_action', name: 'kit',
       act: async (c, { press }) => {
           await press(c, c.page.locator('.o_searchview_facet .o_facet_remove').first());
           await press(c, c.page.locator('.o_filter_menu, .o_searchview_dropdown_toggler').first());
           await press(c, c.page.locator('.o-dropdown-item, .dropdown-item', { hasText: 'Не запаковано' }));
+          await c.page.keyboard.press('Escape');
       },
       facts: [{ name: 'missing_rows', sel: '.o_list_renderer', re: 'Задня стінка[^\\n]*' }] },
     // сцена 5а — пакет розкрою за декором і ділові обрізки (без імітації оптимізатора, OUT-02)
@@ -92,12 +94,13 @@ export const STEPS = [
     { n: 12, role: 'chief', url: '/odoo/action-td_mebli_claim.td_mebli_claim_action', name: 'claims',
       facts: [{ name: 'overdue', sel: '.o_kanban_record .text-bg-danger' }] },
     { n: 13, role: 'fin', url: '/odoo/action-td_mebli_cost.sale_order_td_cost_fact_action', name: 'plan-fact',
-      facts: [{ name: 'fact_total', sel: 'tfoot td:nth-child(8)' }] },
+      facts: [{ name: 'fact_total', sel: 'tfoot td' }] },
     // S-08 — ціни постачальників понад історію
     { n: 14, role: 'owner', url: '/odoo/action-td_mebli_purchase.purchase_order_line_td_price_action', name: 'prices',
       act: async (c, { press }) => {
           await press(c, c.page.locator('.o_searchview_dropdown_toggler').first());
           await press(c, c.page.locator('.o-dropdown-item, .dropdown-item', { hasText: 'Понад історію' }));
+          await c.page.keyboard.press('Escape');
       },
       facts: [{ name: 'overpay_total', sel: 'tfoot td[name=td_overpay], tfoot .o_list_number' }] },
     // сцена 8 — дашборд керівника (останнім); картка = drill-down
@@ -108,12 +111,25 @@ export const STEPS = [
           { name: 'on_time', sel: '.td_card.td_k_on_time .td_value' },
           { name: 'prices', sel: '.td_card.td_k_prices .td_value' },
           { name: 'claims', sel: '.td_card.td_k_claims .td_value' },
+          // DASH-drill: кількість замовлень картки маржі = кількість записів звіту drill-down (крок 16)
+          { name: 'margin_orders', sel: '.td_card.td_k_margin', re: '(?<=замовлень )\\d+' },
       ] },
     { n: 16, role: 'owner', url: '/odoo/action-td_mebli_dashboard.action_dashboard', name: 'dashboard-drill-margin',
       act: async (c, { press }) => { await press(c, c.page.locator('.td_card.td_k_margin')); },
-      facts: [{ name: 'revenue_total', sel: 'tfoot td:nth-child(3)' }] },
+      facts: [
+          { name: 'margin_orders', sel: '.o_pager_limit' },
+          { name: 'revenue_total', sel: 'tfoot td:nth-child(2)' },
+          { name: 'plan_cost_total', sel: 'tfoot td:nth-child(3)' },
+      ] },
+    // сцена 2 — пропозиція до підтвердження: маржа видно ДО запуску (не 100 %: планова собівартість у чернетці)
+    { n: 17, role: 'salon', url: '/odoo/action-sale.action_quotations/117', name: 'quotation-margin',
+      facts: [
+          { name: 'state', sel: '.o_statusbar_status .o_arrow_button_current' },
+          { name: 'margin_percent', sel: '.o_field_widget[name=margin_percent]', re: '[\\d,.]+\\s*%' },
+      ] },
 ];
 // прохід 1 змінює дані (імпорт CSV, «Взято» з PIN); прохід 2 — лише читання, дашборд першим (recording.md); порядок ПОКАЗУ — SALES §6 (дашборд у кінці) — монтаж A-21c
-// (scenario.mjs іде за порядком STEPS; порядок PASS2 — для читання)
 export const PASS1 = [3, 5];
-export const PASS2 = [15, 16, 0, 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+export const PASS2 = [15, 16, 0, 1, 2, 17, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+// scenario.mjs іде за порядком STEPS: прохід 1, потім прохід 2 (дашборд першим)
+export const STEPS = [...PASS1, ...PASS2].map((n) => ALL.find((s) => s.n === n));
