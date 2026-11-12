@@ -21,6 +21,13 @@ export const STEPS = [
       facts: [{ name: 'forecast_date', sel: '.o_field_widget[name=td_forecast_date]' }] },
     { n: 5, role: 'owner', url: '/odoo/action-td_mebli_dashboard.action_dashboard', name: 'dashboard',
       facts: [{ name: 'margin', sel: '.td_card.td_k_margin .td_value' }] },
+    // запит власника: деталі завдання на телефоні — кнопка «Деталей: N» у картці планшета відкриває картки деталей (лише читання)
+    { n: 6, role: 'tablet', url: '/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action', name: 'tablet-parts',
+      act: async (c, { press }) => {
+          const r = c.page.locator('.o_kanban_record', { hasText: 'WH/MO/00109' }).first(); await r.scrollIntoViewIfNeeded();
+          await press(c, r.locator('button.td_parts_link'));
+      },
+      facts: [{ name: 'part_count', sel: '.modal .o_field_widget[name=td_part_count]' }] },
 ];
 export const PASS1 = [];
-export const PASS2 = ['m1', 'm2', 'm3', 'm4', 'm5'];
+export const PASS2 = ['m1', 'm2', 'm6', 'm3', 'm4', 'm5'];

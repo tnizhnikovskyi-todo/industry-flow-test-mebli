@@ -1,6 +1,6 @@
 // Живі записи зрізу A-21 (спроба 2), ПОВНИЙ ОБСЯГ — кроки кліпів підготувала хвиля 1, знімає хвиля 2 (PLAN.md §6). Титри — лише події (бренд — A-21c).
 // Порядок показу — SALES §6 (запис 36): сцена 4 (D_late, екран прийнятого зразка) першою, D_dashboard — останнім; порядок ЗЙОМКИ — PASS1, потім PASS2 (дашборд першим).
-import { clip, title, titleOff, hold, zoom, zoomOff, settle, press, typeIn, glide, focus, scrollTo, fact } from './rec_lib.mjs';
+import { clip, title, titleOff, hold, zoom, zoomOff, settle, press, typeIn, glide, focus, scrollTo, fact, goto } from './rec_lib.mjs';
 const ORDER = process.env.ORDER_ID || '123';
 const tab = (c, text) => c.page.locator('.o_notebook_headers a', { hasText: text });
 const row = (c, text) => c.page.locator('.o_data_row, .o_kanban_record', { hasText: text });
@@ -74,6 +74,14 @@ export const CLIPS = {
             await title(c, 'Деталі в специфікації', 'Розміри, матеріал і кромка — **з файла, без ручного вводу**');
             await focus(c, '.o_field_widget[name=td_part_ids]'); await hold(c, 3000); await titleOff(c);
             await fact(c.page, 'D_csv', 'part_count', '.o_field_widget[name=td_part_count]');
+            // запит власника: деталі видно й у виробничому замовленні — вкладка «Деталі» (лише читання, підсумки на все МО)
+            await goto(c, '/odoo/action-mrp.mrp_production_action');
+            await typeIn(c, c.page.locator('.o_searchview_input'), 'WH/MO/00109'); await c.page.keyboard.press('Enter'); await settle(c.page, 700);
+            await press(c, row(c, 'WH/MO/00109').locator('td[name=name]'));
+            await press(c, tab(c, 'Деталі'));
+            await title(c, 'Виробниче замовлення', 'Ті самі деталі — **у вкладці «Деталі»** замовлення цеху');
+            await focus(c, '.o_field_widget[name=td_part_ids]'); await hold(c, 3000); await titleOff(c);
+            await fact(c.page, 'D_csv', 'mo_part_count', '.o_field_widget[name=td_part_count]');
         });
     },
     // сцена 3 — зміна фасадів (B)
@@ -98,7 +106,14 @@ export const CLIPS = {
             await press(c, c.page.locator('.o_select_menu_item', { hasText: 'Петро Гуменюк' })); await settle(c.page, 400);
             await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
             await press(c, btn(c, 'Підтвердити'));
-            await hold(c, 2000); await titleOff(c);
+            await hold(c, 1500); await titleOff(c);
+            // запит власника: деталі завдання — тут же, кнопкою «Деталі» (діалог лише читання)
+            await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00110' }).locator('button', { hasText: 'Деталі' }).first());
+            await title(c, 'Деталі завдання', 'Деталь, матеріал, кількість, **Д×Ш і кромка** — у планшеті');
+            await focus(c, '.modal .o_field_widget[name=td_part_ids]'); await hold(c, 3000); await titleOff(c);
+            await fact(c.page, 'D_tablet', 'part_count', '.modal .o_field_widget[name=td_part_count]');
+            await press(c, c.page.locator('.modal-footer button', { hasText: 'Закрити' }));
+            await hold(c, 800);
         });
     },
     // сцена 5 — неповний комплект не відвантажується (змінює дані: спроба відвантажити)
@@ -229,6 +244,12 @@ export const CLIPS = {
             const r = c.page.locator('.o_kanban_record', { hasText: 'WH/MO/00110' }).filter({ has: c.page.locator('button', { hasText: 'Зроблено' }) }).first();
             await r.scrollIntoViewIfNeeded(); await settle(c.page, 300);
             await r.evaluate((e) => e.classList.add('td_shot_focus')); await focus(c, '.td_shot_focus'); await hold(c, 1800);
+            // запит власника: деталі завдання на телефоні — кнопкою в картці (діалог з картками деталей), без зламу канбану
+            await press(c, r.locator('button.td_parts_link'));
+            await title(c, 'Деталі', 'Що різати: **розміри й кромка** — у картці завдання');
+            await hold(c, 2600); await titleOff(c);
+            await press(c, c.page.locator('.modal-footer button', { hasText: 'Закрити' })); await settle(c.page, 500);
+            await r.scrollIntoViewIfNeeded();
             await press(c, r.locator('button', { hasText: 'Зроблено' }));
             // кіоск: працівник — зі списку (на телефоні пошуковий діалог співробітників недоступний ролі планшета)
             await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));

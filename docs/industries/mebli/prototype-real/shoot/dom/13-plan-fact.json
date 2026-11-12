@@ -392,6 +392,65 @@
   },
   {
    "kind": "cell",
+   "text": "S00009",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Кав'ярня «Зерно»",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "17 280,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "2 526,36 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "14 753,64 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "14,6",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "8 740,34 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "7 525,83 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "16 266,18 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "5,9",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "10,3",
+   "label": "td_cost_deviation_pct"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
    "text": "S00102",
    "label": "name"
   },
@@ -427,22 +486,22 @@
   },
   {
    "kind": "cell",
-   "text": "20 082,69 ₴",
+   "text": "19 281,04 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "53 116,66 ₴",
+   "text": "52 315,01 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "27,8",
+   "text": "28,9",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "7,6",
+   "text": "6,0",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -486,81 +545,22 @@
   },
   {
    "kind": "cell",
-   "text": "2 564,56 ₴",
+   "text": "2 555,20 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "7 317,64 ₴",
+   "text": "7 308,28 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "25,2",
+   "text": "25,3",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "6,6",
-   "label": "td_cost_deviation_pct"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "S00009",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Кав'ярня «Зерно»",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "17 280,00 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "2 526,36 ₴",
-   "label": "margin"
-  },
-  {
-   "kind": "cell",
-   "text": "14 753,64 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "14,6",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "8 740,34 ₴",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "6 792,44 ₴",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "15 532,79 ₴",
-   "label": "td_cost_fact"
-  },
-  {
-   "kind": "cell",
-   "text": "10,1",
-   "label": "td_margin_fact_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "5,3",
+   "text": "6,5",
    "label": "td_cost_deviation_pct"
   }
  ]

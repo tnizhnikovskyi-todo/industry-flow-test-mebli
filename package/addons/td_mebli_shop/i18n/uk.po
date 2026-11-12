@@ -28,18 +28,42 @@ msgstr "%(who)s уже працює над %(wo)s: спершу «Пауза» �
 msgid ""
 "%(who)s is working on %(wo)s now: one worker at a time. %(who)s presses "
 "«Pause» or «Done» first."
-msgstr "%(who)s зараз працює над %(wo)s: один працівник за раз. Спершу %(who)s натискає «Пауза» або «Зроблено»."
+msgstr ""
+"%(who)s зараз працює над %(wo)s: один працівник за раз. Спершу %(who)s "
+"натискає «Пауза» або «Зроблено»."
 
 #. module: td_mebli_shop
 #. odoo-python
 #: code:addons/td_mebli_shop/wizard/kiosk.py:0
 msgid "%s has no running work on this work order: nothing to pause."
-msgstr "%s не має запущеної роботи на цьому робочому замовленні: нічого ставити на паузу."
+msgstr ""
+"%s не має запущеної роботи на цьому робочому замовленні: нічого ставити на "
+"паузу."
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-pause me-1\" title=\"Pause\"/>"
+msgstr "<i class=\"fa fa-pause me-1\" title=\"Пауза\"/>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-th-list me-1\" title=\"Parts\"/><span>Parts:</span>"
+msgstr "<i class=\"fa fa-th-list me-1\" title=\"Деталі\"/><span>Деталей:</span>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-user me-1\" title=\"Worker\"/>"
+msgstr "<i class=\"fa fa-user me-1\" title=\"Працівник\"/>"
 
 #. module: td_mebli_shop
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.view_order_form_td_mebli_shop
 msgid "<span class=\"o_stat_text\">Not Packed</span>"
 msgstr "<span class=\"o_stat_text\">Не запаковано</span>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<span>Plan, h</span>"
+msgstr "<span>План, год</span>"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__action
@@ -111,8 +135,8 @@ msgstr "Назва для відображення"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__done
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 msgid "Done"
 msgstr "Зроблено"
 
@@ -208,7 +232,9 @@ msgstr "Примітка"
 msgid ""
 "Only the shop floor tablet (with the PIN) or the shop manager sets the "
 "worker of a time line."
-msgstr "Працівника в рядку часу ставить лише планшет цеху (з PIN) або начальник виробництва."
+msgstr ""
+"Працівника в рядку часу ставить лише планшет цеху (з PIN) або начальник "
+"виробництва."
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__order_id
@@ -266,6 +292,11 @@ msgid "Part"
 msgstr "Деталь"
 
 #. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Parts"
+msgstr "Деталі"
+
+#. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__pass
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__result__pass
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_quality_check__result__pass
@@ -274,8 +305,8 @@ msgstr "Пройдено"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__pause
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 msgid "Pause"
 msgstr "Пауза"
 
@@ -309,8 +340,8 @@ msgstr "План, год"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_quality_state
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 msgid "Quality"
 msgstr "Якість"
 
@@ -382,8 +413,8 @@ msgstr "Зробіть фото перевірки."
 
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__start
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 msgid "Taken"
 msgstr "Взято"
 
@@ -413,7 +444,9 @@ msgstr "До виконання"
 #. odoo-python
 #: code:addons/td_mebli_shop/wizard/kiosk.py:0
 msgid "Too many wrong PINs: try again in 5 minutes or ask the shop manager."
-msgstr "Забагато неправильних PIN: спробуйте за 5 хвилин або зверніться до начальника цеху."
+msgstr ""
+"Забагато неправильних PIN: спробуйте за 5 хвилин або зверніться до "
+"начальника цеху."
 
 #. module: td_mebli_shop
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
@@ -494,17 +527,3 @@ msgstr "Працівники"
 #: code:addons/td_mebli_shop/wizard/kiosk.py:0
 msgid "Wrong worker or PIN."
 msgstr "Неправильний працівник або PIN."
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
-msgid "<span>Plan, h</span>"
-msgstr "<span>План, год</span>"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
-msgid "<i class=\"fa fa-user me-1\" title=\"Worker\"/>"
-msgstr "<i class=\"fa fa-user me-1\" title=\"Працівник\"/>"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
-msgid "<i class=\"fa fa-pause me-1\" title=\"Pause\"/>"
-msgstr "<i class=\"fa fa-pause me-1\" title=\"Пауза\"/>"

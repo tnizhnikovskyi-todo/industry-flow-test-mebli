@@ -54,3 +54,20 @@ class MrpWorkorder(models.Model):
             workorder.td_expected_hours = hours
             workorder.td_load_pct = hours / capacity * 100.0 if capacity else 0.0
             workorder.td_load_stage = {'progress': 'work', 'blocked': 'chain'}.get(workorder.state, 'queue')
+
+    # the parts of the manufacturing order of this operation, for the tablet of the shop (read only, not stored)
+    td_part_ids = fields.One2many(related='production_id.bom_id.td_part_ids', string='Parts', readonly=True)
+    td_part_count = fields.Integer(related='production_id.td_part_count', string='Part Count')
+
+    def action_td_parts(self):
+        """Parts of the manufacturing order in a dialog of the tablet (read only)."""
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': self.env._("Parts: %s", self.production_id.display_name),
+            'res_model': 'mrp.workorder',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'views': [(self.env.ref('td_mebli_mrp.mrp_workorder_td_parts_form').id, 'form')],
+            'target': 'new',
+        }

@@ -24,6 +24,10 @@
   },
   {
    "kind": "header",
+   "text": "З деталей"
+  },
+  {
+   "kind": "header",
    "text": "Одиниці"
   },
   {
@@ -57,6 +61,18 @@
   {
    "kind": "label",
    "text": "Комплект"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
   },
   {
    "kind": "label",
@@ -186,10 +202,9 @@
    "required": true
   },
   {
-   "kind": "field",
-   "text": "Компонент Кількість Одиниці [ЛДСП-БЛ16] ЛДСП Білий гладкий 16 мм 0 1,615 м² [ДВП-3] ДВП біла 3 мм 0 0,440 м² [КР-БЛ-2] Кромка ПВХ Білий гладкий 2×22 мм 0 2,688 м [ФР-ПЕТ] Петлі з доводчиком, комплект 0 1,000 шт [ФР-ОПО] Опори регульовані, к-т 0 1,000 шт Фасади МДФ фарбовані, RAL 9010 мат 0 1,000 шт Стільниця кварцова 38 мм 0 0,600 м",
-   "label": "bom_line_ids",
-   "name": "bom_line_ids",
+   "kind": "flag",
+   "text": "true",
+   "label": "",
    "required": false
   },
   {
@@ -344,6 +359,11 @@
   },
   {
    "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
    "text": "м²",
    "label": "product_uom_id"
   },
@@ -377,6 +397,11 @@
   },
   {
    "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
    "text": "м²",
    "label": "product_uom_id"
   },
@@ -407,6 +432,11 @@
    "kind": "cell",
    "text": "2,688",
    "label": "product_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
   },
   {
    "kind": "cell",

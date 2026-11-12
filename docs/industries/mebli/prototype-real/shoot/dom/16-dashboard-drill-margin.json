@@ -276,11 +276,19 @@
   },
   {
    "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
    "text": "Керівник 2 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
-   "text": "Керівник Маржа замовлень 1-58 / 58"
+   "text": "Керівник Маржа замовлень 1-60 / 60"
   },
   {
    "kind": "breadcrumb",
@@ -289,6 +297,49 @@
   {
    "kind": "breadcrumb",
    "text": "Маржа замовлень"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00016",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Юлія Романюк",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "22 500,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "4 921,41 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "17 578,59 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "21,9",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "12 лист.",
+   "label": "date_order"
+  },
+  {
+   "kind": "cell",
+   "text": ""
   },
   {
    "kind": "cell",
@@ -365,49 +416,6 @@
   {
    "kind": "cell",
    "text": "36,9",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "12 лист.",
-   "label": "date_order"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "S00112",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Мережа клінік «Здоров'я»",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "74 250,00 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "19 487,64 ₴",
-   "label": "margin"
-  },
-  {
-   "kind": "cell",
-   "text": "54 762,36 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "26,2",
    "label": "td_margin_plan_pct"
   },
   {

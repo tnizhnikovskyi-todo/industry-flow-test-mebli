@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:29+0000\n"
-"PO-Revision-Date: 2026-11-12 11:29+0000\n"
+"POT-Creation-Date: 2026-11-12 18:18+0000\n"
+"PO-Revision-Date: 2026-11-12 18:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,6 +42,34 @@ msgid "%s is not a parametric product."
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid ""
+"<i class=\"fa fa-calculator me-1\" title=\"From parts\"/>\n"
+"                    Board and edge banding marked «From parts» are calculated from the parts (tab Parts): area plus\n"
+"                    planned waste, length of the edged sides."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>Parts in the order:</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>Pieces:</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>mm</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>pcs</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__area_m2
 msgid "Area, m2"
 msgstr ""
@@ -62,6 +90,11 @@ msgid "Bill of Material"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__bom_id
 msgid "Bill of Materials"
 msgstr ""
@@ -73,6 +106,7 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_board_area_m2
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_board_area_m2
 msgid "Board Area, m2"
 msgstr ""
 
@@ -112,6 +146,11 @@ msgid "Choose a body decor for %s."
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "Close"
+msgstr ""
+
+#. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
 msgid ""
@@ -144,6 +183,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__depth
 msgid "Depth"
 msgstr ""
@@ -170,6 +214,8 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__display_name
@@ -177,6 +223,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__display_name
@@ -209,6 +256,7 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_edge_length_m
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_edge_length_m
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_length_m
 msgid "Edge, m"
 msgstr ""
@@ -274,6 +322,18 @@ msgid "For edge banding: the board decor this edge goes with."
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom_line__td_from_parts
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_from_parts
+msgid "From Parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "From parts"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__td_dimension
 msgid "Furniture Dimension"
 msgstr ""
@@ -310,6 +370,8 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__id
@@ -317,6 +379,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__id
@@ -404,6 +467,11 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_pct
 msgid "Load, %"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_production
+msgid "Manufacturing Order"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -561,6 +629,8 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_part_count
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_part_count
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_part_count
 msgid "Part Count"
 msgstr ""
 
@@ -574,13 +644,31 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_part_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_part_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_part_ids
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
 msgid "Parts"
 msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__preview_count
 msgid "Parts in the File"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_production__td_part_count
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_part_count
+msgid ""
+"Parts of the whole manufacturing order: parts of one piece times the "
+"quantity."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_workorder.py:0
+msgid "Parts: %s"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -596,6 +684,11 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_part
 msgid "Per part"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_piece_rate
+msgid "Piece Rate per Basis Unit"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -638,12 +731,40 @@ msgid "Quantity"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid ""
+"Quantity and sizes of the parts are for one piece; the totals above are for "
+"the whole manufacturing order."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "Quantity and sizes: for one piece."
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
 msgid ""
 "Read only: hours per week of the working calendar of the section times the "
 "number of pieces it makes in parallel (the product capacity without a "
 "product). The time efficiency is not applied here: it is already in the "
 "expected duration of the operations."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_stock_move__td_from_parts
+msgid ""
+"Read only: the quantity of this board or edge banding comes from the parts "
+"of the bill of materials (tab Parts of the manufacturing order)."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_bom_line__td_from_parts
+msgid ""
+"Read only: the quantity of this board or edge banding is calculated from the"
+" parts of the bill of materials (tab Parts): area of the parts plus the "
+"planned waste, length of the edged sides. Not marked when the quantity "
+"differs from what the parts need."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -717,6 +838,11 @@ msgid "Specification"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_template_bom_id
 msgid "Template BoM"
 msgstr ""
@@ -757,6 +883,7 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
 msgid "Total"
 msgstr ""
 
@@ -884,5 +1011,6 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
 msgid "x"
 msgstr ""

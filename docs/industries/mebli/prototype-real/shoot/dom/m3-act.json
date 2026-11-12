@@ -86,14 +86,14 @@
   },
   {
    "kind": "field",
-   "text": "S00063: монтаж",
+   "text": "S00057: монтаж",
    "label": "Виїзд",
    "name": "task_id",
    "required": true
   },
   {
    "kind": "field",
-   "text": "S00063",
+   "text": "S00057",
    "label": "Замовлення?",
    "name": "order_id",
    "required": false
@@ -121,7 +121,7 @@
   },
   {
    "kind": "field",
-   "text": "1 230,00 ₴",
+   "text": "438,73 ₴",
    "label": "Сума бригаді",
    "name": "crew_amount",
    "required": false
@@ -134,7 +134,7 @@
   },
   {
    "kind": "field",
-   "text": "15 жовт., 11:44",
+   "text": "19 жовт., 11:40",
    "label": "Підписано",
    "name": "signed_on",
    "required": false

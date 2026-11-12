@@ -130,9 +130,36 @@ const ALL = [
           { name: 'state', sel: '.o_statusbar_status .o_arrow_button_current' },
           { name: 'margin_percent', sel: '.o_field_widget[name=margin_percent]', re: '[\\d,.]+\\s*%' },
       ] },
+    // запит власника «чому деталі окремою сторінкою»: деталі там, де працюють (лише читання, PLAN §7)
+    // сцена 2 — виробниче замовлення шафи-купе S00123, вкладка «Деталі» (деталі специфікації замовлення, підсумки на все МО);
+    // перехід з імпорту CSV у МО кухонного модуля — у кліпі D_csv (імпорт не перераховує плиту — PLAN §7, беклог A-11)
+    { n: 18, role: 'tech', url: '/odoo/action-mrp.mrp_production_action', name: 'mo-parts',
+      act: async (c, { press, typeIn }) => {
+          await typeIn(c, c.page.locator('.o_searchview_input'), 'WH/MO/00110'); await c.page.keyboard.press('Enter'); await c.page.waitForTimeout(1200);
+          await press(c, row(c, 'WH/MO/00110').locator('td[name=name]'));
+          await press(c, tab(c, 'Деталі'));
+      },
+      facts: [{ name: 'part_count', sel: '.o_field_widget[name=td_part_count]' },
+              { name: 'board_area_m2', sel: '.o_field_widget[name=td_board_area_m2]' }] },
+    // сцена 2/5 — компоненти МО шафи-купе: плита й кромка позначені «З деталей» (кількість розраховано з деталей)
+    { n: 19, role: 'tech', url: '/odoo/action-mrp.mrp_production_action', name: 'mo-from-parts',
+      act: async (c, { press, typeIn }) => {
+          await typeIn(c, c.page.locator('.o_searchview_input'), 'WH/MO/00110'); await c.page.keyboard.press('Enter'); await c.page.waitForTimeout(1200);
+          await press(c, row(c, 'WH/MO/00110').locator('td[name=name]'));
+          await press(c, tab(c, 'Компоненти'));
+      },
+      facts: [{ name: 'from_parts_first', sel: '.o_field_widget[name=move_raw_ids] .o_data_row:has(td[name=td_from_parts] input:checked) td[name=product_id]' }] },
+    // сцена 5 — планшет цеху: «Деталі» завдання розкрою (діалог лише читання: деталь, матеріал, к-сть, Д×Ш, кромка)
+    { n: 20, role: 'tablet', url: '/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action', name: 'tablet-parts',
+      act: async (c, { press }) => {
+          await press(c, c.page.locator('.o_group_header', { hasText: 'Розкрій' }));
+          // WH/MO/00110 у проході 1 завершено (M_tablet) і зі списку «До виконання» зникає: кухонний модуль WH/MO/00109 (у роботі з кроку 5)
+          await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00109' }).locator('button', { hasText: 'Деталі' }).first());
+      },
+      facts: [{ name: 'part_count', sel: '.modal .o_field_widget[name=td_part_count]' }] },
 ];
 // прохід 1 змінює дані (імпорт CSV, «Взято» з PIN); прохід 2 — лише читання, дашборд першим (recording.md); порядок ПОКАЗУ — SALES §6 (дашборд у кінці) — монтаж A-21c
 export const PASS1 = [3, 5];
-export const PASS2 = [15, 16, 0, 1, 2, 17, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+export const PASS2 = [15, 16, 0, 1, 2, 17, 18, 19, 4, 6, 20, 7, 8, 9, 10, 11, 12, 13, 14];
 // scenario.mjs іде за порядком STEPS: прохід 1, потім прохід 2 (дашборд першим)
 export const STEPS = [...PASS1, ...PASS2].map((n) => ALL.find((s) => s.n === n));

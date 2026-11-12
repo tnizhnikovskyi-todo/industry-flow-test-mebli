@@ -80,7 +80,7 @@
   },
   {
    "kind": "cell",
-   "text": "3 лист., 16:38",
+   "text": "3 лист., 16:39",
    "label": "date_order"
   },
   {
@@ -105,22 +105,22 @@
   },
   {
    "kind": "cell",
-   "text": "3 663,90",
+   "text": "3 526,29",
    "label": "price_unit"
   },
   {
    "kind": "cell",
-   "text": "3 306,27 ₴",
+   "text": "3 343,17 ₴",
    "label": "td_history_price"
   },
   {
    "kind": "cell",
-   "text": "10,8",
+   "text": "5,5",
    "label": "td_price_delta_pct"
   },
   {
    "kind": "cell",
-   "text": "2 145,78 ₴",
+   "text": "1 098,73 ₴",
    "label": "td_overpay"
   },
   {
@@ -129,7 +129,7 @@
   },
   {
    "kind": "cell",
-   "text": "3 лист., 12:38",
+   "text": "3 лист., 15:39",
    "label": "date_order"
   },
   {
@@ -154,22 +154,22 @@
   },
   {
    "kind": "cell",
-   "text": "70,41",
+   "text": "70,60",
    "label": "price_unit"
   },
   {
    "kind": "cell",
-   "text": "62,14 ₴",
+   "text": "62,35 ₴",
    "label": "td_history_price"
   },
   {
    "kind": "cell",
-   "text": "13,3",
+   "text": "13,2",
    "label": "td_price_delta_pct"
   },
   {
    "kind": "cell",
-   "text": "2 479,80 ₴",
+   "text": "2 476,20 ₴",
    "label": "td_overpay"
   }
  ]

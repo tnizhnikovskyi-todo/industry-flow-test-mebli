@@ -18,6 +18,9 @@
                 <field name="td_quality_state" widget="badge" decoration-success="td_quality_state == 'pass'"
                        decoration-danger="td_quality_state == 'fail'" decoration-warning="td_quality_state == 'todo'"
                        invisible="td_quality_state == 'none'"/>
+                <field name="td_part_count" column_invisible="True"/>
+                <button name="action_td_parts" type="object" string="Parts" icon="fa-th-list"
+                        invisible="not td_part_count"/>
                 <button name="action_td_kiosk" type="object" string="Taken" icon="fa-play" class="btn-primary"
                         context="{'td_action': 'start'}" invisible="state in ('done', 'cancel', 'progress') and not td_pause_reason"/>
                 <button name="action_td_kiosk" type="object" string="Pause" icon="fa-pause"
@@ -41,6 +44,7 @@
                 <field name="state"/>
                 <field name="td_pause_reason"/>
                 <field name="td_quality_state"/>
+                <field name="td_part_count"/>
                 <templates>
                     <t t-name="card">
                         <div class="d-flex align-items-start">
@@ -52,6 +56,10 @@
                         </div>
                         <div class="d-flex flex-wrap gap-2 text-muted small">
                             <span><span>Plan, h</span> <field name="td_expected_hours"/></span>
+                            <button name="action_td_parts" type="object" class="btn btn-link btn-sm p-0 align-baseline td_parts_link"
+                                    invisible="not td_part_count">
+                                <i class="fa fa-th-list me-1" title="Parts"/><span>Parts:</span> <field name="td_part_count"/>
+                            </button>
                             <field name="td_quality_state" widget="badge" decoration-success="td_quality_state == 'pass'"
                                    decoration-danger="td_quality_state == 'fail'" decoration-warning="td_quality_state == 'todo'"
                                    invisible="td_quality_state == 'none'"/>

@@ -600,35 +600,11 @@
   },
   {
    "kind": "label",
-   "text": ""
-  },
-  {
-   "kind": "label",
-   "text": ""
-  },
-  {
-   "kind": "label",
-   "text": ""
-  },
-  {
-   "kind": "label",
-   "text": ""
-  },
-  {
-   "kind": "label",
-   "text": ""
-  },
-  {
-   "kind": "label",
-   "text": ""
-  },
-  {
-   "kind": "label",
    "text": "Проєкт Проєкти Завдання Монтаж Звітність 2 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
-   "text": "Акти монтажу 1-72 / 72"
+   "text": "Акти монтажу 1-69 / 69"
   },
   {
    "kind": "breadcrumb",
@@ -640,7 +616,7 @@
   },
   {
    "kind": "cell",
-   "text": "АКТ-0072",
+   "text": "АКТ-0069",
    "label": "name"
   },
   {
@@ -688,55 +664,7 @@
   },
   {
    "kind": "cell",
-   "text": "АКТ-0071",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "S00102",
-   "label": "order_id"
-  },
-  {
-   "kind": "cell",
-   "text": "S00102: монтаж",
-   "label": "task_id"
-  },
-  {
-   "kind": "cell",
-   "text": "Фінальний акт",
-   "label": "kind"
-  },
-  {
-   "kind": "cell",
-   "text": "0",
-   "label": "defect_open_count"
-  },
-  {
-   "kind": "cell",
-   "text": "1 472,00 ₴",
-   "label": "crew_amount"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "photo_archive"
-  },
-  {
-   "kind": "cell",
-   "text": "Підписано",
-   "label": "state"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "АКТ-0070",
+   "text": "АКТ-0068",
    "label": "name"
   },
   {
@@ -762,6 +690,54 @@
   {
    "kind": "cell",
    "text": "345,60 ₴",
+   "label": "crew_amount"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "photo_archive"
+  },
+  {
+   "kind": "cell",
+   "text": "Підписано",
+   "label": "state"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "АКТ-0067",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "S00008",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "S00008: монтаж",
+   "label": "task_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Фінальний акт",
+   "label": "kind"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "defect_open_count"
+  },
+  {
+   "kind": "cell",
+   "text": "195,75 ₴",
    "label": "crew_amount"
   },
   {
