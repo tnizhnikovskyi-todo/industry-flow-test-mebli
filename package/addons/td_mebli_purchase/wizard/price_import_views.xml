@@ -50,6 +50,7 @@
         <field name="res_model">td.mebli.price.import</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
+        <field name="context">{'dialog_size': 'extra-large'}</field>
     </record>
 
     <menuitem id="td_mebli_price_import_menu" name="Import of a Price List" parent="purchase.menu_purchase_products"

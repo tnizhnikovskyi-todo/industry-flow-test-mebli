@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:29+0000\n"
-"PO-Revision-Date: 2026-11-12 11:29+0000\n"
+"POT-Creation-Date: 2026-11-12 22:08+0000\n"
+"PO-Revision-Date: 2026-11-12 22:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -42,19 +42,133 @@ msgstr ""
 "цього замовлення."
 
 #. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__code
+msgid "Code"
+msgstr "Код"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__unknown_count
+msgid "Codes not Found"
+msgstr "Кодів не знайдено"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Columns not recognized: the file needs a price and a code or a name."
+msgstr "Колонки не розпізнано: у файлі має бути ціна й код або назва."
+
+#. module: td_mebli_purchase
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Confirmed"
 msgstr "Підтверджено"
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_uid
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_date
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__old_price
+msgid "Current Price"
+msgstr "Поточна ціна"
+
+#. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__display_name
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__display_name
 msgid "Display Name"
 msgstr "Назва"
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__file
+msgid "Excel or CSV File"
+msgstr "Файл прайсу (таблиця або CSV)"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__filename
+msgid "File Name"
+msgstr "Назва файлу"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__has_delay
+msgid "Has Delay"
+msgstr "Є строк"
+
+#. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__id
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__id
 msgid "ID"
 msgstr "ID"
+
+#. module: td_mebli_purchase
+#: model:ir.ui.menu,name:td_mebli_purchase.td_mebli_price_import_menu
+msgid "Import of a Price List"
+msgstr "Імпорт прайсу"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+#: model:ir.actions.act_window,name:td_mebli_purchase.td_mebli_price_import_action
+#: model:ir.model,name:td_mebli_purchase.model_td_mebli_price_import
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Import of a Supplier Price List"
+msgstr "Імпорт прайсу постачальника"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_uid
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_uid
+msgid "Last Updated by"
+msgstr "Останнє оновлення"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_date
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_date
+msgid "Last Updated on"
+msgstr "Оновлено"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__delay
+msgid "Lead Time, days"
+msgstr "Строк, днів"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__min_qty
+msgid "Minimal Quantity"
+msgstr "Мінімальна кількість"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__price
+msgid "New Price"
+msgstr "Нова ціна"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__new
+msgid "New price line"
+msgstr "Нова ціна"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__unknown
+msgid "Not found"
+msgstr "Не знайдено"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Not found: %s."
+msgstr "Не знайдено: %s."
 
 #. module: td_mebli_purchase
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
@@ -67,14 +181,56 @@ msgid "Overpay"
 msgstr "Переплата"
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__update
+msgid "Price changed"
+msgstr "Ціну змінено"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Price list imported from «%(file)s»: %(done)s prices written."
+msgstr "Прайс із «%(file)s» імпортовано: записано цін — %(done)s."
+
+#. module: td_mebli_purchase
+#: model:ir.model,name:td_mebli_purchase.model_td_mebli_price_import_line
+msgid "Price of a Supplier Price List in the File"
+msgstr "Ціна з прайсу постачальника у файлі"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__supplierinfo_id
+msgid "Pricelist Line"
+msgstr "Рядок цін постачальника"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__date_start
+msgid "Prices Valid From"
+msgstr "Ціни діють з"
+
+#. module: td_mebli_purchase
 #: model:ir.ui.menu,name:td_mebli_purchase.purchase_order_line_td_price_menu
 msgid "Prices against History"
 msgstr "Ціни проти історії"
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__line_ids
+msgid "Prices in the File"
+msgstr "Ціни у файлі"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__change_count
+msgid "Prices to Write"
+msgstr "Цін до запису"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__product_id
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Product"
 msgstr "Товар"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__name
+msgid "Product in the File"
+msgstr "Товар у файлі"
 
 #. module: td_mebli_purchase
 #: model:ir.model,name:td_mebli_purchase.model_purchase_order_line
@@ -82,10 +238,54 @@ msgid "Purchase Order Line"
 msgstr "Рядок замовлення на купівлю"
 
 #. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Recognize Columns"
+msgstr "Розпізнати колонки"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__mapping
+msgid "Recognized Columns"
+msgstr "Розпізнані колонки"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__status
+msgid "Result"
+msgstr "Результат"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__partner_id
+msgid "Supplier"
+msgstr "Постачальник"
+
+#. module: td_mebli_purchase
 #: model:ir.actions.act_window,name:td_mebli_purchase.purchase_order_line_td_price_action
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
 msgid "Supplier Prices against History"
 msgstr "Ціни постачальників проти історії"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "The file cannot be read: %s"
+msgstr "Файл не читається: %s"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "The file has no prices."
+msgstr "У файлі немає цін."
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid ""
+"The price list of the supplier (Excel .xlsx or CSV): the columns are recognized by their\n"
+"                    titles (code, product, price, minimal quantity, lead time). The prices go into the standard vendor\n"
+"                    pricelist of the products (Purchase › Products › Vendor Pricelists); nothing else is kept."
+msgstr ""
+"Прайс постачальника (Excel .xlsx або CSV): колонки розпізнаються за "
+"заголовками (код, товар, ціна, мінімальна кількість, строк). Ціни "
+"записуються в стандартні ціни постачальника товарів (Закупівлі › Товари › "
+"Ціни постачальників); іншого нічого не зберігається."
 
 #. module: td_mebli_purchase
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
@@ -97,3 +297,43 @@ msgstr "Разом"
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Vendor"
 msgstr "Постачальник"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__wizard_id
+msgid "Wizard"
+msgstr "Майстер"
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Write Prices"
+msgstr "Записати ціни"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "code"
+msgstr "код"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "lead time, days"
+msgstr "строк, днів"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "minimal quantity"
+msgstr "мінімальна кількість"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "price"
+msgstr "ціна"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "product"
+msgstr "товар"

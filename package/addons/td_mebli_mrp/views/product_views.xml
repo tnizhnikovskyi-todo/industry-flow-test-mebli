@@ -6,6 +6,11 @@
         <field name="inherit_id" ref="product.product_template_only_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='general_information']" position="after">
+                <page string="Analogs" name="td_mebli_analogs" invisible="type != 'consu'">
+                    <field name="td_analog_ids" widget="many2many_tags"/>
+                    <div class="text-muted small">When this material is short, the manufacturing order suggests the first
+                        analog free in stock (position 14).</div>
+                </page>
                 <page string="Furniture Parts" name="td_mebli_parts">
                     <group>
                         <group string="Parametric product">

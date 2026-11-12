@@ -79,7 +79,7 @@ class TdMebliMeasureBooking(models.TransientModel):
             'name': self.env._("Measurement: %s", lead.partner_id.name or lead.contact_name or lead.name),
             'start': slot.start, 'stop': slot.stop, 'user_id': self.measurer_id.id,
             'partner_ids': [(6, 0, partners.ids)], 'opportunity_id': lead.id,
-            'location': lead.partner_id.contact_address_complete or False,
+            'location': ', '.join(filter(None, [lead.partner_id.street, lead.partner_id.city])) or False,
             'alarm_ids': [(6, 0, alarm.ids)],
             'description': self.env._("Measurement of the room: niches, appliances, utilities."),
         })

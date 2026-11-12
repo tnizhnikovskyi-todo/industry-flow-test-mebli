@@ -6,20 +6,27 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:38+0000\n"
-"PO-Revision-Date: 2026-11-12 14:38+0000\n"
+"POT-Creation-Date: 2026-11-12 22:08+0000\n"
+"PO-Revision-Date: 2026-11-12 22:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/models/mrp_bom.py:0
 msgid "%(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
 msgstr "%(axis)s %(value)s мм поза межами %(low)s-%(high)s мм."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "%(name)s: %(qty)s free"
+msgstr "%(name)s: вільно %(qty)s"
 
 #. module: td_mebli_mrp
 #. odoo-python
@@ -75,6 +82,24 @@ msgid "<span>pcs</span>"
 msgstr "<span>шт</span>"
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_analog_hint
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Analog"
+msgstr "Аналог"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_analog_id
+msgid "Analog in Stock"
+msgstr "Аналог на складі"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_analog_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_analog_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Analogs"
+msgstr "Аналоги"
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__area_m2
 msgid "Area, m2"
 msgstr "Площа, м²"
@@ -127,20 +152,20 @@ msgid "Body board"
 msgstr "Плита корпусу"
 
 #. module: td_mebli_mrp
-#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__file
-msgid "CSV File"
-msgstr "Файл CSV"
-
-#. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
 msgid ""
-"CSV export of the design program: the columns are recognized by their titles\n"
+"CSV or Excel (.xlsx) export of the design program: the columns are recognized by their titles\n"
 "                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves\n"
 "                    is not part of the slice."
 msgstr ""
-"Вивантаження CSV з програми проєктування: колонки розпізнаються за заголовками\n"
-"                    (деталь, довжина, ширина, кількість, матеріал, кромка). Читання файлів самих програм проєктування\n"
-"                    не входить у зріз."
+"Вивантаження програми проєктування в CSV або Excel (.xlsx): колонки "
+"розпізнаються за заголовками (деталь, довжина, ширина, кількість, матеріал, "
+"кромка). Читання файлів самих програм проєктування до зрізу не входить."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__file
+msgid "CSV or Excel File"
+msgstr "Файл CSV"
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
@@ -167,6 +192,12 @@ msgid ""
 msgstr ""
 "Колонки не розпізнано: %s. У файлі мають бути назва деталі, довжина й "
 "ширина."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "Component %(old)s is short: replaced by the analog %(new)s."
+msgstr "Компонента %(old)s бракує: замінено аналогом %(new)s."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__td_component_product_id
@@ -238,7 +269,7 @@ msgstr "Розміри, мм"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__display_name
 msgid "Display Name"
-msgstr "Назва для відображення"
+msgstr "Назва"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_edge_allowance_mm
@@ -394,7 +425,7 @@ msgstr "Висота, мм"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
@@ -435,14 +466,14 @@ msgstr "У роботі"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_uid
 msgid "Last Updated by"
-msgstr "Востаннє оновив"
+msgstr "Останнє оновлення"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_date
 msgid "Last Updated on"
-msgstr "Востаннє оновлено"
+msgstr "Оновлено"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__length_mm
@@ -482,7 +513,7 @@ msgstr "Завантаження, %"
 #. module: td_mebli_mrp
 #: model:ir.model,name:td_mebli_mrp.model_mrp_production
 msgid "Manufacturing Order"
-msgstr "Замовлення виробництва"
+msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_matches_board_id
@@ -502,6 +533,18 @@ msgstr "Матеріал"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_material_kind
 msgid "Material Kind"
 msgstr "Вид матеріалу"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_analog_ids
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_analog_ids
+msgid ""
+"Materials that can replace this one when it is short (same thickness and "
+"use, another decor or brand). The manufacturing order suggests the first "
+"analog that is free in stock."
+msgstr ""
+"Матеріали, що можуть замінити цей при дефіциті (та сама товщина й "
+"призначення, інший декор чи виробник). Виробниче замовлення пропонує перший "
+"аналог, вільний на складі."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_max
@@ -543,6 +586,12 @@ msgstr "Мін. ширина, мм"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_time_rate
 msgid "Minutes per Basis Unit"
 msgstr "Хвилин на одиницю бази"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "No analog of %s is free in stock."
+msgstr "Вільного на складі аналога для «%s» немає."
 
 #. module: td_mebli_mrp
 #. odoo-python
@@ -887,6 +936,12 @@ msgstr "Шаблонна специфікація"
 #. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "The Excel file cannot be read: %s"
+msgstr "Файл Excel не читається: %s"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
 msgid "The file is empty."
 msgstr "Файл порожній."
 
@@ -925,9 +980,23 @@ msgid "Total"
 msgstr "Разом"
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Use Analog"
+msgstr "Взяти аналог"
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__chain
 msgid "Waits for previous operation"
 msgstr "Чекає попередньої операції"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid ""
+"When this material is short, the manufacturing order suggests the first\n"
+"                        analog free in stock (position 14)."
+msgstr ""
+"Коли цього матеріалу бракує, виробниче замовлення пропонує перший аналог, "
+"вільний на складі (позиція 14)."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__width

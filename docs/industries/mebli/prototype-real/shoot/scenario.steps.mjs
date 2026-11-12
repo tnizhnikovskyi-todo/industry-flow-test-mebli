@@ -13,6 +13,10 @@ const ID = {
     paidOrder: process.env.PAID_ORDER_ID || '0', cutOrder: process.env.CUT_ORDER_ID || '0', cutJob: process.env.CUT_JOB_ID || '0',
     act: process.env.PDF_ACT_ID || '0', kitOrder: process.env.KIT_ORDER_ID || '0',
 };
+// хвиля 2 позицій збірки (F-49…F-65): id записів демо-бази з параметра td_mebli_demo.shot_ids (seed wave2.py) — env SHOT_IDS (JSON; shoot/ids.sh)
+const W2 = JSON.parse(process.env.SHOT_IDS || '{}');
+const XLSX = new URL('./data/kitchen-spec.xlsx', import.meta.url).pathname;
+const PRICES = new URL('./data/supplier-prices.xlsx', import.meta.url).pathname;
 const PDF_DIR = new URL('../pdf/', import.meta.url).pathname;
 const SCREENS = new URL('../screens/', import.meta.url).pathname;
 // друкована форма: справжній PDF (wkhtmltopdf Odoo, маршрут /report/pdf) -> pdf/<ім'я>.pdf і перша сторінка -> screens/<ім'я>-pdf-p1.png;
@@ -222,10 +226,115 @@ const ALL = [
     { n: 29, role: 'owner', url: `/report/html/td_mebli_shop.report_kit/${ID.kitOrder}`, name: 'kit-pdf',
       act: async (c) => { await savePdf(c, 'td_mebli_shop.report_kit', ID.kitOrder, '29-kit'); },
       facts: [{ name: 'places', sel: '.td_report_kit .row .col-4:first-child', re: '\\d+' }] },
+    // ---- хвиля 2 позицій збірки (flow/decisions.md 42–47; F-49…F-65): стандарт перш за все
+    // F-50 — сповіщення менеджеру: стандартна дія «Зсув прогнозної дати» на замовленні (чаттер, «Заплановані дії»)
+    { n: 30, role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}`, name: 'forecast-activity',
+      act: async (c) => { await c.page.locator('.o-mail-Activity').first().scrollIntoViewIfNeeded().catch(() => {}); },
+      facts: [{ name: 'activity', sel: '.o-mail-Activity', re: 'Прогноз[^\\n]*' }] },
+    // F-51 — лист «нова дата»: стандартний редактор листа з шаблоном (не надсилаємо)
+    { n: 31, role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}`, name: 'new-date-letter',
+      act: async (c, { press }) => { await press(c, c.page.locator('button[name=action_td_notify_new_date]')); await c.page.waitForTimeout(1200); },
+      facts: [{ name: 'new_date', sel: '.modal .o_field_widget[name=body]', re: '(?<=Нова дата: )[\\d.]+\\d' }] },
+    // F-51 — нагадування про доплату перед монтажем у чаттері замовлення (у черзі пошти)
+    { n: 32, role: 'fin', url: `/odoo/action-sale.action_orders/${W2.payment_letter_order || 0}`, name: 'payment-reminder',
+      act: async (c) => { await c.page.locator('.o-mail-Message', { hasText: 'доплатити' }).first().scrollIntoViewIfNeeded().catch(() => {}); },
+      facts: [{ name: 'letter_due', sel: '.o-mail-Message:has-text("доплатити") .o-mail-Message-body', re: '(?<=доплатити: )[\\d\\s ,]+₴' }] },
+    // F-62 — перевірка проєкту за заміром перед розкроєм: діалог на «Надіслати на розкрій» (завдання з кліпу D_cutting; не надсилаємо)
+    { n: 33, role: 'tech', url: '/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action', name: 'measure-check',
+      act: async (c, { press }) => {
+          await press(c, c.page.locator('.o_data_row', { hasText: 'Чернетка' }).first().locator('td').nth(1));
+          await press(c, c.page.locator('button[name=action_send]'));
+          await c.page.waitForTimeout(800);
+      },
+      facts: [{ name: 'problems', sel: '.modal .o_field_widget[name=problems]' }] },
+    // F-63 — надійність постачальника: середнє запізнення поруч зі стандартним «вчасно, %»
+    { n: 34, role: 'store', url: `/odoo/action-account.res_partner_action_supplier/${W2.stone_supplier || 0}`, name: 'supplier-reliability',
+      facts: [{ name: 'avg_delay', sel: '.o_field_widget[name=td_supplier_delay_avg]' },
+              { name: 'on_time', sel: '.o_field_widget[name=on_time_rate]' }] },
+    // F-52 — перевитрата матеріалу: стандартне попередження при закритті МО (PASS1: «Виготовлено» відкриває діалог)
+    { n: 35, role: 'chief', url: `/odoo/action-mrp.mrp_production_action/${W2.consumption_mo || 0}`, name: 'consumption',
+      act: async (c, { press }) => { await press(c, c.page.locator('.o_form_statusbar button[name=button_mark_done]').first()); await c.page.waitForTimeout(1200); },
+      facts: [{ name: 'dialog', sel: '.modal .modal-title' }] },
+    // F-01 (позиція 4) — імпорт специфікації з Excel (.xlsx): колонки розпізнано (не імпортуємо)
+    { n: 36, role: 'tech', url: '/odoo/action-mrp.mrp_bom_form_action', name: 'xlsx-import',
+      act: async (c, { press, typeIn }) => {
+          await typeIn(c, c.page.locator('.o_searchview_input'), 'S00123/391'); await c.page.keyboard.press('Enter'); await c.page.waitForTimeout(1200);
+          await press(c, row(c, 'S00123/391').locator('td').nth(1));
+          await press(c, c.page.locator('.o_cp_action_menus button, .o_cp_action_menus .dropdown-toggle').first());
+          await press(c, c.page.locator('.dropdown-item', { hasText: 'Імпорт деталей' }));
+          await c.page.locator('.modal input[type=file]').setInputFiles(XLSX);
+          await c.page.waitForTimeout(600);
+          await press(c, btn(c, 'Розпізнати колонки'));
+      },
+      facts: [{ name: 'parts_in_file', sel: '.modal .o_field_widget[name=preview_count]' }] },
+    // F-59 — прайс постачальника з Excel у стандартні ціни постачальника (перегляд; не записуємо)
+    { n: 37, role: 'store', url: '/odoo/action-td_mebli_purchase.td_mebli_price_import_action', name: 'price-import',
+      act: async (c, { press, typeIn }) => {
+          await typeIn(c, c.page.locator('.modal .o_field_widget[name=partner_id] input'), 'Плита-Трейд');
+          await press(c, c.page.locator('.o-autocomplete--dropdown-item', { hasText: 'Плита-Трейд' }).first());
+          await c.page.locator('.modal input[type=file]').setInputFiles(PRICES);
+          await c.page.waitForTimeout(600);
+          await press(c, btn(c, 'Розпізнати колонки'));
+          await c.page.mouse.move(5, 5); await c.page.waitForTimeout(300);
+      },
+      facts: [{ name: 'to_write', sel: '.modal .o_field_widget[name=change_count]' },
+              { name: 'not_found', sel: '.modal .o_field_widget[name=unknown_count]' }] },
+    // F-29 — етикетки деталей з QR (PDF з комплектувального листа)
+    { n: 38, role: 'owner', url: `/report/html/td_mebli_shop.report_part_labels/${ID.kitOrder}`, name: 'labels-pdf',
+      act: async (c) => { await savePdf(c, 'td_mebli_shop.report_part_labels', ID.kitOrder, '38-labels'); },
+      facts: [{ name: 'last_label', sel: '.td_label_code' }] },
+    // F-53 — візуалізація дизайнера в стандартному PDF пропозиції
+    { n: 39, role: 'salon', url: `/report/html/sale.report_saleorder/${ORDER}`, name: 'quote-visual-pdf',
+      act: async (c) => { await savePdf(c, 'sale.report_saleorder', ORDER, '39-quote-visual'); },
+      facts: [{ name: 'visual', sel: '.td_design_visual h5' }] },
+    // F-56 — акт приймання-передачі без монтажу (з відвантаження)
+    { n: 40, role: 'store', url: `/report/html/td_mebli_shop.report_handover_act/${W2.handover_picking || 0}`, name: 'handover-act-pdf',
+      act: async (c) => { await savePdf(c, 'td_mebli_shop.report_handover_act', W2.handover_picking || 0, '40-handover-act'); },
+      facts: [{ name: 'title', sel: '.td_report_handover h2' }] },
+    // F-58 — денний план бригади (PDF бригадира: виїзди найближчих днів, сторінка на день)
+    { n: 41, role: 'fitter', url: `/report/html/td_mebli_install.report_day_plan_user/${W2.fitter_user || 0}`, name: 'day-plan-pdf',
+      act: async (c) => { await savePdf(c, 'td_mebli_install.report_day_plan_user', W2.fitter_user || 0, '41-day-plan'); },
+      facts: [{ name: 'visits', sel: '.td_report_day_plan tbody', re: 'S\\d+' }] },
+    // F-54 — календар замірника: вільні вікна й запис з нагоди CRM (не записуємо)
+    { n: 42, role: 'salon', url: `/odoo/action-crm.crm_lead_action_pipeline/${W2.booking_lead || 0}`, name: 'measure-booking',
+      act: async (c, { press }) => { await press(c, c.page.locator('button[name=action_td_book_measure]')); await c.page.waitForTimeout(1000); },
+      facts: [{ name: 'windows', sel: '.modal .td_measure_slots .o_data_row:first-child' }] },
+    // F-55 — платний ремонт після гарантії: стандартний Ремонт, пропозиція й рахунок клієнту
+    { n: 43, role: 'chief', url: `/odoo/action-td_mebli_claim.td_mebli_claim_action/${W2.paid_repair || 0}`, name: 'paid-repair',
+      facts: [{ name: 'warranty_end', sel: '.td_warranty_alert .o_field_widget[name=td_warranty_end]' }] },
+    // F-60 — обслуговування верстатів: поломка, простій дільниці в стандартному журналі часу
+    { n: 44, role: 'chief', url: `/odoo/action-maintenance.hr_equipment_request_action/${W2.breakdown || 0}`, name: 'maintenance',
+      facts: [{ name: 'workcenter', sel: '.o_field_widget[name=td_workcenter_id]' },
+              { name: 'downtime_hours', sel: '.o_field_widget[name=td_downtime_hours]' }] },
+    // F-61 — табель цеху з кіоску за PIN: файл для BAS (імітація)
+    { n: 45, role: 'fin', url: '/odoo/action-td_mebli_attendance.td_mebli_timesheet_export_action', name: 'timesheet-bas',
+      act: async (c, { press }) => {
+          await press(c, c.page.locator('.modal button[name=action_build]')); await c.page.waitForTimeout(800);
+          await c.page.locator('.modal .modal-title').first().click(); await c.page.waitForTimeout(300);  // поле дати не в фокусі
+      },
+      facts: [{ name: 'total_hours', sel: '.modal .o_field_widget[name=total_hours]' }] },
+    // F-61 — стандартний кіоск «Відвідування» з PIN
+    { n: 46, role: 'fin', url: `/hr_attendance/${W2.kiosk_key || 'none'}`, name: 'kiosk',
+      facts: [] },
+    // F-64 — ранковий брифінг власника у «Вхідних» (шаблон за даними, без AI)
+    { n: 47, role: 'owner', url: '/odoo/discuss', name: 'briefing',
+      act: async (c, { press }) => {
+          await press(c, c.page.locator('.o-mail-DiscussSidebar-item, button, a', { hasText: 'Вхідні' }).first());
+          await c.page.waitForTimeout(1500);
+      },
+      facts: [{ name: 'at_risk', sel: '.o-mail-Message .td_briefing, .o-mail-Message-body', re: 'під загрозою: \\d+' }] },
+    // F-65 — табло цеху на ТВ
+    { n: 48, role: 'chief', url: '/odoo/action-td_mebli_dashboard.action_shop_board', name: 'shop-board',
+      facts: [{ name: 'done', sel: '.td_k_board_done .td_value' }, { name: 'risk', sel: '.td_k_board_risk .td_value' }] },
+    // F-57 (коробка B) — аналог матеріалу при дефіциті в компонентах МО
+    { n: 49, role: 'tech', url: `/odoo/action-mrp.mrp_production_action/${W2.analog_mo || 0}`, name: 'analog',
+      act: async (c, { press }) => { await press(c, tab(c, 'Компоненти')); },
+      facts: [{ name: 'hint', sel: '.o_field_widget[name=move_raw_ids] td[name=td_analog_hint]:not(:empty)' }] },
 ];
 // прохід 1 змінює дані (імпорт CSV, «Взято» з PIN); прохід 2 — лише читання, дашборд першим (recording.md); порядок ПОКАЗУ — SALES §6 (дашборд у кінці) — монтаж A-21c
 // 22, 23 лише читають, але знімаються в проході 1: кліп M_act (прохід 1) підписує акт цього виїзду
-export const PASS1 = [3, 5, 22, 23];
-export const PASS2 = [15, 16, 0, 1, 2, 17, 18, 19, 4, 6, 20, 7, 8, 9, 10, 11, 12, 13, 14, 21, 24, 25, 26, 27, 28, 29];
+export const PASS1 = [3, 5, 22, 23, 35];
+export const PASS2 = [15, 16, 0, 1, 2, 17, 18, 19, 4, 6, 20, 7, 8, 9, 10, 11, 12, 13, 14, 21, 24, 25, 26, 27, 28, 29,
+    48, 30, 31, 32, 33, 34, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49];
 // scenario.mjs іде за порядком STEPS: прохід 1, потім прохід 2 (дашборд першим)
 export const STEPS = [...PASS1, ...PASS2].map((n) => ALL.find((s) => s.n === n));

@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:38+0000\n"
-"PO-Revision-Date: 2026-11-12 14:38+0000\n"
+"POT-Creation-Date: 2026-11-12 22:08+0000\n"
+"PO-Revision-Date: 2026-11-12 22:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -26,6 +27,24 @@ msgstr "%s дн."
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "%s orders"
 msgstr "Замовлень: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Before installation without payment: %s"
+msgstr "До монтажу без доплати: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Behind"
+msgstr "Відстає"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Behind the plan"
+msgstr "Відставання від плану"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -72,6 +91,12 @@ msgstr "Клієнт"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting at the distributor"
+msgstr "Порізка в дистриб'ютора"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Cutting jobs"
 msgstr "Завдання розкрою"
 
@@ -103,7 +128,19 @@ msgstr "Дні зсуву обіцяних дат"
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__display_name
 msgid "Display Name"
-msgstr "Назва для відображення"
+msgstr "Назва"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Done"
+msgstr "Зроблено"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Done in the shift"
+msgstr "Зроблено за зміну"
 
 #. module: td_mebli_dashboard
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__td_dash_due
@@ -128,6 +165,18 @@ msgid "For %s"
 msgstr "На %s"
 
 #. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Hours behind"
+msgstr "Годин відставання"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Hours done"
+msgstr "Годин зроблено"
+
+#. module: td_mebli_dashboard
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__id
 msgid "ID"
@@ -138,6 +187,18 @@ msgstr "ID"
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "In the warehouse on average %s days"
 msgstr "На складі в середньому %s дн."
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "In work"
+msgstr "У роботі"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "In work now"
+msgstr "У роботі зараз"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -169,6 +230,11 @@ msgid "Manager Dashboard of the Furniture Factory"
 msgstr "Дашборд керівника меблевої фабрики"
 
 #. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin"
+msgstr "Маржа"
+
+#. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Margin %(margin)s of revenue %(revenue)s, %(count)s orders"
@@ -180,6 +246,11 @@ msgstr "Маржа %(margin)s з виручки %(revenue)s, замовлень 
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Margin of the orders"
 msgstr "Маржа замовлень"
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin, %"
+msgstr "Маржа, %"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -240,9 +311,20 @@ msgstr ""
 "календаря дільниці на тиждень"
 
 #. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Order Date"
+msgstr "Дата замовлення"
+
+#. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
 msgid "Orders"
 msgstr "Замовлення"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Orders at risk"
+msgstr "Замовлення під загрозою"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -336,6 +418,11 @@ msgid "Ready, not shipped"
 msgstr "Готове, не відвантажене"
 
 #. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Revenue"
+msgstr "Виручка"
+
+#. module: td_mebli_dashboard
 #: model:ir.model,name:td_mebli_dashboard.model_sale_order
 msgid "Sales Order"
 msgstr "Замовлення на продаж"
@@ -345,6 +432,12 @@ msgstr "Замовлення на продаж"
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Saved by business offcuts: %s"
 msgstr "Економія від ділових обрізків: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Section"
+msgstr "Дільниця"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -360,6 +453,22 @@ msgid ""
 msgstr ""
 "Бачить дашборд фабрики на одному екрані: виручка, маржа, собівартість. "
 "Надається власнику й фінансисту."
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/shop_board.py:0
+msgid "Shop Floor"
+msgstr "Цех"
+
+#. module: td_mebli_dashboard
+#: model:ir.actions.client,name:td_mebli_dashboard.action_shop_board
+msgid "Shop Floor Board"
+msgstr "Табло цеху"
+
+#. module: td_mebli_dashboard
+#: model:ir.ui.menu,name:td_mebli_dashboard.menu_shop_board
+msgid "Shop Floor Board (TV)"
+msgstr "Табло цеху (ТВ)"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -410,6 +519,12 @@ msgid "The factory dashboard is available to the factory director only."
 msgstr "Дашборд фабрики доступний лише керівнику."
 
 #. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/shop_board.py:0
+msgid "The shop floor board is available to the users of Manufacturing."
+msgstr "Табло цеху доступне користувачам Виробництва."
+
+#. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_due_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
@@ -423,33 +538,25 @@ msgid "Total margin ÷ total revenue of the report, %s days"
 msgstr "Σ маржі ÷ Σ виручки звіту, %s днів"
 
 #. module: td_mebli_dashboard
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
-msgid "Revenue"
-msgstr "Виручка"
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "d."
+msgstr "дн."
 
 #. module: td_mebli_dashboard
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
-msgid "Margin"
-msgstr "Маржа"
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "h"
+msgstr "год"
 
 #. module: td_mebli_dashboard
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
-msgid "Margin, %"
-msgstr "Маржа, %"
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "operations whose planned end has passed"
+msgstr "операцій, плановий кінець яких минув"
 
 #. module: td_mebli_dashboard
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
-msgid "Order Date"
-msgstr "Дата замовлення"
-
-#. module: td_mebli_dashboard
-#. odoo-python
-#: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "Before installation without payment: %s"
-msgstr "До монтажу без доплати: %s"
-
-#. module: td_mebli_dashboard
-#. odoo-python
-#: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "Cutting at the distributor"
-msgstr "Порізка в дистриб'ютора"
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "operations ·"
+msgstr "операцій ·"

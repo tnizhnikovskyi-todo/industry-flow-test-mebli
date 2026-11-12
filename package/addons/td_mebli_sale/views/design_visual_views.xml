@@ -17,6 +17,10 @@
     </record>
 
     <template id="report_saleorder_document_td_design" inherit_id="sale.report_saleorder_document">
+        <!-- the standard Ukrainian translation of Odoo 19 lacks this term (sale/i18n/uk.po has only «Your Reference:») -->
+        <xpath expr="//div[@name='informations_reference']/strong" position="replace">
+            <strong>Customer Reference</strong>
+        </xpath>
         <xpath expr="//div[@id='informations']" position="after">
             <div t-if="doc.td_design_image" class="td_design_visual mb-4 text-center" style="page-break-inside: avoid;">
                 <h5 class="text-start">Design Visual</h5>

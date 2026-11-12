@@ -1,0 +1,247 @@
+{
+ "screen": "37-price-import",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Код"
+  },
+  {
+   "kind": "header",
+   "text": "Товар у файлі"
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Мінімальна кількість"
+  },
+  {
+   "kind": "header",
+   "text": "Поточна ціна"
+  },
+  {
+   "kind": "header",
+   "text": "Нова ціна"
+  },
+  {
+   "kind": "header",
+   "text": "Строк, днів"
+  },
+  {
+   "kind": "header",
+   "text": "Результат"
+  },
+  {
+   "kind": "label",
+   "text": "Постачальник"
+  },
+  {
+   "kind": "label",
+   "text": "Файл прайсу (таблиця або CSV)"
+  },
+  {
+   "kind": "label",
+   "text": "Ціни діють з"
+  },
+  {
+   "kind": "label",
+   "text": "Розпізнані колонки"
+  },
+  {
+   "kind": "label",
+   "text": "Цін до запису"
+  },
+  {
+   "kind": "label",
+   "text": "Кодів не знайдено"
+  },
+  {
+   "kind": "label",
+   "text": "2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Імпорт прайсу постачальника"
+  },
+  {
+   "kind": "button",
+   "text": "Записати ціни"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "field",
+   "text": "Плита-Трейд",
+   "label": "Постачальник",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "supplier-prices.xlsx",
+   "label": "Файл прайсу (таблиця або CSV)",
+   "name": "file",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "12 лист.",
+   "label": "Ціни діють з",
+   "name": "date_start",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "«Артикул» → код «Найменування» → товар «Ціна, грн» → ціна «Мін. партія» → мінімальна кількість «Строк, днів» → строк, днів",
+   "label": "Розпізнані колонки",
+   "name": "mapping",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "5",
+   "label": "Цін до запису",
+   "name": "change_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1",
+   "label": "Кодів не знайдено",
+   "name": "unknown_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Код Товар у файлі Товар Мінімальна кількість Поточна ціна Нова ціна Строк, днів Результат ЛДСП-ДС16 ЛДСП Дуб Сонома 16 мм [ЛДСП-ДС16] ЛДСП Дуб Сонома 16 мм 0,000 489,00 512,40 3 Ціну змінено ЛДСП-БЛ16 ЛДСП Білий гладкий 16 мм [ЛДСП-БЛ16] ЛДСП Білий гладкий 16 мм 0,000 455,00 468,00 3 Ціну змінено ЛДСП-АН16 ЛДСП Антрацит 16 мм [ЛДСП-АН16] ЛДСП Антрацит 16 мм 0,000 0,00 545,90 4 Нова ціна КР-ДС-2 Кромка ПВХ Сонома 2×22 мм [КР-ДС-2] Кромка ПВХ Сонома 2×22 мм 0,000 0,00 15,20 2 Нова ціна КР-БЛ-2 Кромка ПВХ Білий гладкий 2×22 мм [КР-БЛ-2] Кромка ПВХ Білий гладкий 2×22 мм 0,000 0,00 13,60 2 Нова ціна ЛДСП-ГР18 ЛДСП Графіт 18 мм 0,000 0,00 590,00 5 Не знайдено",
+   "label": "line_ids",
+   "name": "line_ids",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП-ДС16",
+   "label": "code"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП Дуб Сонома 16 мм",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "[ЛДСП-ДС16] ЛДСП Дуб Сонома 16 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "min_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "489,00",
+   "label": "old_price"
+  },
+  {
+   "kind": "cell",
+   "text": "512,40",
+   "label": "price"
+  },
+  {
+   "kind": "cell",
+   "text": "3",
+   "label": "delay"
+  },
+  {
+   "kind": "cell",
+   "text": "Ціну змінено",
+   "label": "status"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП-БЛ16",
+   "label": "code"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП Білий гладкий 16 мм",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "[ЛДСП-БЛ16] ЛДСП Білий гладкий 16 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "min_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "455,00",
+   "label": "old_price"
+  },
+  {
+   "kind": "cell",
+   "text": "468,00",
+   "label": "price"
+  },
+  {
+   "kind": "cell",
+   "text": "3",
+   "label": "delay"
+  },
+  {
+   "kind": "cell",
+   "text": "Ціну змінено",
+   "label": "status"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП-АН16",
+   "label": "code"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП Антрацит 16 мм",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "[ЛДСП-АН16] ЛДСП Антрацит 16 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "min_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "0,00",
+   "label": "old_price"
+  },
+  {
+   "kind": "cell",
+   "text": "545,90",
+   "label": "price"
+  },
+  {
+   "kind": "cell",
+   "text": "4",
+   "label": "delay"
+  },
+  {
+   "kind": "cell",
+   "text": "Нова ціна",
+   "label": "status"
+  }
+ ]
+}

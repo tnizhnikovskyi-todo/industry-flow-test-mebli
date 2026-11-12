@@ -1,0 +1,322 @@
+{
+ "screen": "42-measure-booking",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "День"
+  },
+  {
+   "kind": "header",
+   "text": "Вікно"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Очікуваний дохід"
+  },
+  {
+   "kind": "label",
+   "text": "Ймовірність"
+  },
+  {
+   "kind": "label",
+   "text": "Контакт?"
+  },
+  {
+   "kind": "label",
+   "text": "Ел. пошта"
+  },
+  {
+   "kind": "label",
+   "text": "Телефон"
+  },
+  {
+   "kind": "label",
+   "text": "Продавець"
+  },
+  {
+   "kind": "label",
+   "text": "Очікуване закриття?"
+  },
+  {
+   "kind": "label",
+   "text": "Мітки?"
+  },
+  {
+   "kind": "label",
+   "text": "Нагода"
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт?"
+  },
+  {
+   "kind": "label",
+   "text": "Замірник"
+  },
+  {
+   "kind": "label",
+   "text": "Від дати"
+  },
+  {
+   "kind": "label",
+   "text": "Днів"
+  },
+  {
+   "kind": "label",
+   "text": "2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Конвеєр Кухня, новобудова Немає зустрічі 0 Комерційні пропозиції 8 Схожі ліди 1 / 1"
+  },
+  {
+   "kind": "label",
+   "text": "Записати на замір"
+  },
+  {
+   "kind": "button",
+   "text": "Нова пропозиція"
+  },
+  {
+   "kind": "button",
+   "text": "Впіймано"
+  },
+  {
+   "kind": "button",
+   "text": "Отримати"
+  },
+  {
+   "kind": "button",
+   "text": "Втрачено"
+  },
+  {
+   "kind": "button",
+   "text": "Записати на замір"
+  },
+  {
+   "kind": "button",
+   "text": "Примітки"
+  },
+  {
+   "kind": "button",
+   "text": "Контакти"
+  },
+  {
+   "kind": "button",
+   "text": "Оновити вікна"
+  },
+  {
+   "kind": "button",
+   "text": "Закрити"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Конвеєр"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Кухня, новобудова"
+  },
+  {
+   "kind": "field",
+   "text": "Немає зустрічі",
+   "label": "meeting_display_label",
+   "name": "meeting_display_label",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "0 Комерційні пропозиції",
+   "label": "quotation_count",
+   "name": "quotation_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "8",
+   "label": "duplicate_lead_count",
+   "name": "duplicate_lead_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "... Підтверджено Новий 14х",
+   "label": "stage_id",
+   "name": "stage_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Кухня, новобудова",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "0,00",
+   "label": "Очікуваний дохід",
+   "name": "expected_revenue",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "50,00",
+   "label": "Ймовірність",
+   "name": "probability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Алла Захарченко",
+   "label": "Контакт?",
+   "name": "partner_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "client32@customer-demo.example",
+   "label": "Ел. пошта",
+   "name": "email_from",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "+380 00 000 03 02",
+   "label": "Телефон",
+   "name": "phone",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Олена Мартинюк",
+   "label": "Продавець",
+   "name": "user_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Очікуване закриття?",
+   "name": "date_deadline",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Очікуване закриття?",
+   "name": "priority",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Мітки?",
+   "name": "tag_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "lead_properties",
+   "name": "lead_properties",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "description",
+   "name": "description",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Кухня, новобудова",
+   "label": "Нагода",
+   "name": "lead_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Алла Захарченко",
+   "label": "Клієнт?",
+   "name": "partner_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Тетяна Олійник",
+   "label": "Замірник",
+   "name": "measurer_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "13 лист.",
+   "label": "Від дати",
+   "name": "date_from",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "5",
+   "label": "Днів",
+   "name": "days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "День Вікно 13 лист. 08:00–10:00 Записати 13 лист. 10:00–12:00 Записати 13 лист. 13:00–15:00 Записати 13 лист. 15:00–17:00 Записати 17 лист. 10:00–12:00 Записати 17 лист. 13:00–15:00 Записати 17 лист. 15:00–17:00 Записати",
+   "label": "slot_ids",
+   "name": "slot_ids",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "13 лист.",
+   "label": "day"
+  },
+  {
+   "kind": "cell",
+   "text": "08:00–10:00",
+   "label": "label"
+  },
+  {
+   "kind": "cell",
+   "text": "Записати"
+  },
+  {
+   "kind": "cell",
+   "text": "13 лист.",
+   "label": "day"
+  },
+  {
+   "kind": "cell",
+   "text": "10:00–12:00",
+   "label": "label"
+  },
+  {
+   "kind": "cell",
+   "text": "Записати"
+  },
+  {
+   "kind": "cell",
+   "text": "13 лист.",
+   "label": "day"
+  },
+  {
+   "kind": "cell",
+   "text": "13:00–15:00",
+   "label": "label"
+  },
+  {
+   "kind": "cell",
+   "text": "Записати"
+  }
+ ]
+}

@@ -6,14 +6,41 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:37+0000\n"
-"PO-Revision-Date: 2026-11-12 14:37+0000\n"
+"POT-Creation-Date: 2026-11-12 21:17+0000\n"
+"PO-Revision-Date: 2026-11-12 21:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "%(sheet)s: %(item)s — %(issue)s"
+msgstr "%(sheet)s: %(item)s — %(issue)s"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid ""
+"%(sheet)s: %(product)s — %(what)s %(size)s mm, the niche «%(niche)s» takes "
+"%(usable)s mm"
+msgstr ""
+"%(sheet)s: %(product)s — %(what)s %(size)s мм, ніша «%(niche)s» вміщає "
+"%(usable)s мм"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid ""
+"%(sheet)s: part «%(part)s» %(size)s mm is longer than the niche «%(niche)s» "
+"(%(longest)s mm)"
+msgstr ""
+"%(sheet)s: деталь «%(part)s» %(size)s мм довша за нішу «%(niche)s» "
+"(%(longest)s мм)"
 
 #. module: td_mebli_measure
 #. odoo-python
@@ -22,9 +49,24 @@ msgid "%(what)s by %(mm)s mm"
 msgstr "%(what)s на %(mm)s мм"
 
 #. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.mrp_production_form_td_measure_check
+msgid ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Check before cutting\"/>\n"
+"                    <strong>Check the design against the measurement before cutting:</strong>"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Перевірка перед розкроєм\"/>\n"
+"                    <strong>Звірте проєкт із заміром перед розкроєм:</strong>"
+
+#. module: td_mebli_measure
 #: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
 msgid "<strong>Does not fit: </strong>"
 msgstr "<strong>Не вміщається: </strong>"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure_niche__protrusion_mm
+msgid ""
+"A pipe, a duct or a ledge that takes depth off the niche along its wall."
+msgstr "Труба, короб чи уступ, що забирає глибину ніші вздовж стіни."
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_needaction
@@ -59,6 +101,30 @@ msgid "Attachment Count"
 msgstr "Кількість вкладень"
 
 #. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Book"
+msgstr "Записати"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.crm_lead_view_form_td_measure_booking
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Book a Measurement"
+msgstr "Записати на замір"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__booking_id
+msgid "Booking"
+msgstr "Запис"
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure_booking
+msgid "Booking of a Measurement Visit"
+msgstr "Запис на замір"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__issue
 msgid "Check"
 msgstr "Перевірка"
@@ -74,6 +140,11 @@ msgid "Checked against the Design"
 msgstr "Звірено з проєктом"
 
 #. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Close"
+msgstr "Закрити"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__company_id
 msgid "Company"
 msgstr "Компанія"
@@ -81,21 +152,36 @@ msgstr "Компанія"
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__create_uid
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__create_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__create_uid
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__create_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__create_date
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__create_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__create_date
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__create_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__create_date
 msgid "Created on"
 msgstr "Створено"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__customer
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__partner_id
 msgid "Customer"
 msgstr "Клієнт"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__day
+msgid "Day"
+msgstr "День"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__days
+msgid "Days"
+msgstr "Днів"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__depth_mm
@@ -104,18 +190,27 @@ msgid "Depth, mm"
 msgstr "Глибина, мм"
 
 #. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__td_measure_problems
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_problems
+msgid "Design against the Measurement"
+msgstr "Проєкт проти заміру"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__floor_slope_mm
 msgid "Difference of the floor level along the wall."
 msgstr "Перепад рівня підлоги вздовж стіни."
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__display_name
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__display_name
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__display_name
 msgid "Display Name"
-msgstr "Назва для відображення"
+msgstr "Назва"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__issue_count
@@ -127,6 +222,16 @@ msgstr "Не вміщається"
 #: code:addons/td_mebli_measure/models/measure.py:0
 msgid "Does not fit: %s"
 msgstr "Не вміщається: %s"
+
+#. module: td_mebli_measure
+#: model:calendar.alarm,name:td_mebli_measure.alarm_mail_measure_1day
+msgid "Email - 1 Day"
+msgstr "Лист — за 1 день"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__stop
+msgid "End"
+msgstr "Кінець"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__fits
@@ -149,6 +254,32 @@ msgid "Followers (Partners)"
 msgstr "Підписники (партнери)"
 
 #. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure_slot
+msgid "Free Window of the Measurer"
+msgstr "Вільне вікно замірника"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__slot_ids
+msgid "Free Windows"
+msgstr "Вільні вікна"
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid ""
+"Free windows: the working hours of the company minus the meetings of the measurer in\n"
+"                    the calendar. The visit is a standard meeting of the opportunity; the customer gets the invitation and\n"
+"                    a reminder by e-mail a day before."
+msgstr ""
+"Вільні вікна: робочі години компанії мінус зустрічі замірника в календарі. "
+"Виїзд — стандартна зустріч нагоди; клієнт отримує запрошення й нагадування "
+"листом за день."
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__date_from
+msgid "From"
+msgstr "Від дати"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__has_message
 msgid "Has Message"
 msgstr "Є повідомлення"
@@ -161,12 +292,15 @@ msgstr "Висота, мм"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__id
 #: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__id
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__id
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_needaction
@@ -192,14 +326,18 @@ msgstr "Кухня, передпокій, спальня: де стоятиму�
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__write_uid
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__write_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__write_uid
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__write_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__write_uid
 msgid "Last Updated by"
-msgstr "Оновив"
+msgstr "Останнє оновлення"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__write_date
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__write_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__write_date
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__write_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -207,6 +345,21 @@ msgstr "Оновлено"
 #: model:ir.model,name:td_mebli_measure.model_crm_lead
 msgid "Lead"
 msgstr "Лід"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure_booking__partner_id
+msgid ""
+"Linked partner (optional). Usually created when converting the lead. You can"
+" find a partner by its Name, TIN, Email or Internal Reference."
+msgstr ""
+"Пов'язаний контакт (необов'язково). Зазвичай створюється під час "
+"перетворення ліда. Контакт можна знайти за назвою, ІПН, e-mail або "
+"внутрішнім кодом."
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__measure_id
@@ -218,6 +371,12 @@ msgstr "Замір"
 #: model:ir.model.fields.selection,name:td_mebli_measure.selection__td_mebli_measure__state__draft
 msgid "Measured"
 msgstr "Заміряно"
+
+#. module: td_mebli_measure
+#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_calendar_action
+#: model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_calendar_menu
+msgid "Measurement Calendar"
+msgstr "Календар замірів"
 
 #. module: td_mebli_measure
 #: model:ir.model,name:td_mebli_measure.model_td_mebli_measure
@@ -235,6 +394,24 @@ msgid "Measurement Sheets"
 msgstr "Замір-листи"
 
 #. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "Measurement booked: %(day)s %(when)s, %(who)s."
+msgstr "Записано на замір: %(day)s %(when)s, %(who)s."
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "Measurement of the room: niches, appliances, utilities."
+msgstr "Замір приміщення: ніші, техніка, комунікації."
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "Measurement: %s"
+msgstr "Замір: %s"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_count
 #: model_terms:ir.ui.view,arch_db:td_mebli_measure.view_order_form_td_mebli_measure
 msgid "Measurements"
@@ -242,6 +419,7 @@ msgstr "Заміри"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__measurer_id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__measurer_id
 msgid "Measurer"
 msgstr "Замірник"
 
@@ -278,6 +456,12 @@ msgid "Niches and Sizes"
 msgstr "Ніші й розміри"
 
 #. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "No opportunity to book the measurement for."
+msgstr "Немає нагоди, для якої записати замір."
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__name
 msgid "Number"
 msgstr "Номер"
@@ -304,6 +488,7 @@ msgstr "Кількість повідомлень з помилкою доста
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__lead_id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__lead_id
 msgid "Opportunity"
 msgstr "Нагода"
 
@@ -318,14 +503,40 @@ msgid "Photos"
 msgstr "Фото"
 
 #. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__order_line_id
+msgid "Product in the Niche"
+msgstr "Виріб у ніші"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__protrusion_mm
+msgid "Protrusion, mm"
+msgstr "Виступ, мм"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__rating_ids
 msgid "Ratings"
 msgstr "Оцінки"
 
 #. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Refresh Windows"
+msgstr "Оновити вікна"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__room
 msgid "Room"
 msgstr "Приміщення"
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_sale_order__td_measure_problems
+msgid ""
+"Rules, no AI: every appliance against its niche; the product placed in a "
+"niche (width, height, depth minus the protrusion); the longest part of its "
+"specification against the niche. Shown before the parts go to cutting."
+msgstr ""
+"Правила, без AI: кожна техніка проти своєї ніші; виріб у ніші (ширина, "
+"висота, глибина мінус виступ); найдовша деталь його специфікації проти ніші."
+" Показується до передачі деталей на розкрій."
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_has_sms_error
@@ -347,6 +558,11 @@ msgstr "Послідовність"
 #: model:ir.model.constraint,message:td_mebli_measure.constraint_td_mebli_measure_niche_positive
 msgid "Sizes of a niche cannot be negative."
 msgstr "Розміри ніші не можуть бути від'ємними."
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__start
+msgid "Start"
+msgstr "Початок"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__state
@@ -400,6 +616,11 @@ msgid "Width, mm"
 msgstr "Ширина, мм"
 
 #. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__label
+msgid "Window"
+msgstr "Вікно"
+
+#. module: td_mebli_measure
 #. odoo-python
 #: code:addons/td_mebli_measure/models/measure.py:0
 msgid "deeper"
@@ -408,8 +629,20 @@ msgstr "глибше"
 #. module: td_mebli_measure
 #. odoo-python
 #: code:addons/td_mebli_measure/models/measure.py:0
+msgid "depth"
+msgstr "глибина"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
 msgid "fits"
 msgstr "вміщається"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "height"
+msgstr "висота"
 
 #. module: td_mebli_measure
 #. odoo-python
@@ -428,3 +661,9 @@ msgstr "ніша не вказана"
 #: code:addons/td_mebli_measure/models/measure.py:0
 msgid "wider"
 msgstr "ширше"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "width"
+msgstr "ширина"

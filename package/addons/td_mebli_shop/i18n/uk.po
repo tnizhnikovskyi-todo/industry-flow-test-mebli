@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 14:37+0000\n"
-"PO-Revision-Date: 2026-11-12 14:37+0000\n"
+"POT-Creation-Date: 2026-11-12 21:17+0000\n"
+"PO-Revision-Date: 2026-11-12 21:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: td_mebli_shop
 #. odoo-python
@@ -41,6 +42,27 @@ msgstr ""
 "паузу."
 
 #. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_mo_part_labels
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_part_labels
+msgid "'Labels - %s' % (object.name)"
+msgstr "'Етикетки - %s' % (object.name)"
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_kit
+msgid "'Packing list - %s' % (object.name)"
+msgstr "'Комплектувальний лист - %s' % (object.name)"
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_handover_act
+msgid "'Transfer act - %s' % (object.name)"
+msgstr "'Акт приймання-передачі - %s' % (object.name)"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "(by the packing list of the order)."
+msgstr "(за комплектувальним листом замовлення)."
+
+#. module: td_mebli_shop
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
 msgid "<i class=\"fa fa-pause me-1\" title=\"Pause\"/>"
 msgstr "<i class=\"fa fa-pause me-1\" title=\"Пауза\"/>"
@@ -64,6 +86,57 @@ msgstr "<span class=\"o_stat_text\">Не запаковано</span>"
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
 msgid "<span>Plan, h</span>"
 msgstr "<span>План, год</span>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Address:</strong>"
+msgstr "<strong>Адреса:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Buyer:</strong>"
+msgstr "<strong>Покупець:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Date:</strong>"
+msgstr "<strong>Дата:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Items:</strong>"
+msgstr "<strong>Позицій:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Not packed:</strong>"
+msgstr "<strong>Не запаковано:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Order:</strong>"
+msgstr "<strong>Замовлення:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Places:</strong>"
+msgstr "<strong>Місць:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Seller:</strong>"
+msgstr "<strong>Продавець:</strong>"
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_handover_act
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Acceptance and Transfer Act"
+msgstr "Акт приймання-передачі"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Accepted (buyer): ____________________"
+msgstr "Прийняв (покупець): ____________________"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__action
@@ -122,6 +195,8 @@ msgid "Date"
 msgstr "Дата"
 
 #. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_routing_workcenter__display_name
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workcenter_productivity__display_name
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__display_name
@@ -131,7 +206,7 @@ msgstr "Дата"
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__display_name
 msgid "Display Name"
-msgstr "Назва для відображення"
+msgstr "Назва"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__done
@@ -164,6 +239,18 @@ msgid "Fronts"
 msgstr "Фасади"
 
 #. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Goods"
+msgstr "Товар"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Handed over (seller): ____________________"
+msgstr "Передав (продавець): ____________________"
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_production__id
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_routing_workcenter__id
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workcenter_productivity__id
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__id
@@ -197,7 +284,7 @@ msgstr "Етикетка"
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__write_uid
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__write_uid
 msgid "Last Updated by"
-msgstr "Оновив"
+msgstr "Останнє оновлення"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__write_date
@@ -207,14 +294,20 @@ msgid "Last Updated on"
 msgstr "Оновлено"
 
 #. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_mrp_production
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__production_id
 msgid "Manufacturing Order"
-msgstr "Виробниче замовлення"
+msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__none
 msgid "No Step"
 msgstr "Без кроку"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "No parts to label."
+msgstr "Немає деталей для етикеток."
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_missing
@@ -247,7 +340,7 @@ msgstr "Замовлення"
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__pin
 msgid "PIN"
-msgstr ""
+msgstr "PIN"
 
 #. module: td_mebli_shop
 #: model:ir.actions.act_window,name:td_mebli_shop.td_mebli_kiosk_action
@@ -268,10 +361,15 @@ msgid "Packed by"
 msgstr "Запакував"
 
 #. module: td_mebli_shop
-#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_line_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
-#: model:ir.actions.report,name:td_mebli_shop.action_report_kit
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Packed by the warehouse: ____________________"
+msgstr "Склад запакував: ____________________"
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_kit
+#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_line_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
 msgid "Packing List"
 msgstr "Комплектувальний лист"
 
@@ -296,6 +394,12 @@ msgstr "Комплектувальні листи"
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__part_id
 msgid "Part"
 msgstr "Деталь"
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_mo_part_labels
+#: model:ir.actions.report,name:td_mebli_shop.action_report_part_labels
+msgid "Part Labels (QR)"
+msgstr "Етикетки деталей (QR)"
 
 #. module: td_mebli_shop
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
@@ -330,8 +434,9 @@ msgstr "Фото"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__place
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_search
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_search
 msgid "Place"
 msgstr "Місце"
 
@@ -341,9 +446,29 @@ msgid "Places"
 msgstr "Місць"
 
 #. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Places received by the crew: ____________________"
+msgstr "Місця прийняла бригада: ____________________"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Places:"
+msgstr "Місць:"
+
+#. module: td_mebli_shop
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
 msgid "Plan, h"
 msgstr "План, год"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "QR"
+msgstr "QR"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "Qty:"
+msgstr "К-сть:"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_quality_state
@@ -381,9 +506,15 @@ msgstr "Крок якості"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__qty
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Quantity"
 msgstr "Кількість"
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_ir_actions_report
+msgid "Report Action"
+msgstr "Дія звіту"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__result
@@ -427,6 +558,33 @@ msgid "Taken"
 msgstr "Взято"
 
 #. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Template to be checked by a lawyer (No. 17)"
+msgstr "Шаблон до перевірки юристом (№17)"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid ""
+"The goods are checked by the buyer for completeness and visible defects. Claims on the quantity and the\n"
+"                    appearance: ______________________________________________"
+msgstr ""
+"Покупець перевірив товар на комплектність і видимі дефекти. Претензії щодо "
+"кількості й зовнішнього вигляду: "
+"______________________________________________"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "The packing list of the order is not built yet."
+msgstr "Комплектувальний лист замовлення ще не сформовано."
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid ""
+"The seller hands over and the buyer accepts the goods of the order without "
+"installation:"
+msgstr "Продавець передає, а покупець приймає товар замовлення без монтажу:"
+
+#. module: td_mebli_shop
 #. odoo-python
 #: code:addons/td_mebli_shop/models/kit.py:0
 msgid ""
@@ -437,6 +595,15 @@ msgstr ""
 "Комплект замовлення %(order)s неповний: не запаковано позицій — %(count)s "
 "(місця %(places)s), наприклад «%(item)s». Неповний комплект не "
 "відвантажується."
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid ""
+"The warranty is given under the contract; assembly and installation by the buyer or a third party are\n"
+"                    not covered by the warranty of installation."
+msgstr ""
+"Гарантія — за договором; складання й монтаж покупцем або третьою особою "
+"гарантією на монтаж не покриваються."
 
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__todo
@@ -465,6 +632,11 @@ msgstr "Разом"
 #: model:ir.model,name:td_mebli_shop.model_stock_picking
 msgid "Transfer"
 msgstr "Переміщення"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Unit"
+msgstr "Од."
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,help:td_mebli_shop.field_mrp_routing_workcenter__td_quality_point
@@ -537,36 +709,6 @@ msgid "Wrong worker or PIN."
 msgstr "Неправильний працівник або PIN."
 
 #. module: td_mebli_shop
-#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_kit
-msgid "'Packing list - %s' % (object.name)"
-msgstr "'Комплектувальний лист - %s' % (object.name)"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
-msgid "<strong>Items:</strong>"
-msgstr "<strong>Позицій:</strong>"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
-msgid "<strong>Not packed:</strong>"
-msgstr "<strong>Не запаковано:</strong>"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
-msgid "<strong>Places:</strong>"
-msgstr "<strong>Місць:</strong>"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
-msgid "Packed by the warehouse: ____________________"
-msgstr "Склад запакував: ____________________"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
-msgid "Places received by the crew: ____________________"
-msgstr "Місця прийняла бригада: ____________________"
-
-#. module: td_mebli_shop
-#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
-msgid "The packing list of the order is not built yet."
-msgstr "Комплектувальний лист замовлення ще не сформовано."
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "mm"
+msgstr "мм"

@@ -1,0 +1,303 @@
+{
+ "screen": "43-paid-repair",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Тип"
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Попит"
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Референс ремонту"
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт?"
+  },
+  {
+   "kind": "label",
+   "text": "Замовлення, на яке скарга?"
+  },
+  {
+   "kind": "label",
+   "text": "Гарантія до?"
+  },
+  {
+   "kind": "label",
+   "text": "Деталь"
+  },
+  {
+   "kind": "label",
+   "text": "Товар для ремонту"
+  },
+  {
+   "kind": "label",
+   "text": "На гарантії?"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Запланована дата"
+  },
+  {
+   "kind": "label",
+   "text": "Відповідальний"
+  },
+  {
+   "kind": "label",
+   "text": "Мітки"
+  },
+  {
+   "kind": "label",
+   "text": "Статус компонентів?"
+  },
+  {
+   "kind": "label",
+   "text": "Ремонти Рекламації Замовлення 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Рекламації WH/RO/00005 S00124 Замовлення на продаж 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Розпочати ремонт"
+  },
+  {
+   "kind": "button",
+   "text": "Відмінити резервування"
+  },
+  {
+   "kind": "button",
+   "text": "Закрити ремонт"
+  },
+  {
+   "kind": "button",
+   "text": "Повторне виготовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Частини"
+  },
+  {
+   "kind": "button",
+   "text": "Примітки ремонту"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Рекламації"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "WH/RO/00005"
+  },
+  {
+   "kind": "field",
+   "text": "S00124 Замовлення на продаж",
+   "label": "",
+   "name": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00124",
+   "label": "sale_order_id",
+   "name": "sale_order_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Підтверджено",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "3 вер.",
+   "label": "td_warranty_end",
+   "name": "td_warranty_end",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "priority",
+   "name": "priority",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "WH/RO/00005",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Будинок «Липки» (забудовник)",
+   "label": "Клієнт?",
+   "name": "partner_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00026",
+   "label": "Замовлення, на яке скарга?",
+   "name": "td_claim_order_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "3 вер.",
+   "label": "Гарантія до?",
+   "name": "td_warranty_end",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Деталь",
+   "name": "td_part_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Шафа-купе 2-дверна",
+   "label": "Товар для ремонту",
+   "name": "product_id",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "На гарантії?",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "17 лист., 00:15",
+   "label": "Запланована дата",
+   "name": "schedule_date",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Ігор Савчук",
+   "label": "Відповідальний",
+   "name": "user_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Клієнт",
+   "label": "Мітки",
+   "name": "tag_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "Статус компонентів?",
+   "name": "parts_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "repair_properties",
+   "name": "repair_properties",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Тип Товар Попит Кількість Одиниці Додати [ФР-ПЕТ] Петлі з доводчиком, комплект В наявності 2,000 2,000 шт Додати рядокКаталог ​ ​",
+   "label": "move_ids",
+   "name": "move_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "cell",
+   "text": "Додати",
+   "label": "repair_line_type"
+  },
+  {
+   "kind": "cell",
+   "text": "[ФР-ПЕТ] Петлі з доводчиком, комплект",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "2,000",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "2,000",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "шт",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

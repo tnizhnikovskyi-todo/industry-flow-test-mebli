@@ -540,4 +540,7 @@ def seed_full(env, people, partners, orders, show, rnd):
     _calibrate_load(env, {'CUT': 74, 'EDG': 112, 'DRL': 83, 'ASM': 91})
     # after the calendars of the sections: their change replans the open manufacturing orders
     state['distributor_job'] = _distributor_cutting(env, people, orders, rnd)
+    # wave 2 of the A box (decisions 42-47): own random sequence, the data above stays as it was
+    from .wave2 import seed_wave2
+    state['wave2'] = seed_wave2(env, people, orders, show, rnd)
     return state

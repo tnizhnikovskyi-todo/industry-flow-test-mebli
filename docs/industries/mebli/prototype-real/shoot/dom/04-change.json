@@ -120,6 +120,10 @@
   },
   {
    "kind": "button",
+   "text": "Повідомити клієнта про нову дату"
+  },
+  {
+   "kind": "button",
    "text": "Рядки замовлення"
   },
   {
@@ -133,6 +137,10 @@
   {
    "kind": "button",
    "text": "Зміни"
+  },
+  {
+   "kind": "button",
+   "text": "Візуалізація проєкту"
   },
   {
    "kind": "breadcrumb",
@@ -193,21 +201,21 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 19:27",
+   "text": "6 лист., 21:15",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
   },
   {
    "kind": "field",
-   "text": "12 лист., 15:29",
+   "text": "11 лист., 08:05",
    "label": "Виробництво розпочато",
    "name": "td_launch_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "140,0",
+   "text": "106,8",
    "label": "До запуску, год",
    "name": "td_hours_to_launch",
    "required": false

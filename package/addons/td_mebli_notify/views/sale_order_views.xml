@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Position 2: the letter «new date» from the order (standard composer with the template) -->
+    <record id="view_order_form_td_notify" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.notify</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_td_notify_new_date" type="object" string="Tell the Customer the New Date"
+                        invisible="state != 'sale' or td_delay_days &lt;= 0"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

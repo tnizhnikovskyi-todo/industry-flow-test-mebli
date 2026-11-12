@@ -156,6 +156,13 @@
   },
   {
    "kind": "field",
+   "text": "ЗМ-0001: Холодильник, вбудований — глибше на 30 мм ЗМ-0001: Шафа-купе 2-дверна — глибина 600 мм, ніша «Шафа-купе в передпокої» вміщає 560 мм",
+   "label": "td_measure_problems",
+   "name": "td_measure_problems",
+   "required": false
+  },
+  {
+   "kind": "field",
    "text": "",
    "label": "priority",
    "name": "priority",
@@ -212,7 +219,7 @@
   },
   {
    "kind": "field",
-   "text": "12 лист., 22:30",
+   "text": "13 лист., 00:17",
    "label": "Початкова дата?",
    "name": "date_start",
    "required": true

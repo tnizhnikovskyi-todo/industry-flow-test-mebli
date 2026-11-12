@@ -28,6 +28,9 @@ export const STEPS = [
           await press(c, r.locator('button.td_parts_link'));
       },
       facts: [{ name: 'part_count', sel: '.modal .o_field_widget[name=td_part_count]' }] },
+    // F-58 — денний план бригади на телефоні: «Мій день» (виїзди дня, адреса, час, що везти, доплата)
+    { n: 7, role: 'fitter', url: '/odoo/action-td_mebli_install.td_mebli_install_day_server_action', name: 'my-day',
+      facts: [{ name: 'visits', sel: '.o_kanban_renderer', re: 'S\\d+' }] },
 ];
 export const PASS1 = [];
-export const PASS2 = ['m1', 'm2', 'm6', 'm3', 'm4', 'm5'];
+export const PASS2 = ['m1', 'm2', 'm6', 'm3', 'm4', 'm5', 'm7'];

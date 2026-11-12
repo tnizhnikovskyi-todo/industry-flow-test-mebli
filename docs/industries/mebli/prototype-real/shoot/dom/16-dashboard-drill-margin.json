@@ -284,11 +284,15 @@
   },
   {
    "kind": "label",
-   "text": "Керівник 2 Меблева фабрика «Демо»"
+   "text": ""
   },
   {
    "kind": "label",
-   "text": "Керівник Маржа замовлень 1-60 / 60"
+   "text": "Керівник 3 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Керівник Маржа замовлень 1-61 / 61"
   },
   {
    "kind": "breadcrumb",
@@ -297,6 +301,49 @@
   {
    "kind": "breadcrumb",
    "text": "Маржа замовлень"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00124",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Будинок «Липки» (забудовник)",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "1 690,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "650,00 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "1 040,00 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "38,5",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "13 лист.",
+   "label": "date_order"
+  },
+  {
+   "kind": "cell",
+   "text": ""
   },
   {
    "kind": "cell",
@@ -373,49 +420,6 @@
   {
    "kind": "cell",
    "text": "22,1",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "12 лист.",
-   "label": "date_order"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "S00113",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Ірина Коваленко",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "67 275,00 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "24 820,12 ₴",
-   "label": "margin"
-  },
-  {
-   "kind": "cell",
-   "text": "42 454,88 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "36,9",
    "label": "td_margin_plan_pct"
   },
   {

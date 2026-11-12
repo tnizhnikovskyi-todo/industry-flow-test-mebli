@@ -440,7 +440,9 @@ def _age_system_messages(env):
 
 def seed_showcase(env):
     rnd = random.Random(2026)
-    env = env(context=dict(env.context, lang='uk_UA'))
+    # td_no_forecast_activity: the activities «forecast date shift» are made once at the end (wave2), not for every
+    # intermediate date of the seed
+    env = env(context=dict(env.context, lang='uk_UA', td_no_forecast_activity=True))
     now = fields.Datetime.now()
     if env['sale.order'].search_count([('state', '!=', 'cancel')], limit=1):
         return {}
@@ -628,11 +630,14 @@ def seed_showcase(env):
                                                           'capacity': parallel})]
             center.resource_calendar_id = _section_calendar(env, center, round(weekly / parallel, 1))
     show = seed_dates(env, people, partners, rnd, install)
-    seed_full(env, people, partners, orders, show, rnd)
+    full_state = seed_full(env, people, partners, orders, show, rnd)
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
     env.cr.execute("""UPDATE mail_message SET date = date - interval '1 day' WHERE date >= (date_trunc('day', now() at time zone 'Europe/Kyiv') - interval '1 day') at time zone 'Europe/Kyiv'
                       AND date < date_trunc('day', now() at time zone 'Europe/Kyiv') at time zone 'Europe/Kyiv'""")
     env.cr.execute("UPDATE mail_notification SET is_read = true, read_date = now() WHERE is_read IS NOT TRUE")  # no «94 unread» badge in the header
+    # wave 2: the letters to the customers and the morning briefing of the owner come after, new (F-51, F-64)
+    from .wave2 import seed_wave2_after
+    seed_wave2_after(env, people, dict(full_state.get('wave2', {}), show=show.id))
     env.flush_all()
     return {'orders': env['sale.order'].search_count([]), 'productions': env['mrp.production'].search_count([])}
