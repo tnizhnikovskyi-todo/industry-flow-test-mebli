@@ -7,6 +7,7 @@ written by different roles. Everything is fictional: company, people, customers,
 It uses only public ORM methods of the packages.
 """
 import base64
+import math
 import random
 from datetime import timedelta, timezone
 from zoneinfo import ZoneInfo
@@ -115,15 +116,17 @@ _KYIV = ZoneInfo('Europe/Kyiv')
 def _section_calendar(env, center, weekly_hours):
     """A standard working calendar of a section: Mon-Fri from 8:00, the same share of the day every day."""
     per_day = weekly_hours / 5.0
-    return env['resource.calendar'].create({
-        'name': f'{center.name}: {weekly_hours} год на тиждень',
-        'company_id': center.company_id.id or env.company.id,
-        'tz': 'Europe/Kyiv',
+    calendar = env['resource.calendar'].create({
+        'name': f'{center.name}: {weekly_hours} год на тиждень', 'tz': 'Europe/Kyiv',
+        'company_id': center.company_id.id or env.company.id})
+    # the default attendances of a new calendar (company calendar) are replaced, not added to
+    calendar.write({
         'attendance_ids': [(5, 0, 0)] + [
             (0, 0, {'name': f'{center.name} {day + 1}', 'dayofweek': str(day), 'hour_from': 8.0, 'hour_to': 8.0 + per_day,
                     'day_period': 'morning'})
             for day in range(5)],
     })
+    return calendar
 
 
 def _work(when, rnd=None):
@@ -588,7 +591,13 @@ def seed_showcase(env):
         center = env['mrp.workcenter'].search([('code', '=', code)], limit=1)
         hours = center.workcenter_load / 60.0 if center else 0.0
         if center and hours:
-            center.resource_calendar_id = _section_calendar(env, center, max(1, round(hours / percent * 100.0)))
+            weekly = max(1, round(hours / percent * 100.0))
+            # more than one shift of 40 h: parallel places of the section (standard capacity without a product)
+            parallel = max(1, math.ceil(weekly / 40.0))
+            if parallel > 1:
+                center.capacity_ids = [(5, 0, 0), (0, 0, {'product_uom_id': env.ref('uom.product_uom_unit').id,
+                                                          'capacity': parallel})]
+            center.resource_calendar_id = _section_calendar(env, center, round(weekly / parallel, 1))
     seed_dates(env, people, partners, rnd)
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better

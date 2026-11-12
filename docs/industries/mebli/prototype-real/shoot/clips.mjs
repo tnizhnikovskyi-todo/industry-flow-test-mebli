@@ -7,7 +7,10 @@ export const PASS2 = ['D_sample'];
 export const CLIPS = {
     async D_sample() {
         return clip('D_sample', { role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}` }, async (c) => {
-            await settle(c.page, 900); c.mark();
+            await settle(c.page, 900);
+            // планова маржа замовлення (sale_margin) — на вкладці рядків, до переходу на закупівлі
+            await fact(c.page, 'D_sample', 'margin_percent', '.o_field_widget[name=margin_percent]', { re: '[\\d,.]+\\s*%' });
+            c.mark();
             await title(c, 'Менеджер продажу', 'Обіцяли клієнту дату — система **вже бачить**, що її зірве');
             await hold(c, 1500);
             await focus(c, '.td_date_alert');
@@ -18,9 +21,7 @@ export const CLIPS = {
             await hold(c, 1900);
             await zoomOff(c);
             await titleOff(c);
-            // закупівлі створив стандарт (MTO + «Купити»): смарт-кнопка «Купівлі» модуля sale_purchase
-            await focus(c, 'button[name=action_view_purchase_orders]');
-            await hold(c, 1100);
+            // закупівлі створив стандарт (MTO + «Купити»); менеджер салону лише читає закупівлі свого замовлення (без групи «Закупівлі»)
             await press(c, c.page.locator('.o_notebook_headers a', { hasText: 'Закупівлі під замовлення' }));
             await scrollTo(c, '.o_data_row.text-danger');
             await title(c, 'Причина зсуву', 'Фасади: дата постачальника в закупівлі — **пізніше на 2 тижні**');
