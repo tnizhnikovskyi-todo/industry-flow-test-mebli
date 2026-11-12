@@ -30,6 +30,50 @@
         </field>
     </record>
 
+    <!-- the same tablet on a phone (390 px): a card per work order with the worker and the buttons
+         (the action opens it first on small screens: mobile_view_mode = kanban by default) -->
+    <record id="mrp_workorder_td_tablet_kanban" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.tablet.kanban</field>
+        <field name="model">mrp.workorder</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <kanban create="0" class="o_td_tablet_kanban">
+                <field name="state"/>
+                <field name="td_pause_reason"/>
+                <field name="td_quality_state"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex align-items-start">
+                            <div class="flex-grow-1">
+                                <field name="production_id" class="fw-bold"/>
+                                <div><field name="name"/></div>
+                            </div>
+                            <field name="state" widget="badge" decoration-info="state == 'progress'" decoration-success="state == 'done'"/>
+                        </div>
+                        <div class="d-flex flex-wrap gap-2 text-muted small">
+                            <span><span>Plan, h</span> <field name="td_expected_hours"/></span>
+                            <field name="td_quality_state" widget="badge" decoration-success="td_quality_state == 'pass'"
+                                   decoration-danger="td_quality_state == 'fail'" decoration-warning="td_quality_state == 'todo'"
+                                   invisible="td_quality_state == 'none'"/>
+                        </div>
+                        <div class="td_workers" invisible="not td_worker_names"><i class="fa fa-user me-1" title="Worker"/><field name="td_worker_names"/></div>
+                        <div class="text-warning" invisible="not td_pause_reason"><i class="fa fa-pause me-1" title="Pause"/><field name="td_pause_reason"/></div>
+                        <footer class="d-flex flex-wrap gap-1 pt-1">
+                            <button name="action_td_kiosk" type="object" string="Taken" icon="fa-play" class="btn btn-primary"
+                                    context="{'td_action': 'start'}" invisible="state in ('done', 'cancel', 'progress') and not td_pause_reason"/>
+                            <button name="action_td_kiosk" type="object" string="Pause" icon="fa-pause" class="btn btn-secondary"
+                                    context="{'td_action': 'pause'}" invisible="state != 'progress' or td_pause_reason"/>
+                            <button name="action_td_kiosk" type="object" string="Quality" icon="fa-camera" class="btn btn-secondary"
+                                    context="{'td_action': 'quality'}" invisible="td_quality_state in ('none', 'pass') or state in ('done', 'cancel')"/>
+                            <button name="action_td_kiosk" type="object" string="Done" icon="fa-check" class="btn btn-success"
+                                    context="{'td_action': 'done'}" invisible="state != 'progress'"/>
+                        </footer>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
     <record id="mrp_workorder_td_tablet_search" model="ir.ui.view">
         <field name="name">mrp.workorder.td.tablet.search</field>
         <field name="model">mrp.workorder</field>
@@ -49,8 +93,10 @@
     <record id="mrp_workorder_td_tablet_action" model="ir.actions.act_window">
         <field name="name">Shop Floor Tablet</field>
         <field name="res_model">mrp.workorder</field>
-        <field name="view_mode">list</field>
-        <field name="view_id" ref="mrp_workorder_td_tablet_list"/>
+        <field name="view_mode">list,kanban</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('mrp_workorder_td_tablet_list')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('mrp_workorder_td_tablet_kanban')})]"/>
         <field name="search_view_id" ref="mrp_workorder_td_tablet_search"/>
         <field name="context">{'search_default_open': 1, 'search_default_group_workcenter': 1}</field>
         <field name="help">Work orders of the sections; the worker presses «Taken», «Pause» or «Done» and confirms with the PIN.</field>

@@ -161,7 +161,7 @@ class TdMebliDashboard(models.AbstractModel):
                 'alert': _("Below %(pct)s%%: %(count)s", pct=int(LOW_MARGIN * 100), count=len(low)) if low else '',
                 'alert_rows': [f"{o.name} · {self._pct(o.margin / o.amount_untaxed * 100)}" for o in low[:2]],
                 'drill': self._drill(_("Margin of the orders"), 'sale.order', orders,
-                                     ('list', 'td_mebli_cost.sale_order_td_cost_fact_list'))}
+                                     ('list', 'td_mebli_dashboard.sale_order_td_dash_margin_list'))}
 
     @api.model
     def _week(self):

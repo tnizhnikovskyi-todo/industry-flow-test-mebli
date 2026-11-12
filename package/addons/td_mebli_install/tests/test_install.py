@@ -163,3 +163,30 @@ class TestInstallAccess(TdMebliSaleCommon):
         accrual = self.env['td.mebli.accrual'].create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 10.0,
                                                        'reason': 'Clean site', 'company_id': other.id})
         self.assertFalse(self.env['td.mebli.accrual'].with_user(self.fin).search([('id', '=', accrual.id)]))
+
+    def test_defect_visible_as_its_act(self):
+        defect = self.env['td.mebli.install.defect'].create({'act_id': self.act.id, 'name': 'Gap of the door'})
+        Defect = self.env['td.mebli.install.defect']
+        self.assertEqual(Defect.with_user(self.fitter).search([('id', '=', defect.id)]), defect)
+        self.assertEqual(Defect.with_user(self.manager).search([('id', '=', defect.id)]), defect)
+        self.assertFalse(Defect.with_user(self.stranger).search([('id', '=', defect.id)]))
+        with self.assertRaises(AccessError):
+            defect.with_user(self.stranger).read(['name'])
+
+    def test_amount_of_the_signature_is_a_stored_field(self):
+        self.act.write({'signature': PHOTO})
+        self.act.with_user(self.fitter).action_sign()
+        self.assertAlmostEqual(self.act.crew_amount_signed, 500.0)
+        self.assertAlmostEqual(self.act.crew_amount, 500.0)
+        self.order.order_line.price_unit = 30000.0
+        self.act.invalidate_recordset()
+        self.assertAlmostEqual(self.act.crew_amount, 500.0)
+        # an act created already signed (import) keeps the amount of its creation
+        stage = self.env['td.mebli.install.act'].create({'task_id': self.task.id, 'kind': 'stage', 'state': 'signed'})
+        self.assertEqual(stage.crew_amount, 0.0)
+
+    def test_hours_of_an_accrual_are_not_typed(self):
+        accrual = self.env['td.mebli.accrual'].with_user(self.fin).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 10.0, 'reason': 'Clean site'})
+        with self.assertRaises(UserError):
+            accrual.with_user(self.fin).write({'hours': 8.0})

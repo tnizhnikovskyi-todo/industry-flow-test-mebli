@@ -221,21 +221,21 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 13:06",
+   "text": "6 лист., 15:38",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
   },
   {
    "kind": "field",
-   "text": "11 лист., 08:42",
+   "text": "12 лист., 10:33",
    "label": "Виробництво розпочато",
    "name": "td_launch_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "115,6",
+   "text": "138,9",
    "label": "До запуску, год",
    "name": "td_hours_to_launch",
    "required": false

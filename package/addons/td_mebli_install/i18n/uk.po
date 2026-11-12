@@ -564,3 +564,19 @@ msgstr "Історія спілкування з сайту"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__workcenter_id
 msgid "Work Center"
 msgstr "Дільниця"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__crew_amount_signed
+msgid "Crew Amount at the Signature"
+msgstr "Сума бригаді на момент підпису"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__crew_amount_signed
+msgid "Written when the act is signed; the amount of a signed act."
+msgstr "Записується під час підпису акта; сума підписаного акта."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "The hours of an accrual are the time of the tablet: they are not changed by hand."
+msgstr "Години нарахування — це час із планшета цеху: вручну їх не змінюють."

@@ -112,6 +112,7 @@ msgstr "Назва для відображення"
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__done
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
 msgid "Done"
 msgstr "Зроблено"
 
@@ -274,6 +275,7 @@ msgstr "Пройдено"
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__pause
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
 msgid "Pause"
 msgstr "Пауза"
 
@@ -308,6 +310,7 @@ msgstr "План, год"
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_quality_state
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
 msgid "Quality"
 msgstr "Якість"
 
@@ -380,6 +383,7 @@ msgstr "Зробіть фото перевірки."
 #. module: td_mebli_shop
 #: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__start
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
 msgid "Taken"
 msgstr "Взято"
 
@@ -490,3 +494,17 @@ msgstr "Працівники"
 #: code:addons/td_mebli_shop/wizard/kiosk.py:0
 msgid "Wrong worker or PIN."
 msgstr "Неправильний працівник або PIN."
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<span>Plan, h</span>"
+msgstr "<span>План, год</span>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-user me-1\" title=\"Worker\"/>"
+msgstr "<i class=\"fa fa-user me-1\" title=\"Працівник\"/>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-pause me-1\" title=\"Pause\"/>"
+msgstr "<i class=\"fa fa-pause me-1\" title=\"Пауза\"/>"

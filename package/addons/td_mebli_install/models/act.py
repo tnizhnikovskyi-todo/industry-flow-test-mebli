@@ -32,33 +32,43 @@ class TdMebliInstallAct(models.Model):
     currency_id = fields.Many2one(related='order_id.currency_id')
     # fixed at the signature: a later change of the order does not change the amount of a signed act
     crew_amount = fields.Monetary(string='Crew Amount', compute='_compute_crew_amount', store=True)
+    crew_amount_signed = fields.Monetary(string='Crew Amount at the Signature', readonly=True, copy=False,
+                                         help='Written when the act is signed; the amount of a signed act.')
 
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get('name', '/') == '/':
                 vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.install.act') or '/'
-        return super().create(vals_list)
+        acts = super().create(vals_list)
+        for act, vals in zip(acts, vals_list):  # an act created signed (import, data): the amount of the moment
+            if vals.get('state') == 'signed' and 'crew_amount_signed' not in vals:
+                act.sudo().crew_amount_signed = act._td_crew_amount_now()  # a signed act is read only for the crew
+        return acts
+
+    def write(self, vals):
+        self._td_fix_crew_amount(vals)
+        return super().write(vals)
 
     @api.depends('defect_ids.resolved')
     def _compute_defects(self):
         for act in self:
             act.defect_open_count = len(act.defect_ids.filtered(lambda d: not d.resolved))
 
-    @api.depends('kind', 'crew_pct', 'order_id.amount_untaxed')
+    def _td_crew_amount_now(self):
+        self.ensure_one()
+        return self.order_id.amount_untaxed * self.crew_pct / 100.0 if self.kind == 'final' else 0.0
+
+    @api.depends('kind', 'crew_pct', 'order_id.amount_untaxed', 'state', 'crew_amount_signed')
     def _compute_crew_amount(self):
-        # a signed act keeps the amount it was signed with (read from the database: the act may be created signed)
-        saved = {}
-        ids = [act.id for act in self if isinstance(act.id, int)]
-        if ids:
-            self.env.cr.execute("SELECT id, crew_amount FROM td_mebli_install_act "
-                                "WHERE id IN %s AND state = 'signed' AND crew_amount IS NOT NULL", [tuple(ids)])
-            saved = dict(self.env.cr.fetchall())
         for act in self:
-            if act.id in saved:
-                act.crew_amount = saved[act.id]
-                continue
-            act.crew_amount = act.order_id.amount_untaxed * act.crew_pct / 100.0 if act.kind == 'final' else 0.0
+            act.crew_amount = act.crew_amount_signed if act.state == 'signed' else act._td_crew_amount_now()
+
+    def _td_fix_crew_amount(self, vals):
+        """The act becomes signed: the amount of the moment is written into the stored field (not read back by SQL)."""
+        if vals.get('state') == 'signed' and 'crew_amount_signed' not in vals:
+            for act in self.filtered(lambda a: a.state != 'signed'):
+                super(TdMebliInstallAct, act).write({'crew_amount_signed': act._td_crew_amount_now()})
 
     @api.constrains('kind', 'order_id')
     def _check_one_final_act(self):

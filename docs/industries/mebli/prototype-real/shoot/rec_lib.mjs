@@ -114,10 +114,13 @@ export async function clip(name, { role, mobile = false, url = null, plain = fal
     page.setDefaultTimeout(20000);
     page.on('pageerror', (e) => { console.error('PAGEERR', name, String(e.message).slice(0, 200)); ERRORS.push('pageerror ' + String(e.message).slice(0, 100)); });
     page.on('console', (m) => { if (m.type() === 'error' && !/favicon|Failed to load resource.*(404|net::)/.test(m.text())) ERRORS.push('console.error ' + m.text().slice(0, 100)); });
-    const cdp = await ctx.newCDPSession(page); const frames = []; let writing = Promise.resolve(), stop = false, loop = Promise.resolve();
+    const cdp = await ctx.newCDPSession(page); const frames = []; let writing = Promise.resolve(), stop = false, loop = Promise.resolve(), shotErr = null, startLoop = null;
     const put = (ts, b64d) => { const idx = frames.length; frames.push(ts); writing = writing.then(() => fs.promises.writeFile(path.join(dir, `${String(idx).padStart(6, '0')}.jpg`), Buffer.from(b64d, 'base64'))); };
     if (!record) { /* скриншот-крок: без відео */ } else if (mobile) { // телефон: цикл знімків у фізичних пікселях (DPR 3 -> 1170x2532); screencast віддає лише CSS-розмір
-        loop = (async () => { while (!stop) { const t = Date.now() / 1000; try { const r = await page.screenshot({ type: 'jpeg', quality: 88, animations: 'allow', caret: 'initial' }); put(t, r.toString('base64')); } catch (e) { await sleep(50); } } })();
+        // цикл стартує ПІСЛЯ відкриття сторінки: знімок, запущений на about:blank під час переходу, зависав на 20 с (0-1 кадр у кліпі)
+        startLoop = () => { loop = (async () => { while (!stop) { const t = Date.now() / 1000; try { const r = await page.screenshot({ type: 'jpeg', quality: 88, animations: 'allow', caret: 'initial', timeout: 3000 }); put(t, r.toString('base64')); } catch (e) { if (!shotErr) { shotErr = String(e.message).split('\n')[0]; console.error('SHOTERR', name, shotErr); }
+            // запасний шлях (кліп телефона з 0 кадрів у прогонах хвилі 3 і кола 2): знімок через CDP теж у фізичних пікселях
+            try { const r = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: 88 }); put(t, r.data); } catch (e2) { await sleep(50); } } } })(); };
     } else {
         cdp.on('Page.screencastFrame', (f) => { put(f.metadata.timestamp, f.data); cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }).catch(() => {}); });
         await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 92, maxWidth: dev.rec.width, maxHeight: dev.rec.height, everyNthFrame: 1 });
@@ -133,11 +136,14 @@ export async function clip(name, { role, mobile = false, url = null, plain = fal
         }
         if (role && /\/web\/login/.test(page.url())) { console.error('FLOW_STOP: після goto відкрита сторінка логіну (роль ' + role + ', ' + name + ')'); process.exitCode = 2; stop = true; await loop; await cdp.send('Page.stopScreencast').catch(() => {}); await writing; await ctx.close(); fs.rmSync(dir, { recursive: true, force: true }); return false; }
     }
+    if (startLoop) startLoop();
     let err = null;
     try { await fn(c); } catch (e) { err = e; console.error('FAIL', name, String(e.message).split('\n').slice(0, 5).join(' | ')); fs.mkdirSync(path.join(ROOT, 'shoot', 'fail'), { recursive: true }); await page.screenshot({ path: path.join(ROOT, 'shoot', 'fail', `${name}.png`) }).catch(() => {}); }
     const endT = Date.now() / 1000;
     await sleep(300); stop = true; await loop; await cdp.send('Page.stopScreencast').catch(() => {}); await writing; await ctx.close();
-    if (record) {
+    // кліп без кадрів (або з одиничними) — брак зйомки, не «ok»: інакше в теці лишається порожнє/статичне відео
+    if (record && frames.length < 10 && !err) { err = new Error(`кадрів ${frames.length} < 10`); console.error('FAIL', name, err.message); process.exitCode = 1; }
+    if (record && frames.length) {
         // ffconcat за часовими мітками
         const list = []; for (let i = 0; i < frames.length; i++) { list.push(`file '${path.join(dir, String(i).padStart(6, '0') + '.jpg')}'`); list.push(`duration ${Math.max(0.01, (frames[i + 1] ?? frames[i] + 0.3) - frames[i]).toFixed(4)}`); }
         list.push(`file '${path.join(dir, String(frames.length - 1).padStart(6, '0') + '.jpg')}'`);

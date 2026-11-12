@@ -168,7 +168,7 @@
   },
   {
    "kind": "field",
-   "text": "25 лист.",
+   "text": "26 лист.",
    "label": "Термін дії?",
    "name": "validity_date",
    "required": false
@@ -196,14 +196,14 @@
   },
   {
    "kind": "field",
-   "text": "26 лист., 16:10",
+   "text": "26 лист., 18:42",
    "label": "Обіцяна дата?",
    "name": "expected_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "25 лист.",
+   "text": "26 лист.",
    "label": "Прогнозна дата?",
    "name": "td_forecast_date",
    "required": false

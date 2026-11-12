@@ -67,6 +67,39 @@
         <field name="perm_unlink" eval="False"/>
     </record>
 
+    <!-- defects are read as their act: the same visibility as the act (the rules of the act do not cover its lines) -->
+    <record id="td_mebli_install_defect_rule_user_read" model="ir.rule">
+        <field name="name">Defect of an installation act: as visible as its act</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="domain_force">[
+            '|',
+                '&amp;',
+                    ('act_id.task_id.project_id', '!=', False),
+                    '|',
+                        ('act_id.task_id.project_id.privacy_visibility', 'in', ['employees', 'portal']),
+                        ('act_id.task_id.project_id.message_partner_ids', 'in', [user.partner_id.id]),
+                '|',
+                    ('act_id.task_id.message_partner_ids', 'in', [user.partner_id.id]),
+                    ('act_id.task_id.user_ids', 'in', user.id)
+        ]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user')), (4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_install_defect_rule_all_read" model="ir.rule">
+        <field name="name">Defect of an installation act: project managers and «all documents» salespeople read all</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_manager')), (4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
     <!-- defects follow their act: the crew edits them while the act is a draft -->
     <record id="td_mebli_install_defect_rule_write" model="ir.rule">
         <field name="name">Defect of an installation act: editable while the act is a draft</field>

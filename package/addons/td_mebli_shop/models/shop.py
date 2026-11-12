@@ -31,6 +31,20 @@ class MrpWorkcenterProductivity(models.Model):
         self._td_check_employee_write(vals_list)
         return super().create(vals_list)
 
+    def copy(self, default=None):
+        """The standard split of an overrun timer (mrp.workcenter.productivity._close: the time over the plan becomes a
+        copy with the loss «Reduced Speed») keeps the worker of the original line. The copy carries the same worker, it
+        does not set a new one, so it is allowed for every user; a worker given explicitly in `default` is checked."""
+        default = dict(default or {})
+        if 'td_employee_id' in default or self.env.su or self.env.user.has_group('mrp.group_mrp_manager'):
+            return super().copy(default)
+        default['td_employee_id'] = False
+        copies = super().copy(default)
+        for line, new in zip(self, copies):
+            if line.td_employee_id:
+                new.sudo().write({'td_employee_id': line.td_employee_id.id})
+        return copies
+
     def write(self, vals):
         if 'td_employee_id' in vals:
             self._td_check_employee_write([dict(vals, td_employee_id=vals['td_employee_id'] or True)])
@@ -60,7 +74,9 @@ class MrpWorkorder(models.Model):
     @api.depends('time_ids.td_employee_id', 'time_ids.date_end', 'time_ids.loss_type')
     def _compute_td_worker_names(self):
         for workorder in self:
-            workorder.td_worker_names = ', '.join(workorder.time_ids.td_employee_id.mapped('name'))
+            # who works on it now: only the open time lines (a worker who paused or finished is not «in work»)
+            running = workorder.time_ids.filtered(lambda t: not t.date_end and t.loss_type == 'productive')
+            workorder.td_worker_names = ', '.join(running.td_employee_id.mapped('name'))
             pause = workorder.time_ids.filtered(lambda t: not t.date_end and t.loss_type != 'productive')[:1]
             workorder.td_pause_reason = pause.loss_id.name or ''
 
@@ -85,4 +101,5 @@ class TdMebliQualityCheck(models.Model):
     result = fields.Selection([('pass', 'Passed'), ('fail', 'Failed')], string='Result', required=True)
     photo = fields.Image(string='Photo', max_width=1024, max_height=1024)
     note = fields.Char(string='Note')
-    employee_id = fields.Many2one('hr.employee', string='Worker')
+    # created only by the tablet after the PIN (sudo): the manufacturing users have no create right (ir.model.access)
+    employee_id = fields.Many2one('hr.employee', string='Worker', readonly=True)

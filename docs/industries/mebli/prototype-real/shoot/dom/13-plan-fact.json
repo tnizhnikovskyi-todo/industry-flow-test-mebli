@@ -392,65 +392,6 @@
   },
   {
    "kind": "cell",
-   "text": "S00008",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Дмитро Савченко",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "9 787,50 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "2 925,36 ₴",
-   "label": "margin"
-  },
-  {
-   "kind": "cell",
-   "text": "6 862,14 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "29,9",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "4 753,08 ₴",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "2 567,88 ₴",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "7 320,96 ₴",
-   "label": "td_cost_fact"
-  },
-  {
-   "kind": "cell",
-   "text": "25,2",
-   "label": "td_margin_fact_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "6,7",
-   "label": "td_cost_deviation_pct"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
    "text": "S00102",
    "label": "name"
   },
@@ -486,22 +427,81 @@
   },
   {
    "kind": "cell",
-   "text": "21 438,84 ₴",
+   "text": "20 082,69 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "54 472,80 ₴",
+   "text": "53 116,66 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "26,0",
+   "text": "27,8",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "10,4",
+   "text": "7,6",
+   "label": "td_cost_deviation_pct"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00008",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Дмитро Савченко",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "9 787,50 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "2 925,36 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "6 862,14 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "29,9",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "4 753,08 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "2 564,56 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "7 317,64 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "25,2",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "6,6",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -545,22 +545,22 @@
   },
   {
    "kind": "cell",
-   "text": "6 849,52 ₴",
+   "text": "6 792,44 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "15 589,86 ₴",
+   "text": "15 532,79 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "9,8",
+   "text": "10,1",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "5,7",
+   "text": "5,3",
    "label": "td_cost_deviation_pct"
   }
  ]

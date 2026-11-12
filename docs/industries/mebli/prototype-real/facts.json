@@ -1,6 +1,114 @@
 {
  "checks": [
   {
+   "scene": "03-csv-import",
+   "name": "parts_in_file",
+   "expected": "4",
+   "ok": true
+  },
+  {
+   "scene": "05-tablet",
+   "name": "in_work",
+   "expected": "Олег Дорошенко",
+   "ok": true
+  },
+  {
+   "scene": "D_csv",
+   "name": "part_count",
+   "expected": "13",
+   "ok": true
+  },
+  {
+   "scene": "M_tablet",
+   "name": "cut_queue",
+   "expected": "14",
+   "ok": true
+  },
+  {
+   "scene": "D_kit",
+   "name": "missing_part",
+   "expected": "Задня стінка ДВП ",
+   "ok": true
+  },
+  {
+   "scene": "D_cutting",
+   "name": "job_orders",
+   "expected": "WH/MO/00109 WH/MO/00110",
+   "ok": true
+  },
+  {
+   "scene": "M_act",
+   "name": "act_state",
+   "expected": "Підписано",
+   "ok": true
+  },
+  {
+   "scene": "M_act",
+   "name": "crew_amount",
+   "expected": "1 472,00 ₴",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "margin",
+   "expected": "30,2 %",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "shift",
+   "expected": "Замовлень: 3",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "on_time",
+   "expected": "97,2 %",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "prices",
+   "expected": "4 626 ₴",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "claims",
+   "expected": "5,6",
+   "ok": true
+  },
+  {
+   "scene": "15-dashboard",
+   "name": "margin_orders",
+   "expected": "58",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "margin_orders",
+   "expected": "58",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "revenue_total",
+   "expected": "2 508 769,53 ₴",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "margin_total",
+   "expected": "758 793,43 ₴",
+   "ok": true
+  },
+  {
+   "scene": "16-dashboard-drill-margin",
+   "name": "plan_cost_total",
+   "expected": "1 749 976,10 ₴",
+   "ok": true
+  },
+  {
    "scene": "00-late-facades",
    "name": "promised_date",
    "expected": "4 груд.",
@@ -103,9 +211,45 @@
    "ok": true
   },
   {
+   "scene": "08-quality",
+   "name": "failed_check",
+   "expected": "WH/MO/00049",
+   "ok": true
+  },
+  {
+   "scene": "09-install-calendar",
+   "name": "show_visits",
+   "expected": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці",
+   "ok": true
+  },
+  {
+   "scene": "10-acts",
+   "name": "crew_total",
+   "expected": "64 783,54 ",
+   "ok": true
+  },
+  {
+   "scene": "11-accruals",
+   "name": "accrual_total",
+   "expected": "88 256,15 ₴",
+   "ok": true
+  },
+  {
+   "scene": "12-claims",
+   "name": "overdue",
+   "expected": "Прострочено",
+   "ok": true
+  },
+  {
+   "scene": "13-plan-fact",
+   "name": "fact_total",
+   "expected": "2 466 132,98 ₴",
+   "ok": true
+  },
+  {
    "scene": "14-prices",
    "name": "overpay_total",
-   "expected": "3 121,03 ₴",
+   "expected": "4 625,58 ₴",
    "ok": true
   },
   {
@@ -115,9 +259,69 @@
    "ok": true
   },
   {
+   "scene": "m2-tablet",
+   "name": "cut_queue",
+   "expected": "14",
+   "ok": true
+  },
+  {
+   "scene": "m2-tablet",
+   "name": "in_work",
+   "expected": "Олег Дорошенко",
+   "ok": true
+  },
+  {
+   "scene": "m3-act",
+   "name": "act_state",
+   "expected": "Підписано",
+   "ok": true
+  },
+  {
    "scene": "m4-order",
    "name": "forecast_date",
    "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "m5-dashboard",
+   "name": "margin",
+   "expected": "30,2 %",
+   "ok": true
+  },
+  {
+   "scene": "D_dashboard",
+   "name": "margin",
+   "expected": "30,2 %",
+   "ok": true
+  },
+  {
+   "scene": "D_dashboard",
+   "name": "margin_orders",
+   "expected": "58",
+   "ok": true
+  },
+  {
+   "scene": "D_dashboard",
+   "name": "drill_orders",
+   "expected": "58",
+   "ok": true
+  },
+  {
+   "scene": "M_dashboard",
+   "name": "margin",
+   "expected": "30,2 %",
+   "ok": true
+  },
+  {
+   "scene": "M_dashboard",
+   "name": "revenue",
+   "expected": "2 508 770 ₴",
+   "ok": true
+  },
+  {
+   "scene": "M_dashboard",
+   "name": "drill_revenue",
+   "expected": "2 508 769,53",
    "ok": true
   },
   {
@@ -163,207 +367,9 @@
    "ok": true
   },
   {
-   "scene": "08-quality",
-   "name": "failed_check",
-   "expected": "WH/MO/00018",
-   "ok": true
-  },
-  {
-   "scene": "09-install-calendar",
-   "name": "show_visits",
-   "expected": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці",
-   "ok": true
-  },
-  {
-   "scene": "03-csv-import",
-   "name": "parts_in_file",
-   "expected": "4",
-   "ok": true
-  },
-  {
-   "scene": "05-tablet",
-   "name": "in_work",
-   "expected": "Олег Дорошенко",
-   "ok": true
-  },
-  {
-   "scene": "D_csv",
-   "name": "part_count",
-   "expected": "13",
-   "ok": true
-  },
-  {
-   "scene": "M_tablet",
-   "name": "cut_queue",
-   "expected": "15",
-   "ok": true
-  },
-  {
-   "scene": "D_kit",
-   "name": "missing_part",
-   "expected": "Задня стінка ДВП ",
-   "ok": true
-  },
-  {
-   "scene": "D_cutting",
-   "name": "job_orders",
-   "expected": "WH/MO/00109 WH/MO/00110",
-   "ok": true
-  },
-  {
-   "scene": "M_act",
-   "name": "act_state",
-   "expected": "Підписано",
-   "ok": true
-  },
-  {
-   "scene": "M_act",
-   "name": "crew_amount",
-   "expected": "195,75 ₴",
-   "ok": true
-  },
-  {
-   "scene": "15-dashboard",
-   "name": "margin",
-   "expected": "30,4 %",
-   "ok": true
-  },
-  {
-   "scene": "15-dashboard",
-   "name": "shift",
-   "expected": "Замовлень: 3",
-   "ok": true
-  },
-  {
-   "scene": "15-dashboard",
-   "name": "on_time",
-   "expected": "97,1 %",
-   "ok": true
-  },
-  {
-   "scene": "15-dashboard",
-   "name": "prices",
-   "expected": "4 110 ₴",
-   "ok": true
-  },
-  {
-   "scene": "15-dashboard",
-   "name": "claims",
-   "expected": "5,8",
-   "ok": true
-  },
-  {
-   "scene": "15-dashboard",
-   "name": "margin_orders",
-   "expected": "58",
-   "ok": true
-  },
-  {
-   "scene": "16-dashboard-drill-margin",
-   "name": "margin_orders",
-   "expected": "58",
-   "ok": true
-  },
-  {
-   "scene": "16-dashboard-drill-margin",
-   "name": "revenue_total",
-   "expected": "2 514 249,93 ₴",
-   "ok": true
-  },
-  {
-   "scene": "16-dashboard-drill-margin",
-   "name": "margin_total",
-   "expected": "764 273,83 ₴",
-   "ok": true
-  },
-  {
-   "scene": "16-dashboard-drill-margin",
-   "name": "plan_cost_total",
-   "expected": "1 749 976,10 ₴",
-   "ok": true
-  },
-  {
-   "scene": "10-acts",
-   "name": "crew_total",
-   "expected": "60 899,57 ",
-   "ok": true
-  },
-  {
-   "scene": "11-accruals",
-   "name": "accrual_total",
-   "expected": "85 111,70 ₴",
-   "ok": true
-  },
-  {
-   "scene": "12-claims",
-   "name": "overdue",
-   "expected": "Прострочено",
-   "ok": true
-  },
-  {
-   "scene": "13-plan-fact",
-   "name": "fact_total",
-   "expected": "2 466 496,13 ₴",
-   "ok": true
-  },
-  {
-   "scene": "m5-dashboard",
-   "name": "margin",
-   "expected": "30,4 %",
-   "ok": true
-  },
-  {
-   "scene": "m2-tablet",
-   "name": "cut_queue",
-   "expected": "15",
-   "ok": true
-  },
-  {
-   "scene": "m3-act",
-   "name": "act_state",
-   "expected": "Підписано",
-   "ok": true
-  },
-  {
-   "scene": "D_dashboard",
-   "name": "margin",
-   "expected": "30,4 %",
-   "ok": true
-  },
-  {
-   "scene": "D_dashboard",
-   "name": "margin_orders",
-   "expected": "58",
-   "ok": true
-  },
-  {
-   "scene": "D_dashboard",
-   "name": "drill_orders",
-   "expected": "58",
-   "ok": true
-  },
-  {
-   "scene": "M_dashboard",
-   "name": "margin",
-   "expected": "30,4 %",
-   "ok": true
-  },
-  {
-   "scene": "M_dashboard",
-   "name": "revenue",
-   "expected": "2 514 250 ₴",
-   "ok": true
-  },
-  {
-   "scene": "M_dashboard",
-   "name": "drill_revenue",
-   "expected": "2 514 249,93",
-   "ok": true
-  },
-  {
    "scene": "D_install",
    "name": "crew_amount",
-   "expected": "438,73 ₴",
+   "expected": "1 230,00 ₴",
    "ok": true
   },
   {
@@ -384,7 +390,7 @@
    "part_count": "13"
   },
   "M_tablet": {
-   "cut_queue": "15"
+   "cut_queue": "14"
   },
   "D_kit": {
    "missing_part": "Задня стінка ДВП "
@@ -394,21 +400,21 @@
   },
   "M_act": {
    "act_state": "Підписано",
-   "crew_amount": "195,75 ₴"
+   "crew_amount": "1 472,00 ₴"
   },
   "15-dashboard": {
-   "margin": "30,4 %",
+   "margin": "30,2 %",
    "shift": "Замовлень: 3",
-   "on_time": "97,1 %",
-   "prices": "4 110 ₴",
-   "claims": "5,8",
+   "on_time": "97,2 %",
+   "prices": "4 626 ₴",
+   "claims": "5,6",
    "margin_orders": "58"
   },
   "16-dashboard-drill-margin": {
    "margin_orders": "58",
-   "revenue_total": "2 514 249,93 ₴",
-   "plan_cost_total": "1 749 976,10 ₴",
-   "margin_total": "764 273,83 ₴"
+   "revenue_total": "2 508 769,53 ₴",
+   "margin_total": "758 793,43 ₴",
+   "plan_cost_total": "1 749 976,10 ₴"
   },
   "00-late-facades": {
    "promised_date": "4 груд.",
@@ -442,31 +448,32 @@
    "offcut_lots": "18"
   },
   "08-quality": {
-   "failed_check": "WH/MO/00018"
+   "failed_check": "WH/MO/00049"
   },
   "09-install-calendar": {
    "show_visits": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці"
   },
   "10-acts": {
-   "crew_total": "60 899,57 "
+   "crew_total": "64 783,54 "
   },
   "11-accruals": {
-   "accrual_total": "85 111,70 ₴"
+   "accrual_total": "88 256,15 ₴"
   },
   "12-claims": {
    "overdue": "Прострочено"
   },
   "13-plan-fact": {
-   "fact_total": "2 466 496,13 ₴"
+   "fact_total": "2 466 132,98 ₴"
   },
   "14-prices": {
-   "overpay_total": "3 121,03 ₴"
+   "overpay_total": "4 625,58 ₴"
   },
   "m1-measure": {
    "issue": "Холодильник, вбудований: глибше на 30 мм"
   },
   "m2-tablet": {
-   "cut_queue": "15"
+   "cut_queue": "14",
+   "in_work": "Олег Дорошенко"
   },
   "m3-act": {
    "act_state": "Підписано"
@@ -475,17 +482,17 @@
    "forecast_date": "18 груд."
   },
   "m5-dashboard": {
-   "margin": "30,4 %"
+   "margin": "30,2 %"
   },
   "D_dashboard": {
-   "margin": "30,4 %",
+   "margin": "30,2 %",
    "margin_orders": "58",
    "drill_orders": "58"
   },
   "M_dashboard": {
-   "margin": "30,4 %",
-   "revenue": "2 514 250 ₴",
-   "drill_revenue": "2 514 249,93"
+   "margin": "30,2 %",
+   "revenue": "2 508 770 ₴",
+   "drill_revenue": "2 508 769,53"
   },
   "D_late": {
    "margin_percent": "20,02%",
@@ -505,7 +512,7 @@
    "shift_days": "7"
   },
   "D_install": {
-   "crew_amount": "438,73 ₴"
+   "crew_amount": "1 230,00 ₴"
   },
   "D_accruals": {
    "piece_rate": "8,00 ₴"

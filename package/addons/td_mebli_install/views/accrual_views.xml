@@ -16,7 +16,7 @@
                 <field name="kind" readonly="state == 'confirmed'"/>
                 <field name="workcenter_id" optional="show"/>
                 <field name="order_ref"/>
-                <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'" readonly="state == 'confirmed'"/>
+                <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'"/>
                 <field name="piece_rate" optional="show" invisible="kind != 'piece'"/>
                 <field name="amount" sum="Total" readonly="state == 'confirmed'"/>
                 <field name="reason" readonly="state == 'confirmed'"/>

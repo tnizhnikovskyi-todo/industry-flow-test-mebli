@@ -225,10 +225,10 @@ export const CLIPS = {
         return clip('M_tablet', { role: 'tablet', mobile: true, url: TABLET }, async (c) => {
             await settle(c.page, 900); c.mark();
             await title(c, 'Цех', '«Взято» і «Зроблено» — **за PIN працівника**');
-            await press(c, c.page.locator('.o_group_header .o_group_name', { hasText: 'Розкрій' }));
-            // робоче завдання, яке Петро взяв у D_tablet (WH/MO/00110): у ньому кнопка «Зроблено»
-            const r = c.page.locator('.o_data_row', { hasText: 'Петро Гуменюк' }).filter({ has: c.page.locator('button', { hasText: 'Зроблено' }) }).first();
-            await r.scrollIntoViewIfNeeded(); await focus(c, '.o_data_row.text-info'); await hold(c, 1500);
+            // на телефоні — картки канбану (N5): працівник і «Зроблено» в картці; робоче завдання, яке Петро взяв у D_tablet (WH/MO/00110)
+            const r = c.page.locator('.o_kanban_record', { hasText: 'WH/MO/00110' }).filter({ has: c.page.locator('button', { hasText: 'Зроблено' }) }).first();
+            await r.scrollIntoViewIfNeeded(); await settle(c.page, 300);
+            await r.evaluate((e) => e.classList.add('td_shot_focus')); await focus(c, '.td_shot_focus'); await hold(c, 1800);
             await press(c, r.locator('button', { hasText: 'Зроблено' }));
             // кіоск: працівник — зі списку (на телефоні пошуковий діалог співробітників недоступний ролі планшета)
             await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));
@@ -238,7 +238,7 @@ export const CLIPS = {
             await settle(c.page, 900);
             await title(c, 'Зроблено', 'Час і виконавця записано — **основа відрядної**');
             await hold(c, 2000); await titleOff(c);
-            await fact(c.page, 'M_tablet', 'cut_queue', '.o_group_header:has-text("Розкрій")', { re: '(?<=\\()\\d+' });
+            await fact(c.page, 'M_tablet', 'cut_queue', '.o_kanban_group:has(.o_column_title:has-text("Розкрій")) .o_column_title', { re: '(?<=\\()\\d+' });
         });
     },
     // сцена 6 — бригадир на телефоні: акт з фото, підпис клієнта пальцем (змінює дані: акт підписано)

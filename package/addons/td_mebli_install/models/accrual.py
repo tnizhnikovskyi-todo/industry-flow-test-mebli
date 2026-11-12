@@ -14,7 +14,8 @@ class TdMebliAccrual(models.Model):
     date = fields.Date(string='Date', required=True, default=fields.Date.context_today)
     kind = fields.Selection([('piece', 'Piecework'), ('crew', 'Crew Percent'), ('bonus', 'Bonus'), ('penalty', 'Penalty')],
                             string='Kind', required=True)
-    hours = fields.Float(string='Hours', digits=(16, 2))
+    # a copy of the duration of the time line of the tablet (piecework): set by «Accrue», never typed by hand
+    hours = fields.Float(string='Hours', digits=(16, 2), readonly=True)
     piece_rate = fields.Monetary(string='Piece Rate', readonly=True)
     amount = fields.Monetary(string='Amount', required=True)
     reason = fields.Char(string='Reason')
@@ -36,6 +37,8 @@ class TdMebliAccrual(models.Model):
             accrual.order_ref = accrual.act_id.order_id.name or accrual.productivity_id.production_id.origin or ''
 
     def write(self, vals):
+        if 'hours' in vals and not self.env.su:
+            raise UserError(self.env._("The hours of an accrual are the time of the tablet: they are not changed by hand."))
         # a confirmed accrual is handed over to the accounting: its figures are fixed
         if set(vals) & set(LOCKED) and not self.env.su and any(a.state == 'confirmed' for a in self):
             raise UserError(self.env._("A confirmed accrual cannot be changed: add a new bonus or penalty instead."))

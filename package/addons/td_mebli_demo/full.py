@@ -206,7 +206,8 @@ def _installations(env, people, orders, crew, rnd):
     paid_late, ready, to_sign = progress[:2], progress[2:3], progress[3:4]
     for order in paid_late | ready | to_sign:
         for production in order.mrp_production_ids.filtered(lambda p: p.state not in ('done', 'cancel')):
-            end = _past(now - timedelta(days=rnd.randint(1, 3)), now, rnd)
+            # the ready order waits in the warehouse a few days (the card «Ready, not shipped» shows days, not 0)
+            end = _past(now - timedelta(days=rnd.randint(1, 3) + (3 if order in ready else 0)), now, rnd)
             _finish(production, end, rnd)
             production.date_finished = end
         order.action_td_build_kit()
@@ -313,17 +314,24 @@ def _claims(env, people, orders, rnd):
             or env['repair.tags'].create({'name': name, 'color': color})
             for color, (key, name) in enumerate(names.items(), start=1)}
     claims, dates = env['repair.order'], []
-    for act, (reason, payer, text, state, days) in zip(acts[-8::2], rows):
+    # the claims come some days after the installation: acts signed at least 11 days ago, so that a claim is never dated
+    # in the future and the closed one (6 days) is closed before today
+    old_acts = acts.filtered(lambda a: a.signed_on <= now - timedelta(days=11))
+    for act, (reason, payer, text, state, days) in zip(old_acts[-8::2], rows):
         order = act.order_id
         line = order.order_line.filtered('td_bom_id')[:1]
         part = line.td_bom_id.td_part_ids.filtered(lambda p: p.rule_id.material_role == 'facade_board')[:1]
+        created = act.signed_on + timedelta(days=rnd.randint(2, 4))
+        # the date the factory promised to fix it: 10 days after the claim, not earlier than in 3 days for the open ones
+        schedule = created + timedelta(days=10)
+        if state != 'done':
+            schedule = max(schedule, now + timedelta(days=3))
         claim = env['repair.order'].create({
             'partner_id': order.partner_id.id, 'product_id': line.product_id.id, 'td_claim_order_id': order.id,
             'td_part_id': part.id, 'tag_ids': [(6, 0, tags[reason].ids)], 'under_warranty': payer != 'customer',
             'td_photo': photo,
             'internal_notes': f'<p>{text}</p>', 'user_id': people['chief'].id,
-            'schedule_date': act.signed_on + timedelta(days=10 if state != 'confirmed' or reason != 'transport' else 3)})
-        created = act.signed_on + timedelta(days=rnd.randint(2, 4))
+            'schedule_date': schedule})
         if state in ('confirmed', 'under_repair', 'done'):
             claim.action_validate()
             if claim.state == 'draft':  # the stock check may ask a question: the product is at the customer, confirm

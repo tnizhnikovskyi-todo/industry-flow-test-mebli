@@ -20,7 +20,7 @@
   },
   {
    "kind": "header",
-   "text": "Маржа план"
+   "text": "Маржа"
   },
   {
    "kind": "header",
@@ -28,27 +28,15 @@
   },
   {
    "kind": "header",
-   "text": "Планова маржа, %"
+   "text": "Маржа, %"
   },
   {
    "kind": "header",
-   "text": "Матеріали (факт)"
+   "text": "Дата замовлення"
   },
   {
    "kind": "header",
-   "text": "Роботи (факт)"
-  },
-  {
-   "kind": "header",
-   "text": "Фактична собівартість"
-  },
-  {
-   "kind": "header",
-   "text": "Фактична маржа, %"
-  },
-  {
-   "kind": "header",
-   "text": "Відхилення собівартості, %"
+   "text": ""
   },
   {
    "kind": "label",
@@ -308,65 +296,6 @@
   },
   {
    "kind": "cell",
-   "text": "S00113",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Ірина Коваленко",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "67 275,00 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "24 820,12 ₴",
-   "label": "margin"
-  },
-  {
-   "kind": "cell",
-   "text": "42 454,88 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "36,9",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_fact"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_margin_fact_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_deviation_pct"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
    "text": "S00114",
    "label": "name"
   },
@@ -397,28 +326,8 @@
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_fact"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_margin_fact_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "td_cost_deviation_pct"
+   "text": "12 лист.",
+   "label": "date_order"
   },
   {
    "kind": "cell",
@@ -426,58 +335,89 @@
   },
   {
    "kind": "cell",
-   "text": "S00016",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00113",
    "label": "name"
   },
   {
    "kind": "cell",
-   "text": "Юлія Романюк",
+   "text": "Ірина Коваленко",
    "label": "partner_id"
   },
   {
    "kind": "cell",
-   "text": "22 500,00 ₴",
+   "text": "67 275,00 ₴",
    "label": "amount_untaxed"
   },
   {
    "kind": "cell",
-   "text": "4 921,41 ₴",
+   "text": "24 820,12 ₴",
    "label": "margin"
   },
   {
    "kind": "cell",
-   "text": "17 578,59 ₴",
+   "text": "42 454,88 ₴",
    "label": "td_cost_plan"
   },
   {
    "kind": "cell",
-   "text": "21,9",
+   "text": "36,9",
    "label": "td_margin_plan_pct"
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "td_cost_material"
+   "text": "12 лист.",
+   "label": "date_order"
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "td_cost_work"
+   "text": ""
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "td_cost_fact"
+   "text": ""
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "td_margin_fact_pct"
+   "text": "S00112",
+   "label": "name"
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "td_cost_deviation_pct"
+   "text": "Мережа клінік «Здоров'я»",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "74 250,00 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "19 487,64 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "54 762,36 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "26,2",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "12 лист.",
+   "label": "date_order"
+  },
+  {
+   "kind": "cell",
+   "text": ""
   }
  ]
 }

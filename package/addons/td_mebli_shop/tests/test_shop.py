@@ -106,7 +106,95 @@ class TestShop(TdMebliSaleCommon):
         other = self.env['hr.employee'].create({'name': 'Other'})
         with self.assertRaises(AccessError):
             line.with_user(tablet).write({'td_employee_id': other.id})
-        check = self.env['td.mebli.quality.check'].with_user(tablet).create({
-            'workorder_id': self.workorder.id, 'name': 'Edge', 'result': 'fail', 'photo': PHOTO})
+        with self.assertRaises(AccessError):  # a check is created only by the tablet after the PIN
+            self.env['td.mebli.quality.check'].with_user(tablet).create({
+                'workorder_id': self.workorder.id, 'name': 'Edge', 'result': 'fail', 'photo': PHOTO})
+        self.env['td.mebli.kiosk'].with_user(tablet).create({
+            'workorder_id': self.workorder.id, 'action': 'quality', 'employee_id': self.worker.id, 'pin': '1234',
+            'result': 'fail', 'photo': PHOTO}).action_confirm()
+        check = self.workorder.td_quality_ids[:1]
+        self.assertEqual(check.employee_id, self.worker)
         with self.assertRaises(AccessError):  # the tablet records a check, it does not rewrite it
             check.with_user(tablet).write({'result': 'pass'})
+
+    # N1: the work takes longer than planned — the standard splits the timer (mrp.workcenter.productivity._close copies
+    # it with the loss «Reduced Speed»); the copy keeps the worker and must not fail for the tablet or a manufacturing user
+    def _overrun(self, user, expected, back_minutes=30):
+        from datetime import timedelta
+        from odoo import fields
+        self.workorder.duration_expected = expected
+        loss = self.env['mrp.workcenter.productivity.loss'].search([('loss_type', '=', 'availability')], limit=1)
+
+        def kiosk(action, **vals):
+            self.env['td.mebli.kiosk'].with_user(user).create({
+                'workorder_id': self.workorder.id, 'action': action, 'employee_id': self.worker.id, 'pin': '1234',
+                **vals}).action_confirm()
+
+        def age_open_line():  # the worker has been working for half an hour (longer than the plan)
+            line = self.workorder.time_ids.filtered(lambda t: not t.date_end)
+            line.sudo().write({'date_start': fields.Datetime.now() - timedelta(minutes=back_minutes)})
+        kiosk('start'); age_open_line()
+        kiosk('pause', loss_id=loss.id)
+        kiosk('start'); age_open_line()
+        kiosk('quality', photo=PHOTO, result='pass')
+        kiosk('done')
+        self.assertEqual(self.workorder.state, 'done')
+        productive = self.workorder.time_ids.filtered(lambda t: t.loss_id.loss_type in ('productive', 'performance'))
+        self.assertEqual(productive.td_employee_id, self.worker)  # every line of the work, the copies too
+        self.assertFalse(self.workorder.time_ids.filtered(lambda t: not t.date_end))
+        return self.workorder.time_ids
+
+    def _user(self, login, groups):
+        return self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': login, 'login': login, 'group_ids': [(6, 0, [self.env.ref(g).id for g in groups])]})
+
+    def test_overrun_on_the_tablet_user(self):
+        tablet = self._user('td_tablet_n1', ['mrp.group_mrp_user'])
+        lines = self._overrun(tablet, expected=0.0)
+        self.assertTrue(lines.filtered(lambda t: t.loss_type == 'performance'))
+
+    def test_overrun_split_copies_the_worker(self):
+        tablet = self._user('td_tablet_n1b', ['mrp.group_mrp_user'])
+        lines = self._overrun(tablet, expected=10.0)  # 30 min of work against 10 planned: the timer is split
+        performance = lines.filtered(lambda t: t.loss_type == 'performance')
+        self.assertTrue(performance)
+        self.assertEqual(performance.td_employee_id, self.worker)
+        self.assertGreater(len(lines), 3)  # the split added copies
+
+    def test_overrun_of_a_manufacturing_user(self):
+        mrp_user = self._user('td_mrp_user_n1', ['mrp.group_mrp_user', 'stock.group_stock_user'])
+        self.assertFalse(mrp_user.has_group('mrp.group_mrp_manager'))
+        self._overrun(mrp_user, expected=10.0)
+
+    def test_standard_finish_by_a_manufacturing_user_after_the_tablet(self):
+        """The shop manager is away: a manufacturing user closes the work order with the standard button."""
+        from datetime import timedelta
+        from odoo import fields
+        tablet = self._user('td_tablet_n1c', ['mrp.group_mrp_user'])
+        mrp_user = self._user('td_mrp_user_n1c', ['mrp.group_mrp_user'])
+        self.workorder.duration_expected = 10.0
+        self.env['td.mebli.kiosk'].with_user(tablet).create({
+            'workorder_id': self.workorder.id, 'action': 'start', 'employee_id': self.worker.id, 'pin': '1234'}).action_confirm()
+        self.workorder.time_ids.sudo().write({'date_start': fields.Datetime.now() - timedelta(minutes=30)})
+        self.workorder.with_user(mrp_user).end_all()
+        self.assertEqual(self.workorder.time_ids.td_employee_id, self.worker)
+        self.assertGreater(len(self.workorder.time_ids), 1)
+
+    def test_copy_cannot_change_the_worker(self):
+        from odoo.exceptions import AccessError
+        tablet = self._user('td_tablet_n1d', ['mrp.group_mrp_user'])
+        self.env['td.mebli.kiosk'].with_user(tablet).create({
+            'workorder_id': self.workorder.id, 'action': 'start', 'employee_id': self.worker.id, 'pin': '1234'}).action_confirm()
+        line = self.workorder.time_ids[:1]
+        line.sudo().date_end = line.date_start  # a closed line (an open one cannot be doubled: the standard check)
+        other = self.env['hr.employee'].create({'name': 'Other'})
+        with self.assertRaises(AccessError):
+            line.with_user(tablet).copy({'td_employee_id': other.id})
+        self.assertEqual(line.with_user(tablet).copy().td_employee_id, self.worker)
+
+    def test_worker_names_only_open_lines(self):
+        loss = self.env['mrp.workcenter.productivity.loss'].search([('loss_type', '=', 'availability')], limit=1)
+        self._kiosk('start')
+        self.assertEqual(self.workorder.td_worker_names, 'Worker')
+        self._kiosk('pause', loss_id=loss.id)
+        self.assertFalse(self.workorder.td_worker_names)

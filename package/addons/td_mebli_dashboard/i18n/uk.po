@@ -177,6 +177,7 @@ msgstr "Маржа %(margin)s з виручки %(revenue)s, замовлень 
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Margin of the orders"
 msgstr "Маржа замовлень"
 
@@ -419,3 +420,22 @@ msgstr "Разом"
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Total margin ÷ total revenue of the report, %s days"
 msgstr "Σ маржі ÷ Σ виручки звіту, %s днів"
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Revenue"
+msgstr "Виручка"
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin"
+msgstr "Маржа"
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin, %"
+msgstr "Маржа, %"
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Order Date"
+msgstr "Дата замовлення"

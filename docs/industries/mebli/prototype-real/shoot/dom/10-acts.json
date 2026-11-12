@@ -608,11 +608,27 @@
   },
   {
    "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
    "text": "Проєкт Проєкти Завдання Монтаж Звітність 2 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
-   "text": "Акти монтажу 1-70 / 70"
+   "text": "Акти монтажу 1-72 / 72"
   },
   {
    "kind": "breadcrumb",
@@ -624,7 +640,7 @@
   },
   {
    "kind": "cell",
-   "text": "АКТ-0070",
+   "text": "АКТ-0072",
    "label": "name"
   },
   {
@@ -672,17 +688,17 @@
   },
   {
    "kind": "cell",
-   "text": "АКТ-0069",
+   "text": "АКТ-0071",
    "label": "name"
   },
   {
    "kind": "cell",
-   "text": "S00008",
+   "text": "S00102",
    "label": "order_id"
   },
   {
    "kind": "cell",
-   "text": "S00008: монтаж",
+   "text": "S00102: монтаж",
    "label": "task_id"
   },
   {
@@ -697,7 +713,7 @@
   },
   {
    "kind": "cell",
-   "text": "195,75 ₴",
+   "text": "1 472,00 ₴",
    "label": "crew_amount"
   },
   {
@@ -720,7 +736,7 @@
   },
   {
    "kind": "cell",
-   "text": "АКТ-0068",
+   "text": "АКТ-0070",
    "label": "name"
   },
   {

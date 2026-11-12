@@ -89,7 +89,8 @@ class TdMebliKiosk(models.TransientModel):
         elif self.action == 'quality':
             if not self.photo:
                 raise UserError(self.env._("Take a photo of the check."))
-            self.env['td.mebli.quality.check'].create({
+            # the check is created by the tablet after the PIN: the users of manufacturing cannot create it themselves
+            self.env['td.mebli.quality.check'].sudo().create({
                 'workorder_id': workorder.id, 'name': workorder.td_quality_point or self.env._("Check"),
                 'result': self.result, 'photo': self.photo, 'note': self.note, 'employee_id': self.employee_id.id})
         elif self.action == 'done':
