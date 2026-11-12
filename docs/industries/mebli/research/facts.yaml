@@ -1,17 +1,61 @@
-# facts.yaml — єдине джерело чисел пакета «меблі» (OWNER-BRIEF, BOX, SALES, concept/*).
-# Створено кроком A-20 (спроба 2, recalc), 2026-11-12: A-03b виконано за старим флоу (R18) і facts.yaml не створював.
-# Нових чисел тут немає: кожне значення взято з уже затверджених у R18 документів (рядок-джерело — у коментарі).
+# facts.yaml — єдине джерело чисел пакета «меблі» (research/*.md, concept/*, owner-page/*, prototype-real/facts.json).
+# Ринок, кількості, дати; без цін, годин і ставок (LESSONS §24, скіли 0.3.0; flow/decisions.md запис 37).
+# Нових чисел тут немає: кожне значення взято з уже затверджених документів (рядок-джерело — у коментарі).
 # Ключ змінюється лише разом із документом-джерелом; текст із маркером <!--fact:ключ--> має збігатися зі значенням.
-# Ключі джерел: FM — research/FUNCTIONAL-MAP.md; OB — research/OWNER-BRIEF.md; BOX — research/BOX.md; SALES — research/SALES.md;
+# Ключі джерел: FM — research/FUNCTIONAL-MAP.md; OB — research/OWNER-BRIEF.md (історія); BOX — research/BOX.md; SALES — research/SALES.md;
 # OE — research/odoo-ecosystem.md; REUSE — research/REUSE.md; INTAKE — OWNER-INTAKE.md; DEC — flow/decisions.md.
 
 meta:
   galuz: mebli
   date: "2026-11-12"
-  step: A-20             # A-20b (2026-11-12) дописав ключі hours.*_no_oca, launch, upgrade_*, breakeven, crm, fop_light, money.* — без нових даних
-  attempt: 3            # A-20 спроба 3 (recalc, 2026-11-12): рішення DEC записи 29–34; нових чисел не додано
-  base: "e3480ca"
-  note: "числа R18; A-03c (REUSE-01) враховано лише для H-06; гейт A-03c затверджено (DEC запис 29)"
+  step: A-20
+  attempt: 4            # A-20 спроба 4 (recalc, перехід на 0.3.0/0.3.1, DEC запис 37): грошові ключі перенесено в блок «ІСТОРІЯ» нижче; нових чисел не додано
+  base: "388bf1f"
+  note: "числа R18; A-03c (REUSE-01) — основа H-06 ToDo-готовий; гейт A-03c затверджено (DEC запис 29)"
+
+owner_tariffs: {}                # власник тарифів не дав (INTAKE без `tariffs`) — «не задано»; AI тарифів не рахує
+
+market:
+  companies_10_249: 225          # OB §1, §7 R-10; FM §1.1 (odb-catalog, знімок серпня 2026)
+  companies_25_249: 120          # OB §1; FM §1.1
+  clients_3y_base: 8             # OB §6 «R18» — ринок (а) за 3 роки, базово (припущення)
+
+market_extra:
+  companies_0_9: 124             # BOX §1а «Нічия смуга»: юрособи 0–9 людей з виручкою 10–500 млн грн (odb-catalog, FM §1.1)
+
+# Публічні ціни конкурентів — факти ринку (FM §3.1–3.2), не наша економіка; у SALES §3 — лише як ризик продажу R-S2
+keycrm:
+  usd_year: 228                  # SALES §3; FM §3.1
+  usd_month: 19                  # OB §6; SALES §4; BOX §1а
+
+bimp:
+  n10_usd_year: 2390             # OB §6; FM §3.2
+  n25_usd_year: 5490             # OB §6
+  n10_3y_usd: 7170               # SALES §3
+
+crm:                             # OB §1 «R12: що кажуть внутрішні дані ToDo» — знеособлені агрегати CRM (FM §2.5.1, §3.1)
+  leads: 56
+  price_losses_first: 17         # «≥ 17 з 56» — перший прохід
+  price_losses_full: 23          # повний повторний перебір
+  rejected_median_mln: 0.4       # ІСТОРІЯ (гроші, до 0.3.0): лише для маркера OWNER-BRIEF §1; у нових документах не використовувати
+  rejected_n: 10                 # заповнено в 10 із 23
+
+reuse:
+  adapted:
+    - "REUSE-01 td_sale_cost"    # REUSE — рішення «адаптуємо» (основа H-06 = ToDo-готовий)
+  rejected_count: 5              # REUSE «Відкинуто»: REJ-001…005
+  gate_a03c: "затверджено"       # DEC запис 29 (2026-11-12)
+
+concept:                         # concept/* v2 (A-20, спроба 2)
+  screens: 15                    # R18: екрани 1–13, 15, 16 (OB §3; FM §4.5)
+  roles: 8
+  scenarios: 8
+  returned_positions: 11         # DEC запис 27; REJECTED §4а; REJECTED §6 REJ-006…016
+
+# ===================== ІСТОРІЯ (до 0.3.0) =====================
+# Нижче — грошові ключі R18 (ціни, ліцензії, курси, ставки, години, окупність). За 0.3.0 (LESSONS §24) у нових документах НЕ використовуються:
+# BOX, SALES, REJECTED, AI-DECISIONS, concept/* на них не посилаються. Лишено тими самими шляхами лише для маркерів історичного
+# research/OWNER-BRIEF.md (за 0.3.0 «не пишеться», не оновлюється) — щоб його маркери не стали сиротами. Не доповнювати.
 
 pricing:
   ce_entry: true                 # INTAKE pricing.ce_entry (рішення №3б)
@@ -19,11 +63,6 @@ pricing:
   box_fixed_price: "коробка A"   # INTAKE pricing.box_fixed_price (рішення №15)
   box_a_price_uah: null          # ціну коробки A власник ще не назвав (рішення №15); G-60 не вирішено, діє замовчування OB §8 (DEC запис 32) — не вигадувати
   pilot: "платний зі знижкою"    # INTAKE pricing.pilot (рішення №20)
-
-market:
-  companies_10_249: 225          # OB §1, §7 R-10; FM §1.1 (odb-catalog, знімок серпня 2026)
-  companies_25_249: 120          # OB §1; FM §1.1
-  clients_3y_base: 8             # OB §6 «R18» — ринок (а) за 3 роки, базово (припущення)
 
 ee:
   full_user_eur_month: 27.9      # DEC №9 (нотатка власника); OB §6 «R18»; OE §7.9
@@ -49,15 +88,6 @@ rate:
   uah_hour_min: 1975             # OB §6; BOX §1; FM §4.6 — ставка продажу партнера
   uah_hour_max: 2400
   uah_hour_avg: 2190             # OB §6; BOX §1а — середня ставка для маржі легкого тарифу
-
-bimp:
-  n10_usd_year: 2390             # OB §6; FM §3.2
-  n25_usd_year: 5490             # OB §6
-  n10_3y_usd: 7170               # SALES §3
-
-keycrm:
-  usd_year: 228                  # SALES §3; FM §3.1
-  usd_month: 19                  # OB §6; SALES §4; BOX §1а
 
 ce:
   server_admin_usd_year:
@@ -109,28 +139,7 @@ breakeven:                       # OB §6 «R18» таблиці; BOX §1 ряд
   full_ce_at_two_mln: 12
   box_a_entry_at_one_mln: 26
 
-crm:                             # OB §1 «R12: що кажуть внутрішні дані ToDo» — знеособлені агрегати CRM (FM §2.5.1, §3.1)
-  leads: 56
-  price_losses_first: 17         # «≥ 17 з 56» — перший прохід
-  price_losses_full: 23          # повний повторний перебір
-  rejected_median_mln: 0.4       # медіана оцінок, відхилених ціновими лідами
-  rejected_n: 10                 # заповнено в 10 із 23
-
 fop_light:                       # OB §6 «Легкий тариф ФОП»; BOX §1а [припущення / гіпотеза → A-23]
   dev_hours: {min: 60, max: 140}
   launch_thousand_uah: {min: 20, max: 40}
 
-market_extra:
-  companies_0_9: 124             # BOX §1а «Нічия смуга»: юрособи 0–9 людей з виручкою 10–500 млн грн (odb-catalog, FM §1.1)
-
-reuse:
-  adapted:
-    - "REUSE-01 td_sale_cost"    # REUSE — рішення «адаптуємо» (основа H-06 = ToDo-готовий)
-  rejected_count: 5              # REUSE «Відкинуто»: REJ-001…005
-  gate_a03c: "затверджено"       # DEC запис 29 (2026-11-12)
-
-concept:                         # concept/* v2 (A-20, спроба 2)
-  screens: 15                    # R18: екрани 1–13, 15, 16 (OB §3; FM §4.5)
-  roles: 8
-  scenarios: 8
-  returned_positions: 11         # DEC запис 27; REJECTED §4а; REJECTED §6 REJ-006…016
