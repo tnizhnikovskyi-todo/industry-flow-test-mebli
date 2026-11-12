@@ -30,6 +30,7 @@ msgstr "%(kind)s%(lot)s: %(board)s, %(size)s мм, відходи %(waste)s%%"
 #. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/cutting_job.py:0
+#: code:addons/td_mebli_cutting/models/distributor.py:0
 msgid "%s has no parts to cut."
 msgstr "%s не має деталей для розкрою."
 
@@ -230,6 +231,8 @@ msgstr "Декор"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_product_template__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -281,6 +284,8 @@ msgstr "Є повідомлення"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_product_template__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__id
 msgid "ID"
 msgstr "ID"
 
@@ -687,3 +692,124 @@ msgstr "Резерв:"
 msgid "Free"
 msgstr "Вільний"
 
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/distributor.py:0
+msgid "%(service)s: %(job)s, %(parts)s parts"
+msgstr "%(service)s: %(job)s, деталей %(parts)s"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields.selection,name:td_mebli_cutting.selection__sale_order__td_delay_reason__cutting
+msgid "Cutting at the distributor"
+msgstr "Порізка в дистриб'ютора"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields.selection,name:td_mebli_cutting.selection__product_template__td_material_kind__cutting
+msgid "Cutting service"
+msgstr "Послуга порізки"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__distributor_id
+msgid "Distributor"
+msgstr "Дистриб'ютор"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/distributor.py:0
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__purchase_id
+msgid "Distributor Order"
+msgstr "Замовлення дистриб'ютору"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.view_order_form_td_mebli_dates_cutting
+msgid "It is moved by the cutting at the distributor:"
+msgstr "Її зсуває порізка в дистриб'ютора:"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/distributor.py:0
+msgid ""
+"No cutting service with a distributor: create a service product of the kind "
+"«Cutting service» with the distributor as its vendor (Purchase tab, with the"
+" lead time)."
+msgstr ""
+"Немає послуги порізки з дистриб'ютором: створіть товар-послугу виду «Послуга"
+" порізки» з дистриб'ютором як постачальником (вкладка «Закупівля», зі "
+"строком поставки)."
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__return_date
+msgid "Parts Expected Back"
+msgstr "Деталі повернуть"
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_product_template
+msgid "Product"
+msgstr "Товар"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__return_date
+msgid ""
+"Read only: the expected date of the cutting service line in the distributor "
+"purchase order. Empty once the parts are back (result received)."
+msgstr ""
+"Лише читання: очікувана дата рядка послуги порізки в замовленні "
+"дистриб'ютору. Порожньо, коли деталі повернулись (результат отримано)."
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form_distributor
+msgid "Send to the distributor"
+msgstr "Передати дистриб'ютору"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/distributor.py:0
+msgid "The cutting file of %s is attached."
+msgstr "Файл порізки %s додано."
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__purchase_id
+msgid "The purchase of the cutting service from the distributor (Purchase)."
+msgstr "Закупівля послуги порізки в дистриб'ютора (Закупівлі)."
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_product_product__td_material_kind
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_product_template__td_material_kind
+msgid "Material Kind"
+msgstr "Вид матеріалу"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__rating_ids
+msgid "Ratings"
+msgstr "Оцінки"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,help:td_mebli_cutting.field_sale_order__td_delay_reason
+msgid ""
+"Read only: «Supplier» when a purchased item arrives too late for the "
+"promised date, «Company» when the workshop is late."
+msgstr ""
+"Лише читання: «Постачальник» — закупівля надходить запізно для обіцяної "
+"дати, «Компанія» — запізнюється цех."
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,help:td_mebli_cutting.field_product_product__td_material_kind
+#: model:ir.model.fields,help:td_mebli_cutting.field_product_template__td_material_kind
+msgid ""
+"Ready-made facade: fronts bought or made outside (e.g. painted MDF); when "
+"such a line of the template bill of materials applies to the chosen "
+"attribute values, the facade parts are not cut from board."
+msgstr ""
+"Готовий фасад: фасади, куплені чи зроблені поза цехом (напр. фарбований "
+"МДФ); коли такий рядок шаблонної специфікації застосовується до вибраних "
+"значень атрибутів, деталі фасаду з плити не розкроюються."
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__td_delay_reason
+msgid "Shift Reason"
+msgstr "Причина зсуву"

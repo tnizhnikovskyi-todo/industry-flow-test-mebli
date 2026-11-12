@@ -131,7 +131,7 @@ msgstr "На %s"
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -412,6 +412,7 @@ msgstr "Дашборд фабрики доступний лише керівни
 #. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_due_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Total"
 msgstr "Разом"
 
@@ -420,6 +421,7 @@ msgstr "Разом"
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Total margin ÷ total revenue of the report, %s days"
 msgstr "Σ маржі ÷ Σ виручки звіту, %s днів"
+
 #. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Revenue"
@@ -439,3 +441,15 @@ msgstr "Маржа, %"
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Order Date"
 msgstr "Дата замовлення"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Before installation without payment: %s"
+msgstr "До монтажу без доплати: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting at the distributor"
+msgstr "Порізка в дистриб'ютора"

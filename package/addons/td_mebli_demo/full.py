@@ -236,7 +236,76 @@ def _installations(env, people, orders, crew, rnd):
         draft = Act.with_user(fitter).create({'task_id': task.id, 'kind': 'final', 'signed_by': order.partner_id.name,
                                               'crew_pct': CREW_PCT})
         _photos(env, draft, [('Кухня після монтажу.png', 'prod_kitchen.png'), ('Шафа після монтажу.png', 'prod_wardrobe.png')])
-    return {'ready': ready, 'paid_late': paid_late, 'to_sign': to_sign}
+    # A-21 coverage review A1/A4: the schedule «50 % / 40 % before installation / 10 % after the act» (F-22) and the stages
+    # of the board after «Made» (F-07) — one order waits for the customer, one is shipped and paid before the
+    # installation, the order to sign now is not paid before the installation (the warning on the visit and the act)
+    schedule = env['account.payment.term'].search([('line_ids.td_milestone', '=', 'act')], limit=1)
+    waiting, shipped = progress[4:5], progress[5:6]
+    for order in waiting | shipped:
+        for production in order.mrp_production_ids.filtered(lambda p: p.state not in ('done', 'cancel')):
+            end = _past(now - timedelta(days=rnd.randint(1, 2)), now, rnd)
+            _finish(production, end, rnd)
+            production.date_finished = end
+        order.action_td_build_kit()
+        order.td_kit_line_ids.write({'packed': True, 'packed_by_id': people['store'].id})
+    for order in waiting:
+        # the flat of the customer is not ready: the delivery is moved past the promised date in the standard delivery
+        order.commitment_date = fields.Datetime.to_datetime(fields.Date.to_date(now + timedelta(days=1))) + timedelta(hours=15)
+        moved = _work(now + timedelta(days=8), rnd)
+        order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state not in ('done', 'cancel')).write(
+            {'scheduled_date': moved})
+        _note(order, order.user_id, f'Клієнт: ремонт у квартирі не закінчено, доставку перенесено на {moved.strftime("%d.%m.%Y")}. '
+              'Вироби на складі готової продукції.', now - timedelta(hours=5))
+    from .showcase import _invoice
+    for order in shipped | to_sign:
+        order.payment_term_id = schedule
+    for order in shipped:
+        _deliver(order)
+        task = order.tasks_ids[:1]
+        visit = _work(now + timedelta(days=1), rnd)
+        _visit(task, visit, crew_users)
+        order.commitment_date = fields.Datetime.to_datetime(fields.Date.to_date(visit + timedelta(days=1))) + timedelta(hours=15)
+        paid = round(order._td_paid_amount() / order.amount_total * 100.0) if order.amount_total else 0
+        if paid < 90:  # the payment before the installation: up to 50 % + 40 % of the schedule
+            _invoice(env, order, now - timedelta(days=1, hours=3), 90 - paid)
+            _note(order, people['fin'], 'Доплату перед монтажем отримано (90 % за графіком), бригада може виїжджати.',
+                  now - timedelta(days=1, hours=2))
+    for order in to_sign:
+        _note(order, people['fin'], 'Доплату перед монтажем (40 % за графіком) не отримано: клієнт обіцяв оплатити в день монтажу.',
+              now - timedelta(hours=6))
+    return {'ready': ready, 'paid_late': paid_late, 'to_sign': to_sign, 'waiting': waiting, 'shipped': shipped}
+
+
+def _distributor_cutting(env, people, orders, rnd):
+    """F-28: one order waiting for cutting is cut at the board distributor (a standard purchase of the cutting service);
+    the parts come back in a few days and the workshop still needs its lead time: the forecast date moves, reason
+    «Cutting at the distributor»."""
+    from .showcase import _note
+    now = fields.Datetime.now()
+    distributor = env['res.partner'].search([('name', '=', MATERIAL_SUPPLIERS[0][0])], limit=1) or \
+        env['res.partner'].create({'name': MATERIAL_SUPPLIERS[0][0], 'city': MATERIAL_SUPPLIERS[0][1], 'is_company': True})
+    service = env['product.product'].create({
+        'name': 'Порізка плити в дистриб\'ютора', 'type': 'service', 'td_material_kind': 'cutting', 'sale_ok': False,
+        'purchase_ok': True, 'standard_price': 0.0, 'default_code': 'ПОРІЗКА',
+        'seller_ids': [(0, 0, {'partner_id': distributor.id, 'price': 1850.0, 'delay': 5})]})
+    candidates = orders['confirmed'].filtered(
+        lambda o: o.mrp_production_ids.bom_id.td_part_ids and any(p.bom_id.produce_delay for p in o.mrp_production_ids)
+        and not o.mrp_production_ids.td_cutting_job_ids)
+    order = candidates.sorted('date_order')[:1]
+    if not order:
+        return env['td.mebli.cutting.job']
+    job = env['td.mebli.cutting.job'].with_user(people['tech']).create(
+        {'production_ids': [(6, 0, order.mrp_production_ids.ids)]}).with_env(env)
+    job.action_send_distributor()
+    job.purchase_id.write({'user_id': people['store'].id})
+    # the promise was given by the workshop plan alone: the order fits it without the distributor
+    shop_end = max(order.mrp_production_ids.mapped('date_finished'))
+    order.commitment_date = fields.Datetime.to_datetime(fields.Date.to_date(shop_end + timedelta(days=2))) + timedelta(hours=15)
+    _note(job, people['tech'], f'Розкрій цього замовлення — у дистриб\'ютора «{distributor.name}»: власна пила завантажена. '
+          f'Деталі повернуть {job.return_date.strftime("%d.%m.%Y")}.', now - timedelta(hours=4))
+    _note(order, people['chief'], f'Порізка — у «{distributor.name}» ({job.purchase_id.name}), деталі {job.return_date.strftime("%d.%m.%Y")}: '
+          'дата зсувається, клієнту зателефонувати.', now - timedelta(hours=3))
+    return job
 
 
 def _show_visits(env, show, crew_users, rnd):
@@ -446,7 +515,9 @@ def seed_full(env, people, partners, orders, show, rnd):
     _price_history(env, rnd)
     _change(env, show)
     _accruals(env, people, crew)
-    _open_dates(env, orders, rnd, show | state['ready'] | state['paid_late'] | state['to_sign'])
+    _open_dates(env, orders, rnd, show | state['ready'] | state['paid_late'] | state['to_sign'] | state['waiting']
+                | state['shipped'])
+    state['distributor_job'] = _distributor_cutting(env, people, orders, rnd)
     # exchange status with BAS (imitation): finished orders are sent, one with an error to show the state
     done = orders['done']
     done.write({'td_bas_state': 'sent'})

@@ -16,10 +16,6 @@
                     <span> Received <field name="td_pay_received" class="oe_inline"/> of <field name="td_pay_before_install" class="oe_inline"/> due before the visit of the crew.</span>
                 </div>
             </xpath>
-            <xpath expr="//field[@name='payment_term_id']" position="after">
-                <field name="td_pay_before_install" invisible="state != 'sale'"/>
-                <field name="td_pay_received" invisible="state != 'sale'"/>
-            </xpath>
         </field>
     </record>
 

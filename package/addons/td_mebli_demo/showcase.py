@@ -249,15 +249,27 @@ def _localize(env):
 
 
 def _payment_terms(env):
-    """Prepayment terms of the factory: x% when the order is confirmed, the rest before delivery."""
+    """Prepayment terms of the factory: x% when the order is confirmed, the rest before delivery; and the schedule of
+    the A box (F-22): 50 % prepayment, 40 % before the installation, 10 % after the act. The milestone of a line
+    (td_mebli_sale) tells the payment control which lines are due before the crew goes (td_mebli_install)."""
     terms = {}
     for percent in (30, 50):
         term = env['account.payment.term'].with_context(lang='en_US').create({
             'name': f'Prepayment {percent}%',
-            'line_ids': [(0, 0, {'value': 'percent', 'value_amount': percent, 'delay_type': 'days_after', 'nb_days': 0}),
-                         (0, 0, {'value': 'percent', 'value_amount': 100 - percent, 'delay_type': 'days_after', 'nb_days': 14})]})
+            'line_ids': [(0, 0, {'value': 'percent', 'value_amount': percent, 'delay_type': 'days_after', 'nb_days': 0,
+                                 'td_milestone': 'order'}),
+                         (0, 0, {'value': 'percent', 'value_amount': 100 - percent, 'delay_type': 'days_after', 'nb_days': 14,
+                                 'td_milestone': 'install'})]})
         term.with_context(lang='uk_UA').name = f'Передоплата {percent}%'  # the rest before delivery: the term lines say it
         terms[percent] = term
+    term = env['account.payment.term'].with_context(lang='en_US').create({
+        'name': '50% prepayment, 40% before installation, 10% after the act',
+        'note': '<p>50 % — передоплата при підписанні договору; 40 % — перед монтажем; 10 % — після підписання акта монтажу.</p>',
+        'line_ids': [(0, 0, {'value': 'percent', 'value_amount': 50, 'delay_type': 'days_after', 'nb_days': 0, 'td_milestone': 'order'}),
+                     (0, 0, {'value': 'percent', 'value_amount': 40, 'delay_type': 'days_after', 'nb_days': 21, 'td_milestone': 'install'}),
+                     (0, 0, {'value': 'percent', 'value_amount': 10, 'delay_type': 'days_after', 'nb_days': 35, 'td_milestone': 'act'})]})
+    term.with_context(lang='uk_UA').name = '50 % передоплата, 40 % перед монтажем, 10 % після акта'
+    terms['schedule'] = term
     terms[0] = env.ref('account.account_payment_term_immediate')
     return terms
 

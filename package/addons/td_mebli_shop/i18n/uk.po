@@ -173,10 +173,11 @@ msgstr "Фасади"
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__id
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__item
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Item"
 msgstr "Позиція"
 
@@ -187,6 +188,7 @@ msgstr "Вид"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__label
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Label"
 msgstr "Етикетка"
 
@@ -255,17 +257,21 @@ msgstr "PIN працівника"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__packed
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Packed"
 msgstr "Запаковано"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__packed_by_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Packed by"
 msgstr "Запакував"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_line_ids
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
+#: model:ir.actions.report,name:td_mebli_shop.action_report_kit
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Packing List"
 msgstr "Комплектувальний лист"
 
@@ -325,6 +331,7 @@ msgstr "Фото"
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__place
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Place"
 msgstr "Місце"
 
@@ -374,6 +381,7 @@ msgstr "Крок якості"
 
 #. module: td_mebli_shop
 #: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__qty
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 msgid "Quantity"
 msgstr "Кількість"
 
@@ -527,3 +535,38 @@ msgstr "Працівники"
 #: code:addons/td_mebli_shop/wizard/kiosk.py:0
 msgid "Wrong worker or PIN."
 msgstr "Неправильний працівник або PIN."
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_kit
+msgid "'Packing list - %s' % (object.name)"
+msgstr "'Комплектувальний лист - %s' % (object.name)"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Items:</strong>"
+msgstr "<strong>Позицій:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Not packed:</strong>"
+msgstr "<strong>Не запаковано:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Places:</strong>"
+msgstr "<strong>Місць:</strong>"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Packed by the warehouse: ____________________"
+msgstr "Склад запакував: ____________________"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Places received by the crew: ____________________"
+msgstr "Місця прийняла бригада: ____________________"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "The packing list of the order is not built yet."
+msgstr "Комплектувальний лист замовлення ще не сформовано."

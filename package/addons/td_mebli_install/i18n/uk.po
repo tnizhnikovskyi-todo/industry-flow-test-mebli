@@ -100,6 +100,7 @@ msgstr "Премії й штрафи"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__checklist
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Checklist"
 msgstr "Чек-лист"
 
@@ -165,6 +166,7 @@ msgstr "Дата"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__name
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Defect"
 msgstr "Недолік"
 
@@ -176,6 +178,7 @@ msgstr "Недолік в акті монтажу"
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__defect_ids
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Defects"
 msgstr "Недоліки"
 
@@ -184,6 +187,8 @@ msgstr "Недоліки"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__display_name
+#: model:ir.model.fields,field_description:td_mebli_install.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -249,7 +254,7 @@ msgstr "Години"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__message_needaction
@@ -270,12 +275,14 @@ msgstr "У фотоархіві"
 
 #. module: td_mebli_install
 #: model:ir.ui.menu,name:td_mebli_install.td_mebli_install_menu
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_stage__install
 msgid "Installation"
 msgstr "Монтаж"
 
 #. module: td_mebli_install
 #: model:ir.model,name:td_mebli_install.model_td_mebli_install_act
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model:ir.actions.report,name:td_mebli_install.action_report_install_act
 msgid "Installation Act"
 msgstr "Акт монтажу"
 
@@ -284,6 +291,7 @@ msgstr "Акт монтажу"
 #: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_act_ids
 #: model:ir.ui.menu,name:td_mebli_install.td_mebli_install_act_menu
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_list
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_act_ids
 msgid "Installation Acts"
 msgstr "Акти монтажу"
 
@@ -377,11 +385,13 @@ msgstr "Штраф"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__photo
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Photo"
 msgstr "Фото"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__photo_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Photos"
 msgstr "Фото"
 
@@ -439,6 +449,7 @@ msgstr "Підписати акт"
 
 #. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Signature"
 msgstr "Підпис"
 
@@ -471,6 +482,7 @@ msgstr "Етапний акт"
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__state
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__state
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Status"
 msgstr "Стан"
 
@@ -491,7 +503,9 @@ msgstr "Спершу клієнт підписує акт пальцем на е
 msgid ""
 "The order %s already has a final act: one final act per order, the other "
 "visits get stage acts."
-msgstr "Замовлення %s уже має фінальний акт: один фінальний акт на замовлення, інші виїзди — акти етапу."
+msgstr ""
+"Замовлення %s уже має фінальний акт: один фінальний акт на замовлення, інші "
+"виїзди — акти етапу."
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__photo_archive
@@ -578,5 +592,320 @@ msgstr "Записується під час підпису акта; сума �
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/accrual.py:0
-msgid "The hours of an accrual are the time of the tablet: they are not changed by hand."
+msgid ""
+"The hours of an accrual are the time of the tablet: they are not changed by "
+"hand."
 msgstr "Години нарахування — це час із планшета цеху: вручну їх не змінюють."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid ""
+"%(action)s: the order %(order)s is not paid before the installation, "
+"%(missing)s missing. The payment control blocks it (Project settings, "
+"«Payment before installation»)."
+msgstr ""
+"%(action)s: замовлення %(order)s не оплачене до монтажу, бракує %(missing)s."
+" Контроль оплати блокує дію (налаштування Проєкту, «Оплата до монтажу»)."
+
+#. module: td_mebli_install
+#: model:ir.actions.report,print_report_name:td_mebli_install.action_report_install_act
+msgid "'%s' % (object.name)"
+msgstr "'%s' % (object.name)"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "<i class=\"fa fa-ban me-2\" title=\"Installation blocked\"/>"
+msgstr "<i class=\"fa fa-ban me-2\" title=\"Монтаж заблоковано\"/>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_kanban_td_mebli_pay
+msgid "<i class=\"fa fa-money me-1\" title=\"Payment\"/>no payment:"
+msgstr "<i class=\"fa fa-money me-1\" title=\"Оплата\"/>немає доплати:"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "<i class=\"fa fa-money me-2\" title=\"Payment before installation\"/>"
+msgstr "<i class=\"fa fa-money me-2\" title=\"Оплата до монтажу\"/>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay
+msgid ""
+"<span invisible=\"pay_control == 'block'\"> The act can be signed; the manager is warned.</span>\n"
+"                    <span invisible=\"pay_control != 'block'\"> The act is signed after the payment.</span>"
+msgstr ""
+"<span invisible=\"pay_control == 'block'\"> Акт можна підписати; менеджера попереджено.</span>\n"
+"                    <span invisible=\"pay_control != 'block'\"> Акт підписується після оплати.</span>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "<span> Call the customer before the crew leaves.</span>"
+msgstr "<span> Зателефонуйте клієнту до виїзду бригади.</span>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "<span> The installation is blocked until the payment.</span>"
+msgstr "<span> Монтаж заблоковано до оплати.</span>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "<strong>Crew</strong>"
+msgstr "<strong>Бригада</strong>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "<strong>Customer</strong>"
+msgstr "<strong>Замовник</strong>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "<strong>Order:</strong>"
+msgstr "<strong>Замовлення:</strong>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "<strong>Signed on:</strong>"
+msgstr "<strong>Підписано:</strong>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "<strong>Visit:</strong>"
+msgstr "<strong>Виїзд:</strong>"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "Act of an Installation Stage"
+msgstr "Акт етапу монтажу"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "Act of the Installation"
+msgstr "Акт монтажу"
+
+#. module: td_mebli_install
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__res_config_settings__td_mebli_payment_control__block
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_pay_control__block
+msgid "Block"
+msgstr "Блокувати"
+
+#. module: td_mebli_install
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_stage__closed
+msgid "Closed"
+msgstr "Закрито"
+
+#. module: td_mebli_install
+#: model:ir.model,name:td_mebli_install.model_res_config_settings
+msgid "Config Settings"
+msgstr "Налаштування конфігурації"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_before_install
+msgid "Due before Installation"
+msgstr "До сплати до монтажу"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.res_config_settings_view_form_td_mebli_install
+msgid "Furniture Installation"
+msgstr "Монтаж меблів"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "Installed"
+msgstr "Змонтовано"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_missing
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_missing
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_missing
+msgid "Missing before Installation"
+msgstr "Бракує до монтажу"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "No defects: the customer accepts the installation without remarks."
+msgstr "Недоліків немає: замовник приймає монтаж без зауважень."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+msgid "No payment before the installation:"
+msgstr "Немає доплати перед монтажем:"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_order_currency_id
+msgid "Order Currency"
+msgstr "Валюта замовлення"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_stage
+msgid "Order Stage"
+msgstr "Етап замовлення"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_ok
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_ok
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_ok
+msgid "Paid before Installation"
+msgstr "Доплату до монтажу отримано"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_res_config_settings__td_mebli_payment_control
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.res_config_settings_view_form_td_mebli_install
+msgid "Payment before Installation"
+msgstr "Оплата до монтажу"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "Product"
+msgstr "Товар"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "Quantity"
+msgstr "Кількість"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,help:td_mebli_install.field_sale_order__td_pay_before_install
+msgid ""
+"Read only: the lines of the payment terms that are not «After the act» (the "
+"whole amount when the terms have no milestones)."
+msgstr ""
+"Лише читання: рядки умов оплати, крім «Після акта» (уся сума, якщо в умовах "
+"немає етапів)."
+
+#. module: td_mebli_install
+#: model:ir.model.fields,help:td_mebli_install.field_sale_order__td_pay_received
+msgid ""
+"Read only: what the customer has paid on the posted invoices of the order "
+"(the down payments included), less the credit notes."
+msgstr ""
+"Лише читання: що клієнт сплатив за проведеними рахунками замовлення (з "
+"передоплатами), мінус повернення."
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_received
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+msgid "Received"
+msgstr "Отримано"
+
+#. module: td_mebli_install
+#: model:ir.model,name:td_mebli_install.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: td_mebli_install
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_stage__shipped
+msgid "Shipped / on delivery"
+msgstr "Відвантажено / на доставці"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+msgid "Sign the act"
+msgstr "Підписати акт"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "Signature: ____________________"
+msgstr "Підпис: ____________________"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "Start the Installation"
+msgstr "Почати монтаж"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "Start the installation"
+msgstr "Почати монтаж"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_control
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_control
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_control
+msgid "Td Pay Control"
+msgstr "Контроль оплати"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid ""
+"The crew has installed the furniture of the order at the address of the customer. The customer has checked\n"
+"                    the installed furniture; the results of the check are below."
+msgstr ""
+"Бригада змонтувала меблі замовлення за адресою замовника. Замовник перевірив"
+" змонтовані меблі; результати перевірки — нижче."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid ""
+"The customer agrees that the photos of the installed furniture may be used in the\n"
+"                    portfolio of the manufacturer (without the address and the name of the customer)."
+msgstr ""
+"Замовник погоджується, що фото змонтованих меблів можуть використовуватися в"
+" портфоліо виробника (без адреси й імені замовника)."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.res_config_settings_view_form_td_mebli_install
+msgid ""
+"The lines of the payment terms that are not «After the act» are due before "
+"the visit of the crew."
+msgstr ""
+"Рядки умов оплати, крім «Після акта», мають бути сплачені до виїзду бригади."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "The order is not paid before the installation:"
+msgstr "Замовлення не оплачене до монтажу:"
+
+#. module: td_mebli_install
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_stage__wait
+msgid "Waiting for the customer"
+msgstr "Очікує клієнта"
+
+#. module: td_mebli_install
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__res_config_settings__td_mebli_payment_control__warn
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_pay_control__warn
+msgid "Warn"
+msgstr "Попереджати"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,help:td_mebli_install.field_res_config_settings__td_mebli_payment_control
+msgid ""
+"Warn: the visit, the act and the order show that the payment due before the "
+"installation is missing. Block: besides, «Start the installation» and «Sign "
+"the act» are refused until it is paid."
+msgstr ""
+"Попереджати: виїзд, акт і замовлення показують, що доплати до монтажу немає."
+" Блокувати: крім того, «Почати монтаж» і «Підписати акт» недоступні до "
+"оплати."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+msgid "due before the visit of the crew."
+msgstr "до сплати до виїзду бригади."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+msgid "missing."
+msgstr "бракує."
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+msgid "of"
+msgstr "з"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "resolved"
+msgstr "усунено"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+msgid "to be fixed"
+msgstr "усунути"
