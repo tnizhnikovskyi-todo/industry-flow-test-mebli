@@ -1,0 +1,37 @@
+# ТЕСТОВИЙ наряд A-20 (спроба 3, recalc) — внести рішення власника 2026-11-12 (flow/decisions.md записи 29–34) у документи концепції. Склала сесія.
+# НЕ ЗАПУСКАТИ до: валідної анкети A-02b (validate done) і REUSE.md (A-03c decide + «Затвердити»). A-03b вважається виконаним (R18).
+step: A-20
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: research
+skill_ref: ["flow-research:concept-mapper@0.2.0"]
+model: opus
+effort: high
+inputs:
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+  - {name: FUNCTIONAL-MAP.md, from: A-03b, path: docs/industries/mebli/research/FUNCTIONAL-MAP.md, sha: HEAD}
+  - {name: REJECTED.md, from: A-03b, path: docs/industries/mebli/research/REJECTED.md, sha: HEAD}
+  - {name: COMPLETENESS.md, from: A-03b, path: docs/industries/mebli/research/COMPLETENESS.md, sha: HEAD}
+  - {name: OWNER-BRIEF.md, from: A-03b, path: docs/industries/mebli/research/OWNER-BRIEF.md, sha: HEAD}
+  - {name: BOX.md, from: A-03b, path: docs/industries/mebli/research/BOX.md, sha: HEAD}
+  - {name: SALES.md, from: A-03b, path: docs/industries/mebli/research/SALES.md, sha: HEAD}
+  - {name: odoo-ecosystem.md, from: A-03b, path: docs/industries/mebli/research/odoo-ecosystem.md, sha: HEAD}
+  - {name: REUSE.md, from: A-03c, path: docs/industries/mebli/research/REUSE.md, sha: "після A-03c decide"}
+  - {name: "рішення власника (рядки 4–27)", from: A-03b, path: flow/decisions.md, sha: HEAD}
+  - {name: briefing.md, from: A-03, path: docs/industries/mebli/briefing.md, sha: HEAD}
+  - {name: past-projects.md, from: A-04, path: docs/industries/mebli/past-projects.md, sha: HEAD}
+where: docs/industries/mebli/concept/
+template: "references/template/ скіла concept-mapper"
+done: "concept/{features,screens,scenarios}.md під 15 екранів R18 і 11 повернутих позицій; research/{OWNER-BRIEF,BOX,SALES}.md, facts.yaml доповнено; рядки G4/G4а в REJECTED.md без перезапису чужих; роль-покупець має дашборд; позиції do_not_reject не відкинуто"
+check: {mode: both, how: "python3 -I industry-flow-marketplace/plugins/flow-research/skills/concept-mapper/scripts/check_concept.py docs/industries/mebli/concept --base <git.base>; check_intake.py; check_rejected.py; усі PASS або MANUAL з поясненням", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 20, context_budget_tokens: 200000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — «Дозволено передавати в AI» (знеособлені агрегати)"
+review: {checklists: [concept.md, edition-claims.md], max_rounds: 2}
+odoo_connections: []
+params: {mode: recalc, stale: [docs/industries/mebli/concept/], sample: false}
+repo: {url: origin, base_branch: flow/A-20c-test, branch: flow/A-20-3-test}
+attempt: 3
+returned_from: "A-20c зразок: відповіді власника 2026-11-12 (записи 30–34), гейт A-03c (запис 29)"
+git: {base: e3480ca, head: null, prev_tag: null}
+date: 2026-11-12
