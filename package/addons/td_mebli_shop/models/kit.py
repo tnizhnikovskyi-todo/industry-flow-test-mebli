@@ -76,6 +76,12 @@ class SaleOrder(models.Model):
             Line.create(vals)
         return True
 
+    def _td_kit_by_place(self):
+        """The packing list grouped by place, for the printed list: [(place, lines)]."""
+        self.ensure_one()
+        places = sorted(set(self.td_kit_line_ids.mapped('place')))
+        return [(place, self.td_kit_line_ids.filtered(lambda line: line.place == place)) for place in places]
+
     def action_td_view_kit(self):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('td_mebli_shop.td_mebli_kit_line_action')

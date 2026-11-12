@@ -75,14 +75,15 @@ class TdMebliDashboard(models.AbstractModel):
         late = open_orders.filtered(lambda o: o.td_delay_days > 0 and o.delivery_status != 'full')
         changes = env['td.mebli.order.change'].search([('state', '=', 'done'), ('shift_days', '>', 0),
                                                        ('write_date', '>=', since)])
-        reasons = {'customer': [0, set()], 'company': [0, set()], 'supplier': [0, set()]}
+        reasons = {'customer': [0, set()], 'company': [0, set()], 'supplier': [0, set()], 'cutting': [0, set()]}
         for order in late:
             reasons[order.td_delay_reason or 'company'][0] += order.td_delay_days
             reasons[order.td_delay_reason or 'company'][1].add(order.id)
         for change in changes:
             reasons[change.reason][0] += change.shift_days
             reasons[change.reason][1].add(change.order_id.id)
-        names = {'customer': _("Customer"), 'company': _("Company"), 'supplier': _("Supplier")}
+        names = {'customer': _("Customer"), 'company': _("Company"), 'supplier': _("Supplier"),
+                 'cutting': _("Cutting at the distributor")}
         total = sum(days for days, _ids in reasons.values()) or 1
         rows = [{'name': names[key], 'value': _("%s d.", days), 'pct': round(days / total * 100), 'over': key == 'company'}
                 for key, (days, ids) in reasons.items() if days]
@@ -116,13 +117,21 @@ class TdMebliDashboard(models.AbstractModel):
 
     @api.model
     def _card_payments(self, env):
+        """Payments due: after a signed final act (the card value, the drill-down) and, as a line, the coming visits
+        of the made orders that are not paid before the installation (the same control as on the visit, F-22)."""
         _ = self.env._
         acts = env['td.mebli.install.act'].search([('kind', '=', 'final'), ('state', '=', 'signed')])
         orders = acts.order_id.filtered(lambda o: o.td_dash_due > 0.5)
         due = sum(orders.mapped('td_dash_due'))
+        visits = env['project.task'].search([('sale_order_id', '!=', False), ('state', 'not in', ('1_done', '1_canceled')),
+                                             ('sale_order_id.state', '=', 'sale')])
+        unpaid = visits.sale_order_id.filtered(
+            lambda o: o.td_stage in ('done', 'wait', 'shipped', 'install') and not o.td_pay_ok
+            and not o.td_act_ids.filtered(lambda a: a.kind == 'final' and a.state == 'signed'))
         return {'label': _("Payments due after installation"), 'value': self._money(due),
-                'tone': 'warn' if due else 'ok', 'target': _("Signed final act, the customer has not paid in full"),
-                'lines': [_("Orders: %s", len(orders))],
+                'tone': 'warn' if due or unpaid else 'ok', 'target': _("Signed final act, the customer has not paid in full"),
+                'lines': [_("Orders: %s", len(orders)),
+                          _("Before installation without payment: %s", len(unpaid))],
                 'drill': self._drill(_("Payments due after installation"), 'sale.order', orders,
                                      ('list', 'td_mebli_dashboard.sale_order_td_dash_due_list'))}
 
@@ -295,9 +304,7 @@ class SaleOrder(models.Model):
     @api.depends('amount_total', 'invoice_ids.amount_residual', 'invoice_ids.state')
     def _compute_td_dash_due(self):
         for order in self:
-            invoices = order.invoice_ids.filtered(lambda m: m.state == 'posted' and m.move_type == 'out_invoice')
-            # «in payment» is paid for the customer (the bank reconciliation is the accountant's step)
-            paid = sum(m.amount_total if m.payment_state in ('paid', 'in_payment') else m.amount_total - m.amount_residual
-                       for m in invoices)
+            # the same paid amount as the payment control of the visit (td_mebli_install, F-22)
+            paid = order._td_paid_amount()
             order.td_dash_paid = paid
             order.td_dash_due = max(0.0, order.amount_total - paid)
