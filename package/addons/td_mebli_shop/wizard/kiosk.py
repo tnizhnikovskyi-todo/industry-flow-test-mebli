@@ -49,7 +49,8 @@ class TdMebliKiosk(models.TransientModel):
         be lost; «Pause» of one worker would stop the other one. The tablet refuses instead of losing the time."""
         _ = self.env._
         employee, workorder = self.employee_id, self.workorder_id
-        others = open_work.filtered(lambda t: t.td_employee_id != employee)
+        # a timer without a worker (started outside the tablet, e.g. by the planner) is not «another worker»
+        others = open_work.filtered(lambda t: t.td_employee_id and t.td_employee_id != employee)
         if others:
             who = others[0].td_employee_id.name or others[0].user_id.name
             raise UserError(_("%(who)s is working on %(wo)s now: one worker at a time. %(who)s presses «Pause» or "
