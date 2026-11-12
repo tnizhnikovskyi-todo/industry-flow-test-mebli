@@ -1,12 +1,6 @@
 {
  "checks": [
   {
-   "scene": "03-csv-import",
-   "name": "parts_in_file",
-   "expected": "4",
-   "ok": true
-  },
-  {
    "scene": "05-tablet",
    "name": "in_work",
    "expected": "Петро Гуменюк",
@@ -364,6 +358,12 @@
    "scene": "09-install-calendar",
    "name": "show_visits",
    "expected": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці",
+   "ok": true
+  },
+  {
+   "scene": "03-csv-import",
+   "name": "parts_in_file",
+   "expected": "4",
    "ok": true
   }
  ],
