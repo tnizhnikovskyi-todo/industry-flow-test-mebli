@@ -7,6 +7,26 @@ const CSV = new URL('./data/kitchen-spec.csv', import.meta.url).pathname;
 const row = (c, text) => c.page.locator('.o_data_row', { hasText: text });
 const tab = (c, text) => c.page.locator('.o_notebook_headers a', { hasText: text });
 const btn = (c, text) => c.page.locator('button', { hasText: text });
+// доробка коробки A (COVERAGE-REVIEW §2.1, A1–A4): id записів демо-бази (детерміновані seed; перевизначаються env після перезбирання)
+const ID = {
+    noPayOrder: process.env.NOPAY_ORDER_ID || '0', noPayTask: process.env.NOPAY_TASK_ID || '0',
+    paidOrder: process.env.PAID_ORDER_ID || '0', cutOrder: process.env.CUT_ORDER_ID || '0', cutJob: process.env.CUT_JOB_ID || '0',
+    act: process.env.PDF_ACT_ID || '0', kitOrder: process.env.KIT_ORDER_ID || '0',
+};
+const PDF_DIR = new URL('../pdf/', import.meta.url).pathname;
+const SCREENS = new URL('../screens/', import.meta.url).pathname;
+// друкована форма: справжній PDF (wkhtmltopdf Odoo, маршрут /report/pdf) -> pdf/<ім'я>.pdf і перша сторінка -> screens/<крок>-pdf.png;
+// сам крок знімає HTML-рендер того самого шаблону (/report/html) — для DOM-перевірки мови й кадру
+async function savePdf(c, report, id, name) {
+    const fs = await import('fs'); const { execFileSync } = await import('child_process');
+    const base = process.env.BASE || 'http://127.0.0.1:8069';
+    const res = await c.page.request.get(`${base}/report/pdf/${report}/${id}`);
+    const body = await res.body();
+    if (!res.ok() || body.subarray(0, 4).toString() !== '%PDF') throw new Error(`PDF ${report}/${id}: ${res.status()} ${body.subarray(0, 40)}`);
+    fs.mkdirSync(PDF_DIR, { recursive: true });
+    fs.writeFileSync(`${PDF_DIR}${name}.pdf`, body);
+    execFileSync('pdftoppm', ['-png', '-r', '110', '-f', '1', '-l', '1', '-singlefile', `${PDF_DIR}${name}.pdf`, `${SCREENS}${name}-pdf`]);
+}
 
 const ALL = [
     // сцена 4 — замовні фасади затримуються (зразок, прийнято)
@@ -157,9 +177,53 @@ const ALL = [
           await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00109' }).locator('button', { hasText: 'Деталі' }).first());
       },
       facts: [{ name: 'part_count', sel: '.modal .o_field_widget[name=td_part_count]' }] },
+    // ---- доробка коробки A (COVERAGE-REVIEW §2.1): A1 графік оплат і контроль доплати, A3 порізка в дистриб'ютора, A4 етапи дошки, A2 друковані форми
+    // A1 — графік оплат = стандартні умови оплати (3 рядки), нове лише «Етап оплати» рядка
+    { n: 21, role: 'fin', url: '/odoo/action-account.action_payment_term_form', name: 'pay-schedule',
+      act: async (c, { press }) => { await press(c, row(c, 'перед монтажем').locator('td').nth(1)); },
+      facts: [{ name: 'milestones', sel: '.o_field_widget[name=line_ids]', re: 'Передоплата.*Перед монтажем.*Після акта' }] },
+    // A1 — замовлення змонтоване наполовину: доплати перед монтажем немає — попередження в замовленні
+    { n: 22, role: 'fin', url: `/odoo/action-sale.action_orders/${ID.noPayOrder}`, name: 'order-no-payment',
+      facts: [{ name: 'missing', sel: '.td_pay_alert .o_field_widget[name=td_pay_missing]' },
+              { name: 'received', sel: '.td_pay_alert .o_field_widget[name=td_pay_received]' },
+              { name: 'due', sel: '.td_pay_alert .o_field_widget[name=td_pay_before_install]' }] },
+    // A1 — той самий виїзд у бригадира: попередження на задачі виїзду (режим «Попереджати» за замовчуванням)
+    { n: 23, role: 'fitter', url: `/odoo/action-td_mebli_install.td_mebli_install_calendar_action/${ID.noPayTask}`, name: 'visit-no-payment',
+      facts: [{ name: 'missing', sel: '.td_pay_alert .o_field_widget[name=td_pay_missing]' }] },
+    // A3 — порізка в дистриб'ютора: стандартна закупівля послуги, дата повернення деталей
+    { n: 24, role: 'tech', url: `/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action/${ID.cutJob}`, name: 'cutting-distributor',
+      facts: [{ name: 'distributor', sel: '.o_field_widget[name=distributor_id]' },
+              { name: 'return_date', sel: '.o_field_widget[name=return_date]' },
+              { name: 'purchase', sel: '.o_field_widget[name=purchase_id]' }] },
+    // A3 — прогнозна дата з порізкою: банер причини зсуву «Порізка в дистриб'ютора»
+    { n: 25, role: 'chief', url: `/odoo/action-sale.action_orders/${ID.cutOrder}`, name: 'date-cutting',
+      facts: [{ name: 'promised_date', sel: '.o_field_widget[name=commitment_date]' },
+              { name: 'forecast_date', sel: '.o_field_widget[name=td_forecast_date]' },
+              { name: 'delay_days', sel: '.o_group .o_field_widget[name=td_delay_days]', re: '\\d+' },
+              { name: 'reason', sel: '.o_group .o_field_widget[name=td_delay_reason]' }] },
+    // A4 — дошка замовлень: етапи після «Виготовлено» (прокрутка вправо до «Закрито»)
+    { n: 26, role: 'chief', url: '/odoo/action-td_mebli_sale.action_orders_board_td_mebli', name: 'board-stages',
+      act: async (c) => {
+          await c.page.locator('.o_kanban_renderer').evaluate((el) => { el.scrollLeft = el.scrollWidth; });
+          await c.page.waitForTimeout(500);
+      },
+      facts: [{ name: 'stages', sel: '.o_kanban_renderer', re: 'Виготовлено.*Очікує клієнта.*Відвантажено / на доставці.*Монтаж.*Закрито' },
+              { name: 'waiting', sel: '.o_kanban_group:has(.o_column_title:has-text("Очікує клієнта")) .o_kanban_record', re: 'S\\d+' },
+              { name: 'shipped', sel: '.o_kanban_group:has(.o_column_title:has-text("Відвантажено")) .o_kanban_record', re: 'S\\d+' }] },
+    // A2 — друковані форми (PDF): договір (підряд, графік оплат, позначка юриста), акт монтажу, комплектувальний лист
+    { n: 27, role: 'owner', url: `/report/html/td_mebli_sale.report_contract/${ID.paidOrder}`, name: 'contract-pdf',
+      act: async (c) => { await savePdf(c, 'td_mebli_sale.report_contract', ID.paidOrder, '27-contract'); },
+      facts: [{ name: 'lawyer_mark', sel: '.td_lawyer_mark' },
+              { name: 'schedule', sel: '.td_pay_schedule tbody', re: 'Передоплата.*Перед монтажем.*Після акта' }] },
+    { n: 28, role: 'owner', url: `/report/html/td_mebli_install.report_install_act/${ID.act}`, name: 'act-pdf',
+      act: async (c) => { await savePdf(c, 'td_mebli_install.report_install_act', ID.act, '28-act'); },
+      facts: [{ name: 'title', sel: '.td_report_act h2' }] },
+    { n: 29, role: 'owner', url: `/report/html/td_mebli_shop.report_kit/${ID.kitOrder}`, name: 'kit-pdf',
+      act: async (c) => { await savePdf(c, 'td_mebli_shop.report_kit', ID.kitOrder, '29-kit'); },
+      facts: [{ name: 'places', sel: '.td_report_kit .row .col-4:first-child', re: '\\d+' }] },
 ];
 // прохід 1 змінює дані (імпорт CSV, «Взято» з PIN); прохід 2 — лише читання, дашборд першим (recording.md); порядок ПОКАЗУ — SALES §6 (дашборд у кінці) — монтаж A-21c
 export const PASS1 = [3, 5];
-export const PASS2 = [15, 16, 0, 1, 2, 17, 18, 19, 4, 6, 20, 7, 8, 9, 10, 11, 12, 13, 14];
+export const PASS2 = [15, 16, 0, 1, 2, 17, 18, 19, 4, 6, 20, 7, 8, 9, 10, 11, 12, 13, 14, 21, 22, 23, 24, 25, 26, 27, 28, 29];
 // scenario.mjs іде за порядком STEPS: прохід 1, потім прохід 2 (дашборд першим)
 export const STEPS = [...PASS1, ...PASS2].map((n) => ALL.find((s) => s.n === n));
