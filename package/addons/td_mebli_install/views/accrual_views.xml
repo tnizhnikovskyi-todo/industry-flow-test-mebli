@@ -6,19 +6,22 @@
         <field name="arch" type="xml">
             <list string="Accruals" editable="bottom" decoration-danger="kind == 'penalty'" decoration-success="kind == 'bonus'">
                 <header>
-                    <button name="action_td_accrue" type="object" string="Accrue" class="btn-primary" display="always"/>
+                    <button name="action_td_accrue" type="object" string="Accrue" class="btn-primary" display="always"
+                            groups="mrp.group_mrp_manager,account.group_account_user"/>
+                    <button name="action_td_confirm" type="object" string="Confirm"
+                            groups="mrp.group_mrp_manager,account.group_account_user"/>
                 </header>
-                <field name="date"/>
-                <field name="employee_id"/>
-                <field name="kind"/>
+                <field name="date" readonly="state == 'confirmed'"/>
+                <field name="employee_id" readonly="state == 'confirmed'"/>
+                <field name="kind" readonly="state == 'confirmed'"/>
                 <field name="workcenter_id" optional="show"/>
                 <field name="order_ref"/>
-                <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'"/>
+                <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'" readonly="state == 'confirmed'"/>
                 <field name="piece_rate" optional="show" invisible="kind != 'piece'"/>
-                <field name="amount" sum="Total"/>
-                <field name="reason"/>
+                <field name="amount" sum="Total" readonly="state == 'confirmed'"/>
+                <field name="reason" readonly="state == 'confirmed'"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="state" widget="badge" decoration-success="state == 'confirmed'"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" readonly="1"/>
             </list>
         </field>
     </record>

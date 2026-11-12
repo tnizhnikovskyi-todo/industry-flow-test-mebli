@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import AccessError
 
 
 class MrpRoutingWorkcenter(models.Model):
@@ -15,6 +16,25 @@ class MrpWorkcenterProductivity(models.Model):
     td_employee_id = fields.Many2one(
         'hr.employee', string='Worker', index='btree_not_null', readonly=True,
         help="Who confirmed the step with the PIN on the shop floor tablet (the time itself is the standard time line).")
+
+    def _td_check_employee_write(self, vals_list):
+        """The worker of a time line is set by the tablet after the PIN (sudo) or by the shop manager, not by any
+        manufacturing user through the API."""
+        if self.env.su or self.env.user.has_group('mrp.group_mrp_manager'):
+            return
+        if any(vals.get('td_employee_id') for vals in vals_list):
+            raise AccessError(self.env._("Only the shop floor tablet (with the PIN) or the shop manager sets the worker "
+                                         "of a time line."))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        self._td_check_employee_write(vals_list)
+        return super().create(vals_list)
+
+    def write(self, vals):
+        if 'td_employee_id' in vals:
+            self._td_check_employee_write([dict(vals, td_employee_id=vals['td_employee_id'] or True)])
+        return super().write(vals)
 
 
 class MrpWorkorder(models.Model):

@@ -11,6 +11,7 @@
     'depends': ['td_mebli_sale', 'sale_crm'],
     'data': [
         'security/ir.model.access.csv',
+        'security/security.xml',
         'data/ir_sequence_data.xml',
         'views/measure_views.xml',
     ],

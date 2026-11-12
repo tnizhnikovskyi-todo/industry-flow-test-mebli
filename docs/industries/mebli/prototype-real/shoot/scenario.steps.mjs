@@ -63,8 +63,8 @@ const ALL = [
           await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00109' }).locator('button', { hasText: 'Взято' }));
           // кіоск: працівник — зі списку (на телефоні пошуковий діалог співробітників недоступний ролі планшета)
           await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));
-          await press(c, c.page.locator('.o_select_menu_item', { hasText: 'Петро Гуменюк' })); await c.page.waitForTimeout(400);
-          await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
+          await press(c, c.page.locator('.o_select_menu_item', { hasText: 'Олег Дорошенко' })); await c.page.waitForTimeout(400);
+          await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1212');
           await press(c, btn(c, 'Підтвердити'));
       },
       facts: [{ name: 'in_work', sel: '.o_data_row:has-text("WH/MO/00109") td[name=td_worker_names]' }] },
@@ -119,8 +119,10 @@ const ALL = [
       act: async (c, { press }) => { await press(c, c.page.locator('.td_card.td_k_margin')); },
       facts: [
           { name: 'margin_orders', sel: '.o_pager_limit' },
+          // DASH-drill: підсумки «Виручка» і «Маржа план» = рядок картки «Маржа … з виручки …» (картка = маржа ÷ виручка)
           { name: 'revenue_total', sel: 'tfoot td:nth-child(2)' },
-          { name: 'plan_cost_total', sel: 'tfoot td:nth-child(3)' },
+          { name: 'margin_total', sel: 'tfoot td:nth-child(3)' },
+          { name: 'plan_cost_total', sel: 'tfoot td:nth-child(4)' },
       ] },
     // сцена 2 — пропозиція до підтвердження: маржа видно ДО запуску (не 100 %: планова собівартість у чернетці)
     { n: 17, role: 'salon', url: '/odoo/action-sale.action_quotations/117', name: 'quotation-margin',

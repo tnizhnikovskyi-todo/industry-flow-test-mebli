@@ -24,6 +24,7 @@
                         </group>
                         <group>
                             <field name="measurer_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
                             <field name="floor_slope_mm"/>
                             <field name="wall_angle_deg"/>
                         </group>

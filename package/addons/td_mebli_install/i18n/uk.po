@@ -6,20 +6,32 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:29+0000\n"
-"PO-Revision-Date: 2026-11-12 11:29+0000\n"
+"POT-Creation-Date: 2026-11-12 14:37+0000\n"
+"PO-Revision-Date: 2026-11-12 14:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_install
 #: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_reason_required
 msgid "A bonus or a penalty needs a reason."
 msgstr "Премія чи штраф потребують причини."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid ""
+"A confirmed accrual cannot be changed: add a new bonus or penalty instead."
+msgstr "Підтверджене нарахування не змінюється: додайте нову премію чи штраф."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "A confirmed accrual cannot be deleted."
+msgstr "Підтверджене нарахування не видаляється."
 
 #. module: td_mebli_install
 #: model:ir.model,name:td_mebli_install.model_td_mebli_accrual
@@ -32,6 +44,12 @@ msgstr "Нарахування працівнику чи бригаді"
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_pivot
 msgid "Accruals"
 msgstr "Нарахування"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "Accruals are made by the shop manager or the accountant."
+msgstr "Нараховують начальник виробництва або бухгалтер."
 
 #. module: td_mebli_install
 #: model:ir.actions.act_window,name:td_mebli_install.td_mebli_accrual_action
@@ -89,6 +107,11 @@ msgstr "Чек-лист"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__company_id
 msgid "Company"
 msgstr "Компанія"
+
+#. module: td_mebli_install
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list
+msgid "Confirm"
+msgstr "Підтвердити"
 
 #. module: td_mebli_install
 #: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__confirmed
@@ -162,7 +185,7 @@ msgstr "Недоліки"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_install
 #: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__draft
@@ -226,7 +249,7 @@ msgstr "Години"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__message_needaction
@@ -368,6 +391,11 @@ msgid "Photos and Checklist"
 msgstr "Фото й чек-лист"
 
 #. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__piece_rate
+msgid "Piece Rate"
+msgstr "Розцінка"
+
+#. module: td_mebli_install
 #: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__kind__piece
 msgid "Piecework"
 msgstr "Відрядна"
@@ -449,13 +477,21 @@ msgstr "Стан"
 #. module: td_mebli_install
 #: model:ir.model,name:td_mebli_install.model_project_task
 msgid "Task"
-msgstr "Задача"
+msgstr "Завдання"
 
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/act.py:0
 msgid "The customer signs the act with a finger on the screen first."
 msgstr "Спершу клієнт підписує акт пальцем на екрані."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+msgid ""
+"The order %s already has a final act: one final act per order, the other "
+"visits get stage acts."
+msgstr "Замовлення %s уже має фінальний акт: один фінальний акт на замовлення, інші виїзди — акти етапу."
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__photo_archive
@@ -491,6 +527,16 @@ msgid ""
 "\n"
 "            Make sure to use the right format and order e.g. Improve the configuration screen #feature #v16 @Mitchell !"
 msgstr ""
+"Використовуйте ці ключові слова в заголовку, щоб встановити нові завдання:\n"
+"\n"
+"30 год. Виділіть 30 годин на завдання\n"
+"#tags Встановіть теги для завдання\n"
+"@user Призначте завдання користувачеві\n"
+"! Встановіть для завдання середній пріоритет\n"
+"!! Встановіть для завдання високий пріоритет\n"
+"!!! Встановіть для завдання терміновий пріоритет\n"
+"\n"
+"Переконайтеся, що ви використовуєте правильний формат і порядок, наприклад, Покращте екран конфігурації 5 год. #feature #v16 @Mitchell !"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__task_id
@@ -518,8 +564,3 @@ msgstr "Історія спілкування з сайту"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__workcenter_id
 msgid "Work Center"
 msgstr "Дільниця"
-
-#. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__piece_rate
-msgid "Piece Rate"
-msgstr "Розцінка"

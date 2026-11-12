@@ -5,18 +5,21 @@
         <field name="model">sale.order</field>
         <field name="priority">90</field>
         <field name="arch" type="xml">
-            <list string="Cost: Plan vs Actual" create="0" decoration-danger="td_cost_deviation_pct &gt; 3"
-                  decoration-success="td_cost_deviation_pct &lt;= 0">
+            <list string="Cost: Plan vs Actual" create="0" decoration-danger="td_cost_has_fact and td_cost_deviation_pct &gt; 3"
+                  decoration-success="td_cost_has_fact and td_cost_deviation_pct &lt;= 0">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="amount_untaxed" string="Revenue" sum="Total"/>
+                <field name="margin" string="Planned Margin" sum="Total"/>
                 <field name="td_cost_plan" sum="Total"/>
-                <field name="td_cost_material" sum="Total"/>
-                <field name="td_cost_work" sum="Total"/>
-                <field name="td_cost_fact" sum="Total"/>
                 <field name="td_margin_plan_pct"/>
-                <field name="td_margin_fact_pct"/>
-                <field name="td_cost_deviation_pct"/>
+                <!-- the actual figures only for orders with finished production (no zeros for the others) -->
+                <field name="td_cost_has_fact" column_invisible="True"/>
+                <field name="td_cost_material" sum="Total" invisible="not td_cost_has_fact"/>
+                <field name="td_cost_work" sum="Total" invisible="not td_cost_has_fact"/>
+                <field name="td_cost_fact" sum="Total" invisible="not td_cost_has_fact"/>
+                <field name="td_margin_fact_pct" invisible="not td_cost_has_fact"/>
+                <field name="td_cost_deviation_pct" invisible="not td_cost_has_fact"/>
                 <field name="currency_id" column_invisible="True"/>
             </list>
         </field>

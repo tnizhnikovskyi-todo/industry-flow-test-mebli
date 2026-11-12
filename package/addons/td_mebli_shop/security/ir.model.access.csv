@@ -1,5 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_td_mebli_quality_check_user,td.mebli.quality.check user,model_td_mebli_quality_check,mrp.group_mrp_user,1,1,1,0
+access_td_mebli_quality_check_user,td.mebli.quality.check user,model_td_mebli_quality_check,mrp.group_mrp_user,1,0,1,0
 access_td_mebli_quality_check_manager,td.mebli.quality.check manager,model_td_mebli_quality_check,mrp.group_mrp_manager,1,1,1,1
 access_td_mebli_quality_check_sale,td.mebli.quality.check sale,model_td_mebli_quality_check,sales_team.group_sale_salesman,1,0,0,0
 access_td_mebli_kiosk_user,td.mebli.kiosk user,model_td_mebli_kiosk,mrp.group_mrp_user,1,1,1,1

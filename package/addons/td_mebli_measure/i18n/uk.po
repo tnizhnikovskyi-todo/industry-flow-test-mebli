@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:29+0000\n"
-"PO-Revision-Date: 2026-11-12 11:29+0000\n"
+"POT-Creation-Date: 2026-11-12 14:37+0000\n"
+"PO-Revision-Date: 2026-11-12 14:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_measure
 #. odoo-python
@@ -75,6 +74,11 @@ msgid "Checked against the Design"
 msgstr "Звірено з проєктом"
 
 #. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__company_id
+msgid "Company"
+msgstr "Компанія"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__create_uid
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__create_uid
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__create_uid
@@ -111,7 +115,7 @@ msgstr "Перепад рівня підлоги вздовж стіни."
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__display_name
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__issue_count
@@ -162,7 +166,7 @@ msgstr "Висота, мм"
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__id
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_needaction
@@ -202,7 +206,7 @@ msgstr "Оновлено"
 #. module: td_mebli_measure
 #: model:ir.model,name:td_mebli_measure.model_crm_lead
 msgid "Lead"
-msgstr "Нагода"
+msgstr "Лід"
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__measure_id

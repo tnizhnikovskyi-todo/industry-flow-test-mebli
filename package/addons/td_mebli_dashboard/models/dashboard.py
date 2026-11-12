@@ -150,19 +150,13 @@ class TdMebliDashboard(models.AbstractModel):
         revenue, margin = sum(orders.mapped('amount_untaxed')), sum(orders.mapped('margin'))
         pct = margin / revenue * 100.0 if revenue else 0.0
         low = orders.filtered(lambda o: o.amount_untaxed and o.margin / o.amount_untaxed < LOW_MARGIN)
-        finished = env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)]).filtered(
-            lambda o: o.td_cost_has_fact and o.date_order >= since - timedelta(days=PERIOD_DAYS))
-        f_rev = sum(finished.mapped('amount_untaxed'))
-        f_plan = sum(finished.mapped('td_cost_plan'))
-        f_fact = sum(finished.mapped('td_cost_fact'))
+        # one figure: the weighted margin of the confirmed orders; plan vs actual of the finished orders is the
+        # report S-11 «Cost: plan vs actual» (the drill-down list), not a second figure on the card
         lines = [_("Margin %(margin)s of revenue %(revenue)s, %(count)s orders", margin=self._money(margin),
                    revenue=self._money(revenue), count=len(orders))]
-        if f_rev:
-            lines.append(_("Finished orders: plan %(plan)s, actual %(fact)s",
-                           plan=self._pct((f_rev - f_plan) / f_rev * 100.0), fact=self._pct((f_rev - f_fact) / f_rev * 100.0)))
         return {'label': _("Margin, weighted"), 'value': self._pct(pct),
                 'tone': 'bad' if pct < 20 else ('warn' if low else 'ok'),
-                'target': _("Margin of the confirmed orders of %s days ÷ their revenue", PERIOD_DAYS),
+                'target': _("Total margin ÷ total revenue of the report, %s days", PERIOD_DAYS),
                 'lines': lines,
                 'alert': _("Below %(pct)s%%: %(count)s", pct=int(LOW_MARGIN * 100), count=len(low)) if low else '',
                 'alert_rows': [f"{o.name} · {self._pct(o.margin / o.amount_untaxed * 100)}" for o in low[:2]],

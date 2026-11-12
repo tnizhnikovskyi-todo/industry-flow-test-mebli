@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:29+0000\n"
-"PO-Revision-Date: 2026-11-12 11:29+0000\n"
+"POT-Creation-Date: 2026-11-12 14:38+0000\n"
+"PO-Revision-Date: 2026-11-12 14:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_mrp
 #. odoo-python
@@ -150,6 +149,11 @@ msgstr "Створив"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_date
 msgid "Created on"
 msgstr "Створено"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_currency_id
+msgid "Currency"
+msgstr "Валюта"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__depth
@@ -329,7 +333,7 @@ msgstr "Висота, мм"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
@@ -614,6 +618,11 @@ msgstr "На метр кромки"
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_part
 msgid "Per part"
 msgstr "На деталь"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_piece_rate
+msgid "Piece Rate per Basis Unit"
+msgstr "Розцінка за одиницю бази"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_expected_hours
@@ -911,9 +920,4 @@ msgstr "ширина, мм"
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "x"
-msgstr "x"
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_piece_rate
-msgid "Piece Rate per Basis Unit"
-msgstr "Розцінка за одиницю бази"
+msgstr ""

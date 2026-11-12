@@ -8,8 +8,12 @@ class TdMebliMeasure(models.Model):
     _order = 'id desc'
 
     name = fields.Char(string='Number', required=True, readonly=True, copy=False, default='/')
-    lead_id = fields.Many2one('crm.lead', string='Opportunity', index=True, tracking=True)
+    # the opportunity comes from the order (standard sale_crm: sale.order.opportunity_id); before the order it is entered
+    lead_id = fields.Many2one('crm.lead', string='Opportunity', index=True, tracking=True, compute='_compute_lead_id',
+                              store=True, readonly=False, precompute=True)
     order_id = fields.Many2one('sale.order', string='Order', index=True, tracking=True)
+    company_id = fields.Many2one('res.company', string='Company', required=True, index=True,
+                                 compute='_compute_company_id', store=True, readonly=False, precompute=True)
     customer = fields.Char(string='Customer', compute='_compute_customer')
     measurer_id = fields.Many2one('res.users', string='Measurer', default=lambda self: self.env.user, tracking=True)
     room = fields.Char(string='Room', help='Kitchen, hall, bedroom: where the furniture stands.')
@@ -30,6 +34,17 @@ class TdMebliMeasure(models.Model):
             if vals.get('name', '/') == '/':
                 vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.measure') or '/'
         return super().create(vals_list)
+
+    @api.depends('order_id.opportunity_id')
+    def _compute_lead_id(self):
+        for sheet in self:
+            if sheet.order_id.opportunity_id:
+                sheet.lead_id = sheet.order_id.opportunity_id
+
+    @api.depends('order_id.company_id', 'lead_id.company_id')
+    def _compute_company_id(self):
+        for sheet in self:
+            sheet.company_id = sheet.order_id.company_id or sheet.lead_id.company_id or sheet.company_id or self.env.company
 
     @api.depends('lead_id.partner_id', 'order_id.partner_id', 'lead_id.contact_name')
     def _compute_customer(self):

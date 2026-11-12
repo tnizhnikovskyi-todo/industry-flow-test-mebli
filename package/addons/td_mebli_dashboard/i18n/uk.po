@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 11:29+0000\n"
-"PO-Revision-Date: 2026-11-12 11:29+0000\n"
+"POT-Creation-Date: 2026-11-12 14:38+0000\n"
+"PO-Revision-Date: 2026-11-12 14:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -104,7 +103,7 @@ msgstr "Дні зсуву обіцяних дат"
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_dashboard
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__td_dash_due
@@ -125,12 +124,6 @@ msgstr "Фабрика на одному екрані"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "Finished orders: plan %(plan)s, actual %(fact)s"
-msgstr "Завершені замовлення: план %(plan)s, факт %(fact)s"
-
-#. module: td_mebli_dashboard
-#. odoo-python
-#: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "For %s"
 msgstr "На %s"
 
@@ -138,7 +131,7 @@ msgstr "На %s"
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__id
 msgid "ID"
-msgstr "ID"
+msgstr ""
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -180,12 +173,6 @@ msgstr "Дашборд керівника меблевої фабрики"
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Margin %(margin)s of revenue %(revenue)s, %(count)s orders"
 msgstr "Маржа %(margin)s з виручки %(revenue)s, замовлень %(count)s"
-
-#. module: td_mebli_dashboard
-#. odoo-python
-#: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "Margin of the confirmed orders of %s days ÷ their revenue"
-msgstr "Маржа підтверджених замовлень за %s днів ÷ їх виручка"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -426,3 +413,9 @@ msgstr "Дашборд фабрики доступний лише керівни
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
 msgid "Total"
 msgstr "Разом"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Total margin ÷ total revenue of the report, %s days"
+msgstr "Σ маржі ÷ Σ виручки звіту, %s днів"

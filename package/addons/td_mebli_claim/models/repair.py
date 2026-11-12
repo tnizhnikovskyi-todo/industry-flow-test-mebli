@@ -10,11 +10,8 @@ class RepairOrder(models.Model):
         help="The furniture order the customer complains about (the standard «Sale Order» of a repair is the order the "
              "repair was sold from, a different thing).")
     td_part_id = fields.Many2one('td.mebli.part', string='Part', domain="[('bom_id.td_sale_order_id', '=', td_claim_order_id)]")
-    td_reason = fields.Selection(
-        [('production', 'Production'), ('installation', 'Installation'), ('supplier', 'Supplier'),
-         ('transport', 'Transport'), ('customer', 'Customer')], string='Reason')
-    td_payer = fields.Selection([('company', 'Company'), ('supplier', 'Supplier'), ('customer', 'Customer')],
-                                string='Who Pays')
+    # the reason of the claim is the standard «Tags» (repair.tags: production, installation, supplier, ...), who pays
+    # is the standard «Under Warranty» (the factory pays, the customer gets the parts at price 0): no own fields
     td_photo = fields.Image(string='Photo', max_width=1024, max_height=1024)
     td_remake_production_id = fields.Many2one('mrp.production', string='Remake', readonly=True, copy=False)
     td_days_open = fields.Integer(string='Days Open', compute='_compute_td_days_open')

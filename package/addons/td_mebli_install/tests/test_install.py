@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import TransactionCase, tagged
 
 from odoo.addons.td_mebli_sale.tests.common import TdMebliSaleCommon
@@ -82,3 +82,84 @@ class TestPiecework(TdMebliSaleCommon):
         self.assertEqual(set(accruals.mapped('piece_rate')), {10.0})
         env['td.mebli.accrual'].action_td_accrue()  # twice: no double accrual
         self.assertEqual(env['td.mebli.accrual'].search_count([('productivity_id', 'in', workorder.time_ids.ids)]), 2)
+
+
+@tagged('post_install', '-at_install')
+class TestInstallAccess(TdMebliSaleCommon):
+    """Record rules of the acts and the accruals; «Accrue» by the accountant without manufacturing rights."""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        env = cls.env
+
+        def user(login, groups):
+            return env['res.users'].with_context(no_reset_password=True).create(
+                {'name': login, 'login': login, 'group_ids': [(6, 0, [env.ref(g).id for g in groups])]})
+        cls.fitter = user('td_fitter_a', ['project.group_project_user'])
+        cls.stranger = user('td_fitter_b', ['project.group_project_user'])
+        cls.manager = user('td_pm', ['project.group_project_manager'])
+        # the finance role of the demo: sales manager, accountant, stock user, dashboard; no manufacturing group
+        cls.fin = user('td_fin', ['sales_team.group_sale_manager', 'account.group_account_user', 'stock.group_stock_user'])
+        cls.employee = env['hr.employee'].create({'name': 'Fitter A', 'user_id': cls.fitter.id})
+        private = env['project.project'].create({'name': 'Installation', 'privacy_visibility': 'followers'})
+        partner = env['res.partner'].create({'name': 'Customer'})
+        cls.order = env['sale.order'].create({'partner_id': partner.id, 'order_line': [
+            (0, 0, {'product_id': env['product.product'].create({'name': 'Montage', 'type': 'service',
+                                                                   'list_price': 10000.0}).id})]})
+        cls.order.action_confirm()
+        cls.task = env['project.task'].create({'name': 'Visit', 'project_id': private.id, 'partner_id': partner.id,
+                                               'sale_line_id': cls.order.order_line.id,
+                                               'user_ids': [(6, 0, cls.fitter.ids)]})
+        cls.task.sale_order_id = cls.order
+        assert cls.task.sale_order_id == cls.order
+        cls.act = env['td.mebli.install.act'].create({'task_id': cls.task.id, 'kind': 'final', 'crew_pct': 5.0})
+
+    def test_act_visible_as_its_visit(self):
+        Act = self.env['td.mebli.install.act']
+        self.assertEqual(Act.with_user(self.fitter).search([('id', '=', self.act.id)]), self.act)
+        self.assertFalse(Act.with_user(self.stranger).search([('id', '=', self.act.id)]))
+        self.assertEqual(Act.with_user(self.manager).search([('id', '=', self.act.id)]), self.act)
+        with self.assertRaises(AccessError):
+            self.act.with_user(self.stranger).write({'crew_pct': 7.0})
+
+    def test_signed_act_is_read_only_and_amount_fixed(self):
+        act = self.act.with_user(self.fitter)
+        act.write({'signature': PHOTO, 'signed_by': 'Customer'})
+        act.action_sign()
+        self.assertEqual(self.act.state, 'signed')
+        amount = self.act.crew_amount
+        for user in (self.fitter, self.manager):
+            with self.assertRaises(AccessError):
+                self.act.with_user(user).write({'crew_pct': 10.0})
+        self.order.order_line.price_unit = 20000.0  # the order changes later: the signed act keeps its amount
+        self.env.flush_all()
+        self.assertAlmostEqual(self.act.crew_amount, amount)
+        self.act.with_user(self.fitter).message_post(body='Photo of the gap')  # the chatter stays open
+
+    def test_one_final_act_per_order(self):
+        with self.assertRaises(ValidationError):
+            self.env['td.mebli.install.act'].create({'task_id': self.task.id, 'kind': 'final'})
+        self.env['td.mebli.install.act'].create({'task_id': self.task.id, 'kind': 'stage'})
+
+    def test_accountant_accrues_and_confirmed_is_fixed(self):
+        self.act.write({'signature': PHOTO})
+        self.act.action_sign()
+        Accrual = self.env['td.mebli.accrual'].with_user(self.fin)
+        Accrual.action_td_accrue()
+        accrual = Accrual.search([('act_id', '=', self.act.id)])
+        self.assertEqual(accrual.employee_id, self.employee)
+        accrual.action_td_confirm()
+        with self.assertRaises(UserError):
+            accrual.write({'amount': 1.0})
+        with self.assertRaises(AccessError):  # the salesperson is not allowed to accrue
+            seller = self.env['res.users'].with_context(no_reset_password=True).create({
+                'name': 'Seller', 'login': 'td_seller',
+                'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_salesman').id])]})
+            self.env['td.mebli.accrual'].with_user(seller).action_td_accrue()
+
+    def test_accrual_of_another_company_is_hidden(self):
+        other = self.env['res.company'].create({'name': 'Other factory'})
+        accrual = self.env['td.mebli.accrual'].create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 10.0,
+                                                       'reason': 'Clean site', 'company_id': other.id})
+        self.assertFalse(self.env['td.mebli.accrual'].with_user(self.fin).search([('id', '=', accrual.id)]))

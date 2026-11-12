@@ -14,7 +14,9 @@ class TestClaim(TdMebliSaleCommon):
         bought = self.env['product.product'].create({'name': 'Painted front', 'type': 'consu'})
         claim = self.env['repair.order'].create({
             'partner_id': self.partner.id, 'product_id': bought.id, 'td_claim_order_id': order.id,
-            'td_part_id': part.id, 'td_reason': 'production', 'td_payer': 'company'})
+            'td_part_id': part.id, 'under_warranty': True,
+            'tag_ids': [(0, 0, {'name': 'Production defect'})]})
+        self.assertEqual(claim.tag_ids.name, 'Production defect')  # the reason is the standard tag
         self.assertEqual(order.td_claim_count, 1)
         with self.assertRaises(UserError):  # a bought product is ordered again, not remade
             claim.action_td_remake()

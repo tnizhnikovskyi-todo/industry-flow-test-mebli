@@ -16,21 +16,22 @@
                     <div class="oe_title"><h1><field name="name"/></h1></div>
                     <group>
                         <group>
-                            <field name="task_id"/>
+                            <field name="task_id" readonly="state == 'signed'"/>
                             <field name="order_id"/>
-                            <field name="kind"/>
+                            <field name="kind" readonly="state == 'signed'"/>
                             <field name="crew_user_ids" widget="many2many_avatar_user"/>
                         </group>
                         <group>
-                            <field name="crew_pct" invisible="kind != 'final'"/>
-                            <field name="crew_amount" invisible="kind != 'final'"/>
-                            <field name="photo_archive"/>
+                            <field name="crew_pct" invisible="kind != 'final'" readonly="state == 'signed'"/>
+                            <field name="crew_amount" invisible="kind != 'final'" readonly="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="photo_archive" readonly="state == 'signed'"/>
                             <field name="signed_on" invisible="state != 'signed'"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Defects" name="defects">
-                            <field name="defect_ids">
+                            <field name="defect_ids" readonly="state == 'signed'">
                                 <list editable="bottom" decoration-muted="resolved">
                                     <field name="name"/>
                                     <field name="photo" widget="image" options="{'size': [48, 48]}"/>
@@ -40,8 +41,8 @@
                         </page>
                         <page string="Photos and Checklist" name="photos">
                             <group>
-                                <field name="photo_ids" widget="many2many_binary"/>
-                                <field name="checklist"/>
+                                <field name="photo_ids" widget="many2many_binary" readonly="state == 'signed'"/>
+                                <field name="checklist" readonly="state == 'signed'"/>
                             </group>
                         </page>
                         <page string="Signature" name="signature">
@@ -68,6 +69,7 @@
                 <field name="kind"/>
                 <field name="defect_open_count"/>
                 <field name="crew_amount" sum="Total"/>
+                <field name="currency_id" column_invisible="True"/>
                 <field name="photo_archive" optional="show"/>
                 <field name="state" widget="badge" decoration-success="state == 'signed'"/>
             </list>
@@ -94,6 +96,8 @@
         <field name="name">Installation Acts</field>
         <field name="res_model">td.mebli.install.act</field>
         <field name="view_mode">list,form</field>
+        <!-- an act is created from its visit (the «Acts» button of the task), not from the menu -->
+        <field name="context">{'create': False}</field>
     </record>
 
     <record id="td_mebli_install_calendar_action" model="ir.actions.act_window">

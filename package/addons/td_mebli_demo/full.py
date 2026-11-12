@@ -25,6 +25,9 @@ WORKERS = [
     ('Андрій Мельник', 'Складальник', 'ASM', 160.0, '7777'),
     ('Юрій Савчук', 'Складальник', 'ASM', 160.0, '8888'),
     ('Роман Ковальчук', 'Складальник', 'ASM', 160.0, '9999'),
+    # the second cutter: the tablet allows one running timer per worker (review of the Architect, round 1), the
+    # scenes take two cutting work orders in a row (screen 5 and the clip D_tablet)
+    ('Олег Дорошенко', 'Оператор розкрою', 'CUT', 165.0, '1212'),
 ]
 # crew share of the order amount (without taxes) for the installation, in the demo (a parameter of the act; calibrated
 # so that one crew of two installers gets a believable month: about 15-30 thousand UAH each; the demo factory installs
@@ -98,6 +101,17 @@ def _shop_history(env, by_center, team, rnd):
             employee = min(employees, key=lambda e: (load[e], e.id))
             load[employee] += _piece(workorder)
             wo_lines.write({'td_employee_id': employee.id})
+    # one running timer per worker (the tablet refuses a second one, review of the Architect, round 1): the earlier
+    # work orders of a worker are paused (the line ends where his next one starts); the cutters are free for scene 5
+    now = fields.Datetime.now()
+    running = lines.filtered(lambda line: not line.date_end and line.loss_type == 'productive' and line.td_employee_id)
+    for employee, emp_lines in running.grouped('td_employee_id').items():
+        ordered = emp_lines.sorted(lambda line: (line.date_start, line.id))
+        to_close = ordered if employee in team.get('CUT', ()) else ordered[:-1]
+        for index, line in enumerate(to_close):
+            following = ordered[index + 1].date_start if index + 1 < len(ordered) else None
+            end = following if following and following > line.date_start else line.date_start + timedelta(minutes=45)
+            line.date_end = min(end, now)
     photo = _image('prod_kitchen.png')
     since = fields.Datetime.now() - timedelta(days=30)
     edge_done = env['mrp.workorder'].search([('workcenter_id.code', '=', 'EDG'), ('state', '=', 'done'),
@@ -292,6 +306,12 @@ def _claims(env, people, orders, rnd):
             ('installation', 'company', 'Дверка шафи-купе сходить з напрямної', 'under_repair', 0),
             ('supplier', 'supplier', 'Тріщина фарби на фасаді МДФ', 'confirmed', 0),
             ('transport', 'company', 'Подряпина бокової панелі після доставки', 'confirmed', 0)]
+    # the reasons are the standard repair tags (configuration of the customer, A-12), who pays — «Under Warranty»
+    names = {'production': 'Виробництво', 'installation': 'Монтаж', 'supplier': 'Постачальник', 'transport': 'Транспорт',
+             'customer': 'Клієнт'}
+    tags = {key: env['repair.tags'].search([('name', '=', name)], limit=1)
+            or env['repair.tags'].create({'name': name, 'color': color})
+            for color, (key, name) in enumerate(names.items(), start=1)}
     claims, dates = env['repair.order'], []
     for act, (reason, payer, text, state, days) in zip(acts[-8::2], rows):
         order = act.order_id
@@ -299,7 +319,8 @@ def _claims(env, people, orders, rnd):
         part = line.td_bom_id.td_part_ids.filtered(lambda p: p.rule_id.material_role == 'facade_board')[:1]
         claim = env['repair.order'].create({
             'partner_id': order.partner_id.id, 'product_id': line.product_id.id, 'td_claim_order_id': order.id,
-            'td_part_id': part.id, 'td_reason': reason, 'td_payer': payer, 'td_photo': photo,
+            'td_part_id': part.id, 'tag_ids': [(6, 0, tags[reason].ids)], 'under_warranty': payer != 'customer',
+            'td_photo': photo,
             'internal_notes': f'<p>{text}</p>', 'user_id': people['chief'].id,
             'schedule_date': act.signed_on + timedelta(days=10 if state != 'confirmed' or reason != 'transport' else 3)})
         created = act.signed_on + timedelta(days=rnd.randint(2, 4))
@@ -314,7 +335,7 @@ def _claims(env, people, orders, rnd):
         claims |= claim
         dates.append((created, created + timedelta(days=days) if days else now, claim.id))
     # the transport claim is overdue: its date has passed
-    overdue = claims.filtered(lambda c: c.td_reason == 'transport')
+    overdue = claims.filtered(lambda c: tags['transport'] in c.tag_ids)
     overdue.schedule_date = now - timedelta(days=2)
     env.flush_all()
     for row in dates:  # after all writes: the dates of the claims (a closed one took 6 days)

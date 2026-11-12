@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class TdMebliInstallAct(models.Model):
@@ -7,6 +7,7 @@ class TdMebliInstallAct(models.Model):
     _description = 'Installation Act'
     _inherit = ['mail.thread']
     _order = 'id desc'
+    _mail_post_access = 'read'  # a signed act is read only (record rule), the crew still writes in its chatter
 
     name = fields.Char(string='Number', required=True, readonly=True, copy=False, default='/')
     task_id = fields.Many2one('project.task', string='Visit', required=True, ondelete='cascade', index=True)
@@ -29,6 +30,7 @@ class TdMebliInstallAct(models.Model):
     crew_pct = fields.Float(string='Crew, %', digits=(5, 2), default=5.0,
                             help='Share of the order amount (without taxes) paid to the crew for the installation.')
     currency_id = fields.Many2one(related='order_id.currency_id')
+    # fixed at the signature: a later change of the order does not change the amount of a signed act
     crew_amount = fields.Monetary(string='Crew Amount', compute='_compute_crew_amount', store=True)
 
     @api.model_create_multi
@@ -45,8 +47,25 @@ class TdMebliInstallAct(models.Model):
 
     @api.depends('kind', 'crew_pct', 'order_id.amount_untaxed')
     def _compute_crew_amount(self):
+        # a signed act keeps the amount it was signed with (read from the database: the act may be created signed)
+        saved = {}
+        ids = [act.id for act in self if isinstance(act.id, int)]
+        if ids:
+            self.env.cr.execute("SELECT id, crew_amount FROM td_mebli_install_act "
+                                "WHERE id IN %s AND state = 'signed' AND crew_amount IS NOT NULL", [tuple(ids)])
+            saved = dict(self.env.cr.fetchall())
         for act in self:
+            if act.id in saved:
+                act.crew_amount = saved[act.id]
+                continue
             act.crew_amount = act.order_id.amount_untaxed * act.crew_pct / 100.0 if act.kind == 'final' else 0.0
+
+    @api.constrains('kind', 'order_id')
+    def _check_one_final_act(self):
+        for act in self.filtered(lambda a: a.kind == 'final' and a.order_id):
+            if self.sudo().search_count([('kind', '=', 'final'), ('order_id', '=', act.order_id.id), ('id', '!=', act.id)]):
+                raise ValidationError(self.env._("The order %s already has a final act: one final act per order, the "
+                                                 "other visits get stage acts.", act.order_id.name))
 
     def action_sign(self):
         for act in self:
@@ -84,7 +103,7 @@ class ProjectTask(models.Model):
         self.ensure_one()
         action = self.env['ir.actions.act_window']._for_xml_id('td_mebli_install.td_mebli_install_act_action')
         action['domain'] = [('task_id', '=', self.id)]
-        action['context'] = {'default_task_id': self.id}
+        action['context'] = {'default_task_id': self.id, 'create': True}
         if len(self.td_act_ids) == 1:
             action.update(view_mode='form', views=[(False, 'form')], res_id=self.td_act_ids.id)
         return action

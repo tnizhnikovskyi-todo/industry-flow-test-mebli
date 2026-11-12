@@ -193,7 +193,7 @@ export const CLIPS = {
             await fact(c.page, 'D_dashboard', 'margin_orders', '.td_card.td_k_margin', { re: '(?<=замовлень )\\d+' });
             await hold(c, 3000);
             await zoom(c, '.td_card.td_k_shift', 1.5, 900); await hold(c, 2500); await zoomOff(c);
-            await press(c, c.page.locator('.td_card.td_k_margin'));
+            await press(c, c.page.locator('.td_card.td_k_margin .td_value'));
             await settle(c.page, 900);
             await title(c, 'Картка = звіт', 'Ті самі замовлення й та сама **зважена маржа**');
             await focus(c, 'tfoot'); await hold(c, 3000); await titleOff(c);

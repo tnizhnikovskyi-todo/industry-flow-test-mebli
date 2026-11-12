@@ -1,10 +1,10 @@
 {
     'name': 'ToDo Mebli: claims',
-    'summary': 'A claim of the customer on the standard repair order: the order and the part it concerns, the reason, '
-               'who pays, the photo and the remake in production.',
+    'summary': 'A claim of the customer on the standard repair order: the order and the part it concerns, the photo and '
+               'the remake in production; the reason and who pays are the standard tags and «Under Warranty».',
     'description': 'Screen S-14 of the furniture package on Odoo 19 Community: the stages, parts and dates are the '
-                   'standard Repairs app; this module links the repair to the furniture order and its part and keeps '
-                   'the reason and the payer, which the standard has no field for.',
+                   'standard Repairs app (the reason is a standard tag, the factory pays when the repair is under '
+                   'warranty); this module links the repair to the furniture order and its part.',
     'version': '19.0.1.0.0',
     'category': 'Manufacturing/Repair',
     'license': 'LGPL-3',
