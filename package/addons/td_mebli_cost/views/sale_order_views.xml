@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_td_cost_fact_list" model="ir.ui.view">
+        <field name="name">sale.order.td.cost.fact.list</field>
+        <field name="model">sale.order</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Cost: Plan vs Actual" create="0" decoration-danger="td_cost_deviation_pct &gt; 3"
+                  decoration-success="td_cost_deviation_pct &lt;= 0">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="amount_untaxed" string="Revenue" sum="Total"/>
+                <field name="td_cost_plan" sum="Total"/>
+                <field name="td_cost_material" sum="Total"/>
+                <field name="td_cost_work" sum="Total"/>
+                <field name="td_cost_fact" sum="Total"/>
+                <field name="td_margin_plan_pct"/>
+                <field name="td_margin_fact_pct"/>
+                <field name="td_cost_deviation_pct"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_order_td_cost_fact_action" model="ir.actions.act_window">
+        <field name="name">Cost: Plan vs Actual</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'sale'), ('stock_reference_ids.production_ids.state', '=', 'done')]</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('sale_order_td_cost_fact_list')})]"/>
+        <field name="help">Orders with finished production: planned cost of the quotation against the consumed materials and the real hours.</field>
+    </record>
+
+    <record id="view_order_form_td_mebli_cost" model="ir.ui.view">
+        <field name="name">sale.order.form.td_mebli_cost</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Plan vs Actual" name="td_cost" invisible="not td_cost_has_fact">
+                    <group>
+                        <group>
+                            <field name="td_cost_plan"/>
+                            <field name="td_margin_plan_pct"/>
+                        </group>
+                        <group>
+                            <field name="td_cost_material"/>
+                            <field name="td_cost_work"/>
+                            <field name="td_cost_fact"/>
+                            <field name="td_margin_fact"/>
+                            <field name="td_margin_fact_pct"/>
+                            <field name="td_cost_deviation_pct"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <menuitem id="sale_order_td_cost_fact_menu" name="Cost: Plan vs Actual" parent="sale.menu_sale_report"
+              action="sale_order_td_cost_fact_action" sequence="32"/>
+</odoo>

@@ -13,6 +13,7 @@
         'views/mrp_bom_views.xml',
         'views/order_cost_report_views.xml',
         'views/sale_order_dates_views.xml',
+        'views/order_change_views.xml',
     ],
     'assets': {
         'web.assets_tests': [

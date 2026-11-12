@@ -3,9 +3,9 @@
     .td_dash_head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; margin-bottom: 14px;
         h1 { font-size: 1.6rem; font-weight: 700; margin: 0; color: #101820; }
         .td_dash_period { color: #6b7280; } }
-    .td_dash_grid { display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(2, 1fr); gap: 16px; flex: 1 1 auto; min-height: 0; }
+    .td_dash_grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(150px, auto); gap: 12px; flex: 1 1 auto; min-height: 0; }
     .td_card { background: #fff; border-radius: 10px; padding: 14px 18px; cursor: pointer; border-left: 6px solid #d1d5db;
-        box-shadow: 0 1px 3px rgba(0,0,0,.1); min-height: 150px; display: flex; flex-direction: column; justify-content: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,.1); min-height: 140px; display: flex; flex-direction: column; justify-content: center;
         &:hover { box-shadow: 0 3px 10px rgba(0,0,0,.18); }
         &.td_ok { border-left-color: #16a34a; .td_value { color: #16a34a; } }
         &.td_warn { border-left-color: #ea7a00; .td_value { color: #ea7a00; } }
@@ -15,7 +15,7 @@
         .td_alert { margin-top: 6px; padding: 6px 10px; border-radius: 8px; background: #fee2e2; color: #b91c1c; font-size: 1rem;
             .td_alert_row { display: block; font-size: .92rem; } }
         .td_label { text-transform: uppercase; letter-spacing: .05em; font-size: .85rem; font-weight: 700; color: #6b7280; }
-        .td_value { font-size: 3.2rem; font-weight: 700; line-height: 1.15; color: #101820; margin: 4px 0 6px; }
+        .td_value { font-size: 2.4rem; font-weight: 700; line-height: 1.15; color: #101820; margin: 4px 0 6px; }
         .td_line { color: #374151; font-size: 1.05rem; } }
     .td_bars { margin: 6px 0 4px; }
     .td_bar_row { display: flex; align-items: center; gap: 8px; margin: 7px 0; font-size: 1.05rem; }

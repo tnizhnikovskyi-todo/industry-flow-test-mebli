@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_kiosk_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.kiosk.form</field>
+        <field name="model">td.mebli.kiosk</field>
+        <field name="arch" type="xml">
+            <form string="PIN of the Worker">
+                <group>
+                    <field name="workorder_id" readonly="1"/>
+                    <field name="action" readonly="1"/>
+                    <field name="employee_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="pin" password="True"/>
+                    <field name="loss_id" invisible="action != 'pause'" required="action == 'pause'"
+                           options="{'no_create': True, 'no_open': True}"/>
+                    <field name="quality_point" invisible="action != 'quality'"/>
+                    <field name="result" invisible="action != 'quality'" widget="radio" options="{'horizontal': True}"/>
+                    <field name="photo" widget="image" invisible="action != 'quality'"/>
+                    <field name="note" invisible="action not in ('quality', 'pause')"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" type="object" string="Confirm" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_kiosk_action" model="ir.actions.act_window">
+        <field name="name">PIN of the Worker</field>
+        <field name="res_model">td.mebli.kiosk</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

@@ -17,22 +17,16 @@ export class TdMebliDashboard extends Component {
         });
     }
 
-    async openMargin(card) {
-        // drill-down shows exactly the orders counted as «low margin» on the card, so the totals agree
-        if (card.low_ids && card.low_ids.length) {
-            this.actionService.doAction({
-                type: "ir.actions.act_window", name: card.alert, res_model: "sale.order",
-                views: [[card.low_kanban_id || false, "kanban"], [card.low_view_id || false, "list"], [false, "form"]], domain: [["id", "in", card.low_ids]],
-            });
-        } else {
-            this.open(card.action);
+    // a card opens exactly the records it counted, so the totals of the report equal the card
+    open(card) {
+        const drill = card.drill;
+        if (!drill) {
+            return;
         }
-    }
-
-    open(xmlid) {
-        if (xmlid) {
-            this.actionService.doAction(xmlid);
-        }
+        this.actionService.doAction({
+            type: "ir.actions.act_window", name: drill.name, res_model: drill.res_model,
+            views: drill.views, domain: [["id", "in", drill.ids]], context: { create: false },
+        });
     }
 }
 

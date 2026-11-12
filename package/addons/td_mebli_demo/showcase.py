@@ -38,13 +38,19 @@ USERS = [
     ('chief', 'Ігор Савчук', 'Начальник виробництва', 'avatar_chief',
      ['mrp.group_mrp_manager', 'sales_team.group_sale_salesman_all_leads', 'stock.group_stock_user']),
     ('store', 'Марія Гнатюк', 'Комірник', 'avatar_store',
-     ['stock.group_stock_manager', 'mrp.group_mrp_user', 'purchase.group_purchase_user']),
+     ['stock.group_stock_manager', 'mrp.group_mrp_user', 'purchase.group_purchase_user', 'stock.group_stock_user']),
     ('fin', 'Наталія Бондар', 'Фінансист', 'avatar_fin',
      ['sales_team.group_sale_manager', 'account.group_account_user', 'stock.group_stock_user',
       'td_mebli_dashboard.group_td_mebli_director']),
     ('owner', 'Віталій Остапенко', 'Власник · директор фабрики', 'avatar_owner',
      ['sales_team.group_sale_manager', 'mrp.group_mrp_manager', 'account.group_account_user', 'stock.group_stock_user',
-      'td_mebli_dashboard.group_td_mebli_director']),
+      'purchase.group_purchase_manager', 'project.group_project_manager', 'td_mebli_dashboard.group_td_mebli_director']),
+    # full scope (A-21, wave 1): measurer, installers, the shared tablet of the shop (no picture: initials avatar)
+    ('measure', 'Тетяна Олійник', 'Замірник', None, ['sales_team.group_sale_salesman_all_leads']),
+    ('fitter', 'Микола Демченко', 'Бригадир монтажників', None,
+     ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
+    ('fitter2', 'Іван Кушнір', 'Монтажник', None, ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
+    ('tablet', 'Планшет цеху', 'Планшет дільниць', None, ['mrp.group_mrp_user']),
 ]
 
 # name, company type, city, street: end customers of the factory salon (people and small businesses)
@@ -270,7 +276,8 @@ def _users(env):
     for login, name, job, avatar, groups in USERS:
         Users.create({
             'name': name, 'login': f'{login}@demo-fabryka.example', 'password': 'demo', 'lang': 'uk_UA',
-            'tz': 'Europe/Kyiv', 'image_1920': _binary(avatar + '.png'), 'email': f'{login}@demo-fabryka.example',
+            'tz': 'Europe/Kyiv', 'image_1920': _binary(avatar + '.png') if avatar else False,
+            'email': f'{login}@demo-fabryka.example',
             'group_ids': [(6, 0, [env.ref('base.group_user').id] + [env.ref(g).id for g in groups])],
             'notification_type': 'inbox', 'odoobot_state': 'disabled',  # no OdooBot onboarding window on the first login
         })
@@ -436,6 +443,8 @@ def seed_showcase(env):
     _stock(env, wardrobes)
     people = {login: _user(env, login) for login, *_ in USERS}
 
+    from .full import _installation_project, seed_full
+    _project, install = _installation_project(env)
     orders = {'done': env['sale.order'], 'progress': env['sale.order'], 'confirmed': env['sale.order']}
     prepay, drafts = [], env['sale.order']
     for product, qty, dims, body, facade, edge, fitting, stage, days, customer, seller, discount, advance in ORDERS + bulk:
@@ -453,6 +462,8 @@ def seed_showcase(env):
             discount = max(0.0, round((1 - line.purchase_price / (line.price_unit * (1 - target))) * 100.0, 1))
         if discount:
             order.order_line.discount = discount
+        # delivery and installation are in the price of the order; the service line makes the visit task (sale_project)
+        order.order_line = [(0, 0, {'product_id': install.id, 'product_uom_qty': 1.0})]
         if stage == 'sent':
             order.action_quotation_sent()
             drafts |= order.with_env(env)
@@ -598,7 +609,8 @@ def seed_showcase(env):
                 center.capacity_ids = [(5, 0, 0), (0, 0, {'product_uom_id': env.ref('uom.product_uom_unit').id,
                                                           'capacity': parallel})]
             center.resource_calendar_id = _section_calendar(env, center, round(weekly / parallel, 1))
-    seed_dates(env, people, partners, rnd)
+    show = seed_dates(env, people, partners, rnd, install)
+    seed_full(env, people, partners, orders, show, rnd)
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
     env.cr.execute("""UPDATE mail_message SET date = date - interval '1 day' WHERE date >= (date_trunc('day', now() at time zone 'Europe/Kyiv') - interval '1 day') at time zone 'Europe/Kyiv'

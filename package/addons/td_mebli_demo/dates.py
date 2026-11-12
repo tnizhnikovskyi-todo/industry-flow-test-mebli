@@ -106,7 +106,7 @@ def _receive(picking):
     picking.with_context(skip_backorder=True, skip_sms=True).button_validate()
 
 
-def _show_order(env, people, partners, components):
+def _show_order(env, people, partners, components, install):
     """The order of the demo: a kitchen and a sliding wardrobe in one contract; the painted fronts are late."""
     salon = people['salon']
     store = people['store']
@@ -116,6 +116,7 @@ def _show_order(env, people, partners, components):
         'order_line': [
             _line(env, 'prod_kitchen', (600, 720, 560), 'val_body_white', 'val_facade_mdf', 'val_edge_2', 'val_fit_premium', 9.0),
             _line(env, 'prod_wardrobe', (1800, 2400, 600), 'val_body_white', 'val_facade_mdf', 'val_edge_2', 'val_fit_premium', 1.0),
+            (0, 0, {'product_id': install.id, 'product_uom_qty': 1.0}),
         ],
     })
     ordered = now - timedelta(days=6, hours=3)
@@ -154,14 +155,14 @@ def _show_order(env, people, partners, components):
     return order
 
 
-def seed_dates(env, people, partners, rnd):
+def seed_dates(env, people, partners, rnd, install):
     from .showcase import _note
     # the system bot writes the tracking messages in the chatter: a Ukrainian name, no Latin in the frame
     env.ref('base.partner_root').name = 'Система'
     suppliers = _suppliers(env)
     _book(env, rnd)
     components = _components(env, suppliers)
-    order = _show_order(env, people, partners, components)
+    order = _show_order(env, people, partners, components, install)
     fronts = order._get_purchase_orders().order_line.filtered(lambda line: line.product_id == components['fronts_9010'])
     moved = fields.Date.context_today(fronts, fronts.date_planned)
     _note(order, people['salon'], 'Клієнт погодив кухню й шафу-купе в одному договорі, фасади — фарбовані RAL 9010 мат.',

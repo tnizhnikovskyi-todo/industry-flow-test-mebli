@@ -7,7 +7,7 @@
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['td_mebli_sale', 'td_mebli_cutting', 'td_mebli_dashboard'],
+    'depends': ['td_mebli_dashboard', 'td_mebli_ua'],
     'data': [
         'data/settings_data.xml',
         'data/workcenter_data.xml',

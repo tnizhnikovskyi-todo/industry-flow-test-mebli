@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_repair_order_form_td_mebli" model="ir.ui.view">
+        <field name="name">repair.order.form.td_mebli_claim</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_td_remake" type="object" string="Remake in Production"
+                        invisible="td_remake_production_id or state in ('done', 'cancel')"/>
+            </xpath>
+            <field name="partner_id" position="after">
+                <field name="td_claim_order_id"/>
+                <field name="td_part_id" invisible="not td_claim_order_id"/>
+                <field name="td_reason"/>
+                <field name="td_payer"/>
+                <field name="td_remake_production_id" invisible="not td_remake_production_id"/>
+            </field>
+            <xpath expr="//sheet" position="inside">
+                <field name="td_photo" widget="image" class="oe_avatar" invisible="not td_photo"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_repair_kanban_td_mebli" model="ir.ui.view">
+        <field name="name">repair.order.kanban.td_mebli_claim</field>
+        <field name="model">repair.order</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" class="o_kanban_small_column" quick_create="false">
+                <field name="td_overdue"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="name" class="fw-bold"/>
+                            <span t-if="record.td_overdue.raw_value" class="badge text-bg-danger">Overdue</span>
+                        </div>
+                        <field name="partner_id"/>
+                        <field name="td_claim_order_id"/>
+                        <field name="product_id"/>
+                        <div class="d-flex justify-content-between">
+                            <field name="td_reason"/>
+                            <span><field name="td_days_open"/> days</span>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_repair_list_td_mebli" model="ir.ui.view">
+        <field name="name">repair.order.list.td_mebli_claim</field>
+        <field name="model">repair.order</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="Claims" decoration-danger="td_overdue">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="td_claim_order_id"/>
+                <field name="product_id"/>
+                <field name="td_reason"/>
+                <field name="td_payer"/>
+                <field name="schedule_date"/>
+                <field name="td_days_open"/>
+                <field name="td_overdue" column_invisible="True"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_repair_search_td_mebli" model="ir.ui.view">
+        <field name="name">repair.order.search.td_mebli_claim</field>
+        <field name="model">repair.order</field>
+        <field name="inherit_id" ref="repair.view_repair_order_form_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <separator/>
+                <filter name="td_claims" string="Claims on Orders" domain="[('td_claim_order_id', '!=', False)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="td_mebli_claim_action" model="ir.actions.act_window">
+        <field name="name">Claims</field>
+        <field name="res_model">repair.order</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{'search_default_td_claims': 1}</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_repair_kanban_td_mebli')}),
+                                      (0, 0, {'view_mode': 'list', 'view_id': ref('view_repair_list_td_mebli')})]"/>
+    </record>
+
+    <record id="view_order_form_td_mebli_claim" model="ir.ui.view">
+        <field name="name">sale.order.form.td_mebli_claim</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_td_view_claims" type="object" class="oe_stat_button" icon="fa-exclamation-triangle"
+                        invisible="td_claim_count == 0">
+                    <field name="td_claim_count" widget="statinfo" string="Claims"/>
+                </button>
+            </div>
+        </field>
+    </record>
+
+    <menuitem id="td_mebli_claim_menu" name="Claims" parent="repair.menu_repair_order" action="td_mebli_claim_action" sequence="1"/>
+</odoo>

@@ -1,14 +1,19 @@
-// Живі записи зрізу A-21 (спроба 2). ЗРАЗОК: кліп D_sample (~15 с) — менеджер продажу відкриває замовлення «кухня + шафа-купе»
-// і бачить, що закупівля фарбованих фасадів (стандарт: MTO + «Купити», дата — у замовленні на купівлю) зсуває дату (S-02; F-23, F-31, NG-01; SALES §6 сцена 4; PAIN-16). Титри — лише події (бренд — A-21c).
-import { clip, title, titleOff, hold, zoom, zoomOff, settle, press, glide, focus, scrollTo, fact } from './rec_lib.mjs';
+// Живі записи зрізу A-21 (спроба 2), ПОВНИЙ ОБСЯГ — кроки кліпів підготувала хвиля 1, знімає хвиля 2 (PLAN.md §6). Титри — лише події (бренд — A-21c).
+// Порядок показу — SALES §6 (запис 36): D_sample (сцена 4, прийнятий зразок) першим, D_dashboard — останнім.
+import { clip, title, titleOff, hold, zoom, zoomOff, settle, press, typeIn, glide, focus, scrollTo, fact } from './rec_lib.mjs';
 const ORDER = process.env.ORDER_ID || '123';
-export const PASS1 = [];
-export const PASS2 = ['D_sample'];
+const tab = (c, text) => c.page.locator('.o_notebook_headers a', { hasText: text });
+const row = (c, text) => c.page.locator('.o_data_row, .o_kanban_record', { hasText: text });
+const btn = (c, text) => c.page.locator('button', { hasText: text });
+const CSV = new URL('./data/kitchen-spec.csv', import.meta.url).pathname;
+
+export const PASS1 = ['D_csv', 'D_tablet', 'D_kit'];
+export const PASS2 = ['D_sample', 'D_measure', 'D_change', 'D_cutting', 'D_install', 'D_accruals', 'D_claims', 'D_dashboard'];
 export const CLIPS = {
+    // сцена 4 — прийнятий зразок (без змін, N-11)
     async D_sample() {
         return clip('D_sample', { role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}` }, async (c) => {
             await settle(c.page, 900);
-            // планова маржа замовлення (sale_margin) — на вкладці рядків, до переходу на закупівлі
             await fact(c.page, 'D_sample', 'margin_percent', '.o_field_widget[name=margin_percent]', { re: '[\\d,.]+\\s*%' });
             c.mark();
             await title(c, 'Менеджер продажу', 'Обіцяли клієнту дату — система **вже бачить**, що її зірве');
@@ -21,8 +26,7 @@ export const CLIPS = {
             await hold(c, 1900);
             await zoomOff(c);
             await titleOff(c);
-            // закупівлі створив стандарт (MTO + «Купити»); менеджер салону лише читає закупівлі свого замовлення (без групи «Закупівлі»)
-            await press(c, c.page.locator('.o_notebook_headers a', { hasText: 'Закупівлі під замовлення' }));
+            await press(c, tab(c, 'Закупівлі під замовлення'));
             await scrollTo(c, '.o_data_row.text-danger');
             await title(c, 'Причина зсуву', 'Фасади: дата постачальника в закупівлі — **пізніше на 2 тижні**');
             await zoom(c, '.o_data_row.text-danger', 1.5, 900);
@@ -32,6 +36,121 @@ export const CLIPS = {
             await hold(c, 800);
             await fact(c.page, 'D_sample', 'delay_days', '.o_group .o_field_widget[name=td_delay_days]', { re: '\\d+' });
             await fact(c.page, 'D_sample', 'late_item_ready', '.o_data_row.text-danger td[name=td_date_ready]');
+        });
+    },
+    // сцена 1 — замір: холодильник глибший за нішу
+    async D_measure() {
+        return clip('D_measure', { role: 'measure', url: '/odoo/action-td_mebli_measure.td_mebli_measure_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Замірник', 'Ніші й техніка клієнта — **у картці замовлення**');
+            await press(c, row(c, 'Кухня й передпокій'));
+            await press(c, tab(c, 'Техніка клієнта'));
+            await focus(c, '.o_data_row.text-danger');
+            await zoom(c, '.o_data_row.text-danger', 1.5, 900);
+            await title(c, 'Помилку видно до виробництва', 'Холодильник **глибший за нішу** на 30 мм');
+            await hold(c, 3000); await zoomOff(c); await titleOff(c);
+            await fact(c.page, 'D_measure', 'fridge_check', '.o_data_row.text-danger td[name=issue]');
+        });
+    },
+    // сцена 2 — імпорт CSV з розпізнаванням колонок (змінює дані)
+    async D_csv() {
+        return clip('D_csv', { role: 'tech', url: '/odoo/action-mrp.mrp_bom_form_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Технолог', 'Специфікація з програми проєктування — **без ручного перенесення**');
+            await press(c, row(c, 'S00'));
+            await press(c, c.page.locator('.o_cp_action_menus .dropdown-toggle').first());
+            await press(c, c.page.locator('.dropdown-item', { hasText: 'Імпорт деталей' }));
+            await c.page.locator('.modal input[type=file]').setInputFiles(CSV);
+            await press(c, btn(c, 'Розпізнати колонки'));
+            await focus(c, '.modal .o_field_widget[name=mapping]'); await hold(c, 2500);
+            await press(c, btn(c, 'Імпортувати'));
+            await titleOff(c);
+            await fact(c.page, 'D_csv', 'part_count', '.o_field_widget[name=td_part_count]');
+        });
+    },
+    // сцена 3 — зміна фасадів (B)
+    async D_change() {
+        return clip('D_change', { role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}` }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await press(c, tab(c, 'Зміни'));
+            await title(c, 'Зміна від клієнта', 'Нова версія: **ціна й дата** з причиною «Клієнт»');
+            await focus(c, '.o_data_row'); await hold(c, 3000); await titleOff(c);
+            await fact(c.page, 'D_change', 'shift_days', '.o_data_row td[name=shift_days]');
+        });
+    },
+    // сцена 5 — планшет цеху за PIN (змінює дані)
+    async D_tablet() {
+        return clip('D_tablet', { role: 'tablet', url: '/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Цех', '«Взято» — **за PIN працівника**, без окремого користувача');
+            await press(c, c.page.locator('.o_data_row button', { hasText: 'Взято' }).first());
+            await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Сергій');
+            await press(c, c.page.locator('.o-autocomplete--dropdown-item').first());
+            await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '4444');
+            await press(c, btn(c, 'Підтвердити'));
+            await hold(c, 2000); await titleOff(c);
+        });
+    },
+    // сцена 5 — неповний комплект не відвантажується (змінює дані: спроба відвантажити)
+    async D_kit() {
+        return clip('D_kit', { role: 'store', url: '/odoo/action-td_mebli_shop.td_mebli_kit_line_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Комірник', 'Комплектувальний лист: **що в яке місце**');
+            await hold(c, 2500);
+            await focus(c, '.o_data_row.text-danger'); await hold(c, 2000); await titleOff(c);
+        });
+    },
+    // сцена 5а — пакет розкрою і ділові обрізки (без оптимізатора, OUT-02)
+    async D_cutting() {
+        return clip('D_cutting', { role: 'tech', url: '/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Розкрій пакетом', 'Кілька замовлень одного декору — **одне завдання**, обрізки в облік');
+            await press(c, c.page.locator('.o_data_row').first());
+            await hold(c, 3000); await titleOff(c);
+        });
+    },
+    // сцена 6 — монтаж: календар, акт з недоліком і % бригаді
+    async D_install() {
+        return clip('D_install', { role: 'fitter', url: '/odoo/action-td_mebli_install.td_mebli_install_calendar_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Монтаж', 'Два виїзди: **корпуси → стільниця**');
+            await hold(c, 2500);
+            await c.page.goto(c.page.url().split('/odoo')[0] + '/odoo/action-td_mebli_install.td_mebli_install_act_action');
+            await settle(c.page, 900);
+            await title(c, 'Акт', 'Фото, недолік, підпис клієнта — **% бригаді рахується з акта**');
+            await focus(c, '.o_list_renderer'); await hold(c, 3000); await titleOff(c);
+        });
+    },
+    async D_accruals() {
+        return clip('D_accruals', { role: 'fin', url: '/odoo/action-td_mebli_install.td_mebli_accrual_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Нарахування', 'Відрядна, % бригаді, **премії й штрафи з причиною**');
+            await hold(c, 3500); await titleOff(c);
+        });
+    },
+    // сцена 7 — рекламації і план ↔ факт
+    async D_claims() {
+        return clip('D_claims', { role: 'chief', url: '/odoo/action-td_mebli_claim.td_mebli_claim_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Рекламації', 'Кожна — з причиною, строком і **хто платить**');
+            await focus(c, '.o_kanban_record .text-bg-danger'); await hold(c, 3000); await titleOff(c);
+            await c.page.goto(c.page.url().split('/odoo')[0] + '/odoo/action-td_mebli_cost.sale_order_td_cost_fact_action');
+            await settle(c.page, 900);
+            await title(c, 'Собівартість', 'План ↔ факт **по кожному замовленню**');
+            await hold(c, 3000); await titleOff(c);
+        });
+    },
+    // сцена 8 — дашборд керівника (останнім); картка маржі -> drill-down
+    async D_dashboard() {
+        return clip('D_dashboard', { role: 'owner', url: '/odoo/action-td_mebli_dashboard.action_dashboard' }, async (c) => {
+            await settle(c.page, 1200); c.mark();
+            await title(c, 'Власник', 'Фабрика **на одному екрані**');
+            await fact(c.page, 'D_dashboard', 'margin', '.td_card.td_k_margin .td_value');
+            await hold(c, 3000);
+            await zoom(c, '.td_card.td_k_shift', 1.5, 900); await hold(c, 2500); await zoomOff(c);
+            await press(c, c.page.locator('.td_card.td_k_margin'));
+            await title(c, 'Картка = звіт', 'Ті самі замовлення й та сама **зважена маржа**');
+            await hold(c, 3000); await titleOff(c);
         });
     },
 };

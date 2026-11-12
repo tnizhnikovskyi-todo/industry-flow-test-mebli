@@ -1,0 +1,68 @@
+from odoo import api, fields, models
+
+
+class MrpRoutingWorkcenter(models.Model):
+    _inherit = 'mrp.routing.workcenter'
+
+    td_quality_point = fields.Char(
+        string='Quality Step',
+        help="What the worker checks and photographs before «Done», e.g. «edge without chips, photo of the end».")
+
+
+class MrpWorkcenterProductivity(models.Model):
+    _inherit = 'mrp.workcenter.productivity'
+
+    td_employee_id = fields.Many2one(
+        'hr.employee', string='Worker', index='btree_not_null', readonly=True,
+        help="Who confirmed the step with the PIN on the shop floor tablet (the time itself is the standard time line).")
+
+
+class MrpWorkorder(models.Model):
+    _inherit = 'mrp.workorder'
+
+    td_quality_point = fields.Char(related='operation_id.td_quality_point', string='Quality Step')
+    td_quality_ids = fields.One2many('td.mebli.quality.check', 'workorder_id', string='Quality Checks')
+    td_quality_state = fields.Selection(
+        [('none', 'No Step'), ('todo', 'To Check'), ('pass', 'Passed'), ('fail', 'Failed')],
+        string='Quality', compute='_compute_td_quality_state')
+    td_worker_names = fields.Char(string='Workers', compute='_compute_td_worker_names')
+    td_pause_reason = fields.Char(string='Pause Reason', compute='_compute_td_worker_names')
+
+    @api.depends('td_quality_point', 'td_quality_ids.result')
+    def _compute_td_quality_state(self):
+        for workorder in self:
+            last = workorder.td_quality_ids.sorted('id')[-1:]
+            if not workorder.td_quality_point:
+                workorder.td_quality_state = 'none'
+            else:
+                workorder.td_quality_state = last.result or 'todo'
+
+    @api.depends('time_ids.td_employee_id', 'time_ids.date_end', 'time_ids.loss_type')
+    def _compute_td_worker_names(self):
+        for workorder in self:
+            workorder.td_worker_names = ', '.join(workorder.time_ids.td_employee_id.mapped('name'))
+            pause = workorder.time_ids.filtered(lambda t: not t.date_end and t.loss_type != 'productive')[:1]
+            workorder.td_pause_reason = pause.loss_id.name or ''
+
+    def action_td_kiosk(self):
+        """Opens the PIN dialog of the tablet for the button pressed (context td_action)."""
+        self.ensure_one()
+        action = self.env['ir.actions.act_window']._for_xml_id('td_mebli_shop.td_mebli_kiosk_action')
+        action['context'] = {'default_workorder_id': self.id,
+                             'default_action': self.env.context.get('td_action', 'start')}
+        return action
+
+
+class TdMebliQualityCheck(models.Model):
+    _name = 'td.mebli.quality.check'
+    _description = 'Quality Check of a Work Order'
+    _order = 'id desc'
+
+    workorder_id = fields.Many2one('mrp.workorder', string='Work Order', required=True, ondelete='cascade', index=True)
+    production_id = fields.Many2one(related='workorder_id.production_id', store=True, string='Manufacturing Order')
+    workcenter_id = fields.Many2one(related='workorder_id.workcenter_id', store=True, string='Work Center')
+    name = fields.Char(string='Quality Step', required=True)
+    result = fields.Selection([('pass', 'Passed'), ('fail', 'Failed')], string='Result', required=True)
+    photo = fields.Image(string='Photo', max_width=1024, max_height=1024)
+    note = fields.Char(string='Note')
+    employee_id = fields.Many2one('hr.employee', string='Worker')

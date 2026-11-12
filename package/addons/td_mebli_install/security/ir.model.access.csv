@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_install_act_user,td.mebli.install.act user,model_td_mebli_install_act,project.group_project_user,1,1,1,0
+access_td_mebli_install_act_sale,td.mebli.install.act sale,model_td_mebli_install_act,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_install_act_manager,td.mebli.install.act manager,model_td_mebli_install_act,project.group_project_manager,1,1,1,1
+access_td_mebli_install_defect_user,td.mebli.install.defect user,model_td_mebli_install_defect,project.group_project_user,1,1,1,1
+access_td_mebli_install_defect_sale,td.mebli.install.defect sale,model_td_mebli_install_defect,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_accrual_mrp,td.mebli.accrual workshop,model_td_mebli_accrual,mrp.group_mrp_manager,1,1,1,0
+access_td_mebli_accrual_account,td.mebli.accrual accounting,model_td_mebli_accrual,account.group_account_user,1,1,1,1

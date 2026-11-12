@@ -5,10 +5,11 @@ from odoo.exceptions import AccessError
 from odoo.tools.misc import formatLang
 
 PERIOD_DAYS = 30
-LOW_MARGIN = 0.15      # the same threshold as the red rows of the margin report (td_mebli_sale)
-TARGET_LAUNCH_H = 48   # order to launch, hours
-TARGET_WASTE_PCT = 8   # cutting waste, %
-TARGET_OVERRUN_PCT = 3  # cost overrun against the plan, %
+LOW_MARGIN = 0.15        # the same threshold as the red rows of the margin report (td_mebli_sale)
+STUCK_DAYS = 5           # an order without a move of its production for longer is «stuck»
+TARGET_ON_TIME = 90      # % of installed orders on the promised date
+TARGET_WASTE_PCT = 8     # cutting waste, %
+TARGET_CLAIMS = 5        # claims per 100 installed orders
 GROUP = 'td_mebli_dashboard.group_td_mebli_director'
 
 
@@ -16,165 +17,290 @@ class TdMebliDashboard(models.AbstractModel):
     _name = 'td.mebli.dashboard'
     _description = 'Manager Dashboard of the Furniture Factory'
 
+    # ---------------------------------------------------------------- formatting
     @api.model
     def _money(self, value):
         symbol = self.env.company.currency_id.symbol
-        return f"{round(value):,}".replace(',', ' ') + f" {symbol}"
+        sign = '−' if value < 0 else ''
+        return sign + f"{round(abs(value)):,}".replace(',', ' ') + f" {symbol}"
 
     @api.model
     def _num(self, value, digits=1):
         return formatLang(self.env, value, digits=digits)
 
     @api.model
-    def _delta(self, cur, prev, kind, good_when_up=True):
-        """Comparison with the previous period: kind 'pct' (relative change) or 'pp' (difference in points)."""
+    def _pct(self, value):
+        return f"{self._num(value)} %"
+
+    @api.model
+    def _drill(self, name, model, records, *views):
+        """Drill-down of a card: exactly the records the card counted (the totals of the report equal the card)."""
+        view_list = [[self.env.ref(xmlid).sudo().id if xmlid else False, kind] for kind, xmlid in views]
+        if not any(kind == 'form' for kind, _x in views):
+            view_list.append([False, 'form'])
+        return {'name': name, 'res_model': model, 'ids': records.ids, 'views': view_list}
+
+    # ---------------------------------------------------------------- figures
+    @api.model
+    def _period(self):
+        today = fields.Date.context_today(self)
+        since = fields.Datetime.to_datetime(today - timedelta(days=PERIOD_DAYS))
+        return today, since
+
+    @api.model
+    def _final_acts(self, env, since):
+        return env['td.mebli.install.act'].search([('kind', '=', 'final'), ('state', '=', 'signed'),
+                                                   ('signed_on', '>=', since)])
+
+    @api.model
+    def _card_on_time(self, env, since):
         _ = self.env._
-        if not prev:
-            return {'text': _("no data for the previous %s days", PERIOD_DAYS), 'tone': 'flat'}
-        change = (cur - prev) / abs(prev) * 100.0 if kind == 'pct' else cur - prev
-        sign = '+' if change > 0 else ''
-        unit = '%' if kind == 'pct' else _("p.p.")
-        tone = 'flat' if abs(change) < (0.5 if kind == 'pp' else 1.0) else ('ok' if (change > 0) == good_when_up else 'bad')
-        arrow = '▲' if change > 0 else ('▼' if change < 0 else '■')
-        return {'text': _("%s %s%s %s vs previous %s days", arrow, sign, self._num(change), unit, PERIOD_DAYS), 'tone': tone}
+        acts = self._final_acts(env, since)
+        orders = acts.order_id
+        on_time = orders.filtered(lambda o: o.commitment_date and min(
+            acts.filtered(lambda a: a.order_id == o).mapped('signed_on')).date() <= o.commitment_date.date())
+        pct = len(on_time) / len(orders) * 100.0 if orders else 0.0
+        return {'label': _("Orders on time"), 'value': self._pct(pct) if orders else '—',
+                'tone': 'ok' if pct >= TARGET_ON_TIME else ('warn' if pct >= TARGET_ON_TIME - 15 else 'bad'),
+                'target': _("Target: from %s%%", TARGET_ON_TIME),
+                'lines': [_("Installed: %(all)s, on the promised date: %(ok)s", all=len(orders), ok=len(on_time))],
+                'drill': self._drill(_("Installed orders"), 'sale.order', orders,
+                                     ('list', 'td_mebli_dashboard.sale_order_td_dash_list'))}
 
     @api.model
-    def _orders_stats(self, env, company, start, end):
-        orders = env['sale.order'].with_context(active_test=False).search([
-            ('state', '=', 'sale'), ('date_order', '>=', start), ('date_order', '<', end), ('company_id', '=', company.id)])
-        revenue = sum(orders.mapped('amount_untaxed'))
-        margin = sum(orders.mapped('margin'))
-        hours = [o.td_hours_to_launch for o in orders.filtered('td_launch_date')]
-        return {
-            'orders': orders, 'revenue': revenue, 'margin': margin,
-            'margin_pct': margin / revenue * 100.0 if revenue else 0.0,
-            'launch_avg': sum(hours) / len(hours) if hours else 0.0, 'launched': len(hours),
-        }
+    def _card_shift(self, env, company, since):
+        _ = self.env._
+        open_orders = env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)])
+        late = open_orders.filtered(lambda o: o.td_delay_days > 0)
+        changes = env['td.mebli.order.change'].search([('state', '=', 'done'), ('shift_days', '>', 0),
+                                                       ('write_date', '>=', since)])
+        reasons = {'customer': [0, set()], 'company': [0, set()], 'supplier': [0, set()]}
+        for order in late:
+            reasons[order.td_delay_reason or 'company'][0] += order.td_delay_days
+            reasons[order.td_delay_reason or 'company'][1].add(order.id)
+        for change in changes:
+            reasons[change.reason][0] += change.shift_days
+            reasons[change.reason][1].add(change.order_id.id)
+        names = {'customer': _("Customer"), 'company': _("Company"), 'supplier': _("Supplier")}
+        total = sum(days for days, _ids in reasons.values()) or 1
+        rows = [{'name': names[key], 'value': _("%s d.", days), 'pct': round(days / total * 100), 'over': key == 'company'}
+                for key, (days, ids) in reasons.items() if days]
+        ids = set().union(*(ids for _days, ids in reasons.values()))
+        orders = env['sale.order'].browse(sorted(ids))
+        return {'label': _("Date shift by reason"), 'value': _("%s orders", len(orders)), 'tone': 'warn' if late else 'ok',
+                'target': _("Days of shift of the promised dates"), 'rows': rows,
+                'lines': [_("Now at risk: %s", len(late))],
+                'drill': self._drill(_("Orders with a shifted date"), 'sale.order', orders,
+                                     ('list', 'td_mebli_dashboard.sale_order_td_dash_list'))}
 
     @api.model
-    def _cutting_stats(self, env, company, start, end):
-        jobs = env['td.mebli.cutting.job'].search([
-            ('state', 'in', ('result', 'done')), ('company_id', '=', company.id),
-            ('create_date', '>=', start), ('create_date', '<', end)])
+    def _card_stuck(self, env, company):
+        _ = self.env._
+        now = fields.Datetime.now()
+        stuck = env['sale.order']
+        for order in env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)]):
+            productions = order.mrp_production_ids.filtered(lambda p: p.state in ('confirmed', 'progress'))
+            if not productions:
+                continue
+            moves = [t.date_end or t.date_start for t in productions.workorder_ids.time_ids]
+            starts = [p.date_start for p in productions if p.date_start and p.date_start <= now]
+            last = max(moves + starts + [order.date_order])
+            if now - last > timedelta(days=STUCK_DAYS) and starts:
+                stuck |= order
+        return {'label': _("Stuck orders"), 'value': str(len(stuck)), 'tone': 'bad' if stuck else 'ok',
+                'target': _("No move in production for more than %s days", STUCK_DAYS),
+                'lines': [f"{o.name} · {o.partner_id.name}" for o in stuck[:3]],
+                'drill': self._drill(_("Stuck orders"), 'sale.order', stuck,
+                                     ('list', 'td_mebli_dashboard.sale_order_td_dash_list'))}
+
+    @api.model
+    def _card_payments(self, env):
+        _ = self.env._
+        acts = env['td.mebli.install.act'].search([('kind', '=', 'final'), ('state', '=', 'signed')])
+        orders = acts.order_id.filtered(lambda o: o.td_dash_due > 0.5)
+        due = sum(orders.mapped('td_dash_due'))
+        return {'label': _("Payments due after installation"), 'value': self._money(due),
+                'tone': 'warn' if due else 'ok', 'target': _("Signed final act, the customer has not paid in full"),
+                'lines': [_("Orders: %s", len(orders))],
+                'drill': self._drill(_("Payments due after installation"), 'sale.order', orders,
+                                     ('list', 'td_mebli_dashboard.sale_order_td_dash_due_list'))}
+
+    @api.model
+    def _card_claims(self, env, since):
+        _ = self.env._
+        claims = env['repair.order'].search([('td_claim_order_id', '!=', False), ('create_date', '>=', since)])
+        installed = len(self._final_acts(env, since).order_id)
+        per100 = len(claims) / installed * 100.0 if installed else 0.0
+        closed = claims.filtered(lambda r: r.state == 'done')
+        avg_days = sum(closed.mapped('td_days_open')) / len(closed) if closed else 0.0
+        overdue = claims.filtered('td_overdue')
+        return {'label': _("Claims per 100 orders"), 'value': self._num(per100) if installed else '—',
+                'tone': 'ok' if per100 <= TARGET_CLAIMS else 'bad', 'target': _("Target: up to %s", TARGET_CLAIMS),
+                'lines': [_("Claims: %(claims)s for %(installed)s installed", claims=len(claims), installed=installed),
+                          _("Closed on average in %s days", self._num(avg_days)), _("Overdue: %s", len(overdue))],
+                'drill': self._drill(_("Claims"), 'repair.order', claims,
+                                     ('list', 'td_mebli_claim.view_repair_list_td_mebli'))}
+
+    @api.model
+    def _card_margin(self, env, company, since):
+        _ = self.env._
+        orders = env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id),
+                                           ('date_order', '>=', since)])
+        revenue, margin = sum(orders.mapped('amount_untaxed')), sum(orders.mapped('margin'))
+        pct = margin / revenue * 100.0 if revenue else 0.0
+        low = orders.filtered(lambda o: o.amount_untaxed and o.margin / o.amount_untaxed < LOW_MARGIN)
+        finished = env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)]).filtered(
+            lambda o: o.td_cost_has_fact and o.date_order >= since - timedelta(days=PERIOD_DAYS))
+        f_rev = sum(finished.mapped('amount_untaxed'))
+        f_plan = sum(finished.mapped('td_cost_plan'))
+        f_fact = sum(finished.mapped('td_cost_fact'))
+        lines = [_("Margin %(margin)s of revenue %(revenue)s, %(count)s orders", margin=self._money(margin),
+                   revenue=self._money(revenue), count=len(orders))]
+        if f_rev:
+            lines.append(_("Finished orders: plan %(plan)s, actual %(fact)s",
+                           plan=self._pct((f_rev - f_plan) / f_rev * 100.0), fact=self._pct((f_rev - f_fact) / f_rev * 100.0)))
+        return {'label': _("Margin, weighted"), 'value': self._pct(pct),
+                'tone': 'bad' if pct < 20 else ('warn' if low else 'ok'),
+                'target': _("Margin of the confirmed orders of %s days ÷ their revenue", PERIOD_DAYS),
+                'lines': lines,
+                'alert': _("Below %(pct)s%%: %(count)s", pct=int(LOW_MARGIN * 100), count=len(low)) if low else '',
+                'alert_rows': [f"{o.name} · {self._pct(o.margin / o.amount_untaxed * 100)}" for o in low[:2]],
+                'drill': self._drill(_("Margin of the orders"), 'sale.order', orders,
+                                     ('list', 'td_mebli_cost.sale_order_td_cost_fact_list'))}
+
+    @api.model
+    def _week(self):
+        """The next 7 days: the work that is open and planned to start before their end."""
+        start = fields.Datetime.to_datetime(fields.Date.context_today(self))
+        return start, start + timedelta(days=7)
+
+    @api.model
+    def _card_load(self, env):
+        _ = self.env._
+        start, end = self._week()
+        week = env['mrp.workorder'].search([('state', 'not in', ('done', 'cancel')), ('date_start', '!=', False),
+                                            ('date_start', '<', end)])
+        rows, over = [], 0
+        for center in env['mrp.workcenter'].search([]).filtered(lambda c: c.td_capacity_hours > 0):
+            hours = sum(week.filtered(lambda w: w.workcenter_id == center).mapped('td_expected_hours'))
+            if hours:
+                pct = round(hours / center.td_capacity_hours * 100.0)
+                rows.append({'name': center.name, 'pct': pct, 'value': f"{pct}%", 'over': pct > 100})
+                over += pct > 100
+        rows.sort(key=lambda row: -row['pct'])
+        queue = env['mrp.workorder'].search([('state', 'not in', ('done', 'cancel'))])
+        capacity = sum(env['mrp.workcenter'].search([]).mapped('td_capacity_hours'))
+        weeks = sum(queue.mapped('td_expected_hours')) / capacity if capacity else 0.0
+        return {'label': _("Section load, 7 days"), 'rows': rows,
+                'target': _("Open work started or planned to start in 7 days ÷ weekly hours of the section calendar"),
+                'lines': [_("Over capacity: %s", over), _("Open queue: %s weeks of work", self._num(weeks))],
+                'drill': self._drill(_("Section load, 7 days"), 'mrp.workorder', week,
+                                     ('pivot', 'td_mebli_mrp.mrp_workorder_td_load_pivot'),
+                                     ('list', 'td_mebli_shop.mrp_workorder_td_tablet_list'))}
+
+    @api.model
+    def _card_conversion(self, env, since):
+        _ = self.env._
+        sheets = env['td.mebli.measure'].search([('create_date', '>=', since)])
+        signed = sheets.filtered(lambda s: s.order_id.state == 'sale')
+        pct = len(signed) / len(sheets) * 100.0 if sheets else 0.0
+        return {'label': _("Measurement to contract"), 'value': self._pct(pct) if sheets else '—',
+                'tone': 'ok' if pct >= 50 else 'warn',
+                'target': _("Measurements of %s days that became confirmed orders", PERIOD_DAYS),
+                'lines': [_("Measurements: %(all)s, contracts: %(ok)s", all=len(sheets), ok=len(signed))],
+                'drill': self._drill(_("Measurements"), 'td.mebli.measure', sheets,
+                                     ('list', 'td_mebli_measure.td_mebli_measure_view_list'))}
+
+    @api.model
+    def _card_ready(self, env, company):
+        _ = self.env._
+        now = fields.Datetime.now()
+        ready = env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)]).filtered(
+            lambda o: o.mrp_production_ids and all(p.state == 'done' for p in o.mrp_production_ids)
+            and o.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state not in ('done', 'cancel')))
+        days = [(now - max(o.mrp_production_ids.mapped('date_finished'))).days for o in ready]
+        return {'label': _("Ready, not shipped"), 'value': str(len(ready)), 'tone': 'warn' if ready else 'ok',
+                'target': _("Production finished, the delivery is not done"),
+                'lines': [_("For %s", self._money(sum(ready.mapped('amount_untaxed')))),
+                          _("In the warehouse on average %s days", self._num(sum(days) / len(days) if days else 0.0))],
+                'drill': self._drill(_("Ready, not shipped"), 'sale.order', ready,
+                                     ('list', 'td_mebli_dashboard.sale_order_td_dash_list'))}
+
+    @api.model
+    def _card_waste(self, env, company, since):
+        _ = self.env._
+        jobs = env['td.mebli.cutting.job'].search([('state', 'in', ('result', 'done')), ('company_id', '=', company.id),
+                                                   ('create_date', '>=', since)])
         sheets = jobs.sheet_ids
         area = sum(sheets.mapped('used_area_m2')) + sum(sheets.mapped('offcut_area_m2'))
-        waste = sum(s.waste_pct * (s.used_area_m2 + s.offcut_area_m2) for s in sheets)
-        return {'jobs': jobs, 'waste_pct': waste / area if area else 0.0, 'saving': sum(jobs.mapped('offcut_saving'))}
+        waste = sum(s.waste_pct * (s.used_area_m2 + s.offcut_area_m2) for s in sheets) / area if area else 0.0
+        return {'label': _("Cutting waste"), 'value': self._pct(waste),
+                'tone': 'ok' if waste <= TARGET_WASTE_PCT else 'warn', 'target': _("Target: up to %s%%", TARGET_WASTE_PCT),
+                'lines': [_("Saved by business offcuts: %s", self._money(sum(jobs.mapped('offcut_saving')))),
+                          _("Cutting jobs: %s", len(jobs))],
+                'drill': self._drill(_("Cutting jobs"), 'td.mebli.cutting.job', jobs,
+                                     ('list', 'td_mebli_cutting.td_mebli_cutting_job_view_list'))}
+
+    @api.model
+    def _card_prices(self, env, company, since):
+        _ = self.env._
+        lines = env['purchase.order.line'].search([('company_id', '=', company.id), ('state', 'in', ('purchase', 'done')),
+                                                   ('order_id.date_order', '>=', since), ('td_over_history', '=', True)])
+        overpay = sum(lines.mapped('td_overpay'))
+        return {'label': _("Supplier prices above history"), 'value': self._money(overpay),
+                'tone': 'warn' if lines else 'ok', 'target': _("Overpay against the average of 180 days"),
+                'lines': [_("Purchase lines: %s", len(lines))] + [
+                    f"{l.product_id.name} · +{self._num(l.td_price_delta_pct)} %" for l in lines.sorted('td_overpay', reverse=True)[:2]],
+                'drill': self._drill(_("Prices above history"), 'purchase.order.line', lines,
+                                     ('list', 'td_mebli_purchase.purchase_order_line_td_price_list'))}
 
     @api.model
     def get_data(self):
-        """All figures of the screen in one call. Computed with sudo (the manager sees the whole factory), so the call
+        """All figures of the screen in one call. Computed with sudo (the owner sees the whole factory), so the call
         itself is limited to the director group and the administrators."""
         user = self.env.user
         if not (self.env.su or user.has_group(GROUP) or user.has_group('base.group_system')):
             raise AccessError(self.env._("The factory dashboard is available to the factory director only."))
         env = self.sudo().with_company(self.env.company).env
         company = env.company
-        now = fields.Datetime.now()
-        # whole days: the same boundary as the «last 30 days» filter of the margin report, so the figures agree
-        since = fields.Datetime.to_datetime(fields.Date.context_today(self) - timedelta(days=PERIOD_DAYS))
-        before = since - timedelta(days=PERIOD_DAYS)
-        cur = self._orders_stats(env, company, since, now + timedelta(days=1))
-        prev = self._orders_stats(env, company, before, since)
-        orders = cur['orders']
-        quotes = env['sale.order'].with_context(active_test=False).search([
-            ('state', 'in', ('draft', 'sent')), ('company_id', '=', company.id)])
-        low = orders.filtered(lambda o: o.amount_untaxed and o.margin / o.amount_untaxed < LOW_MARGIN)
-        low = low.sorted(lambda o: o.margin / o.amount_untaxed)
-        launched_count = cur['launched']
-        waiting = len(orders) - launched_count
-
-        load = []
-        # capacity: the working calendar of the section (td_capacity_hours, computed); open hours: standard workcenter_load
-        for center in env['mrp.workcenter'].search([]).filtered(lambda c: c.td_capacity_hours > 0):
-            planned = center.workcenter_load / 60.0
-            if planned:
-                load.append({'name': center.name, 'pct': round(planned / center.td_capacity_hours * 100.0),
-                             'over': planned > center.td_capacity_hours})
-        load.sort(key=lambda row: -row['pct'])
-
-        cut = self._cutting_stats(env, company, since, now + timedelta(days=1))
-        cut_prev = self._cutting_stats(env, company, before, since)
-        offcut_area = sum(lot.td_area_m2 for lot in env['stock.lot'].search([('td_is_offcut', '=', True)]) if lot.product_qty > 0)
-
-        plan_materials = plan_work = fact_materials = fact_work = 0.0
-        done = env['mrp.production'].search([('state', '=', 'done'), ('company_id', '=', company.id),
-                                             ('date_finished', '>=', since)])
-        for line in done.sale_line_id:
-            plan_materials += line.td_planned_material_cost
-            plan_work += line.td_planned_operation_cost
-            for production in done.filtered(lambda p: p.sale_line_id == line):
-                for move in production.move_raw_ids.filtered(lambda m: m.state == 'done'):
-                    fact_materials += move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id) * move.product_id.standard_price
-                for wo in production.workorder_ids:
-                    fact_work += wo.duration / 60.0 * wo.workcenter_id.costs_hour
-        plan = plan_materials + plan_work
-        fact = fact_materials + fact_work
-        deviation = (fact - plan) / plan * 100.0 if plan else 0.0
-
+        today, since = self._period()
         _ = self.env._
-        margin_tone = 'bad' if cur['margin_pct'] < 20 else ('warn' if low else 'ok')
-        note = env['ir.config_parameter'].get_param('td_mebli_dashboard.note') or \
-            _("Plan margin: standard prices of materials and hours.")
+        cards = [
+            ('shift', self._card_shift(env, company, since)),
+            ('on_time', self._card_on_time(env, since)),
+            ('stuck', self._card_stuck(env, company)),
+            ('margin', self._card_margin(env, company, since)),
+            ('claims', self._card_claims(env, since)),
+            ('payments', self._card_payments(env)),
+            ('prices', self._card_prices(env, company, since)),
+            ('load', self._card_load(env)),
+            ('ready', self._card_ready(env, company)),
+            ('conversion', self._card_conversion(env, since)),
+            ('waste', self._card_waste(env, company, since)),
+        ]
+        for key, card in cards:
+            card['key'] = key
         return {
             'title': _("Factory on one screen"),
-            'period': _("Last %s days · %s", PERIOD_DAYS, fields.Date.context_today(self).strftime('%d.%m.%Y')),
+            'period': _("Last %(days)s days · %(date)s", days=PERIOD_DAYS, date=today.strftime('%d.%m.%Y')),
             'company': company.name,
-            'cards': {
-                'revenue': {
-                    'label': _("Revenue"), 'value': self._money(cur['revenue']),
-                    'delta': self._delta(cur['revenue'], prev['revenue'], 'pct'),
-                    'lines': [_("Orders confirmed: %s (previous period: %s)", len(orders), len(prev['orders'])),
-                              _("In quotations: %s for %s", len(quotes), self._money(sum(quotes.mapped('amount_untaxed'))))],
-                    'action': 'td_mebli_sale.action_orders_board_td_mebli',
-                },
-                'margin': {
-                    'label': _("Average margin"), 'value': f"{self._num(cur['margin_pct'])} %", 'tone': margin_tone,
-                    'delta': self._delta(cur['margin_pct'], prev['margin_pct'], 'pp'),
-                    'alert': _("Orders below %s%%: %s", int(LOW_MARGIN * 100), len(low)) if low else '',
-                    'alert_rows': [f"{o.name} · {self._num(o.margin / o.amount_untaxed * 100)} %" for o in low[:3]],
-                    'lines': [_("Margin: %s of %s", self._money(cur['margin']), self._money(cur['revenue']))],
-                    'action': 'td_mebli_sale.sale_order_line_td_cost_action',
-                    'low_ids': low.ids,
-                    'low_view_id': self.env.ref('td_mebli_sale.sale_order_td_low_margin_list').sudo().id,
-                    'low_kanban_id': self.env.ref('td_mebli_sale.sale_order_td_low_margin_kanban').sudo().id,
-                },
-                'launch': {
-                    'label': _("Order to launch"), 'value': _("%s h", self._num(cur['launch_avg'])),
-                    'tone': 'ok' if cur['launch_avg'] <= TARGET_LAUNCH_H else 'warn',
-                    'target': _("Target: up to %s h", TARGET_LAUNCH_H),
-                    'delta': self._delta(cur['launch_avg'], prev['launch_avg'], 'pct', good_when_up=False),
-                    'lines': [_("Average for %s launched orders", launched_count),
-                              _("Waiting for launch: %s", waiting)],
-                    'action': 'td_mebli_sale.action_orders_launch_td_mebli',
-                },
-                'load': {
-                    'label': _("Section load, % of week"), 'rows': load,
-                    'target': _("Over 100%: the section is the bottleneck"),
-                    'lines': [_("Over capacity: %s", sum(1 for row in load if row['over']))],
-                    'action': 'td_mebli_mrp.mrp_workorder_td_load_action',
-                },
-                'cutting': {
-                    'label': _("Cutting waste"), 'value': f"{self._num(cut['waste_pct'])} %",
-                    'tone': 'ok' if cut['waste_pct'] <= TARGET_WASTE_PCT else 'warn',
-                    'target': _("Target: up to %s%%", TARGET_WASTE_PCT),
-                    'delta': self._delta(cut['waste_pct'], cut_prev['waste_pct'], 'pp', good_when_up=False),
-                    'lines': [_("Saved by business offcuts: %s", self._money(cut['saving'])),
-                              _("Offcuts in stock: %s m²", self._num(offcut_area)),
-                              _("Cutting jobs: %s", len(cut['jobs']))],
-                    'action': 'td_mebli_cutting.td_mebli_cutting_job_action',
-                },
-                'plan_fact': {
-                    'label': _("Cost: plan vs actual"), 'value': f"{'+' if deviation > 0 else ''}{self._num(deviation)} %",
-                    'tone': 'ok' if deviation <= TARGET_OVERRUN_PCT else ('warn' if deviation <= 2 * TARGET_OVERRUN_PCT else 'bad'),
-                    'target': _("Target: overrun up to %s%%", TARGET_OVERRUN_PCT),
-                    'plan': self._money(plan), 'fact': self._money(fact),
-                    'plan_label': _("Plan"), 'fact_label': _("Actual"),
-                    'fact_ratio': round(min(fact / plan, 1.5) / 1.5 * 100.0) if plan else 0,
-                    'plan_ratio': round(1 / 1.5 * 100.0) if plan else 0,
-                    'lines': [_("Manufacturing orders finished: %s", len(done))],
-                    'action': 'mrp.mrp_production_action',
-                },
-            },
-            'note': note,
+            'cards': [card for _key, card in cards],
+            'by_key': dict(cards),
+            'note': _("Quality nonconformities: in the B box only. Margin: one weighted figure (margin ÷ revenue) on the "
+                      "dashboard and in the reports."),
         }
+
+
+class SaleOrder(models.Model):
+    _inherit = 'sale.order'
+
+    td_dash_paid = fields.Monetary(string='Paid', compute='_compute_td_dash_due')
+    td_dash_due = fields.Monetary(string='Due', compute='_compute_td_dash_due')
+
+    @api.depends('amount_total', 'invoice_ids.amount_residual', 'invoice_ids.state')
+    def _compute_td_dash_due(self):
+        for order in self:
+            invoices = order.invoice_ids.filtered(lambda m: m.state == 'posted' and m.move_type == 'out_invoice')
+            paid = sum(invoices.mapped('amount_total')) - sum(invoices.mapped('amount_residual'))
+            order.td_dash_paid = paid
+            order.td_dash_due = max(0.0, order.amount_total - paid)

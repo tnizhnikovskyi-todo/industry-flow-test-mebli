@@ -6,14 +6,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-10 17:00+0000\n"
-"PO-Revision-Date: 2026-11-10 17:00+0000\n"
+"POT-Creation-Date: 2026-11-12 11:29+0000\n"
+"PO-Revision-Date: 2026-11-12 11:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: td_mebli_mrp
 #. odoo-python
@@ -90,10 +91,41 @@ msgid "Body board"
 msgstr "Плита корпусу"
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__file
+msgid "CSV File"
+msgstr "Файл CSV"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid ""
+"CSV export of the design program: the columns are recognized by their titles\n"
+"                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves\n"
+"                    is not part of the slice."
+msgstr ""
+"Вивантаження CSV з програми проєктування: колонки розпізнаються за заголовками\n"
+"                    (деталь, довжина, ширина, кількість, матеріал, кромка). Читання файлів самих програм проєктування\n"
+"                    не входить у зріз."
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/models/mrp_bom.py:0
 msgid "Choose a body decor for %s."
 msgstr "Оберіть декор корпусу для %s."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid ""
+"Columns not recognized: %s. The file needs a part name, a length and a "
+"width."
+msgstr ""
+"Колонки не розпізнано: %s. У файлі мають бути назва деталі, довжина й "
+"ширина."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__td_component_product_id
@@ -108,12 +140,14 @@ msgstr "Роль компонента"
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -133,6 +167,11 @@ msgid "Depth, mm"
 msgstr "Глибина, мм"
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Designation"
+msgstr "Позначення"
+
+#. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
 msgid "Dimensions, mm"
 msgstr "Розміри, мм"
@@ -148,6 +187,7 @@ msgstr "Розміри, мм"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -204,6 +244,11 @@ msgstr "Додаткова довжина кромки на кожну кром�
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__facade_board
 msgid "Facade board"
 msgstr "Плита фасаду"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__filename
+msgid "File Name"
+msgstr "Назва файлу"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__fitting
@@ -282,8 +327,33 @@ msgstr "Висота, мм"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__id
 msgid "ID"
 msgstr "ID"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Import"
+msgstr "Імпортувати"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+#: model:ir.actions.act_window,name:td_mebli_mrp.td_mebli_spec_import_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Import of Parts"
+msgstr "Імпорт деталей"
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_spec_import
+msgid "Import of the Parts of a Specification from CSV"
+msgstr "Імпорт деталей специфікації з CSV"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "Imported from %(file)s: %(count)s parts."
+msgstr "Імпортовано з %(file)s: деталей %(count)s."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__queue
@@ -298,12 +368,14 @@ msgstr "У роботі"
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_uid
 msgid "Last Updated by"
 msgstr "Востаннє оновив"
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_date
 msgid "Last Updated on"
 msgstr "Востаннє оновлено"
 
@@ -427,6 +499,17 @@ msgid "Nominal Width, mm"
 msgstr "Номінальна ширина, мм"
 
 #. module: td_mebli_mrp
+#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
+msgid ""
+"Open work orders by work center: the load of every section by week of the "
+"planned start, in percent of its weekly capacity (working calendar of the "
+"section)."
+msgstr ""
+"Відкриті операції за дільницями: завантаження кожної дільниці за тижнями "
+"запланованого старту, у відсотках тижневої потужності (робочий календар "
+"дільниці)."
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_order_bom
 msgid "Order BoM"
 msgstr "Специфікація під замовлення"
@@ -444,6 +527,15 @@ msgstr ""
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__over
 msgid "Over capacity"
 msgstr "Понад потужність"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid ""
+"Over capacity: the open work of the section (standard work center load) "
+"needs more hours than the section has in a week."
+msgstr ""
+"Понад потужність: відкрита робота дільниці (стандартне завантаження робочого"
+" центру) потребує більше годин, ніж дільниця має за тиждень."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_is_parametric
@@ -504,6 +596,11 @@ msgid "Parts"
 msgstr "Деталі"
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__preview_count
+msgid "Parts in the File"
+msgstr "Деталей у файлі"
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_board_m2
 msgid "Per m2 of board"
 msgstr "На м² плити"
@@ -558,6 +655,51 @@ msgid "Quantity"
 msgstr "Кількість"
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid ""
+"Read only: hours per week of the working calendar of the section times the "
+"number of pieces it makes in parallel (the product capacity without a "
+"product). The time efficiency is not applied here: it is already in the "
+"expected duration of the operations."
+msgstr ""
+"Лише читання: години на тиждень робочого календаря дільниці, помножені на "
+"кількість виробів, які вона робить паралельно (потужність без товару). "
+"Ефективність тут не застосовується: вона вже в очікуваній тривалості "
+"операцій."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__facade
+msgid "Ready-made facade"
+msgstr "Готовий фасад"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_material_kind
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_material_kind
+msgid ""
+"Ready-made facade: fronts bought or made outside (e.g. painted MDF); when "
+"such a line of the template bill of materials applies to the chosen "
+"attribute values, the facade parts are not cut from board."
+msgstr ""
+"Готовий фасад: фасади, куплені чи зроблені поза цехом (напр. фарбований "
+"МДФ); коли такий рядок шаблонної специфікації застосовується до вибраних "
+"значень атрибутів, деталі фасаду з плити не розкроюються."
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Recognize Columns"
+msgstr "Розпізнати колонки"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__mapping
+msgid "Recognized Columns"
+msgstr "Розпізнані колонки"
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Reserved / consumed"
+msgstr "Зарезервовано / спожито"
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__rule_id
 msgid "Rule"
 msgstr "Правило"
@@ -567,6 +709,16 @@ msgstr "Правило"
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__sequence
 msgid "Sequence"
 msgstr "Послідовність"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid ""
+"Share of the weekly capacity of the section taken by this operation; summed "
+"over a section and the week of the planned start it is the load of that "
+"week."
+msgstr ""
+"Частка тижневої потужності дільниці, яку займає ця операція; сума по "
+"дільниці за тиждень запланованого старту — завантаження цього тижня."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_length_mm
@@ -586,9 +738,20 @@ msgid "Shop Status"
 msgstr "Стан у цеху"
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__bom_id
+msgid "Specification"
+msgstr "Специфікація"
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_template_bom_id
 msgid "Template BoM"
 msgstr "Шаблонна специфікація"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "The file is empty."
+msgstr "Файл порожній."
 
 #. module: td_mebli_mrp
 #: model:ir.model.constraint,message:td_mebli_mrp.constraint_td_mebli_part_rule_edge_sides_range
@@ -599,6 +762,13 @@ msgstr "Кількість кромкованих сторін має бути �
 #: model:ir.model.constraint,message:td_mebli_mrp.constraint_td_mebli_part_rule_qty_positive
 msgid "The part quantity must be positive."
 msgstr "Кількість деталей має бути додатною."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid ""
+"The specification has no board among its components: add the board first."
+msgstr "У специфікації немає плити серед компонентів: спершу додайте плиту."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_thickness_mm
@@ -686,52 +856,59 @@ msgid "Work Order"
 msgstr "Робоче замовлення"
 
 #. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "edged long sides"
+msgstr "кромка довгих сторін"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "edged short sides"
+msgstr "кромка коротких сторін"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "length, mm"
+msgstr "довжина, мм"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "material"
+msgstr "матеріал"
+
+#. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "mm."
 msgstr "мм."
 
 #. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "part"
+msgstr "деталь"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "quantity"
+msgstr "кількість"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "thickness"
+msgstr "товщина"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "width, mm"
+msgstr "ширина, мм"
+
+#. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "x"
 msgstr "x"
-
-#. module: td_mebli_mrp
-#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
-msgid "Designation"
-msgstr "Позначення"
-
-#. module: td_mebli_mrp
-#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
-msgid "Reserved / consumed"
-msgstr "Зарезервовано / спожито"
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
-msgid "Read only: hours per week of the working calendar of the section times the number of pieces it makes in parallel (the product capacity without a product). The time efficiency is not applied here: it is already in the expected duration of the operations."
-msgstr "Лише читання: години на тиждень робочого календаря дільниці, помножені на кількість виробів, які вона робить паралельно (потужність без товару). Ефективність тут не застосовується: вона вже в очікуваній тривалості операцій."
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
-msgid "Share of the weekly capacity of the section taken by this operation; summed over a section and the week of the planned start it is the load of that week."
-msgstr "Частка тижневої потужності дільниці, яку займає ця операція; сума по дільниці за тиждень запланованого старту — завантаження цього тижня."
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
-msgid "Over capacity: the open work of the section (standard work center load) needs more hours than the section has in a week."
-msgstr "Понад потужність: відкрита робота дільниці (стандартне завантаження робочого центру) потребує більше годин, ніж дільниця має за тиждень."
-
-#. module: td_mebli_mrp
-#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
-msgid "Open work orders by work center: the load of every section by week of the planned start, in percent of its weekly capacity (working calendar of the section)."
-msgstr "Відкриті операції за дільницями: завантаження кожної дільниці за тижнями запланованого старту, у відсотках тижневої потужності (робочий календар дільниці)."
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__facade
-msgid "Ready-made facade"
-msgstr "Готовий фасад"
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_material_kind
-#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_material_kind
-msgid "Ready-made facade: fronts bought or made outside (e.g. painted MDF); when such a line of the template bill of materials applies to the chosen attribute values, the facade parts are not cut from board."
-msgstr "Готовий фасад: фасади, куплені чи зроблені поза цехом (напр. фарбований МДФ); коли такий рядок шаблонної специфікації застосовується до вибраних значень атрибутів, деталі фасаду з плити не розкроюються."

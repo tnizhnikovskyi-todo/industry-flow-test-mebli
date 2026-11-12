@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_order_change_wizard_form" model="ir.ui.view">
+        <field name="name">td.mebli.order.change.wizard.form</field>
+        <field name="model">td.mebli.order.change.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Create a Change">
+                <p class="text-muted">The current price and promised date are fixed as «before»; change the lines and the
+                    date of the order, then press «Fix the Change».</p>
+                <group>
+                    <field name="order_id" readonly="1"/>
+                    <field name="reason" widget="radio" options="{'horizontal': True}"/>
+                    <field name="note"/>
+                </group>
+                <footer>
+                    <button name="action_create" type="object" string="Create" class="btn-primary"/>
+                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_order_form_td_mebli_change" model="ir.ui.view">
+        <field name="name">sale.order.form.td_mebli_change</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_td_open_change" type="object" string="Create a Change"
+                        invisible="state != 'sale' or td_change_open"/>
+                <button name="action_td_fix_change" type="object" string="Fix the Change" class="btn-primary"
+                        invisible="not td_change_open"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Changes" name="td_changes" invisible="not td_change_ids">
+                    <field name="td_change_ids" readonly="1">
+                        <list decoration-info="state == 'open'">
+                            <field name="version"/>
+                            <field name="reason"/>
+                            <field name="note"/>
+                            <field name="amount_before"/>
+                            <field name="amount_after"/>
+                            <field name="amount_delta"/>
+                            <field name="date_before"/>
+                            <field name="date_after"/>
+                            <field name="shift_days"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="state" widget="badge" decoration-info="state == 'open'"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
