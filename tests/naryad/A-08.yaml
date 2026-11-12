@@ -1,0 +1,30 @@
+# ТЕСТОВИЙ наряд A-08 — ТР пакета «меблі» (use cases, AC, технічний дизайн) після A-07 «будуємо» (flow/decisions.md запис 41). Склала сесія.
+# Крок закривають скіли ОРГАНІЗАЦІЇ odoo19-tr-authoring (у сесії — anthropic-skills:tr-usecases-acceptance, tr-odoo-tech-design; гейт — tr-review). Версію скілів організації лише фіксуємо у звіті.
+step: A-08
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: ["odoo19-tr-authoring:tr-usecases-acceptance", "odoo19-tr-authoring:tr-odoo-tech-design", "odoo19-tr-authoring:tr-review"]
+model: opus
+effort: high
+inputs:
+  - {name: "concept/*", from: A-20, path: docs/industries/mebli/concept/, sha: e9cff61}
+  - {name: "research/{AI-DECISIONS,BOX,SALES,REJECTED,REUSE,FUNCTIONAL-MAP}.md", from: A-20, path: docs/industries/mebli/research/, sha: e9cff61}
+  - {name: "зріз A-21: PLAN.md, README.md, complexity.md, facts.json", from: A-21, path: docs/industries/mebli/prototype-real/, sha: e9cff61}
+  - {name: "модулі зрізу (заготовка A-11)", from: A-21, path: package/addons/, sha: e9cff61}
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: e9cff61}
+  - {name: "рішення власника (записи 4–41)", from: A-07, path: flow/decisions.md, sha: e9cff61}
+where: "package/SPEC.md; package/tr/"
+template: "формати скілів організації tr-usecases-acceptance і tr-odoo-tech-design"
+done: "package/SPEC.md: use cases за ролями й сценаріями концепції, AC-xx з треком (стандарт / конфіг / код td_) і посиланням на F-xx; технічний дизайн td_ на Odoo 19 CE (EE — мости/ризики); рецензія tr-review без blocker"
+check: {mode: both, how: "tr-review (гейт A-08); кожна F-xx концепції покрита AC або в «не робимо»; трек AC узгоджений з complexity.md і таблицею «Модель даних» PLAN.md", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 30, context_budget_tokens: 250000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — знеособлені агрегати; без даних клієнтів"
+odoo_connections: []
+params: {mode: перша}
+repo: {url: origin, base_branch: flow/v020-start, branch: flow/A-08-test}
+attempt: 1
+returned_from: null
+git: {base: e9cff61, head: null, prev_tag: null}
+date: 2026-11-12
