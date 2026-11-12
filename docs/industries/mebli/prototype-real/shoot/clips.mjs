@@ -1,5 +1,5 @@
 // Живі записи зрізу A-21 (спроба 2), ПОВНИЙ ОБСЯГ — кроки кліпів підготувала хвиля 1, знімає хвиля 2 (PLAN.md §6). Титри — лише події (бренд — A-21c).
-// Порядок показу — SALES §6 (запис 36): D_sample (сцена 4, прийнятий зразок) першим, D_dashboard — останнім.
+// Порядок показу — SALES §6 (запис 36): сцена 4 (D_late, екран прийнятого зразка) першою, D_dashboard — останнім; порядок ЗЙОМКИ — PASS1, потім PASS2 (дашборд першим).
 import { clip, title, titleOff, hold, zoom, zoomOff, settle, press, typeIn, glide, focus, scrollTo, fact } from './rec_lib.mjs';
 const ORDER = process.env.ORDER_ID || '123';
 const tab = (c, text) => c.page.locator('.o_notebook_headers a', { hasText: text });
@@ -8,13 +8,14 @@ const btn = (c, text) => c.page.locator('button', { hasText: text });
 const CSV = new URL('./data/kitchen-spec.csv', import.meta.url).pathname;
 
 export const PASS1 = ['D_csv', 'D_tablet', 'D_kit'];
-export const PASS2 = ['D_sample', 'D_measure', 'D_change', 'D_cutting', 'D_install', 'D_accruals', 'D_claims', 'D_dashboard'];
+// прохід 2 — дашборд першим (recording.md, після fix_dates); D_sample (прийнятий зразок) НЕ перезнімається — сцена 4 повного обсягу = D_late
+export const PASS2 = ['D_dashboard', 'D_late', 'D_measure', 'D_change', 'D_cutting', 'D_install', 'D_accruals', 'D_claims'];
 export const CLIPS = {
-    // сцена 4 — прийнятий зразок (без змін, N-11)
-    async D_sample() {
-        return clip('D_sample', { role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}` }, async (c) => {
+    // сцена 4 — екран прийнятого зразка як є (нові кнопки S-02 у кадрі; D_sample не перезнімається — PLAN §7)
+    async D_late() {
+        return clip('D_late', { role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}` }, async (c) => {
             await settle(c.page, 900);
-            await fact(c.page, 'D_sample', 'margin_percent', '.o_field_widget[name=margin_percent]', { re: '[\\d,.]+\\s*%' });
+            await fact(c.page, 'D_late', 'margin_percent', '.o_field_widget[name=margin_percent]', { re: '[\\d,.]+\\s*%' });
             c.mark();
             await title(c, 'Менеджер продажу', 'Обіцяли клієнту дату — система **вже бачить**, що її зірве');
             await hold(c, 1500);
@@ -34,8 +35,8 @@ export const CLIPS = {
             await hold(c, 3500);
             await zoomOff(c);
             await hold(c, 800);
-            await fact(c.page, 'D_sample', 'delay_days', '.o_group .o_field_widget[name=td_delay_days]', { re: '\\d+' });
-            await fact(c.page, 'D_sample', 'late_item_ready', '.o_data_row.text-danger td[name=td_date_ready]');
+            await fact(c.page, 'D_late', 'delay_days', '.o_group .o_field_widget[name=td_delay_days]', { re: '\\d+' });
+            await fact(c.page, 'D_late', 'late_item_ready', '.o_data_row.text-danger td[name=td_date_ready]');
         });
     },
     // сцена 1 — замір: холодильник глибший за нішу

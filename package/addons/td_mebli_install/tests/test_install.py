@@ -1,5 +1,9 @@
+from datetime import datetime, timedelta
+
 from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
+
+from odoo.addons.td_mebli_sale.tests.common import TdMebliSaleCommon
 
 PHOTO = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=='
 
@@ -42,3 +46,39 @@ class TestInstall(TransactionCase):
         with self.assertRaises(Exception):
             with self.env.cr.savepoint():
                 env['td.mebli.accrual'].create({'employee_id': employee.id, 'kind': 'penalty', 'amount': -500.0})
+
+
+@tagged('post_install', '-at_install')
+class TestPiecework(TdMebliSaleCommon):
+    """Decision AI-08: the piecework is the piece rate of the operation, not the hours times the hourly cost."""
+
+    def test_piece_rate_of_the_operation_shared_by_time(self):
+        env = self.env
+        first = env['hr.employee'].create({'name': 'First', 'pin': '1111', 'hourly_cost': 999.0})
+        second = env['hr.employee'].create({'name': 'Second', 'pin': '2222', 'hourly_cost': 1.0})
+        order = self._make_order()
+        order.action_confirm()
+        workorder = order.mrp_production_ids.workorder_ids[:1]
+        operation = workorder.operation_id
+        operation.td_piece_rate = 10.0
+        basis = operation._td_basis_quantity()
+        self.assertGreater(basis, 0)
+        kiosk = env['td.mebli.kiosk']
+        kiosk.create({'workorder_id': workorder.id, 'action': 'start', 'employee_id': first.id, 'pin': '1111'}).action_confirm()
+        kiosk.create({'workorder_id': workorder.id, 'action': 'done', 'employee_id': first.id, 'pin': '1111'}).action_confirm()
+        self.assertEqual(workorder.state, 'done')
+        start = datetime(2026, 11, 2, 8, 0)
+        workorder.time_ids.write({'date_start': start, 'date_end': start + timedelta(minutes=90)})
+        productive = env['mrp.workcenter.productivity.loss'].search([('loss_type', '=', 'productive')], limit=1)
+        env['mrp.workcenter.productivity'].create({
+            'workorder_id': workorder.id, 'workcenter_id': workorder.workcenter_id.id, 'loss_id': productive.id,
+            'td_employee_id': second.id, 'date_start': start, 'date_end': start + timedelta(minutes=30)})
+        env['td.mebli.accrual'].action_td_accrue()
+        accruals = env['td.mebli.accrual'].search([('productivity_id', 'in', workorder.time_ids.ids)])
+        total = 10.0 * basis * workorder.qty_produced
+        self.assertAlmostEqual(sum(accruals.mapped('amount')), total, places=1)
+        first_amount = accruals.filtered(lambda a: a.employee_id == first).amount
+        self.assertAlmostEqual(first_amount, round(total * 0.75, 2))  # the share of the time, not the hourly cost
+        self.assertEqual(set(accruals.mapped('piece_rate')), {10.0})
+        env['td.mebli.accrual'].action_td_accrue()  # twice: no double accrual
+        self.assertEqual(env['td.mebli.accrual'].search_count([('productivity_id', 'in', workorder.time_ids.ids)]), 2)

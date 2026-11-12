@@ -196,5 +196,6 @@ class MrpBom(models.Model):
                 'name': op.name, 'workcenter_id': op.workcenter_id.id, 'sequence': op.sequence,
                 'time_mode': 'manual', 'time_cycle_manual': duration,
                 'td_time_basis': op.td_time_basis, 'td_time_rate': op.td_time_rate,
+                'td_piece_rate': op.td_piece_rate,
             }))
         return operations

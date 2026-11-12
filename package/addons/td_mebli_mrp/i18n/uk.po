@@ -912,3 +912,8 @@ msgstr "ширина, мм"
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "x"
 msgstr "x"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_piece_rate
+msgid "Piece Rate per Basis Unit"
+msgstr "Розцінка за одиницю бази"

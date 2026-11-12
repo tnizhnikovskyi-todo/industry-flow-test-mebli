@@ -10,7 +10,8 @@ const btn = (c, text) => c.page.locator('button', { hasText: text });
 
 export const STEPS = [
     // сцена 4 — замовні фасади затримуються (зразок, прийнято)
-    { n: 0, role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}`, name: 'sample',
+    // ім'я кроку — не 'sample': прийнятий кадр зразка screens/00-sample.png не перезаписується (рішення AI 0.3.x, PLAN §7)
+    { n: 0, role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}`, name: 'late-facades',
       act: async (c, { press }) => { await press(c, tab(c, 'Закупівлі під замовлення')); },
       facts: [
           { name: 'promised_date', sel: '.o_field_widget[name=commitment_date]' },
@@ -112,6 +113,7 @@ export const STEPS = [
       act: async (c, { press }) => { await press(c, c.page.locator('.td_card.td_k_margin')); },
       facts: [{ name: 'revenue_total', sel: 'tfoot td:nth-child(3)' }] },
 ];
-// прохід 1 змінює дані (імпорт CSV, «Взято» з PIN); прохід 2 — лише читання, дашборд останнім за SALES §6
+// прохід 1 змінює дані (імпорт CSV, «Взято» з PIN); прохід 2 — лише читання, дашборд першим (recording.md); порядок ПОКАЗУ — SALES §6 (дашборд у кінці) — монтаж A-21c
+// (scenario.mjs іде за порядком STEPS; порядок PASS2 — для читання)
 export const PASS1 = [3, 5];
-export const PASS2 = [0, 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+export const PASS2 = [15, 16, 0, 1, 2, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14];

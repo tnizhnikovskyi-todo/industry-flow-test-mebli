@@ -56,6 +56,7 @@
             <field name="workcenter_id" position="after">
                 <field name="td_time_basis" optional="show"/>
                 <field name="td_time_rate" optional="show"/>
+                <field name="td_piece_rate" optional="show"/>
             </field>
         </field>
     </record>
@@ -68,6 +69,7 @@
             <field name="workcenter_id" position="after">
                 <field name="td_time_basis"/>
                 <field name="td_time_rate" invisible="td_time_basis == 'fixed'"/>
+                <field name="td_piece_rate"/>
             </field>
         </field>
     </record>

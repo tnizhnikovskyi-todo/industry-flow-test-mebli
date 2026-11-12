@@ -518,3 +518,8 @@ msgstr "Історія спілкування з сайту"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__workcenter_id
 msgid "Work Center"
 msgstr "Дільниця"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__piece_rate
+msgid "Piece Rate"
+msgstr "Розцінка"
