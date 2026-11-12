@@ -21,7 +21,15 @@ WORKERS = [
     ('Оксана Литвин', 'Оператор присадки', 'DRL', 150.0, '3333'),
     ('Сергій Бондаренко', 'Складальник', 'ASM', 160.0, '4444'),
     ('Іван Кушнір', 'Монтажник', None, 170.0, '5555'),
+    # the assembly section has four assemblers: one assembler for all the orders gave an implausible monthly piecework
+    ('Андрій Мельник', 'Складальник', 'ASM', 160.0, '7777'),
+    ('Юрій Савчук', 'Складальник', 'ASM', 160.0, '8888'),
+    ('Роман Ковальчук', 'Складальник', 'ASM', 160.0, '9999'),
 ]
+# crew share of the order amount (without taxes) for the installation, in the demo (a parameter of the act; calibrated
+# so that one crew of two installers gets a believable month: about 15-30 thousand UAH each; the demo factory installs
+# about 60 orders a month with one crew, so the share is lower than a crew of a smaller factory would get)
+CREW_PCT = 2.0
 QUALITY_POINT = 'Кромка без сколів і щілин, фото торця'
 INSTALL_PRODUCT = 'Доставка й монтаж (у вартості замовлення)'
 
@@ -44,10 +52,18 @@ def _image(name):
         return base64.b64encode(handle.read())
 
 
+def _photos(env, record, photos):
+    """Photo stubs (product pictures of the demo, not real photos) attached to a measurement sheet or an act."""
+    attachments = env['ir.attachment'].create([
+        {'name': name, 'datas': _image(image), 'mimetype': 'image/png', 'res_model': record._name, 'res_id': record.id}
+        for name, image in photos])
+    record.photo_ids = [(6, 0, attachments.ids)]
+
+
 def _employees(env, people):
     """Standard employees with a PIN and an hourly cost (hr, hr_hourly_cost); the installer is the user of the crew."""
     Employee = env['hr.employee'].sudo()
-    by_center, crew = {}, Employee
+    by_center, team, crew = {}, {}, Employee
     for index, (name, job, code, cost, pin) in enumerate(WORKERS, start=1):
         vals = {'name': name, 'job_title': job, 'hourly_cost': cost, 'pin': pin,
                 'work_phone': f'+380 00 000 01 {index:02d}', 'work_email': f'worker{index}@demo-fabryka.example'}
@@ -55,21 +71,33 @@ def _employees(env, people):
             vals['user_id'] = people['fitter2'].id
         employee = Employee.create(vals)
         if code:
-            by_center[code] = employee
+            by_center.setdefault(code, employee)
+            team[code] = team.get(code, Employee) | employee
         else:
             crew |= employee
     crew |= Employee.create({'name': people['fitter'].name, 'job_title': 'Бригадир монтажників', 'hourly_cost': 190.0,
                              'user_id': people['fitter'].id, 'pin': '6666', 'work_email': 'fitter@demo-fabryka.example'})
-    return by_center, crew
+    return by_center, team, crew
 
 
-def _shop_history(env, by_center, rnd):
+def _shop_history(env, by_center, team, rnd):
     """The time lines written by the tablet so far get the worker who confirmed them; the edge banding has a quality step."""
     for operation in env['mrp.routing.workcenter'].search([('workcenter_id.code', '=', 'EDG')]):
         operation.td_quality_point = QUALITY_POINT
     lines = env['mrp.workcenter.productivity'].search([('workorder_id', '!=', False)])
-    for code, employee in by_center.items():
-        lines.filtered(lambda line: line.workcenter_id.code == code).write({'td_employee_id': employee.id})
+    for code, employees in team.items():
+        # one worker per work order; a section with several workers shares its work orders evenly by the piecework
+        # (the largest work order goes to the worker with the least work so far)
+        by_order = lines.filtered(lambda line: line.workcenter_id.code == code).grouped('workorder_id')
+        load = {employee: 0.0 for employee in employees}
+
+        def _piece(workorder):
+            operation = workorder.operation_id
+            return operation.td_piece_rate * operation._td_basis_quantity() * (workorder.qty_produced or 1.0) if operation else 0.0
+        for workorder, wo_lines in sorted(by_order.items(), key=lambda item: (-_piece(item[0]), item[0].id)):
+            employee = min(employees, key=lambda e: (load[e], e.id))
+            load[employee] += _piece(workorder)
+            wo_lines.write({'td_employee_id': employee.id})
     photo = _image('prod_kitchen.png')
     since = fields.Datetime.now() - timedelta(days=30)
     edge_done = env['mrp.workorder'].search([('workcenter_id.code', '=', 'EDG'), ('state', '=', 'done'),
@@ -128,8 +156,14 @@ def _installations(env, people, orders, crew, rnd):
         task.name = f'{task.sale_order_id.name}: монтаж'  # not the name of the service line
     for order in orders['done'].sorted('date_order'):
         task = order.tasks_ids[:1]
-        finished = max(order.mrp_production_ids.mapped('date_finished') or [order.date_order])
-        visit = _past(_work(finished + timedelta(days=rnd.randint(1, 3)), rnd), now, rnd)
+        # the planned finish of the manufacturing orders can lie in the future: the installation then falls on one of the
+        # last working days (not all on today, which piled the installations of a month into one day)
+        finished = min(max(order.mrp_production_ids.mapped('date_finished') or [order.date_order]),
+                       order.date_order + timedelta(days=rnd.randint(12, 18)))
+        target = finished + timedelta(days=rnd.randint(1, 3))
+        if target > now - timedelta(hours=2):
+            target = now - timedelta(days=rnd.randint(1, 9), hours=rnd.randint(0, 6))
+        visit = _past(_work(target, rnd), now, rnd)
         _visit(task, visit, crew_users)
         late = finished >= since and on_time_misses < 2 and rnd.random() < 0.12
         on_time_misses += late
@@ -138,11 +172,12 @@ def _installations(env, people, orders, crew, rnd):
         if visit < since:
             task.state = '1_done'
             continue
-        act = Act.with_user(fitter).create({'task_id': task.id, 'kind': 'final', 'crew_pct': 5.0,
+        act = Act.with_user(fitter).create({'task_id': task.id, 'kind': 'final', 'crew_pct': CREW_PCT,
                                             'signed_by': order.partner_id.name, 'signature': photo,
                                             'photo_ids': [], 'photo_archive': rnd.random() < 0.3})
         act.with_user(fitter).action_sign()
         acts |= act
+        env.flush_all()  # the signing date is written by the ORM: flush it before the back-dating, or it overwrites it
         env.cr.execute('UPDATE td_mebli_install_act SET signed_on = %s, create_date = %s WHERE id = %s',
                        (visit + timedelta(hours=3), visit, act.id))
     acts.invalidate_recordset(['signed_on', 'create_date'])
@@ -151,6 +186,7 @@ def _installations(env, people, orders, crew, rnd):
                                                   ('Подряпина на цоколі, замінено', True))):
         act.defect_ids = [(0, 0, {'name': text, 'resolved': resolved, 'photo': photo})]
         _note(act, fitter, 'Клієнт підписав акт, недолік записано, виїзд на регулювання — за домовленістю.', act.signed_on)
+        _photos(env, act, [('Кухня після монтажу.png', 'prod_kitchen.png'), ('Недолік: дверка.png', 'prod_wardrobe.png')])
     # orders in progress: two installed but not fully paid (prepayment only), one ready and not shipped, one to install now
     progress = orders['progress'].sorted('date_order')
     paid_late, ready, to_sign = progress[:2], progress[2:3], progress[3:4]
@@ -169,9 +205,11 @@ def _installations(env, people, orders, crew, rnd):
         _visit(task, visit, crew_users)
         order.commitment_date = fields.Datetime.to_datetime(fields.Date.to_date(visit + timedelta(days=2))) + timedelta(hours=15)
         act = Act.with_user(fitter).create({'task_id': task.id, 'kind': 'final', 'signed_by': order.partner_id.name,
-                                            'signature': photo, 'photo_archive': True})
+                                            'signature': photo, 'photo_archive': True, 'crew_pct': CREW_PCT})
         act.with_user(fitter).action_sign()
+        env.flush_all()
         env.cr.execute('UPDATE td_mebli_install_act SET signed_on = %s WHERE id = %s', (visit + timedelta(hours=3), act.id))
+        act.invalidate_recordset(['signed_on'])
     # ready: the back panels of the wardrobe/dresser are not packed yet — the delivery is blocked (scene 5)
     missing = ready.td_kit_line_ids.filtered(lambda line: 'Задня стінка' in line.item)
     (ready.td_kit_line_ids - missing).write({'packed': True, 'packed_by_id': people['store'].id})
@@ -180,7 +218,9 @@ def _installations(env, people, orders, crew, rnd):
         task = order.tasks_ids[:1]
         _visit(task, _work(now.replace(hour=7, minute=0), rnd), crew_users)
         order.commitment_date = now + timedelta(days=1)
-        Act.with_user(fitter).create({'task_id': task.id, 'kind': 'final', 'signed_by': order.partner_id.name})
+        draft = Act.with_user(fitter).create({'task_id': task.id, 'kind': 'final', 'signed_by': order.partner_id.name,
+                                              'crew_pct': CREW_PCT})
+        _photos(env, draft, [('Кухня після монтажу.png', 'prod_kitchen.png'), ('Шафа після монтажу.png', 'prod_wardrobe.png')])
     return {'ready': ready, 'paid_late': paid_late, 'to_sign': to_sign}
 
 
@@ -215,6 +255,8 @@ def _measures(env, people, show, orders, rnd):
     env['td.mebli.measure.appliance'].create([
         {'measure_id': sheet.id, 'sequence': i, 'name': n, 'niche_id': niches[k].id, 'width_mm': w, 'height_mm': h,
          'depth_mm': d} for i, (n, k, w, h, d) in enumerate(SPEC_APPLIANCES)])
+    _photos(env, sheet, [('Ніша під холодильник.png', 'prod_kitchen.png'), ('Стіна передпокою.png', 'prod_wardrobe.png'),
+                         ('Розетки й вода.png', 'prod_dresser.png')])
     _backdate(env, 'td_mebli_measure', sheet, show.date_order - timedelta(days=3))
     # the background: measurements of the last 30 days, half of them became contracts (KPI 8)
     recent = (orders['done'] | orders['progress'] | orders['confirmed']).filtered(
@@ -365,10 +407,10 @@ def _calibrate_load(env, targets):
 
 
 def seed_full(env, people, partners, orders, show, rnd):
-    by_center, crew = _employees(env, people)
+    by_center, team, crew = _employees(env, people)
     crew_users = people['fitter'] | people['fitter2']
     state = _installations(env, people, orders, crew, rnd)
-    _shop_history(env, by_center, rnd)
+    _shop_history(env, by_center, team, rnd)
     _show_visits(env, show, crew_users, rnd)
     _measures(env, people, show, orders, rnd)
     _claims(env, people, orders, rnd)

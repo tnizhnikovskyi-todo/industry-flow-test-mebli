@@ -7,9 +7,12 @@ const row = (c, text) => c.page.locator('.o_data_row, .o_kanban_record', { hasTe
 const btn = (c, text) => c.page.locator('button', { hasText: text });
 const CSV = new URL('./data/kitchen-spec.csv', import.meta.url).pathname;
 
-export const PASS1 = ['D_csv', 'D_tablet', 'D_kit', 'D_cutting'];
+export const PASS1 = ['D_csv', 'D_tablet', 'M_tablet', 'D_kit', 'D_cutting', 'M_act'];
 // прохід 2 — дашборд першим (recording.md, після fix_dates); D_sample (прийнятий зразок) НЕ перезнімається — сцена 4 повного обсягу = D_late
-export const PASS2 = ['D_dashboard', 'D_late', 'D_measure', 'D_change', 'D_install', 'D_accruals', 'D_claims'];
+// мобільні кліпи (хвиля 3, 390×844, isMobile, hasTouch, DPR 3): M_tablet і M_act змінюють дані (прохід 1), решта — лише читання
+export const PASS2 = ['D_dashboard', 'M_dashboard', 'D_late', 'M_late', 'D_measure', 'M_measure', 'D_change', 'D_install', 'D_accruals', 'D_claims'];
+const TABLET = '/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action';
+const ACTS = '/odoo/action-td_mebli_install.td_mebli_install_act_action';
 export const CLIPS = {
     // сцена 4 — екран прийнятого зразка як є (нові кнопки S-02 у кадрі; D_sample не перезнімається — PLAN §7)
     async D_late() {
@@ -90,8 +93,9 @@ export const CLIPS = {
             await title(c, 'Цех', '«Взято» — **за PIN працівника**, без окремого користувача');
             await press(c, c.page.locator('.o_group_header', { hasText: 'Розкрій' }));
             await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00110' }).locator('button', { hasText: 'Взято' }));
-            await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Петро');
-            await press(c, c.page.locator('.o-autocomplete--dropdown-item').first());
+            // кіоск: працівник — зі списку (на телефоні пошуковий діалог співробітників недоступний ролі планшета)
+            await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));
+            await press(c, c.page.locator('.o_select_menu_item', { hasText: 'Петро Гуменюк' })); await settle(c.page, 400);
             await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
             await press(c, btn(c, 'Підтвердити'));
             await hold(c, 2000); await titleOff(c);
@@ -194,6 +198,115 @@ export const CLIPS = {
             await title(c, 'Картка = звіт', 'Ті самі замовлення й та сама **зважена маржа**');
             await focus(c, 'tfoot'); await hold(c, 3000); await titleOff(c);
             await fact(c.page, 'D_dashboard', 'drill_orders', '.o_pager_limit');
+        });
+    },
+
+    // ---------------- телефон (хвиля 3) ----------------
+    // сцена 1 — замірник на телефоні: ніші, техніка «не вміщається», фото ніш і комунікацій
+    async M_measure() {
+        return clip('M_measure', { role: 'measure', mobile: true, url: '/odoo/action-td_mebli_measure.td_mebli_measure_action' }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Замірник з телефона', 'Замір-лист **на об\'єкті**, а не на папері');
+            await hold(c, 1200);
+            await press(c, row(c, 'Кухня й передпокій').locator('td').first());
+            await press(c, tab(c, 'Техніка клієнта'));
+            await scrollTo(c, '.o_data_row.text-danger');
+            await title(c, 'Не вміщається', 'Холодильник **глибший за нішу** — видно до виробництва');
+            await focus(c, '.o_data_row.text-danger'); await hold(c, 2500);
+            await fact(c.page, 'M_measure', 'issue', '.alert-danger .o_field_widget[name=issue_text]');
+            await press(c, tab(c, 'Комунікації й фото'));
+            await scrollTo(c, '.o_field_widget[name=photo_ids]');
+            await title(c, 'Фото ніш', 'Фото й комунікації — **у тому ж замір-листі**');
+            await focus(c, '.o_field_widget[name=photo_ids]'); await hold(c, 2500); await titleOff(c);
+        });
+    },
+    // сцена 5 — планшет цеху на телефоні: «Зроблено» за PIN (змінює дані: завершує робоче завдання, яке взяв D_tablet)
+    async M_tablet() {
+        return clip('M_tablet', { role: 'tablet', mobile: true, url: TABLET }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Цех', '«Взято» і «Зроблено» — **за PIN працівника**');
+            await press(c, c.page.locator('.o_group_header .o_group_name', { hasText: 'Розкрій' }));
+            // робоче завдання, яке Петро взяв у D_tablet (WH/MO/00110): у ньому кнопка «Зроблено»
+            const r = c.page.locator('.o_data_row', { hasText: 'Петро Гуменюк' }).filter({ has: c.page.locator('button', { hasText: 'Зроблено' }) }).first();
+            await r.scrollIntoViewIfNeeded(); await focus(c, '.o_data_row.text-info'); await hold(c, 1500);
+            await press(c, r.locator('button', { hasText: 'Зроблено' }));
+            // кіоск: працівник — зі списку (на телефоні пошуковий діалог співробітників недоступний ролі планшета)
+            await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));
+            await press(c, c.page.locator('.o_select_menu_item', { hasText: 'Петро Гуменюк' })); await settle(c.page, 400);
+            await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
+            await press(c, btn(c, 'Підтвердити'));
+            await settle(c.page, 900);
+            await title(c, 'Зроблено', 'Час і виконавця записано — **основа відрядної**');
+            await hold(c, 2000); await titleOff(c);
+            await fact(c.page, 'M_tablet', 'cut_queue', '.o_group_header:has-text("Розкрій")', { re: '(?<=\\()\\d+' });
+        });
+    },
+    // сцена 6 — бригадир на телефоні: акт з фото, підпис клієнта пальцем (змінює дані: акт підписано)
+    async M_act() {
+        return clip('M_act', { role: 'fitter', mobile: true, url: ACTS }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Монтажник', 'Акт — **на телефоні**, на об\'єкті клієнта');
+            const draft = c.page.locator('.o_data_row, .o_kanban_record').filter({ hasText: 'Фінальний' }).filter({ hasText: 'Чернетка' }).first();
+            await press(c, draft.locator('td').first());
+            await press(c, tab(c, 'Фото й чек-лист'));
+            await scrollTo(c, '.o_field_widget[name=photo_ids]');
+            await title(c, 'Фото', 'Фото після монтажу — **в акті**, а не в месенджері');
+            await focus(c, '.o_field_widget[name=photo_ids]'); await hold(c, 2200);
+            await press(c, tab(c, 'Підпис'));
+            await scrollTo(c, '.o_field_widget[name=signature]');
+            await press(c, c.page.locator('.o_field_widget[name=signature] .o_signature').first());
+            await settle(c.page, 700);
+            await title(c, 'Підпис клієнта', 'Пальцем на екрані — **акт підписано**');
+            const cv = c.page.locator('.modal canvas').first();
+            const b = await cv.boundingBox();
+            const pts = [[.12, .62], [.2, .3], [.28, .7], [.36, .35], [.45, .65], [.55, .4], [.62, .6], [.72, .32], [.86, .58]];
+            await c.page.mouse.move(b.x + b.width * pts[0][0], b.y + b.height * pts[0][1]); await c.page.mouse.down();
+            for (const [px, py] of pts.slice(1)) await c.page.mouse.move(b.x + b.width * px, b.y + b.height * py, { steps: 8 });
+            await c.page.mouse.up(); await hold(c, 900);
+            await press(c, c.page.locator('.modal-footer button', { hasText: 'Прийняти' }));
+            await settle(c.page, 700);
+            const save = c.page.locator('.o_form_button_save:visible');
+            if (await save.count()) await press(c, save.first());
+            // на телефоні панель керування липка: кнопку статусу докручуємо нижче неї, інакше дотик влучить у «Новий»
+            await scrollTo(c, '.o_form_statusbar', 900, 0.35); await settle(c.page, 500);
+            await press(c, c.page.locator('.o_form_statusbar button[name=action_sign]'));
+            await settle(c.page, 1000);
+            await scrollTo(c, '.o_statusbar_status', 900, 0.35);
+            await focus(c, '.o_statusbar_status'); await hold(c, 2200); await titleOff(c);
+            await fact(c.page, 'M_act', 'act_state', '.o_statusbar_status .o_arrow_button_current');
+            await fact(c.page, 'M_act', 'crew_amount', '.o_field_widget[name=crew_amount]');
+        });
+    },
+    // сцена 4 на телефоні — менеджер салону бачить зсув дати (лише читання)
+    async M_late() {
+        return clip('M_late', { role: 'salon', mobile: true, url: `/odoo/action-sale.action_orders/${ORDER}` }, async (c) => {
+            await settle(c.page, 900); c.mark();
+            await title(c, 'Менеджер у салоні', 'Дата під загрозою — **видно з телефона**');
+            await focus(c, '.td_date_alert'); await hold(c, 2200);
+            await scrollTo(c, '.o_field_widget[name=td_forecast_date]');
+            await focus(c, '.o_field_widget[name=td_forecast_date]'); await hold(c, 2200); await titleOff(c);
+            await fact(c.page, 'M_late', 'forecast_date', '.o_field_widget[name=td_forecast_date]');
+        });
+    },
+    // сцена 8 на телефоні — дашборд керівника: картки одна під одною, картка маржі -> записи, які вона порахувала
+    async M_dashboard() {
+        return clip('M_dashboard', { role: 'owner', mobile: true, url: '/odoo/action-td_mebli_dashboard.action_dashboard' }, async (c) => {
+            await settle(c.page, 1200); c.mark();
+            await title(c, 'Власник', 'Фабрика — **у телефоні**');
+            await fact(c.page, 'M_dashboard', 'margin', '.td_card.td_k_margin .td_value');
+            await fact(c.page, 'M_dashboard', 'revenue', '.td_card.td_k_margin', { re: '(?<=виручки )[\\d\\s\u00a0\u202f]+\\S' });
+            await hold(c, 1800);
+            for (const k of ['td_k_on_time', 'td_k_margin', 'td_k_claims', 'td_k_load']) {
+                if (await c.page.locator(`.td_card.${k}`).count()) { await scrollTo(c, `.td_card.${k}`, 900, 0.12); await hold(c, 1300); }
+            }
+            await scrollTo(c, '.td_card.td_k_margin', 900, 0.12);
+            await press(c, c.page.locator('.td_card.td_k_margin .td_label'));
+            await settle(c.page, 900);
+            await title(c, 'Картка = звіт', 'Ті самі замовлення, що й у картці');
+            await scrollTo(c, 'tfoot', 900, 0.5); await focus(c, 'tfoot');
+            await hold(c, 2500); await titleOff(c);
+            // на телефоні пейджер без лічильника: картку звіряємо з підсумком виручки звіту (DASH-drill)
+            await fact(c.page, 'M_dashboard', 'drill_revenue', 'tfoot', { re: '[\\d\u00a0\u202f ]+,\\d\\d' });
         });
     },
 };

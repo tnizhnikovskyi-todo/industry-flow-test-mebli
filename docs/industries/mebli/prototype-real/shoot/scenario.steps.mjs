@@ -61,9 +61,9 @@ const ALL = [
       act: async (c, { press, typeIn }) => {
           await press(c, c.page.locator('.o_group_header', { hasText: 'Розкрій' }));
           await press(c, c.page.locator('.o_data_row', { hasText: 'WH/MO/00109' }).locator('button', { hasText: 'Взято' }));
+          // кіоск: працівник — зі списку (на телефоні пошуковий діалог співробітників недоступний ролі планшета)
           await press(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'));
-          await typeIn(c, c.page.locator('.modal .o_field_widget[name=employee_id] input'), 'Петро');
-          await press(c, c.page.locator('.o-autocomplete--dropdown-item').first());
+          await press(c, c.page.locator('.o_select_menu_item', { hasText: 'Петро Гуменюк' })); await c.page.waitForTimeout(400);
           await typeIn(c, c.page.locator('.modal .o_field_widget[name=pin] input'), '1111');
           await press(c, btn(c, 'Підтвердити'));
       },
@@ -82,10 +82,10 @@ const ALL = [
     { n: 7, role: 'tech', url: '/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action', name: 'offcuts',
       facts: [{ name: 'offcut_lots', sel: '.o_pager_limit, .o_group_header', re: '\\d+' }] },
     { n: 8, role: 'tech', url: '/odoo/action-td_mebli_shop.td_mebli_quality_check_action', name: 'quality',
-      facts: [{ name: 'checks', sel: '.o_list_renderer tbody' }] },
+      facts: [{ name: 'failed_check', sel: '.o_list_renderer tbody .o_data_row.text-danger', re: 'WH/MO/\\d+' }] },
     // сцена 6 — календар монтажів, два виїзди S00123; акти
     { n: 9, role: 'fitter', url: '/odoo/action-td_mebli_install.td_mebli_install_calendar_action', name: 'install-calendar',
-      facts: [{ name: 'visits', sel: '.o_calendar_renderer' }] },
+      facts: [{ name: 'show_visits', sel: '.o_calendar_renderer', re: 'S00123: монтаж корпусів.*S00123: монтаж стільниці' }] },
     { n: 10, role: 'fitter', url: '/odoo/action-td_mebli_install.td_mebli_install_act_action', name: 'acts',
       facts: [{ name: 'crew_total', sel: 'tfoot td[name=crew_amount], tfoot .o_list_number', re: '[\\d\\s ,.]+' }] },
     // сцена 6/8 — нарахування: відрядна, % бригаді, премія і штраф з причиною

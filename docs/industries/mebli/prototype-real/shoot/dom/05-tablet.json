@@ -145,7 +145,7 @@
   },
   {
    "kind": "cell",
-   "text": "WH/MO/00100",
+   "text": "WH/MO/00102",
    "label": "production_id"
   },
   {
@@ -155,7 +155,7 @@
   },
   {
    "kind": "cell",
-   "text": "4,4",
+   "text": "1,7",
    "label": "td_expected_hours"
   },
   {
@@ -197,7 +197,7 @@
   },
   {
    "kind": "cell",
-   "text": "WH/MO/00094",
+   "text": "WH/MO/00093",
    "label": "production_id"
   },
   {
@@ -207,7 +207,7 @@
   },
   {
    "kind": "cell",
-   "text": "2,6",
+   "text": "0,9",
    "label": "td_expected_hours"
   },
   {

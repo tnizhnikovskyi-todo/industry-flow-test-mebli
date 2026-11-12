@@ -8,7 +8,7 @@
                 <group>
                     <field name="workorder_id" readonly="1"/>
                     <field name="action" readonly="1"/>
-                    <field name="employee_id" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="employee_id" widget="selection"/>
                     <field name="pin" password="True"/>
                     <field name="loss_id" invisible="action != 'pause'" required="action == 'pause'"
                            options="{'no_create': True, 'no_open': True}"/>

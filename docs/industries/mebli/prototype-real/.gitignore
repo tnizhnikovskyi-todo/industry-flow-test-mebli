@@ -3,3 +3,4 @@ shoot/.db_stamp
 shoot/odoo-serve.log
 shoot/fail/
 video/rec/tmp-*/
+shoot/node_modules

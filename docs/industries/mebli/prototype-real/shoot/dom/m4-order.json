@@ -1,0 +1,301 @@
+{
+ "screen": "m4-order",
+ "viewport": "mobile",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Дата замовлення?"
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво розпочато"
+  },
+  {
+   "kind": "label",
+   "text": "До запуску, год"
+  },
+  {
+   "kind": "label",
+   "text": "Прайс-лист?"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Обмін з BAS?"
+  },
+  {
+   "kind": "label",
+   "text": "Обіцяна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Прогнозна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Зсув, дн."
+  },
+  {
+   "kind": "label",
+   "text": "Причина зсуву?"
+  },
+  {
+   "kind": "label",
+   "text": "Сума без податків"
+  },
+  {
+   "kind": "label",
+   "text": "ПДВ 20%"
+  },
+  {
+   "kind": "label",
+   "text": "Разом"
+  },
+  {
+   "kind": "label",
+   "text": "Маржа"
+  },
+  {
+   "kind": "label",
+   "text": "S00123 2"
+  },
+  {
+   "kind": "label",
+   "text": "Новий"
+  },
+  {
+   "kind": "label",
+   "text": "Кухонний модуль нижній 600 46 800,00 ₴ Кількість: 9,000 шт Ціна за одиницю: 5 200,00"
+  },
+  {
+   "kind": "label",
+   "text": "Шафа-купе 2-дверна 29 025,00 ₴ Кількість: 1,000 шт Ціна за одиницю: 29 025,00"
+  },
+  {
+   "kind": "label",
+   "text": "[МОНТАЖ] Доставка й монтаж (у вартості замовлення) 0,00 ₴ Кількість: 1,000 шт Ціна за одиницю: 0,00"
+  },
+  {
+   "kind": "button",
+   "text": "Створити рахунок"
+  },
+  {
+   "kind": "button",
+   "text": ""
+  },
+  {
+   "kind": "button",
+   "text": "Рядки замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Закупівлі під замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Інша інформація"
+  },
+  {
+   "kind": "button",
+   "text": "Зміни"
+  },
+  {
+   "kind": "button",
+   "text": "Додати товар"
+  },
+  {
+   "kind": "button",
+   "text": "Каталог"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00123"
+  },
+  {
+   "kind": "field",
+   "text": "Замовлення на продаж",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "td_delay_days",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "label": "td_late_item",
+   "name": "td_late_item",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00123",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Ірина Коваленко просп. Стрийська, 21 Львів Україна",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "6 лист., 13:06",
+   "label": "Дата замовлення?",
+   "name": "date_order",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "11 лист., 08:42",
+   "label": "Виробництво розпочато",
+   "name": "td_launch_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "115,6",
+   "label": "До запуску, год",
+   "name": "td_hours_to_launch",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Роздрібний, грн (UAH)",
+   "label": "Прайс-лист?",
+   "name": "pricelist_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Передоплата 50%",
+   "label": "Термін оплати",
+   "name": "payment_term_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Не передано",
+   "label": "Обмін з BAS?",
+   "name": "td_bas_state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "4 груд.",
+   "label": "Обіцяна дата?",
+   "name": "commitment_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "18 груд.",
+   "label": "Прогнозна дата?",
+   "name": "td_forecast_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "Зсув, дн.",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Постачальник",
+   "label": "Причина зсуву?",
+   "name": "td_delay_reason",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Додати товар Каталог Кухонний модуль нижній 600 46 800,00 ₴ Кількість: 9,000 шт Ціна за одиницю: 5 200,00 Шафа-купе 2-дверна 29 025,00 ₴ Кількість: 1,000 шт Ціна за одиницю: 29 025,00 [МОНТАЖ] Доставка й монтаж (у вартості замовлення) 0,00 ₴ Кількість: 1,000 шт Ціна за одиницю: 0,00",
+   "label": "order_line",
+   "name": "order_line",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "image",
+   "label": "product_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "46 800,00 ₴",
+   "label": "price_subtotal",
+   "name": "price_subtotal",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "image",
+   "label": "product_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "29 025,00 ₴",
+   "label": "price_subtotal",
+   "name": "price_subtotal",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "image",
+   "label": "product_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "0,00 ₴",
+   "label": "price_subtotal",
+   "name": "price_subtotal",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Термін виготовлення — 28 днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж — за графіком монтажів.",
+   "label": "note",
+   "name": "note",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Сума без податків 75 825,00 ₴ ПДВ 20% 0,00 ₴ Разом 75 825,00 ₴",
+   "label": "tax_totals",
+   "name": "tax_totals",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "15 178,51 ₴",
+   "label": "Сума без податків",
+   "name": "margin",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "20,02%",
+   "label": "Сума без податків",
+   "name": "margin_percent",
+   "required": false
+  }
+ ]
+}

@@ -196,7 +196,7 @@
   },
   {
    "kind": "field",
-   "text": "26 лист., 15:20",
+   "text": "26 лист., 16:10",
    "label": "Обіцяна дата?",
    "name": "expected_date",
    "required": false

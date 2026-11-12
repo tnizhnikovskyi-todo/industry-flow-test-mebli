@@ -388,52 +388,52 @@
   },
   {
    "kind": "cell",
-   "text": "S00009",
+   "text": "S00102",
    "label": "name"
   },
   {
    "kind": "cell",
-   "text": "Кав'ярня «Зерно»",
+   "text": "Дмитро Савченко",
    "label": "partner_id"
   },
   {
    "kind": "cell",
-   "text": "17 280,00 ₴",
+   "text": "73 600,00 ₴",
    "label": "amount_untaxed"
   },
   {
    "kind": "cell",
-   "text": "14 753,64 ₴",
+   "text": "49 357,44 ₴",
    "label": "td_cost_plan"
   },
   {
    "kind": "cell",
-   "text": "8 740,34 ₴",
+   "text": "33 033,97 ₴",
    "label": "td_cost_material"
   },
   {
    "kind": "cell",
-   "text": "6 935,01 ₴",
+   "text": "18 882,86 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "15 675,35 ₴",
+   "text": "51 916,83 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "14,6",
+   "text": "32,9",
    "label": "td_margin_plan_pct"
   },
   {
    "kind": "cell",
-   "text": "9,3",
+   "text": "29,5",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "6,2",
+   "text": "5,2",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -467,12 +467,12 @@
   },
   {
    "kind": "cell",
-   "text": "2 492,02 ₴",
+   "text": "2 489,63 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "7 245,09 ₴",
+   "text": "7 242,70 ₴",
    "label": "td_cost_fact"
   },
   {
@@ -487,7 +487,7 @@
   },
   {
    "kind": "cell",
-   "text": "5,6",
+   "text": "5,5",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -496,52 +496,52 @@
   },
   {
    "kind": "cell",
-   "text": "S00102",
+   "text": "S00009",
    "label": "name"
   },
   {
    "kind": "cell",
-   "text": "Дмитро Савченко",
+   "text": "Кав'ярня «Зерно»",
    "label": "partner_id"
   },
   {
    "kind": "cell",
-   "text": "73 600,00 ₴",
+   "text": "17 280,00 ₴",
    "label": "amount_untaxed"
   },
   {
    "kind": "cell",
-   "text": "49 357,44 ₴",
+   "text": "14 753,64 ₴",
    "label": "td_cost_plan"
   },
   {
    "kind": "cell",
-   "text": "33 033,97 ₴",
+   "text": "8 740,34 ₴",
    "label": "td_cost_material"
   },
   {
    "kind": "cell",
-   "text": "19 835,48 ₴",
+   "text": "7 439,98 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "52 869,45 ₴",
+   "text": "16 180,33 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "32,9",
+   "text": "14,6",
    "label": "td_margin_plan_pct"
   },
   {
    "kind": "cell",
-   "text": "28,2",
+   "text": "6,4",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "7,1",
+   "text": "9,7",
    "label": "td_cost_deviation_pct"
   }
  ]

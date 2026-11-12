@@ -221,7 +221,7 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 12:16",
+   "text": "6 лист., 13:06",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
@@ -235,7 +235,7 @@
   },
   {
    "kind": "field",
-   "text": "116,4",
+   "text": "115,6",
    "label": "До запуску, год",
    "name": "td_hours_to_launch",
    "required": false
