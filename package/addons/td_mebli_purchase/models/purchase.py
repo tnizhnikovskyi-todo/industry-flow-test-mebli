@@ -28,7 +28,7 @@ class PurchaseOrderLine(models.Model):
                     ('state', 'in', ('purchase', 'done')), ('order_id.date_order', '<', line.order_id.date_order),
                     ('order_id.date_order', '>=', start), ('id', '!=', line._origin.id or 0)])
                 qty = sum(earlier.mapped('product_qty'))
-                history = sum(l.price_unit * l.product_qty for l in earlier) / qty if qty else 0.0
+                history = sum(ln.price_unit * ln.product_qty for ln in earlier) / qty if qty else 0.0
             line.td_history_price = history
             line.td_price_delta_pct = (line.price_unit - history) / history * 100.0 if history else 0.0
             line.td_overpay = (line.price_unit - history) * line.product_qty if history and line.price_unit > history else 0.0

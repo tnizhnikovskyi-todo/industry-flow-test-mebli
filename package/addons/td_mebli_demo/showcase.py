@@ -383,7 +383,8 @@ def _invoice(env, order, when, percent):
     invoice.write({'invoice_date': when.date(), 'invoice_date_due': when.date()})
     invoice.action_post()
     register = env['account.payment.register'].with_context(
-        active_model='account.move', active_ids=invoice.ids).create({'payment_date': when.date()})
+        active_model='account.move', active_ids=invoice.ids).create(
+        {'payment_date': when.date(), 'amount': sum(invoice.mapped('amount_residual'))})  # all installments, not the first
     register._create_payments()
 
 
@@ -431,6 +432,10 @@ def seed_showcase(env):
     now = fields.Datetime.now()
     if env['sale.order'].search_count([('state', '!=', 'cancel')], limit=1):
         return {}
+    # the company currency is UAH before the first document (the post-init hook may run before the chart of accounts
+    # is loaded, which sets USD): without it the dashboard and the payments are in dollars
+    from .hooks import _set_company_currency
+    _set_company_currency(env)
     _localize(env)
     _brand(env)
     _users(env)
@@ -536,13 +541,14 @@ def seed_showcase(env):
     # one order in production is late: the deadline has passed
     late = orders['progress'][1].mrp_production_ids
     # invoices and payments: delivered orders are paid in full, many orders in work have a prepayment
-    for order in orders['done']:
-        _deliver(order)
-        _invoice(env, order, order.date_order + timedelta(days=rnd.randint(8, 12)), 0)
+    # the prepayment comes first, the final invoice of a delivered order deducts it (standard down payment)
     for order, percent in prepay:
         _invoice(env, order, order.date_order + timedelta(hours=26), percent)
         _note(order, people['fin'], f'Передоплату {percent}% отримано, замовлення можна запускати.',
               order.date_order + timedelta(hours=27))
+    for order in orders['done']:
+        _deliver(order)
+        _invoice(env, order, order.date_order + timedelta(days=rnd.randint(8, 12)), 0)
     # work waiting for cutting: planned work orders, so that the work centers show their load
     waiting = orders['confirmed'].mrp_production_ids
     waiting.button_plan()

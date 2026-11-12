@@ -48,8 +48,9 @@ class RepairOrder(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    td_claim_ids = fields.One2many('repair.order', 'td_claim_order_id', string='Claims of the Order')
-    td_claim_count = fields.Integer(string='Claims', compute='_compute_td_claim_count')
+    td_claim_ids = fields.One2many('repair.order', 'td_claim_order_id', string='Claims of the Order',
+                                   groups='stock.group_stock_user')
+    td_claim_count = fields.Integer(string='Claims', compute='_compute_td_claim_count', groups='stock.group_stock_user')
 
     @api.depends('td_claim_ids')
     def _compute_td_claim_count(self):

@@ -69,7 +69,7 @@ def _shop_history(env, by_center, rnd):
         operation.td_quality_point = QUALITY_POINT
     lines = env['mrp.workcenter.productivity'].search([('workorder_id', '!=', False)])
     for code, employee in by_center.items():
-        lines.filtered(lambda l: l.workcenter_id.code == code).write({'td_employee_id': employee.id})
+        lines.filtered(lambda line: line.workcenter_id.code == code).write({'td_employee_id': employee.id})
     photo = _image('prod_kitchen.png')
     since = fields.Datetime.now() - timedelta(days=30)
     edge_done = env['mrp.workorder'].search([('workcenter_id.code', '=', 'EDG'), ('state', '=', 'done'),
@@ -124,6 +124,8 @@ def _installations(env, people, orders, crew, rnd):
     photo = _image('prod_kitchen.png')
     on_time_misses = 0
     acts = Act
+    for task in env['project.task'].search([('sale_order_id', '!=', False)]):
+        task.name = f'{task.sale_order_id.name}: монтаж'  # not the name of the service line
     for order in orders['done'].sorted('date_order'):
         task = order.tasks_ids[:1]
         finished = max(order.mrp_production_ids.mapped('date_finished') or [order.date_order])
@@ -171,7 +173,7 @@ def _installations(env, people, orders, crew, rnd):
         act.with_user(fitter).action_sign()
         env.cr.execute('UPDATE td_mebli_install_act SET signed_on = %s WHERE id = %s', (visit + timedelta(hours=3), act.id))
     # ready: the back panels of the wardrobe/dresser are not packed yet — the delivery is blocked (scene 5)
-    missing = ready.td_kit_line_ids.filtered(lambda l: 'Задня стінка' in l.item)
+    missing = ready.td_kit_line_ids.filtered(lambda line: 'Задня стінка' in line.item)
     (ready.td_kit_line_ids - missing).write({'packed': True, 'packed_by_id': people['store'].id})
     # to sign now: the visit is today, the act is a draft the installer completes on the phone (scene 6)
     for order in to_sign:
@@ -228,8 +230,10 @@ def _measures(env, people, show, orders, rnd):
     for order in quotes[:5]:
         s = Sheet.create({'order_id': order.id, 'room': rnd.choice(rooms), 'floor_slope_mm': rnd.randint(0, 8)})
         _backdate(env, 'td_mebli_measure', s, now - timedelta(days=rnd.randint(3, 20)))
-    for name in ('Шафа в нішу, будинок', 'Кухня, новобудова', 'Гардероб, квартира'):
-        lead = env['crm.lead'].create({'name': name, 'type': 'opportunity', 'user_id': people['salon'].id})
+    for name, contact in (('Шафа в нішу, будинок', 'Василь Гордієнко'), ('Кухня, новобудова', 'Алла Захарченко'),
+                          ('Гардероб, квартира', 'Богдан Кравчук')):
+        lead = env['crm.lead'].create({'name': name, 'type': 'opportunity', 'user_id': people['salon'].id,
+                                       'contact_name': contact})
         s = Sheet.create({'lead_id': lead.id, 'room': rnd.choice(rooms)})
         _backdate(env, 'td_mebli_measure', s, now - timedelta(days=rnd.randint(2, 25)))
     _note(sheet, measurer, 'Замір зроблено, фото ніш і комунікацій — у вкладенні. Холодильник клієнта глибший за нішу пенала.',
@@ -246,7 +250,7 @@ def _claims(env, people, orders, rnd):
             ('installation', 'company', 'Дверка шафи-купе сходить з напрямної', 'under_repair', 0),
             ('supplier', 'supplier', 'Тріщина фарби на фасаді МДФ', 'confirmed', 0),
             ('transport', 'company', 'Подряпина бокової панелі після доставки', 'confirmed', 0)]
-    claims = env['repair.order']
+    claims, dates = env['repair.order'], []
     for act, (reason, payer, text, state, days) in zip(acts[-8::2], rows):
         order = act.order_id
         line = order.order_line.filtered('td_bom_id')[:1]
@@ -265,13 +269,15 @@ def _claims(env, people, orders, rnd):
             claim.action_repair_start()
         if state == 'done':
             claim.action_repair_end()
-        env.cr.execute('UPDATE repair_order SET create_date = %s, write_date = %s WHERE id = %s',
-                       (created, created + timedelta(days=days) if days else now, claim.id))
         claims |= claim
-    claims.invalidate_recordset()
+        dates.append((created, created + timedelta(days=days) if days else now, claim.id))
     # the transport claim is overdue: its date has passed
     overdue = claims.filtered(lambda c: c.td_reason == 'transport')
     overdue.schedule_date = now - timedelta(days=2)
+    env.flush_all()
+    for row in dates:  # after all writes: the dates of the claims (a closed one took 6 days)
+        env.cr.execute('UPDATE repair_order SET create_date = %s, write_date = %s WHERE id = %s', row)
+    claims.invalidate_recordset()
     return claims
 
 
@@ -326,19 +332,14 @@ def _accruals(env, people, crew):
          'reason': 'Фото з акта погоджено для реклами'}])
 
 
-def _open_dates(env, ctx_now, rnd, skip):
-    """Promised dates of the open orders: most fit the forecast, two are late through the workshop («Company»)."""
-    late = 0
-    for order in env['sale.order'].search([('state', '=', 'sale'), ('commitment_date', '=', False)]):
-        if order in skip:
-            continue
-        shop = order.td_shop_date or fields.Date.context_today(order)
-        if late < 2 and order.mrp_production_ids.filtered(lambda p: p.state == 'progress'):
-            promised = shop - timedelta(days=rnd.randint(2, 5))
-            late += 1
-        else:
-            promised = shop + timedelta(days=rnd.randint(2, 6))
-        order.commitment_date = fields.Datetime.to_datetime(promised) + timedelta(hours=15)
+def _open_dates(env, orders, rnd, skip):
+    """Two orders still in the workshop are late through the workshop (reason «Company»), the rest keep their date."""
+    open_orders = orders['progress'].filtered(
+        lambda o: o not in skip and o.delivery_status != 'full'
+        and o.mrp_production_ids.filtered(lambda p: p.state == 'progress'))
+    for order in open_orders.sorted('date_order')[-2:]:
+        order.commitment_date = fields.Datetime.to_datetime(order._td_shop_date() - timedelta(days=rnd.randint(2, 5))) \
+            + timedelta(hours=15)
 
 
 def _calibrate_load(env, targets):
@@ -374,12 +375,12 @@ def seed_full(env, people, partners, orders, show, rnd):
     _price_history(env, rnd)
     _change(env, show)
     _accruals(env, people, crew)
-    _open_dates(env, fields.Datetime.now(), rnd, show)
+    _open_dates(env, orders, rnd, show | state['ready'] | state['paid_late'] | state['to_sign'])
     # exchange status with BAS (imitation): finished orders are sent, one with an error to show the state
     done = orders['done']
     done.write({'td_bas_state': 'sent'})
     done[-1:].write({'td_bas_state': 'error'})
     env['res.currency'].with_context(active_test=False).search([('name', 'in', ('EUR', 'USD'))]).write({'active': True})
     env['res.currency'].td_update_nbu_rates({'EUR': 48.3, 'USD': 41.6}, imitation=True)  # imitation rates, not real ones
-    _calibrate_load(env, {'CUT': 74, 'EDG': 97, 'DRL': 83, 'ASM': 118})
+    _calibrate_load(env, {'CUT': 74, 'EDG': 112, 'DRL': 83, 'ASM': 91})
     return state

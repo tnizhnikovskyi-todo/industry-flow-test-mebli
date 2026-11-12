@@ -46,7 +46,7 @@ class SaleOrder(models.Model):
     @api.depends('td_kit_line_ids.packed', 'td_kit_line_ids.place')
     def _compute_td_kit(self):
         for order in self:
-            order.td_kit_missing = len(order.td_kit_line_ids.filtered(lambda l: not l.packed))
+            order.td_kit_missing = len(order.td_kit_line_ids.filtered(lambda line: not line.packed))
             order.td_kit_places = len(set(order.td_kit_line_ids.mapped('place')))
 
     def action_td_build_kit(self):
@@ -66,7 +66,7 @@ class SaleOrder(models.Model):
                                  'sequence': seq[kind], 'item': f"{product}: {part.name}", 'part_id': part.id,
                                  'qty': part.qty * sale_line.product_uom_qty})
                 for bom_line in bom.bom_line_ids.filtered(
-                        lambda l: l.product_id.td_material_kind in ('fitting', 'facade')):
+                        lambda line: line.product_id.td_material_kind in ('fitting', 'facade')):
                     kind = 'fitting' if bom_line.product_id.td_material_kind == 'fitting' else 'facade'
                     seq[kind] += 1
                     vals.append({'order_id': order.id, 'place': base + KIND_PLACE[kind] + 1, 'kind': kind,
@@ -90,7 +90,7 @@ class StockPicking(models.Model):
 
     def button_validate(self):
         for picking in self.filtered(lambda p: p.picking_type_code == 'outgoing' and p.sale_id):
-            missing = picking.sale_id.td_kit_line_ids.filtered(lambda l: not l.packed)
+            missing = picking.sale_id.td_kit_line_ids.filtered(lambda line: not line.packed)
             if missing:
                 places = sorted(set(missing.mapped('place')))
                 raise UserError(self.env._(

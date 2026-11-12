@@ -71,7 +71,8 @@ class TdMebliDashboard(models.AbstractModel):
     def _card_shift(self, env, company, since):
         _ = self.env._
         open_orders = env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)])
-        late = open_orders.filtered(lambda o: o.td_delay_days > 0)
+        # open = not delivered in full yet (delivered orders keep their old dates, they are not «at risk»)
+        late = open_orders.filtered(lambda o: o.td_delay_days > 0 and o.delivery_status != 'full')
         changes = env['td.mebli.order.change'].search([('state', '=', 'done'), ('shift_days', '>', 0),
                                                        ('write_date', '>=', since)])
         reasons = {'customer': [0, set()], 'company': [0, set()], 'supplier': [0, set()]}
@@ -250,7 +251,7 @@ class TdMebliDashboard(models.AbstractModel):
         return {'label': _("Supplier prices above history"), 'value': self._money(overpay),
                 'tone': 'warn' if lines else 'ok', 'target': _("Overpay against the average of 180 days"),
                 'lines': [_("Purchase lines: %s", len(lines))] + [
-                    f"{l.product_id.name} · +{self._num(l.td_price_delta_pct)} %" for l in lines.sorted('td_overpay', reverse=True)[:2]],
+                    f"{ln.product_id.name} · +{self._num(ln.td_price_delta_pct)} %" for ln in lines.sorted('td_overpay', reverse=True)[:2]],
                 'drill': self._drill(_("Prices above history"), 'purchase.order.line', lines,
                                      ('list', 'td_mebli_purchase.purchase_order_line_td_price_list'))}
 
@@ -301,6 +302,8 @@ class SaleOrder(models.Model):
     def _compute_td_dash_due(self):
         for order in self:
             invoices = order.invoice_ids.filtered(lambda m: m.state == 'posted' and m.move_type == 'out_invoice')
-            paid = sum(invoices.mapped('amount_total')) - sum(invoices.mapped('amount_residual'))
+            # «in payment» is paid for the customer (the bank reconciliation is the accountant's step)
+            paid = sum(m.amount_total if m.payment_state in ('paid', 'in_payment') else m.amount_total - m.amount_residual
+                       for m in invoices)
             order.td_dash_paid = paid
             order.td_dash_due = max(0.0, order.amount_total - paid)

@@ -38,7 +38,7 @@ class TdMebliAccrual(models.Model):
         lines = self.env['mrp.workcenter.productivity'].search([
             ('td_employee_id', '!=', False), ('date_end', '!=', False), ('loss_type', '=', 'productive')])
         done = set(self.search([('productivity_id', 'in', lines.ids)]).productivity_id.ids)
-        for line in lines.filtered(lambda l: l.id not in done):
+        for line in lines.filtered(lambda line: line.id not in done):
             hours = line.duration / 60.0
             vals.append({'employee_id': line.td_employee_id.id, 'date': fields.Date.context_today(self, line.date_end),
                          'kind': 'piece', 'hours': hours, 'amount': round(hours * line.td_employee_id.hourly_cost, 2),

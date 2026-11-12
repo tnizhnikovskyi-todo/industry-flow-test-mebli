@@ -96,7 +96,7 @@
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
                 <button name="action_td_view_claims" type="object" class="oe_stat_button" icon="fa-exclamation-triangle"
-                        invisible="td_claim_count == 0">
+                        invisible="td_claim_count == 0" groups="stock.group_stock_user">
                     <field name="td_claim_count" widget="statinfo" string="Claims"/>
                 </button>
             </div>

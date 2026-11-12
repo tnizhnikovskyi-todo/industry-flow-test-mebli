@@ -18,14 +18,16 @@ class SaleOrder(models.Model):
         """Actual cost of the finished manufacturing orders of the order, as the standard MO Overview counts it."""
         self.ensure_one()
         material = work = 0.0
-        productions = self.mrp_production_ids.filtered(lambda p: p.state == 'done')
+        # the salesperson sees the cost of her order without manufacturing rights: the figures are read as the system
+        order = self.sudo()
+        productions = order.mrp_production_ids.filtered(lambda p: p.state == 'done')
         for production in productions:
             for move in production.move_raw_ids.filtered(lambda m: m.state == 'done'):
                 qty = move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id)
                 material += qty * move.product_id.standard_price
             for workorder in production.workorder_ids:
                 work += workorder.duration / 60.0 * workorder.workcenter_id.costs_hour
-        return bool(productions) and all(p.state == 'done' for p in self.mrp_production_ids), material, work
+        return bool(productions) and all(p.state == 'done' for p in order.mrp_production_ids), material, work
 
     @api.depends('order_line.purchase_price', 'order_line.product_uom_qty', 'amount_untaxed', 'margin')
     def _compute_td_cost(self):
