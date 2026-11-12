@@ -1,0 +1,226 @@
+{
+ "screen": "21-pay-schedule",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Борг"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Після"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Етап оплати"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Рання знижка"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Показати дати платежу"
+  },
+  {
+   "kind": "label",
+   "text": "2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати 50 % передоплата, 40 % перед монтажем, 10 % після акта 13 / 13"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "50 % передоплата, 40 % перед монтажем, 10 % після акта"
+  },
+  {
+   "kind": "field",
+   "text": "50 % передоплата, 40 % перед монтажем, 10 % після акта",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "Рання знижка",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Борг Після Етап оплати 50,000000 Відсоток 0 Днів після дати рахунку Передоплата 40,000000 Відсоток 21 Днів після дати рахунку Перед монтажем 10,000000 Відсоток 35 Днів після дати рахунку Після акта ​",
+   "label": "line_ids",
+   "name": "line_ids",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "true",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 000,00",
+   "label": "",
+   "name": "example_amount",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "12 лист.",
+   "label": "",
+   "name": "example_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "50 % — передоплата при підписанні договору; 40 % — перед монтажем; 10 % — після підписання акта монтажу.",
+   "label": "note",
+   "name": "note",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1# Розстрочка 500,00 ₴ через 12.11.2026 2# Розстрочка 400,00 ₴ через 03.12.2026 3# Розстрочка 100,00 ₴ через 17.12.2026",
+   "label": "example_preview",
+   "name": "example_preview",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "50,000000",
+   "label": "value_amount"
+  },
+  {
+   "kind": "cell",
+   "text": "Відсоток",
+   "label": "value"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "nb_days"
+  },
+  {
+   "kind": "cell",
+   "text": "Днів після дати рахунку",
+   "label": "delay_type"
+  },
+  {
+   "kind": "cell",
+   "text": "Передоплата",
+   "label": "td_milestone"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "days_next_month"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "40,000000",
+   "label": "value_amount"
+  },
+  {
+   "kind": "cell",
+   "text": "Відсоток",
+   "label": "value"
+  },
+  {
+   "kind": "cell",
+   "text": "21",
+   "label": "nb_days"
+  },
+  {
+   "kind": "cell",
+   "text": "Днів після дати рахунку",
+   "label": "delay_type"
+  },
+  {
+   "kind": "cell",
+   "text": "Перед монтажем",
+   "label": "td_milestone"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "days_next_month"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "10,000000",
+   "label": "value_amount"
+  },
+  {
+   "kind": "cell",
+   "text": "Відсоток",
+   "label": "value"
+  },
+  {
+   "kind": "cell",
+   "text": "35",
+   "label": "nb_days"
+  },
+  {
+   "kind": "cell",
+   "text": "Днів після дати рахунку",
+   "label": "delay_type"
+  },
+  {
+   "kind": "cell",
+   "text": "Після акта",
+   "label": "td_milestone"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "days_next_month"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

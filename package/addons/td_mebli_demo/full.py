@@ -287,20 +287,34 @@ def _distributor_cutting(env, people, orders, rnd):
     service = env['product.product'].create({
         'name': 'Порізка плити в дистриб\'ютора', 'type': 'service', 'td_material_kind': 'cutting', 'sale_ok': False,
         'purchase_ok': True, 'standard_price': 0.0, 'default_code': 'ПОРІЗКА',
-        'seller_ids': [(0, 0, {'partner_id': distributor.id, 'price': 1850.0, 'delay': 5})]})
+        'seller_ids': [(0, 0, {'partner_id': distributor.id, 'price': 1850.0, 'delay': 7})]})
     candidates = orders['confirmed'].filtered(
-        lambda o: o.mrp_production_ids.bom_id.td_part_ids and any(p.bom_id.produce_delay for p in o.mrp_production_ids)
-        and not o.mrp_production_ids.td_cutting_job_ids)
-    order = candidates.sorted('date_order')[:1]
+        lambda o: o.mrp_production_ids.bom_id.td_part_ids and not o.mrp_production_ids.td_cutting_job_ids
+        and len(o.mrp_production_ids) == 1)
+    order = candidates.sorted('date_order')[-1:]
     if not order:
         return env['td.mebli.cutting.job']
+    # the promise was given by the plan of the own workshop: cut tomorrow, a few days of work, two days in reserve
+    from .showcase import _work
+    cursor = start = _work(now + timedelta(days=1), rnd)
+    for production in order.mrp_production_ids:
+        for workorder in production.workorder_ids.sorted('id'):  # the same layout as the waiting queue of seed_showcase
+            hours = min(max((workorder.duration_expected or 60.0) / 60.0, 2.0), 7.0)
+            # SQL like the back-dating of seed_showcase: the ORM would replan the order by the calibrated section
+            # calendars (_calibrate_load), which push every waiting order months ahead (README §9, demo defect)
+            env.cr.execute('UPDATE mrp_workorder SET date_start = %s, date_finished = %s WHERE id = %s',
+                           (cursor, cursor + timedelta(hours=hours), workorder.id))
+            cursor = _work(cursor + timedelta(hours=hours), rnd)
+        env.cr.execute('UPDATE mrp_production SET date_start = %s, date_finished = %s WHERE id = %s',
+                       (start, cursor, production.id))
+    env.invalidate_all()
+    end = max(order.mrp_production_ids.mapped('date_finished'))
+    order.commitment_date = fields.Datetime.to_datetime(fields.Date.to_date(end + timedelta(days=2))) + timedelta(hours=15)
+    # the own saw is busy: the technologist sends the cutting to the distributor (a standard purchase of the service)
     job = env['td.mebli.cutting.job'].with_user(people['tech']).create(
         {'production_ids': [(6, 0, order.mrp_production_ids.ids)]}).with_env(env)
     job.action_send_distributor()
     job.purchase_id.write({'user_id': people['store'].id})
-    # the promise was given by the workshop plan alone: the order fits it without the distributor
-    shop_end = max(order.mrp_production_ids.mapped('date_finished'))
-    order.commitment_date = fields.Datetime.to_datetime(fields.Date.to_date(shop_end + timedelta(days=2))) + timedelta(hours=15)
     _note(job, people['tech'], f'Розкрій цього замовлення — у дистриб\'ютора «{distributor.name}»: власна пила завантажена. '
           f'Деталі повернуть {job.return_date.strftime("%d.%m.%Y")}.', now - timedelta(hours=4))
     _note(order, people['chief'], f'Порізка — у «{distributor.name}» ({job.purchase_id.name}), деталі {job.return_date.strftime("%d.%m.%Y")}: '
@@ -517,7 +531,6 @@ def seed_full(env, people, partners, orders, show, rnd):
     _accruals(env, people, crew)
     _open_dates(env, orders, rnd, show | state['ready'] | state['paid_late'] | state['to_sign'] | state['waiting']
                 | state['shipped'])
-    state['distributor_job'] = _distributor_cutting(env, people, orders, rnd)
     # exchange status with BAS (imitation): finished orders are sent, one with an error to show the state
     done = orders['done']
     done.write({'td_bas_state': 'sent'})
@@ -525,4 +538,6 @@ def seed_full(env, people, partners, orders, show, rnd):
     env['res.currency'].with_context(active_test=False).search([('name', 'in', ('EUR', 'USD'))]).write({'active': True})
     env['res.currency'].td_update_nbu_rates({'EUR': 48.3, 'USD': 41.6}, imitation=True)  # imitation rates, not real ones
     _calibrate_load(env, {'CUT': 74, 'EDG': 112, 'DRL': 83, 'ASM': 91})
+    # after the calendars of the sections: their change replans the open manufacturing orders
+    state['distributor_job'] = _distributor_cutting(env, people, orders, rnd)
     return state

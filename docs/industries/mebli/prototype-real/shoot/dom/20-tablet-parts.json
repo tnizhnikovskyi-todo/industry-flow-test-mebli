@@ -128,6 +128,18 @@
   },
   {
    "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
    "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій 2 Меблева фабрика «Демо»"
   },
   {
@@ -200,7 +212,7 @@
   },
   {
    "kind": "cell",
-   "text": "WH/MO/00091",
+   "text": "WH/MO/00101",
    "label": "production_id"
   },
   {
@@ -210,7 +222,7 @@
   },
   {
    "kind": "cell",
-   "text": "1,7",
+   "text": "2,6",
    "label": "td_expected_hours"
   },
   {
@@ -252,7 +264,7 @@
   },
   {
    "kind": "cell",
-   "text": "WH/MO/00094",
+   "text": "WH/MO/00096",
    "label": "production_id"
   },
   {
@@ -262,7 +274,7 @@
   },
   {
    "kind": "cell",
-   "text": "2,6",
+   "text": "4,4",
    "label": "td_expected_hours"
   },
   {

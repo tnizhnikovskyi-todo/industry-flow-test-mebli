@@ -13,6 +13,30 @@
    "ok": true
   },
   {
+   "scene": "22-order-no-payment",
+   "name": "missing",
+   "expected": "29 440,00 ₴",
+   "ok": true
+  },
+  {
+   "scene": "22-order-no-payment",
+   "name": "received",
+   "expected": "36 800,00 ₴",
+   "ok": true
+  },
+  {
+   "scene": "22-order-no-payment",
+   "name": "due",
+   "expected": "66 240,00 ₴",
+   "ok": true
+  },
+  {
+   "scene": "23-visit-no-payment",
+   "name": "missing",
+   "expected": "29 440,00 ₴",
+   "ok": true
+  },
+  {
    "scene": "D_csv",
    "name": "part_count",
    "expected": "13",
@@ -33,7 +57,7 @@
   {
    "scene": "M_tablet",
    "name": "cut_queue",
-   "expected": "13",
+   "expected": "16",
    "ok": true
   },
   {
@@ -57,7 +81,7 @@
   {
    "scene": "M_act",
    "name": "crew_amount",
-   "expected": "345,60 ₴",
+   "expected": "1 472,00 ₴",
    "ok": true
   },
   {
@@ -69,25 +93,25 @@
   {
    "scene": "15-dashboard",
    "name": "shift",
-   "expected": "Замовлень: 3",
+   "expected": "Замовлень: 4",
    "ok": true
   },
   {
    "scene": "15-dashboard",
    "name": "on_time",
-   "expected": "97,1 %",
+   "expected": "97,2 %",
    "ok": true
   },
   {
    "scene": "15-dashboard",
    "name": "prices",
-   "expected": "3 575 ₴",
+   "expected": "3 356 ₴",
    "ok": true
   },
   {
    "scene": "15-dashboard",
    "name": "claims",
-   "expected": "5,9",
+   "expected": "5,6",
    "ok": true
   },
   {
@@ -105,13 +129,13 @@
   {
    "scene": "16-dashboard-drill-margin",
    "name": "revenue_total",
-   "expected": "2 603 787,18 ₴",
+   "expected": "2 603 116,38 ₴",
    "ok": true
   },
   {
    "scene": "16-dashboard-drill-margin",
    "name": "margin_total",
-   "expected": "788 516,17 ₴",
+   "expected": "787 845,37 ₴",
    "ok": true
   },
   {
@@ -231,7 +255,7 @@
   {
    "scene": "06-kit",
    "name": "missing_rows",
-   "expected": "Задня стінка ДВП 16,00 ​ ​ ​ ​",
+   "expected": "Задня стінка ДВП 6,00 ​ ​ ​ ​",
    "ok": true
   },
   {
@@ -249,7 +273,7 @@
   {
    "scene": "08-quality",
    "name": "failed_check",
-   "expected": "WH/MO/00063",
+   "expected": "WH/MO/00049",
    "ok": true
   },
   {
@@ -261,13 +285,13 @@
   {
    "scene": "10-acts",
    "name": "crew_total",
-   "expected": "61 198,53 ",
+   "expected": "65 349,83 ",
    "ok": true
   },
   {
    "scene": "11-accruals",
    "name": "accrual_total",
-   "expected": "84 666,49 ₴",
+   "expected": "86 697,95 ₴",
    "ok": true
   },
   {
@@ -279,13 +303,79 @@
   {
    "scene": "13-plan-fact",
    "name": "fact_total",
-   "expected": "2 461 861,86 ₴",
+   "expected": "2 502 723,59 ₴",
    "ok": true
   },
   {
    "scene": "14-prices",
    "name": "overpay_total",
-   "expected": "3 574,93 ₴",
+   "expected": "3 356,09 ₴",
+   "ok": true
+  },
+  {
+   "scene": "21-pay-schedule",
+   "name": "milestones",
+   "expected": "Передоплата 40,000000 Відсоток 21 Днів після дати рахунку Перед монтажем 10,000000 Відсоток 35 Днів після дати рахунку Після акта",
+   "ok": true
+  },
+  {
+   "scene": "24-cutting-distributor",
+   "name": "distributor",
+   "expected": "Плита-Трейд",
+   "ok": true
+  },
+  {
+   "scene": "24-cutting-distributor",
+   "name": "return_date",
+   "expected": "19 лист.",
+   "ok": true
+  },
+  {
+   "scene": "24-cutting-distributor",
+   "name": "purchase",
+   "expected": "P00040",
+   "ok": true
+  },
+  {
+   "scene": "25-date-cutting",
+   "name": "promised_date",
+   "expected": "19 лист.",
+   "ok": true
+  },
+  {
+   "scene": "25-date-cutting",
+   "name": "forecast_date",
+   "expected": "21 лист.",
+   "ok": true
+  },
+  {
+   "scene": "25-date-cutting",
+   "name": "delay_days",
+   "expected": "2",
+   "ok": true
+  },
+  {
+   "scene": "25-date-cutting",
+   "name": "reason",
+   "expected": "Порізка в дистриб'ютора",
+   "ok": true
+  },
+  {
+   "scene": "26-board-stages",
+   "name": "stages",
+   "expected": "Виготовлено (1) Кав'ярня «Зерно» S00009 5 лист., 08:10 17 280,00 ₴ 14,62% немає доплати: 8 640,00 ₴ до запуску: 27,0 год Очікує клієнта (1) Дмитро Савченко S00109 6 лист., 08:06 47 891,88 ₴ 28,78% немає доплати: 33 524,32 ₴ до запуску: 72,7 год Відвантажено / на доставці (1) Юлія Романюк S00098 6 лист., 08:38 47 891,88 ₴ 28,78% до запуску: 71,7 год Монтаж (3) Дмитро Савченко S00102 5 лист., 08:48 73 600,00 ₴ 32,94% немає доплати: 29 440,00 ₴ до запуску: 31,0 год Дмитро Савченко S00008 5 лист., 08:05 9 787,50 ₴ 29,89% немає доплати: 6 851,25 ₴ до запуску: 96,2 год Ірина Коваленко S00007 4 лист., 08:33 22 176,00 ₴ 11,75% немає доплати: 11 088,00 ₴ до запуску: 28,0 год Закрито",
+   "ok": true
+  },
+  {
+   "scene": "26-board-stages",
+   "name": "waiting",
+   "expected": "S00109",
+   "ok": true
+  },
+  {
+   "scene": "26-board-stages",
+   "name": "shipped",
+   "expected": "S00098",
    "ok": true
   },
   {
@@ -297,7 +387,7 @@
   {
    "scene": "m2-tablet",
    "name": "cut_queue",
-   "expected": "13",
+   "expected": "16",
    "ok": true
   },
   {
@@ -357,13 +447,13 @@
   {
    "scene": "M_dashboard",
    "name": "revenue",
-   "expected": "2 603 787 ₴",
+   "expected": "2 603 116 ₴",
    "ok": true
   },
   {
    "scene": "M_dashboard",
    "name": "drill_revenue",
-   "expected": "2 603 787,18",
+   "expected": "2 603 116,38",
    "ok": true
   },
   {
@@ -411,13 +501,37 @@
   {
    "scene": "D_install",
    "name": "crew_amount",
-   "expected": "438,73 ₴",
+   "expected": "1 468,67 ₴",
    "ok": true
   },
   {
    "scene": "D_accruals",
    "name": "piece_rate",
    "expected": "10,50 ₴",
+   "ok": true
+  },
+  {
+   "scene": "27-contract-pdf",
+   "name": "lawyer_mark",
+   "expected": "Шаблон до перевірки юристом (№17)",
+   "ok": true
+  },
+  {
+   "scene": "27-contract-pdf",
+   "name": "schedule",
+   "expected": "Передоплата 50 % 23 945,94 ₴ Перед монтажем 40 % 19 156,75 ₴ Після акта",
+   "ok": true
+  },
+  {
+   "scene": "28-act-pdf",
+   "name": "title",
+   "expected": "Акт монтажу АКТ-0002",
+   "ok": true
+  },
+  {
+   "scene": "29-kit-pdf",
+   "name": "places",
+   "expected": "3",
    "ok": true
   }
  ],
@@ -428,6 +542,14 @@
   "05-tablet": {
    "in_work": "Олег Дорошенко"
   },
+  "22-order-no-payment": {
+   "missing": "29 440,00 ₴",
+   "received": "36 800,00 ₴",
+   "due": "66 240,00 ₴"
+  },
+  "23-visit-no-payment": {
+   "missing": "29 440,00 ₴"
+  },
   "D_csv": {
    "part_count": "13",
    "mo_part_count": "117"
@@ -436,7 +558,7 @@
    "part_count": "13"
   },
   "M_tablet": {
-   "cut_queue": "13"
+   "cut_queue": "16"
   },
   "D_kit": {
    "missing_part": "Задня стінка ДВП "
@@ -446,20 +568,20 @@
   },
   "M_act": {
    "act_state": "Підписано",
-   "crew_amount": "345,60 ₴"
+   "crew_amount": "1 472,00 ₴"
   },
   "15-dashboard": {
    "margin": "30,3 %",
-   "shift": "Замовлень: 3",
-   "on_time": "97,1 %",
-   "prices": "3 575 ₴",
-   "claims": "5,9",
+   "shift": "Замовлень: 4",
+   "on_time": "97,2 %",
+   "prices": "3 356 ₴",
+   "claims": "5,6",
    "margin_orders": "60"
   },
   "16-dashboard-drill-margin": {
    "margin_orders": "60",
-   "revenue_total": "2 603 787,18 ₴",
-   "margin_total": "788 516,17 ₴",
+   "revenue_total": "2 603 116,38 ₴",
+   "margin_total": "787 845,37 ₴",
    "plan_cost_total": "1 815 271,01 ₴"
   },
   "00-late-facades": {
@@ -495,7 +617,7 @@
    "change_amount_delta": "8 400,00 ₴"
   },
   "06-kit": {
-   "missing_rows": "Задня стінка ДВП 16,00 ​ ​ ​ ​"
+   "missing_rows": "Задня стінка ДВП 6,00 ​ ​ ​ ​"
   },
   "20-tablet-parts": {
    "part_count": "117"
@@ -504,31 +626,60 @@
    "offcut_lots": "18"
   },
   "08-quality": {
-   "failed_check": "WH/MO/00063"
+   "failed_check": "WH/MO/00049"
   },
   "09-install-calendar": {
    "show_visits": "S00123: монтаж корпусів 2 3 4 S00123: монтаж стільниці"
   },
   "10-acts": {
-   "crew_total": "61 198,53 "
+   "crew_total": "65 349,83 "
   },
   "11-accruals": {
-   "accrual_total": "84 666,49 ₴"
+   "accrual_total": "86 697,95 ₴"
   },
   "12-claims": {
    "overdue": "Прострочено"
   },
   "13-plan-fact": {
-   "fact_total": "2 461 861,86 ₴"
+   "fact_total": "2 502 723,59 ₴"
   },
   "14-prices": {
-   "overpay_total": "3 574,93 ₴"
+   "overpay_total": "3 356,09 ₴"
+  },
+  "21-pay-schedule": {
+   "milestones": "Передоплата 40,000000 Відсоток 21 Днів після дати рахунку Перед монтажем 10,000000 Відсоток 35 Днів після дати рахунку Після акта"
+  },
+  "24-cutting-distributor": {
+   "distributor": "Плита-Трейд",
+   "return_date": "19 лист.",
+   "purchase": "P00040"
+  },
+  "25-date-cutting": {
+   "promised_date": "19 лист.",
+   "forecast_date": "21 лист.",
+   "delay_days": "2",
+   "reason": "Порізка в дистриб'ютора"
+  },
+  "26-board-stages": {
+   "stages": "Виготовлено (1) Кав'ярня «Зерно» S00009 5 лист., 08:10 17 280,00 ₴ 14,62% немає доплати: 8 640,00 ₴ до запуску: 27,0 год Очікує клієнта (1) Дмитро Савченко S00109 6 лист., 08:06 47 891,88 ₴ 28,78% немає доплати: 33 524,32 ₴ до запуску: 72,7 год Відвантажено / на доставці (1) Юлія Романюк S00098 6 лист., 08:38 47 891,88 ₴ 28,78% до запуску: 71,7 год Монтаж (3) Дмитро Савченко S00102 5 лист., 08:48 73 600,00 ₴ 32,94% немає доплати: 29 440,00 ₴ до запуску: 31,0 год Дмитро Савченко S00008 5 лист., 08:05 9 787,50 ₴ 29,89% немає доплати: 6 851,25 ₴ до запуску: 96,2 год Ірина Коваленко S00007 4 лист., 08:33 22 176,00 ₴ 11,75% немає доплати: 11 088,00 ₴ до запуску: 28,0 год Закрито",
+   "waiting": "S00109",
+   "shipped": "S00098"
+  },
+  "27-contract-pdf": {
+   "lawyer_mark": "Шаблон до перевірки юристом (№17)",
+   "schedule": "Передоплата 50 % 23 945,94 ₴ Перед монтажем 40 % 19 156,75 ₴ Після акта"
+  },
+  "28-act-pdf": {
+   "title": "Акт монтажу АКТ-0002"
+  },
+  "29-kit-pdf": {
+   "places": "3"
   },
   "m1-measure": {
    "issue": "Холодильник, вбудований: глибше на 30 мм"
   },
   "m2-tablet": {
-   "cut_queue": "13",
+   "cut_queue": "16",
    "in_work": "Олег Дорошенко"
   },
   "m3-act": {
@@ -550,8 +701,8 @@
   },
   "M_dashboard": {
    "margin": "30,3 %",
-   "revenue": "2 603 787 ₴",
-   "drill_revenue": "2 603 787,18"
+   "revenue": "2 603 116 ₴",
+   "drill_revenue": "2 603 116,38"
   },
   "D_late": {
    "margin_percent": "20,02%",
@@ -571,7 +722,7 @@
    "shift_days": "7"
   },
   "D_install": {
-   "crew_amount": "438,73 ₴"
+   "crew_amount": "1 468,67 ₴"
   },
   "D_accruals": {
    "piece_rate": "10,50 ₴"

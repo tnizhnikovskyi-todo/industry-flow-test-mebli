@@ -1,0 +1,571 @@
+{
+ "screen": "22-order-no-payment",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Ширина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Висота, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Глибина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": "Ціна одиниці"
+  },
+  {
+   "kind": "header",
+   "text": "Податки"
+  },
+  {
+   "kind": "header",
+   "text": "Сума"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Дата замовлення?"
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво розпочато"
+  },
+  {
+   "kind": "label",
+   "text": "До запуску, год"
+  },
+  {
+   "kind": "label",
+   "text": "Прайс-лист?"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Обмін з BAS?"
+  },
+  {
+   "kind": "label",
+   "text": "Обіцяна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Прогнозна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Сума без податків"
+  },
+  {
+   "kind": "label",
+   "text": "ПДВ 20%"
+  },
+  {
+   "kind": "label",
+   "text": "Разом"
+  },
+  {
+   "kind": "label",
+   "text": "Маржа"
+  },
+  {
+   "kind": "label",
+   "text": "Продажі Замовлення До включення у рахунок Товари Звітність Налаштування 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замовлення на продаж S00102 1 Доставка 1 Рахунки 1 Виробництво 0 Не запаковано 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Створити рахунок"
+  },
+  {
+   "kind": "button",
+   "text": "Надіслати"
+  },
+  {
+   "kind": "button",
+   "text": "Попередній перегляд"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Передати в BAS (імітація)"
+  },
+  {
+   "kind": "button",
+   "text": "Створити зміну"
+  },
+  {
+   "kind": "button",
+   "text": "Рядки замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Інша інформація"
+  },
+  {
+   "kind": "button",
+   "text": "План і факт"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замовлення на продаж"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00102"
+  },
+  {
+   "kind": "field",
+   "text": "1 Доставка",
+   "label": "delivery_count",
+   "name": "delivery_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 Рахунки",
+   "label": "invoice_count",
+   "name": "invoice_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 Виробництво",
+   "label": "td_production_count",
+   "name": "td_production_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "0 Не запаковано",
+   "label": "",
+   "name": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "0",
+   "label": "td_kit_missing",
+   "name": "td_kit_missing",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Замовлення на продаж",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "29 440,00 ₴",
+   "label": "td_pay_missing",
+   "name": "td_pay_missing",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "36 800,00 ₴",
+   "label": "td_pay_received",
+   "name": "td_pay_received",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "66 240,00 ₴",
+   "label": "td_pay_before_install",
+   "name": "td_pay_before_install",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00102",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Дмитро Савченко вул. Франка, 31 Житомир Україна",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "5 лист., 08:48",
+   "label": "Дата замовлення?",
+   "name": "date_order",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "6 лист., 15:48",
+   "label": "Виробництво розпочато",
+   "name": "td_launch_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "31,0",
+   "label": "До запуску, год",
+   "name": "td_hours_to_launch",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Роздрібний, грн (UAH)",
+   "label": "Прайс-лист?",
+   "name": "pricelist_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "50 % передоплата, 40 % перед монтажем, 10 % після акта",
+   "label": "Термін оплати",
+   "name": "payment_term_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Не передано",
+   "label": "Обмін з BAS?",
+   "name": "td_bas_state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "13 лист.",
+   "label": "Обіцяна дата?",
+   "name": "commitment_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "11 лист.",
+   "label": "Прогнозна дата?",
+   "name": "td_forecast_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Попередня оплата",
+   "label": "order_line",
+   "name": "order_line",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Кухонний модуль нижній 600 Декор корпусу: ЛДСП Дуб Сонома Декор фасаду: МДФ Білий матовий Кромка: ПВХ 0,4 мм Фурнітура: Стандарт Ширина, мм: 800 Висота, мм: 720 Глибина, мм: 560",
+   "label": "product_template_id",
+   "name": "product_template_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "tax_ids",
+   "name": "tax_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "[МОНТАЖ] Доставка й монтаж (у вартості замовлення)",
+   "label": "product_template_id",
+   "name": "product_template_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "ПДВ 20%",
+   "label": "tax_ids",
+   "name": "tax_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Попередня оплата",
+   "label": "product_template_id",
+   "name": "product_template_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Down Payment (ref: INV/2026/00062 on 06.11.2026)",
+   "label": "product_template_id",
+   "name": "product_template_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "tax_ids",
+   "name": "tax_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Термін виготовлення — 14 робочих днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж за окремою домовленістю.",
+   "label": "note",
+   "name": "note",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Сума без податків 73 600,00 ₴ ПДВ 20% 0,00 ₴ Разом 73 600,00 ₴",
+   "label": "tax_totals",
+   "name": "tax_totals",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "24 242,56 ₴",
+   "label": "Сума без податків",
+   "name": "margin",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "32,94%",
+   "label": "Сума без податків",
+   "name": "margin_percent",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Кухонний модуль нижній 600 Декор корпусу: ЛДСП Дуб Сонома Декор фасаду: МДФ Білий матовий Кромка: ПВХ 0,4 мм Фурнітура: Стандарт Ширина, мм: 800 Висота, мм: 720 Глибина, мм: 560",
+   "label": "product_template_id"
+  },
+  {
+   "kind": "cell",
+   "text": "800",
+   "label": "td_width"
+  },
+  {
+   "kind": "cell",
+   "text": "720",
+   "label": "td_height"
+  },
+  {
+   "kind": "cell",
+   "text": "560",
+   "label": "td_depth"
+  },
+  {
+   "kind": "cell",
+   "text": "16,000",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "шт",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "4 600,00",
+   "label": "price_unit"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "tax_ids"
+  },
+  {
+   "kind": "cell",
+   "text": "73 600,00 ₴",
+   "label": "price_subtotal"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "[МОНТАЖ] Доставка й монтаж (у вартості замовлення)",
+   "label": "product_template_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "td_width"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "td_height"
+  },
+  {
+   "kind": "cell",
+   "text": "0",
+   "label": "td_depth"
+  },
+  {
+   "kind": "cell",
+   "text": "1,000",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "шт",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "0,00",
+   "label": "price_unit"
+  },
+  {
+   "kind": "cell",
+   "text": "ПДВ 20%",
+   "label": "tax_ids"
+  },
+  {
+   "kind": "cell",
+   "text": "0,00 ₴",
+   "label": "price_subtotal"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "product_template_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "price_subtotal"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

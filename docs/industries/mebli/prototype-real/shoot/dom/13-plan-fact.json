@@ -380,7 +380,7 @@
   },
   {
    "kind": "label",
-   "text": "Собівартість: план і факт 1-80 / 84"
+   "text": "Собівартість: план і факт 1-80 / 86"
   },
   {
    "kind": "breadcrumb",
@@ -392,57 +392,116 @@
   },
   {
    "kind": "cell",
-   "text": "S00009",
+   "text": "S00098",
    "label": "name"
   },
   {
    "kind": "cell",
-   "text": "Кав'ярня «Зерно»",
+   "text": "Юлія Романюк",
    "label": "partner_id"
   },
   {
    "kind": "cell",
-   "text": "17 280,00 ₴",
+   "text": "47 891,88 ₴",
    "label": "amount_untaxed"
   },
   {
    "kind": "cell",
-   "text": "2 526,36 ₴",
+   "text": "13 782,88 ₴",
    "label": "margin"
   },
   {
    "kind": "cell",
-   "text": "14 753,64 ₴",
+   "text": "34 109,00 ₴",
    "label": "td_cost_plan"
   },
   {
    "kind": "cell",
-   "text": "14,6",
+   "text": "28,8",
    "label": "td_margin_plan_pct"
   },
   {
    "kind": "cell",
-   "text": "8 740,34 ₴",
+   "text": "27 273,42 ₴",
    "label": "td_cost_material"
   },
   {
    "kind": "cell",
-   "text": "7 525,83 ₴",
+   "text": "7 589,27 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "16 266,18 ₴",
+   "text": "34 862,69 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "5,9",
+   "text": "27,2",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "10,3",
+   "text": "2,2",
+   "label": "td_cost_deviation_pct"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "S00109",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Дмитро Савченко",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "47 891,88 ₴",
+   "label": "amount_untaxed"
+  },
+  {
+   "kind": "cell",
+   "text": "13 782,88 ₴",
+   "label": "margin"
+  },
+  {
+   "kind": "cell",
+   "text": "34 109,00 ₴",
+   "label": "td_cost_plan"
+  },
+  {
+   "kind": "cell",
+   "text": "28,8",
+   "label": "td_margin_plan_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "27 273,42 ₴",
+   "label": "td_cost_material"
+  },
+  {
+   "kind": "cell",
+   "text": "7 800,18 ₴",
+   "label": "td_cost_work"
+  },
+  {
+   "kind": "cell",
+   "text": "35 073,60 ₴",
+   "label": "td_cost_fact"
+  },
+  {
+   "kind": "cell",
+   "text": "26,8",
+   "label": "td_margin_fact_pct"
+  },
+  {
+   "kind": "cell",
+   "text": "2,8",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -486,81 +545,22 @@
   },
   {
    "kind": "cell",
-   "text": "19 281,04 ₴",
+   "text": "19 459,07 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "52 315,01 ₴",
+   "text": "52 493,04 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "28,9",
+   "text": "28,7",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "6,0",
-   "label": "td_cost_deviation_pct"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "S00008",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Дмитро Савченко",
-   "label": "partner_id"
-  },
-  {
-   "kind": "cell",
-   "text": "9 787,50 ₴",
-   "label": "amount_untaxed"
-  },
-  {
-   "kind": "cell",
-   "text": "2 925,36 ₴",
-   "label": "margin"
-  },
-  {
-   "kind": "cell",
-   "text": "6 862,14 ₴",
-   "label": "td_cost_plan"
-  },
-  {
-   "kind": "cell",
-   "text": "29,9",
-   "label": "td_margin_plan_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "4 753,08 ₴",
-   "label": "td_cost_material"
-  },
-  {
-   "kind": "cell",
-   "text": "2 555,20 ₴",
-   "label": "td_cost_work"
-  },
-  {
-   "kind": "cell",
-   "text": "7 308,28 ₴",
-   "label": "td_cost_fact"
-  },
-  {
-   "kind": "cell",
-   "text": "25,3",
-   "label": "td_margin_fact_pct"
-  },
-  {
-   "kind": "cell",
-   "text": "6,5",
+   "text": "6,4",
    "label": "td_cost_deviation_pct"
   }
  ]

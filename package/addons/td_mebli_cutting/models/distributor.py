@@ -6,6 +6,8 @@ from markupsafe import Markup
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
+WORKDAY_MINUTES = 8 * 60  # one shift: the expected work of the order after the cutting, in working days
+
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
@@ -79,11 +81,25 @@ class TdMebliCuttingJob(models.Model):
         return self.purchase_id._get_records_action(name=self.env._("Distributor Order"))
 
 
+class MrpProduction(models.Model):
+    _inherit = 'mrp.production'
+
+    def _td_days_after_cutting(self):
+        """Days the workshop needs once the parts are cut: the BoM lead time, else the expected time of the open work
+        orders (standard duration_expected) in working days of WORKDAY_MINUTES, at least one day."""
+        self.ensure_one()
+        if self.bom_id.produce_delay:
+            return math.ceil(self.bom_id.produce_delay)
+        minutes = sum(self.workorder_ids.filtered(lambda w: w.state not in ('done', 'cancel')).mapped('duration_expected'))
+        return max(1, math.ceil(minutes / WORKDAY_MINUTES))
+
+
 class SaleOrder(models.Model):
     """S-02: the cutting at the distributor moves the workshop date of the order (F-28).
 
     The parts are back on the expected date of the distributor purchase; the workshop needs the manufacturing lead time
-    of the bill of materials after that (standard produce_delay, the same assumption as for a purchased item)."""
+    of the bill of materials after that (standard produce_delay, the same assumption as for a purchased item), or, when
+    the BoM has none, the expected time of its open work orders (standard duration_expected) in shifts."""
     _inherit = 'sale.order'
 
     td_delay_reason = fields.Selection(selection_add=[('cutting', 'Cutting at the distributor')])
@@ -95,7 +111,7 @@ class SaleOrder(models.Model):
         # sudo: read only — the salesperson sees the date, the cutting jobs and the purchase stay with their users
         for production in self.sudo().mrp_production_ids.filtered(lambda p: p.state not in ('done', 'cancel')):
             for job in production.td_cutting_job_ids.filtered(lambda j: j.state == 'sent' and j.return_date):
-                ready = job.return_date + timedelta(days=math.ceil(production.bom_id.produce_delay or 0))
+                ready = job.return_date + timedelta(days=production._td_days_after_cutting())
                 if not best or ready > best:
                     best, best_job = ready, job
         return best, best_job

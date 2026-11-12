@@ -1,0 +1,258 @@
+{
+ "screen": "24-cutting-distributor",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Специфікація"
+  },
+  {
+   "kind": "header",
+   "text": "Деталь"
+  },
+  {
+   "kind": "header",
+   "text": "Матеріал"
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": "Довжина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Ширина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Кромка"
+  },
+  {
+   "kind": "label",
+   "text": "Виробничі замовлення"
+  },
+  {
+   "kind": "label",
+   "text": "Файл розкрою"
+  },
+  {
+   "kind": "label",
+   "text": "Замовлення дистриб'ютору?"
+  },
+  {
+   "kind": "label",
+   "text": "Дистриб'ютор?"
+  },
+  {
+   "kind": "label",
+   "text": "Деталі повернуть?"
+  },
+  {
+   "kind": "label",
+   "text": "Деталей"
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Завдання розкрою CUT/0026 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Отримати результат (імітація)"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Деталі"
+  },
+  {
+   "kind": "button",
+   "text": "Параметри розкрою"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Завдання розкрою"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "CUT/0026"
+  },
+  {
+   "kind": "field",
+   "text": "Виконано Результат отримано Передано на розкрій Чернетка",
+   "label": "state",
+   "name": "state",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "CUT/0026",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "WH/MO/00016",
+   "label": "Виробничі замовлення",
+   "name": "production_ids",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "CUT-0026-деталі.csv",
+   "label": "Файл розкрою",
+   "name": "export_attachment_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "P00040",
+   "label": "Замовлення дистриб'ютору?",
+   "name": "purchase_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Плита-Трейд",
+   "label": "Дистриб'ютор?",
+   "name": "distributor_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "19 лист.",
+   "label": "Деталі повернуть?",
+   "name": "return_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "13",
+   "label": "Деталей",
+   "name": "part_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Специфікація Деталь Матеріал Кількість Довжина, мм Ширина, мм Кромка S00016/31 1500x2400x600: Шафа-купе 2-дверна Бокова панель ЛДСП Білий гладкий 16 мм 2 2 400,00 600,00 Кромка ПВХ Білий гладкий 2×22 мм S00016/31 1500x2400x600: Шафа-купе 2-дверна Дах ЛДСП Білий гладкий 16 мм 1 1 468,00 600,00 Кромка ПВХ Білий гладкий 2×22 мм S00016/31 1500x2400x600: Шафа-купе 2-дверна Дно ЛДСП Білий гладкий 16 мм 1 1 468,00 600,00 Кромка ПВХ Білий гладкий 2×22 мм S00016/31 1500x2400x600: Шафа-купе 2-дверна Перегородка ЛДСП Білий гладкий 16 мм 1 2 336,00 580,00 Кромка ПВХ Білий гладкий 2×22 мм S00016/31 1500x2400x600: Шафа-купе 2-дверна Полиця ЛДСП Білий гладкий 16 мм 4 732,00 580,00 Кромка ПВХ Білий гладкий 2×22 мм S00016/31 1500x2400x600: Шафа-купе 2-дверна Двері-купе МДФ Білий матовий 18 мм 2 2 340,00 770,00 Кромка ПВХ Білий матовий 2×22 мм S00016/31 1500x2400x600: Шафа-купе 2-дверна Задня стінка ДВП (половина) ДВП біла 3 мм 2 2 390,00 745,00",
+   "label": "part_ids",
+   "name": "part_ids",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "S00016/31 1500x2400x600: Шафа-купе 2-дверна",
+   "label": "bom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Бокова панель",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП Білий гладкий 16 мм",
+   "label": "material_id"
+  },
+  {
+   "kind": "cell",
+   "text": "2",
+   "label": "qty"
+  },
+  {
+   "kind": "cell",
+   "text": "2 400,00",
+   "label": "length_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "600,00",
+   "label": "width_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "Кромка ПВХ Білий гладкий 2×22 мм",
+   "label": "edge_product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "S00016/31 1500x2400x600: Шафа-купе 2-дверна",
+   "label": "bom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Дах",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП Білий гладкий 16 мм",
+   "label": "material_id"
+  },
+  {
+   "kind": "cell",
+   "text": "1",
+   "label": "qty"
+  },
+  {
+   "kind": "cell",
+   "text": "1 468,00",
+   "label": "length_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "600,00",
+   "label": "width_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "Кромка ПВХ Білий гладкий 2×22 мм",
+   "label": "edge_product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "S00016/31 1500x2400x600: Шафа-купе 2-дверна",
+   "label": "bom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Дно",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "ЛДСП Білий гладкий 16 мм",
+   "label": "material_id"
+  },
+  {
+   "kind": "cell",
+   "text": "1",
+   "label": "qty"
+  },
+  {
+   "kind": "cell",
+   "text": "1 468,00",
+   "label": "length_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "600,00",
+   "label": "width_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "Кромка ПВХ Білий гладкий 2×22 мм",
+   "label": "edge_product_id"
+  }
+ ]
+}

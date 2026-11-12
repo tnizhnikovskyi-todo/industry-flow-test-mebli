@@ -212,7 +212,7 @@
   },
   {
    "kind": "field",
-   "text": "12 лист., 20:41",
+   "text": "12 лист., 22:30",
    "label": "Початкова дата?",
    "name": "date_start",
    "required": true

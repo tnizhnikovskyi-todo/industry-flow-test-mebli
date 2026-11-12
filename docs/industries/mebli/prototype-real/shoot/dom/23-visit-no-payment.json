@@ -1,0 +1,152 @@
+{
+ "screen": "23-visit-no-payment",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Проєкт"
+  },
+  {
+   "kind": "label",
+   "text": "Уповноважені"
+  },
+  {
+   "kind": "label",
+   "text": "Мітки"
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Елемент замовлення на продаж?"
+  },
+  {
+   "kind": "label",
+   "text": "Кінцевий термін"
+  },
+  {
+   "kind": "label",
+   "text": "Проєкт Проєкти Завдання Монтаж Звітність 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Календар монтажів S00102: монтаж Замовлення на продаж 1 Акти 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Опис"
+  },
+  {
+   "kind": "button",
+   "text": "Підзавдання"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Календар монтажів"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00102: монтаж"
+  },
+  {
+   "kind": "field",
+   "text": "1 Акти",
+   "label": "td_act_count",
+   "name": "td_act_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "stage_id",
+   "name": "stage_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "29 440,00 ₴",
+   "label": "td_pay_missing",
+   "name": "td_pay_missing",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00102: монтаж",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "priority",
+   "name": "priority",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "В процесі",
+   "label": "state",
+   "name": "state",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Монтажі",
+   "label": "Проєкт",
+   "name": "project_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Іван Кушнір Микола Демченко",
+   "label": "Уповноважені",
+   "name": "user_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Мітки",
+   "name": "tag_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Дмитро Савченко",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00102 - [МОНТАЖ] Доставка й монтаж (у вартості замовлення) (Дмитро Савченко)",
+   "label": "Елемент замовлення на продаж?",
+   "name": "sale_line_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "12 лист., 09:00",
+   "label": "Кінцевий термін",
+   "name": "date_deadline",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "task_properties",
+   "name": "task_properties",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "description",
+   "name": "description",
+   "required": false
+  }
+ ]
+}
