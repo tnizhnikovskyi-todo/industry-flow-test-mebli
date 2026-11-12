@@ -1,0 +1,55 @@
+{
+ "checks": [
+  {
+   "scene": "00-sample",
+   "name": "promised_date",
+   "expected": "4 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "forecast_date",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "delay_days",
+   "expected": "14",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "delay_reason",
+   "expected": null,
+   "ok": false
+  },
+  {
+   "scene": "00-sample",
+   "name": "late_item",
+   "expected": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "late_item_supplier_date",
+   "expected": "15 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "margin_percent",
+   "expected": null,
+   "ok": false
+  }
+ ],
+ "facts": {
+  "00-sample": {
+   "promised_date": "4 груд.",
+   "forecast_date": "18 груд.",
+   "delay_days": "14",
+   "late_item": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "late_item_supplier_date": "15 груд."
+  }
+ }
+}

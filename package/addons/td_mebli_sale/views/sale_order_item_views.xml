@@ -8,19 +8,15 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="before">
                 <field name="td_late_item_id" invisible="1"/>
-                <div class="alert alert-danger d-flex align-items-center gap-2 mb-0 td_date_alert" role="alert"
-                     invisible="td_delay_days &lt;= 0 or state == 'cancel'">
-                    <i class="fa fa-exclamation-triangle" title="Date at risk"/>
-                    <span>The forecast date is later than the promised one by</span>
-                    <field name="td_delay_days" class="fw-bold oe_inline"/>
-                    <span>days.</span>
-                    <span invisible="not td_late_item_id">It is moved by the made-to-order item</span>
-                    <field name="td_late_item_id" class="fw-bold oe_inline" invisible="not td_late_item_id" readonly="1"
-                           options="{'no_open': True}"/>
+                <div class="alert alert-danger mb-0 td_date_alert" role="alert" invisible="td_delay_days &lt;= 0 or state == 'cancel'">
+                    <i class="fa fa-exclamation-triangle me-2" title="Date at risk"/>
+                    <strong>The forecast date is later than the promised one by <field name="td_delay_days" class="oe_inline"/> days.</strong>
+                    <span invisible="not td_late_item_id"> It is moved by the made-to-order item
+                        «<field name="td_late_item_id" class="oe_inline" readonly="1" options="{'no_open': True}"/>».</span>
                 </div>
             </xpath>
             <xpath expr="//group[@name='order_details']" position="inside">
-                <field name="commitment_date" string="Promised Date" widget="date" readonly="state == 'cancel' or locked"/>
+                <field name="commitment_date" string="Promised Date" options="{'show_time': false}" readonly="state == 'cancel' or locked"/>
                 <field name="td_forecast_date" decoration-danger="td_delay_days &gt; 0" decoration-success="td_delay_days == 0"
                        invisible="not td_forecast_date"/>
                 <field name="td_delay_days" invisible="td_delay_days == 0" decoration-danger="td_delay_days &gt; 0"/>
@@ -32,11 +28,11 @@
                         <list editable="bottom" decoration-danger="is_late" decoration-muted="state == 'received'">
                             <field name="sequence" widget="handle"/>
                             <field name="name"/>
-                            <field name="supplier_id"/>
-                            <field name="state"/>
-                            <field name="date_supplier"/>
-                            <field name="lead_days" optional="show"/>
-                            <field name="date_ready"/>
+                            <field name="supplier_id" width="190px"/>
+                            <field name="state" width="130px"/>
+                            <field name="date_supplier" width="180px"/>
+                            <field name="lead_days" optional="hide" width="120px"/>
+                            <field name="date_ready" width="120px"/>
                             <field name="is_late" column_invisible="True"/>
                         </list>
                     </field>
@@ -54,7 +50,7 @@
         <field name="arch" type="xml">
             <field name="commitment_date" position="attributes">
                 <attribute name="string">Promised Date</attribute>
-                <attribute name="widget">date</attribute>
+                <attribute name="options">{'show_time': false}</attribute>
             </field>
             <field name="commitment_date" position="after">
                 <field name="td_forecast_date" optional="hide" decoration-danger="td_delay_days &gt; 0"/>

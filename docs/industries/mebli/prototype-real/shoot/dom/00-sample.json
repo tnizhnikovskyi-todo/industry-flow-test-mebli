@@ -1,0 +1,357 @@
+{
+ "screen": "00-sample",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Позиція"
+  },
+  {
+   "kind": "header",
+   "text": "Постачальник"
+  },
+  {
+   "kind": "header",
+   "text": "Стан"
+  },
+  {
+   "kind": "header",
+   "text": "Дата постачальника"
+  },
+  {
+   "kind": "header",
+   "text": "Днів на встановлення"
+  },
+  {
+   "kind": "header",
+   "text": "Готово за позицією"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Дата замовлення?"
+  },
+  {
+   "kind": "label",
+   "text": "Прайс-лист?"
+  },
+  {
+   "kind": "label",
+   "text": "Термін оплати"
+  },
+  {
+   "kind": "label",
+   "text": "Обіцяна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Прогнозна дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Зсув, дн."
+  },
+  {
+   "kind": "label",
+   "text": "Причина зсуву?"
+  },
+  {
+   "kind": "label",
+   "text": "Продажі Замовлення До включення у рахунок Товари 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замовлення на продаж S00123 2 Виробництво 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Створити рахунок"
+  },
+  {
+   "kind": "button",
+   "text": "Надіслати"
+  },
+  {
+   "kind": "button",
+   "text": "Попередній перегляд"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Рядки замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Замовні позиції"
+  },
+  {
+   "kind": "button",
+   "text": "Інша інформація"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замовлення на продаж"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "S00123"
+  },
+  {
+   "kind": "field",
+   "text": "2 Виробництво",
+   "label": "td_production_count",
+   "name": "td_production_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Замовлення на продаж",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "td_delay_days",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "label": "td_late_item_id",
+   "name": "td_late_item_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00123",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Ірина Коваленко просп. Стрийська, 21 Львів Україна",
+   "label": "Клієнт",
+   "name": "partner_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "6 лист., 07:42",
+   "label": "Дата замовлення?",
+   "name": "date_order",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Роздрібний, грн (UAH)",
+   "label": "Прайс-лист?",
+   "name": "pricelist_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Передоплата 50%, решта перед доставкою",
+   "label": "Термін оплати",
+   "name": "payment_term_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "4 груд.",
+   "label": "Обіцяна дата?",
+   "name": "commitment_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "18 груд.",
+   "label": "Прогнозна дата?",
+   "name": "td_forecast_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "14",
+   "label": "Зсув, дн.",
+   "name": "td_delay_days",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Постачальник",
+   "label": "Причина зсуву?",
+   "name": "td_delay_reason",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Позиція Постачальник Стан Дата постачальника Днів на встановлення Готово за позицією Фасади МДФ фарбовані, RAL 9010 мат Фарбоцех «Палітра» Підтверджено постачальником 15 груд. 3 18 груд. Стільниця кварцова 38 мм Камінь-Майстер Замовлено 26 лист. 2 28 лист. Профіль шафи-купе, алюміній шампань Профіль-Систем Отримано 11 лист. 1 Додати рядок",
+   "label": "td_item_ids",
+   "name": "td_item_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "28 лист.",
+   "label": "td_shop_date",
+   "name": "td_shop_date",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Фарбоцех «Палітра»",
+   "label": "supplier_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Підтверджено постачальником",
+   "label": "state"
+  },
+  {
+   "kind": "cell",
+   "text": "15 груд.",
+   "label": "date_supplier"
+  },
+  {
+   "kind": "cell",
+   "text": "3",
+   "label": "lead_days"
+  },
+  {
+   "kind": "cell",
+   "text": "18 груд.",
+   "label": "date_ready"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Стільниця кварцова 38 мм",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Камінь-Майстер",
+   "label": "supplier_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Замовлено",
+   "label": "state"
+  },
+  {
+   "kind": "cell",
+   "text": "26 лист.",
+   "label": "date_supplier"
+  },
+  {
+   "kind": "cell",
+   "text": "2",
+   "label": "lead_days"
+  },
+  {
+   "kind": "cell",
+   "text": "28 лист.",
+   "label": "date_ready"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Профіль шафи-купе, алюміній шампань",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Профіль-Систем",
+   "label": "supplier_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Отримано",
+   "label": "state"
+  },
+  {
+   "kind": "cell",
+   "text": "11 лист.",
+   "label": "date_supplier"
+  },
+  {
+   "kind": "cell",
+   "text": "1",
+   "label": "lead_days"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "date_ready"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

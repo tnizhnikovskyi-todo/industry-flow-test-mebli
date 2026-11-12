@@ -69,7 +69,8 @@ def _book(env, suppliers, rnd):
         promised = max(shop + timedelta(days=rnd.randint(2, 6)), ordered + timedelta(days=rnd.randint(21, 30)))
         if open_order and key and rnd.random() < 0.6:
             for position, (name, supplier) in enumerate(ITEMS[key][:rnd.randint(1, len(ITEMS[key]))]):
-                arrive = min(promised - timedelta(days=rnd.randint(4, 9)), max(today + timedelta(days=rnd.randint(1, 12)), ordered + timedelta(days=7)))
+                earliest = max(today + timedelta(days=rnd.randint(1, 12)), ordered + timedelta(days=7))
+                arrive = min(promised - timedelta(days=rnd.randint(4, 9)), earliest)
                 env['td.mebli.order.item'].create({
                     'order_id': order.id, 'sequence': position, 'name': name, 'supplier_id': suppliers[supplier].id,
                     'date_supplier': arrive, 'lead_days': rnd.choice([1, 2, 2, 3]),
@@ -103,14 +104,16 @@ def _show_order(env, people, partners, suppliers):
     ordered = now - timedelta(days=6, hours=3)
     order.write({'user_id': salon.id, 'date_order': ordered, 'client_order_ref': 'Кухня й шафа-купе, квартира',
                  'payment_term_id': partners[1].property_payment_term_id.id,
-                 'note': 'Термін виготовлення — 28 днів від дня передоплати. Гарантія на виріб — 24 місяці. Доставка й монтаж — за графіком монтажів.'})
+                 'note': 'Термін виготовлення — 28 днів від дня передоплати. Гарантія на виріб — 24 місяці. '
+                         'Доставка й монтаж — за графіком монтажів.'})
     order = order.with_user(salon)
     order.order_line.action_td_generate_bom()
-    # the workshop needs 12 days for this order (standard lead time of the BoM): the manufacturing orders end well before the promise
-    order.order_line.td_bom_id.sudo().write({'produce_delay': 12})
     order.action_confirm()
     order = order.with_env(env)
     order.date_order = ordered
+    # the workshop needs 12 days for this order (standard lead time of the BoM, set after the confirmation regenerated the
+    # order BoM): the manufacturing orders end well before the promise
+    order.order_line.td_bom_id.write({'produce_delay': 12})
     # the workshop starts in four days (after the prepayment); the end follows from the lead time of the BoM
     order.mrp_production_ids.write({'date_start': now + timedelta(days=4)})
     promised = fields.Date.context_today(order, ordered) + timedelta(days=28)
@@ -129,6 +132,8 @@ def _show_order(env, people, partners, suppliers):
 
 def seed_dates(env, people, partners, rnd):
     from .showcase import _note
+    # the system bot writes the tracking messages in the chatter: a Ukrainian name, no Latin in the frame
+    env.ref('base.partner_root').name = 'Система'
     suppliers = _suppliers(env)
     _book(env, suppliers, rnd)
     order = _show_order(env, people, partners, suppliers)

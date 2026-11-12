@@ -408,24 +408,6 @@ msgid ") or the last made-to-order item is fitted."
 msgstr ") або останню замовну позицію встановлено."
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid ""
-"<i class=\"fa fa-exclamation-triangle\" title=\"Date at risk\"/>\n"
-"                    <span>The forecast date is later than the promised one by</span>"
-msgstr ""
-"<i class=\"fa fa-exclamation-triangle\" title=\"Дата під загрозою\"/>\n"
-"                    <span>Прогнозна дата пізніша за обіцяну на</span>"
-
-#. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid ""
-"<span>days.</span>\n"
-"                    <span invisible=\"not td_late_item_id\">It is moved by the made-to-order item</span>"
-msgstr ""
-"<span>дн.</span>\n"
-"                    <span invisible=\"not td_late_item_id\">Її зсуває замовна позиція</span>"
-
-#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__company_id
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__company
 msgid "Company"
@@ -434,7 +416,7 @@ msgstr "Компанія"
 #. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_item__state__confirmed
 msgid "Confirmed by Supplier"
-msgstr "Підтверджено постачальником"
+msgstr "Підтверджено"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__create_uid
@@ -513,7 +495,7 @@ msgstr "Обіцяна дата"
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_item__date_ready
 msgid "Ready by Item"
-msgstr "Готово за позицією"
+msgstr "Готовність"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_shop_date
@@ -583,3 +565,29 @@ msgid ""
 "Who moved the date: suggested from the forecast, the manager may set "
 "«Customer» for a change asked by the customer."
 msgstr "Хто зсунув дату: підказка з прогнозу; менеджер може вказати «Клієнт», якщо зміну попросив клієнт."
+
+
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "<i class=\"fa fa-exclamation-triangle me-2\" title=\"Date at risk\"/>"
+msgstr "<i class=\"fa fa-exclamation-triangle me-2\" title=\"Дата під загрозою\"/>"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid ""
+"It is moved by the made-to-order item\n"
+"                        «"
+msgstr ""
+"Її зсуває замовна позиція\n"
+"                        «"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "The forecast date is later than the promised one by"
+msgstr "Прогнозна дата пізніша за обіцяну на"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "days."
+msgstr "дн."
