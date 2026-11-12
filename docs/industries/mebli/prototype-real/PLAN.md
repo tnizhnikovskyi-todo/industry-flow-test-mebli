@@ -309,6 +309,15 @@ EE-твердження: окремого `research/edition-claims.md` нема�
 
 Файли кроків (хвиля 1 підготувала, не знято): `shoot/scenario.steps.mjs` (кроки 0–16; PASS1 = 3, 5 — імпорт CSV і «Взято» з PIN; PASS2 — решта, дашборд останнім), `shoot/scenario-mobile.steps.mjs` (5 кроків ролей m1–m5), `shoot/clips.mjs` (11 кліпів; PASS1 = D_csv, D_tablet, D_kit), `shoot/data/kitchen-spec.csv` (вигаданий CSV для сцени 2). Селектори звіряє хвиля 2 на живій базі.
 
+**База показу `demo-mebli-full` (Крок 5; C-00 `tools/odoo/` у репо немає — прямі команди, рівнозначні `build_db.sh`):**
+```
+dropdb --if-exists demo-mebli-full
+$ODOO_PY $ODOO_BIN -c $ODOO_CONF -d demo-mebli-full -i td_mebli_demo --load-language uk_UA --without-demo=True --stop-after-init
+$ODOO_PY $ODOO_BIN -c $ODOO_CONF -d demo-mebli-full -u td_mebli_mrp,td_mebli_sale,td_mebli_cutting,td_mebli_measure,td_mebli_shop,td_mebli_install,td_mebli_claim,td_mebli_cost,td_mebli_purchase,td_mebli_ua,td_mebli_dashboard,td_mebli_demo --load-language uk_UA --i18n-overwrite --stop-after-init
+$ODOO_PY $ODOO_BIN shell -c $ODOO_CONF -d demo-mebli-full < package/addons/td_mebli_demo/scripts/seed_showcase.py   # seed_showcase -> seed_dates -> seed_full, commit
+psql -d demo-mebli-full -c "SELECT count(*) FROM td_mebli_install_act"   # > 0, інакше seed не закомічено (--check-table td_mebli_install_act)
+```
+
 Прохід 1 (змінює дані) — у зразку порожній; прохід 2 (лише читання) — крок 0 і кліп `D_sample`. Сцени `facts.json`: `00-sample` (скриншот-крок), `D_sample` (кліп).
 
 ## 7. Складність і ризики
