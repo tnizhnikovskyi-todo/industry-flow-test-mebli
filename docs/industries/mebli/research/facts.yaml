@@ -8,7 +8,7 @@
 meta:
   galuz: mebli
   date: "2026-11-12"
-  step: A-20
+  step: A-20             # A-20b (2026-11-12) дописав ключі hours.*_no_oca, launch, upgrade_*, breakeven, crm, fop_light, money.* — без нових даних
   attempt: 2
   base: "51fbf07"
   note: "числа R18; A-03c (REUSE-01) враховано лише для H-06"
@@ -86,8 +86,42 @@ hours:                           # години до накладних, [оці
   h06_adapt: {min: 16, max: 32}                   # REUSE «Реєстр» — адаптація td_sale_cost (REUSE-01)
   h06_saving: {min: 8, max: 32, mid: 20}          # REUSE «Вплив на години» — економія ≈20 год (8–32)
 
+  # A-20b (2026-11-12): ключі нижче — без нових даних, лише рядки R18 або арифметика над ними (рядок-джерело в коментарі)
+  web_responsive_alt: {min: 40, max: 120}         # OB §6 «Чутливість (R18)», §8 №14 — власний адаптивний інтерфейс CE замість OCA web_responsive
+  full_package_no_oca: {min: 2568, max: 5664}     # OB §6 «Основна цифра»: 2 528 + 40; 5 544 + 120 (арифметика)
+  full_package_no_oca_overhead: {min: 3600, max: 9350}   # OB §6: 2 568 × 1,40 ≈ 3 600; 5 664 × 1,65 ≈ 9 350 (округлено до 10, як 3 540 / 9 150)
+  hard_core: {min: 908, max: 2016}                # OB §8 №16 — тверде ядро до накладних
+  launch:                                         # OB §6 «R18» таблиця; BOX §1 «Години запуску в клієнта» [припущення]
+    a: {min: 132, max: 244}
+    b: {min: 232, max: 452}
+    c: {min: 272, max: 532}
+  upgrade_a_to_b: {min: 100, max: 208}            # BOX §2 «Апгрейд»: різниця запуску B і A (232 − 132; 452 − 244), арифметика
+  upgrade_b_to_c: {min: 40, max: 80}              # BOX §2 «Апгрейд»: різниця запуску C і B (272 − 232; 532 − 452), арифметика; без міграції бази CE → EE
+
 money:                           # млн грн, з накладними за ставкою 1 975–2 400 грн/год (FM §4.6)
   full_package_mln_uah: {min: 7.0, max: 22.0, mid: 14.5}   # OB §6 «R18»; BOX §1
+  full_package_no_oca_mln_uah: {min: 7.1, max: 22.4}       # OB §6 «Основна цифра»: 3 600 × 1 975 ≈ 7,1; 9 350 × 2 400 ≈ 22,4 (арифметика)
+  payback_price_ce_mln: 2.6      # OB §6 «R18»: ціна окупності повного пакета на ринку ≈8 (середина, без підписки)
+  subscription_gap_full_mln: 0.53   # OB §6 «R18»: підписка на рік, що закриває різницю (повний пакет за 1,0 млн, ринок ≈8)
+
+breakeven:                       # OB §6 «R18» таблиці; BOX §1 рядок «Точка беззбитковості R18» — клієнтів за 3 роки, середина, без підписки
+  full_ce_at_one_mln: 64
+  full_ce_at_two_mln: 12
+  box_a_entry_at_one_mln: 26
+
+crm:                             # OB §1 «R12: що кажуть внутрішні дані ToDo» — знеособлені агрегати CRM (FM §2.5.1, §3.1)
+  leads: 56
+  price_losses_first: 17         # «≥ 17 з 56» — перший прохід
+  price_losses_full: 23          # повний повторний перебір
+  rejected_median_mln: 0.4       # медіана оцінок, відхилених ціновими лідами
+  rejected_n: 10                 # заповнено в 10 із 23
+
+fop_light:                       # OB §6 «Легкий тариф ФОП»; BOX §1а [припущення / гіпотеза → A-23]
+  dev_hours: {min: 60, max: 140}
+  launch_thousand_uah: {min: 20, max: 40}
+
+market_extra:
+  companies_0_9: 124             # BOX §1а «Нічия смуга»: юрособи 0–9 людей з виручкою 10–500 млн грн (odb-catalog, FM §1.1)
 
 reuse:
   adapted:
