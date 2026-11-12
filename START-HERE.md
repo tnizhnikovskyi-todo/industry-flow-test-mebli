@@ -18,10 +18,10 @@
 Сирі внутрішні дані ToDo (клас `internal-raw`) — `research/sources/` (рішення власника: зберігати в репо галузі).
 На сторінки й у висновки — лише знеособлені агрегати: без назв клієнтів, ПІБ, контактів, сум окремих угод, дослівних цитат.
 
-## 2. Скіли 0.2.0
+## 2. Скіли 0.2.1
 
 - Встановлено `bootstrap.sh`: 36 скілів у `.claude/skills/`, 9 агентів у `.claude/agents/`, копія пакета в `industry-flow-marketplace/`.
-- Джерело правди: `tnizhnikovskyi-todo/todo_timur`, гілка `claude/ecstatic-einstein-wf59oh`, коміт `fcebf185`. Тут пакет не правити;
+- Джерело правди: `tnizhnikovskyi-todo/todo_timur`, гілка `claude/ecstatic-einstein-wf59oh`, коміт `2c7b7a30` (0.2.1: двобічна перевірка стандарту, LESSONS §23). Тут пакет не правити;
   зауваження до скілів — у `observations/` (формат `boost:skill-feedback`).
 - Новий порядок пулу A (`industry-flow-marketplace/plugins/flow-core/references/flow-map.md`, `step-cards.md`):
   **A-02b** анкета власника (`owner-questionnaire`) → **A-03b** глибокий аналіз з K1 (`industry-deep-dive`) → **A-03c** готові модулі ToDo
