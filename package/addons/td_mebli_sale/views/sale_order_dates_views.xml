@@ -31,7 +31,7 @@
             <!-- the standard «Expected: …» hint (and the rescheduling popover in it) is replaced by the forecast date of
                  td_mebli_sale when there is one: two different «expected» dates next to each other would confuse -->
             <xpath expr="//span[field[@name='expected_date']]" position="attributes">
-                <attribute name="invisible">td_forecast_date or not expected_date or (effective_date and commitment_date)</attribute>
+                <attribute name="invisible">(state == 'sale' and td_forecast_date) or not expected_date or (effective_date and commitment_date)</attribute>
             </xpath>
             <field name="commitment_date" position="attributes">
                 <attribute name="options">{'show_time': false}</attribute>

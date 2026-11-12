@@ -53,7 +53,7 @@ class SaleOrder(models.Model):
             for production in productions:
                 if not production.workorder_ids:
                     production.button_plan()
-                first = production.workorder_ids.filtered(lambda w: w.state in ('ready', 'waiting', 'pending'))[:1]
+                first = production.workorder_ids.filtered(lambda w: w.state in ('ready', 'blocked'))[:1]
                 if first:
                     first.button_start()
 
