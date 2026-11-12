@@ -1,0 +1,30 @@
+# ТЕСТОВИЙ наряд A-02b (скіли 0.2.0, без Odoo). Склала сесія за дорученням власника (START-HERE.md §3 п.1), картка — flow-core/references/step-cards.md «A-02b».
+# Анкету заповнюємо ПІСЛЯ рішень власника 2026-11-11 (flow/decisions.md, рядки 4–27): замовчування беремо з них, відкрите — «уточнити».
+step: A-02b
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: ["flow-research:owner-questionnaire@0.2.0"]
+model: sonnet
+effort: low
+inputs:
+  - {name: scoring.md, from: A-01, path: docs/industries/scoring.md, sha: HEAD}
+  - {name: "рішення A-02 і рішення власника 2026-11-11", from: A-02, path: flow/decisions.md, sha: HEAD}
+  - {name: "OWNER-BRIEF.md §8 (статус рішень)", from: A-03b, path: docs/industries/mebli/research/OWNER-BRIEF.md, sha: HEAD}
+  - {name: "past-projects.md (джерела для reuse)", from: A-04, path: docs/industries/mebli/past-projects.md, sha: HEAD}
+where: docs/industries/mebli/OWNER-INTAKE.md
+template: "references/owner-intake-template.md скіла owner-questionnaire"
+done: "OWNER-INTAKE.md з 16 ключами; блокуючі поля заповнені з рішень власника або «уточнити»; кожне значення з рішення — рядок «Журналу змін» з джерелом; check_intake.py --allow-empty без FAIL; waiting_human (власник ≤20 хв)"
+check: {mode: auto, how: "python3 -I industry-flow-marketplace/plugins/flow-core/skills/flow-autocheck/scripts/check_intake.py docs/industries/mebli/OWNER-INTAKE.md --allow-empty", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 3, context_budget_tokens: 60000}
+human_sla: "2 робочі дні"
+client_data: none
+data_rule: "package/DATA_POLICY.md — «Дозволено передавати в AI» (none)"
+review: {checklists: [], max_rounds: 2}
+odoo_connections: []
+params: {mode: prepare, sample: false}
+repo: {url: origin, base_branch: flow/v020-start, branch: flow/A-02b-test}
+attempt: 1
+returned_from: null
+git: {base: 5bf0c3eda666771b138f48c69b8b03e091de1e1a, head: null, prev_tag: null}
+date: 2026-11-11
