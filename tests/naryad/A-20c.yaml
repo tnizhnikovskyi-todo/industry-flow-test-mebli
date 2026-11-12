@@ -1,0 +1,28 @@
+# ТЕСТОВИЙ наряд A-20c (скіли 0.2.0), ЗРАЗОК. Склала сесія. Публікацію Artifact погодити з власником (START-HERE §3 п.4): до згоди — лише локальні файли, без «КОМАНДИ: publish».
+step: A-20c
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: ["flow-research:concept-presentation@0.2.0"]
+model: sonnet
+effort: high
+inputs:
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: 5d0e450}
+  - {name: "research/*, facts.yaml, COMPLETENESS.md", from: A-20b, path: docs/industries/mebli/research/, sha: 5d0e450}
+  - {name: "concept/*", from: A-20, path: docs/industries/mebli/concept/, sha: 5d0e450}
+where: "docs/industries/mebli/research/owner-page/{index,competitors,rejected}.html"
+template: "flow-research/references/templates/owner-page/"
+done: "зразок: перший екран index.html (вердикт і гроші, біль із цитатою, що вирішити), навігація, каркас розділів; OP-* (--sample) PASS; waiting_human"
+check: {mode: both, how: "check_owner_page.py research/owner-page --research research --sample; check_brand.py; check_privacy.py; check_intake.py --page", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 12, context_budget_tokens: 150000}
+human_sla: "2 робочі дні"
+client_data: none
+data_rule: "package/DATA_POLICY.md — знеособлені агрегати"
+review: {checklists: [owner-page.md, edition-claims.md], max_rounds: 2}
+odoo_connections: []
+params: {mode: recalc, sample: true, stale: [docs/industries/mebli/research/owner-page/]}
+repo: {url: origin, base_branch: flow/A-20b-test, branch: flow/A-20c-test}
+attempt: 1
+returned_from: null
+git: {base: 5d0e450, head: null, prev_tag: null}
+date: 2026-11-12
