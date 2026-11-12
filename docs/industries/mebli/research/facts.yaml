@@ -9,15 +9,15 @@ meta:
   galuz: mebli
   date: "2026-11-12"
   step: A-20             # A-20b (2026-11-12) дописав ключі hours.*_no_oca, launch, upgrade_*, breakeven, crm, fop_light, money.* — без нових даних
-  attempt: 2
-  base: "51fbf07"
-  note: "числа R18; A-03c (REUSE-01) враховано лише для H-06"
+  attempt: 3            # A-20 спроба 3 (recalc, 2026-11-12): рішення DEC записи 29–34; нових чисел не додано
+  base: "e3480ca"
+  note: "числа R18; A-03c (REUSE-01) враховано лише для H-06; гейт A-03c затверджено (DEC запис 29)"
 
 pricing:
   ce_entry: true                 # INTAKE pricing.ce_entry (рішення №3б)
   ee_upgrade: true               # INTAKE pricing.ee_upgrade (рішення №3б)
   box_fixed_price: "коробка A"   # INTAKE pricing.box_fixed_price (рішення №15)
-  box_a_price_uah: null          # ціну коробки A власник ще не назвав (рішення №15) — відкрите, не вигадувати
+  box_a_price_uah: null          # ціну коробки A власник ще не назвав (рішення №15); G-60 не вирішено, діє замовчування OB §8 (DEC запис 32) — не вигадувати
   pilot: "платний зі знижкою"    # INTAKE pricing.pilot (рішення №20)
 
 market:
@@ -127,6 +127,7 @@ reuse:
   adapted:
     - "REUSE-01 td_sale_cost"    # REUSE — рішення «адаптуємо» (основа H-06 = ToDo-готовий)
   rejected_count: 5              # REUSE «Відкинуто»: REJ-001…005
+  gate_a03c: "затверджено"       # DEC запис 29 (2026-11-12)
 
 concept:                         # concept/* v2 (A-20, спроба 2)
   screens: 15                    # R18: екрани 1–13, 15, 16 (OB §3; FM §4.5)
