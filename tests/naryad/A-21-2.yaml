@@ -1,0 +1,31 @@
+# ТЕСТОВИЙ наряд A-21 (спроба 2, скіли 0.2.0) — новий реальний зріз за концепцією v2 після гейта A-20c (flow/decisions.md запис 35) і рішення №19 (перезібрати зріз).
+# Склала сесія. Середовище Odoo 19 CE (C-00) підіймає runner у контейнері: /home/user/odoo19 (src 19.0, venv), PostgreSQL 16 локально. EE — немає доступу: «не перевірено».
+# Рішення №13 (запис 30): перевірка на чистих базах до A-21 — у цьому наряді як Крок 1 (PLAN.md: кожне припущення про стандарт CE — файл:рядок у вихідниках 19.0 + тест на чистій базі); EE-частина — WARN.
+step: A-21
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-research:prototype-builder@0.2.0"]
+model: opus
+effort: high
+inputs:
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: 413e82a}
+  - {name: "concept/*", from: A-20, path: docs/industries/mebli/concept/, sha: 413e82a}
+  - {name: "research/{OWNER-BRIEF,FUNCTIONAL-MAP,BOX,SALES,REJECTED,REUSE,COMPLETENESS}.md, facts.yaml", from: A-20c, path: docs/industries/mebli/research/, sha: 413e82a}
+  - {name: "попередній зріз (лише як матеріал, не як вхід К-05)", from: A-21, path: docs/industries/mebli/prototype-real/, sha: 413e82a}
+  - {name: "REUSE-01 td_sale_cost", from: A-03c, path: "repo:tnizhnikovskyi-todo/todo_timur/factory3d/odoo_addons/td_sale_cost@0976f05", sha: 0976f05}
+where: "package/addons/td_mebli_*; docs/industries/mebli/prototype-real/; docs/industries/mebli/research/DEPENDS.yaml"
+template: "references/ скіла prototype-builder (slice-plan-template.md, recording.md, readme-template.md, handoff-a21c.md)"
+done: "зразок: PLAN.md (Крок 1, з перевіркою припущень по вихідниках CE 19), 1 екран зрізу, 15 с живого запису, 1 кадр (screens/00-sample.png); waiting_human до приймання (ACCEPTED.md — людина)"
+check: {mode: both, how: "Автоперевірка prototype-builder (no-x-models, check_ui_text, тести модулів, boost:odoo19-lint за наявності); EE — WARN «не перевірено»", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 480, lease_factor: 1.5, cost_limit_usd: 40, context_budget_tokens: 250000}
+client_data: none
+data_rule: "лише вигадані демо-дані; без internal-raw; package/DATA_POLICY.md"
+review: {checklists: [prototype.md], max_rounds: 2}
+odoo_connections: []
+params: {mode: recalc, sample: true, stale: [docs/industries/mebli/prototype-real/, package/addons/]}
+repo: {url: origin, base_branch: flow/v020-start, branch: flow/A-21-2-test}
+attempt: 2
+returned_from: "рішення власника №19 (запис 23): перезібрати зріз; гейт концепції A-20c затверджено (запис 35)"
+git: {base: 413e82a, head: null, prev_tag: null}
+date: 2026-11-12
