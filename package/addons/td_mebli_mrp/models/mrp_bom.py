@@ -80,6 +80,10 @@ class MrpBom(models.Model):
                     "%(axis)s %(value)s mm is out of range %(low)s-%(high)s mm.",
                     axis=axis, value=dims[axis], low=low, high=high))
         template_bom = self._bom_find(product)[product]
+        template_lines = template_bom._td_applicable_lines(product, selections)
+        # ready-made fronts (painted MDF) are bought by a line of the template: the facade parts are not cut, else they
+        # would be counted twice (board under cutting + bought fronts)
+        bought_facade = bool(template_lines.filtered(lambda line: line.product_id.td_material_kind == 'facade'))
         picked = self._td_pick_components(selections)
         if not picked['body_board']:
             raise UserError(self.env._("Choose a body decor for %s.", product.display_name))
@@ -87,6 +91,8 @@ class MrpBom(models.Model):
 
         part_vals = []
         for rule in tmpl.td_part_rule_ids:
+            if bought_facade and rule.material_role == 'facade_board':
+                continue
             if rule.material_role == 'fixed':
                 material = rule.fixed_material_id
             elif rule.material_role == 'facade_board':
@@ -126,14 +132,24 @@ class MrpBom(models.Model):
             'td_part_ids': [(0, 0, vals) for vals in part_vals],
         })
         bom.write({
-            'bom_line_ids': bom._td_prepare_component_lines(template_bom, picked),
+            'bom_line_ids': bom._td_prepare_component_lines(template_lines, picked),
         })
         bom.write({
             'operation_ids': bom._td_prepare_operations(template_bom),
         })
         return bom
 
-    def _td_prepare_component_lines(self, template_bom, picked):
+    def _td_applicable_lines(self, product, selections):
+        """Lines of the template BoM that apply to the chosen attribute values (standard «Apply on Variants»,
+        mrp.bom.line._skip_bom_line; the furniture attributes are no_variant, so the values are passed as never values)."""
+        if not self:
+            return self.env['mrp.bom.line']
+        self.ensure_one()
+        chosen = self.product_tmpl_id.attribute_line_ids.product_template_value_ids.filtered(
+            lambda ptav: ptav.product_attribute_value_id in selections)
+        return self.bom_line_ids.filtered(lambda line: not line._skip_bom_line(product, never_attribute_values=chosen))
+
+    def _td_prepare_component_lines(self, template_lines, picked):
         self.ensure_one()
         uom_m2 = self.env.ref('uom.product_uom_square_meter')
         uom_m = self.env.ref('uom.product_uom_meter')
@@ -157,7 +173,7 @@ class MrpBom(models.Model):
             }))
         for fitting in picked['fittings']:
             lines.append((0, 0, {'product_id': fitting.id, 'product_qty': 1.0, 'product_uom_id': fitting.uom_id.id}))
-        for line in template_bom.bom_line_ids:
+        for line in template_lines:
             lines.append((0, 0, {
                 'product_id': line.product_id.id, 'product_qty': line.product_qty,
                 'product_uom_id': line.product_uom_id.id,

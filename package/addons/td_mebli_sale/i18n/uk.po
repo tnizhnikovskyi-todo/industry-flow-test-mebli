@@ -542,3 +542,9 @@ msgstr "Останні 30 днів"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Order Ready"
 msgstr "Готовність"
+
+
+#. module: td_mebli_sale
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid "Only a manufacturing user can start the production of an order."
+msgstr "Запустити виробництво замовлення може лише користувач виробництва."

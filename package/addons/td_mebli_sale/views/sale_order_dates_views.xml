@@ -15,15 +15,26 @@
                     <span invisible="not td_late_item"> It is moved by the purchase: <field name="td_late_item" class="oe_inline"/>.</span>
                 </div>
             </xpath>
+            <!-- one promised date: the standard commitment_date (sale, sale_stock views/sale_order_views.xml:36) is moved
+                 from «Other Info» next to the forecast date, not added a second time -->
             <xpath expr="//group[@name='order_details']" position="inside">
-                <field name="commitment_date" string="Promised Date" options="{'show_time': false}" readonly="state == 'cancel' or locked"/>
+                <xpath expr="//label[@for='commitment_date']" position="move"/>
+                <xpath expr="//field[@name='commitment_date']/.." position="move"/>
                 <field name="td_forecast_date" decoration-danger="td_delay_days &gt; 0" decoration-success="td_delay_days == 0"
                        invisible="not td_forecast_date"/>
                 <field name="td_delay_days" invisible="td_delay_days == 0" decoration-danger="td_delay_days &gt; 0"/>
                 <field name="td_delay_reason" invisible="td_delay_days == 0"/>
             </xpath>
+            <xpath expr="//label[@for='commitment_date']" position="attributes">
+                <attribute name="string">Promised Date</attribute>
+            </xpath>
+            <field name="commitment_date" position="attributes">
+                <attribute name="options">{'show_time': false}</attribute>
+                <attribute name="readonly">state == 'cancel' or locked</attribute>
+            </field>
             <xpath expr="//page[@name='order_lines']" position="after">
-                <page string="Purchases for the Order" name="td_purchases" groups="purchase.group_purchase_user"
+                <!-- read only for the salesperson (access rule «purchases of my orders»); the smart button stays with Purchase -->
+                <page string="Purchases for the Order" name="td_purchases" groups="sales_team.group_sale_salesman,purchase.group_purchase_user"
                       invisible="not td_purchase_line_ids">
                     <field name="td_late_line_id" invisible="1"/>
                     <field name="td_purchase_line_ids" readonly="1">

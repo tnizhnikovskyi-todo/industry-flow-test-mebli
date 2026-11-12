@@ -427,15 +427,6 @@ msgid "Nominal Width, mm"
 msgstr "Номінальна ширина, мм"
 
 #. module: td_mebli_mrp
-#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
-msgid ""
-"Open work orders by work center: the load of every section in percent of its"
-" weekly capacity."
-msgstr ""
-"Відкриті операції за дільницями: завантаження кожної дільниці у відсотках "
-"від її тижневої потужності. Понад 100% означає вузьке місце."
-
-#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_order_bom
 msgid "Order BoM"
 msgstr "Специфікація під замовлення"
@@ -453,15 +444,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__over
 msgid "Over capacity"
 msgstr "Понад потужність"
-
-#. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
-msgid ""
-"Over capacity: the open work of the section needs more hours than the "
-"section has in a week."
-msgstr ""
-"Понад потужність: відкрита робота дільниці потребує більше годин, ніж у "
-"дільниці є на тиждень."
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_is_parametric
@@ -587,15 +569,6 @@ msgid "Sequence"
 msgstr "Послідовність"
 
 #. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
-msgid ""
-"Share of the weekly capacity of the section taken by this operation; the sum"
-" over a section is its load."
-msgstr ""
-"Частка тижневої потужності дільниці, яку займає ця операція; сума по "
-"дільниці — її завантаження."
-
-#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_length_mm
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_length_mm
 msgid "Sheet Length, mm"
@@ -713,15 +686,6 @@ msgid "Work Order"
 msgstr "Робоче замовлення"
 
 #. module: td_mebli_mrp
-#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
-msgid ""
-"Working hours the section can give to orders in a week (people x shift "
-"hours); the base of the load, %."
-msgstr ""
-"Скільки годин на тиждень дільниця може віддати під ці замовлення (люди × "
-"години зміни); основа для «Завантаження, %»."
-
-#. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "mm."
 msgstr "мм."
@@ -741,3 +705,33 @@ msgstr "Позначення"
 msgid "Reserved / consumed"
 msgstr "Зарезервовано / спожито"
 
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid "Read only: hours per week of the working calendar of the section times the number of pieces it makes in parallel (the product capacity without a product). The time efficiency is not applied here: it is already in the expected duration of the operations."
+msgstr "Лише читання: години на тиждень робочого календаря дільниці, помножені на кількість виробів, які вона робить паралельно (потужність без товару). Ефективність тут не застосовується: вона вже в очікуваній тривалості операцій."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid "Share of the weekly capacity of the section taken by this operation; summed over a section and the week of the planned start it is the load of that week."
+msgstr "Частка тижневої потужності дільниці, яку займає ця операція; сума по дільниці за тиждень запланованого старту — завантаження цього тижня."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid "Over capacity: the open work of the section (standard work center load) needs more hours than the section has in a week."
+msgstr "Понад потужність: відкрита робота дільниці (стандартне завантаження робочого центру) потребує більше годин, ніж дільниця має за тиждень."
+
+#. module: td_mebli_mrp
+#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
+msgid "Open work orders by work center: the load of every section by week of the planned start, in percent of its weekly capacity (working calendar of the section)."
+msgstr "Відкриті операції за дільницями: завантаження кожної дільниці за тижнями запланованого старту, у відсотках тижневої потужності (робочий календар дільниці)."
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__facade
+msgid "Ready-made facade"
+msgstr "Готовий фасад"
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_material_kind
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_material_kind
+msgid "Ready-made facade: fronts bought or made outside (e.g. painted MDF); when such a line of the template bill of materials applies to the chosen attribute values, the facade parts are not cut from board."
+msgstr "Готовий фасад: фасади, куплені чи зроблені поза цехом (напр. фарбований МДФ); коли такий рядок шаблонної специфікації застосовується до вибраних значень атрибутів, деталі фасаду з плити не розкроюються."

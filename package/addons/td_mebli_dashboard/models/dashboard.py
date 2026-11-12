@@ -85,8 +85,9 @@ class TdMebliDashboard(models.AbstractModel):
         waiting = len(orders) - launched_count
 
         load = []
-        for center in env['mrp.workcenter'].search([('td_capacity_hours', '>', 0)]):
-            planned = sum(center.order_ids.filtered(lambda w: w.state not in ('done', 'cancel')).mapped('duration_expected')) / 60.0
+        # capacity: the working calendar of the section (td_capacity_hours, computed); open hours: standard workcenter_load
+        for center in env['mrp.workcenter'].search([]).filtered(lambda c: c.td_capacity_hours > 0):
+            planned = center.workcenter_load / 60.0
             if planned:
                 load.append({'name': center.name, 'pct': round(planned / center.td_capacity_hours * 100.0),
                              'over': planned > center.td_capacity_hours})

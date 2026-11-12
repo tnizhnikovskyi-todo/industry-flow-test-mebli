@@ -18,11 +18,16 @@ SUPPLIERS = [
     ('Фарбоцех «Палітра»', 'Біла Церква'), ('Камінь-Майстер', 'Житомир'), ('Профіль-Систем', 'Київ'),
 ]
 
-# key, name, unit xmlid, cost (UAH, the planned margin of the show order stays ~20 %), supplier index, supplier lead time (days), template BoM, quantity per unit
+# key, name, unit xmlid, cost (UAH), supplier index, supplier lead time (days), template BoM, quantity per unit,
+# material kind (td_mebli_mrp), facade value the line applies to (standard «Apply on Variants» of the BoM line; None = always)
+# The painted fronts are ready-made facades: for the facade «МДФ Білий матовий» the kitchen buys them and the part rule
+# «Фасад» is not cut from board (td_mebli_mrp: no double counting of the facades).
 COMPONENTS = [
-    ('fronts_9010', 'Фасади МДФ фарбовані, RAL 9010 мат', 'uom.product_uom_unit', 380.0, 0, 14, 'prod_kitchen', 1.0),
-    ('worktop_quartz', 'Стільниця кварцова 38 мм', 'uom.product_uom_meter', 1600.0, 1, 10, 'prod_kitchen', 0.6),
-    ('profile_champagne', 'Профіль шафи-купе, алюміній шампань', 'uom.product_uom_unit', 2400.0, 2, 5, 'prod_wardrobe', 1.0),
+    ('fronts_9010', 'Фасади МДФ фарбовані, RAL 9010 мат', 'uom.product_uom_unit', 380.0, 0, 14, 'prod_kitchen', 1.0,
+     'facade', 'val_facade_mdf'),
+    ('worktop_quartz', 'Стільниця кварцова 38 мм', 'uom.product_uom_meter', 1600.0, 1, 10, 'prod_kitchen', 0.6, False, None),
+    ('profile_champagne', 'Профіль шафи-купе, алюміній шампань', 'uom.product_uom_unit', 2400.0, 2, 5, 'prod_wardrobe', 1.0,
+     False, None),
 ]
 
 # standard manufacturing lead time of the template bills of materials (mrp.bom.produce_delay), days
@@ -46,15 +51,19 @@ def _components(env, suppliers):
     a line of the template bill of materials. From now on every kitchen and wardrobe order buys them on confirmation."""
     routes = [env.ref('stock.route_warehouse0_mto').id, env.ref('purchase_stock.route_warehouse0_buy').id]
     found = {}
-    for key, name, uom, cost, supplier, delay, template, qty in COMPONENTS:
+    for key, name, uom, cost, supplier, delay, template, qty, kind, applies_to in COMPONENTS:
         product = env['product.product'].create({
             'name': name, 'type': 'consu', 'is_storable': True, 'uom_id': env.ref(uom).id,
             'standard_price': cost, 'purchase_ok': True, 'sale_ok': False, 'route_ids': [(6, 0, routes)],
+            'td_material_kind': kind,
             'seller_ids': [(0, 0, {'partner_id': suppliers[supplier].id, 'price': cost, 'delay': delay})],
         })
-        bom = env['mrp.bom']._bom_find(env.ref(f'td_mebli_demo.{template}').product_variant_id)[
-            env.ref(f'td_mebli_demo.{template}').product_variant_id]
-        bom.write({'bom_line_ids': [(0, 0, {'product_id': product.id, 'product_qty': qty, 'product_uom_id': product.uom_id.id})]})
+        tmpl = env.ref(f'td_mebli_demo.{template}')
+        bom = env['mrp.bom']._bom_find(tmpl.product_variant_id)[tmpl.product_variant_id]
+        ptavs = tmpl.attribute_line_ids.product_template_value_ids.filtered(
+            lambda v: applies_to and v.product_attribute_value_id == env.ref(f'td_mebli_demo.{applies_to}'))
+        bom.write({'bom_line_ids': [(0, 0, {'product_id': product.id, 'product_qty': qty, 'product_uom_id': product.uom_id.id,
+                                            'bom_product_template_attribute_value_ids': [(6, 0, ptavs.ids)]})]})
         found[key] = product
     for template, days in PRODUCE_DELAY.items():
         variant = env.ref(f'td_mebli_demo.{template}').product_variant_id

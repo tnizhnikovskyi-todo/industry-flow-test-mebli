@@ -4,27 +4,23 @@
         <field name="name">Розкрій</field>
         <field name="code">CUT</field>
         <field name="costs_hour">600</field>
-        <field name="td_capacity_hours">10</field>
     </record>
 
     <record id="wc_edge" model="mrp.workcenter">
         <field name="name">Крайкування</field>
         <field name="code">EDG</field>
         <field name="costs_hour">450</field>
-        <field name="td_capacity_hours">11</field>
     </record>
 
     <record id="wc_drill" model="mrp.workcenter">
         <field name="name">Присадка</field>
         <field name="code">DRL</field>
         <field name="costs_hour">400</field>
-        <field name="td_capacity_hours">15</field>
     </record>
 
     <record id="wc_asm" model="mrp.workcenter">
         <field name="name">Складання</field>
         <field name="code">ASM</field>
         <field name="costs_hour">320</field>
-        <field name="td_capacity_hours">44</field>
     </record>
 </odoo>

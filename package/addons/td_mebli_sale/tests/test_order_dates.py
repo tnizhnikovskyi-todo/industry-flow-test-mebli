@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from odoo import fields
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 
 from .common import TdMebliSaleCommon
@@ -115,6 +116,80 @@ class TestOrderDates(TdMebliSaleCommon):
         self.assertEqual(as_salesman.td_delay_days, 10)
         self.assertEqual(as_salesman.td_delay_reason, 'supplier')
         self.assertIn(self.supplier.name, as_salesman.td_late_item)
+
+    def _salesman(self, login, group='sales_team.group_sale_salesman'):
+        return self.env['res.users'].create({
+            'name': login, 'login': login,
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id, self.env.ref(group).id])]})
+
+    def test_salesperson_reads_the_purchases_of_his_orders_only(self):
+        """Read-only access to purchase.order(.line) for a salesperson, limited by the rule «purchases of my orders»."""
+        mine, start = self._confirmed(20)
+        other, _start = self._confirmed(20)
+        salesman = self._salesman('td_salesman_own')
+        mine.user_id = salesman
+        mine._get_purchase_orders().order_line.date_planned = fields.Datetime.to_datetime(start + timedelta(days=25))
+        as_salesman = self._reread(mine).with_user(salesman)
+        self.assertFalse(salesman.has_group('purchase.group_purchase_user'))
+        lines = as_salesman.td_purchase_line_ids
+        self.assertEqual(len(lines), 1)
+        # the fields of the tab are read with his own rights (no sudo)
+        values = lines.read(['product_id', 'partner_id', 'order_id', 'date_planned', 'qty_received', 'td_date_ready'])
+        self.assertEqual(values[0]['td_date_ready'], start + timedelta(days=30))
+        self.assertEqual(as_salesman.td_late_line_id, lines)
+        with self.assertRaises(AccessError):
+            lines.with_user(salesman).write({'date_planned': fields.Datetime.now()})
+        with self.assertRaises(AccessError):
+            lines.order_id.with_user(salesman).button_confirm()
+        theirs = other._get_purchase_orders()
+        if theirs != mine._get_purchase_orders():  # a merged request for quotation is read by both salespersons
+            with self.assertRaises(AccessError):
+                theirs.with_user(salesman).read(['name'])
+        self.assertEqual(self.env['sale.order']._fields['purchase_order_count'].groups, 'purchase.group_purchase_user',
+                         "the smart button stays with Purchase (standard group)")
+
+    def test_merged_request_shows_only_the_lines_of_the_order(self):
+        """Two orders, the same supplier: the buyer merges the requests for quotation (standard action_merge, the merged
+        request keeps the references of both, purchase_stock _merge_po_post_process); each order sees only its line."""
+        first, start = self._confirmed(20)
+        second, _start = self._confirmed(20)
+        own, other = first._get_purchase_orders(), second._get_purchase_orders()
+        other.order_line.date_planned = fields.Datetime.to_datetime(start + timedelta(days=40))  # not merged into one line
+        (own | other).action_merge()
+        merged = first._get_purchase_orders().filtered(lambda po: po.state != 'cancel')
+        self.assertEqual(merged, second._get_purchase_orders().filtered(lambda po: po.state != 'cancel'))
+        self.assertEqual(len(merged.order_line), 2)
+        self._reread(first)
+        self._reread(second)
+        self.assertEqual(len(first.td_purchase_line_ids), 1)
+        self.assertEqual(len(second.td_purchase_line_ids), 1)
+        self.assertEqual(first.td_purchase_line_ids._td_production(), first.mrp_production_ids)
+        self.assertEqual(second.td_purchase_line_ids._td_production(), second.mrp_production_ids)
+
+    def test_two_step_receipt_follows_the_chain(self):
+        """Receipt in 2 steps: the purchase line feeds the input move; the chain of destination moves reaches the MO."""
+        warehouse = self.env['stock.warehouse'].search([('company_id', '=', self.env.company.id)], limit=1)
+        warehouse.reception_steps = 'two_steps'
+        order, start = self._confirmed(20)
+        line = order._get_purchase_orders().order_line
+        self.assertEqual(line._td_production(), order.mrp_production_ids)
+        self.assertEqual(order.td_purchase_line_ids, line)
+        line.date_planned = fields.Datetime.to_datetime(start + timedelta(days=25)) + timedelta(hours=10)
+        self._reread(order)
+        self.assertEqual(line.td_date_ready, start + timedelta(days=30))
+
+    def test_stage_drag_needs_manufacturing_rights(self):
+        """The board: a salesperson cannot start the production by moving the card (no sudo); a manufacturing user can."""
+        order, _start = self._confirmed(20)
+        salesman = self._salesman('td_salesman_stage')
+        order.user_id = salesman
+        with self.assertRaises(UserError):
+            order.with_user(salesman).td_stage = 'progress'
+        worker = self.env['res.users'].create({
+            'name': 'Worker', 'login': 'td_mrp_stage', 'group_ids': [(6, 0, [
+                self.env.ref('mrp.group_mrp_user').id, self.env.ref('sales_team.group_sale_salesman_all_leads').id])]})
+        order.with_user(worker).td_stage = 'progress'
+        self.assertTrue(order.mrp_production_ids.workorder_ids.filtered(lambda w: w.state == 'progress'))
 
     def test_no_parallel_accounting(self):
         """§23: the date fields of the order are computed and read only, no supplier or date is entered in the order."""

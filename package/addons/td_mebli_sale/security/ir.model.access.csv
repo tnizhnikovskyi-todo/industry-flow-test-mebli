@@ -7,3 +7,5 @@ access_mrp_bom_byproduct_salesman,mrp.bom.byproduct salesman,mrp.model_mrp_bom_b
 access_mrp_workcenter_capacity_salesman,mrp.workcenter.capacity salesman,mrp.model_mrp_workcenter_capacity,sales_team.group_sale_salesman,1,0,0,0
 access_mrp_production_salesman,mrp.production salesman,mrp.model_mrp_production,sales_team.group_sale_salesman,1,0,0,0
 access_mrp_workorder_salesman,mrp.workorder salesman,mrp.model_mrp_workorder,sales_team.group_sale_salesman,1,0,0,0
+access_purchase_order_salesman,purchase.order salesman (read),purchase.model_purchase_order,sales_team.group_sale_salesman,1,0,0,0
+access_purchase_order_line_salesman,purchase.order.line salesman (read),purchase.model_purchase_order_line,sales_team.group_sale_salesman,1,0,0,0

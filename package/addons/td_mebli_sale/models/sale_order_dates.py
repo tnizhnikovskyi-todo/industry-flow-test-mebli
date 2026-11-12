@@ -16,11 +16,19 @@ class PurchaseOrderLine(models.Model):
              "bill of materials that consumes it: when the sales order can be ready if only this item is waited for. "
              "Empty when the item is received or the purchase is cancelled.")
 
-    def _td_production(self):
-        """The manufacturing order that consumes the purchased item (standard MTO chain: the purchase line feeds the
-        component move of the manufacturing order)."""
+    def _td_productions(self):
+        """The manufacturing orders that consume the purchased item (standard MTO chain: the purchase line feeds the
+        component move of the manufacturing order). With a receipt in 2 or 3 steps the line feeds the input move, so the
+        chain of destination moves is followed (standard _rollup_move_dests, as purchase_mrp does in the MO overview).
+        Read only: sudo reads the stock moves, which a salesperson may not read; nothing is written."""
         self.ensure_one()
-        return self.move_dest_ids.raw_material_production_id[:1]
+        Move = self.env['stock.move'].sudo()
+        moves = Move.browse(self.sudo().move_dest_ids._rollup_move_dests())
+        return moves.raw_material_production_id
+
+    def _td_production(self):
+        self.ensure_one()
+        return self._td_productions()[:1]
 
     def _td_is_open(self):
         self.ensure_one()
@@ -33,7 +41,8 @@ class PurchaseOrderLine(models.Model):
                 line.td_date_ready = False
                 continue
             arrival = fields.Date.context_today(line, line.date_planned)
-            line.td_date_ready = arrival + timedelta(days=line._td_production().bom_id.produce_delay or 0)
+            # sudo: the bill of materials of the manufacturing order is read only (produce_delay)
+            line.td_date_ready = arrival + timedelta(days=line._td_production().sudo().bom_id.produce_delay or 0)
 
 
 class SaleOrder(models.Model):
@@ -47,14 +56,15 @@ class SaleOrder(models.Model):
 
     td_purchase_line_ids = fields.Many2many(
         'purchase.order.line', string='Purchased for the Order', compute='_compute_td_purchase_lines',
-        groups='purchase.group_purchase_user')
+        groups='sales_team.group_sale_salesman,purchase.group_purchase_user')
     td_shop_date = fields.Date(string='Ready by Workshop', compute='_compute_td_forecast')
     td_forecast_date = fields.Date(string='Forecast Date', compute='_compute_td_forecast',
                                    help="The later of the two: the workshop is ready, the last purchased item arrives and is "
                                         "made into the product (manufacturing lead time of the bill of materials).")
     td_delay_days = fields.Integer(string='Shift, days', compute='_compute_td_forecast')
     td_late_line_id = fields.Many2one('purchase.order.line', string='Purchase that Moves the Date',
-                                      compute='_compute_td_purchase_lines', groups='purchase.group_purchase_user')
+                                      compute='_compute_td_purchase_lines',
+                                      groups='sales_team.group_sale_salesman,purchase.group_purchase_user')
     td_late_item = fields.Char(string='Item that Moves the Date', compute='_compute_td_forecast')
     td_delay_reason = fields.Selection(
         [('supplier', 'Supplier'), ('company', 'Company')], string='Shift Reason', compute='_compute_td_forecast',
@@ -75,10 +85,17 @@ class SaleOrder(models.Model):
 
     def _td_purchase_lines(self):
         """The lines of the purchase orders linked to the sales order by the standard (sale_purchase,
-        sale_purchase_stock: _get_purchase_orders)."""
+        sale_purchase_stock: _get_purchase_orders), only those bought for this order: the line feeds a manufacturing
+        order of this order (a request for quotation may be merged with the purchases of other orders,
+        purchase_stock _merge_po_post_process) or is bought for one of its lines (sale_purchase services)."""
         self.ensure_one()
-        # sudo: a salesperson without purchase rights still gets the forecast date and the reason
-        return self.sudo()._get_purchase_orders().order_line.filtered(lambda line: not line.display_type and line.state != 'cancel')
+        # sudo: read only — the forecast date and the reason are computed for a salesperson too; the lines are given to
+        # the views without sudo (the access rule «purchases of my orders» decides what he reads)
+        order = self.sudo()
+        productions = order.mrp_production_ids
+        return order._get_purchase_orders().order_line.filtered(
+            lambda line: not line.display_type and line.state != 'cancel'
+            and (line._td_productions() & productions or line.sale_line_id in order.order_line))
 
     def _td_late_line(self, lines, shop):
         """The purchased item that arrives last, if it is ready later than the workshop."""

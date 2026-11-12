@@ -27,8 +27,9 @@ COMPANY = {
 
 # login, name, job, avatar, groups (xmlids)
 USERS = [
-    # the salon manager reads the purchases of her orders (the smart button of sale_purchase needs the Purchase user group)
-    ('salon', 'Олена Мартинюк', 'Менеджер салону', 'avatar_salon', ['sales_team.group_sale_salesman', 'purchase.group_purchase_user']),
+    # the salon manager reads the purchases of her orders read only (td_mebli_sale: access rule «purchases of my orders»);
+    # no Purchase group: the smart button of sale_purchase stays with the buyers, as in the standard
+    ('salon', 'Олена Мартинюк', 'Менеджер салону', 'avatar_salon', ['sales_team.group_sale_salesman']),
     ('salon2', 'Роман Лисенко', 'Менеджер салону', 'avatar_salon2', ['sales_team.group_sale_salesman']),
     ('salon3', 'Світлана Прокопенко', 'Менеджер салону', 'avatar_salon3', ['sales_team.group_sale_salesman']),
     ('tech', 'Андрій Ковальчук', 'Технолог-конструктор', 'avatar_tech',
@@ -109,6 +110,20 @@ NOTES = {
 
 
 _KYIV = ZoneInfo('Europe/Kyiv')
+
+
+def _section_calendar(env, center, weekly_hours):
+    """A standard working calendar of a section: Mon-Fri from 8:00, the same share of the day every day."""
+    per_day = weekly_hours / 5.0
+    return env['resource.calendar'].create({
+        'name': f'{center.name}: {weekly_hours} год на тиждень',
+        'company_id': center.company_id.id or env.company.id,
+        'tz': 'Europe/Kyiv',
+        'attendance_ids': [(5, 0, 0)] + [
+            (0, 0, {'name': f'{center.name} {day + 1}', 'dayofweek': str(day), 'hour_from': 8.0, 'hour_to': 8.0 + per_day,
+                    'day_period': 'morning'})
+            for day in range(5)],
+    })
 
 
 def _work(when, rnd=None):
@@ -566,13 +581,14 @@ def seed_showcase(env):
                       ('prod_kitchen', 'Фасади лише з МДФ; кромка ПВХ 2 мм обов\'язкова для відкритих торців.'),
                       ('prod_dresser', 'Стандартна висота цоколя 100 мм, регульовані опори в комплекті.')):
         _note(env.ref(f'td_mebli_demo.{key}'), people['tech'], text, now - timedelta(days=rnd.randint(20, 35)))
-    # section load: the capacity of the work centers is set so that the show has a believable picture (one bottleneck)
+    # section load: the working calendar of each section (standard resource.calendar) gives the hours the section has for
+    # these orders in a week; they are set so that the show has a believable picture (one bottleneck). The calendars are
+    # given after the work orders are planned, so the dates of the order book do not change.
     for code, percent in {'CUT': 74, 'EDG': 97, 'DRL': 83, 'ASM': 118}.items():
         center = env['mrp.workcenter'].search([('code', '=', code)], limit=1)
-        hours = sum(env['mrp.workorder'].search([('workcenter_id', '=', center.id), ('state', 'not in', ('done', 'cancel'))])
-                    .mapped('duration_expected')) / 60.0
+        hours = center.workcenter_load / 60.0 if center else 0.0
         if center and hours:
-            center.td_capacity_hours = max(1, round(hours / percent * 100.0))
+            center.resource_calendar_id = _section_calendar(env, center, max(1, round(hours / percent * 100.0)))
     seed_dates(env, people, partners, rnd)
     _age_system_messages(env)
     # no chatter message dated «yesterday»: the web client shows that word untranslated, a plain date reads better
