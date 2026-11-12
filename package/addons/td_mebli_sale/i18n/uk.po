@@ -152,8 +152,8 @@ msgstr "У виробництві"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid "It is moved by the purchase «"
-msgstr "Її зсуває закупівля «"
+msgid "It is moved by the purchase:"
+msgstr "Її зсуває закупівля:"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_late_item
@@ -418,7 +418,6 @@ msgid "Specification"
 msgstr "Специфікація"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
 msgid "Status"
 msgstr "Стан"
@@ -505,11 +504,6 @@ msgid "Type to find a product..."
 msgstr "Введіть назву виробу..."
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid "Unit"
-msgstr "Од."
-
-#. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__confirmed
 msgid "Waiting for launch"
 msgstr "Очікує запуску"
@@ -543,3 +537,8 @@ msgstr "год"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
 msgid "Останні 30 днів"
 msgstr "Останні 30 днів"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "Order Ready"
+msgstr "Готовність"

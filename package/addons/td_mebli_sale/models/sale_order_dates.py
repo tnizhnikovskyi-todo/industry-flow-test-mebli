@@ -78,7 +78,7 @@ class SaleOrder(models.Model):
         sale_purchase_stock: _get_purchase_orders)."""
         self.ensure_one()
         # sudo: a salesperson without purchase rights still gets the forecast date and the reason
-        return self.sudo()._get_purchase_orders().order_line.filtered(lambda l: not l.display_type and l.state != 'cancel')
+        return self.sudo()._get_purchase_orders().order_line.filtered(lambda line: not line.display_type and line.state != 'cancel')
 
     def _td_late_line(self, lines, shop):
         """The purchased item that arrives last, if it is ready later than the workshop."""

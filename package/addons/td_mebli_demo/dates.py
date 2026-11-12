@@ -139,7 +139,7 @@ def _show_order(env, people, partners, components):
         for line in purchase.order_line:
             if line.product_id in dates:
                 line.date_planned = dates[line.product_id]
-    profile = purchases.order_line.filtered(lambda l: l.product_id == components['profile_champagne']).order_id
+    profile = purchases.order_line.filtered(lambda line: line.product_id == components['profile_champagne']).order_id
     for picking in profile.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel')):
         _receive(picking)
     return order
@@ -153,7 +153,7 @@ def seed_dates(env, people, partners, rnd):
     _book(env, rnd)
     components = _components(env, suppliers)
     order = _show_order(env, people, partners, components)
-    fronts = order._get_purchase_orders().order_line.filtered(lambda l: l.product_id == components['fronts_9010'])
+    fronts = order._get_purchase_orders().order_line.filtered(lambda line: line.product_id == components['fronts_9010'])
     moved = fields.Date.context_today(fronts, fronts.date_planned)
     _note(order, people['salon'], 'Клієнт погодив кухню й шафу-купе в одному договорі, фасади — фарбовані RAL 9010 мат.',
           order.date_order + timedelta(hours=2))

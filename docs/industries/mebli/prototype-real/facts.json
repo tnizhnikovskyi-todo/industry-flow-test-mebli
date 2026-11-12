@@ -21,19 +21,37 @@
   {
    "scene": "00-sample",
    "name": "late_item",
-   "expected": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "expected": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
    "ok": true
   },
   {
    "scene": "00-sample",
    "name": "late_item_supplier_date",
-   "expected": "15 груд.",
+   "expected": "6 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "late_item_ready",
+   "expected": "18 груд.",
+   "ok": true
+  },
+  {
+   "scene": "00-sample",
+   "name": "purchase_count",
+   "expected": "3",
    "ok": true
   },
   {
    "scene": "D_sample",
    "name": "delay_days",
    "expected": "14",
+   "ok": true
+  },
+  {
+   "scene": "D_sample",
+   "name": "late_item_ready",
+   "expected": "18 груд.",
    "ok": true
   }
  ],
@@ -42,11 +60,14 @@
    "promised_date": "4 груд.",
    "forecast_date": "18 груд.",
    "delay_days": "14",
-   "late_item": "Фасади МДФ фарбовані, RAL 9010 мат",
-   "late_item_supplier_date": "15 груд."
+   "late_item": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "late_item_supplier_date": "6 груд.",
+   "late_item_ready": "18 груд.",
+   "purchase_count": "3"
   },
   "D_sample": {
-   "delay_days": "14"
+   "delay_days": "14",
+   "late_item_ready": "18 груд."
   }
  }
 }

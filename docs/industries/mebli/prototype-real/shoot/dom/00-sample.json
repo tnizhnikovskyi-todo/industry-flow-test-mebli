@@ -4,11 +4,7 @@
  "items": [
   {
    "kind": "header",
-   "text": ""
-  },
-  {
-   "kind": "header",
-   "text": "Позиція"
+   "text": "Товар"
   },
   {
    "kind": "header",
@@ -16,7 +12,7 @@
   },
   {
    "kind": "header",
-   "text": "Стан"
+   "text": "Закупівля"
   },
   {
    "kind": "header",
@@ -24,11 +20,11 @@
   },
   {
    "kind": "header",
-   "text": "Готовність"
+   "text": "Отримано"
   },
   {
    "kind": "header",
-   "text": ""
+   "text": "Готовність"
   },
   {
    "kind": "label",
@@ -68,7 +64,7 @@
   },
   {
    "kind": "label",
-   "text": "Новий Замовлення на продаж S00123 2 Виробництво 1 / 1"
+   "text": "Новий Замовлення на продаж S00123 3 Купівлі 2 Виробництво 1 / 1"
   },
   {
    "kind": "button",
@@ -92,7 +88,7 @@
   },
   {
    "kind": "button",
-   "text": "Замовні позиції"
+   "text": "Закупівлі під замовлення"
   },
   {
    "kind": "button",
@@ -105,6 +101,13 @@
   {
    "kind": "breadcrumb",
    "text": "S00123"
+  },
+  {
+   "kind": "field",
+   "text": "3 Купівлі",
+   "label": "purchase_order_count",
+   "name": "purchase_order_count",
+   "required": false
   },
   {
    "kind": "field",
@@ -129,9 +132,9 @@
   },
   {
    "kind": "field",
-   "text": "Фасади МДФ фарбовані, RAL 9010 мат",
-   "label": "td_late_item_id",
-   "name": "td_late_item_id",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат — Фарбоцех «Палітра»",
+   "label": "td_late_item",
+   "name": "td_late_item",
    "required": false
   },
   {
@@ -150,7 +153,7 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 08:04",
+   "text": "6 лист., 09:01",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
@@ -199,30 +202,9 @@
   },
   {
    "kind": "field",
-   "text": "Позиція Постачальник Стан Дата постачання Готовність Фасади МДФ фарбовані, RAL 9010 мат Фарбоцех «Палітра» Підтверджено 15 груд. 18 груд. Стільниця кварцова 38 мм Камінь-Майстер Замовлено 26 лист. 28 лист. Профіль шафи-купе, алюміній шампань Профіль-Систем Отримано 11 лист. Додати рядок",
-   "label": "td_item_ids",
-   "name": "td_item_ids",
-   "required": false
-  },
-  {
-   "kind": "field",
-   "text": "",
-   "label": "sequence",
-   "name": "sequence",
-   "required": false
-  },
-  {
-   "kind": "field",
-   "text": "",
-   "label": "sequence",
-   "name": "sequence",
-   "required": false
-  },
-  {
-   "kind": "field",
-   "text": "",
-   "label": "sequence",
-   "name": "sequence",
+   "text": "Товар Постачальник Закупівля Дата постачання Отримано Готовність Профіль шафи-купе, алюміній шампань Профіль-Систем P00003 11 лист. 1,000 Стільниця кварцова 38 мм Камінь-Майстер P00002 15 лист. 0,000 27 лист. Фасади МДФ фарбовані, RAL 9010 мат Фарбоцех «Палітра» P00001 6 груд. 0,000 18 груд. ​",
+   "label": "td_purchase_line_ids",
+   "name": "td_purchase_line_ids",
    "required": false
   },
   {
@@ -234,105 +216,93 @@
   },
   {
    "kind": "cell",
-   "text": "",
-   "label": "sequence"
-  },
-  {
-   "kind": "cell",
-   "text": "Фасади МДФ фарбовані, RAL 9010 мат",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Фарбоцех «Палітра»",
-   "label": "supplier_id"
-  },
-  {
-   "kind": "cell",
-   "text": "Підтверджено",
-   "label": "state"
-  },
-  {
-   "kind": "cell",
-   "text": "15 груд.",
-   "label": "date_supplier"
-  },
-  {
-   "kind": "cell",
-   "text": "18 груд.",
-   "label": "date_ready"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "sequence"
-  },
-  {
-   "kind": "cell",
-   "text": "Стільниця кварцова 38 мм",
-   "label": "name"
-  },
-  {
-   "kind": "cell",
-   "text": "Камінь-Майстер",
-   "label": "supplier_id"
-  },
-  {
-   "kind": "cell",
-   "text": "Замовлено",
-   "label": "state"
-  },
-  {
-   "kind": "cell",
-   "text": "26 лист.",
-   "label": "date_supplier"
-  },
-  {
-   "kind": "cell",
-   "text": "28 лист.",
-   "label": "date_ready"
-  },
-  {
-   "kind": "cell",
-   "text": ""
-  },
-  {
-   "kind": "cell",
-   "text": "",
-   "label": "sequence"
-  },
-  {
-   "kind": "cell",
    "text": "Профіль шафи-купе, алюміній шампань",
-   "label": "name"
+   "label": "product_id"
   },
   {
    "kind": "cell",
    "text": "Профіль-Систем",
-   "label": "supplier_id"
+   "label": "partner_id"
   },
   {
    "kind": "cell",
-   "text": "Отримано",
-   "label": "state"
+   "text": "P00003",
+   "label": "order_id"
   },
   {
    "kind": "cell",
    "text": "11 лист.",
-   "label": "date_supplier"
+   "label": "date_planned"
+  },
+  {
+   "kind": "cell",
+   "text": "1,000",
+   "label": "qty_received"
   },
   {
    "kind": "cell",
    "text": "",
-   "label": "date_ready"
+   "label": "td_date_ready"
   },
   {
    "kind": "cell",
-   "text": ""
+   "text": "Стільниця кварцова 38 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Камінь-Майстер",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "P00002",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "15 лист.",
+   "label": "date_planned"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "qty_received"
+  },
+  {
+   "kind": "cell",
+   "text": "27 лист.",
+   "label": "td_date_ready"
+  },
+  {
+   "kind": "cell",
+   "text": "Фасади МДФ фарбовані, RAL 9010 мат",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "Фарбоцех «Палітра»",
+   "label": "partner_id"
+  },
+  {
+   "kind": "cell",
+   "text": "P00001",
+   "label": "order_id"
+  },
+  {
+   "kind": "cell",
+   "text": "6 груд.",
+   "label": "date_planned"
+  },
+  {
+   "kind": "cell",
+   "text": "0,000",
+   "label": "qty_received"
+  },
+  {
+   "kind": "cell",
+   "text": "18 груд.",
+   "label": "td_date_ready"
   }
  ]
 }
