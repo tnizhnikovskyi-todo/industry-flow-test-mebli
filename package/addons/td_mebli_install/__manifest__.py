@@ -19,6 +19,8 @@
         'data/ir_sequence_data.xml',
         'views/act_views.xml',
         'views/accrual_views.xml',
+        'views/payment_views.xml',
+        'report/act_report.xml',
     ],
     'installable': True,
 }

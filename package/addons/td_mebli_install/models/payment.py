@@ -5,22 +5,6 @@ PARAM_CONTROL = 'td_mebli_install.payment_control'  # «warn» (default) or «bl
 ROUNDING = 0.5  # UAH: an amount due below it is paid (rounding of the bank)
 
 
-class AccountPaymentTermLine(models.Model):
-    """F-22: the payment schedule of the order is the standard payment terms (several lines: 50 % now, 40 % ..., 10 % ...).
-
-    The standard line knows only «how much» and «after how many days»; the furniture factory pays by the event of the
-    order (confirmation, installation, act). The milestone is a new piece of data on the standard line (there is no such
-    field in the standard), it only tells which lines have to be paid before the crew goes to the customer."""
-    _inherit = 'account.payment.term.line'
-
-    td_milestone = fields.Selection(
-        [('order', 'Prepayment'), ('install', 'Before installation'), ('act', 'After the act')],
-        string='Furniture Milestone',
-        help="The event of the order this line is paid by. The lines «Prepayment» and «Before installation» have to be "
-             "paid before the installation (the visit of the crew); «After the act» is paid after the signed act. "
-             "Payment terms without milestones: the whole amount is due before the installation.")
-
-
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 

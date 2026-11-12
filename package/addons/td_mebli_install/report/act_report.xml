@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Printed act of the installation (A-21, coverage review A2): the company of the customer's documents
+         (logo and details of the standard document layout), the language of the customer. -->
+    <record id="action_report_install_act" model="ir.actions.report">
+        <field name="name">Installation Act</field>
+        <field name="model">td.mebli.install.act</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_install.report_install_act</field>
+        <field name="report_file">td_mebli_install.report_install_act</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_td_mebli_install_act"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_install_act_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.order_id.partner_id.lang)"/>
+            <t t-set="order" t-value="doc.order_id.sudo()"/>
+            <t t-set="address">
+                <div t-field="order.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+            </t>
+            <div class="page td_report_act">
+                <h2 class="mt-2">
+                    <span t-if="doc.kind == 'final'">Act of the Installation</span>
+                    <span t-else="">Act of an Installation Stage</span>
+                    <span t-field="doc.name"/>
+                </h2>
+                <div class="row mt-3 mb-3">
+                    <div class="col-4"><strong>Order:</strong> <span t-field="order.name"/></div>
+                    <div class="col-4"><strong>Visit:</strong> <span t-field="doc.task_id.name"/></div>
+                    <div class="col-4" t-if="doc.signed_on"><strong>Signed on:</strong> <span t-field="doc.signed_on" t-options='{"widget": "date"}'/></div>
+                </div>
+                <p>The crew has installed the furniture of the order at the address of the customer. The customer has checked
+                    the installed furniture; the results of the check are below.</p>
+                <h5>Installed</h5>
+                <table class="table table-sm o_main_table">
+                    <thead><tr><th>Product</th><th class="text-end">Quantity</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="order.order_line.filtered(lambda l: l.product_id.type == 'consu' and not l.display_type)" t-as="line">
+                            <td><span t-field="line.name"/></td>
+                            <td class="text-end"><span t-field="line.product_uom_qty"/> <span t-field="line.product_uom_id"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h5>Checklist</h5>
+                <ul><li t-foreach="(doc.checklist or '').splitlines()" t-as="item" t-if="item.strip()"><t t-out="item"/></li></ul>
+                <h5>Defects</h5>
+                <p t-if="not doc.defect_ids">No defects: the customer accepts the installation without remarks.</p>
+                <table t-else="" class="table table-sm">
+                    <thead><tr><th>Defect</th><th>Status</th><th>Photo</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="doc.defect_ids" t-as="defect">
+                            <td><span t-field="defect.name"/></td>
+                            <td><span t-if="defect.resolved">resolved</span><span t-else="">to be fixed</span></td>
+                            <td><img t-if="defect.photo" t-att-src="image_data_uri(defect.photo)" style="max-height: 70px;" alt="Defect"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <t t-set="photos" t-value="doc.photo_ids.filtered(lambda a: (a.mimetype or '').startswith('image/'))"/>
+                <div t-if="photos" class="mb-3">
+                    <h5>Photos</h5>
+                    <img t-foreach="photos[:4]" t-as="photo" t-att-src="image_data_uri(photo.datas)" style="max-height: 110px; margin-right: 8px;" alt="Photo"/>
+                </div>
+                <p t-if="doc.photo_archive" class="small">The customer agrees that the photos of the installed furniture may be used in the
+                    portfolio of the manufacturer (without the address and the name of the customer).</p>
+                <div class="row mt-4">
+                    <div class="col-6">
+                        <strong>Crew</strong>
+                        <div t-foreach="doc.crew_user_ids" t-as="member"><span t-field="member.name"/></div>
+                        <div class="mt-4">Signature: ____________________</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Customer</strong>
+                        <div><span t-out="doc.signed_by or order.partner_id.name"/></div>
+                        <img t-if="doc.signature" t-att-src="image_data_uri(doc.signature)" style="max-height: 70px;" alt="Signature"/>
+                        <div t-else="" class="mt-4">Signature: ____________________</div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_install_act">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="td_mebli_install.report_install_act_document" t-lang="doc.order_id.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

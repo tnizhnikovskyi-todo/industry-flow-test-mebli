@@ -5,3 +5,4 @@ from . import sale_order_line
 from . import stock_rule
 from . import sale_order_dates
 from . import order_change
+from . import payment_term
