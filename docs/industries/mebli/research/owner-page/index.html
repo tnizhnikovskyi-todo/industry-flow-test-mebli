@@ -101,51 +101,45 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
 <div class="wrap"><div class="masthead">
 <span class="eyebrow">Концепція для власника продукту · пакет «меблі» на Odoo 19</span>
 <h1>Система замовлень меблевого цеху: від заміру до рекламації</h1>
-<div class="meta"><span class="num">12.11.2026</span><span class="tag ok">повний обсяг</span><span class="tag">гейт концепції A-20c чекає вашого рішення</span></div>
+<div class="meta"><span class="num">12.11.2026</span><span class="tag ok">повний обсяг, перерахунок 0.3</span><span class="tag">гейт концепції: відповідь потрібна лише за незгоди</span></div>
 <div class="first">
 <div class="stack">
 <div class="verdict">
-<p><b>Висновок.</b> Будуємо одну систему замовлення для компанії на 10–249 працівників, яка робить кухні й корпусні меблі на замовлення: замір, проєкт, розкрій, комплектація, монтаж, акт і рекламація в одному ланцюгу на Odoo 19 Community (безкоштовна), з апгрейдом на Enterprise (платна). Ви вже вирішили робити одразу повний пакет; сторінка цього не оскаржує, а чесно показує, що він коштує.</p>
-<p><b>Чесно про гроші.</b> Розробка повного пакета першого релізу: ≈<span data-fact="money.full_package_no_oca_mln_uah.min">7,1</span>–<span data-fact="money.full_package_no_oca_mln_uah.max">22,4</span> млн грн. На базовому ринку ≈<span data-fact="market.clients_3y_base">8</span> клієнтів за 3 роки він за серединою годин і без підписки не окупається за жодної з розглянутих цін. Окупність дає одне з трьох: ≈<span data-fact="money.payback_price_ce_mln">2,6</span> млн грн з клієнта, підписка ≈<span data-fact="money.subscription_gap_full_mln">0,53</span> млн грн на рік з клієнта або ширший ринок (не досліджено). Коробка A як вхід за рекомендованою ціною окупає пакет лише з <span data-fact="breakeven.box_a_entry_at_one_mln">26</span> клієнтами.</p>
-<p><b>Головний ризик.</b> Розмір ринку не виміряно: частка кухонь на замовлення серед <span data-fact="market.companies_10_249">225</span> компаній цільової смуги невідома, файлів CAD для імпорту немає, усі години: припущення. Ваше рішення 12.11 «розробка чекає сигналу тесту попиту A-23» прибирає витрати до сигналу, але відсуває реліз. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§6">OB §6</a> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§7">OB §7, R-27</a></p>
+<p><b>Що будуємо і для кого.</b> Пакет на Odoo 19 для компанії на 10–249 працівників, що робить кухні й корпусні меблі на замовлення. Одне замовлення веде весь ланцюг: замір, проєкт із CAD, розкрій чи порізка в дистриб'ютора, цех, комплектація, монтаж з актом і рекламація. Основа: Community (безкоштовна редакція); Enterprise (платна) як апгрейд з мостами вже в першому релізі. Облік лишається в BAS/BAF клієнта, ми передаємо документи. Перший реліз повний: <span data-fact="concept.screens">15</span> екранів для <span data-fact="concept.roles">8</span> ролей; клієнту поставляємо коробку A (вхід), B або C з одного пакета. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="../concept/screens.md§Екрани">екрани</a></p>
+<p><b>Три головні ризики.</b> (1) Розмір ринку не виміряно: скільки серед <span data-fact="market.companies_10_249">225</span> компаній цільової смуги саме кухонь і корпусних, невідомо; розробка чекає сигналу тесту попиту A-23. (2) Імпорт із CAD і обмін з BAS спроєктовано без зразків файлів клієнта. (3) Твердження про Enterprise не перевірено на чистій базі. <a class="src" href="#sources" data-src="SALES.md§3">SALES §3</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-11, AI-13</a></p>
 </div>
 <blockquote class="pain">
 <p class="q">«Обіцяли два місяці, вийшло три.»</p>
-<p class="small">Покупець кухні на замовлення, публічний відгук, жовтень 2024. Біль, який ми лікуємо: замовлення проходить через 6–8 людей і 3–5 програм, і ніхто вчасно не бачить, що помилка заміру, недокомплект чи зсув порізки зірве обіцяну дату. <span class="tag hyp">кількість людей і програм: оцінка авторів</span> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§1">OB §1</a> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-16</a></p>
+<p class="small">Покупець кухні на замовлення, публічний відгук. Біль, який ми лікуємо: обіцяна клієнту дата зривається, а помилку заміру, недокомплект, запізнення замовного фасаду чи порізки видно лише тоді, коли вже пізно. <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-16</a> <a class="src" href="#sources" data-src="SALES.md§4">SALES §4, варіант 1</a></p>
 </blockquote>
 </div>
 <div class="decide">
-<span class="eyebrow">Що вирішити зараз (5 з 7 відкритих)</span>
-<ol>
-<li>Ціна входу коробки A і підписка для тесту попиту.</li>
-<li>Строк і пороги тесту попиту A-23.</li>
-<li>Модуль OCA для телефона і ліцензія наших модулів.</li>
-<li>Версія Odoo на старті розробки.</li>
-<li>Що пропонуємо компаніям на 6–9 людей.</li>
-</ol>
-<p class="small">Кожне питання має рекомендацію AI і замовчування, яке діє, доки ви не відповіли. <a href="#decisions">До рішень</a></p>
-<p class="small">Вирішено вами 12.11.2026 (журнал, записи 29–34): гейт A-03c, повна перевірка на чистих базах до A-21, склад коробки A, «розробка після A-23», три відкидання. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§8">OB §8</a></p>
+<span class="eyebrow">Що потрібно від вас</span>
+<p>Лише незгоди. Рішення AI (AI-01…AI-13) прийнято, доки ви не заперечите. Відмітьте рядок, напишіть, що замість, і натисніть «Скопіювати мої заперечення».</p>
+<p class="small"><b>Зверніть увагу на AI-06:</b> лендинг тесту попиту без ціни входу. Це рішення замінює замовчування із запису 32 (ціна-точка в лендингу).</p>
+<p class="small"><a href="#ai-decisions">До рішень AI</a> · <a href="#owner">Ваші рішення (записи 4–37)</a></p>
 </div>
 </div>
 </div></div>
-<div class="nav"><div class="nav-inner"><a href="#verdict">Вердикт і гроші</a><a href="#pain">Для кого і який біль</a><a href="#scenario">Наскрізний сценарій</a><a href="#day">День з життя ролей</a><a href="#screens">Екрани</a><a href="#current">Що вже є в зрізі</a><a href="#competitors">Конкуренти</a><a href="#not-doing">Що свідомо не робимо</a><a href="#signals">Внутрішні сигнали ToDo</a><a href="#money">Гроші</a><a href="#box">Коробка</a><a href="#sales">Продаж</a><a href="#returned">Повернуто</a><a href="#risks">Ризики</a><a href="#completeness">Повнота</a><a href="#decisions">Рішення власника</a><a href="#chain">Ланцюг</a><a href="#evidence">Докази</a><a href="#limits">Обмеження й план перевірки</a><a href="#sources">Джерела</a></div></div>
+<div class="nav"><div class="nav-inner"><a href="#summary">Висновок</a><a href="#pain">Для кого і який біль</a><a href="#scenario">Наскрізний сценарій</a><a href="#day">День з життя ролей</a><a href="#screens">Екрани</a><a href="#current">Зріз A-21</a><a href="#competitors">Конкуренти</a><a href="#signals">Внутрішні сигнали ToDo</a><a href="#box">Коробка</a><a href="#sales">Продаж</a><a href="#owner">Ваші рішення</a><a href="#ai-decisions">Що вирішив AI</a><a href="#risks">Ризики</a><a href="#not-doing">Що не робимо</a><a href="#chain">Ланцюг</a><a href="#evidence">Докази</a><a href="#limits">Обмеження й план перевірки</a><a href="#sources">Джерела</a></div></div>
 <main>
-<section id="verdict">
+<section id="summary">
   <span class="eyebrow">Висновок</span>
-  <h2>Вердикт і гроші</h2>
-  <p class="prose">Рішення №0 (одразу повний пакет) і №12 (мости до Enterprise з першого релізу) ухвалено. Економіка показує умову: пакет окупається, якщо ринок ширший за базовий, ціна з клієнта близька до ≈<span data-fact="money.payback_price_ce_mln">2,6</span> млн грн або є підписка. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§6">OB §6 «R18»</a> <a class="src" href="#sources" data-src="facts.yaml§money">facts: money</a></p>
-  <p class="prose">Ваші відповіді 12.11 змінили порядок робіт: перевірка на чистих базах Community 19 і Enterprise, потім зріз A-21, тест попиту A-23 і лише після сигналу розробка (A-08 і далі). Отже, до витрат на розробку ви побачите реакцію ринку на ціну входу. Тому перше відкрите питання: ціна коробки A і підписка (G-60). <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§8">OB §8</a></p>
+  <h2>Висновок: що будуємо і для кого</h2>
+  <p class="prose">Будуємо галузевий пакет «від заміру до рекламації» для виробника кухонь і корпусних меблів на замовлення з 10–249 працівниками. Ланцюг, який конкуренти закривають частинами (облік окремо, CAD окремо, CRM окремо), ми збираємо в одному замовленні на Odoo 19 Community; облік клієнта лишається в BAS/BAF. Порядок робіт ваш: зріз A-21, тест попиту A-23, і лише після сигналу розробка. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§1.3">FM §1.3</a> <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a></p>
+  <p class="prose">Відповідь потрібна лише за незгоди з рішеннями AI нижче; ваші рішення з журналу показано як вхід і не перепитуються. <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS</a></p>
 </section>
 <section id="pain">
   <span class="eyebrow">Біль</span>
   <h2>Для кого і який біль</h2>
-  <p class="prose">Клієнт: компанія на 10–249 працівників, меблі на замовлення, підсегмент (а) кухні й корпусні. У смузі 10–249 у реєстрі <span data-fact="market.companies_10_249">225</span> компаній (odb-catalog, знімок серпня 2026); скільки з них саме (а), невідомо. Мікроцехи на 1–5 людей отримують окремий легкий тариф (№4), смуга 6–9 людей: відкрите питання G-61. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§1">OB §1</a></p>
+  <p class="prose">Клієнт: компанія на 10–249 працівників, меблі на замовлення, підсегмент «кухні й корпусні». У цій смузі в реєстрі юросіб <span data-fact="market.companies_10_249">225</span> компаній (знімок серпня 2026), з них <span data-fact="market.companies_25_249">120</span> на 25–249 працівників; скільки саме кухонь і корпусних, невідомо. Мікроцехи ФОП на 1–5 людей отримують легкий тариф (ваше рішення №4); компанії на 6–9 людей поки поза цільовим клієнтом (AI-05). <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§1.1">FM §1.1</a> <a class="src" href="#sources" data-src="BOX.md§1а">BOX §1а</a></p>
   <ul class="prose">
-  <li><b>Строки зриваються, причину бачать запізно.</b> Відгуки покупців кухонь на замовлення і вакансії керівника виробництва («контролювати строки, якість і комплектацію»): два типи джерел. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§1">OB §1</a></li>
-  <li><b>Порізка в дистриб'ютора зсуває дату.</b> Меблярі пишуть, що порізка приходить «аж через місяць», а постачальник відповідає, що зробив «за вашою картою крою». Один тип джерел.</li>
-  <li><b>Зміна замовлення після погодження.</b> Договір виробника забороняє змінювати ескіз після підпису; що процедури зміни з новою ціною й датою бракує, це наша гіпотеза. <span class="tag hyp">гіпотеза</span></li>
-  <li><b>Замовні позиції.</b> Фарбований фасад, кам'яна стільниця, скло: без них прогнозна дата хибна на типовій кухні. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§2">OB §2, крок 7а</a></li>
-  <li><b>Біль керівника</b> (маржа лише після закриття, щоденні цифри) не підтверджено; перевіряємо на розмовах A-06 і в тесті A-23. <span class="tag hyp">гіпотеза</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">features: Болі</a></li>
+  <li><b>Строки зриваються, причину бачать запізно.</b> Відгуки покупців кухонь на замовлення і вакансії керівника виробництва («контролювати строки, якість і комплектацію»). <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-16, PAIN-28</a></li>
+  <li><b>Помилку заміру видно лише на монтажі.</b> Покупець кухні: холодильник виступає з пеналу. <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-14</a></li>
+  <li><b>Порізка в дистриб'ютора зсуває дату.</b> Меблярі скаржаться на строки й помилки присадки; голос мебляра, без підтвердження від цільових клієнтів. <span class="tag hyp">ризик: перевірити на пілоті</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-19</a></li>
+  <li><b>Недокомплект виявляють на монтажі, монтаж і рекламація тягнуться.</b> Вакансії («контролювати комплектацію»), відгуки покупців (рекламацію не закривали місяцями). <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-23, PAIN-24, PAIN-26</a></li>
+  <li><b>Зміна замовлення після погодження.</b> Голос дистриб'ютора порізки, а не виробника; прямого болю цільових клієнтів немає. <span class="tag hyp">гіпотеза</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-18</a></li>
+  <li><b>Біль керівника</b> (маржа лише після закриття, щоденні цифри) перенесено з вакансій начальника виробництва; перевіряємо на розмовах A-06 і в тесті A-23 (AI-12). <span class="tag hyp">гіпотеза</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-28</a></li>
   </ul>
   <p class="small prose">Хто купує: рішення ухвалює власник чи директор; заблокувати можуть бухгалтер (облік у BAS), конструктор (CAD) і начальник виробництва. <span class="tag hyp">гіпотеза до A-06, A-23</span> <a class="src" href="#sources" data-src="SALES.md§1">SALES §1</a></p>
 </section>
@@ -166,7 +160,7 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
   <tr><td>Сервіс</td><td>Рекламація з причиною, строком і гарантією, повторне виготовлення</td><td>12</td></tr>
   <tr><td>Керівник</td><td>Щодня дашборд: зсуви, рекламації, ціни постачальників; у кінці місяця собівартість план і факт по замовленню</td><td>16, 13</td></tr>
   </tbody></table></div>
-  <p class="prose">Варіанти сценарію: тверді (свій розкрій чи порізка, зсув з нашої вини з причиною, недокомплект, договір на кілька виробів, рекламація); у коробці A за вашим рішенням №16 затримка замовної позиції зсуває прогнозну дату; решта «умовно», вмикаються клієнту після A-06 і A-23. Пеня й автоматичний перерахунок уже розкроєних деталей у першу версію не входять. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§2.1">OB §2.1</a> <a class="src" href="#sources" data-src="../concept/scenarios.md§Сценарії">SC-01…SC-08</a></p>
+  <p class="prose">Варіанти сценарію: свій розкрій чи порізка, зсув з нашої вини з причиною, недокомплект, договір на кілька виробів, рекламація; у коробці A за вашим рішенням №16 затримка замовної позиції зсуває прогнозну дату; решта «умовно», вмикаються клієнту після A-06 і A-23. Пеня й автоматичний перерахунок уже розкроєних деталей у першу версію не входять (REJ-046, REJ-051). Монтаж налаштовується: у вартості замовлення або окремою послугою (AI-08). <a class="src" href="#sources" data-src="../concept/scenarios.md§Сценарії">SC-01…SC-08</a> <a class="src" href="#sources" data-src="SALES.md§6">SALES §6</a></p>
 </section>
 <section id="day">
   <span class="eyebrow">Ролі</span>
@@ -181,12 +175,12 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
   <li><b>Бригадир монтажу й сервісу (SC-08).</b> Зараз відсоток бригаді рахують вручну (вакансії). З пакетом акт із фото й підписом і рекламація з причиною.</li>
   <li><b>Керівник-покупець (SC-06).</b> Зараз маржу бачить після закриття <span class="tag hyp">гіпотеза</span>. З пакетом щоденний дашборд.</li>
   </ul>
-  <p class="small"><a class="src" href="#sources" data-src="OWNER-BRIEF.md§2">OB §2</a> <a class="src" href="#sources" data-src="../concept/scenarios.md§SC-06">SC-06</a></p>
+  <p class="small">Злиття ролей (закупівельник у комірнику, менеджер з рекламацій у бригадирі) перевіряємо на A-06 (AI-10). <a class="src" href="#sources" data-src="../concept/scenarios.md§Сценарії">сценарії</a> <a class="src" href="#sources" data-src="../concept/scenarios.md§SC-06">SC-06</a></p>
 </section>
 <section id="screens">
   <span class="eyebrow">Екрани</span>
-  <h2>15 екранів першого релізу і їх основа</h2>
-  <p class="small"><span class="tag std">стандарт Community</span> налаштування Odoo · <span class="tag td">наш модуль</span> будуємо · <span class="tag ok">готовий модуль ToDo</span> адаптуємо · <span class="tag ee">Enterprise</span> що змінюється на платній редакції</p>
+  <h2>Екрани першого релізу і їх основа</h2>
+  <p class="small"><span class="tag std">стандарт Community</span> налаштування Odoo · <span class="tag td">наш модуль</span> будуємо · <span class="tag ok">готовий модуль ToDo</span> адаптуємо · <span class="tag ee">Enterprise</span> що змінюється на платній редакції (стовпець <span class="tag hyp">не перевірено</span>, AI-11)</p>
   <div class="scroll" tabindex="0" aria-label="Екрани"><table style="min-width:720px"><thead><tr><th>№</th><th>Екран</th><th>Основа на Community</th><th>На Enterprise</th></tr></thead><tbody>
   <tr><td>1</td><td>Замір-лист</td><td><span class="tag td">наш</span> на задачі проєкту; телефон у браузері <span class="tag hyp">не перевірено</span></td><td>той самий модуль; мобільний застосунок Odoo є лише в Enterprise</td></tr>
   <tr><td>2</td><td>Замовлення: калькуляція, маржа, графік оплат, дати, курс НБУ, ціна з розмірів</td><td><span class="tag std">стандарт</span> продажів + <span class="tag td">наш</span></td><td>те саме: курсу НБУ і нагадувань за графіком оплат Enterprise не дає (документація 19.0)</td></tr>
@@ -200,17 +194,16 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
   <tr><td>10</td><td>Календар монтажів і акт</td><td><span class="tag std">стандарт</span> задач + <span class="tag td">наш</span>: інтервал виїзду, бригада, акт</td><td>Field Service і Planning частково; акт наш</td></tr>
   <tr><td>11</td><td>Нарахування бригаді й цеху</td><td><span class="tag td">наш</span></td><td>те саме: Payroll без України й відрядної</td></tr>
   <tr><td>12</td><td>Рекламація</td><td><span class="tag std">стандарт</span> ремонтів + <span class="tag td">наш</span>: строки й гарантія</td><td>Helpdesk: повернення, ремонт, виїзд, SLA (документація 19.0)</td></tr>
-  <tr><td>13</td><td>Собівартість план і факт</td><td><span class="tag ok">готовий ToDo</span> адаптуємо: <span data-fact="hours.h06_adapt.min">16</span>–<span data-fact="hours.h06_adapt.max">32</span> год замість <span data-fact="hours.h06_scratch.min">24</span>–<span data-fact="hours.h06_scratch.max">64</span>; вмикання аналітики без Enterprise <span class="tag hyp">не перевірено</span></td><td>те саме</td></tr>
+  <tr><td>13</td><td>Собівартість план і факт</td><td><span class="tag ok">готовий ToDo</span> адаптуємо (гейт A-03c, запис 29); вмикання аналітики без Enterprise <span class="tag hyp">не перевірено</span></td><td>те саме</td></tr>
   <tr><td>15</td><td>Погодження й зміна замовлення</td><td><span class="tag td">наш</span></td><td>те саме; PLM веде лише інженерні зміни виробу</td></tr>
   <tr><td>16</td><td>Дашборд керівника</td><td><span class="tag td">наш</span> на стандартних графіках</td><td>те саме</td></tr>
   </tbody></table></div>
-  <p class="small prose">Не екрани: кілька юросіб (коробки B, C), пакет міграції BAS/BAF і БАЗИС, обмін з BAS (інтеграція). Екран 14 «Портал покупця» прибрано. Твердження про редакції взято з порівняння з документацією 19.0 від 11.11.2026; реєстру перевірених тверджень ще немає (G-68), тож без позначки «документація 19.0» це не перевірено. Частка «Enterprise закриває повністю» у функціональній карті завищена: для рішень беріть стовпець Community. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§3">OB §3</a> <a class="src" href="#sources" data-src="odoo-ecosystem.md§7.9">OE §7.9</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§2.4">FM §2.4</a> <a class="src" href="#sources" data-src="REUSE.md§Реєстр">REUSE</a></p>
+  <p class="small prose">Не екрани: кілька юросіб (коробки B, C), пакет міграції BAS/BAF і БАЗИС, обмін з BAS (інтеграція). Екран 14 «Портал покупця» прибрано (REJ-017). Твердження про редакції взято з порівняння з документацією 19.0 від 11.11.2026; реєстру перевірених тверджень немає, чистої бази Enterprise теж, тому стовпець Enterprise не перевірено (рішення AI-11). Для рішень беріть стовпець Community. Мобільний вигляд Community робимо самі, без модулів OCA (AI-02). <a class="src" href="#sources" data-src="../concept/screens.md§Екрани">екрани</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§4.5">FM §4.5</a> <a class="src" href="#sources" data-src="odoo-ecosystem.md§7.9">OE §7.9</a> <a class="src" href="#sources" data-src="REUSE.md§Реєстр">REUSE</a></p>
 </section>
 <section id="current">
   <span class="eyebrow">Зріз</span>
-  <h2>Що вже є в зрізі</h2>
-  <p class="prose"><span class="tag hyp">буде перезібрано (№19)</span> Зріз A-21 на Odoo 19 Community (план від 10.11.2026, модулі td_mebli_*) показує: конфігуратор виробу з ціною; специфікацію під замовлення; виробниче замовлення з дільницями «розкрій, крайкування, присадка, складання»; передачу деталей на розкрій, де карта розкрою поки імітація; резерв плит і нестачу; ділові обрізки як залишок із розмірами; планову собівартість і маржу. <a class="src" href="#sources" data-src="../prototype-real/PLAN.md§1">PLAN §1</a> <a class="src" href="#sources" data-src="../prototype-real/PLAN.md§5">PLAN §5</a></p>
-  <p class="prose">Проти 15 екранів: основа є для 8 (2, 3, 4, 5, 6, 7, 8, 13), з нуля 7 (1, 9, 10, 11, 12, 15, 16). Зріз зібрано під попередню концепцію; за рішенням №19 його перезбирають, а A-21 стартує лише після перевірки на чистих базах (№13). <a class="src" href="#sources" data-src="BOX.md§13">BOX §13</a></p>
+  <h2>Зріз A-21: у роботі</h2>
+  <p class="prose"><span class="tag hyp">у роботі</span> Зразок зрізу (екран «Замовлення клієнта» з обіцяною й прогнозною датою і замовними позиціями) ви прийняли 12.11.2026 (запис 36). Повний обсяг на Odoo 19 Community зараз у роботі: за планом зріз охоплює всі <span data-fact="concept.screens">15</span> екранів концепції в порядку демо-сценарію. У зріз свідомо не входять мости Enterprise, справжній обмін з BAS, пакет міграції й кілька юросіб; оптимізатор розкрою не показуємо. Перелік того, що вже готово, з'явиться на цій сторінці після завершення A-21. <a class="src" href="#sources" data-src="../prototype-real/PLAN.md§1">PLAN §1</a> <a class="src" href="#sources" data-src="BOX.md§13">BOX §13</a></p>
 </section>
 <section id="competitors">
   <span class="eyebrow">Конкуренти</span>
@@ -222,135 +215,117 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
   <li>KeyCRM від $<span data-fact="keycrm.usd_month">19</span> на місяць дешевший для мікроцехів: ризик для легкого тарифу.</li>
   <li>1С/BAS і БАЗИС: аргумент міграції репутаційний, для приватного бізнесу прямої заборони немає.</li>
   </ul>
-  <p class="small">Матриця, профілі й що казати проти: <a href="competitors.html">сторінка «Конкуренти»</a>. <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§4">OB §4</a></p>
-</section>
-<section id="not-doing">
-  <span class="eyebrow">Межі</span>
-  <h2>Що свідомо не робимо</h2>
-  <ul class="prose">
-  <li>Власне 3D-проєктування й рендер: інтегруємося з PRO100, БАЗИС і конструкторами дистриб'юторів.</li>
-  <li>Оптимізацію розкрою і програми ЧПУ: це шар CAD/CAM.</li>
-  <li>Повний бухоблік і зарплату: облік у BAS/BAF клієнта з нашим обміном (№5).</li>
-  <li>Наші модулі на Studio і залежність ядра від шаблону Odoo для меблів.</li>
-  <li>Кабінет покупця і перерахунок маржі відкритих замовлень за курсом євро: відкидання підтверджено вами 12.11.2026 (запис 34). Претензію постачальнику порізки повертаємо після розмов A-06.</li>
-  <li>Нова Пошта, маркетплейси й POS, дані EUDR для експорту, AI поза розпізнаванням колонок файлу.</li>
-  </ul>
-  <p class="prose">У реєстрі 48 позицій у групах 1–4, <span data-fact="concept.returned_positions">11</span> повернуто вами (4а), 1 стала окремим тарифом (4б); ще 5 готових модулів ToDo не беремо. Повний реєстр з причинами й умовами повернення: <a href="rejected.html">сторінка «Що відкинули»</a>. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§5">OB §5</a> <a class="src" href="#sources" data-src="REJECTED.md§1">REJECTED §1</a> <a class="src" href="#sources" data-src="REJECTED.md§6">REJECTED §6</a></p>
+  <p class="small">Матриця, профілі й що казати проти: <a href="competitors.html">сторінка «Конкуренти»</a>. <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§3.1">FM §3.1</a></p>
 </section>
 <section id="signals">
   <span class="eyebrow">Сигнали</span>
   <h2>Внутрішні сигнали ToDo (лише знеособлені агрегати)</h2>
   <ul class="prose">
-  <li><span data-fact="crm.leads">56</span> меблевих лідів і угод 2023–2026. Програють через ціну: щонайменше <span data-fact="crm.price_losses_first">17</span> у першому проході, <span data-fact="crm.price_losses_full">23</span> у повному переборі; через брак функцій: 3. Серед цінових програшів кухні й корпусні (а): 1, ймовірно (а): 2. Це класифікація менеджерів, а не слова клієнтів.</li>
-  <li>Найчастіші потреби: відрядна й облік виробітку, планшет чи кіоск для цеху (по 5), видимість статусу і причина зсуву (по 4), імпорт із CAD (3).</li>
-  <li>Облік лишається в 1С/BAS в обох клієнтів, які це обговорювали. Кабінет покупця не просив жоден.</li>
+  <li><span data-fact="crm.leads">56</span> меблевих лідів і угод у CRM ToDo. Головна причина програшу: ціна (щонайменше <span data-fact="crm.price_losses_first">17</span> у першому проході, <span data-fact="crm.price_losses_full">23</span> у повному переборі); через брак функцій програють рідко. Це класифікація менеджерів, а не слова клієнтів, і переважно не кухні й корпусні.</li>
+  <li>Найчастіші потреби: відрядна й облік виробітку, планшет чи кіоск для цеху, видимість статусу і причина зсуву, імпорт із CAD.</li>
+  <li>Облік лишається в 1С/BAS у клієнтів, які це обговорювали. Кабінет покупця не просив жоден.</li>
   </ul>
-  <p class="small prose">Опис потреби є лише приблизно в 30 записах; більшість сигналів не від (а). Суми відхилених оцінок не показуємо до дозволу власника даних (G-81). <a class="src" href="#sources" data-src="OWNER-BRIEF.md§1">OB §1 «R12»</a></p>
-</section>
-<section id="money">
-  <span class="eyebrow">Гроші</span>
-  <h2>Гроші: розробка, запуск, окупність</h2>
-  <div class="scroll" tabindex="0" aria-label="Гроші"><table style="min-width:600px"><thead><tr><th>Що</th><th>Скільки <span class="tag hyp">припущення</span></th></tr></thead><tbody>
-  <tr><td>Повний пакет першого релізу, основна цифра без модулів OCA</td><td><span data-fact="hours.full_package_no_oca.min">2 568</span>–<span data-fact="hours.full_package_no_oca.max">5 664</span> год до накладних; ≈<span data-fact="hours.full_package_no_oca_overhead.min">3 600</span>–<span data-fact="hours.full_package_no_oca_overhead.max">9 350</span> з накладними; ≈<span data-fact="money.full_package_no_oca_mln_uah.min">7,1</span>–<span data-fact="money.full_package_no_oca_mln_uah.max">22,4</span> млн грн</td></tr>
-  <tr><td>Альтернатива з одним модулем OCA для телефона (№14)</td><td><span data-fact="hours.full_package.min">2 528</span>–<span data-fact="hours.full_package.max">5 544</span> год; ≈<span data-fact="money.full_package_mln_uah.min">7,0</span>–<span data-fact="money.full_package_mln_uah.max">22,0</span> млн грн</td></tr>
-  <tr><td>з них тверде ядро</td><td><span data-fact="hours.hard_core.min">908</span>–<span data-fact="hours.hard_core.max">2 016</span> год до накладних</td></tr>
-  <tr><td>з них 11 повернутих вами позицій</td><td>+<span data-fact="hours.returned_11.min">668</span>–<span data-fact="hours.returned_11.max">1 404</span> год</td></tr>
-  <tr><td>з них мости до Enterprise (№12)</td><td>+<span data-fact="hours.bridges_ee.min">168</span>–<span data-fact="hours.bridges_ee.max">408</span> год</td></tr>
-  <tr><td>Запуск у клієнта</td><td>A <span data-fact="hours.launch.a.min">132</span>–<span data-fact="hours.launch.a.max">244</span> год; B <span data-fact="hours.launch.b.min">232</span>–<span data-fact="hours.launch.b.max">452</span>; C <span data-fact="hours.launch.c.min">272</span>–<span data-fact="hours.launch.c.max">532</span></td></tr>
-  </tbody></table></div>
-  <p class="prose"><b>Окупність</b> (середина годин, без підписки, Community-клієнти): на ринку ≈<span data-fact="market.clients_3y_base">8</span> клієнтів за 3 роки пакет окупається лише за ціни ≈<span data-fact="money.payback_price_ce_mln">2,6</span> млн грн з клієнта. За найнижчої точки шкали ціни потрібно <span data-fact="breakeven.full_ce_at_one_mln">64</span> клієнти, за вдвічі вищої <span data-fact="breakeven.full_ce_at_two_mln">12</span>. Коробка A як вхід за рекомендованою ціною несе розробку всього пакета з <span data-fact="breakeven.box_a_entry_at_one_mln">26</span> клієнтами. Різницю закриває підписка ≈<span data-fact="money.subscription_gap_full_mln">0,53</span> млн грн на рік з клієнта. Ринок: діапазон, а не точка; найбільше його змінює частка (а) серед 225 компаній і ринки поза (а) <span class="tag hyp">не досліджено</span>. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§6">OB §6</a> <a class="src" href="#sources" data-src="facts.yaml§breakeven">facts: breakeven</a></p>
-  <p class="prose"><b>Що платить клієнт за Odoo.</b> Community: ліцензій немає, сервер і адміністрування до ≈$<span data-fact="ce.server_admin_usd_year.n10_max">2 880</span> на рік на 10 користувачів. Enterprise для розрахунків €<span data-fact="ee.full_user_eur_month">27,90</span> за повного користувача на місяць (№9): 10 працівників ≈$<span data-fact="ee.license_usd_year.n10">2 680</span> на рік, 25 ≈$<span data-fact="ee.license_usd_year.n25">4 280</span> (6 повних, решта Light по ≈$<span data-fact="ee.light_usd_month">8,90</span>; ціну Light дає лише радник Odoo). Bimp для порівняння: $<span data-fact="bimp.n10_usd_year">2 390</span> і $<span data-fact="bimp.n25_usd_year">5 490</span> на рік. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a></p>
-  <p class="prose"><b>Легкий тариф для мікроцехів (№4).</b> +<span data-fact="fop_light.dev_hours.min">60</span>–<span data-fact="fop_light.dev_hours.max">140</span> год розробки поза цифрою пакета; запуск ≈<span data-fact="fop_light.launch_thousand_uah.min">20</span>–<span data-fact="fop_light.launch_thousand_uah.max">40</span> тис. грн; підписка до <span data-fact="fop.subscription_uah_month_max">3 000</span> грн на місяць. Ціна: гіпотеза до A-23, ринок не виміряно. Готовий модуль ToDo для собівартості заощаджує ≈<span data-fact="hours.h06_saving.mid">20</span> год, у межах похибки. <a class="src" href="#sources" data-src="BOX.md§1а">BOX §1а</a> <a class="src" href="#sources" data-src="facts.yaml§money">facts: money</a></p>
+  <p class="small prose">Опис потреби є лише в частині записів; більшість сигналів не від кухонь і корпусних. Лише знеособлені агрегати, без назв і сум. <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§2.5.1">FM §2.5.1</a> <a class="src" href="#sources" data-src="SALES.md§1">SALES §1</a></p>
 </section>
 <section id="box">
   <span class="eyebrow">Коробка</span>
   <h2>Коробка: що входить у продукт</h2>
+  <p class="prose"><b>Тарифи: не задано.</b> Ви тарифів не давали; AI їх не рахує й не обґрунтовує. Що кажемо про ціну в продажу: AI-01 (Enterprise) і AI-06 (лендинг тесту попиту). <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a></p>
   <div class="scroll" tabindex="0" aria-label="Коробки"><table style="min-width:600px"><thead><tr><th>Коробка</th><th>Для кого</th><th>Склад</th></tr></thead><tbody>
-  <tr><td>A «Community-старт»</td><td>вхід (№15)</td><td>13 екранів: тверде ядро + ціна з розмірів, дашборд, прайси постачальників, премії й штрафи, фотоархів; замовні позиції в прогнозній даті (№16); одна юрособа; обмін з BAS</td></tr>
-  <tr><td>B «Community-повний»</td><td>кому потрібні повернуті позиції</td><td>15 екранів: + конфігуратор, обрізки, розкрій кількох замовлень, якість з фото; кілька юросіб; повна міграція</td></tr>
-  <tr><td>C «Enterprise»</td><td>апгрейд (№3б)</td><td>B + мости до Field Service, Shop Floor, Quality, Helpdesk, Sign, Planning</td></tr>
-  <tr><td>Легкий тариф</td><td>мікроцехи 1–5 людей (№4)</td><td>обмежений склад, наш сервер</td></tr>
+  <tr><td>A «Community-старт»</td><td>вхід (ваше рішення №15)</td><td>тверде ядро + ціна з розмірів, дашборд керівника, прайси постачальників, премії й штрафи, фотоархів; замовні позиції в прогнозній даті (№16); одна юрособа; обмін з BAS; без конфігуратора й погодження версії</td></tr>
+  <tr><td>B «Community-повний»</td><td>кому потрібні повернуті позиції</td><td>усі екрани концепції: + конфігуратор, обрізки, розкрій кількох замовлень, якість з фото, кіоск цеху; кілька юросіб; повна міграція</td></tr>
+  <tr><td>C «Enterprise»</td><td>апгрейд (№3б)</td><td>B + мости до Field Service, Shop Floor, Quality, Helpdesk, Sign, Planning; ліцензію Enterprise клієнт купує в Odoo чи партнера</td></tr>
+  <tr><td>Легкий тариф</td><td>мікроцехи ФОП на 1–5 людей (№4)</td><td>обмежений склад на нашому сервері, без цеху за дільницями й обміну з BAS</td></tr>
   </tbody></table></div>
-  <p class="prose">Коробки: склад поставки з одного пакета, а не етапи розробки. Входить: анкета й межа коробки, установка, шаблони довідників, дані на старт, обмін з BAS, навчання за ролями, 4 тижні супроводу. Не входить: доробки, інтеграції поза списком. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§10">OB §10</a></p>
+  <p class="prose">Коробки: склад поставки з одного пакета, а не етапи розробки. Входить: анкета й межа коробки, установка, шаблони довідників, дані на старт, обмін з BAS, навчання за ролями, супровід після старту. Не входить: доробки під клієнта, інтеграції поза списком. Строки запуску: ризик, перевірити на пілоті. Перехід Community на Enterprise не обіцяємо як безшовний до перевірки на чистій базі. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="BOX.md§2">BOX §2</a></p>
 </section>
 <section id="sales">
   <span class="eyebrow">Продаж</span>
   <h2>Продаж: як це продаємо</h2>
   <ul class="prose">
   <li>Продаємо «поруч з обліком у BAS», а не «замість». Головне заперечення: ціна.</li>
-  <li>Пілот платний зі знижкою за кейс (№20); форма «Заявка на пілот» у тесті A-23.</li>
-  <li>Демо 20–25 хвилин: одне замовлення кухні й шафи; коротке демо A зі сценою замовних позицій (№16).</li>
-  <li>Межу коробки показуємо на демо явно, доробки продаємо окремо.</li>
+  <li>Пілот платний зі знижкою за кейс (ваше рішення №20); форма «Заявка на пілот» у тесті A-23 без суми (AI-06).</li>
+  <li>Демо: одне замовлення кухні й шафи; коротке демо коробки A зі сценою замовних позицій (№16).</li>
+  <li>Межу коробки показуємо на демо явно, доробки продаємо окремо. Повернуті вами позиції подаємо як «є в пакеті», а не як «цього просять виробники».</li>
   </ul>
-  <p class="small"><a class="src" href="#sources" data-src="SALES.md§2">SALES §2</a> <a class="src" href="#sources" data-src="SALES.md§5">SALES §5</a> <a class="src" href="#sources" data-src="SALES.md§6">SALES §6</a></p>
+  <p class="small"><a class="src" href="#sources" data-src="SALES.md§2">SALES §2</a> <a class="src" href="#sources" data-src="SALES.md§5">SALES §5</a> <a class="src" href="#sources" data-src="SALES.md§6">SALES §6</a> <a class="src" href="#sources" data-src="SALES.md§7">SALES §7</a></p>
 </section>
-<section id="returned">
-  <span class="eyebrow">Повернуто</span>
-  <h2>Повернуто вашим рішенням</h2>
-  <p class="prose">11 позицій ви повернули в концепцію 11.11.2026 в обхід правила «щонайменше два типи джерел». Рішення не є новим доказом: кожна перевіряється на розмовах A-06 і в тесті A-23; якщо відповідь «ні», позиція повертається в групу 2 рішенням людини. <a class="src" href="#sources" data-src="REJECTED.md§4а">REJECTED §4а</a></p>
-  <div class="scroll" tabindex="0" aria-label="Повернуті позиції"><table style="min-width:600px"><thead><tr><th>Позиція</th><th>Доказ, як був</th><th>Ризик «немає попиту»</th><th>Коробки</th></tr></thead><tbody>
-  <tr><td>Прайси постачальників</td><td>1 тип, 3 клієнти ToDo</td><td>низький–середній</td><td>A, B, C</td></tr>
-  <tr><td>Премії й штрафи з причиною</td><td>1 тип</td><td>середній</td><td>A, B, C</td></tr>
-  <tr><td>Фотоархів з акта</td><td>1 тип</td><td>низький</td><td>A, B, C</td></tr>
-  <tr><td>Ціна з розмірів у рядку</td><td>для (а) не підтверджено</td><td>високий</td><td>A, B, C</td></tr>
-  <tr><td>Дашборд керівника</td><td>показники лише переліком</td><td>середній</td><td>A, B, C</td></tr>
-  <tr><td>Контроль якості з фото</td><td>1 тип, непрямо</td><td>середній</td><td>B, C</td></tr>
-  <tr><td>Пакет міграції BAS/BAF і БАЗИС</td><td>2 типи, є «проти»</td><td>середній</td><td>B, C</td></tr>
-  <tr><td>Кілька юросіб</td><td>гіпотеза</td><td>середній</td><td>B, C</td></tr>
-  <tr><td>Ділові обрізки</td><td>1 тип, «проти» сильніше</td><td>високий</td><td>B, C</td></tr>
-  <tr><td>Розкрій кількох замовлень за декором</td><td>1 тип для (а)</td><td>високий, найдорожча</td><td>B, C</td></tr>
-  <tr><td>Конфігуратор з правилами</td><td>для (а) не підтверджено</td><td>високий</td><td>B, C</td></tr>
+<section id="owner">
+  <span class="eyebrow">Ваші рішення</span>
+  <h2>Що вже вирішили ви (журнал, записи 4–37)</h2>
+  <p class="prose">Це вхід концепції, а не питання: сторінка їх не перепитує. Змінити рішення можна новим записом у журналі.</p>
+  <div class="scroll" tabindex="0" aria-label="Рішення власника"><table style="min-width:600px"><thead><tr><th>Запис</th><th>Рішення</th></tr></thead><tbody>
+  <tr><td>4, 16</td><td>Одразу повний пакет першого релізу; мости до Enterprise одразу</td></tr>
+  <tr><td>5, 6, 7</td><td>Перший підсегмент: кухні й корпусні на замовлення; без розмітки компаній; клієнт від 10 людей</td></tr>
+  <tr><td>8, 19</td><td>Community основний вхід, Enterprise апгрейд; коробка A як вхід</td></tr>
+  <tr><td>9</td><td>Мікроцехи ФОП: окремий легкий тариф</td></tr>
+  <tr><td>10</td><td>Облік у BAS/BAF клієнта + наш обмін</td></tr>
+  <tr><td>11, 12, 15</td><td>Тріали конкурентів відкласти; з дистриб'юторами плит партнерство щодо формату й API; CAD+T еталоном функцій</td></tr>
+  <tr><td>21, 22, 24</td><td>Підряд і купівля-продаж налаштуванням пакета; внутрішні першоджерела після рішення про підставу обробки; платний пілот зі знижкою за кейс</td></tr>
+  <tr><td>23, 27</td><td>Повернути концепцію й перезібрати зріз; <span data-fact="concept.returned_positions">11</span> позицій повернуто в концепцію</td></tr>
+  <tr><td>28, 29</td><td>Прогалини анкети й готові модулі доручено AI; гейт готових модулів затверджено (адаптуємо модуль собівартості)</td></tr>
+  <tr><td>30, 31</td><td>Перевірка стандарту Community до зрізу; склад коробки A з замовними позиціями в прогнозній даті</td></tr>
+  <tr><td>33, 34</td><td>Розробка чекає сигналу тесту попиту A-23; кабінет покупця й маржа за курсом євро відкинуті, претензія порізці після A-06</td></tr>
+  <tr><td>35, 36</td><td>Гейт концепції затверджено, зріз A-21 почато; зразок зрізу прийнято</td></tr>
+  <tr><td>37</td><td>Перехід на 0.3: гроші на етапі концепції не рахуємо; рішення за замовчуванням приймає AI з ризиком, ви маєте вето</td></tr>
   </tbody></table></div>
+  <p class="small prose">Відкриті раніше питання (записи 14, 18, 25, 26 і 32, смуга 6–9 людей, версія Odoo на старті) за записом 37 тепер вирішує AI: рядки AI-01…AI-07 нижче. Запис 32 «діє замовчування» замінено рішенням AI-06. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS</a></p>
+</section>
+<section id="ai-decisions">
+  <span class="eyebrow">Рішення AI</span>
+  <h2>Що вирішив AI і з яким ризиком</h2>
+  <div class="verdict"><p>Рядки AI-01…AI-13 прийнято, доки ви не накладете вето. Відповідь потрібна лише за незгоди: відмітьте «Не згоден», напишіть, що замість, і натисніть «Скопіювати мої заперечення». Рядок AI-06 замінює замовчування запису 32.</p></div>
+  <p class="small prose">Позначки зберігаються лише у вашому браузері як особиста чернетка; вето стає записом у журналі рішень лише після копіювання й передачі. Щоб повернути позицію з «не робимо», впишіть її номер REJ-NNN у поле «що замість».</p>
+  <p class="small"><a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS.md§Рішення</a></p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn" id="copyBtn" type="button">Скопіювати мої заперечення</button>
+    <button class="btn ghost" id="clearBtn" type="button">Очистити</button>
+  </div>
+  <p id="copyMsg" class="small" role="status" aria-live="polite"></p>
+  <textarea id="copyOut" readonly hidden aria-label="Текст заперечень для копіювання"></textarea>
+  <div id="decList"></div>
+  <noscript><p class="small">Для відмітки незгоди потрібен JavaScript. Рішення AI: AI-01 ціна Enterprise не називається; AI-02 LGPL-3 без OCA; AI-03 A-23 у січні–лютому; AI-04 у git лише знеособлені джерела; AI-05 смуга 6–9 людей поза цільовим клієнтом; AI-06 лендинг без ціни входу; AI-07 Odoo 19; AI-08 відрядна за операцією, монтаж параметром; AI-09 колишні позиції «два типи джерел» поза першим релізом; AI-10 злиття ролей; AI-11 Enterprise «не перевірено»; AI-12 слабкі болі не відсікаємо; AI-13 обмін і міграція за шаблоном.</p></noscript>
 </section>
 <section id="risks">
   <span class="eyebrow">Ризики</span>
   <h2>Головні ризики і що з ними робити</h2>
   <div class="scroll" tabindex="0" aria-label="Ризики"><table style="min-width:600px"><thead><tr><th>Ризик</th><th>Що робимо</th></tr></thead><tbody>
-  <tr><td>R-27. Розробка до сигналу ринку</td><td>Пом'якшено вашим рішенням 12.11: розробка чекає A-23. Лишається невідома частка (а) і строк через сезон.</td></tr>
-  <tr><td>R-10. Розмір ринку</td><td>Розмітки не буде (№2); частку (а) покаже лише A-23 і пілот.</td></tr>
-  <tr><td>R-1, R-28. Імпорт із CAD без файлів</td><td>Основний шлях: CSV чи Excel за шаблоном. Партнерство з дистриб'юторами (№7), домовленостей ще немає.</td></tr>
-  <tr><td>R-18. Аналітика й кіоск на Community</td><td>Повна перевірка на чистих базах до A-21 (№13); до того у годинах верхня межа.</td></tr>
-  <tr><td>R-12, R-19. Ліцензії модулів OCA</td><td>Ядро без OCA; №14 відкрите.</td></tr>
-  <tr><td>R-29. Мости до Enterprise одразу</td><td>Якщо клієнтів на Enterprise не буде, ці години не повертаються.</td></tr>
-  <tr><td>R-25. Сезонність</td><td>Тест попиту в січні–лютому (рекомендація до №21).</td></tr>
-  <tr><td>R-30. Легкий тариф забирає клієнтів A</td><td>Обмежений склад тарифу; питання G-61.</td></tr>
-  <tr><td>R-21, R-31. Підряд чи купівля-продаж</td><td>Два режими параметром (№17); норми закону підтверджує юрист.</td></tr>
-  <tr><td>R-16, R-17. Оновлення версії і перехід Community на Enterprise</td><td>Не перевірено; апгрейд у продажу не обіцяємо як безшовний.</td></tr>
+  <tr><td>Розмір ринку не виміряно: частка кухонь і корпусних у цільовій смузі невідома</td><td>Розмітки не буде (ваше рішення №2); частку покажуть тест попиту A-23 і пілот; розробка чекає сигналу A-23 (запис 33).</td></tr>
+  <tr><td>Ціна: головна причина програшу у воронці ToDo; заявки без ціни в лендингу менш кваліфіковані (AI-06)</td><td>Ризик: перевірити на пілоті. A-23 рахує, яка частка заявок лишається після розмови про бюджет.</td></tr>
+  <tr><td>Клієнт зводить вибір до ціни дешевих хмарних CRM (KeyCRM, Bimp)</td><td>У лендингу й демо продаємо ланцюг, а не ціну; A-23 перевіряє реакцію на варіанти цінності.</td></tr>
+  <tr><td>Імпорт із CAD і обмін з BAS без зразків файлів (AI-13)</td><td>Основний шлях: CSV чи Excel за шаблоном; пробний обмін на етапі запуску; прямі конвертори після зразків першого клієнта.</td></tr>
+  <tr><td>Enterprise і перехід Community на Enterprise не перевірено (AI-11)</td><td>Перевірка на чистій базі Enterprise (рішення №13); до неї апгрейд не обіцяємо як безшовний.</td></tr>
+  <tr><td>Мобільний вигляд Community без модулів OCA (AI-02)</td><td>Замір, кіоск і акт на телефоні перевіряємо в пілоті.</td></tr>
+  <tr><td>Клієнт боїться залежності від нашого сервера й підтримки</td><td>Регламент копій і оновлень наш; перевірка: заперечення на A-06, звернення в пілоті.</td></tr>
+  <tr><td>Повернуті вами позиції без доказу попиту (<span data-fact="concept.returned_positions">11</span>)</td><td>Окремі пункти форми A-23; у продажі «є в пакеті», а не «цього просять».</td></tr>
+  <tr><td>Сезон: розсилка в листопаді–грудні отримає менше відповідей</td><td>A-23 у січні–лютому (AI-03); сезон відомий з одного запису, не перевірено.</td></tr>
+  <tr><td>Легкий тариф забирає клієнтів коробки A; смуга 6–9 людей іде до конкурентів</td><td>Ліміт користувачів і склад тарифу; окремий пункт форми A-23 (AI-05).</td></tr>
+  <tr><td>Норми закону (гарантія, пеня, строки ремонту) з вторинних джерел</td><td>Два режими договору налаштуванням (ваше рішення №17); значення полів після юриста.</td></tr>
   </tbody></table></div>
-  <p class="small"><a class="src" href="#sources" data-src="OWNER-BRIEF.md§7">OB §7</a></p>
+  <h3>Що самоперевірка повноти лишила ризиком</h3>
+  <p class="prose">Самоперевірка в кінці A-20 пройшла 14 пунктів без грошей: сегмент, сценарій, склад коробок і план запуску, заперечення й демо, ризики, «не робимо» закрито; решта лишилась ризиком і має свій рядок рішення AI. <span class="tag hyp">ризик: перевірити на пілоті</span></p>
+  <div class="scroll" tabindex="0" aria-label="Повнота: ризики"><table style="min-width:560px"><thead><tr><th>Пункт</th><th>Чому ризик</th><th>Рядок</th></tr></thead><tbody>
+  <tr><td>Болі з цитатами; звіти й показники керівника</td><td>частина болів лише з галузевої довідки; показники дашборда лише переліком</td><td>AI-12</td></tr>
+  <tr><td>Ролі й «день з життя»</td><td>ролі злито, у компаніях 10–249 це можуть бути окремі люди</td><td>AI-10</td></tr>
+  <tr><td>Функціональна карта й екрани з основою</td><td>основу «стандарт Enterprise» не перевірено</td><td>AI-11</td></tr>
+  <tr><td>Дані, міграція, інтеграції й формати</td><td>зразків файлів клієнта немає, контракт з BAS не перевірено</td><td>AI-13</td></tr>
+  <tr><td>Права й нефункціональні вимоги</td><td>мобільний вигляд Community без OCA; Enterprise не перевірено</td><td>AI-02, AI-11</td></tr>
+  </tbody></table></div>
+  <p class="small"><a class="src" href="#sources" data-src="SALES.md§3">SALES §3</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Повнота">AI-DECISIONS: Повнота</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS: Рішення</a></p>
 </section>
-<section id="completeness">
-  <span class="eyebrow">Повнота</span>
-  <h2>Повнота концепції</h2>
-  <p class="prose">Аудит повноти A-20b: з 22 пунктів закрито 5, частково 17, відкрито 0. Що лишилось, крім ваших рішень: <a class="src" href="#sources" data-src="COMPLETENESS.md§1">COMPLETENESS §1</a></p>
+<section id="not-doing">
+  <span class="eyebrow">Межі</span>
+  <h2>Що свідомо не робимо</h2>
   <ul class="prose">
-  <li>G-71: перевірки на чистих базах (людина, до A-21).</li>
-  <li>G-72: зразки файлів CAD і вивантажень для міграції (A-06).</li>
-  <li>G-08: контракт обміну з BAS перевіряє бухгалтер (до A-08).</li>
-  <li>G-14, G-28, G-79: юрист щодо договору, гарантії й персональних даних.</li>
-  <li>G-59, G-68: перевірка правила «у трьох і більше конкурентів» і реєстр тверджень про редакції (повтор A-03b).</li>
-  <li>G-76, G-81: запис рішення №10 у журнал; дозвіл на показ суми відхилених оцінок.</li>
+  <li>Власне 3D-проєктування й рендер, оптимізацію розкрою і програми ЧПУ: це шар CAD/CAM; ми беремо специфікацію й передаємо список деталей (REJ-019…021).</li>
+  <li>Повний бухоблік і зарплату: облік у BAS/BAF клієнта з нашим обміном (ваше рішення №5, REJ-023).</li>
+  <li>Кабінет покупця і перерахунок маржі відкритих замовлень за курсом євро: відкидання підтверджено вами (запис 34, REJ-017, REJ-018). Претензію постачальнику порізки повертаємо після розмов A-06 (REJ-028).</li>
+  <li>Позиції, що відпадали за правилом «два типи джерел», лишаються поза першим релізом рішенням AI (AI-09): AI-розбір рекламацій, Нова Пошта, офлайн-замір, пеня та інші.</li>
+  <li>Інші підсегменти й профілі: офісні й контрактні, серійні на склад, м'які меблі, експорт (REJ-054…059).</li>
+  <li>П'ять готових модулів ToDo, крім модуля собівартості (REJ-001…005).</li>
   </ul>
-  <p class="small prose">У реєстрі прогалин статуси G-13, G-58, G-60, G-62, G-66 частково застарілі; чинний статус рішень: журнал і OWNER-BRIEF §8. <a class="src" href="#sources" data-src="COMPLETENESS.md§2">COMPLETENESS §2</a></p>
-</section>
-<section id="decisions">
-  <span class="eyebrow">Рішення</span>
-  <h2>Рішення власника</h2>
-  <div class="verdict"><p>Стан на 12.11.2026 (журнал, записи 4–34): з 24 рішень вирішено 20, відкрито 4 (№9, 14, 21, 22). З питань аудиту G-58 і G-66 вирішено, G-60 записано як «не вирішено, діє замовчування», G-61 і G-65 відкриті. Нижче 5 питань з кнопками, решта списком, вирішене 12.11 згорнуто. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§8">OB §8</a></p></div>
-  <p class="small prose">Позначки зберігаються лише у вашому браузері як особиста чернетка. Ніхто інший їх не бачить; рішенням стає лише запис у <code>flow/decisions.md</code>.</p>
-  <div style="display:flex;gap:8px;flex-wrap:wrap">
-    <button class="btn" id="copyBtn" type="button">Скопіювати мої відповіді</button>
-    <button class="btn ghost" id="clearBtn" type="button">Очистити</button>
-  </div>
-  <p id="copyMsg" class="small" role="status" aria-live="polite"></p>
-  <textarea id="copyOut" readonly hidden aria-label="Текст відповідей для копіювання"></textarea>
-  <div id="decList"></div>
-  <noscript><p class="small">Для вибору варіантів потрібен JavaScript. Відкриті питання з кнопками: G-60, OB8-21, OB8-14, G-65, G-61.</p></noscript>
-  <h3>Решта відкритих: рекомендація AI і замовчування</h3>
-  <ul class="rest">
-  <li><b>№9. Ціна Enterprise для України.</b> Рекомендація: запросити пропозицію партнера чи радника Odoo до лендингу апгрейду. Замовчування: €<span data-fact="ee.full_user_eur_month">27,90</span> за повного користувача на місяць лише для розрахунків, у продажу ціну Enterprise не називати.</li>
-  <li><b>№22. Сирі джерела дослідження в git.</b> Рекомендація: лишити в git лише знеособлені версії, сирі перенести в місце, яке назве людина. Замовчування: нових дослівних фрагментів не додавати; у документах і на сторінках лише агрегати.</li>
-  </ul>
+  <p class="prose">Повний список з причинами й умовами повернення: <a href="rejected.html">сторінка «Що відкинули»</a>. Хочете повернути позицію? Впишіть її номер REJ-NNN у поле «що замість» будь-якого рядка рішення AI вище (вийде «AI-NN: не згоден — повернути REJ-NNN»).</p>
+  <p class="small"><a class="src" href="#sources" data-src="REJECTED.md§Не робимо">REJECTED: не робимо</a> <a class="src" href="#sources" data-src="REJECTED.md§Повернуто в концепцію">REJECTED: повернуто</a></p>
 </section>
 <section id="chain">
   <span class="eyebrow">Додаток</span>
@@ -373,97 +348,98 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
   <div class="scroll" tabindex="0" aria-label="Докази"><table style="min-width:600px"><thead><tr><th>Теза</th><th>Доказ</th><th>Рівень</th></tr></thead><tbody>
   <tr><td>Строки зриваються, причину бачать запізно</td><td>відгуки покупців (а), вакансії</td><td>● два типи</td></tr>
   <tr><td>Порізка зсуває дату</td><td>відгуки меблярів</td><td>◐ один тип</td></tr>
-  <tr><td>Програють через ціну</td><td>агрегати CRM ToDo, переважно не (а)</td><td>◐</td></tr>
+  <tr><td>Програють через ціну</td><td>агрегати CRM ToDo, переважно не кухні й корпусні</td><td>◐</td></tr>
   <tr><td>Імпорт із CAD як головна перевага</td><td>лише неофіційна структура файлу ViyarPro</td><td>гіпотеза</td></tr>
-  <tr><td>Ринок ≈<span data-fact="market.clients_3y_base">8</span> клієнтів за 3 роки</td><td>225 компаній × припущення частки й конверсії</td><td>гіпотеза</td></tr>
-  <tr><td>11 повернутих позицій</td><td>ваше рішення, доказ попиту не з'явився</td><td>гіпотеза</td></tr>
+  <tr><td>Розмір цільового ринку</td><td><span data-fact="market.companies_10_249">225</span> компаній у смузі 10–249; частка кухонь і корпусних невідома</td><td>гіпотеза</td></tr>
+  <tr><td>Повернуті вами позиції</td><td>ваше рішення, доказ попиту не з'явився</td><td>гіпотеза</td></tr>
   <tr><td>Наш пакет закриває ланцюг</td><td>план концепції</td><td>◎ ціль, не факт</td></tr>
   </tbody></table></div>
-  <p class="small"><a class="src" href="#sources" data-src="../concept/features.md§Болі">features: типи доказу</a> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§4">OB §4</a></p>
+  <p class="small"><a class="src" href="#sources" data-src="../concept/features.md§Болі">features: типи доказу</a> <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a></p>
 </section>
 <section id="limits">
   <span class="eyebrow">Додаток</span>
   <h2>Обмеження й план перевірки</h2>
   <ul class="prose">
-  <li>Твердження про редакції: лише з порівняння з документацією 19.0; реєстру перевірених тверджень немає (G-68).</li>
-  <li>Формати CAD не підтверджено файлами; тріали конкурентів відкладено (№6).</li>
-  <li>Вхід за PIN без користувача, аналітика без Enterprise, телефон і планшет, онлайн-оплата українськими картками на Community: до перевірки на чистих базах (№13).</li>
-  <li>Години, ринок, ціна Light і ціна Enterprise для України: припущення.</li>
+  <li>Твердження про редакції: лише з порівняння з документацією 19.0; реєстру перевірених тверджень і чистої бази Enterprise немає (AI-11).</li>
+  <li>Формати CAD і вивантажень BAS не підтверджено файлами; тріали конкурентів відкладено (ваше рішення №6).</li>
+  <li>Вхід за PIN, аналітика без Enterprise, телефон і планшет на Community: перевірка стандарту в межах A-21 (записи 30, 35).</li>
   <li>Норми закону (гарантія, пеня) з вторинних джерел, до юриста (№17). Голос виробника здебільшого переказ; першоджерела після рішення про підставу обробки (№18).</li>
+  <li>Гроші на цій сторінці свідомо не рахуються (запис 37): трудомісткість оцінює A-08 після сигналу A-23.</li>
   </ul>
-  <p class="prose">План: перевірка на чистих базах, зріз A-21, розмови A-06, тест попиту A-23, юрист до A-08 і A-10, після сигналу розробка. <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§3.4">FM §3.4</a> <a class="src" href="#sources" data-src="OWNER-BRIEF.md§8">OB §8</a></p>
+  <p class="prose">План: зріз A-21, розмови A-06, тест попиту A-23, юрист до A-08 і A-10, після сигналу розробка. <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§3.4">FM §3.4</a> <a class="src" href="#sources" data-src="SALES.md§4">SALES §4</a></p>
 </section>
 <section id="sources">
   <span class="eyebrow">Додаток</span>
   <h2>Джерела (шляхи в репо)</h2>
-  <p class="prose">Підписи біля тез ведуть сюди; шлях: <code>docs/industries/mebli/research/</code> + файл і розділ з атрибута посилання. Головні: OWNER-BRIEF.md, FUNCTIONAL-MAP.md, BOX.md, SALES.md, REJECTED.md, COMPLETENESS.md, REUSE.md, odoo-ecosystem.md, competitor-features.md, competitors-registry.md; концепція: <code>concept/</code>; зріз: <code>prototype-real/PLAN.md</code>. Числа: <code>research/facts.yaml</code>. Рішення: <code>flow/decisions.md</code>, записи 4–34. <a class="src" href="#sources" data-src="OWNER-BRIEF.md§8">OB §8</a></p>
+  <p class="prose">Підписи біля тез ведуть сюди; шлях: <code>docs/industries/mebli/research/</code> + файл і розділ з атрибута посилання. Головні: AI-DECISIONS.md, BOX.md, SALES.md, REJECTED.md, FUNCTIONAL-MAP.md, REUSE.md, odoo-ecosystem.md, competitor-features.md, competitors-registry.md; концепція: <code>concept/</code>; зріз: <code>prototype-real/PLAN.md</code>. Числа: <code>research/facts.yaml</code>. Рішення власника: <code>flow/decisions.md</code>, записи 4–37. <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS</a></p>
 </section>
 </main>
-<footer class="small">ToDo · 12.11.2026 · сторінка власника A-20c, повний обсяг · числа: research/facts.yaml (A-20, спроба 3; A-20b) · ринок: odb-catalog, знімок серпня 2026</footer>
+<footer class="small">ToDo · 12.11.2026 · сторінка власника A-20c, повний обсяг, перерахунок за 0.3 · числа: research/facts.yaml (A-20, спроба 4) · ринок: odb-catalog, знімок серпня 2026</footer>
 <script>
 (function(){
-  /* Блок рішень: DEC заповнює скіл concept-presentation. id: G-xx | OB8-n | крок. st: "done" | "open". */
+  /* Блок «Що вирішив AI»: DEC заповнює скіл concept-presentation рядками research/AI-DECISIONS.md («Рішення»). st: "open" (прийнято AI, можна вето) | "veto". flag — позначка рядка, що замінює замовчування власника. */
   var DEC=[
-  {"n":1,"id":"G-60","q":"З якою ціною входу A і якою підпискою йдемо в тест попиту A-23?","st":"open","gate":"A-20c","scope":"mebli","ctx":"12.11 (запис 32) ви відповіли «поки не готовий, діє замовчування». Тепер від ціни A залежить і старт розробки: вона чекає сигналу A-23. Точки ціни A та їх окупність: OWNER-BRIEF §6 і §8.","opts":["Як радить AI","Інша ціна або підписка: вкажу в нотатці","Поки не готовий, діє замовчування"],"rec":"Верхня з трьох точок ціни A в OWNER-BRIEF §8; одна підписка для Community і Enterprise (ліцензію Enterprise клієнт платить Odoo окремо), рівень з реакції A-23; знижка пілоту не більша за рекомендовану межу, з лімітом доробок; апгрейд за різницею запуску.","def":"У лендингу A-23 рекомендована точка як «від» для перевірки, підписка «за запитом», апгрейд «за оцінкою».","cons":"Від ціни A залежать окупність і старт A-23, а отже й старт розробки."},
-  {"n":2,"id":"OB8-21","q":"Коли і з якими порогами проводимо тест попиту A-23?","st":"open","gate":"A-20c","scope":"mebli","ctx":"Пороги сигналів готує крок A-23, ви їх затверджуєте. Сезон у (а), за єдиним джерелом, з кінця літа до кінця зими. Розробка тепер чекає сигналу A-23.","opts":["(б) січень–лютий під весняний пілот","(а) зараз, з нижчими порогами на листопад–грудень","Інший строк: вкажу в нотатці"],"rec":"(б): січень–лютий під весняний запуск пілоту; пороги з A-23 на ваше затвердження.","def":"A-23 не стартує, доки немає ціни A (G-60) і затверджених вами порогів; календар (б).","cons":"(а) дає сигнал раніше, але в сезон відповідей менше; (б) відсуває старт розробки на час тесту."},
-  {"n":3,"id":"OB8-14","q":"Лишаємо одну залежність від модуля OCA для телефона (web_responsive) і під якою ліцензією наші модулі?","st":"open","gate":"A-20c","scope":"mebli","ctx":"Ваша нотатка: модулі пишемо самі, OCA лише як ідеї. Без цього модуля адаптивний інтерфейс Community робимо самі; ці години вже у верхній межі основної цифри.","opts":["Як радить AI: без OCA, юрист до A-10","Лишити web_responsive як єдину залежність","Інше: вкажу в нотатці"],"rec":"Без web_responsive, бо одна залежність ламає правило «OCA лише як ідеї»; ліцензію наших модулів підтверджує юрист до A-10, зокрема для роботи поруч з Enterprise.","def":"Основна цифра без OCA; наші модулі під LGPL-3 (з анкети), ядро без залежностей AGPL.","cons":"Залежність від OCA трохи зменшує години, але додає ризик ліцензії й сумісності."},
-  {"n":4,"id":"G-65","q":"На якій версії Odoo стартує розробка?","st":"open","gate":"A-20c","scope":"mebli","ctx":"Odoo 20 уже опублікована. На 19 є дослідження, зріз A-21 і готовий модуль ToDo; усі години пораховано для 19. Рішення потрібне до A-08.","opts":["19 з плановим перенесенням на 20","Одразу 20","Інше: вкажу в нотатці"],"rec":"19: на неї вже є дослідження, зріз і готовий модуль; перенесення на 20 як плановий крок D-03.","def":"19.0, так пораховано всі години.","cons":"Версія 20 потребує повторної перевірки стандарту, модулів і перерахунку годин."},
-  {"n":5,"id":"G-61","q":"Що пропонуємо компаніям на 6–9 людей?","st":"open","gate":"A-20c","scope":"mebli","ctx":"Смуга між легким тарифом (1–5 людей) і клієнтом 10–249. Ризик (1): компанія на 10–15 людей заведе до 9 користувачів і візьме легкий тариф замість A. Ризик (2): смуга піде до KeyCRM чи Bimp.","opts":["Як радить AI: нічого не будувати до A-23","(1) легкий тариф з лімітом до 9 користувачів","(2) коробка A за повною ціною"],"rec":"До A-23 нічого не будувати; у формі A-23 окремий пункт «6–9 людей» з обома цінами; після A-23 варіант (1), якщо реакція на ціну A слабка.","def":"6–9 людей поза цільовими клієнтами; на запит пропонуємо коробку A; легкий тариф до 5 користувачів.","cons":"(1) розширює ринок, але може забрати клієнтів у A."},
-  {"n":6,"id":"A-03c","q":"Гейт A-03c: готові модулі ToDo","st":"done","dec":"Затверджено 12.11.2026, запис 29: адаптуємо модуль собівартості замовлення; решту п'яти модулів не беремо (REJ-001…005)."},
-  {"n":7,"id":"OB8-13","q":"Перевірка на чистих базах до прототипу A-21","st":"done","dec":"12.11.2026, запис 30: так, повна перевірка до A-21 на чистих базах Community 19 і Enterprise; A-21 чекає результату. До того пункти перевірки не перевірені, у годинах верхня межа."},
-  {"n":8,"id":"OB8-16","q":"Склад першої коробки A","st":"done","dec":"12.11.2026, запис 31: як радить AI, з замовними позиціями в прогнозній даті. Рядки «умовно» лишаються в релізі й вмикаються клієнту після A-06 і A-23."},
-  {"n":9,"id":"G-66","q":"Тест попиту A-23 відносно старту розробки","st":"done","dec":"12.11.2026, запис 33: (в) розробка чекає A-23, а не рекомендація AI (б). Розробка (A-08 і далі) після сигналу; реліз лишається повним (№0)."},
-  {"n":10,"id":"G-58","q":"Чотири позиції попередньої концепції","st":"done","dec":"12.11.2026, запис 34: відкидання кабінету покупця, порталу і маржі відкритих замовлень за курсом євро підтверджено; претензію постачальнику порізки повертаємо після розмов A-06."}
+  {"n":1,"id":"AI-01","q":"Ціну Odoo Enterprise для клієнта не називаємо (ваше рішення №9 було відкритим)","st":"open","ai":"Для концепції ціна Enterprise не потрібна. У продажу кажемо: ліцензію Enterprise клієнт купує в Odoo або в партнера за їхнім прайсом; склад: повні користувачі та Light для працівників цеху.","alt":"Назвати ціну з вашої нотатки до рішення №9 як ціну для клієнта.","risk":"Клієнт, що хоче Enterprise, не бачить порядку витрат і відкладає рішення.","check":"Перший клієнт на Enterprise: запит пропозиції партнера чи радника Odoo."},
+  {"n":2,"id":"AI-02","q":"Ліцензія наших модулів і модулі OCA (ваше рішення №14 було відкритим)","st":"open","ai":"Наші модулі під LGPL-3 (з анкети), без жодної залежності від OCA, зокрема без web_responsive; OCA лише як ідеї, код пишемо самі.","alt":"Власна ліцензія OPL-1 для частини модулів або web_responsive як єдина залежність OCA.","risk":"LGPL дозволяє конкурентам брати код; мобільний вигляд Community без web_responsive робимо самі, польові екрани (замір, кіоск, акт) можуть бути незручні на телефоні.","check":"Замір і акт на телефоні в пілоті; консультація юриста щодо ліцензії до A-10."},
+  {"n":3,"id":"AI-03","q":"Календар і пороги тесту попиту A-23 (ваше рішення №21 було відкритим)","st":"open","ai":"A-23 у січні–лютому під весняний старт пілоту. Числові пороги сигналів ставить крок A-23 як гіпотези, без окремого затвердження до старту; на ціну входу A-23 не чекає (AI-06).","alt":"A-23 зараз, у листопаді–грудні, з нижчими порогами.","risk":"Сезон відомий з одного запису CRM не з цільового підсегмента: якщо сезону немає, втрачаємо близько двох місяців, а розробка чекає A-23 (запис 33).","check":"A-23: відгук розсилки за тижнями; пілот, коли клієнт готовий стартувати."},
+  {"n":4,"id":"AI-04","q":"Сирі джерела дослідження в git (ваше рішення №22 було відкритим)","st":"open","ai":"У git лишаються лише знеособлені версії джерел; сирі переносяться поза git у місце, яке назве людина; нових дослівних фрагментів не додаємо. Вилучення файлів і чистку історії git робить людина.","alt":"Лишити як є, обмеживши доступ до репозиторію, з позначкою в політиці даних пакета.","risk":"Поки людина не вилучила сирі фрагменти, вони лишаються в git і в його історії.","check":"Людина: перелік файлів теки джерел після вилучення; перевірка приватності."},
+  {"n":5,"id":"AI-05","q":"Компанії на 6–9 людей і юрособи до 10 працівників","st":"open","ai":"До A-23 під цю смугу нічого не будуємо: вона поза цільовим клієнтом; на запит пропонуємо коробку A; легкий тариф лишається до 5 користувачів; у формі A-23 окремий пункт «6–9 людей».","alt":"Легкий тариф з лімітом до 9 користувачів.","risk":"Смуга йде до KeyCRM чи Bimp; якщо згодом розширимо легкий тариф, він забиратиме клієнтів коробки A.","check":"A-23: частка заявок «6–9 людей»."},
+  {"n":6,"id":"AI-06","q":"Лендинг тесту попиту без ціни входу коробки A","flag":"замінює замовчування запису 32","st":"open","ai":"У лендингу A-23 ціни немає: «вартість після демо, за складом коробки A»; заявка на пілот без суми. Підстава: запис 37 (гроші не рахуємо) і тарифів в анкеті немає. Замовчування запису 32 з ціною-точкою в лендингу цим рішенням замінено.","alt":"Лишити ціну-точку із замовчування запису 32.","risk":"Заявки без ціни менш кваліфіковані, а ціна вже головна причина програшу у воронці ToDo.","check":"A-23: яка частка заявок лишається після розмови про бюджет."},
+  {"n":7,"id":"AI-07","q":"Версія Odoo на старті розробки","st":"open","ai":"Odoo 19: на ній зроблено дослідження, зріз A-21 і готовий модуль собівартості; перенесення на 20 плановим кроком D-03.","alt":"Одразу Odoo 20.","risk":"Розробка стартує після A-23: на той час 20 може бути зрілою, і перший клієнт попросить саме її.","check":"Перед A-08 звірити стан українських модулів для 20."},
+  {"n":8,"id":"AI-08","q":"Відрядна і монтаж у пакеті","st":"open","ai":"Відрядна рахується розцінкою за операцію (у демо A-21 погодинно як спрощення зрізу); монтаж налаштовується: у вартості замовлення або окремою послугою, задача виїзду створюється в обох режимах.","alt":"Лише погодинна відрядна; монтаж лише окремою позицією.","risk":"Розцінка за операцію ускладнює довідник розцінок; фабрики продають монтаж по-різному.","check":"A-06 і пілот: як фабрика рахує відрядну і продає монтаж."},
+  {"n":9,"id":"AI-09","q":"Позиції, що відпадали за правилом «два типи джерел», лишаються поза першим релізом","st":"open","ai":"Правило скасовано, але позиції REJ-029…053 у перший реліз не повертаємо: біль для кухонь і корпусних не підтверджено або це норма закону до юриста. Повернення за сигналом A-23, A-06 чи вашим запереченням.","alt":"Повернути всі ці позиції в концепцію з позначкою «перевірити на пілоті».","risk":"Частина може виявитись потрібною (наприклад, поетапність операцій чи офлайн-замір), тоді повтор A-20.","check":"Пункти «що вам цікаво» в A-23, розмови A-06."},
+  {"n":10,"id":"AI-10","q":"Злиття ролей і позначки в прототипі","st":"open","ai":"Закупівельника злито з комірником-комплектувальником, менеджера з рекламацій із бригадиром монтажу й сервісу; конфігуратор, пакетний розкрій і обрізки в прототипі з позначкою «лише B».","alt":"Окремі ролі закупівельника й менеджера з рекламацій.","risk":"У компаніях 10–249 це можуть бути окремі люди, і сценарії доведеться розділити.","check":"A-06 і пілот: хто виконує ці обов'язки."},
+  {"n":11,"id":"AI-11","q":"Твердження про Enterprise без реєстру перевірених тверджень","st":"open","ai":"Основи екранів «стандарт Enterprise» і мости беремо з функціональної карти й огляду екосистеми; без вердикту позначаємо «не перевірено»; чистої бази Enterprise немає, тому твердження про Enterprise не подаємо як факт.","alt":"Зупинити A-20 до появи реєстру тверджень про редакції (повтор A-03b).","risk":"Міст чи стандарт Enterprise поводиться інакше, ніж описано; апгрейд з Community складніший.","check":"Перевірка на чистій базі Enterprise (рішення №13); повтор A-03b створює реєстр тверджень."},
+  {"n":12,"id":"AI-12","q":"Слабко доведені болі й показники дашборда не відсікаємо","st":"open","ai":"Болі з галузевої довідки, повернуті вами позиції і показники дашборда керівника лишаємо в концепції з позначкою «ризик: перевірити на пілоті».","alt":"Відкинути функції з одним джерелом (старе правило, скасовано).","risk":"Частина функцій і показників покупцю не потрібна, це зайва робота на A-08.","check":"A-23: карта інтересу за функціями; A-06: які цифри керівник дивиться щодня."},
+  {"n":13,"id":"AI-13","q":"Формати обміну й міграції без зразків файлів","st":"open","ai":"Обмін з BAS/BAF за першим варіантом контракту; специфікації вантажимо з CSV чи Excel за шаблоном; прямий імпорт БАЗИС і PRO100 та повна міграція після зразків вивантажень клієнта.","alt":"Будувати конвертори БАЗИС і PRO100 до пілоту.","risk":"Конфігурація BAS клієнта чи вивантаження CAD не ляже в шаблон.","check":"Етапи запуску з даними й обміном, зразки файлів від першого клієнта."}
   ];
-  var KEY="mebli-owner-decisions-v3";
+  var KEY="mebli-ai-veto-v1";
   var state={};
   try{var raw=localStorage.getItem(KEY);if(raw){state=JSON.parse(raw)||{};}}catch(e){state={};}
   function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
   var list=document.getElementById("decList");
   function render(){
-    var html="",closedHead=false;
+    var html="";
     DEC.forEach(function(d){
       var n=d.n;
-      if(d.st==="done"){if(!closedHead){html+='<h3 style="margin-top:16px">Вирішено 12.11.2026</h3>';closedHead=true;}html+='<div class="dec closed"><span class="num">'+esc(n)+'</span><div class="stack"><div><b>'+esc(d.q)+'</b> <span class="tag ok">вирішено</span> <span class="tag">'+esc(d.id)+'</span></div><p class="small">'+esc(d.dec||"")+'</p></div></div>';return;}
-      var opts="";
-      (d.opts||[]).forEach(function(o,j){var id="d"+n+"o"+j;opts+='<span><input type="radio" name="d'+n+'" id="'+id+'" value="'+j+'"> <label for="'+id+'">'+esc(o)+'</label></span>';});
-      html+='<div class="dec"><span class="num">'+esc(n)+'</span><div class="stack"><div><b>'+esc(d.q)+'</b> <span class="tag">'+esc(d.id)+'</span></div><p class="small">'+esc(d.ctx||"")+'</p>'+(d.rec?'<p class="small"><b>Рекомендація AI (відкрите рішення).</b> '+esc(d.rec)+'</p>':'')+(d.def?'<p class="small"><b>Замовчування, якщо не відповісте.</b> '+esc(d.def)+'</p>':'')+(d.cons?'<p class="small"><b>Наслідок.</b> '+esc(d.cons)+'</p>':'')+'<div class="opts" role="radiogroup">'+opts+'</div><textarea class="note" id="note'+n+'" rows="2" aria-label="Нотатка до рішення '+esc(n)+'"></textarea></div></div>';
+      if(d.st==="veto"){html+='<div class="dec closed"><span class="num">'+esc(d.id)+'</span><div class="stack"><div><b>'+esc(d.q)+'</b> <span class="tag ok">вето внесено</span></div><p class="small">'+esc(d.dec||"")+'</p></div></div>';return;}
+      html+='<div class="dec"><span class="num">'+esc(d.id)+'</span><div class="stack"><div><b>'+esc(d.q)+'</b>'+(d.flag?' <span class="tag hyp">'+esc(d.flag)+'</span>':'')+'</div><p class="small"><b>Рішення AI.</b> '+esc(d.ai||"")+'</p>'+(d.alt?'<p class="small"><b>Альтернатива.</b> '+esc(d.alt)+'</p>':'')+(d.risk?'<p class="small"><b>Ризик.</b> '+esc(d.risk)+'</p>':'')+(d.check?'<p class="small"><b>Перевірка.</b> '+esc(d.check)+'</p>':'')+'<div class="opts"><span><input type="checkbox" id="v'+n+'"> <label for="v'+n+'">Не згоден</label></span></div><textarea class="note" id="note'+n+'" rows="2" aria-label="Що замість, '+esc(d.id)+'"></textarea></div></div>';
     });
     list.innerHTML=html;
     DEC.forEach(function(d){
-      if(d.st==="done")return;
+      if(d.st==="veto")return;
       var s=state["d"+d.n]||{};
-      if(s.o!==undefined&&s.o!==null){var el=document.getElementById("d"+d.n+"o"+s.o);if(el)el.checked=true;}
+      if(s.v){document.getElementById("v"+d.n).checked=true;}
       if(s.t){document.getElementById("note"+d.n).value=s.t;}
     });
   }
   render();
-  list.addEventListener("change",function(e){var t=e.target;if(t.type==="radio"){var n=t.name.slice(1);state["d"+n]=state["d"+n]||{};state["d"+n].o=+t.value;save();}});
+  list.addEventListener("change",function(e){var t=e.target;if(t.type==="checkbox"){var n=t.id.slice(1);state["d"+n]=state["d"+n]||{};state["d"+n].v=t.checked;save();}});
   list.addEventListener("input",function(e){var t=e.target;if(t.classList.contains("note")){var n=t.id.slice(4);state["d"+n]=state["d"+n]||{};state["d"+n].t=t.value;save();}});
-  /* Формат для decisions-batch: «<id> -> варіант | коментар»; гейт і scope на початку коментаря. */
+  /* Формат заперечень — «AI-NN: не згоден — <що замість>»; приймач — flow-state-keeper, режим veto-batch (flow-core/references/flow-state.md §3). */
   function oneLine(t){return String(t||"").replace(/[\r\n|]+/g," ").trim();}
   function buildText(){
-    var out=["Рішення власника: пакет mebli, сторінка A-20c (повний обсяг), 12.11.2026. Формат рядка: <id> -> варіант | коментар. Це чернетка для flow-state-keeper (decisions-batch); рішенням стає лише запис у flow/decisions.md."];
+    var out=["Заперечення власника: пакет mebli, сторінка A-20c, 12.11.2026. Один рядок на заперечення: AI-NN: не згоден — що замість. Рядки, яких тут немає, власник приймає. flow-state-keeper (veto-batch) вносить їх у flow/decisions.md з посиланням на це повідомлення."];
     DEC.forEach(function(d){
-      if(d.st==="done")return;
+      if(d.st==="veto")return;
       var s=state["d"+d.n]||{};
-      var choice=(s.o!==undefined&&s.o!==null)?d.opts[s.o]:"не вирішено";
-      var com=(oneLine(d.gate)+" "+oneLine(d.scope)+"; "+oneLine(d.q)+(s.t?"; "+oneLine(s.t):"")).slice(0,200);
-      out.push(oneLine(d.id)+" -> "+oneLine(choice)+" | "+com);
+      if(!s.v)return;
+      out.push(oneLine(d.id)+": не згоден — "+(oneLine(s.t)||"що замість не вказано"));
     });
+    if(out.length===1)out.push("Заперечень немає: усі рішення AI прийнято.");
     return out.join("\n");
   }
   var msg=document.getElementById("copyMsg"),outEl=document.getElementById("copyOut");
   function fallback(text){outEl.hidden=false;outEl.value=text;outEl.focus();outEl.select();msg.textContent="Автоматичне копіювання недоступне. Текст виділено: Ctrl+C або Cmd+C.";}
   document.getElementById("copyBtn").addEventListener("click",function(){
     var text=buildText();
-    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){outEl.hidden=true;msg.textContent="Скопійовано відкриті рішення.";},function(){fallback(text);});}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){outEl.hidden=true;msg.textContent="Скопійовано заперечення.";},function(){fallback(text);});}
     else{fallback(text);}
   });
   document.getElementById("clearBtn").addEventListener("click",function(){
     state={};save();
-    list.querySelectorAll("input[type=radio]").forEach(function(r){r.checked=false;});
+    list.querySelectorAll("input[type=checkbox]").forEach(function(r){r.checked=false;});
     list.querySelectorAll(".note").forEach(function(r){r.value="";});
     outEl.hidden=true;msg.textContent="Позначки очищено.";
   });
@@ -473,4 +449,4 @@ footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
   window.addEventListener("scroll",onScroll,{passive:true});onScroll();
 })();
 </script>
-<!-- A-20c повний обсяг (concept-presentation 0.2.0, params.sample: false, mode: recalc), 12.11.2026. Перший екран і стиль зі зразка; рішення 2026-11-12 (записи 29–34) враховано. Логотип: base64 brand-todo/todo-logo.png (той самий рядок у трьох сторінках). -->
+<!-- A-20c повний обсяг, recalc за concept-presentation 0.3.1 (params.sample: false, mode: recalc), 12.11.2026. Без грошей (LESSONS §24, запис 37); блок «Що вирішив AI» — AI-01…AI-13 з research/AI-DECISIONS.md, вето через «Скопіювати мої заперечення»; рішення власника записи 4–37 — як вхід, без кнопок. Каркас скрипта — шаблон 0.3.x; додано лише поле flag (позначка AI-06). Логотип: base64 brand-todo/todo-logo.png (той самий рядок у трьох сторінках). -->
