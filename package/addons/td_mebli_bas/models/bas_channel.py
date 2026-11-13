@@ -258,6 +258,8 @@ class TdMebliBasChannel(models.Model):
         return batch
 
     def _td_after_bas_payment(self, invoice, payment):
-        """Hook after a payment from BAS is reconciled (tr/integrations.md §1.3 п.3). The manual payment marks of the
-        same order (td.mebli.pay.mark, td_mebli_install of G3) are cancelled here once that model exists."""
+        """Hook after a payment from BAS is reconciled (tr/integrations.md §1.3 п.3, AC-042): the manual payment marks
+        of the same order on the same amount (td.mebli.pay.mark, td_mebli_install — a dependency of this module) are
+        cancelled."""
+        invoice.line_ids.sale_line_ids.order_id._td_cancel_pay_marks(payment.amount)
         return True

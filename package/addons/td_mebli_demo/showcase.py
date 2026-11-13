@@ -479,7 +479,7 @@ def seed_showcase(env):
         if discount == -1:  # a deal sold almost at cost: the discount that brings the margin down to 6-13%
             line = order.order_line[:1]
             target = rnd.choice([0.06, 0.09, 0.13])
-            discount = max(0.0, round((1 - line.purchase_price / (line.price_unit * (1 - target))) * 100.0, 1))
+            discount = max(0.0, round((1 - line.sudo().purchase_price / (line.price_unit * (1 - target))) * 100.0, 1))  # cost: AC-018 groups
         if discount:
             order.order_line.discount = discount
         # delivery and installation are in the price of the order; the service line makes the visit task (sale_project)
@@ -511,10 +511,18 @@ def seed_showcase(env):
     jobs = env['td.mebli.cutting.job']
     dev_order = orders['done'][3]  # the order that took longer than planned: a deviation worth showing
     batches = []
+    Job = env['td.mebli.cutting.job']
     for stage in ('done', 'progress'):
-        ordered_list = orders[stage].sorted('date_order')
-        for index in range(0, len(ordered_list), 4):
-            batches.append((ordered_list[index:index + 4], stage))
+        # one decor per job (AC-058, G2-3): the technologist batches the orders whose boards are the same, up to 4
+        by_boards = {}
+        for order in orders[stage].sorted('date_order'):
+            key = frozenset().union(*[Job._td_board_set(p) for p in order.mrp_production_ids]) \
+                if order.mrp_production_ids else frozenset()
+            by_boards.setdefault(key, env['sale.order'])
+            by_boards[key] |= order
+        for same in by_boards.values():
+            for index in range(0, len(same), 4):
+                batches.append((same[index:index + 4], stage))
     for batch, stage in batches:
         tech = people['tech']
         job = env['td.mebli.cutting.job'].with_user(tech).create({'production_ids': [(6, 0, batch.mrp_production_ids.ids)]})

@@ -31,8 +31,8 @@ class TestDashboardOnDemoData(TransactionCase):
             self.assertEqual(len(records.exists()), len(item['drill']['ids']))
 
     def test_finance_role_opens_every_card(self):
-        """The finance role of the demo (no manufacturing, purchase or project group) opens the drill-down of all 11
-        cards: the list views load and read the records the card counted."""
+        """The finance role of the demo (no manufacturing, purchase or project group) opens the drill-down of all the
+        cards (11; 12 with the quality feature of box B): the list views load and read the records the card counted."""
         from lxml import etree
 
         from odoo.addons.td_mebli_demo.showcase import USERS
@@ -45,7 +45,9 @@ class TestDashboardOnDemoData(TransactionCase):
         fin = self.env['res.users'].with_context(no_reset_password=True).create({
             'name': 'Finance', 'login': 'td_fin_test', 'group_ids': [(6, 0, [self.env.ref(g).id for g in groups])]})
         data = self.env['td.mebli.dashboard'].with_user(fin).get_data()
-        self.assertEqual(len(data['cards']), 11)
+        # box B of the demo (settings_data.xml): the quality feature adds the 12th card (AC-121)
+        quality = fin.has_group('td_mebli_base.group_feature_quality')
+        self.assertEqual(len(data['cards']), 12 if quality else 11)
         self.assertTrue(data['by_key']['load']['drill']['ids'])
         for card in data['cards']:
             drill = card['drill']

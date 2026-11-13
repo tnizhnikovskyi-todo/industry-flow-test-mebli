@@ -67,6 +67,22 @@ class TestCuttingAtDistributor(TdMebliSaleCommon):
         self.assertFalse(job.return_date)
         self.assertNotEqual(order.td_delay_reason, 'distributor')
 
+    def test_g1_g2_job_change_recomputes_the_stored_forecast(self):
+        """G1→G2 tail: the stored forecast of the order (td_mebli_sale) has no @api.depends on the cutting job —
+        a change of the job (its orders, its state) recomputes it at once, not by the daily cron."""
+        order, job = self._job(10)
+        job.action_send_distributor()
+        self.assertEqual(order.td_delay_reason, 'distributor')
+        # the job is moved to the manufacturing order of another sale: the first order no longer waits for the
+        # distributor, the other one does — both at once
+        other, other_job = self._job(10)
+        other_job.action_cancel()
+        job.write({'production_ids': [(6, 0, other.mrp_production_ids.ids)]})
+        self.env.flush_all()
+        self.assertNotEqual(order.td_delay_reason, 'distributor')
+        self.assertEqual(other.td_delay_reason, 'distributor')
+        self.assertEqual(other.td_forecast_date, job.return_date + timedelta(days=5))
+
     def test_no_cutting_service_is_explained(self):
         self.service.td_material_kind = False
         _order, job = self._job(40)

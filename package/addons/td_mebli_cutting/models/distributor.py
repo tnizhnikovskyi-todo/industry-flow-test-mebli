@@ -76,11 +76,24 @@ class TdMebliCuttingJob(models.Model):
                                                                                 'res_id': purchase.id}).ids)
         return True
 
+    def _td_forecast_orders(self):
+        """The sales orders whose stored forecast (td_mebli_sale, AC-066) reads these jobs (read only)."""
+        return self.sudo().filtered('purchase_id').production_ids._td_sale_orders()
+
     def write(self, vals):
+        # G1→G2: the forecast of the orders follows the cutting at the distributor (sent / back / cancelled, the
+        # orders of the job changed); td_mebli_sale has no @api.depends on the jobs — recompute explicitly
+        tracked = bool({'state', 'purchase_id', 'production_ids'} & set(vals))
+        before = self._td_forecast_orders() if tracked else self.env['sale.order']
         result = super().write(vals)
-        if {'state', 'purchase_id'} & set(vals):
-            # the forecast of the orders follows the cutting at the distributor (sent / back / cancelled)
-            self.sudo().filtered('purchase_id').production_ids._td_sale_orders()._td_recompute_forecast()
+        if tracked:
+            (before | self._td_forecast_orders())._td_recompute_forecast()
+        return result
+
+    def unlink(self):
+        orders = self._td_forecast_orders()
+        result = super().unlink()
+        orders.exists()._td_recompute_forecast()
         return result
 
     def action_view_purchase(self):

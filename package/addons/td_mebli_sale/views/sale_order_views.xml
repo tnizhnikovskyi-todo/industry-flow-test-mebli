@@ -32,12 +32,13 @@
             </xpath>
             <xpath expr="//field[@name='order_line']/form//label[@for='product_id']" position="attributes"><attribute name="invisible">1</attribute></xpath>
             <xpath expr="//field[@name='order_line']/form//field[@name='product_id']/.." position="attributes"><attribute name="invisible">1</attribute></xpath>
+            <!-- AC-011/012, VP-02: розміри виробу — функція «конфігуратор» коробки B (group_feature_configurator) -->
             <!-- на телефоні рядок замовлення — повноекранна форма: розміри виробу редагуються тут, ціна перераховується -->
             <xpath expr="//field[@name='order_line']/form//div[@name='ordered_qty']" position="after">
                 <field name="td_is_parametric" invisible="1"/>
-                <field name="td_width" invisible="not td_is_parametric"/>
-                <field name="td_height" invisible="not td_is_parametric"/>
-                <field name="td_depth" invisible="not td_is_parametric"/>
+                <field name="td_width" invisible="not td_is_parametric" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_height" invisible="not td_is_parametric" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_depth" invisible="not td_is_parametric" groups="td_mebli_base.group_feature_configurator"/>
             </xpath>
         </field>
     </record>
@@ -50,10 +51,10 @@
             <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="before">
                 <field name="td_is_parametric" column_invisible="True"/>
                 <field name="td_bom_id" column_invisible="True"/>
-                <field name="td_width" optional="show" readonly="not td_is_parametric" width="95px"/>
-                <field name="td_height" optional="show" readonly="not td_is_parametric" width="95px"/>
-                <field name="td_depth" optional="show" readonly="not td_is_parametric" width="95px"/>
-                <field name="td_size_factor" optional="hide" readonly="1"/>
+                <field name="td_width" optional="show" readonly="not td_is_parametric" width="95px" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_height" optional="show" readonly="not td_is_parametric" width="95px" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_depth" optional="show" readonly="not td_is_parametric" width="95px" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_size_factor" optional="hide" readonly="1" groups="td_mebli_base.group_feature_configurator"/>
             </xpath>
             <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
                 <button name="action_td_generate_bom" type="object" icon="fa-cogs" title="Build specification"

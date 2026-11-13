@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
         [('quote', 'Quotation'), ('sent', 'Sent to customer'), ('confirmed', 'Waiting for launch'),
          ('progress', 'In production'), ('done', 'Made')],
         string='Order Stage', compute='_compute_td_stage', inverse='_inverse_td_stage', store=True, readonly=False,
-        group_expand='_read_group_td_stage')
+        copy=False, group_expand='_read_group_td_stage')  # copy=False: «Duplicate» recomputes, not the inverse
     # AC-067: the last time the stage of the board changed (kept by the computation of the stage, not entered)
     td_stage_date = fields.Datetime(string='Stage Changed', readonly=True, copy=False, index=True,
                                     default=fields.Datetime.now)

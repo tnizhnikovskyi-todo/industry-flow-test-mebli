@@ -3,6 +3,17 @@
     <record id="base.group_user" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('mrp.group_mrp_routings')), (4, ref('mrp.group_mrp_byproducts')), (4, ref('stock.group_production_lot')), (4, ref('product.group_product_variant')), (4, ref('uom.group_uom'))]"/>
     </record>
+    <!-- Box B functions the demo shows (VP-02): configurator, offcuts, cutting batches (the scenario cuts two orders
+         in one job), workshop tablet, quality checks, label scanning of the packing list, NBU rates, analogs, workshop
+         board. Not switched on: signature of changes, AI column mapping — the demo does not show them. -->
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('td_mebli_base.group_feature_configurator')), (4, ref('td_mebli_base.group_feature_offcut')), (4, ref('td_mebli_base.group_feature_cutting_batch')), (4, ref('td_mebli_base.group_feature_kiosk')), (4, ref('td_mebli_base.group_feature_quality')), (4, ref('td_mebli_base.group_feature_label_scan')), (4, ref('td_mebli_base.group_feature_nbu')), (4, ref('td_mebli_base.group_feature_analog')), (4, ref('td_mebli_base.group_feature_shop_board'))]"/>
+    </record>
+    <!-- the demo factory: contract work (contract_mode), box B -->
+    <record id="base.main_company" model="res.company">
+        <field name="td_contract_mode">contract</field>
+        <field name="td_box_profile">B</field>
+    </record>
 
     <record id="stock.route_warehouse0_mto" model="stock.route">
         <field name="active" eval="True"/>

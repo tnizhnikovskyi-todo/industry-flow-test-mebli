@@ -180,11 +180,13 @@ class TdMebliPayMark(models.Model):
 class SaleOrderPayMark(models.Model):
     _inherit = 'sale.order'
 
-    def _td_cancel_pay_marks(self):
+    def _td_cancel_pay_marks(self, amount=None):
         """AC-042: a payment of the order arrived by the exchange with BAS — the manual marks that stood in for it are
-        cancelled (kept, not deleted). Called from the BAS hook `_td_after_bas_payment` (td_mebli_bas) with one line:
-        `invoice.line_ids.sale_line_ids.order_id._td_cancel_pay_marks()`."""
-        marks = self.sudo().td_pay_mark_ids.filtered(lambda mark: not mark.cancelled)
+        cancelled (kept, not deleted). `amount` — the amount of the payment: only the marks of the same amount are
+        cancelled (tr/integrations.md §1.3 п.3); None — all the open marks. Called from the BAS hook
+        `_td_after_bas_payment` (td_mebli_bas)."""
+        marks = self.sudo().td_pay_mark_ids.filtered(
+            lambda mark: not mark.cancelled and (amount is None or not mark.currency_id.compare_amounts(mark.amount, amount)))
         if marks:
             marks.write({'cancelled': True})
         return marks

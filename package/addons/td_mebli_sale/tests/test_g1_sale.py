@@ -277,6 +277,24 @@ class TestG1Sale(TdMebliSaleCommon):
         with self.assertRaises(UserError):
             bom.td_part_ids[:1].write({'qty': 5})
 
+    def test_duplicate_of_a_confirmed_order(self):
+        """«Duplicate» of a confirmed order: the stage of the board is not copied (its inverse would refuse it), the copy
+        is a quotation."""
+        order = self._make_order()
+        order.action_confirm()
+        copy = order.copy()
+        self.assertEqual(copy.state, 'draft')
+        self.assertEqual(copy.td_stage, 'quote')
+
+    def test_ac_n07_configurator_dimensions_are_box_b(self):
+        """AC-011/012 (VP-02 `configurator`): the dimensions of the order line are shown only with the feature group."""
+        salesman = self._user('td_g1_conf', 'sales_team.group_sale_salesman_all_leads')
+        arch = lambda: self.env['sale.order'].with_user(salesman).get_views([(False, 'form')])['views']['form']['arch']  # noqa: E731
+        self.assertNotIn('name="td_width"', arch(), "box A: no dimensions in the order line")
+        salesman.group_ids = [(4, self.env.ref('td_mebli_base.group_feature_configurator').id)]
+        self.env.registry.clear_cache('templates')
+        self.assertIn('name="td_width"', arch())
+
 
 @tagged('post_install', '-at_install')
 class TestG1ChangeSign(HttpCase, TdMebliSaleCommon):

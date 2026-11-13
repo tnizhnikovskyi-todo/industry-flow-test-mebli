@@ -177,6 +177,26 @@ class TestBasExchange(AccountTestInvoicingCommon):
         batch.action_td_retry()
         self.assertEqual(self.env['account.payment'].search_count([('td_bas_ref', '=', 'P-1')]), 1)
 
+    def test_ac_042_payment_from_bas_cancels_manual_marks(self):
+        order = self.env['sale.order'].create({
+            'partner_id': self.partner_a.id,
+            'order_line': [(0, 0, {'product_id': self.product_a.id, 'product_uom_qty': 1, 'price_unit': 1000.0})]})
+        order.action_confirm()
+        other = order.copy()
+        other.action_confirm()
+        invoice = order._create_invoices()
+        invoice.action_post()
+        Mark = self.env['td.mebli.pay.mark']
+        mark = Mark.create({'order_id': order.id, 'amount': invoice.amount_total, 'reason': 'Bank transfer seen'})
+        other_amount = Mark.create({'order_id': order.id, 'amount': 77.0, 'reason': 'Cash at the office'})
+        other_mark = Mark.create({'order_id': other.id, 'amount': invoice.amount_total, 'reason': 'Other order'})
+        self._incoming([{'bas_ref': 'P-M1', 'date': '2026-11-10', 'amount': invoice.amount_total,
+                         'invoice_number': invoice.name}])
+        self.assertTrue(mark.cancelled, "the mark of the paid order on the same amount is cancelled")
+        self.assertTrue(mark.exists(), "cancelled, not deleted")
+        self.assertFalse(other_amount.cancelled, "a mark of another amount stays (tr/integrations.md §1.3 п.3)")
+        self.assertFalse(other_mark.cancelled, "the marks of another order stay")
+
     def test_ac_042_broken_file_is_a_batch_error(self):
         batch = self.env['td.mebli.bas.batch'].create({
             'channel_id': self.channel.id, 'direction': 'in', 'kind': 'payments',
