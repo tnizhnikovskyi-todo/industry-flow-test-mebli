@@ -8,11 +8,11 @@
                    'of edge, m2 of board or per operation) for done work orders, shared by the time lines of the tablet, the crew percent from a signed final act, bonuses and '
                    'penalties with a reason. Payroll is Enterprise only and has no Ukrainian localisation: the accruals '
                    'are handed over to the accounting system of the customer.',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Services/Project',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['td_mebli_shop', 'sale_project'],
+    'depends': ['td_mebli_base', 'td_mebli_shop', 'sale_project'],
     'data': [
         'security/ir.model.access.csv',
         'security/security.xml',
@@ -21,6 +21,7 @@
         'views/accrual_views.xml',
         'views/payment_views.xml',
         'report/act_report.xml',
+        'report/accrual_report.xml',
         'views/day_plan_views.xml',
     ],
     'installable': True,

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 21:17+0000\n"
-"PO-Revision-Date: 2026-11-12 21:17+0000\n"
+"POT-Creation-Date: 2026-11-13 09:40+0000\n"
+"PO-Revision-Date: 2026-11-13 09:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -27,13 +27,55 @@ msgstr ""
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid ""
+": the service decides\n"
+"                    «Under Warranty» by hand (the term of the product category is empty until the conclusion of the lawyer)."
+msgstr ": рішення «На гарантії» сервіс\n                    ставить вручну (строк категорії товару порожній до висновку юриста)."
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
 msgid "<i class=\"fa fa-money me-2\" title=\"Paid repair\"/>"
 msgstr "<i class=\"fa fa-money me-2\" title=\"Платний ремонт\"/>"
 
 #. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "<i class=\"fa fa-question-circle me-2\" title=\"Warranty\"/>"
+msgstr "<i class=\"fa fa-question-circle me-2\" title=\"Гарантія\"/>"
+
+#. module: td_mebli_claim
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_after_warranty
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
 msgid "After Warranty"
 msgstr "Після гарантії"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "After warranty"
+msgstr "Після гарантії"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Choose a part or a product to remake"
+msgstr "Оберіть деталь або виріб для повторного виготовлення"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Choose the claimed order first: the visit goes to its address."
+msgstr "Спершу оберіть замовлення рекламації: виїзд іде на його адресу."
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__td_claim_id
+msgid "Claim"
+msgstr "Рекламація"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Claim %(claim)s: %(order)s"
+msgstr "Рекламація %(claim)s: %(order)s"
 
 #. module: td_mebli_claim
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_claim_order_id
@@ -60,24 +102,25 @@ msgid "Claims on Orders"
 msgstr "Рекламації на замовлення"
 
 #. module: td_mebli_claim
-#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_days_open
-msgid "Days Open"
-msgstr "Днів відкрито"
-
-#. module: td_mebli_claim
 #: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_warranty_end
 msgid ""
-"Delivery of the claimed order (standard effective date of the order) plus "
-"the warranty period of the package (months, a parameter of the package)."
+"Date of the final installation act of the claimed order (the delivery when "
+"there is no installation) plus the warranty term of the product category."
 msgstr ""
 "Дата поставки замовлення (стандартна дата поставки) плюс строк гарантії "
 "пакета (місяців, параметр пакета)."
 
 #. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_days_open
+msgid "Days Open"
+msgstr "Днів відкрито"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__display_name
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
@@ -85,14 +128,27 @@ msgid "Factory Pays"
 msgstr "За рахунок фабрики"
 
 #. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__id
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__id
 #: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__id
 msgid "ID"
 msgstr "ID"
 
 #. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+msgid "On Warranty"
+msgstr "На гарантії"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "On warranty"
+msgstr "На гарантії"
+
+#. module: td_mebli_claim
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_overdue
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
 msgid "Overdue"
 msgstr "Прострочено"
 
@@ -107,6 +163,11 @@ msgid "Photo"
 msgstr "Фото"
 
 #. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "Plan a Visit"
+msgstr "Запланувати виїзд"
+
+#. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
 msgid "Reason"
 msgstr "Причина"
@@ -115,6 +176,11 @@ msgstr "Причина"
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_remake_production_id
 msgid "Remake"
 msgstr "Повторне виготовлення"
+
+#. module: td_mebli_claim
+#: model:product.template,name:td_mebli_claim.product_remake_part
+msgid "Remake Part"
+msgstr "Повторна деталь"
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
@@ -138,6 +204,22 @@ msgid "Sales Order"
 msgstr "Замовлення на продаж"
 
 #. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_visit_task_id
+msgid "Service Visit"
+msgstr "Сервісний виїзд"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Service visit planned: %s"
+msgstr "Заплановано сервісний виїзд: %s"
+
+#. module: td_mebli_claim
+#: model:ir.model,name:td_mebli_claim.model_project_task
+msgid "Task"
+msgstr "Завдання"
+
+#. module: td_mebli_claim
 #: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_claim_order_id
 msgid ""
 "The furniture order the customer complains about (the standard «Sale Order» "
@@ -145,6 +227,14 @@ msgid ""
 msgstr ""
 "Замовлення меблів, на яке скаржиться клієнт (стандартне «Замовлення на "
 "продаж» ремонту — це замовлення, з якого продано ремонт, інше)."
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid ""
+"The order %s has no installation visit: the installation project is not "
+"known."
+msgstr "Замовлення %s не має виїзду на монтаж: проєкт монтажів невідомий."
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
@@ -169,6 +259,46 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
 msgid "The warranty ended on"
 msgstr "Гарантія закінчилась"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,help:td_mebli_claim.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"            #tags Set tags on the task\n"
+"            @user Assign the task to a user\n"
+"            ! Set the task a medium priority\n"
+"            !! Set the task a high priority\n"
+"            !!! Set the task a urgent priority\n"
+"\n"
+"            Make sure to use the right format and order e.g. Improve the configuration screen #feature #v16 @Mitchell !"
+msgstr ""
+"Використовуйте ці ключові слова в заголовку, щоб встановити нові завдання:\n"
+"\n"
+"30 год. Виділіть 30 годин на завдання\n"
+"#tags Встановіть теги для завдання\n"
+"@user Призначте завдання користувачеві\n"
+"! Встановіть для завдання середній пріоритет\n"
+"!! Встановіть для завдання високий пріоритет\n"
+"!!! Встановіть для завдання терміновий пріоритет\n"
+"\n"
+"Переконайтеся, що ви використовуєте правильний формат і порядок, наприклад, Покращте екран конфігурації 5 год. #feature #v16 @Mitchell !"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_warranty_note
+msgid "Warranty"
+msgstr "Гарантія"
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_warranty_unset
+msgid "Warranty Term Not Set"
+msgstr "Гарантійний строк не задано"
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Warranty term is not set"
+msgstr "Гарантійний строк не задано"
 
 #. module: td_mebli_claim
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_warranty_end

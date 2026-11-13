@@ -20,7 +20,8 @@ class TestDashboard(TransactionCase):
             drill = card['drill']
             self.assertIsInstance(drill['ids'], list)
             self.assertTrue(all(isinstance(view_id, int) for view_id, kind in drill['views'] if kind != 'form'))
-        self.assertTrue(data['by_key']['margin']['value'].endswith('%'))
+        margin = data['by_key']['margin']['value']
+        self.assertTrue(margin.endswith('%') or margin == 'No data', margin)  # AC-123: no orders — no data
 
     def test_access_is_limited_to_the_director(self):
         clerk = self._user('td_clerk', ['base.group_user', 'sales_team.group_sale_salesman', 'stock.group_stock_manager'])

@@ -7,6 +7,8 @@
             <form string="Installation Act">
                 <header>
                     <button name="action_sign" type="object" string="Sign the Act" class="btn-primary" invisible="state == 'signed'"/>
+                    <button name="action_td_photo_archive" type="object" string="To the Photo Archive"
+                            invisible="state != 'signed' or photo_archive"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -22,10 +24,13 @@
                             <field name="crew_user_ids" widget="many2many_avatar_user"/>
                         </group>
                         <group>
-                            <field name="crew_pct" invisible="kind != 'final'" readonly="state == 'signed'"/>
-                            <field name="crew_amount" invisible="kind != 'final'" readonly="1"/>
+                            <field name="crew_base" invisible="1"/>
+                            <field name="crew_pct" invisible="kind != 'final' and crew_base != 'stage'" readonly="state == 'signed'"/>
+                            <field name="stage_pct" invisible="kind != 'stage' or crew_base != 'stage'" readonly="state == 'signed'"/>
+                            <field name="crew_amount" invisible="kind != 'final' and crew_base != 'stage'" readonly="1"/>
                             <field name="currency_id" invisible="1"/>
-                            <field name="photo_archive" readonly="state == 'signed'"/>
+                            <field name="photo_consent" readonly="state == 'signed'"/>
+                            <field name="photo_archive" readonly="1"/>
                             <field name="signed_on" invisible="state != 'signed'"/>
                         </group>
                     </group>
@@ -44,6 +49,14 @@
                                 <field name="photo_ids" widget="many2many_binary" readonly="state == 'signed'"/>
                                 <field name="checklist" readonly="state == 'signed'"/>
                             </group>
+                        </page>
+                        <page string="Crew Hours" name="crew_hours">
+                            <field name="crew_line_ids" readonly="state == 'signed'">
+                                <list editable="bottom">
+                                    <field name="user_id"/>
+                                    <field name="hours" widget="float_time" sum="Total"/>
+                                </list>
+                            </field>
                         </page>
                         <page string="Signature" name="signature">
                             <group>
@@ -85,7 +98,7 @@
                 <field name="order_id"/>
                 <filter name="signed" string="Signed" domain="[('state', '=', 'signed')]"/>
                 <separator/>
-                <filter name="archive" string="In the Photo Archive" domain="[('photo_archive', '=', True)]"/>
+                <filter name="archive" string="Photo Archive" domain="[('photo_archive', '=', True)]"/>
                 <separator/>
                 <filter name="final" string="Final Acts" domain="[('kind', '=', 'final')]"/>
             </search>

@@ -5,19 +5,24 @@
         <field name="model">sale.order</field>
         <field name="priority">90</field>
         <field name="arch" type="xml">
-            <list string="Cost: Plan vs Actual" create="0" decoration-danger="td_cost_has_fact and td_cost_deviation_pct &gt; 3"
-                  decoration-success="td_cost_has_fact and td_cost_deviation_pct &lt;= 0">
+            <!-- no row decoration: the deviation is a field of the finance (AC-115), the list is not -->
+            <list string="Cost: Plan vs Actual" create="0">
                 <field name="name"/>
                 <field name="partner_id"/>
                 <field name="amount_untaxed" string="Revenue" sum="Total"/>
                 <field name="margin" string="Planned Margin" sum="Total"/>
                 <field name="td_cost_plan" sum="Total"/>
                 <field name="td_margin_plan_pct"/>
-                <!-- the actual figures only for orders with finished production (no zeros for the others) -->
+                <!-- the actual figures only for orders with finished production: the others say «No actual yet» -->
                 <field name="td_cost_has_fact" column_invisible="True"/>
+                <field name="td_cost_status" string="Actual" invisible="td_cost_has_fact"/>
                 <field name="td_cost_material" sum="Total" invisible="not td_cost_has_fact"/>
                 <field name="td_cost_work" sum="Total" invisible="not td_cost_has_fact"/>
+                <field name="td_cost_cutting" sum="Total" invisible="not td_cost_has_fact" optional="show"/>
+                <field name="td_cost_piece" sum="Total" invisible="not td_cost_has_fact" optional="show"/>
+                <field name="td_cost_crew" sum="Total" invisible="not td_cost_has_fact" optional="show"/>
                 <field name="td_cost_fact" sum="Total" invisible="not td_cost_has_fact"/>
+                <field name="td_margin_fact" sum="Total" invisible="not td_cost_has_fact" optional="hide"/>
                 <field name="td_margin_fact_pct" invisible="not td_cost_has_fact"/>
                 <field name="td_cost_deviation_pct" invisible="not td_cost_has_fact"/>
                 <field name="currency_id" column_invisible="True"/>
@@ -25,13 +30,29 @@
         </field>
     </record>
 
+    <record id="sale_order_td_cost_fact_search" model="ir.ui.view">
+        <field name="name">sale.order.td.cost.fact.search</field>
+        <field name="model">sale.order</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <search string="Cost: Plan vs Actual">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <filter name="td_finished" string="Production Finished"
+                        domain="[('stock_reference_ids.production_ids.state', '=', 'done')]"/>
+                <filter name="td_overconsumption" string="Overconsumption" domain="[('td_overconsumption', '=', True)]"/>
+            </search>
+        </field>
+    </record>
+
     <record id="sale_order_td_cost_fact_action" model="ir.actions.act_window">
         <field name="name">Cost: Plan vs Actual</field>
         <field name="res_model">sale.order</field>
         <field name="view_mode">list,form</field>
-        <field name="domain">[('state', '=', 'sale'), ('stock_reference_ids.production_ids.state', '=', 'done')]</field>
+        <field name="domain">[('state', '=', 'sale'), ('stock_reference_ids.production_ids', '!=', False)]</field>
+        <field name="search_view_id" ref="sale_order_td_cost_fact_search"/>
         <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'list', 'view_id': ref('sale_order_td_cost_fact_list')})]"/>
-        <field name="help">Orders with finished production: planned cost of the quotation against the consumed materials and the real hours.</field>
+        <field name="help">Confirmed orders with manufacturing: the planned cost of the quotation against the consumed materials, the real hours, the cutting and the accruals of the finished orders.</field>
     </record>
 
     <record id="view_order_form_td_mebli_cost" model="ir.ui.view">
@@ -40,7 +61,7 @@
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//notebook" position="inside">
-                <page string="Plan vs Actual" name="td_cost" invisible="not td_cost_has_fact">
+                <page string="Plan vs Actual" name="td_cost" invisible="not td_cost_has_fact" groups="td_mebli_base.group_finance">
                     <group>
                         <group>
                             <field name="td_cost_plan"/>
@@ -49,6 +70,9 @@
                         <group>
                             <field name="td_cost_material"/>
                             <field name="td_cost_work"/>
+                            <field name="td_cost_cutting"/>
+                            <field name="td_cost_piece"/>
+                            <field name="td_cost_crew"/>
                             <field name="td_cost_fact"/>
                             <field name="td_margin_fact"/>
                             <field name="td_margin_fact_pct"/>
@@ -60,6 +84,20 @@
         </field>
     </record>
 
+    <record id="res_config_settings_view_form_td_mebli_cost" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.td_mebli_cost</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="td_mebli_base.res_config_settings_view_form_td_mebli_base"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='td_mebli_control']" position="inside">
+                <setting string="Cost: Piecework instead of Hours" company_dependent="1"
+                         help="The actual work of the report «Cost: plan vs actual» is the piecework, not the hours at the hourly cost.">
+                    <field name="td_cost_piecework"/>
+                </setting>
+            </xpath>
+        </field>
+    </record>
+
     <menuitem id="sale_order_td_cost_fact_menu" name="Cost: Plan vs Actual" parent="sale.menu_sale_report"
-              action="sale_order_td_cost_fact_action" sequence="32"/>
+              action="sale_order_td_cost_fact_action" sequence="32" groups="td_mebli_base.group_finance"/>
 </odoo>

@@ -73,7 +73,7 @@ class TestPaymentControl(TransactionCase):
         act.action_sign()
         self.assertEqual(act.state, 'signed')
         # block: «Start the installation» and «Sign the act» are refused until the payment
-        self.env['ir.config_parameter'].sudo().set_param('td_mebli_install.payment_control', 'block')
+        self.env.company.td_payment_control = 'block'  # VP-06: the field of the company (td_mebli_base)
         second = self._order()
         with self.assertRaises(UserError):
             second.tasks_ids.action_td_start_install()
@@ -84,9 +84,10 @@ class TestPaymentControl(TransactionCase):
         self.assertEqual(len(second.tasks_ids.td_act_ids), 1)
 
     def test_settings_parameter(self):
-        settings = self.env['res.config.settings'].create({'td_mebli_payment_control': 'block'})
+        settings = self.env['res.config.settings'].create({'td_payment_control': 'block'})
         settings.execute()
-        self.assertEqual(self.env['ir.config_parameter'].sudo().get_param('td_mebli_install.payment_control'), 'block')
+        self.assertEqual(self.env.company.td_payment_control, 'block')
+        self.assertEqual(self._order().td_pay_control, 'block')
 
     def test_act_report_renders(self):
         order = self._order()

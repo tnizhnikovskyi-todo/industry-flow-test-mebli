@@ -8,8 +8,16 @@
             <xpath expr="//header" position="inside">
                 <button name="action_td_remake" type="object" string="Remake in Production"
                         invisible="td_remake_production_id or state in ('done', 'cancel')"/>
+                <button name="action_td_plan_visit" type="object" string="Plan a Visit"
+                        invisible="not td_claim_order_id or td_visit_task_id or state in ('done', 'cancel')"/>
             </xpath>
             <xpath expr="//sheet" position="before">
+                <field name="td_warranty_unset" invisible="1"/>
+                <div class="alert alert-warning mb-0 td_warranty_unset_alert" role="status" invisible="not td_warranty_unset">
+                    <i class="fa fa-question-circle me-2" title="Warranty"/>
+                    <strong><field name="td_warranty_note" class="oe_inline" readonly="1"/></strong>: the service decides
+                    «Under Warranty» by hand (the term of the product category is empty until the conclusion of the lawyer).
+                </div>
                 <div class="alert alert-info mb-0 td_warranty_alert" role="status"
                      invisible="not td_after_warranty or under_warranty">
                     <i class="fa fa-money me-2" title="Paid repair"/>
@@ -20,10 +28,12 @@
             </xpath>
             <field name="partner_id" position="after">
                 <field name="td_claim_order_id"/>
-                <field name="td_warranty_end" invisible="not td_claim_order_id"/>
+                <field name="td_warranty_end" invisible="not td_claim_order_id or td_warranty_unset"/>
                 <field name="td_after_warranty" invisible="1"/>
                 <field name="td_part_id" invisible="not td_claim_order_id"/>
                 <field name="td_remake_production_id" invisible="not td_remake_production_id"/>
+                <field name="td_visit_task_id" invisible="not td_visit_task_id"/>
+                <field name="td_days_open" invisible="not td_claim_order_id"/>
             </field>
             <xpath expr="//sheet" position="inside">
                 <field name="td_photo" widget="image" class="oe_avatar" invisible="not td_photo"/>
@@ -85,6 +95,10 @@
             <xpath expr="//search" position="inside">
                 <separator/>
                 <filter name="td_claims" string="Claims on Orders" domain="[('td_claim_order_id', '!=', False)]"/>
+                <separator/>
+                <filter name="td_on_warranty" string="On Warranty" domain="[('under_warranty', '=', True)]"/>
+                <filter name="td_after_warranty" string="After Warranty" domain="[('td_after_warranty', '=', True)]"/>
+                <filter name="td_overdue" string="Overdue" domain="[('td_overdue', '=', True)]"/>
             </xpath>
         </field>
     </record>
@@ -109,6 +123,18 @@
                     <field name="td_claim_count" widget="statinfo" string="Claims"/>
                 </button>
             </div>
+        </field>
+    </record>
+
+    <!-- AC-132: the service visit shows its claim -->
+    <record id="view_task_form2_td_mebli_claim" model="ir.ui.view">
+        <field name="name">project.task.form.td_mebli_claim</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="td_claim_id" invisible="not td_claim_id"/>
+            </xpath>
         </field>
     </record>
 

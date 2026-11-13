@@ -6,7 +6,7 @@
     </record>
     <menuitem id="menu_dashboard_root" name="Manager Dashboard" action="action_dashboard" sequence="1"
               web_icon="td_mebli_dashboard,static/description/icon.svg"
-              groups="sales_team.group_sale_manager,mrp.group_mrp_manager"/>
+              groups="td_mebli_dashboard.group_td_mebli_director"/>
 
     <!-- Position 39 (F-65): shop floor board on a TV -->
     <record id="action_shop_board" model="ir.actions.client">
@@ -14,5 +14,5 @@
         <field name="tag">td_mebli_shop_board</field>
     </record>
     <menuitem id="menu_shop_board" name="Shop Floor Board (TV)" action="action_shop_board"
-              parent="mrp.menu_mrp_reporting" sequence="1" groups="mrp.group_mrp_user"/>
+              parent="mrp.menu_mrp_reporting" sequence="1" groups="td_mebli_base.group_feature_shop_board"/>
 </odoo>

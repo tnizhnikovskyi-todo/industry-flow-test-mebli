@@ -6,11 +6,11 @@ from odoo.tools.misc import formatLang
 
 PERIOD_DAYS = 30
 LOW_MARGIN = 0.15        # the same threshold as the red rows of the margin report (td_mebli_sale)
-STUCK_DAYS = 5           # an order without a move of its production for longer is «stuck»
 TARGET_ON_TIME = 90      # % of installed orders on the promised date
 TARGET_WASTE_PCT = 8     # cutting waste, %
 TARGET_CLAIMS = 5        # claims per 100 installed orders
 GROUP = 'td_mebli_dashboard.group_td_mebli_director'
+QUALITY_FEATURE = 'td_mebli_base.group_feature_quality'  # the 12th card (box B/C, VP-02)
 
 
 class TdMebliDashboard(models.AbstractModel):
@@ -31,6 +31,11 @@ class TdMebliDashboard(models.AbstractModel):
     @api.model
     def _pct(self, value):
         return f"{self._num(value)} %"
+
+    @api.model
+    def _no_data(self):
+        """AC-123: a card without data says so (no «0 %» from a division by zero)."""
+        return self.env._("No data")
 
     @api.model
     def _drill(self, name, model, records, *views):
@@ -60,7 +65,7 @@ class TdMebliDashboard(models.AbstractModel):
         on_time = orders.filtered(lambda o: o.commitment_date and min(
             acts.filtered(lambda a: a.order_id == o).mapped('signed_on')).date() <= o.commitment_date.date())
         pct = len(on_time) / len(orders) * 100.0 if orders else 0.0
-        return {'label': _("Orders on time"), 'value': self._pct(pct) if orders else '—',
+        return {'label': _("Orders on time"), 'value': self._pct(pct) if orders else self._no_data(),
                 'tone': 'ok' if pct >= TARGET_ON_TIME else ('warn' if pct >= TARGET_ON_TIME - 15 else 'bad'),
                 'target': _("Target: from %s%%", TARGET_ON_TIME),
                 'lines': [_("Installed: %(all)s, on the promised date: %(ok)s", all=len(orders), ok=len(on_time))],
@@ -75,7 +80,7 @@ class TdMebliDashboard(models.AbstractModel):
         late = open_orders.filtered(lambda o: o.td_delay_days > 0 and o.delivery_status != 'full')
         changes = env['td.mebli.order.change'].search([('state', '=', 'done'), ('shift_days', '>', 0),
                                                        ('write_date', '>=', since)])
-        reasons = {'customer': [0, set()], 'company': [0, set()], 'supplier': [0, set()], 'cutting': [0, set()]}
+        reasons = {'customer': [0, set()], 'company': [0, set()], 'supplier': [0, set()], 'distributor': [0, set()]}
         for order in late:
             reasons[order.td_delay_reason or 'company'][0] += order.td_delay_days
             reasons[order.td_delay_reason or 'company'][1].add(order.id)
@@ -83,7 +88,7 @@ class TdMebliDashboard(models.AbstractModel):
             reasons[change.reason][0] += change.shift_days
             reasons[change.reason][1].add(change.order_id.id)
         names = {'customer': _("Customer"), 'company': _("Company"), 'supplier': _("Supplier"),
-                 'cutting': _("Cutting at the distributor")}
+                 'distributor': _("Cutting at the distributor")}
         total = sum(days for days, _ids in reasons.values()) or 1
         rows = [{'name': names[key], 'value': _("%s d.", days), 'pct': round(days / total * 100), 'over': key == 'company'}
                 for key, (days, ids) in reasons.items() if days]
@@ -98,19 +103,11 @@ class TdMebliDashboard(models.AbstractModel):
     @api.model
     def _card_stuck(self, env, company):
         _ = self.env._
-        now = fields.Datetime.now()
-        stuck = env['sale.order']
-        for order in env['sale.order'].search([('state', '=', 'sale'), ('company_id', '=', company.id)]):
-            productions = order.mrp_production_ids.filtered(lambda p: p.state in ('confirmed', 'progress'))
-            if not productions:
-                continue
-            moves = [t.date_end or t.date_start for t in productions.workorder_ids.time_ids]
-            starts = [p.date_start for p in productions if p.date_start and p.date_start <= now]
-            last = max(moves + starts + [order.date_order])
-            if now - last > timedelta(days=STUCK_DAYS) and starts:
-                stuck |= order
+        stuck_days = company.td_stuck_days  # VP-10 (td_mebli_base), read by the search of td_is_stuck
+        # AC-067: the stored flag of the order (td_mebli_sale) — a confirmed order whose stage did not move for longer
+        stuck = env['sale.order'].search([('td_is_stuck', '=', True), ('company_id', '=', company.id)])
         return {'label': _("Stuck orders"), 'value': str(len(stuck)), 'tone': 'bad' if stuck else 'ok',
-                'target': _("No move in production for more than %s days", STUCK_DAYS),
+                'target': _("No change of the stage for more than %s days", stuck_days),
                 'lines': [f"{o.name} · {o.partner_id.name}" for o in stuck[:3]],
                 'drill': self._drill(_("Stuck orders"), 'sale.order', stuck,
                                      ('list', 'td_mebli_dashboard.sale_order_td_dash_list'))}
@@ -144,7 +141,7 @@ class TdMebliDashboard(models.AbstractModel):
         closed = claims.filtered(lambda r: r.state == 'done')
         avg_days = sum(closed.mapped('td_days_open')) / len(closed) if closed else 0.0
         overdue = claims.filtered('td_overdue')
-        return {'label': _("Claims per 100 orders"), 'value': self._num(per100) if installed else '—',
+        return {'label': _("Claims per 100 orders"), 'value': self._num(per100) if installed else self._no_data(),
                 'tone': 'ok' if per100 <= TARGET_CLAIMS else 'bad', 'target': _("Target: up to %s", TARGET_CLAIMS),
                 'lines': [_("Claims: %(claims)s for %(installed)s installed", claims=len(claims), installed=installed),
                           _("Closed on average in %s days", self._num(avg_days)), _("Overdue: %s", len(overdue))],
@@ -163,7 +160,7 @@ class TdMebliDashboard(models.AbstractModel):
         # report S-11 «Cost: plan vs actual» (the drill-down list), not a second figure on the card
         lines = [_("Margin %(margin)s of revenue %(revenue)s, %(count)s orders", margin=self._money(margin),
                    revenue=self._money(revenue), count=len(orders))]
-        return {'label': _("Margin, weighted"), 'value': self._pct(pct),
+        return {'label': _("Margin, weighted"), 'value': self._pct(pct) if revenue else self._no_data(),
                 'tone': 'bad' if pct < 20 else ('warn' if low else 'ok'),
                 'target': _("Total margin ÷ total revenue of the report, %s days", PERIOD_DAYS),
                 'lines': lines,
@@ -208,7 +205,7 @@ class TdMebliDashboard(models.AbstractModel):
         sheets = env['td.mebli.measure'].search([('create_date', '>=', since)])
         signed = sheets.filtered(lambda s: s.order_id.state == 'sale')
         pct = len(signed) / len(sheets) * 100.0 if sheets else 0.0
-        return {'label': _("Measurement to contract"), 'value': self._pct(pct) if sheets else '—',
+        return {'label': _("Measurement to contract"), 'value': self._pct(pct) if sheets else self._no_data(),
                 'tone': 'ok' if pct >= 50 else 'warn',
                 'target': _("Measurements of %s days that became confirmed orders", PERIOD_DAYS),
                 'lines': [_("Measurements: %(all)s, contracts: %(ok)s", all=len(sheets), ok=len(signed))],
@@ -238,7 +235,7 @@ class TdMebliDashboard(models.AbstractModel):
         sheets = jobs.sheet_ids
         area = sum(sheets.mapped('used_area_m2')) + sum(sheets.mapped('offcut_area_m2'))
         waste = sum(s.waste_pct * (s.used_area_m2 + s.offcut_area_m2) for s in sheets) / area if area else 0.0
-        return {'label': _("Cutting waste"), 'value': self._pct(waste),
+        return {'label': _("Cutting waste"), 'value': self._pct(waste) if area else self._no_data(),
                 'tone': 'ok' if waste <= TARGET_WASTE_PCT else 'warn', 'target': _("Target: up to %s%%", TARGET_WASTE_PCT),
                 'lines': [_("Saved by business offcuts: %s", self._money(sum(jobs.mapped('offcut_saving')))),
                           _("Cutting jobs: %s", len(jobs))],
@@ -257,6 +254,27 @@ class TdMebliDashboard(models.AbstractModel):
                     f"{ln.product_id.name} · +{self._num(ln.td_price_delta_pct)} %" for ln in lines.sorted('td_overpay', reverse=True)[:2]],
                 'drill': self._drill(_("Prices above history"), 'purchase.order.line', lines,
                                      ('list', 'td_mebli_purchase.purchase_order_line_td_price_list'))}
+
+    @api.model
+    def _card_quality(self, env, company, since):
+        """Card 12 (box B/C, `group_feature_quality`): the failed quality checks of the tablet in the period — the
+        nonconformities and the defects of the shop; the drill-down is the same records."""
+        _ = self.env._
+        # AC-073 + AC-121: failed quality steps (kind «check») and scraps of the shop (kind «scrap») are the journal
+        checks = env['td.mebli.quality.check'].search([('result', '=', 'fail'), ('create_date', '>=', since),
+                                                       ('company_id', '=', company.id)])
+        scraps = len(checks.filtered(lambda check: check.kind == 'scrap'))
+        by_center = {}
+        for check in checks:
+            by_center[check.workcenter_id.name or _("Without a work center")] = \
+                by_center.get(check.workcenter_id.name or _("Without a work center"), 0) + 1
+        rows = [{'name': name, 'value': str(count), 'pct': round(count / len(checks) * 100), 'over': False}
+                for name, count in sorted(by_center.items(), key=lambda item: -item[1])[:4]]
+        return {'label': _("Quality nonconformities"), 'value': str(len(checks)), 'tone': 'bad' if checks else 'ok',
+                'target': _("Failed quality checks and defects of the shop, %s days", PERIOD_DAYS), 'rows': rows,
+                'lines': [_("Manufacturing orders: %s", len(checks.production_id)), _("Scraps: %s", scraps)],
+                'drill': self._drill(_("Quality nonconformities"), 'td.mebli.quality.check', checks,
+                                     ('list', 'td_mebli_shop.td_mebli_quality_check_view_list'))}
 
     @api.model
     def get_data(self):
@@ -282,6 +300,8 @@ class TdMebliDashboard(models.AbstractModel):
             ('conversion', self._card_conversion(env, since)),
             ('waste', self._card_waste(env, company, since)),
         ]
+        if user.has_group(QUALITY_FEATURE):  # box B/C: the 12th card (AC-121)
+            cards.append(('quality', self._card_quality(env, company, since)))
         for key, card in cards:
             card['key'] = key
         return {
@@ -290,8 +310,7 @@ class TdMebliDashboard(models.AbstractModel):
             'company': company.name,
             'cards': [card for _key, card in cards],
             'by_key': dict(cards),
-            'note': _("Quality nonconformities: in the B box only. Margin: one weighted figure (margin ÷ revenue) on the "
-                      "dashboard and in the reports."),
+            'note': _("Margin: one weighted figure (margin ÷ revenue) on the dashboard and in the reports."),
         }
 
 

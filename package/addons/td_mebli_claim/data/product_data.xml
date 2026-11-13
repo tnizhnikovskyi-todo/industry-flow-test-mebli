@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- AC-080: the product of the manufacturing order of a remade part (a one-part bill of materials per claim) -->
+    <record id="product_remake_part" model="product.template">
+        <field name="name">Remake Part</field>
+        <field name="type">consu</field>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="list_price">0.0</field>
+    </record>
+</odoo>

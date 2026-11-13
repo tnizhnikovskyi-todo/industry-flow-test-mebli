@@ -95,7 +95,7 @@
         <t>
             <t t-foreach="groups" t-as="group">
                 <t t-call="web.external_layout">
-                    <div class="page td_report_day_plan">
+                    <div class="page td_mebli_report td_report_day_plan">
                         <h2>Day Plan <t t-out="group[0].strftime('%d.%m.%Y')"/></h2>
                         <p><strong>Crew:</strong> <t t-out="group[1] or '—'"/></p>
                         <table class="table table-sm o_main_table">
