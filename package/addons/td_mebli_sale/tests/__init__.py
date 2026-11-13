@@ -7,3 +7,4 @@ from . import test_order_change
 from . import test_contract
 from . import test_wave2
 from . import test_g1_sale
+from . import test_noupdate

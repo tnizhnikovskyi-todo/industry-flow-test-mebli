@@ -79,6 +79,7 @@ class SaleOrder(models.Model):
     def _action_cancel(self):
         result = super()._action_cancel()
         # rule 4: the document of the installing company is not cancelled automatically — its salesperson decides
+        # sudo: the documents of the installing company (FOP) are found for a salesperson of the main company
         for install in self.sudo().td_install_order_ids.filtered(lambda o: o.state != 'cancel'):
             install.activity_schedule(
                 'mail.mail_activity_data_todo', summary=self.env._("The main order is cancelled"),

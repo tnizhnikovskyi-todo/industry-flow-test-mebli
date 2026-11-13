@@ -112,3 +112,15 @@ msgstr "Сервіс НБУ не відповів або повернув пом
 #: model:ir.ui.menu,name:td_mebli_ua.menu_td_update_prices_by_rate
 msgid "Update Prices at the Rate"
 msgstr "Оновити ціни за курсом"
+
+#. module: td_mebli_ua
+#. odoo-python
+#: code:addons/td_mebli_ua/models/sale_order.py:0
+msgid "Lines with a manual price or discount kept: %(count)s."
+msgstr "Рядків з ручною ціною чи знижкою збережено: %(count)s."
+
+#. module: td_mebli_ua
+#. odoo-python
+#: code:addons/td_mebli_ua/models/currency.py:0
+msgid "Only the administrator loads the NBU rates by hand."
+msgstr "Курси НБУ вручну завантажує лише адміністратор."

@@ -8,7 +8,7 @@
                    'BAS» that locks the document (corrections only by a reversal). The format of BAS is not agreed yet '
                    '(ВП-1): the batch is a JSON file of our draft schema (transport «file»); the HTTP transport is a '
                    'stub until the contract.',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Accounting/Accounting',
     'license': 'LGPL-3',
     'author': 'ToDo',

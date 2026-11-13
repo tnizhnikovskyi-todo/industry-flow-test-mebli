@@ -124,10 +124,12 @@ class SaleOrderLine(models.Model):
 
     def _td_generate_bom(self):
         """(Re)create the order BoM of the line; a BoM that already has manufacturing orders is kept."""
-        # a salesperson has no manufacturing rights: the specification is built and replaced as the system
+        # sudo: a salesperson has no manufacturing rights: the order specification is built and replaced as the system
         Bom = self.env['mrp.bom'].sudo()
         for line in self.filtered('td_is_parametric'):
+            # sudo: the old specification is read and replaced as the system (no manufacturing rights of the salesperson)
             old = line.td_bom_id.sudo()
+            # sudo: read only — is the old specification used by a manufacturing order
             if old and self.env['mrp.production'].sudo().search_count([('bom_id', '=', old.id)], limit=1):
                 continue
             dims = {axis: line[f'td_{axis}'] for axis in AXES}

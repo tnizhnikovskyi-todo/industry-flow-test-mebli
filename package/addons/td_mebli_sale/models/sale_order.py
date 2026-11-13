@@ -134,6 +134,7 @@ class SaleOrder(models.Model):
         for order in self:
             # the salesperson may read the manufacturing orders (access rule), but a sudo is kept for the names:
             # the order must not fail on confirmation if some rule hides a manufacturing order
+            # sudo: read only — the names of the manufacturing orders for the chatter; no rule may fail the confirmation
             names = order.sudo().mrp_production_ids.mapped('name')
             if names:
                 order.message_post(body=self.env._("Manufacturing order created: %s.", ', '.join(names)),
@@ -143,6 +144,7 @@ class SaleOrder(models.Model):
     def action_td_view_production(self):
         """Open the manufacturing orders of the order (the salesperson has read access to them by an access rule)."""
         self.ensure_one()
+        # sudo: read only — the ids of the manufacturing orders; the action opens them with the rights of the user
         productions = self.sudo().mrp_production_ids
         action = {'type': 'ir.actions.act_window', 'res_model': 'mrp.production'}
         if len(productions) == 1:

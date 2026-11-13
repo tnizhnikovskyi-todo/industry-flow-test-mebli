@@ -9,7 +9,7 @@
                    'leaves the rates as they are and gives the finance users an activity. The button «Update Prices '
                    'at the Rate» (feature group «nbu») recomputes only the quotations. The exchange with BAS/BAF is the '
                    'module td_mebli_bas.',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Accounting/Localizations',
     'license': 'LGPL-3',
     'author': 'ToDo',

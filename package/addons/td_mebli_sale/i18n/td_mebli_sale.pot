@@ -1386,3 +1386,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "— the Seller"
 msgstr ""
+
+#. module: td_mebli_sale
+#: model:account.payment.term,name:td_mebli_sale.payment_term_td_furniture
+msgid "Furniture to Order"
+msgstr ""

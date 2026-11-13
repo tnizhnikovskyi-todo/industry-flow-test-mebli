@@ -3,7 +3,7 @@ import logging
 import requests
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 
 _logger = logging.getLogger(__name__)
 NBU_URL = 'https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?json'
@@ -23,6 +23,7 @@ class ResCurrency(models.Model):
 
     @api.model
     def _td_nbu_online(self):
+        # sudo: read only — the switch of the online loading is a system parameter, the cron and finance users read it
         return bool(self.env['ir.config_parameter'].sudo().get_param('td_mebli_ua.nbu_online'))
 
     @api.model
@@ -37,6 +38,15 @@ class ResCurrency(models.Model):
 
     @api.model
     def td_update_nbu_rates(self, rates=None, imitation=False):
+        """Public entry (scripts of the demo stand, the administrator): review A-14 security 5 — a user with the right to
+        write currency rates (accounting manager) must not write arbitrary rates marked «NBU» through RPC, so only the
+        superuser and the settings administrators call it. The job and the code of the package use the private method."""
+        if not (self.env.su or self.env.user.has_group('base.group_system')):
+            raise AccessError(self.env._("Only the administrator loads the NBU rates by hand."))
+        return self._td_update_nbu_rates(rates, imitation)
+
+    @api.model
+    def _td_update_nbu_rates(self, rates=None, imitation=False):
         """Writes the rates into the standard res.currency.rate of the companies in UAH. `rates` — {code: UAH per unit};
         without it the rates are loaded from the NBU if the online loading is on."""
         if rates is None:
@@ -74,16 +84,19 @@ class ResCurrency(models.Model):
             _logger.error('td_mebli_ua: NBU rates not loaded, the rates are not changed: %s', error)
             self._td_notify_nbu_failure(error)
             return False
-        self.td_update_nbu_rates(rates)
+        self._td_update_nbu_rates(rates)
         return True
 
     @api.model
     def _td_notify_nbu_failure(self, error):
         """Activity «NBU rate not updated» to the finance users of each company in UAH (one open activity per user)."""
+        # sudo: the job reads the members of the group «Finance» to address the activity; nothing is written to the group
         finance = self.env.ref('td_mebli_base.group_finance').sudo().all_user_ids.filtered(lambda u: u.active and not u.share)
         todo = self.env.ref('mail.mail_activity_data_todo')
         summary = self.env._("NBU rate not updated")
+        # sudo: the activity is created for a finance user of another company by the job, not by the reader of the rates
         Activity = self.env['mail.activity'].sudo()
+        # sudo: read only — all companies in UAH, also the ones the current user does not belong to
         for company in self.env['res.company'].sudo().search([('currency_id', '=', self.env.ref('base.UAH').id)]):
             partner = company.partner_id
             for user in finance.filtered(lambda u: company in u.company_ids):

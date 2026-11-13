@@ -6,7 +6,7 @@
                    'order of the seller; the confirmation moves the installation line to a new service order of the '
                    'installing company (its own project task), the lines of the main order are not split. Standard '
                    'multi-company of Odoo 19 Community; there are no inter-company rules in CE.',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',

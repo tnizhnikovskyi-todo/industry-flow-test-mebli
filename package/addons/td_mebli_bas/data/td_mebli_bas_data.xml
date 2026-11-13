@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
     <record id="seq_td_mebli_bas_batch" model="ir.sequence">
         <field name="name">BAS exchange batch</field>
         <field name="code">td.mebli.bas.batch</field>

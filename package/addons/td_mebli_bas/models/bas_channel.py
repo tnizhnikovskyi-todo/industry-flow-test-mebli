@@ -144,6 +144,7 @@ class TdMebliBasChannel(models.Model):
         no_code = {move.id for move, _reason in errors}
 
         def set_state(move, state, batch):
+            # sudo: the exchange status of the document is set by the exchange (cron or finance), not by the rights on invoices
             move.sudo().write({'td_bas_state': state, 'td_bas_batch_id': batch.id,
                                'td_bas_missing_code': state == 'error' and move.id in no_code})
         return self._td_send(batch, records, errors, set_state)
@@ -193,6 +194,7 @@ class TdMebliBasChannel(models.Model):
         batch = self._td_new_batch('accruals')
         records, errors, sheet = [], [], {}
         for accrual in accruals:
+            # sudo: read only — the BAS code of the employee (HR data) for the finance user
             code = accrual.employee_id.sudo().with_company(company).td_bas_code
             if not code:
                 errors.append((accrual, self.env._("The employee %s has no BAS code.", accrual.employee_id.name)))
@@ -207,6 +209,7 @@ class TdMebliBasChannel(models.Model):
                  'sheet': sorted(sheet.values(), key=lambda r: (r['employee'], r['kind']))}
 
         def set_state(accrual, state, batch):
+            # sudo: the exchange status of the accrual is set by the exchange (cron or finance), past the lock of a sent accrual
             accrual.sudo().write({'bas_state': state, 'bas_batch_id': batch.id})
         return self._td_send(batch, records, errors, set_state, extra)
 
