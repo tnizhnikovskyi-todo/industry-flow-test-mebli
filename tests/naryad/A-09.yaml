@@ -1,0 +1,29 @@
+# ТЕСТОВИЙ наряд A-09 — анкета параметрів пакета «меблі» (questionnaire-builder, режим first) після A-08 спроба 2 (реєстр VP у SPEC §11).
+# Склала сесія. Рішення — AI за делегуванням власника (flow/decisions.md записи 28, 37, 48), власник — вето.
+# Перша спроба A-09 зупинилась на Кроці 1 (tr-defect: no-vp-list) -> повернення на A-08 (наряд A-08-2.yaml) у тій самій гілці.
+step: A-09
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: ["flow-package-build:questionnaire-builder@0.3.1"]
+model: sonnet
+effort: medium
+inputs:
+  - {name: "ТР пакета (SPEC §4 AC, §11 VP)", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "технічний дизайн (параметри компанії, feature-групи)", from: A-08, path: package/tr/, sha: HEAD}
+  - {name: OWNER-INTAKE.md (editions, legal_ambiguous), from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+  - {name: DATA_POLICY.md, from: A-02b, path: package/DATA_POLICY.md, sha: HEAD}
+where: "package/questionnaire.md + package/templates/answers.yaml + package/templates/answers.example.yaml"
+template: "немає файлом: формат — questionnaire-builder/references/questionnaire-template.md, answers-schema.md"
+done: "кожна VP-xx ТР має питання з закритим списком і ключ у answers.yaml; edition і contract_mode з default і поясненням; answers.example.yaml = default усіх VP і проходить схему"
+check: {mode: both, how: "flow-autocheck checks/A-09.yaml + самоперевірка (б) скіла; Архітектор рішення — прив'язка Q ↔ VP; Тімлід — варіанти = значення ТР, однозначність", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 45, lease_factor: 1.5, cost_limit_usd: 5, context_budget_tokens: 60000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []
+params: {}
+repo: {url: origin, base_branch: flow/A-08-2-test, branch: flow/A-09-test}
+attempt: 1
+returned_from: null
+git: {base: 7bbacad, head: null, prev_tag: null}   # base = коміт A-08-2 у flow/A-09-test (ставить runner)
+date: 2026-11-13

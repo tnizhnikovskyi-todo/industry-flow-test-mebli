@@ -54,7 +54,7 @@ td_mebli_base ─┬─> td_mebli_mrp ─> td_mebli_sale ─┬─> td_mebli_mea
 | Механізм | Що робить | Стандарт Odoo 19 |
 |---|---|---|
 | Feature-групи `td_mebli_base.group_feature_*` | приховують меню, кнопки й поля функцій коробки B у коробці A | галочка налаштування `res.config.settings` з `implied_group` (`odoo/addons/base/models/res_config.py:256`); видимість у поданнях — атрибут `groups` |
-| Профіль конфіг-пакета A-12 (`answers.yaml: box: light / A / B / C`) | вмикає/вимикає feature-групи, ставить список модулів | конфіг-пакет (`config-as-code`) |
+| Профіль конфіг-пакета A-12 (`answers.yaml`: VP-01 `light / A / B` + `edition`, функції B — VP-02; SPEC §11) | вмикає/вимикає feature-групи, ставить список модулів | конфіг-пакет (`config-as-code`) |
 | Окремі модулі B | `td_mebli_multico`, конвертори `td_mebli_migration` — ставляться лише в B | — |
 | Мости C | ставляться самі за наявності EE-додатка | `auto_install` |
 
