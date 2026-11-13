@@ -91,6 +91,7 @@
   model: res.company
   xmlid_target: base.main_company
   values: {td_crew_split: "{{VP-14}}"}
+  applies_if: {VP-01: [A, B]}          # SPEC §11.3: у light не застосовуються (manifest preflight PF-06, CHECKS №23)
   ac: [AC-104]
   requires_module: td_mebli_base
   source: "package/addons/td_mebli_base/models/res_company.py (td_crew_split); SPEC §11"
@@ -100,6 +101,7 @@
   model: res.company
   xmlid_target: base.main_company
   values: {td_crew_base: "{{VP-15}}"}
+  applies_if: {VP-01: [A, B]}          # SPEC §11.3: у light не застосовуються (manifest preflight PF-06, CHECKS №23)
   ac: [AC-103, AC-104]
   requires_module: td_mebli_base
   source: "package/addons/td_mebli_base/models/res_company.py (td_crew_base); SPEC §11"

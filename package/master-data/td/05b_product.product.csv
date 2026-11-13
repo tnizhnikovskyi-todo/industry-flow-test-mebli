@@ -1,6 +1,9 @@
 id,td_material_kind,td_sheet_length_mm,td_sheet_width_mm,td_thickness_mm,td_waste_pct,td_edge_thickness,td_matches_board_id/id
 td_md.product_product_dsp_18_w,board,2800,2070,18,15,,
 td_md.product_product_dsp_18_oak,board,2800,2070,18,15,,
+td_md.product_product_dsp_18_gr,board,2800,2070,18,15,,
 td_md.product_product_edge_pvc_2_w,edge,,,,,2,td_md.product_product_dsp_18_w
+td_md.product_product_edge_pvc_2_oak,edge,,,,,2,td_md.product_product_dsp_18_oak
+td_md.product_product_edge_pvc_2_gr,edge,,,,,2,td_md.product_product_dsp_18_gr
 td_md.product_product_hinge_110,fitting,,,,,,
 td_md.product_product_facade_paint,facade,,,,,,

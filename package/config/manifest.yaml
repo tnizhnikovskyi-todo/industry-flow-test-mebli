@@ -1,4 +1,4 @@
-# Конфіг-пакет пакета mebli (A-12, config-as-code (версія 0.3.1), спроба 2, режим fix — модулі A-11 @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
+# Конфіг-пакет пакета mebli (A-12, config-as-code (версія 0.3.1), спроба 3, режим fix — модулі A-11 @ 4e96a56; спроба 2 — @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
 # Порядок модулів = порядок установки (топологічний за depends; перевірено скриптом за __manifest__.py Odoo 19.0 CE @40e9be2b і package/addons @4e0fdda: порушень 0).
 # when: — умова за answers.yaml (профіль коробки VP-01 / VP-03 / VP-04); без when — у всіх профілях light / A / B.
 # Профіль light = A без td_mebli_bas (VP-04=false) — AI-A10-05; профіль B = A + td_mebli_multico (VP-03=multi_install_fop) + feature-групи VP-02.
@@ -51,7 +51,7 @@ edition_profiles:
       - {name: td_mebli_cost, origin: td, source: code, ac: [AC-114]}
       - {name: td_mebli_maint, origin: td, source: code, ac: [AC-076]}
       - {name: td_mebli_attendance, origin: td, source: code, ac: [AC-078]}
-      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true"}
+      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true and VP-01 != 'light'"}   # SPEC §11.3: light — без BAS (CHECKS №23)
       - {name: td_mebli_migration, origin: td, source: code, ac: [AC-089, AC-090]}
       - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
@@ -97,7 +97,7 @@ edition_profiles:
       - {name: td_mebli_cost, origin: td, source: code, ac: [AC-114]}
       - {name: td_mebli_maint, origin: td, source: code, ac: [AC-076]}
       - {name: td_mebli_attendance, origin: td, source: code, ac: [AC-078]}
-      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true"}
+      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true and VP-01 != 'light'"}   # SPEC §11.3: light — без BAS (CHECKS №23)
       - {name: td_mebli_migration, origin: td, source: code, ac: [AC-089, AC-090]}
       - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
@@ -114,6 +114,67 @@ edition_profiles:
       - {name: td_mebli_planning, origin: td, source: code, ac: [AC-128], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
       - {name: td_mebli_helpdesk, origin: td, source: code, ac: [AC-129], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
       - {name: td_mebli_sign, origin: td, source: code, ac: [AC-130], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
+# preflight — обмеження між параметрами SPEC §11.3 («перевіряють A-12 і B-02»; CHECKS.md №23). Перевіряються ДО установки
+# модулів за answers.yaml (після підстановки default схеми). on_violation:
+#   error  — застосування зупиняється до установки, у лог пишеться message (відповідь суперечить коробці — виправити answers.yaml у B-02);
+#   ignore — значення VP у цьому профілі не застосовується (пункти даних мають applies_if), у лог — message; read-back = default модуля;
+#   warn   — застосування йде далі, у лог — message.
+# when / require — вирази над відповідями (`a['VP-xx']`), як `when:` модулів.
+preflight:
+  - id: PF-01
+    rule: "edition: ee ⇒ VP-01 = B"
+    when: "a['edition'] == 'ee'"
+    require: "a['VP-01'] == 'B'"
+    on_violation: error
+    message: "Редакція EE — лише коробка C = B + мости (SPEC §11.3, AI-A08-21): VP-01 має бути B."
+  - id: PF-02
+    rule: "VP-01 = light ⇒ edition: ce"
+    when: "a['VP-01'] == 'light'"
+    require: "a['edition'] == 'ce'"
+    on_violation: error
+    message: "Легкий тариф — лише CE (SPEC §11.3, BOX §1а): edition має бути ce."
+  - id: PF-03
+    rule: "VP-01 = light ⇒ VP-04 = false"
+    when: "a['VP-01'] == 'light'"
+    require: "a['VP-04'] is False"
+    on_violation: error
+    message: "Легкий тариф — без обміну з BAS (SPEC §11.3): VP-04 має бути false (default схеми true — у light задати явно). Модуль td_mebli_bas у light не ставиться (when у modules)."
+  - id: PF-04
+    rule: "VP-01 = light ⇒ VP-05 = false"
+    when: "a['VP-01'] == 'light'"
+    require: "a['VP-05'] is False"
+    on_violation: error
+    message: "Легкий тариф — без графіка оплат етапами (SPEC §11.3): VP-05 має бути false."
+  - id: PF-05
+    rule: "VP-01 = light ⇒ VP-09 = distributor"
+    when: "a['VP-01'] == 'light'"
+    require: "a['VP-09'] == 'distributor'"
+    on_violation: error
+    message: "Легкий тариф — лише порізка в дистриб'ютора (SPEC §11.3): VP-09 має бути distributor."
+  - id: PF-06
+    rule: "VP-14, VP-15 не застосовуються при VP-01 = light"
+    when: "a['VP-01'] == 'light'"
+    require: "False"
+    on_violation: ignore
+    message: "Легкий тариф — нарахування бригадам приховані (SPEC §11.3, 00-architecture.md §3): VP-14, VP-15 не пишуться (td_config.param_vp_14/15 — applies_if), у компанії лишається default модуля."
+  - id: PF-07
+    rule: "кіоск відвідувань за PIN — у всіх коробках, крім light"
+    when: "a['VP-01'] == 'light'"
+    require: "False"
+    on_violation: ignore
+    message: "Кіоск за PIN — стандарт hr_attendance у всіх коробках, крім light (SPEC §11.4, AC-077): td_config.settings_attendance_pin не застосовується."
+  - id: PF-08
+    rule: "VP-02, VP-03, VP-12 — лише при VP-01 = B; VP-06, VP-07 — лише при VP-05 = true"
+    when: "a['VP-01'] != 'B' or a['VP-05'] is not True"
+    require: "False"
+    on_violation: ignore
+    message: "Параметри поза своєю коробкою / без етапу «перед монтажем» не пишуться (applies_if у vp-map.yaml і даних)."
+  - id: PF-09
+    rule: "VP-12 має сенс, якщо VP-02 містить offcut"
+    when: "a['VP-01'] == 'B'"
+    require: "'offcut' in (a['VP-02'] or [])"
+    on_violation: warn
+    message: "VP-12 (мінімальний обрізок) без функції offcut у VP-02 нічого не змінює (SPEC §11.3, AC-059)."
 data_files:
   - data/15_accounting.yaml
   - data/20_sale_project.yaml

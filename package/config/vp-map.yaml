@@ -1,10 +1,12 @@
-# VP-xx -> параметр конфіг-пакета (A-12, спроба 2, режим fix). Джерела: SPEC §11, ALLOCATION «Точки варіативності», схема package/templates/answers.yaml,
+# VP-xx -> параметр конфіг-пакета (A-12, спроба 3, режим fix; спроба 2 — поля res.company.td_*). Джерела: SPEC §11, ALLOCATION «Точки варіативності», схема package/templates/answers.yaml,
 # API td_mebli_base (package/addons/AC-COVERAGE.md «G0 — API для груп»).
 # Формат якоря: <model>:<селектор>:<поле> (config-package-format.md). transform: identity | {значення VP: значення в Odoo} | {expr: ...}
 # (expr — вираз над відповідями `a`, коли значення залежить від кількох VP).
 # Трек «код»: kind td_param з якорем — поле res.company.td_* модуля td_mebli_base (AI-A08-04; рішення AI-A12-01 спроби 2 замість ключів
 # ir.config_parameter td_mebli.<vp> спроби 1). Запис — у компанію base.main_company (чиста база має одну компанію; у B-04 — кожна юрособа).
 # applies_if — зі схеми: невиконана умова = параметр не пишеться (поле лишається з default модуля; read-back = default).
+# Значення-список у applies_if = «одне з» (спроба 3: VP-14, VP-15 — {VP-01: [A, B]} за SPEC §11.3; у схемі A-09 цього applies_if немає —
+# розбіжність записано у звіт A-12-3 і tests/open-questions.md). Обмеження між параметрами — manifest.yaml `preflight` (PF-01…PF-09).
 VP-01:
   track: config
   kind: td_param               # + профіль модулів manifest (when: VP-01) і feature-групи VP-02
@@ -36,9 +38,11 @@ VP-04:
   ac: [AC-021, AC-039, AC-040, AC-041, AC-042, AC-078, AC-109]
 VP-05:
   track: config
-  kind: record
-  anchor: "account.payment.term:xml_id=td_config.payment_term_stages:active"
+  kind: record                 # спроба 3 (config-review №1): умову оплати дає модуль (td_mebli_sale, noupdate, з td_milestone order/install/act);
+                               # конфіг лише вмикає/архівує її і ставить default умови оплати покупців компанії (ir.default, 20_sale_project.yaml)
+  anchor: "account.payment.term:xml_id=td_mebli_sale.payment_term_td_furniture:active"
   transform: {"true": true, "false": false}
+  requires_module: td_mebli_sale
   ac: [AC-019, AC-020, AC-031, AC-042, AC-065]
 VP-06:
   track: code
@@ -104,6 +108,7 @@ VP-14:
   kind: td_param
   anchor: "res.company:xml_id=base.main_company:td_crew_split"
   transform: identity
+  applies_if: {VP-01: [A, B]}   # SPEC §11.3: у light не застосовуються (preflight PF-06)
   ac: [AC-104]
   note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-15:
@@ -111,6 +116,7 @@ VP-15:
   kind: td_param
   anchor: "res.company:xml_id=base.main_company:td_crew_base"
   transform: identity
+  applies_if: {VP-01: [A, B]}   # SPEC §11.3: у light не застосовуються (preflight PF-06)
   ac: [AC-103, AC-104]
   note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-16:
@@ -118,8 +124,9 @@ VP-16:
   kind: td_param
   anchor: "res.company:xml_id=base.main_company:td_install_in_price"
   transform: identity
+  default: true                # спроба 3: default схеми A-09 = default поля модуля (td_mebli_base, A-11 спроба 3, CHECKS №24) = true
   ac: [AC-043]
-  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base; конфіг пише значення анкети (за замовчуванням true = default модуля, запис не змінює поле)"
 VP-17:
   track: config
   kind: record                 # ir.default поля mrp.bom.consumption (споживання нових специфікацій)

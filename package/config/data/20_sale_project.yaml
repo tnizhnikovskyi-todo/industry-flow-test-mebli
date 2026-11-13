@@ -1,18 +1,28 @@
 # Продаж і монтаж (AC-019, AC-043, AC-044, AC-095, AC-117 — settings у 80_settings.yaml).
-- id: td_config.payment_term_stages
+- id: td_config.payment_term_furniture_active
   kind: record
   model: account.payment.term
+  xmlid_target: td_mebli_sale.payment_term_td_furniture     # запис модуля (A-11 спроба 3, CHECKS №22): 50/40/10 %, td_milestone order/install/act, noupdate
   values:
-    name: "50 % передоплата / 40 % перед монтажем / 10 % після акта"
     active: "{{VP-05}}"
-  lines:                                # створюються разом із записом (сума 100 %); порівнюються на 2-му проході
-    - {value: percent, value_amount: 50.0, nb_days: 0}
-    - {value: percent, value_amount: 40.0, nb_days: 0}
-    - {value: percent, value_amount: 10.0, nb_days: 0}
-  ac: [AC-019]
-  source: "addons/account/models/account_payment_term.py (account.payment.term, line_ids: value, value_amount, nb_days)"
+  requires_module: td_mebli_sale
+  ac: [AC-019, AC-020]
+  source: "package/addons/td_mebli_sale/data/account_payment_term_data.xml (payment_term_td_furniture); addons/account/models/account_payment_term.py (active)"
   manual: false
-  note: "відсотки — приклад SPEC AC-019, клієнт змінює в B-04; розмітка етапів td_milestone (передоплата / перед монтажем / акт) — td_mebli_sale (A-11) або B-04, у даних не задається (CFG-td-isolation)"
+  note: "спроба 3 (config-review №1): власного запису умов оплати конфіг більше не створює (td_config.payment_term_stages прибрано — інакше в базі дві умови); відсотки — приклад SPEC AC-019, клієнт змінює в B-04 (noupdate модуля зберігає їх при оновленні)"
+- id: td_config.default_payment_term
+  kind: record
+  model: ir.default
+  values:
+    field_id: "ref:account.field_res_partner__property_payment_term_id"
+    company_id: "ref:base.main_company"
+    json_value: "refjson:td_mebli_sale.payment_term_td_furniture"    # json id запису (ir.default зберігає id як JSON)
+  applies_if: {VP-05: true}
+  requires_module: td_mebli_sale
+  ac: [AC-019]
+  source: "addons/account/models/partner.py:559 (property_payment_term_id, company_dependent); odoo/orm/fields.py:794 (get_company_dependent_fallback ← ir.default); addons/sale/models/sale_order.py:435 (payment_term_id ← partner.property_payment_term_id)"
+  manual: false
+  note: "умова оплати за замовчуванням для покупців компанії → замовлення продажу; при VP-05 = false не застосовується"
 - id: td_config.project_install
   kind: record
   model: project.project
