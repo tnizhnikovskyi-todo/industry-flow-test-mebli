@@ -188,7 +188,7 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
 
     def test_ac_089_import_steps_follow_the_templates_of_a13(self):
         steps = self.env['td.mebli.migration.step'].search([])
-        self.assertEqual(steps.mapped('sequence'), list(range(1, 27)))
+        self.assertEqual(steps.mapped('sequence'), list(range(1, 29)))
         self.assertEqual(steps[0].template, '01_product.category.csv')
         action = steps[0].action_td_import()
         self.assertEqual((action['tag'], action['params']['model']), ('import', 'product.category'))
@@ -212,7 +212,7 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
             self.skipTest('package/master-data is not next to the addons')
         with open(readme, encoding='utf-8') as handle:
             files = re.findall(r'^\| (?:td )?\d\d[a-z]? \| `([^`]+\.csv)` \|', handle.read(), re.M)
-        self.assertEqual(len(files), 26)
+        self.assertEqual(len(files), 28)
         self.assertEqual(set(templates), set(files), "every template of the README has its step and back")
         folder = os.path.dirname(readme)
         for name in templates:
@@ -226,12 +226,18 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         bas = self.env['ir.module.module'].search([('name', '=', 'td_mebli_bas')]).state == 'installed'
         steps = self.env['td.mebli.migration.step'].search([('template', 'like', 'td/%b_%')])
         bas_steps = steps.filtered(lambda s: s.module_name == 'td_mebli_bas')
-        self.assertEqual(bas_steps.mapped('sequence'), [24, 25, 26])
+        self.assertEqual(bas_steps.mapped('sequence'), [26, 27, 28])
         self.assertEqual(set(bas_steps.mapped('model_installed')), {bas})
         if not bas:
             with self.assertRaises(UserError):
                 bas_steps[0].action_td_import()
         self.assertTrue(self.env.ref('td_mebli_migration.step_td_01b').model_installed)
+        # Return A-14 (CHECKS №7, A-13-3): the component roles of the configurator go after td/01b and before td/05b
+        roles = self.env.ref('td_mebli_migration.step_td_03b') | self.env.ref('td_mebli_migration.step_td_04b')
+        self.assertEqual(roles.mapped('sequence'), [17, 18])
+        self.assertEqual(set(roles.mapped('module_name')), {'td_mebli_mrp'})
+        self.assertEqual(set(roles.mapped('model_installed')), {True})
+        self.assertEqual(self.env.ref('td_mebli_migration.step_16').sequence, 19)
         self.assertEqual(self.env.ref('td_mebli_migration.step_01').template, '01_product.category.csv')
 
 

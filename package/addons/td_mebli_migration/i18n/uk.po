@@ -53,8 +53,8 @@ msgstr "B"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_02
-msgid "BAS code — step 24 (td/19b)"
-msgstr "код BAS — крок 24 (td/19b)"
+msgid "BAS code — step 26 (td/19b)"
+msgstr "код BAS — крок 26 (td/19b)"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_10
@@ -602,6 +602,8 @@ msgstr "напр. Старт системи"
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_17
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_18
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_td_01b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_03b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_04b
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_td_14b
 msgid "second pass of the same ids"
 msgstr "другий прохід тих самих id"
@@ -699,3 +701,13 @@ msgstr "Скинути звірку може лише керівник."
 #: code:addons/td_mebli_migration/models/migration_check.py:0
 msgid "The reconciliation is closed: reset it first."
 msgstr "Звірку закрито: спершу скиньте її."
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_03b
+msgid "Component roles of the attributes"
+msgstr "Ролі атрибутів у специфікації"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_04b
+msgid "Boards and edge thickness of the attribute values"
+msgstr "Плити й товщина кромки значень атрибутів"

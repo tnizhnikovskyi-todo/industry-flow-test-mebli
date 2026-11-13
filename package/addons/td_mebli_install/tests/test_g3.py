@@ -22,6 +22,8 @@ class G3InstallCommon(TransactionCase):
         super().setUpClass()
         env = cls.env
         env['res.lang']._activate_lang('uk_UA')
+        # the terms of uk.po: a base without uk_UA (en_US admin) gets them only now (AC-102 prints in the customer language)
+        env['ir.module.module']._load_module_terms(['td_mebli_install'], ['uk_UA'], overwrite=True)
         # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
         # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
         cls.env.company.td_install_in_price = False
