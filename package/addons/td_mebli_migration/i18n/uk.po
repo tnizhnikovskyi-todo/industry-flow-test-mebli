@@ -687,3 +687,15 @@ msgid ""
 "The module %s is not installed: this template is not imported in this "
 "database."
 msgstr "Модуль %s не встановлено: цей шаблон у цю базу не імпортується."
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager resets a reconciliation."
+msgstr "Скинути звірку може лише керівник."
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "The reconciliation is closed: reset it first."
+msgstr "Звірку закрито: спершу скиньте її."

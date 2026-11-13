@@ -15,8 +15,13 @@ class TestEeBridge(TransactionCase):
         fields = self.env['planning.slot']._fields
         for field in ['resource_id', 'start_datetime', 'end_datetime', 'name', 'company_id']:
             self.assertIn(field, fields, 'assumption of tr/ee-bridges.md: planning.slot.%s exists on Enterprise' % field)
-        self.assertEqual(self.env.ref('td_mebli_install.td_mebli_install_calendar_menu').group_ids, self.env.ref('td_mebli_planning.group_td_old_screens'),
-                         'the td_ screen is hidden by a group')
+        menu = self.env.ref('td_mebli_install.td_mebli_install_calendar_menu')
+        self.assertIn(self.env.ref('td_mebli_planning.group_td_old_screens'), menu.group_ids, 'the td_ screen is hidden by a group')
+        # A-14 pr-review m7: with the other bridge installed too, its group is kept (no bridge overwrites the other)
+        other = self.env.ref('td_mebli_fsm.group_td_old_screens', raise_if_not_found=False)
+        if other:
+            self.assertIn(other, menu.group_ids)
+        self.assertLessEqual(len(menu.group_ids), 2)
 
     def test_ac_128_crew_gets_planning_shifts(self):
         employee = self.env['hr.employee'].create({'name': 'Fitter EE', 'user_id': self.env.user.id}) \

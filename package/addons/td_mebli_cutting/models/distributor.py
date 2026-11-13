@@ -78,6 +78,7 @@ class TdMebliCuttingJob(models.Model):
 
     def _td_forecast_orders(self):
         """The sales orders whose stored forecast (td_mebli_sale, AC-066) reads these jobs (read only)."""
+        # sudo: read only: the sales orders whose forecast reads these jobs
         return self.sudo().filtered('purchase_id').production_ids._td_sale_orders()
 
     def write(self, vals):
@@ -155,5 +156,6 @@ class PurchaseOrderLine(models.Model):
         """The cutting service bought from the distributor moves the orders of its cutting job (td_mebli_sale recomputes
         their forecast when the date of the line changes)."""
         orders = super()._td_sale_orders()
+        # sudo: read only: the jobs of the purchase orders, the salesperson has no manufacturing rights
         jobs = self.env['td.mebli.cutting.job'].sudo().search([('purchase_id', 'in', self.order_id.ids)])
         return orders | jobs.production_ids._td_sale_orders()

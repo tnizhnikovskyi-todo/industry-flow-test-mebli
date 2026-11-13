@@ -52,6 +52,7 @@ class TdMebliMigrationCheck(models.Model):
     def _td_prepayment(self, order):
         """Paid on the posted invoices of the order (standard: amount_total − amount_residual; refunds negative)."""
         paid = 0.0
+        # sudo: read only: the posted invoices of the order for the reconciliation of the finance
         for move in order.sudo().invoice_ids.filtered(lambda m: m.state == 'posted'):
             amount = move.amount_total - move.amount_residual
             paid += -amount if move.move_type == 'out_refund' else amount
@@ -86,6 +87,16 @@ class TdMebliMigrationCheck(models.Model):
             check.state = 'diff' if check.has_diff else 'reconciled'
         return True
 
+    def _td_check_manager(self, message):
+        if not (self.env.su or self.env.user.has_group('sales_team.group_sale_manager')):
+            raise AccessError(message)
+
+    def write(self, vals):
+        # the signature of the explanation is written by «Sign the Explanation» / «Reset» only (a manager), not by RPC
+        if {'explained_by', 'explained_on'} & set(vals):
+            self._td_check_manager(self.env._("Only a manager signs the explanation of a difference."))
+        return super().write(vals)
+
     def action_td_sign_explanation(self):
         """«Sign the Explanation» (AC-090): a manager accepts the difference with a written reason."""
         if not self.env.user.has_group('sales_team.group_sale_manager'):
@@ -99,6 +110,8 @@ class TdMebliMigrationCheck(models.Model):
         return True
 
     def action_td_reset(self):
+        # A-14 security 6: the signed explanation (AC-090) is reset by a manager only, checked on the server
+        self._td_check_manager(self.env._("Only a manager resets a reconciliation."))
         self.write({'state': 'draft', 'explained_by': False, 'explained_on': False})
         return True
 
@@ -123,6 +136,25 @@ class TdMebliMigrationCheckLine(models.Model):
                                        help="Orders behind a difference: open orders with a prepayment (or the order "
                                             "of the line).")
     note = fields.Char(string='Note')
+
+    def _td_check_open(self):
+        # A-14 pr-review m3: a closed reconciliation (reconciled / explained) is not changed line by line — «Reset» first
+        if not self.env.su and any(line.check_id.state in ('reconciled', 'explained') for line in self):
+            raise UserError(self.env._("The reconciliation is closed: reset it first."))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        lines._td_check_open()
+        return lines
+
+    def write(self, vals):
+        self._td_check_open()
+        return super().write(vals)
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_closed(self):
+        self._td_check_open()
 
     @api.depends('value_source', 'value_odoo')
     def _compute_diff(self):

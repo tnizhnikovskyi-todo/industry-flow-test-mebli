@@ -18,8 +18,13 @@ class TestEeBridge(TransactionCase):
         fields = self.env['project.project']._fields
         for field in ['is_fsm']:
             self.assertIn(field, fields, 'assumption of tr/ee-bridges.md: project.project.%s exists on Enterprise' % field)
-        self.assertEqual(self.env.ref('td_mebli_install.td_mebli_install_calendar_menu').group_ids, self.env.ref('td_mebli_fsm.group_td_old_screens'),
-                         'the td_ screen is hidden by a group')
+        menu = self.env.ref('td_mebli_install.td_mebli_install_calendar_menu')
+        self.assertIn(self.env.ref('td_mebli_fsm.group_td_old_screens'), menu.group_ids, 'the td_ screen is hidden by a group')
+        # A-14 pr-review m7: with the other bridge installed too, its group is kept (no bridge overwrites the other)
+        other = self.env.ref('td_mebli_planning.group_td_old_screens', raise_if_not_found=False)
+        if other:
+            self.assertIn(other, menu.group_ids)
+        self.assertLessEqual(len(menu.group_ids), 2)
 
     def test_ac_128_act_on_the_field_service_task(self):
         self.assertIn('td_act_ids', self.env['project.task']._fields)

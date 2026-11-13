@@ -32,6 +32,7 @@ class SaleOrder(models.Model):
 
     def _td_stage_after_made(self):
         self.ensure_one()
+        # sudo: read only: the stage is shown to the salesperson, the documents stay with their modules
         order = self.sudo()  # read only: the stage is shown to the salesperson, the documents stay with their modules
         deliveries = order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state != 'cancel')
         delivered = bool(deliveries) and all(p.state == 'done' for p in deliveries)

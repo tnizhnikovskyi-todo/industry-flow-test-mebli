@@ -51,6 +51,7 @@ class SaleOrder(models.Model):
     def _td_productions(self):
         """Manufacturing orders of the order, read as the system (the finance has no manufacturing rights)."""
         self.ensure_one()
+        # sudo: read only: the finance has no manufacturing rights
         return self.sudo().mrp_production_ids
 
     def _td_actual_cost(self):
@@ -62,6 +63,7 @@ class SaleOrder(models.Model):
         """{order id: (has fact, material, work)} for the whole recordset: the manufacturing orders, their moves and
         work orders are read in batches (prefetch of the recordset), not order by order (review A-11, N+1)."""
         result = {}
+        # sudo: read only: the cost report reads manufacturing and stock for the finance
         orders = self.sudo()
         all_productions = orders.mrp_production_ids
         all_productions.move_raw_ids.mapped('quantity')  # one prefetch of the moves and the work orders of the batch
@@ -87,11 +89,13 @@ class SaleOrder(models.Model):
 
     def _td_cutting_costs(self):
         """{order id: cutting cost} with one search of the jobs for the whole recordset."""
+        # sudo: read only: the cost report reads the cutting jobs for the finance
         orders = self.sudo()
         result = dict.fromkeys(self.ids, 0.0)
         productions = orders.mrp_production_ids
         if not productions:
             return result
+        # sudo: read only: the cost report reads the cutting jobs for the finance
         jobs = self.env['td.mebli.cutting.job'].sudo().search([('production_ids', 'in', productions.ids),
                                                                ('purchase_id', '!=', False),
                                                                ('purchase_id.state', 'in', ('purchase', 'done'))])
@@ -111,8 +115,10 @@ class SaleOrder(models.Model):
 
     def _td_labour_costs(self):
         """{order id: (piecework, crew)} with two searches of the accruals for the whole recordset."""
+        # sudo: read only: the cost report reads the accruals of all the employees for the finance
         orders = self.sudo()
         result = {order_id: [0.0, 0.0] for order_id in self.ids}
+        # sudo: read only: the cost report reads the accruals of all the employees for the finance
         Accrual = self.env['td.mebli.accrual'].sudo()
         productions = orders.mrp_production_ids
         if productions:
@@ -160,6 +166,7 @@ class SaleOrder(models.Model):
     def _td_overconsumed_productions(self, productions):
         """Done manufacturing orders that consumed more of a component than the bill of materials expects for the
         produced quantity — the stored flag of the manufacturing order (computed once, when it is done)."""
+        # sudo: read only: the stored overconsumption flag of the manufacturing orders
         return productions.sudo().filtered('td_overconsumed')
 
     def _compute_td_overconsumption(self):
@@ -171,6 +178,7 @@ class SaleOrder(models.Model):
         history of the done manufacturing orders at every search."""
         if operator not in ('=', '!=') or not isinstance(value, bool):
             return NotImplemented
+        # sudo: read only: the search of the flag; the result is the sale orders the user reads
         over = self.env['mrp.production'].sudo().search([('td_overconsumed', '=', True),
                                                          ('company_id', 'in', self.env.companies.ids)])
         orders = over.reference_ids.sale_ids | over.sale_line_id.order_id

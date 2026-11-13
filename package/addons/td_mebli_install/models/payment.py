@@ -31,11 +31,13 @@ class SaleOrder(models.Model):
         «In payment» counts as paid: the payment is registered, the bank reconciliation is the accountant's step."""
         self.ensure_one()
         paid = 0.0
+        # sudo: read only: the crew and the salesperson see the payment figure, the invoices stay with Accounting
         for move in self.sudo().invoice_ids.filtered(lambda m: m.state == 'posted'):
             amount = move.amount_total if move.payment_state in ('paid', 'in_payment') \
                 else move.amount_total - move.amount_residual
             paid += -amount if move.move_type == 'out_refund' else amount
         # AC-021: the manual marks of the finance (not cancelled) count as received
+        # sudo: read only: the manual marks of the finance count for every user of the order
         paid += sum(self.sudo().td_pay_mark_ids.filtered(lambda mark: not mark.cancelled).mapped('amount'))
         return paid
 
@@ -54,6 +56,7 @@ class SaleOrder(models.Model):
     def _td_payment_control(self):
         """VP-06: the field of the company of the order (td_mebli_base), «warn» when it is empty."""
         company = self[:1].company_id or self.env.company
+        # sudo: read only: a parameter of the company (VP-06)
         return company.sudo().td_payment_control or 'warn'
 
     def _compute_td_pay(self):
@@ -61,6 +64,7 @@ class SaleOrder(models.Model):
             control = order._td_payment_control()
             # sudo: read only — the crew and the salesperson see the figures, the invoices stay with Accounting
             due = order.sudo()._td_due_before_install() if order.state == 'sale' else 0.0
+            # sudo: read only — the crew and the salesperson see the figures, the invoices stay with Accounting
             paid = order.sudo()._td_paid_amount() if order.id else 0.0
             order.td_pay_before_install = due
             order.td_pay_received = paid
@@ -77,6 +81,7 @@ class SaleOrder(models.Model):
 
         Block: the error of SPEC, nothing changes. Warn (default): the action goes on, the order chatter keeps the
         warning; the banner is on the order, the visit and the act."""
+        # sudo: read only: the payment figures of the order for the crew; the warning is posted by the system
         for order in self.sudo().filtered(lambda o: o.state == 'sale' and not o.td_pay_ok):
             missing = order._td_missing_text()
             if order._td_payment_control() == 'block':
@@ -111,6 +116,7 @@ class ProjectTask(models.Model):
         if self.state not in ('1_done', '1_canceled'):
             self.state = '01_in_progress'
         if not self.td_act_ids:
+            # sudo: read only: whether the order already has a final act, also of a visit the crew does not see
             final = self.env['td.mebli.install.act'].sudo().search_count(
                 [('order_id', '=', self.sale_order_id.id), ('kind', '=', 'final')], limit=1)
             self.env['td.mebli.install.act'].create({'task_id': self.id, 'kind': 'stage' if final else 'final'})
@@ -158,6 +164,7 @@ class TdMebliPayMark(models.Model):
                 raise ValidationError(self.env._("Specify the reason of the manual payment mark"))
         marks = super().create(vals_list)
         for mark in marks:
+            # sudo: the finance posts the mark in the chatter of an order it only reads
             mark.order_id.sudo().message_post(body=self.env._(
                 "Payment confirmed by hand: %(amount)s %(currency)s, %(user)s, %(date)s. Reason: %(reason)s",
                 amount=f"{mark.amount:,.2f}".replace(',', ' '), currency=mark.currency_id.symbol or '',
@@ -175,10 +182,12 @@ class TdMebliPayMark(models.Model):
         res = super().write(vals)
         for mark in self:
             if vals.get('cancelled'):
+                # sudo: the finance posts the change of the mark in the chatter of an order it only reads
                 mark.order_id.sudo().message_post(body=self.env._(
                     "Manual payment mark cancelled: %(amount)s, %(user)s.",
                     amount=f"{mark.amount:,.2f}".replace(',', ' '), user=self.env.user.name))
             elif 'cancelled' in vals:
+                # sudo: the finance posts the change of the mark in the chatter of an order it only reads
                 mark.order_id.sudo().message_post(body=self.env._(
                     "Manual payment mark restored: %(amount)s, %(user)s.",
                     amount=f"{mark.amount:,.2f}".replace(',', ' '), user=self.env.user.name))
@@ -186,6 +195,7 @@ class TdMebliPayMark(models.Model):
                        f"{mark._td_log_value(name, before[mark.id][name])} → {mark._td_log_value(name, mark[name])}"
                        for name in logged if before[mark.id][name] != mark[name]]
             if changes:
+                # sudo: the finance posts the change of the mark in the chatter of an order it only reads
                 mark.order_id.sudo().message_post(body=self.env._(
                     "Manual payment mark changed by %(user)s: %(changes)s",
                     user=self.env.user.name, changes='; '.join(changes)))
@@ -217,6 +227,7 @@ class SaleOrderPayMark(models.Model):
         cancelled (kept, not deleted). `amount` — the amount of the payment: only the marks of the same amount are
         cancelled (tr/integrations.md §1.3 п.3); None — all the open marks. Called from the BAS hook
         `_td_after_bas_payment` (td_mebli_bas)."""
+        # sudo: called by the BAS exchange (system): the marks are closed whoever reads them
         marks = self.sudo().td_pay_mark_ids.filtered(
             lambda mark: not mark.cancelled and (amount is None or not mark.currency_id.compare_amounts(mark.amount, amount)))
         if marks:

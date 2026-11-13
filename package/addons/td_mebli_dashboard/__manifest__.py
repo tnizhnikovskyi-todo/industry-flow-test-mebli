@@ -3,7 +3,7 @@
     'summary': 'One-screen dashboard for the owner of a furniture factory: the KPIs of the A box (BOX §11.1), every card opens the records it counted.',
     'description': 'A client action on Odoo 19 Community (no Enterprise, no spreadsheet): the figures are read from the sales, '
                    'manufacturing and cutting data of the furniture package. Responsive: the same screen works on a phone.',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',

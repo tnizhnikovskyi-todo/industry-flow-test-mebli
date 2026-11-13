@@ -31,7 +31,7 @@
                         <tr t-foreach="doc.workorder_ids" t-as="workorder">
                             <td><span t-field="workorder.name"/></td>
                             <td><span t-field="workorder.workcenter_id"/></td>
-                            <td class="text-end"><span t-esc="round(workorder.duration_expected)"/></td>
+                            <td class="text-end"><span t-out="round(workorder.duration_expected)"/></td>
                             <td>____:____</td><td>____:____</td><td>__________</td><td>______________</td>
                         </tr>
                     </tbody>

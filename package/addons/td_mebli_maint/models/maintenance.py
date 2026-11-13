@@ -25,6 +25,7 @@ class MaintenanceRequest(models.Model):
     @api.depends('td_downtime_id.date_end', 'td_downtime_id.duration')
     def _compute_td_downtime(self):
         for request in self:
+            # sudo: read only: the downtime line of manufacturing (the maintenance user has no manufacturing rights)
             row = request.sudo().td_downtime_id
             request.td_downtime_open = bool(row) and not row.date_end
             request.td_downtime_hours = (row.duration or 0.0) / 60.0
@@ -43,6 +44,7 @@ class MaintenanceRequest(models.Model):
         return True
 
     def action_td_stop_downtime(self):
+        # sudo: the maintenance user closes the downtime of his request, a line of manufacturing
         self.filtered('td_downtime_open').td_downtime_id.sudo().write({'date_end': fields.Datetime.now()})
         return True
 

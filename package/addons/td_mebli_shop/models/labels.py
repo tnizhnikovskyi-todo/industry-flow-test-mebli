@@ -60,6 +60,7 @@ class MrpProduction(models.Model):
         """Labels straight from the parts of the order BoM (before the packing list exists), one per piece: no place yet."""
         self.ensure_one()
         rows = []
+        # sudo: read only: the label shows the sale order, the manufacturing user has no sales rights
         order = (self.sudo().reference_ids.sale_ids | self.sudo().sale_line_id.order_id)[:1]
         for index, part in enumerate(self.bom_id.td_part_ids, start=1):
             rows.append({

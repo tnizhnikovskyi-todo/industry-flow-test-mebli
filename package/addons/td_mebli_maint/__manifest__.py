@@ -6,7 +6,7 @@
                    'standard Maintenance of Odoo 19 Community. The link of a machine to its work center (Enterprise has it '
                    'in mrp_maintenance, Community does not) and the downtime of a breakdown written as a standard time '
                    'log of the work center with the standard loss reason «Equipment Failure».',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Manufacturing/Maintenance',
     'license': 'LGPL-3',
     'author': 'ToDo',

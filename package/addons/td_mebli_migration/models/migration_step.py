@@ -25,6 +25,7 @@ class TdMebliMigrationStep(models.Model):
 
     def _compute_model_installed(self):
         names = set(self.mapped('module_name')) - {False, ''}
+        # sudo: read only: whether a module is installed (ir.module.module is admin only)
         installed = set(self.env['ir.module.module'].sudo().search(
             [('name', 'in', list(names)), ('state', '=', 'installed')]).mapped('name')) if names else set()
         for step in self:

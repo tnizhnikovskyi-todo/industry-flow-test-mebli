@@ -324,8 +324,10 @@ class TdMebliSpecImport(models.TransientModel):
         if self.mode == 'replace' and bom.td_part_ids:
             # the technologist has no unlink right on parts in general: the wizard replaces the parts of this
             # specification only, as the system
+            # sudo: the technologist has no unlink right on parts in general: only the parts of this BoM are replaced
             bom.td_part_ids.sudo().unlink()
         parts = self.env['td.mebli.part'].create(vals)  # one create for the whole file (AC-048)
+        # sudo: the technologist only reads the BoM: its component lines follow the parts just imported
         bom.sudo()._td_recompute_component_lines()
         if self.template_name and self.column_ids:
             self.env['td.mebli.import.template'].create({
@@ -334,6 +336,7 @@ class TdMebliSpecImport(models.TransientModel):
         mode = dict(self._fields['mode']._description_selection(self.env))[self.mode]
         # the technologist (mrp user) may add parts but only reads the BoM: the log line in the chatter is written by
         # the system on behalf of the user (posting needs write access on the BoM)
+        # sudo: posting needs write access on the BoM; the log line is written on behalf of the user
         bom.sudo().message_post(
             body=self.env._("Imported from %(file)s: %(count)s parts, mode: %(mode)s.",
                             file=self.filename or 'CSV', count=len(parts), mode=mode),

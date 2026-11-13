@@ -88,6 +88,7 @@ class TdMebliAccrual(models.Model):
         if not reason and not (vals.get('reason') or '').strip():
             raise ValidationError(self.env._("Specify the reason of the bonus or the penalty"))
         if reason and not (vals.get('reason') or '').strip():
+            # sudo: read only: the name of the reason is copied to the accrual for any author
             vals['reason'] = reason.sudo().name
         return vals
 
@@ -97,6 +98,11 @@ class TdMebliAccrual(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
+        # A-14 security 2: the state (confirm / cancel) is changed by the head only, also through RPC — the shop master
+        # writes the drafts of his section (record rule) but does not confirm his own bonuses and penalties
+        if 'state' in vals and not self.env.su and not any(self.env.user.has_group(group)
+                                                           for group in ACCRUE_GROUPS + CANCEL_GROUPS):
+            raise AccessError(self.env._("Accruals are confirmed by the shop manager or the accountant."))
         if 'hours' in vals and not self.env.su:
             raise UserError(self.env._("The hours of an accrual are the time of the tablet: they are not changed by hand."))
         # a confirmed accrual is handed over to the accounting: its figures are fixed
@@ -116,6 +122,7 @@ class TdMebliAccrual(models.Model):
         return super().unlink()
 
     def action_td_confirm(self):
+        self._td_check_confirm_rights()
         self.filtered(lambda a: a.state == 'draft').write({'state': 'confirmed'})
         return True
 
@@ -125,6 +132,7 @@ class TdMebliAccrual(models.Model):
             raise AccessError(self.env._("A confirmed accrual is cancelled by the head only."))
         if not (reason or '').strip():
             raise UserError(self.env._("Specify the reason of the cancellation"))
+        # sudo: the head is checked above (CANCEL_GROUPS); a confirmed line is locked for every user
         self.filtered(lambda a: a.state == 'confirmed').sudo().write({'state': 'cancel', 'cancel_reason': reason.strip()})
         return True
 
@@ -132,6 +140,12 @@ class TdMebliAccrual(models.Model):
         return {'type': 'ir.actions.act_window', 'name': self.env._("Cancel Accruals"),
                 'res_model': 'td.mebli.accrual.cancel', 'view_mode': 'form', 'target': 'new',
                 'context': {'default_accrual_ids': self.ids}}
+
+    @api.model
+    def _td_check_confirm_rights(self):
+        """AC-106: the accruals are confirmed by the head (the shop manager or the accountant), checked on the server."""
+        if not (self.env.su or any(self.env.user.has_group(group) for group in ACCRUE_GROUPS)):
+            raise AccessError(self.env._("Accruals are confirmed by the shop manager or the accountant."))
 
     @api.model
     def _td_check_accrue_rights(self):
@@ -159,9 +173,11 @@ class TdMebliAccrual(models.Model):
             domain.append(('date_end', '>=', start))
         if end:
             domain.append(('date_end', '<', end))
+        # sudo: rights checked by _td_check_accrue_rights; the accountant reads the time lines of manufacturing
         all_lines = self.env['mrp.workcenter.productivity'].sudo().search(domain)
         lines = all_lines.filtered(lambda line: line.workorder_id.operation_id.td_piece_rate > 0)
         no_rate = (all_lines - lines).workorder_id
+        # sudo: duplicates are searched among all the accruals, not only the ones the user reads
         done = set(self.sudo().search([('productivity_id', 'in', lines.ids), ('state', '!=', 'cancel')]).productivity_id.ids)
         for workorder, wo_lines in lines.grouped('workorder_id').items():
             operation = workorder.operation_id
@@ -181,7 +197,9 @@ class TdMebliAccrual(models.Model):
             act_domain.append(('signed_on', '>=', start))
         if end:
             act_domain.append(('signed_on', '<', end))
+        # sudo: rights checked by _td_check_accrue_rights; the acts are read in all the visits of the company
         acts = self.env['td.mebli.install.act'].sudo().search(act_domain)
+        # sudo: duplicates are searched among all the accruals, not only the ones the user reads
         accrued = set(self.sudo().search([('act_id', 'in', acts.ids), ('state', '!=', 'cancel')]).act_id.ids)
         for act in acts.filtered(lambda a: a.id not in accrued):
             # review A-11: a user has an employee in every company — only the employees of the company of the act
@@ -228,9 +246,10 @@ class TdMebliAccrualWizard(models.TransientModel):
             raise UserError(self.env._("The start of the period is after its end."))
         accruals, no_rate = self.env['td.mebli.accrual'].with_company(self.company_id)._td_accrue(
             self.date_from, self.date_to)
+        # sudo: read only: the names of the work orders without a piece rate for the result message
+        no_rate_names = [f"{wo.production_id.name} · {wo.name} · {wo.workcenter_id.name}" for wo in no_rate.sudo()]
         self.write({'state': 'done', 'accrual_count': len(accruals), 'missing_rate_count': len(no_rate),
-                    'missing_rate_list': '\n'.join(f"{wo.production_id.name} · {wo.name} · {wo.workcenter_id.name}"
-                                                   for wo in no_rate.sudo()),
+                    'missing_rate_list': '\n'.join(no_rate_names),
                     'summary': self.env._("Without piece rate: %(count)s operations", count=len(no_rate))})
         return {'type': 'ir.actions.act_window', 'res_model': self._name, 'res_id': self.id, 'view_mode': 'form',
                 'target': 'new', 'name': self.env._("Accrue")}

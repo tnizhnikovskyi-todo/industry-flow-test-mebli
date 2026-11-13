@@ -39,6 +39,7 @@ class TdMebliMeasureBooking(models.TransientModel):
     def _td_default_measurer(self):
         """The first measurer of the company (group «Measurer»), else the user who books."""
         group = self.env.ref('td_mebli_measure.group_td_mebli_measurer', raise_if_not_found=False)
+        # sudo: read only: the members of the group «Measurer» (res.groups is admin only)
         measurers = group.sudo().all_user_ids.filtered(
             lambda u: u.active and not u.share and self.env.company in u.company_ids) if group else self.env['res.users']
         return measurers.sorted('id')[:1] or self.env.user
@@ -55,6 +56,7 @@ class TdMebliMeasureBooking(models.TransientModel):
         now = pytz.utc.localize(fields.Datetime.now())
         calendar = self.measurer_id.resource_calendar_id or self.env.company.resource_calendar_id
         work = calendar._work_intervals_batch(start, end, tz=tz)[False]
+        # sudo: read only: the busy time of the measurer, also the private events the salesperson does not see
         busy = self.env['calendar.event'].sudo().search([
             ('partner_ids', 'in', self.measurer_id.partner_id.ids), ('start', '<', end.astimezone(pytz.utc).replace(tzinfo=None)),
             ('stop', '>', start.astimezone(pytz.utc).replace(tzinfo=None))])
@@ -86,6 +88,7 @@ class TdMebliMeasureBooking(models.TransientModel):
         self.ensure_one()
         lead = self.lead_id
         # the window was free when the list was shown: another salesperson may have booked it since
+        # sudo: read only: the busy time of the measurer, also the private events the salesperson does not see
         busy = self.env['calendar.event'].sudo().search_count([
             ('partner_ids', 'in', self.measurer_id.partner_id.ids), ('start', '<', slot.stop), ('stop', '>', slot.start)],
             limit=1)

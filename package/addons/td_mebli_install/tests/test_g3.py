@@ -22,6 +22,9 @@ class G3InstallCommon(TransactionCase):
         super().setUpClass()
         env = cls.env
         env['res.lang']._activate_lang('uk_UA')
+        # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
+        # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
+        cls.env.company.td_install_in_price = False
         cls.company = env.company
         cls.term = env['account.payment.term'].create({'name': '50/40/10', 'line_ids': [
             (0, 0, {'value': 'percent', 'value_amount': 50.0, 'nb_days': 0, 'td_milestone': 'order'}),
@@ -160,6 +163,27 @@ class TestActG3(G3InstallCommon):
         act.action_sign()
         return act
 
+    def test_ac_098_sign_without_signature_and_change_of_a_signed_act(self):
+        """AC-098: SPEC texts «Немає підпису клієнта» / «Підписаний акт змінювати не можна»; the data do not change."""
+        order = self._order()
+        act = self.env['td.mebli.install.act'].create({'task_id': order.tasks_ids.id, 'kind': 'final'})
+        for lang, text in (('en_US', "There is no signature of the customer"), ('uk_UA', "Немає підпису клієнта")):
+            with self.assertRaises(UserError) as error:
+                act.with_user(self.fitter).with_context(lang=lang).action_sign()
+            self.assertEqual(str(error.exception), text)
+        self.assertEqual(act.state, 'draft')
+        act.write({'signature': PHOTO, 'signed_by': 'Customer'})
+        act.with_user(self.fitter).action_sign()
+        for lang, text in (('en_US', "A signed act cannot be changed"),
+                           ('uk_UA', "Підписаний акт змінювати не можна")):
+            with self.assertRaises(UserError) as error:  # the crew of the visit
+                act.with_user(self.fitter).with_context(lang=lang).write({'signed_by': 'Somebody else'})
+            self.assertEqual(str(error.exception), text)
+            with self.assertRaises(UserError) as error:  # «Sign» again
+                act.with_user(self.fitter).with_context(lang=lang).action_sign()
+            self.assertEqual(str(error.exception), text)
+        self.assertEqual(act.signed_by, 'Customer')
+
     def test_ac_100_photo_archive_needs_the_consent(self):
         order = self._order()
         act = self._signed(order)
@@ -185,6 +209,11 @@ class TestActG3(G3InstallCommon):
         order = self._order()
         act = self._signed(order, defect_ids=[(0, 0, {'name': 'Gap on the left door'})], checklist='Fronts adjusted')
         report = self.env['ir.actions.report']
+        # the act is printed in the language of the customer: set explicitly (A-14 convergence 4, not the base language)
+        order.partner_id.lang = 'uk_UA'
+        html, _kind = report._render_qweb_html('td_mebli_install.report_install_act', act.ids)
+        self.assertIn('Шаблон до перевірки юристом'.encode(), html)
+        order.partner_id.lang = 'en_US'
         html, _kind = report._render_qweb_html('td_mebli_install.report_install_act', act.ids)
         self.assertIn(b'Template to be checked by a lawyer', html)
         self.assertIn(b'Gap on the left door', html)
@@ -315,7 +344,13 @@ class TestAccrualG3(G3InstallCommon):
                                               'reason_id': reason.id})
         with self.assertRaises(AccessError):  # not a bonus or a penalty
             Accrual.with_user(master).create({'employee_id': self.employee.id, 'kind': 'piece', 'amount': 50.0})
-        bonus.action_td_confirm()  # the head confirms
+        # A-14 security 2: the master does not confirm his own drafts — neither by the button nor by RPC write
+        with self.assertRaises(AccessError):
+            bonus.with_user(master).action_td_confirm()
+        with self.assertRaises(AccessError):
+            bonus.with_user(master).write({'state': 'confirmed'})
+        self.assertEqual(bonus.state, 'draft')
+        bonus.with_env(self.env).action_td_confirm()  # the head confirms
         with self.assertRaises(UserError):  # AccessError is a UserError too
             bonus.with_user(master).write({'reason': 'Other'})
 

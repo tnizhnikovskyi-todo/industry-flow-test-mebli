@@ -1194,8 +1194,14 @@ msgstr ""
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/act.py:0
-msgid "The customer signs the act with a finger on the screen first."
-msgstr "Спершу клієнт підписує акт пальцем на екрані."
+msgid "There is no signature of the customer"
+msgstr "Немає підпису клієнта"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+msgid "A signed act cannot be changed"
+msgstr "Підписаний акт змінювати не можна"
 
 #. module: td_mebli_install
 #. odoo-python
@@ -1444,3 +1450,9 @@ msgstr "Ручну позначку оплати відновлено: %(amount)
 #: code:addons/td_mebli_install/models/payment.py:0
 msgid "Manual payment mark changed by %(user)s: %(changes)s"
 msgstr "Ручну позначку оплати змінив(ла) %(user)s: %(changes)s"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "Accruals are confirmed by the shop manager or the accountant."
+msgstr "Нарахування підтверджує начальник виробництва або бухгалтер."

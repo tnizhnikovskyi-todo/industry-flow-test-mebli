@@ -1125,3 +1125,15 @@ msgstr "м²"
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
 msgid "мм"
 msgstr "мм"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Part %(code)s is placed %(placed)s times, the job has %(qty)s pieces"
+msgstr "Деталь %(code)s розміщено %(placed)s раз(и), у завданні %(qty)s шт."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Sheet %(sheet)s: lot %(lot)s of this board is not found in the company of the job."
+msgstr "Аркуш %(sheet)s: партію %(lot)s цієї плити не знайдено в компанії завдання."

@@ -167,6 +167,24 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         self.assertEqual((check.state, check.explained_by), ('explained', self.env.user))
         with self.assertRaises(UserError):
             check.action_td_compute()  # closed
+        # A-14 security 6 / pr-review m3: the finance does not reset the signed explanation, not even by RPC, and does
+        # not change the lines of a closed reconciliation
+        with self.assertRaises(AccessError):
+            check.with_user(clerk).action_td_reset()
+        with self.assertRaises(AccessError):
+            check.with_user(clerk).write({'explained_by': clerk.id})
+        with self.assertRaises(UserError):
+            prepayment.with_user(clerk).write({'value_source': 300.0})
+        with self.assertRaises(UserError):
+            prepayment.with_user(clerk).unlink()
+        self.assertEqual((check.state, check.explained_by, prepayment.value_source),
+                         ('explained', self.env.user, 500.0))
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Sales Manager', 'login': 'td_mig_manager',
+            'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_manager').id])]})
+        check.with_user(manager).action_td_reset()
+        self.assertEqual((check.state, check.explained_by.id), ('draft', False))
+        prepayment.with_user(clerk).write({'value_source': 300.0})  # open again
 
     def test_ac_089_import_steps_follow_the_templates_of_a13(self):
         steps = self.env['td.mebli.migration.step'].search([])

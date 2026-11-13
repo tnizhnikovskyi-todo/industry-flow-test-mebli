@@ -35,6 +35,7 @@ class MrpBom(models.Model):
     def _td_mark_sent_to_cutting(self):
         """Called by the cutting (system): the next version of every specification is sent; returns {bom: version}."""
         versions = {}
+        # sudo: called by the cutting (system): the version of the sent specification is written whoever sends
         for bom in self.sudo():
             bom.td_cut_version += 1
             versions[bom.id] = bom.td_cut_version
