@@ -1,9 +1,11 @@
 # AC-COVERAGE-G3 — монтаж, рекламація, собівартість, дашборд (A-11, G3)
 
-Гілка `flow/A-11-test`, база зрізу після G0+G2 (HEAD `0dab06b`). Модулі групи: `td_mebli_install`, `td_mebli_claim`,
+Гілка `flow/A-11-test`, після злиття G0+G1+G2+G4 (HEAD `5529dc0`). Модулі групи: `td_mebli_install`, `td_mebli_claim`,
 `td_mebli_cost`, `td_mebli_dashboard` (версії підняті до `19.0.1.1.0`). Прогін: установка в чисту базу + оновлення з
-попередньої версії (`19.0.1.0.0`) з `migrations/`; тести своїх модулів — **0 failed, 0 error** (60 тестів:
-install 55, claim 16, cost 6, dashboard 11 — із залежностей). Тексти помилок і чисел — дослівно за SPEC §4.3/§4.10/§4.11/§4.18;
+попередньої версії (`19.0.1.0.0`) з `migrations/`; тести своїх модулів на чистій базі
+(`test-mebli-a11g3-c`, порт 8173) — **61 тест, 0 failed, 0 error** (install 56, claim 16, cost 6, dashboard 17 — у
+лічильнику модуля є й тести залежностей). Залежні `td_mebli_notify`/`td_mebli_demo`: 18 тестів, 1 failed —
+`td_mebli_demo/tests/test_scenario.py::test_scenario` (лоти розкрою G2; падає й без коду G3 на HEAD — не G3). Тексти помилок і чисел — дослівно за SPEC §4.3/§4.10/§4.11/§4.18;
 переклади uk — у `i18n/uk.po` кожного модуля (перевірено `uk_UA` у тестах нещасливих шляхів).
 
 ## Покриття AC
@@ -29,7 +31,7 @@ install 55, claim 16, cost 6, dashboard 11 — із залежностей). Т�
 | AC-115 | done | `groups` на полях факту (`group_finance`) і плану (`group_margin_view`/finance/sale_manager); меню й сторінка форми — `group_finance` | `test_cost.py::TestCost.test_ac_115_cost_only_for_the_finance` |
 | AC-116 | done | Поле `td_overconsumption` (compute+search) порівнює спожите з розкладеною специфікацією; фільтр «Перевитрата» у звіті S-11 | `test_cost.py::TestCost.test_ac_116_overconsumption_filter` |
 | AC-121 | done | 12-та картка «Невідповідності якості» (`group_feature_quality`): `td.mebli.quality.check` `result='fail'` — і крок якості, і брак (AC-073, `kind='scrap'`); у коробці A — 11 карток | `td_mebli_dashboard/tests/test_g3.py::TestDashboardG3.test_ac_121_twelfth_card_of_the_quality_in_box_b` |
-| AC-122 | done | Меню «Дашборд керівника» — `group_td_mebli_director`; `get_data` — AccessError для не-керівника; міграція скидає старі групи меню | `test_dashboard.py::test_access_is_limited_to_the_director`; `test_g3.py::test_ac_122_menu_and_finance_of_the_director` |
+| AC-122 | done | Меню «Дашборд керівника» — `group_td_mebli_director` (включає `group_finance`, `sale_salesman_all_leads`, `mrp.group_mrp_user`, `project.group_project_user`, `stock.group_stock_user` за `security.md` §1 — щоб кожна картка відкривала свої записи); `get_data` — AccessError для не-керівника; міграція скидає старі групи меню | `test_dashboard.py::test_access_is_limited_to_the_director`; `test_g3.py::test_ac_122_menu_and_finance_of_the_director` |
 | AC-123 | done | Порожні дані — «Немає даних»/0, без ділення на нуль (`_no_data`) | `test_g3.py::TestDashboardG3.test_ac_123_empty_data`; `test_dashboard.py::test_cards_of_the_a_box` |
 | AC-132 | done | «Запланувати виїзд» з рекламації: `project.task` у проєкті монтажів (`td_visit_kind='service'`, без акта/контролю доплати), `td_claim_id`, адреса; видно в календарі й денному плані | `test_claim.py::TestClaimVisit.test_ac_132_plan_a_visit`, `test_ac_132_order_without_installation` |
 | AC-134 | done | QWeb «Відомість нарахувань» за працівниками й видами з причинами, підсумками, місцем підпису; лише підтверджені; клас `td_mebli_report` | `test_g3.py::TestAccrualG3.test_ac_134_accruals_sheet` |
@@ -38,6 +40,14 @@ install 55, claim 16, cost 6, dashboard 11 — із залежностей). Т�
 - **AC-021 `td.mebli.pay.mark`** — зроблено першою, G4 бере її для AC-042 (поле `cancelled`: обмін ставить при надходженні оплати).
 - **AC-121 12-та картка** — отримує брак від G2 (`td.mebli.quality.check.kind='scrap'`, коміт `0dab06b`); картка рахує `result='fail'` незалежно від `kind`.
 - **Зсув дати при порізці** — ключ `td_delay_reason`/дашборда переведено на `'distributor'` (було `'cutting'`) за хвостом G2.
+- **Картка «Застряглі»** (хвіст G1) — читає збережене `sale.order.td_is_stuck` (VP-10 компанії, лише підтверджені), без власного підрахунку й константи.
+- **AC-042 хук скасування позначок** — тіло хука `_td_after_bas_payment` лежить у `td_mebli_bas` (G4, не правлю): там треба один рядок
+  `invoice.line_ids.sale_line_ids.order_id._td_cancel_pay_marks()`. Метод `sale.order._td_cancel_pay_marks()` (G3, ідемпотентний,
+  ставить `cancelled`, запис у чат) — тест `td_mebli_install/tests/test_g3.py::TestPaymentG3.test_ac_042_cancel_marks_on_bas_payment`.
+  Доки рядка немає — позначку знімає фінансист вручну.
+- **Демо (`td_mebli_demo`, завершальний крок сесії):** `full.py:223` створює акт з `photo_archive: True` без `photo_consent` — тепер
+  ValidationError (AC-100); треба додати `'photo_consent': True`. Демо спирається на `crew_pct` 5 % явно — ок; дефолт акта тепер
+  `company.td_crew_pct` (0).
 - **AC-073** (цех, G2) — сам кіоск «Брак» у модулі G2; тут лише читання для картки.
 
 ## Поля даних (нові td_; аналог у стандарті CE 19 або причина)
@@ -78,6 +88,9 @@ install 55, claim 16, cost 6, dashboard 11 — із залежностей). Т�
 | G3-5 | Міграція `td_mebli_dashboard/19.0.1.1.0` скидає `group_ids` меню (menuitem `groups=` на оновленні — адитивний, лишав старі групи → дашборд був видимий усім) | якщо меню переозброять вручну після оновлення — міграція не повторюється (разова) |
 | G3-6 | `td_mebli_install/19.0.1.1.0/pre-migrate` видаляє старе подання налаштувань зрізу (поле `td_mebli_payment_control` зникло) до оновлення | подання відтворюється новим з `td_mebli_base`; якщо хтось успадкував старий xmlid — зламається (нема таких у пакеті) |
 | G3-7 | AC-105 список операцій без розцінки — текст (не посилання): у майстра немає прав виробництва відкрити МО | неклікабельно; достатньо для підсумку |
+| G3-8 | Група керівника дашборда включає читання виробництва, проєкту, складу й усіх продажів (`security.md` §1), а не лише фінансиста — без цього картка «Завантаження» падала AccessError на `mrp.workcenter.productivity` (`td_worker_names` у списку планшета G2 без sudo) | керівник бачить меню виробництва/проєкту; група `td_mebli_base.group_director` з ТР ще не створена — перенос xmlid пізніше (AC-N.04) |
+| G3-9 | Поділ «Застряглих» — за датою зміни етапу дошки (`td_is_stuck` G1), а не за рухом МО як у зрізі | інше визначення «руху», ніж у зрізі; відповідає AC-067 |
+| G3-10 | Скасування підтвердженого нарахування — `mrp.group_mrp_manager` або `account.group_account_manager` («керівник»); `td_mebli_base.group_director` з ТР ще немає | коли з'явиться група керівника — замінити `CANCEL_GROUPS` |
 
 ## Що лишилось (не в обсязі G3)
 - AC-042 (G4) — бере `td.mebli.pay.mark` і знімає `cancelled`.
