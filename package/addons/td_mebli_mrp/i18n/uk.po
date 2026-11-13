@@ -936,12 +936,6 @@ msgstr "Шаблонна специфікація"
 #. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "The Excel file cannot be read: %s"
-msgstr "Файл Excel не читається: %s"
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
 msgid "The file is empty."
 msgstr "Файл порожній."
 
@@ -1120,3 +1114,19 @@ msgstr "ширина, мм"
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
 msgid "x"
 msgstr "×"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid ""
+"The analog %(new)s is counted in %(unit)s, the component in %(old_unit)s: "
+"the quantity cannot be converted."
+msgstr ""
+"Аналог %(new)s обліковується в %(unit)s, компонент — у %(old_unit)s: "
+"кількість не перерахувати."
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "The file cannot be read: %s"
+msgstr "Файл не вдається прочитати: %s"

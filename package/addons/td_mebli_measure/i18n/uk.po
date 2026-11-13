@@ -667,3 +667,26 @@ msgstr "ширше"
 #: code:addons/td_mebli_measure/models/measure.py:0
 msgid "width"
 msgstr "ширина"
+
+#. module: td_mebli_measure
+#: model:res.groups,name:td_mebli_measure.group_td_mebli_measurer
+msgid "Measurer (measurement visits)"
+msgstr "Замірник (виїзди на замір)"
+
+#. module: td_mebli_measure
+#: model:res.groups,comment:td_mebli_measure.group_td_mebli_measurer
+msgid ""
+"The user goes to the measurement visits: the booking wizard offers his free "
+"windows."
+msgstr ""
+"Користувач їздить на заміри: запис на замір пропонує його вільні вікна."
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid ""
+"The window %(day)s %(when)s of %(who)s is already taken: refresh the free "
+"windows and choose another one."
+msgstr ""
+"Вікно %(day)s %(when)s (%(who)s) вже зайняте: оновіть вільні вікна й оберіть"
+" інше."

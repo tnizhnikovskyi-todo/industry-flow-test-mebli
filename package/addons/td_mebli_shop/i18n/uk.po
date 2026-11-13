@@ -712,3 +712,8 @@ msgstr "Неправильний працівник або PIN."
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
 msgid "mm"
 msgstr "мм"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "Piece"
+msgstr "Штука"

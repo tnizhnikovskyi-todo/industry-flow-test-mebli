@@ -1,6 +1,7 @@
 from datetime import timedelta
 
 from odoo import fields
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 
 from odoo.addons.td_mebli_sale.tests.common import TdMebliSaleCommon
@@ -54,3 +55,24 @@ class TestWave2Measure(TdMebliSaleCommon):
         self.assertEqual(event.alarm_ids.alarm_type, 'email', "the reminder is the standard e-mail alarm")
         wizard._td_fill_slots()
         self.assertEqual(len(wizard.slot_ids), free - 1, "the booked window is busy now")
+
+    def test_booking_rechecks_the_window_and_measurer_by_group(self):
+        env = self.env
+        env.user.tz = 'Europe/Kyiv'
+        measurer = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Measurer', 'login': 'td_measurer_group', 'tz': 'Europe/Kyiv',
+            'group_ids': [(6, 0, [env.ref('td_mebli_measure.group_td_mebli_measurer').id])]})
+        lead = env['crm.lead'].create({'name': 'Hall', 'type': 'opportunity',
+                                       'partner_id': env['res.partner'].create({'name': 'Buyer 2'}).id})
+        day = fields.Date.today() + timedelta(days=7)
+        while day.weekday() >= 5:
+            day += timedelta(days=1)
+        wizard = env['td.mebli.measure.booking'].create({'lead_id': lead.id, 'date_from': day, 'days': 1})
+        self.assertEqual(wizard.measurer_id, measurer, "the default measurer comes from the group, not from the login")
+        wizard._td_fill_slots()
+        slot = wizard.slot_ids[0]
+        # another salesperson books the same window meanwhile
+        env['calendar.event'].create({'name': 'Other visit', 'start': slot.start, 'stop': slot.stop,
+                                      'partner_ids': [(6, 0, measurer.partner_id.ids)]})
+        with self.assertRaises(UserError):
+            slot.action_book()

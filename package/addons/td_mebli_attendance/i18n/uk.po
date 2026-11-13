@@ -155,3 +155,30 @@ msgstr "Майстер"
 #: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
 msgid "timesheet-BAS-imitation-%(start)s-%(end)s.csv"
 msgstr "табель-BAS-імітація-%(start)s-%(end)s.csv"
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,help:td_mebli_attendance.field_td_mebli_timesheet_export__warning
+msgid ""
+"Employees without a personnel code (Badge ID): BAS cannot match them, they "
+"are left out."
+msgstr ""
+"Працівники без табельного номера (номер бейджа): BAS не зіставить їх, у файл"
+" вони не йдуть."
+
+#. module: td_mebli_attendance
+#. odoo-python
+#: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
+msgid "No personnel code (Badge ID on the employee), not in the file: %s."
+msgstr ""
+"Немає табельного номера (номер бейджа в картці працівника), не у файлі: %s."
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,help:td_mebli_attendance.field_td_mebli_timesheet_export_line__skipped
+msgid "No personnel code: left out of the file."
+msgstr "Немає табельного номера: не у файлі."
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__warning
+#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export_line__skipped
+msgid "Not in the File"
+msgstr "Не у файлі"

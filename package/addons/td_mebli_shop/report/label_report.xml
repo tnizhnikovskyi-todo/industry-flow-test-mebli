@@ -24,31 +24,37 @@
     </record>
 
     <template id="report_part_labels_grid">
+        <!-- a table of 3 columns, not a flex row: wkhtmltopdf (old WebKit) does not wrap flex rows and cut the third
+             label of a row at the edge of the page -->
         <div class="page td_report_labels">
-            <div class="row g-0">
-                <t t-foreach="rows" t-as="row">
-                    <div class="col-4 p-1" style="page-break-inside: avoid;">
+            <table style="width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 2mm;">
+                <tr t-foreach="range(0, len(rows), 3)" t-as="start" style="page-break-inside: avoid;">
+                    <td t-foreach="range(start, start + 3)" t-as="index" style="width: 33.33%; vertical-align: top; padding: 0;">
+                        <t t-if="index &lt; len(rows)">
+                        <t t-set="row" t-value="rows[index]"/>
                         <div class="td_label border border-dark p-2" style="height: 44mm; overflow: hidden;">
-                            <div class="d-flex">
-                                <div style="width: 26mm;">
+                            <table style="width: 100%;"><tr>
+                                <td style="width: 26mm; vertical-align: top; padding: 0;">
                                     <img t-att-src="env['ir.actions.report']._td_qr_data_uri(row['code'])" style="width:24mm;height:24mm" alt="QR"/>
-                                </div>
-                                <div class="ps-2 small" style="line-height: 1.25;">
+                                </td>
+                                <td class="ps-2 small" style="line-height: 1.25; vertical-align: top; padding: 0;">
                                     <div><strong t-out="row['item']"/></div>
                                     <div t-if="row['size']"><span t-out="row['size']"/> mm</div>
                                     <div t-if="row['material']" t-out="row['material']"/>
-                                    <div>Qty: <t t-out="'%g' % row['qty']"/></div>
-                                </div>
-                            </div>
+                                    <div t-if="row.get('piece')">Piece <strong t-out="row['piece']"/></div>
+                                    <div t-else="">Qty: <t t-out="'%g' % row['qty']"/></div>
+                                </td>
+                            </tr></table>
                             <div class="small mt-1 border-top pt-1">
                                 <strong t-out="row['order']"/> · <t t-out="row['customer']"/>
                                 <t t-if="row['place']"> · <strong>Place <t t-out="row['place']"/></strong></t>
                                 <div class="text-muted td_label_code" t-out="row['code']"/>
                             </div>
                         </div>
-                    </div>
-                </t>
-            </div>
+                        </t>
+                    </td>
+                </tr>
+            </table>
             <p t-if="not rows">No parts to label.</p>
         </div>
     </template>

@@ -173,7 +173,7 @@
   },
   {
    "kind": "field",
-   "text": "14",
+   "text": "15",
    "label": "td_delay_days",
    "name": "td_delay_days",
    "required": false
@@ -201,21 +201,21 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 23:09",
+   "text": "7 лист., 00:47",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
   },
   {
    "kind": "field",
-   "text": "12 лист., 15:29",
+   "text": "12 лист., 14:52",
    "label": "Виробництво розпочато",
    "name": "td_launch_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "136,3",
+   "text": "134,1",
    "label": "До запуску, год",
    "name": "td_hours_to_launch",
    "required": false
@@ -243,21 +243,21 @@
   },
   {
    "kind": "field",
-   "text": "4 груд.",
+   "text": "5 груд.",
    "label": "Обіцяна дата?",
    "name": "commitment_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "18 груд.",
+   "text": "20 груд.",
    "label": "Прогнозна дата?",
    "name": "td_forecast_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "14",
+   "text": "15",
    "label": "Зсув, дн.",
    "name": "td_delay_days",
    "required": false
@@ -271,7 +271,7 @@
   },
   {
    "kind": "field",
-   "text": "Версія Причина Що змінюється Ціна до Ціна після Зміна ціни Обіцяна до Обіцяна після Зсув, дн. Стан 2 Клієнт Фасади кухні — фарбований МДФ RAL 9010 замість плівкового 67 425,00 ₴ 75 825,00 ₴ 8 400,00 ₴ 27 лист. 4 груд. 7 Зафіксовано ​ ​ ​",
+   "text": "Версія Причина Що змінюється Ціна до Ціна після Зміна ціни Обіцяна до Обіцяна після Зсув, дн. Стан 2 Клієнт Фасади кухні — фарбований МДФ RAL 9010 замість плівкового 67 425,00 ₴ 75 825,00 ₴ 8 400,00 ₴ 28 лист. 5 груд. 7 Зафіксовано ​ ​ ​",
    "label": "td_change_ids",
    "name": "td_change_ids",
    "required": false
@@ -315,12 +315,12 @@
   },
   {
    "kind": "cell",
-   "text": "27 лист.",
+   "text": "28 лист.",
    "label": "date_before"
   },
   {
    "kind": "cell",
-   "text": "4 груд.",
+   "text": "5 груд.",
    "label": "date_after"
   },
   {

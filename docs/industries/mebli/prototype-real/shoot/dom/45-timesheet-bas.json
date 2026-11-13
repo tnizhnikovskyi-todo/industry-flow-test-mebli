@@ -15,6 +15,14 @@
    "text": "Години"
   },
   {
+   "kind": "header",
+   "text": "Не у файлі"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
    "kind": "label",
    "text": "Від дати"
   },
@@ -29,6 +37,38 @@
   {
    "kind": "label",
    "text": "Годин усього"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
   },
   {
    "kind": "label",
@@ -75,10 +115,57 @@
    "required": false
   },
   {
-   "kind": "field",
-   "text": "Працівник Днів Години Андрій Мельник 9 72,4 Василь Ткач 9 73,1 Оксана Литвин 7 57,5 Олег Дорошенко 9 72,9 Петро Гуменюк 9 72,5 Роман Ковальчук 9 72,9 Сергій Бондаренко 9 72,6 Юрій Савчук 9 73,0",
-   "label": "line_ids",
-   "name": "line_ids",
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
    "required": false
   },
   {
@@ -98,6 +185,15 @@
   },
   {
    "kind": "cell",
+   "text": "",
+   "label": "skipped"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
    "text": "Василь Ткач",
    "label": "employee_id"
   },
@@ -113,6 +209,15 @@
   },
   {
    "kind": "cell",
+   "text": "",
+   "label": "skipped"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
    "text": "Оксана Литвин",
    "label": "employee_id"
   },
@@ -125,6 +230,15 @@
    "kind": "cell",
    "text": "57,5",
    "label": "hours"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "skipped"
+  },
+  {
+   "kind": "cell",
+   "text": ""
   }
  ]
 }

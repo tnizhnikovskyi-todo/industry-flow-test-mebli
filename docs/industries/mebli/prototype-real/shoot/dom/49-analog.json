@@ -233,7 +233,7 @@
   },
   {
    "kind": "field",
-   "text": "25 лист., 08:22",
+   "text": "25 лист., 08:32",
    "label": "Запланована дата?",
    "name": "date_start",
    "required": true

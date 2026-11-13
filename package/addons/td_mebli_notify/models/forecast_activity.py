@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.tools import html2plaintext
 
 ACTIVITY = 'td_mebli_notify.mail_activity_type_td_forecast_shift'
 
@@ -6,8 +7,15 @@ ACTIVITY = 'td_mebli_notify.mail_activity_type_td_forecast_shift'
 class SaleOrder(models.Model):
     """Position 1 (F-50): the salesperson gets a standard activity on the order when the forecast date (td_mebli_sale,
     read from Purchase and Manufacturing) passes the promised date; the activity is closed when the forecast comes back.
-    One open activity per order: a new shift updates it, it is never duplicated."""
+    One open activity per order: a new shift updates it, it is never duplicated. When the salesperson marks the activity
+    «Done» while the forecast is still late, the cron does not open it again for the same shift: a new activity only
+    when the shift grows (the handled shift is kept on the order)."""
     _inherit = 'sale.order'
+
+    td_forecast_shift_done = fields.Integer(
+        string='Handled Forecast Shift, days', copy=False, readonly=True,
+        help="The shift of the forecast (days) for which the salesperson already got the activity; reset when the "
+             "forecast comes back within the promised date.")
 
     def _td_sync_forecast_activity(self):
         if self.env.context.get('td_no_forecast_activity'):  # bulk loads (demo data, migration) run the cron after
@@ -34,15 +42,23 @@ class SaleOrder(models.Model):
                                   promised=fields.Date.to_string(fields.Date.context_today(order, order.commitment_date)),
                                   reason=order.td_late_item or '')
                 if current:
-                    if current.summary != summary:
+                    # the shift or its reason (the late item) changed: the open activity says it
+                    if current.summary != summary or html2plaintext(current.note or '').strip() != note.strip():
                         current.write({'summary': summary, 'note': note})
-                else:
+                elif order.td_delay_days > order.td_forecast_shift_done:
                     order.sudo().activity_schedule(
                         ACTIVITY, date_deadline=fields.Date.context_today(order), summary=summary, note=note,
                         user_id=(order.user_id or self.env.user).id)
-            elif current:
-                order.sudo().activity_feedback([ACTIVITY], feedback=self.env._("The forecast date is back within the "
-                                                                               "promised date."))
+                else:
+                    continue  # marked «Done» for this shift (or a larger one): not repeated
+                if order.td_forecast_shift_done != order.td_delay_days:
+                    order.sudo().td_forecast_shift_done = order.td_delay_days
+            else:
+                if current:
+                    order.sudo().activity_feedback([ACTIVITY], feedback=self.env._("The forecast date is back within "
+                                                                                   "the promised date."))
+                if order.td_forecast_shift_done:
+                    order.sudo().td_forecast_shift_done = 0
 
     @api.model
     def _cron_td_forecast_activity(self):

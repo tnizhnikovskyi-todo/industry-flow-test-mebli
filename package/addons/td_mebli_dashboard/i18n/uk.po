@@ -43,8 +43,8 @@ msgstr "Відстає"
 #. module: td_mebli_dashboard
 #. odoo-javascript
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
-msgid "Behind the plan"
-msgstr "Відставання від плану"
+msgid "Operations behind the plan"
+msgstr "Операцій відстає від плану"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -139,8 +139,8 @@ msgstr "Зроблено"
 #. module: td_mebli_dashboard
 #. odoo-javascript
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
-msgid "Done in the shift"
-msgstr "Зроблено за зміну"
+msgid "Operations done in the shift"
+msgstr "Операцій виконано за зміну"
 
 #. module: td_mebli_dashboard
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__td_dash_due
@@ -552,11 +552,6 @@ msgstr "год"
 #. module: td_mebli_dashboard
 #. odoo-javascript
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
-msgid "operations whose planned end has passed"
-msgstr "операцій, плановий кінець яких минув"
+msgid "planned end has passed"
+msgstr "плановий кінець минув"
 
-#. module: td_mebli_dashboard
-#. odoo-javascript
-#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
-msgid "operations ·"
-msgstr "операцій ·"

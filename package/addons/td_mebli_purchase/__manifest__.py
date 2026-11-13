@@ -9,7 +9,7 @@
     'category': 'Inventory/Purchase',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['purchase_stock'],
+    'depends': ['purchase_stock', 'base_import'],
     'data': [
         'security/ir.model.access.csv',
         'views/purchase_views.xml',

@@ -28,8 +28,11 @@ class TdMebliMeasureBooking(models.TransientModel):
 
     @api.model
     def _td_default_measurer(self):
-        measurer = self.env['res.users'].search([('login', '=like', 'measure@%')], limit=1)
-        return measurer or self.env.user
+        """The first measurer of the company (group «Measurer»), else the user who books."""
+        group = self.env.ref('td_mebli_measure.group_td_mebli_measurer', raise_if_not_found=False)
+        measurers = group.sudo().all_user_ids.filtered(
+            lambda u: u.active and not u.share and self.env.company in u.company_ids) if group else self.env['res.users']
+        return measurers.sorted('id')[:1] or self.env.user
 
     def _td_tz(self):
         return pytz.timezone(self.measurer_id.tz or self.env.user.tz or 'Europe/Kyiv')
@@ -73,6 +76,14 @@ class TdMebliMeasureBooking(models.TransientModel):
     def _td_book(self, slot):
         self.ensure_one()
         lead = self.lead_id
+        # the window was free when the list was shown: another salesperson may have booked it since
+        busy = self.env['calendar.event'].sudo().search_count([
+            ('partner_ids', 'in', self.measurer_id.partner_id.ids), ('start', '<', slot.stop), ('stop', '>', slot.start)],
+            limit=1)
+        if busy:
+            raise UserError(self.env._("The window %(day)s %(when)s of %(who)s is already taken: refresh the free windows "
+                                       "and choose another one.", day=slot.day.strftime('%d.%m.%Y'), when=slot.label,
+                                       who=self.measurer_id.name))
         partners = self.measurer_id.partner_id | lead.partner_id
         alarm = self.env.ref('td_mebli_measure.alarm_mail_measure_1day', raise_if_not_found=False)
         event = self.env['calendar.event'].with_context(default_opportunity_id=lead.id).create({

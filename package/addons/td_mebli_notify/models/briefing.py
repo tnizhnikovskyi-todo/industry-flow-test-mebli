@@ -34,8 +34,10 @@ class TdMebliDashboard(models.AbstractModel):
                                                    ('order_id.company_id', 'in', companies.ids)])
         after_act = acts.order_id.filtered(lambda o: o.td_dash_due > 0.5)
         visits = env['project.task'].search([('sale_order_id.state', '=', 'sale'), ('state', 'not in', ('1_done', '1_canceled')),
-                                             ('date_deadline', '>=', now), ('date_deadline', '<', now + timedelta(days=7))]
-                                            + in_companies)
+                                             ('date_deadline', '>=', now), ('date_deadline', '<', now + timedelta(days=7)),
+                                             # the visit is of the company of its order (a task of a project without a
+                                             # company has no company of its own)
+                                             ('sale_order_id.company_id', 'in', companies.ids)])
         before = visits.sale_order_id.filtered(lambda o: o.td_pay_missing > 0)
         # yesterday: the calendar day before today in the time zone of the user
         tz = pytz.timezone(self.env.context.get('tz') or self.env.user.tz or 'Europe/Kyiv')

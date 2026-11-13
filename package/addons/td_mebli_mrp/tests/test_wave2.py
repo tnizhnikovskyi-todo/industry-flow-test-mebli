@@ -1,6 +1,7 @@
 import base64
 import io
 
+from odoo.exceptions import UserError
 from odoo.tests import tagged
 
 from .common import TdMebliCommon
@@ -53,3 +54,20 @@ class TestWave2Mrp(TdMebliCommon):
         self.assertIn(analog, production.move_raw_ids.product_id)
         self.assertIn(analog, bom.td_part_ids.material_id)
         self.assertNotIn(self.board_a, bom.td_part_ids.material_id)
+
+    def test_analog_in_another_unit_kind_is_not_suggested(self):
+        unit = self.board_a.uom_id
+        other = self.env.ref('uom.product_uom_unit')
+        if unit._has_common_reference(other):
+            other = self.env.ref('uom.product_uom_meter')
+        self.assertFalse(unit._has_common_reference(other))
+        analog = self.env['product.product'].create({'name': 'Edge in metres', 'is_storable': True, 'uom_id': other.id})
+        self.board_a.product_tmpl_id.td_analog_ids = [(6, 0, analog.ids)]
+        self.env['stock.quant']._update_available_quantity(analog, self.env.ref('stock.stock_location_stock'), 1000.0)
+        bom = self.env['mrp.bom']._td_generate_order_bom(self.cabinet, self.dims, self.selections)
+        production = self.env['mrp.production'].create({'product_id': self.cabinet.id, 'bom_id': bom.id, 'product_qty': 1})
+        production.action_confirm()
+        move = production.move_raw_ids.filtered(lambda m: m.product_id == self.board_a)
+        self.assertFalse(move.td_analog_id, "pieces or metres cannot replace square metres")
+        with self.assertRaises(UserError):
+            move.action_td_use_analog()

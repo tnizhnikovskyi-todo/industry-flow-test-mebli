@@ -9,9 +9,9 @@
             </div>
             <div class="td_dash_grid td_board_grid">
                 <div class="td_card td_ok td_k_board_done">
-                    <div class="td_label">Done in the shift</div>
+                    <div class="td_label">Operations done in the shift</div>
                     <div class="td_value"><t t-out="d.done"/></div>
-                    <div class="td_target">operations · <t t-out="d.done_hours"/> h</div>
+                    <div class="td_target"><t t-out="d.done_hours"/> h</div>
                 </div>
                 <div class="td_card td_none td_k_board_working">
                     <div class="td_label">In work now</div>
@@ -24,9 +24,9 @@
                     <div class="td_line" t-foreach="d.risk" t-as="r" t-key="r.name"><t t-out="r.name"/> · <t t-out="r.customer"/> · +<t t-out="r.days"/> d.</div>
                 </div>
                 <div t-attf-class="td_card td_k_board_behind #{d.behind ? 'td_warn' : 'td_ok'}">
-                    <div class="td_label">Behind the plan</div>
+                    <div class="td_label">Operations behind the plan</div>
                     <div class="td_value" t-out="d.behind"/>
-                    <div class="td_target">operations whose planned end has passed</div>
+                    <div class="td_target">planned end has passed</div>
                 </div>
             </div>
             <table class="td_board_table">

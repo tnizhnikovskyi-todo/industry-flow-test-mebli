@@ -427,22 +427,22 @@
   },
   {
    "kind": "cell",
-   "text": "7 639,01 ₴",
+   "text": "7 372,23 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "34 912,43 ₴",
+   "text": "34 645,65 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "27,1",
+   "text": "27,7",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "2,4",
+   "text": "1,6",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -486,22 +486,22 @@
   },
   {
    "kind": "cell",
-   "text": "7 319,16 ₴",
+   "text": "7 857,83 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "34 592,58 ₴",
+   "text": "35 131,25 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "27,8",
+   "text": "26,6",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "1,4",
+   "text": "3,0",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -545,22 +545,22 @@
   },
   {
    "kind": "cell",
-   "text": "19 422,94 ₴",
+   "text": "19 662,64 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "52 456,90 ₴",
+   "text": "52 696,61 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "28,7",
+   "text": "28,4",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "6,3",
+   "text": "6,8",
    "label": "td_cost_deviation_pct"
   }
  ]

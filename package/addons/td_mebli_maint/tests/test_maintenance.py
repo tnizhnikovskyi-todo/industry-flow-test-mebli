@@ -1,3 +1,4 @@
+from odoo.exceptions import UserError
 from odoo.tests import TransactionCase, tagged
 
 
@@ -22,3 +23,11 @@ class TestMaintenance(TransactionCase):
         request.stage_id = done
         self.assertTrue(row.date_end, "closing the request ends the downtime")
         self.assertFalse(request.td_downtime_open)
+
+    def test_downtime_needs_a_work_center(self):
+        machine = self.env['maintenance.equipment'].create({'name': 'Drill without a section'})
+        request = self.env['maintenance.request'].create({'name': 'Spindle noise', 'equipment_id': machine.id,
+                                                          'maintenance_type': 'corrective'})
+        with self.assertRaises(UserError):
+            request.action_td_start_downtime()
+        self.assertFalse(request.td_downtime_id, "no downtime row without a section")

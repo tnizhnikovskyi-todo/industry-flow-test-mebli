@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- the measurers of the salon: the booking of a measurement offers the first of them by default (no login rule) -->
+    <record id="group_td_mebli_measurer" model="res.groups">
+        <field name="name">Measurer (measurement visits)</field>
+        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="comment">The user goes to the measurement visits: the booking wizard offers his free windows.</field>
+    </record>
+
     <!-- a salesperson with «own documents only» sees the measurements she made or that belong to her order or
          opportunity; «all documents», sales managers and the workshop (read) see all -->
     <record id="td_mebli_measure_rule_own" model="ir.rule">

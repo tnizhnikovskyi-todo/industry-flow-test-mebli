@@ -46,7 +46,8 @@ USERS = [
      ['sales_team.group_sale_manager', 'mrp.group_mrp_manager', 'account.group_account_user', 'stock.group_stock_user',
       'purchase.group_purchase_manager', 'project.group_project_manager', 'td_mebli_dashboard.group_td_mebli_director']),
     # full scope (A-21, wave 1): measurer, installers, the shared tablet of the shop (no picture: initials avatar)
-    ('measure', 'Тетяна Олійник', 'Замірник', None, ['sales_team.group_sale_salesman_all_leads']),
+    ('measure', 'Тетяна Олійник', 'Замірник', None,
+     ['sales_team.group_sale_salesman_all_leads', 'td_mebli_measure.group_td_mebli_measurer']),
     ('fitter', 'Микола Демченко', 'Бригадир монтажників', None,
      ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
     ('fitter2', 'Іван Кушнір', 'Монтажник', None, ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),

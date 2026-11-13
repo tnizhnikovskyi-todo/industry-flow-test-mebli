@@ -207,7 +207,7 @@
   },
   {
    "kind": "field",
-   "text": "17 лист., 02:09",
+   "text": "17 лист., 03:48",
    "label": "Запланована дата",
    "name": "schedule_date",
    "required": true

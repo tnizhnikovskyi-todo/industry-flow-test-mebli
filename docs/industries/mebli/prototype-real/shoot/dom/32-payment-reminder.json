@@ -290,7 +290,7 @@
   },
   {
    "kind": "field",
-   "text": "10 лист.",
+   "text": "11 лист.",
    "label": "Прогнозна дата?",
    "name": "td_forecast_date",
    "required": false

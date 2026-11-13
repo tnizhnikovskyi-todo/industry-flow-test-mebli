@@ -324,3 +324,45 @@ msgstr ""
 "!!! Встановіть для завдання терміновий пріоритет\n"
 "\n"
 "Переконайтеся, що ви використовуєте правильний формат і порядок, наприклад, Покращте екран конфігурації 5 год. #feature #v16 @Mitchell !"
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__td_forecast_shift_done
+msgid "Handled Forecast Shift, days"
+msgstr "Опрацьований зсув прогнозу, дн."
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_install_reminded_for
+msgid "Installation Reminder Sent for"
+msgstr "Нагадування про монтаж надіслано на"
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_payment_reminded_for
+msgid "Payment Reminder Sent for"
+msgstr "Нагадування про доплату надіслано на"
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_payment_reminded_for
+msgid ""
+"The date of the visit for which the payment before the installation was "
+"reminded (once per visit date)."
+msgstr ""
+"Дата виїзду, для якої нагадано про доплату перед монтажем (один раз на дату "
+"виїзду)."
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_install_reminded_for
+msgid ""
+"The date of the visit the customer was reminded of (once per visit date; a "
+"moved visit is reminded again)."
+msgstr ""
+"Дата виїзду, про яку нагадано клієнту (один раз на дату виїзду; перенесений "
+"виїзд — нове нагадування)."
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_sale_order__td_forecast_shift_done
+msgid ""
+"The shift of the forecast (days) for which the salesperson already got the "
+"activity; reset when the forecast comes back within the promised date."
+msgstr ""
+"Зсув прогнозу (дні), для якого продавець уже отримав дію; скидається, коли "
+"прогноз повертається в обіцяну дату."
