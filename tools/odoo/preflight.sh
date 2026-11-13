@@ -92,7 +92,8 @@ else
 fi
 # Опції odoo-bin для мови показу (reset.sh --lang / install.sh --lang): звірка з --help
 if need odoo && { have "$ob" || [[ -x "$ob" ]]; }; then
-  oh="$("$ob" --help 2>/dev/null)"
+  # C-00: в Odoo 19 `odoo-bin --help` друкує лише підкоманди; опції сервера — у `odoo-bin server --help`
+  oh="$("$ob" --help 2>/dev/null; "$ob" server --help 2>/dev/null)"
   if [[ -z "$oh" ]]; then add odoo-lang-opts WARN "odoo-bin --help порожній: --load-language/--i18n-overwrite не звірено"
   elif grep -q -- '--load-language' <<<"$oh" && grep -q -- '--i18n-overwrite' <<<"$oh"; then add odoo-lang-opts PASS "odoo-bin підтримує --load-language і --i18n-overwrite"
   else add odoo-lang-opts WARN "у odoo-bin --help немає --load-language або --i18n-overwrite: install.sh/reset.sh --lang не працюватимуть, адаптувати (C-00)"; fi

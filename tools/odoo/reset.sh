@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 # Скидання демо/тест-бази до чистого стану. Використання:
-#   [PKG_REPO=<репо>] [ODOO_EDITION=ce|ee] reset.sh <db> --yes [--modules m1,m2] [--tag <тег>] [--demo] [--lang uk_UA]
+#   [PKG_REPO=<репо>] [ODOO_EDITION=ce|ee] reset.sh <db> --yes [--modules m1,m2] [--tag <тег>] [--demo] [--lang uk_UA] [--snapshot]
+# --snapshot (C-00): спершу restore.sh <db> (знімок <db>-snap від snapshot.sh, createdb -T); знімка немає -- повний підйом нижче.
 # --lang потребує --modules (інакше FLOW_STOP, код 2). --lang: після установки модулів повторне оновлення з --i18n-overwrite (переклади view-ів потрапляють у мову показу).
 # Пересоздає базу (clean_db.sh) і, якщо задано --modules, встановлює модулі (install.sh).
 # Без --yes нічого не робить. Знімки/restore цей шаблон не реалізує (рішення C-00).
 source "$(dirname "$0")/_common.sh"
 HERE="$(dirname "$0")"
 DB="${1:-}"; shift || true
-YES=0; MODS=""; PASS=(); LANGC=""
+YES=0; MODS=""; PASS=(); LANGC=""; SNAP=0
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --yes) YES=1; shift ;;
@@ -15,6 +16,7 @@ while [[ $# -gt 0 ]]; do
     --tag) PASS+=(--tag "${2:?}"); shift 2 ;;
     --demo) PASS+=(--demo); shift ;;
     --lang) LANGC="${2:?}"; shift 2 ;;
+    --snapshot) SNAP=1; shift ;;
     *) echo "Невідомий параметр: $1" >&2; exit 2 ;;
   esac
 done
@@ -22,6 +24,12 @@ guard_db "$DB"
 check_edition
 if [[ -n "$LANGC" && -z "$MODS" ]]; then echo "FLOW_STOP: --lang $LANGC без --modules не має ефекту (мова застосовується лише при установці модулів); додайте --modules або приберіть --lang" >&2; exit 2; fi
 [[ $YES -eq 1 ]] || { echo "Потрібен --yes (база $DB буде видалена й створена знову)" >&2; exit 2; }
+if (( SNAP )); then
+  set +e; "$HERE/restore.sh" "$DB"; rc=$?; set -e
+  if [[ $rc -eq 0 ]]; then echo "OK reset: $DB (зі знімка)"; exit 0; fi
+  [[ $rc -eq 4 ]] || { echo "FAIL reset: restore.sh код $rc"; exit 1; }
+  echo "WARN reset: знімка немає — повний підйом" >&2
+fi
 "$HERE/clean_db.sh" "$DB" ${PASS[@]+"${PASS[@]}"}
 if [[ -n "$MODS" ]]; then
   if [[ -n "$LANGC" ]]; then

@@ -16,5 +16,6 @@ chk needs FAIL playwright --profile repo --needs odoo,browser; chk needs SKIP od
 chk step FAIL odoo19 --profile repo --step A-21; chk step2 SKIP odoo19 --profile repo --step A-21c; chk unknown WARN profile --profile zzz; chk unknown FAIL odoo19 --profile zzz
 chk step3 FAIL sources-push --profile research-internal --step A-05; chk step3 SKIP sources-push --profile research --step A-05
 chk none WARN sources-push
-chk none WARN core-deps-script --needs odoo
+# C-00: check_core_deps.py уже скопійовано в tools/odoo -> PASS; без нього -> WARN
+chk none "$([[ -f "$D/check_core_deps.py" ]] && echo PASS || echo WARN)" core-deps-script --needs odoo
 exit $fail

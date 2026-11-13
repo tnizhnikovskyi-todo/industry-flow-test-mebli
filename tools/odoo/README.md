@@ -1,5 +1,9 @@
 # Шаблони tools/odoo (C-00)
 
+> **Стан у цьому репо (тест «меблі»):** шаблони адаптовано під локальне середовище й прогнано на Odoo 19.0 CE — розділ
+> «Адаптація C-00 (тест «меблі»)» наприкінці; звіт `tests/reports/C-00.md`. Перед викликом Python-скриптів і `preflight.sh`:
+> `source tools/odoo/env.local.sh` (bash-скрипти підключають його самі через `_common.sh`).
+
 Шаблони, не готові скрипти: C-00 (людина) копіює їх у `tools/odoo/` репо пакета й адаптує. Агенти не вигадують параметрів — лише викликають те, що є в `tools/odoo/`. Не перевірялись на реальному Odoo 19 (лише на stub `odoo-bin`): C-00 обов'язково проганяє їх на тестовій базі.
 
 ## Захист
@@ -24,12 +28,13 @@
 | `apply.py` | `modules\|shell\|rpc --db <db> ...` | застосування конфіг-пакета: `-u` модулів з data-файлами в manifest; `odoo-bin shell` зі скриптом; upsert за xml-id із `plan.json` через XML-RPC (`--dry-run`). Підсумок JSON `{created,updated,unchanged,manual,errors}`; `modules` після `-u` перевіряє `installed` (інакше rc=1) |
 | `validate.py` | `--db <db> --expect expect.json` | лише читання (XML-RPC): модулі `installed`, `ir.config_parameter`, записи за xml-id проти очікуваного; `PASS`/`FAIL`, код 1 при розбіжностях |
 | `run_tests.sh` | `<db> <module> [test-tags]` | `-u <module> --test-enable --test-tags` (за замовч. `/<module>`); `RESULT: PASS` лише якщо в логу є підсумок і тестів > 0, інакше `FAIL ... (no tests ran)` |
-| `import.sh` | `<db> <model> <csv>` | заглушка: канал імпорту реалізує C-00 (код 4) |
-| `reset.sh` | `<db> --yes [--modules m] [--tag T] [--demo] [--lang L]` (`--lang` лише з `--modules`, інакше `FLOW_STOP`) | clean_db + install; знімків немає (`PKG_REPO` для `--tag`) |
+| `import.sh` | `<db> <model> <csv>` \| `<db> --dir <master-data> [--exclude f1,f2] [--out res.json]` | C-00: ORM `load()` (= base_import) через `odoo-bin shell` (`import_shell.py`); `--dir` — порядок README A-13 (`*.csv`, потім `td/*.csv` за іменем); файл = транзакція, перша помилка — стоп, код 1 |
+| `snapshot.sh` / `restore.sh` | `<db>` | C-00: знімок `<db>-snap` (`createdb -T` + копія filestore) / відновлення; `restore.sh` без знімка — код 4 |
+| `reset.sh` | `<db> --yes [--modules m] [--tag T] [--demo] [--lang L] [--snapshot]` (`--lang` лише з `--modules`, інакше `FLOW_STOP`) | clean_db + install; C-00: `--snapshot` — спершу `restore.sh` (є знімок — готово), інакше повний підйом |
 | `preflight.sh` | `[--edition ce\|ee\|both] [--profile P]` | передпольотна перевірка середовища, JSON, без побічних дій |
 | `check_core_deps.py` | `--addons package/addons [--licenses F] [--ee-modules F] [--odoo-addons D1,D2]` | копія зі складу `ci-pipeline-builder/scripts/` (кладе C-00, див. `c00-checklist.md`); JSON `CORE-*`, код 1 при FAIL; лише stdlib |
 | `serve.sh` | `<db> <port>` | старт HTTP-сервера Odoo (`--http-port`, `--workers=0`) для зйомки A-21; викликає `prototype-builder/run_all.sh` (альтернатива — `ODOO_SERVE_CMD`); без обох зйомка зупиняється з `FLOW_STOP` |
-| `smoke.sh` | `<db> <modules>` | модулі `installed` + оновлення без ERROR |
+| `smoke.sh` | `<db> <modules> [--script smoke.py]` | модулі `installed` + оновлення без ERROR; C-00: `--script` — бізнес-smoke (`odoo-bin shell`, PASS лише з рядком `SMOKE OK`) |
 
 ## apply.py / validate.py (еталони, рішення q17)
 `ODOO_ALLOWED_HOSTS` — список хостів через кому або пробіл (однаково для `_common.sh`, `apply.py`, `validate.py`).
@@ -60,3 +65,38 @@ bash >= 4.4 (macOS: `brew install bash`), PostgreSQL-клієнти (`createdb`,
 | `master-data-template-builder` | імпорт шаблонів | `import.sh` (заглушка); перевірка результату — `validate.py` (`records`) |
 | `config-as-code` | `install.sh`/`apply.py`/`validate.py` (CLI-контракт у `config-package-format.md`) | еталони тут; контракт `--answers`/`bin/*` НЕ реалізовано, сигнатури різні (див. вище) |
 | `package-release-builder`, `odoo-version-migrator` | чиста база, установка, smoke | `clean_db.sh`, `install.sh --addons-src --tag`, `smoke.sh`, `validate.py` |
+
+## Адаптація C-00 (тест «меблі», 2026-11-13; рішення AI за дорученням власника, власник має вето)
+Середовище: Odoo 19.0 CE `/home/user/odoo19/src` @ `40e9be2b` (venv `/home/user/odoo19/venv`), PostgreSQL 16 локально (unix-сокет), EE недоступна.
+
+| Що | Як адаптовано |
+|---|---|
+| Змінні | `env.local.sh` (лише значення за замовчуванням; задані раніше змінні не перезаписує): `ODOO_BIN=tools/odoo/odoo-bin.sh` (обгортка `$ODOO_PY $ODOO_SRC_BIN` — shebang `odoo-bin` = системний python3 без залежностей), `ODOO_CONF=/home/user/odoo19/odoo-tools.conf` (створюється з `odoo.conf.example`; головний `/home/user/odoo19/odoo.conf` не чіпається), `ODOO_DELIVERY_DIR=/home/user/odoo19/delivery` (окремий каталог доставки, поза репо), `ODOO_ADDONS_PATH=<src>/addons,<src>/odoo/addons,$ODOO_DELIVERY_DIR` (без `package/addons` головного чекауту), `ODOO_DATA_DIR=/home/user/odoo19/data-tools`, `ODOO_ALLOWED_HOSTS=localhost,127.0.0.1`, `ODOO_EDITION=ce`, `PKG_REPO` = корінь git. Вимкнути автопідключення: `FLOW_ENV_LOCAL=0` |
+| Демо-дані | звірено з `odoo-bin server --help` (Odoo 19): `ODOO_DEMO_OPT=--with-demo`, `ODOO_NODEMO_OPT=--without-demo=True` (без демо — умовчання 19) |
+| Мова | `--load-language`, `--i18n-overwrite` є в `odoo-bin server --help`; `preflight.sh` тепер читає і `server --help` (в Odoo 19 `odoo-bin --help` друкує лише підкоманди) |
+| `apply.py shell` | дефект шаблону: `odoo-bin -c … shell` → «server: error: unrecognized parameters: shell»; підкоманда тепер перед `-c/--addons-path`, + `--no-http`; для не-rpc режимів — перевірка `PGHOST` за `ODOO_ALLOWED_HOSTS` (як `_common.sh`) |
+| `odoo-bin shell` і коміт | НЕ комітить сам: скрипти роблять явний `env.cr.commit()` (`import_shell.py`, `config_shell.py`, seed-и) |
+| Підсумок тестів | Odoo 19: `odoo.tests.result: <F> failed, <E> error(s) of <N> tests when loading database '<db>'` → `TESTS_SUMMARY_RE`; `run_tests.sh` додатково FAIL при F/E > 0 і друкує `SKIPPED: <n>` (рядки `…: skipped …`) |
+| `import.sh` | реалізовано: ORM `load()` (канал base_import) через `odoo-bin shell`; `--dir` — порядок README A-13 |
+| Знімок | `snapshot.sh`/`restore.sh` (`createdb -T` + filestore); `reset.sh --snapshot`; `clean_db.sh` — `dropdb --force` і очищення filestore бази |
+| Стан модуля | `ir_module_module.state = 'installed'` — підтверджено на Odoo 19 |
+| `validate.py` | під `python3 -I` не імпортувався `apply` (каталог скрипта не в `sys.path`) — додано; XML-RPC потребує запущеного сервера (`serve.sh`) і `ODOO_URL/ODOO_LOGIN/ODOO_API_KEY` |
+
+### Адаптер конфіг-пакета (`apply.py plan|config`; формат `package/config/`: `manifest.yaml` format 2, `vp-map.yaml`, `data/*.yaml`)
+Контракт `config-package-format.md` (`install.sh --db --answers`, `bin/validate.py --answers`) і еталони (`install.sh <db> <modules>`, `validate.py --db --expect`) різні — питання сигнатур вирішує людина (`tests/open-questions.md`); робочий варіант без зміни контракту:
+- `python3 -I tools/odoo/apply.py plan --config package/config --answers <answers.yaml> [--out plan.json]` — відповіді = default схеми `package/templates/answers.yaml` + файл; правила `preflight` (error → код 1, «PREFLIGHT STOP»); друкує модулі профілю за `when` (без `auto_install`-мостів) через кому — вхід для `install.sh`.
+- `python3 -I tools/odoo/apply.py config --db <db> --config package/config --answers <answers.yaml> [--mode apply|compare|readback] [--out res.json]` — `config_plan.py` + `odoo-bin shell` зі скриптом `config_shell.py` (семантика `apply-semantics.md`: upsert за xml-id `td_config.*`, `xmlid_target`, `applies_if`, `res.config.settings.execute()` останнім, `try_loading` плану рахунків); `compare` — повтор без запису (ідемпотентність: diff/missing = 0, інакше код 1); `readback` — значення VP за `vp-map.yaml` (FAIL → код 1). Потребує PyYAML (системний `python3`; у venv Odoo його немає).
+- Обмеження: `config_shell.py` має пакетні read-back-пункти «меблі» (шаблони AC-030, нагадування AC-004, `TD_FEATURES`) — для іншого пакета адаптувати; вирази `transform.expr`/`when` виконуються `eval` (довірені файли репо пакета).
+
+### Порядок підйому тестової бази (перевірено, `tests/reports/C-00.md`)
+```
+source tools/odoo/env.local.sh
+MODS=$(python3 -I tools/odoo/apply.py plan --config package/config --answers package/templates/answers.example.yaml)
+tools/odoo/clean_db.sh test-c00-a
+tools/odoo/install.sh test-c00-a "$MODS" --addons-src package/addons --lang uk_UA
+tools/odoo/install.sh test-c00-a "$MODS" --update --lang uk_UA --i18n-overwrite
+python3 -I tools/odoo/apply.py config --db test-c00-a --config package/config --answers package/templates/answers.example.yaml   # + --mode compare, --mode readback
+tools/odoo/import.sh test-c00-a --dir package/master-data          # light: --exclude td/19b_res.partner.csv,td/20b_product.product.csv,td/21b_hr.employee.csv
+tools/odoo/smoke.sh test-c00-a "$MODS"
+tools/odoo/run_tests.sh test-c00-a td_mebli_base
+```

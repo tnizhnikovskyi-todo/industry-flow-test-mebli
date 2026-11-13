@@ -5,6 +5,9 @@
   modules  --db DB --modules a,b                       odoo-bin -u <модулі>: підхоплює data-файли з manifest (XML/CSV); потім перевірка state=installed
                                                        (psql, як require_installed в install.sh), інакше rc=1. Доставку модулів робить install.sh --addons-src.
   shell    --db DB --script FILE.py                    odoo-bin shell -d DB < FILE.py (змінна `env` у скрипті).
+  plan     --config package/config --answers A.yaml [--out plan.json]   (C-00) preflight + модулі профілю (друкує через кому).
+  config   --db DB --config package/config --answers A.yaml [--mode apply|compare|readback] [--out res.json]
+           (C-00, адаптер формату package/config/: manifest.yaml format 2 + vp-map.yaml + data/*.yaml; odoo-bin shell + config_shell.py).
                                                        Скрипт сам викликає env.cr.commit(): інакше зміни відкочуються (припущення, звірити).
   rpc      --db DB --plan plan.json [--dry-run]        upsert за xml-id через XML-RPC /xmlrpc/2 (execute_kw).
 Формат plan.json: [{"xmlid": "td_config.vp_01", "model": "res.partner", "values": {"name": "X"}}, ...]
@@ -48,8 +51,24 @@ def guard_host(url):
         stop("хост '%s' не в ODOO_ALLOWED_HOSTS" % host)
 
 
-def odoo_base():
-    args = [os.environ.get("ODOO_BIN", "odoo-bin")]
+def load_env_local():
+    """C-00 (тест «меблі»): значення за замовчуванням з env.local.sh (як _common.sh); задані змінні не перезаписуються."""
+    f = os.path.join(os.path.dirname(os.path.abspath(__file__)), "env.local.sh")
+    if os.environ.get("FLOW_ENV_LOCAL", "1") == "0" or not os.path.isfile(f):
+        return
+    try:
+        out = subprocess.run(["bash", "-c", 'source "$1" >/dev/null 2>&1; env -0', "_", f], capture_output=True, check=True).stdout
+    except (OSError, subprocess.CalledProcessError) as e:
+        stop("env.local.sh не завантажився: %s" % e)
+    for kv in out.split(b"\0"):
+        k, _, v = kv.decode("utf-8", "replace").partition("=")
+        if k and k not in os.environ:
+            os.environ[k] = v
+
+
+def odoo_base(cmd=None):
+    # C-00: підкоманда odoo-bin (shell) має йти ПЕРЕД -c/--addons-path (інакше Odoo 19: «server: error: unrecognized parameters: shell»)
+    args = [os.environ.get("ODOO_BIN", "odoo-bin")] + ([cmd] if cmd else [])
     if os.environ.get("ODOO_CONF"):
         args += ["-c", os.environ["ODOO_CONF"]]
     ap = os.environ.get("ODOO_ADDONS_PATH", "")
@@ -167,6 +186,58 @@ def cmd_rpc(a):
     return 1 if res["errors"] else 0
 
 
+def cmd_config(a):
+    """plan: answers + package/config -> plan.json (preflight, модулі за when, пункти даних); друкує модулі через кому.
+    config: plan + odoo-bin shell зі скриптом config_shell.py (apply|compare|readback); підсумок JSON, код 1 при errors/FAIL."""
+    import tempfile
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import config_plan  # потребує PyYAML (системний python3), не stdlib
+    plan = config_plan.build(a.config, a.answers)
+    mode = getattr(a, "cfg_mode", None) or "plan"
+    errs = [x for x in plan["preflight"] if x["on_violation"] == "error"]
+    if mode == "plan":
+        if a.out:
+            with open(a.out, "w", encoding="utf-8") as f:
+                json.dump(plan, f, ensure_ascii=False, default=str)
+        for x in plan["preflight"]:
+            sys.stderr.write("PREFLIGHT %s %s: %s\n" % (x["on_violation"], x["id"], x["message"]))
+        if errs:
+            sys.stderr.write("PREFLIGHT STOP: %s\n" % ",".join(x["id"] for x in errs))
+            return 1
+        print(",".join(plan["modules"]))
+        return 0
+    if errs:
+        print(json.dumps({"preflight": "STOP", "errors": [x["id"] + ": " + x["message"] for x in errs]}, ensure_ascii=False))
+        return 1
+    with tempfile.TemporaryDirectory() as td:
+        pin, pout = os.path.join(td, "plan.json"), a.out or os.path.join(td, "out.json")
+        with open(pin, "w", encoding="utf-8") as f:
+            json.dump(plan, f, ensure_ascii=False, default=str)
+        os.environ.update({"CFG_IN": pin, "CFG_MODE": mode, "CFG_OUT": pout})
+        src = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "config_shell.py"), encoding="utf-8").read()
+        try:
+            p = subprocess.run(odoo_base("shell") + ["-d", a.db, "--no-http", "--log-level=warn"], input=src, capture_output=True, text=True)
+        except OSError as e:
+            stop("не вдалося запустити odoo-bin: %s" % e)
+        tb = [l for l in (p.stdout + p.stderr).splitlines() if re.search(r" (ERROR|CRITICAL) |Traceback", l)]
+        for l in tb[:20]:
+            print(l, file=sys.stderr)
+        try:
+            res = json.load(open(pout, encoding="utf-8"))
+        except (OSError, ValueError):
+            print(json.dumps({"errors": ["config_shell.py не записав результат (код %d)" % p.returncode]}, ensure_ascii=False))
+            return 1
+    cnt = res["counts"]
+    rb_fail = [x["vp"] for x in res.get("readback", []) if x.get("status") == "FAIL"]
+    summary = {"mode": mode, "created": cnt["created"], "updated": cnt["updated"], "unchanged": cnt["unchanged"],
+               "manual": cnt["manual"], "skipped": cnt["skipped"], "diff": cnt.get("diff", 0), "missing": cnt.get("missing", 0),
+               "errors": [x for x in res["log"] if str(x[1]).startswith(("ERROR", "blocked"))],
+               "readback": {"checked": len(res.get("readback", [])), "failed": rb_fail} if mode == "readback" else None}
+    print(json.dumps(summary, ensure_ascii=False))
+    bad = cnt["errors"] or rb_fail or (mode == "compare" and (cnt.get("diff") or cnt.get("missing")))
+    return 1 if bad or p.returncode != 0 else 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="mode", required=True)
@@ -174,8 +245,21 @@ def main():
     s = sub.add_parser("shell"); s.add_argument("--db", required=True); s.add_argument("--script", required=True)
     r = sub.add_parser("rpc"); r.add_argument("--db", required=True); r.add_argument("--plan", required=True)
     r.add_argument("--dry-run", action="store_true")
+    # C-00 (адаптер до формату package/config/: manifest.yaml format 2, vp-map.yaml, data/*.yaml) -- див. README «Адаптер конфіг-пакета»
+    c = sub.add_parser("config"); c.add_argument("--db", required=True); c.add_argument("--config", required=True)
+    c.add_argument("--answers", required=True); c.add_argument("--mode", dest="cfg_mode", choices=["apply", "compare", "readback"], default="apply")
+    c.add_argument("--out", help="JSON з повним результатом (лог пунктів, read-back)")
+    p = sub.add_parser("plan"); p.add_argument("--config", required=True); p.add_argument("--answers", required=True)
+    p.add_argument("--out", help="plan.json (відповіді, preflight, модулі, пункти даних)"); p.add_argument("--db", default=None)
     a = ap.parse_args()
+    load_env_local()
+    if a.mode == "plan":
+        return cmd_config(a)
     guard_db(a.db)
+    if a.mode != "rpc":  # C-00: як guard_db у _common.sh -- PGHOST (типово localhost) має бути в ODOO_ALLOWED_HOSTS
+        allowed = [h.strip() for h in os.environ.get("ODOO_ALLOWED_HOSTS", "").replace(" ", ",").split(",") if h.strip()]
+        if os.environ.get("PGHOST", "localhost") not in allowed:
+            stop("сервер БД '%s' не в ODOO_ALLOWED_HOSTS; відмова" % os.environ.get("PGHOST", "localhost"))
     if a.mode == "modules":
         for x in a.modules.split(","):
             if not MOD_OK.fullmatch(x):
@@ -186,7 +270,9 @@ def main():
             src = open(a.script, encoding="utf-8").read()
         except OSError as e:
             stop("не вдалося прочитати --script: %s" % e)
-        return run_logged(odoo_base() + ["shell", "-d", a.db, "--log-level=warn"], a.db, stdin=src)
+        return run_logged(odoo_base("shell") + ["-d", a.db, "--no-http", "--log-level=warn"], a.db, stdin=src)
+    if a.mode in ("config", "plan"):
+        return cmd_config(a)
     return cmd_rpc(a)
 
 

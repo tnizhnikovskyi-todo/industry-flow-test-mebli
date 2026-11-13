@@ -2,6 +2,11 @@
 # Спільні функції шаблонів tools/odoo (C-00 адаптує під інфраструктуру клієнта).
 # Підключається через: source "$(dirname "$0")/_common.sh"
 set -euo pipefail
+# C-00 (тест «меблі»): локальні значення за замовчуванням (env.local.sh не перезаписує вже задані змінні); FLOW_ENV_LOCAL=0 — вимкнути.
+if [[ "${FLOW_ENV_LOCAL:-1}" != "0" && -f "$(dirname "${BASH_SOURCE[0]}")/env.local.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "$(dirname "${BASH_SOURCE[0]}")/env.local.sh"
+fi
 if (( BASH_VERSINFO[0] < 4 || (BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] < 4) )); then
   echo "FLOW_STOP: потрібен bash >= 4.4 (macOS: встановити через brew)" >&2; exit 2
 fi

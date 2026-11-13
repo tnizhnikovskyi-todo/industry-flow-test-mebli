@@ -31,5 +31,10 @@ SUMMARY="$(grep -E "$TESTS_SUMMARY_RE" "$LOG" | tail -3 || true)"
 [[ -z "$SUMMARY" ]] || echo "$SUMMARY"
 if [[ $RC -ne 0 ]] || grep -qE " (ERROR|CRITICAL) |FAIL:" "$LOG"; then echo "RESULT: FAIL $DB $MOD $TAGS"; exit 1; fi
 N="$({ echo "$SUMMARY" | grep -oE '[0-9]+ tests' || true; } | awk '{s+=$1} END{print s+0}')"
+# C-00: підсумок Odoo 19 — «odoo.tests.result: <F> failed, <E> error(s) of <N> tests when loading database ...»; F/E > 0 = FAIL.
+FE="$({ echo "$SUMMARY" | grep -oE '[0-9]+ failed, [0-9]+ error' || true; } | grep -oE '[0-9]+' | awk '{s+=$1} END{print s+0}')"
+SKIP="$(grep -cE 'odoo\.addons\.[a-z0-9_.]+: skipped ' "$LOG" || true)"
+echo "SKIPPED: ${SKIP:-0}"
+if [[ "${FE:-0}" -gt 0 ]]; then echo "RESULT: FAIL $DB $MOD $TAGS (failed/errors: $FE)"; exit 1; fi
 if [[ -z "$SUMMARY" || "$N" -le 0 ]]; then echo "RESULT: FAIL $DB $MOD $TAGS (no tests ran)"; exit 1; fi
 echo "RESULT: PASS $DB $MOD $TAGS"

@@ -8,7 +8,8 @@ expect.json: {"modules": ["stock","mrp"],                       # ir.module.modu
 Вихід: рядки PASS/FAIL, останній -- JSON {"checked","failed"}. Коди: 0 усе збіглося, 1 є розбіжності, 2 запуск/захист.
 Відкрите для C-00: модель/поле стану модуля (ir.module.module.state) і ir.config_parameter у Odoo 19 звірити з реальною базою.
 """
-import argparse, json, sys
+import argparse, json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))  # C-00: `python3 -I` не додає каталог скрипта в sys.path
 import apply as A  # той самий каталог: guard_db, guard_host, rpc_conn, norm
 
 
@@ -17,6 +18,7 @@ def main():
     ap.add_argument("--db", required=True)
     ap.add_argument("--expect", required=True)
     a = ap.parse_args()
+    A.load_env_local()
     A.guard_db(a.db)
     exp = A.load_json(a.expect)
     if not isinstance(exp, dict):

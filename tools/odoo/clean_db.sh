@@ -32,7 +32,9 @@ if [[ $DEMO -eq 1 ]]; then
 else
   [[ -n "${ODOO_NODEMO_OPT:-}" ]] && read -ra DEMO_ARGS <<<"$ODOO_NODEMO_OPT" || echo "WARN: ODOO_NODEMO_OPT не задано; наявність демо-даних залежить від умовчань Odoo (відкрите питання C-00)" >&2
 fi
-dropdb --if-exists "$DB"
+dropdb --if-exists --force "$DB"   # C-00: --force (PostgreSQL 13+) закриває залишкові з'єднання
+# C-00: filestore старої бази з тим самим ім'ям (data_dir конфігу tools) — прибрати, щоб вкладення не «воскресали»
+[[ -z "${ODOO_DATA_DIR:-}" ]] || rm -rf -- "${ODOO_DATA_DIR:?}/filestore/$DB"
 createdb "$DB"
 odoo_args
 LOG="$(mktemp)"; trap 'rm -f "$LOG"' EXIT
