@@ -20,7 +20,7 @@ msgstr ""
 #: model:mail.template,body_html:td_mebli_notify.mail_template_td_briefing
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\" class=\"td_briefing\">\n"
-"    <t t-set=\"data\" t-value=\"object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
+"    <t t-set=\"data\" t-value=\"briefing or object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
 "    <p><strong>Orders at risk: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
 "    <ul t-if=\"data['at_risk']\">\n"
 "        <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> d. · <t t-out=\"row['reason']\"/></li>\n"
@@ -43,7 +43,7 @@ msgid ""
 "        "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\" class=\"td_briefing\">\n"
-"    <t t-set=\"data\" t-value=\"object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
+"    <t t-set=\"data\" t-value=\"briefing or object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
 "    <p><strong>Замовлення під загрозою: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
 "    <ul t-if=\"data['at_risk']\">\n"
 "        <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> дн. · <t t-out=\"row['reason']\"/></li>\n"
@@ -240,8 +240,8 @@ msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_briefing
-msgid "Morning briefing {{ format_date(datetime.date.today()) }}"
-msgstr "Ранковий брифінг {{ format_date(datetime.date.today()) }}"
+msgid "Morning briefing {{ format_date(ctx.get('td_today') or datetime.date.today()) }}"
+msgstr "Ранковий брифінг {{ format_date(ctx.get('td_today') or datetime.date.today()) }}"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_new_date
@@ -282,8 +282,8 @@ msgstr "Надсилає менеджер, коли дата замовленн�
 
 #. module: td_mebli_notify
 #: model:mail.template,description:td_mebli_notify.mail_template_td_briefing
-msgid "Sent every morning to the owners (group of the dashboard)"
-msgstr "Щоранку власникам (група дашборда)"
+msgid "Sent every morning to each owner (group of the dashboard) personally, figures of his companies"
+msgstr "Щоранку кожному власнику (група дашборда) особисто, цифри його компаній"
 
 #. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_project_task
