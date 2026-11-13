@@ -10,7 +10,7 @@
     'category': 'Human Resources/Attendances',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['hr_attendance'],
+    'depends': ['td_mebli_base', 'hr_attendance'],
     'data': [
         'security/ir.model.access.csv',
         'wizard/timesheet_export_views.xml',

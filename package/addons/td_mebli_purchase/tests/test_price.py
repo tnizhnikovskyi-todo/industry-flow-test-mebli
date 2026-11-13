@@ -32,3 +32,27 @@ class TestPriceHistory(TransactionCase):
         old = buy(30.0, 400)
         old._compute_td_history_price()
         self.assertFalse(old.td_over_history)  # no history in 180 days before it
+
+    def test_ac_085_threshold_from_the_company(self):
+        """VP-11: the threshold «price above history» is the parameter of the company (td_mebli_base), not a constant."""
+        env = self.env
+        vendor = env['res.partner'].create({'name': 'Vendor'})
+        product = env['product.product'].create({'name': 'Handle', 'type': 'consu'})
+        now = fields.Datetime.now()
+
+        def buy(price, days_ago):
+            order = env['purchase.order'].create({'partner_id': vendor.id, 'date_order': now - timedelta(days=days_ago),
+                                                  'order_line': [(0, 0, {'product_id': product.id, 'product_qty': 10,
+                                                                         'price_unit': price})]})
+            order.button_confirm()
+            order.date_order = now - timedelta(days=days_ago)
+            return order.order_line
+
+        buy(100.0, 30)
+        line = buy(108.0, 1)  # +8 %
+        env.company.td_price_threshold_pct = 5.0
+        line._compute_td_history_price()
+        self.assertTrue(line.td_over_history)
+        env.company.td_price_threshold_pct = 10.0
+        line._compute_td_history_price()
+        self.assertFalse(line.td_over_history)

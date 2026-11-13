@@ -5,7 +5,7 @@
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['mrp_account', 'stock', 'base_import'],
+    'depends': ['td_mebli_base', 'mrp_account', 'stock', 'base_import'],
     'data': [
         'data/decimal_precision.xml',
         'security/ir.model.access.csv',

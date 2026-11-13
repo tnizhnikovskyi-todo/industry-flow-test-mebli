@@ -5,7 +5,7 @@
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['td_mebli_mrp', 'sale_mrp', 'sale_margin', 'sale_purchase_stock', 'purchase_mrp'],
+    'depends': ['td_mebli_base', 'td_mebli_mrp', 'sale_mrp', 'sale_margin', 'sale_purchase_stock', 'purchase_mrp'],
     'data': [
         'security/ir.model.access.csv',
         'security/purchase_security.xml',

@@ -1105,3 +1105,14 @@ msgstr "— Покупець"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "— the Seller"
 msgstr "— Продавець"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/payment_term.py:0
+msgid "Set the contract mode in the company settings (Sales → Settings)"
+msgstr "Задайте режим договору в налаштуваннях компанії (Продажі → Налаштування)"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_report_td_mebli_sale_report_contract
+msgid "Printed contract of the order"
+msgstr "Друкований договір замовлення"

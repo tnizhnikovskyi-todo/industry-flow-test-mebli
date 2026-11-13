@@ -1,6 +1,5 @@
-from odoo import fields, models
-
-CONTRACT_PARAM = 'td_mebli_sale.contract_mode'  # «work» (contract work, default) or «sale» (sale contract)
+from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class AccountPaymentTermLine(models.Model):
@@ -23,8 +22,13 @@ class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     def _td_contract_mode(self):
-        """Printed contract: «work» (contract work, made to the measurements of the customer) or «sale» (sale contract)."""
-        return self.env['ir.config_parameter'].sudo().get_param(CONTRACT_PARAM, 'work')
+        """Printed contract: «contract» (contract work, made to the measurements of the customer) or «sale» (sale
+        contract) — the parameter of the company of the order (td_mebli_base, contract_mode of the questionnaire)."""
+        self.ensure_one()
+        mode = self.company_id.td_contract_mode
+        if not mode:
+            raise UserError(self.env._("Set the contract mode in the company settings (Sales → Settings)"))
+        return mode
 
     def _td_payment_schedule(self):
         """The payment schedule of the printed contract: the lines of the standard payment terms of the order with their
@@ -39,11 +43,14 @@ class SaleOrder(models.Model):
         return rows
 
 
-class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+class ReportContract(models.AbstractModel):
+    """AC-034: without the contract mode of the company the PDF of the contract is not made."""
+    _name = 'report.td_mebli_sale.report_contract'
+    _description = 'Printed contract of the order'
 
-    td_mebli_contract_mode = fields.Selection(
-        [('work', 'Contract work'), ('sale', 'Sale contract')], string='Printed Contract', default='work',
-        config_parameter=CONTRACT_PARAM,
-        help="Contract work: the furniture is made to the measurements of the customer (the usual case). Sale contract: "
-             "ready-made furniture from the catalogue. Both texts are templates to be checked by a lawyer.")
+    @api.model
+    def _get_report_values(self, docids, data=None):
+        docs = self.env['sale.order'].browse(docids)
+        for order in docs:
+            order._td_contract_mode()
+        return {'doc_ids': docids, 'doc_model': 'sale.order', 'docs': docs, 'data': data}

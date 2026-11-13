@@ -19,9 +19,9 @@
         <field name="arch" type="xml">
             <xpath expr="//block[@name='quotation_order_setting_container']" position="after">
                 <block title="Furniture Documents" name="td_mebli_documents">
-                    <setting id="td_mebli_contract_mode" string="Printed Contract"
+                    <setting id="td_mebli_contract_mode" string="Printed Contract" company_dependent="1"
                              help="The text of the contract printed from the order (a template to be checked by a lawyer).">
-                        <field name="td_mebli_contract_mode" widget="radio"/>
+                        <field name="td_contract_mode" widget="radio"/>
                     </setting>
                 </block>
             </xpath>

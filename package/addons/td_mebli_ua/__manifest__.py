@@ -11,7 +11,7 @@
     'category': 'Accounting/Localizations',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['sale'],
+    'depends': ['td_mebli_base', 'sale'],
     'data': [
         'data/ir_cron_data.xml',
         'views/views.xml',

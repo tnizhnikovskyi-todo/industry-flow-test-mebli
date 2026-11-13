@@ -3,7 +3,6 @@ from datetime import timedelta
 from odoo import api, fields, models
 
 HISTORY_DAYS = 180
-OVER_PCT = 5.0
 
 
 class PurchaseOrderLine(models.Model):
@@ -32,4 +31,4 @@ class PurchaseOrderLine(models.Model):
             line.td_history_price = history
             line.td_price_delta_pct = (line.price_unit - history) / history * 100.0 if history else 0.0
             line.td_overpay = (line.price_unit - history) * line.product_qty if history and line.price_unit > history else 0.0
-            line.td_over_history = bool(history) and line.td_price_delta_pct > OVER_PCT
+            line.td_over_history = bool(history) and line.td_price_delta_pct > line.company_id.td_price_threshold_pct  # VP-11

@@ -10,7 +10,7 @@
     'category': 'Manufacturing/Maintenance',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['maintenance', 'mrp'],
+    'depends': ['td_mebli_base', 'maintenance', 'mrp'],
     'data': [
         'views/maintenance_views.xml',
     ],

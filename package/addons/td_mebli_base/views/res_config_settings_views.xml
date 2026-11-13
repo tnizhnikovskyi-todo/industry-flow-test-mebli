@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- tr/td_mebli_base.md §3: section «Furniture» of the settings. The contract mode is shown in the Sales settings
+         (td_mebli_sale), the error of AC-034 points there. -->
+    <record id="res_config_settings_view_form_td_mebli_base" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.td.mebli.base</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Furniture" string="Furniture" name="td_mebli_base" groups="base.group_system">
+                    <block title="Contract and Payment" name="td_mebli_payment">
+                        <setting string="Payment Control Before the Visit" company_dependent="1"
+                                 help="What happens when the crew is sent to an order with unpaid payments before the installation.">
+                            <field name="td_payment_control" widget="radio"/>
+                        </setting>
+                        <setting string="Payment Reminder" company_dependent="1"
+                                 help="Days before the visit when the customer is reminded of the payment (1–7).">
+                            <field name="td_pay_reminder_days" class="text-center" style="width: 6ch;"/> <span>days</span>
+                        </setting>
+                        <setting string="Texts Checked by a Lawyer" company_dependent="1"
+                                 help="Removes the mark «Template to be checked by a lawyer» from the contract and the acts.">
+                            <field name="td_legal_checked"/>
+                        </setting>
+                        <setting string="Salesman Sees the Margin" company_dependent="1"
+                                 help="The users of «Sales: own documents» see the costs and the margin of the orders.">
+                            <field name="td_margin_to_salesman"/>
+                        </setting>
+                    </block>
+                    <block title="Installation" name="td_mebli_install">
+                        <setting string="Crew Percent" company_dependent="1"
+                                 help="Default percent of the order amount for the crew of a new act.">
+                            <field name="td_crew_pct" class="text-center" style="width: 8ch;"/> <span>%</span>
+                        </setting>
+                        <setting string="Crew Percent Split" company_dependent="1">
+                            <field name="td_crew_split" widget="radio"/>
+                        </setting>
+                        <setting string="Crew Percent Base" company_dependent="1">
+                            <field name="td_crew_base" widget="radio"/>
+                        </setting>
+                        <setting string="Installation in the Order Price" company_dependent="1"
+                                 help="The installation is a service line with a zero price.">
+                            <field name="td_install_in_price"/>
+                        </setting>
+                        <setting string="Act Checklist" company_dependent="1" help="Points of the installation act, one per line.">
+                            <field name="td_act_checklist" class="w-100"/>
+                        </setting>
+                    </block>
+                    <block title="Control" name="td_mebli_control">
+                        <setting string="Stuck Orders" company_dependent="1" help="Days without a move (1–30).">
+                            <field name="td_stuck_days" class="text-center" style="width: 6ch;"/> <span>days</span>
+                        </setting>
+                        <setting string="Price Above History" company_dependent="1"
+                                 help="Percent above the average of the earlier purchases (1–50).">
+                            <field name="td_price_threshold_pct" class="text-center" style="width: 8ch;"/> <span>%</span>
+                        </setting>
+                        <setting string="Claim Overdue" company_dependent="1" help="Days of an open claim (1–60).">
+                            <field name="td_claim_overdue_days" class="text-center" style="width: 6ch;"/> <span>days</span>
+                        </setting>
+                        <setting string="Minimal Offcut" company_dependent="1" help="Smallest kept rest of a board (100–1000).">
+                            <field name="td_min_offcut_mm" class="text-center" style="width: 8ch;"/> <span>mm</span>
+                        </setting>
+                        <setting string="Board Cutting" company_dependent="1">
+                            <field name="td_cutting_mode" widget="radio"/>
+                        </setting>
+                        <setting string="Box Profile" company_dependent="1" help="Information only: functions are switched on below.">
+                            <field name="td_box_profile"/>
+                        </setting>
+                    </block>
+                    <block title="Functions of Box B" name="td_mebli_features">
+                        <setting string="Product Configurator" help="Configurator of standard products by parameters (F-03).">
+                            <field name="group_td_feature_configurator"/>
+                        </setting>
+                        <setting string="Offcuts" help="Accounting of the offcuts of boards and their reuse (F-11).">
+                            <field name="group_td_feature_offcut"/>
+                        </setting>
+                        <setting string="Cutting Batches" help="Several orders in one cutting job (F-30).">
+                            <field name="group_td_feature_cutting_batch"/>
+                        </setting>
+                        <setting string="Workshop Kiosk" help="Kiosk of the workshop by PIN, defects at the workplace (F-32, F-18).">
+                            <field name="group_td_feature_kiosk"/>
+                        </setting>
+                        <setting string="Quality Control" help="Checks of the parts and the 12th card of the dashboard (F-34).">
+                            <field name="group_td_feature_quality"/>
+                        </setting>
+                        <setting string="Label Scanning" help="Scanning of the part labels when the kit is assembled (F-29).">
+                            <field name="group_td_feature_label_scan"/>
+                        </setting>
+                        <setting string="Signature of Order Changes" help="The customer signs the change of the order in the portal (F-44).">
+                            <field name="group_td_feature_change_sign"/>
+                        </setting>
+                        <setting string="NBU Exchange Rates" help="Daily exchange rates of the National Bank for the price lists in currency (F-26).">
+                            <field name="group_td_feature_nbu"/>
+                        </setting>
+                        <setting string="AI Column Mapping" help="AI hint for the columns of an imported file (F-27); off until the provider is chosen.">
+                            <field name="group_td_feature_ai_mapping"/>
+                        </setting>
+                        <setting string="Analogs" help="Analogs of the materials when a material is short (F-57).">
+                            <field name="group_td_feature_analog"/>
+                        </setting>
+                        <setting string="Workshop Board" help="Board of the workshop on a TV screen (F-65).">
+                            <field name="group_td_feature_shop_board"/>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
