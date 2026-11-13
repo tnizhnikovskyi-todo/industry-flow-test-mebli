@@ -1,0 +1,11 @@
+# Feature-групи коробки B (VP-01, VP-02, AC-N.07). Групи td_mebli_base.group_feature_* створює A-11.
+- id: td_config.feature_groups_box
+  kind: group
+  model: res.groups
+  xmlid_target: base.group_user
+  values: {implied_ids: "{{VP-02}}"}     # додати групи з transform(VP-02); у профілі A/light — жодної
+  applies_if: {VP-01: B}
+  requires_module: td_mebli_base
+  ac: [AC-N.07, AC-011, AC-012, AC-037, AC-038, AC-050, AC-057, AC-058, AC-059, AC-060, AC-062, AC-071, AC-072, AC-073, AC-074, AC-075, AC-079, AC-088, AC-120, AC-121]
+  source: "odoo/addons/base/models/res_config.py (implied_group); tr/00-architecture.md §3"
+  manual: false

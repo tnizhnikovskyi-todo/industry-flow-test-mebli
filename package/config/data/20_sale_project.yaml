@@ -1,0 +1,36 @@
+# Продаж і монтаж (AC-019, AC-043, AC-044, AC-095, AC-117 — settings у 80_settings.yaml).
+- id: td_config.payment_term_stages
+  kind: record
+  model: account.payment.term
+  values:
+    name: "50 % передоплата / 40 % перед монтажем / 10 % після акта"
+    active: "{{VP-05}}"
+  lines:                                # створюються разом із записом (сума 100 %); порівнюються на 2-му проході
+    - {value: percent, value_amount: 50.0, nb_days: 0}
+    - {value: percent, value_amount: 40.0, nb_days: 0}
+    - {value: percent, value_amount: 10.0, nb_days: 0}
+  ac: [AC-019]
+  source: "addons/account/models/account_payment_term.py (account.payment.term, line_ids: value, value_amount, nb_days)"
+  manual: false
+  note: "відсотки — приклад SPEC AC-019, клієнт змінює в B-04; розмітка етапів td_milestone (передоплата / перед монтажем / акт) — td_mebli_sale (A-11) або B-04, у даних не задається (CFG-td-isolation)"
+- id: td_config.project_install
+  kind: record
+  model: project.project
+  values: {name: "Монтажі"}
+  ac: [AC-043, AC-095]
+  source: "addons/project/models/project_project.py (project.project); подання календаря задач — стандарт project"
+  manual: false
+- id: td_config.product_install
+  kind: record
+  model: product.template
+  values:
+    name: "Монтаж"
+    type: service
+    service_tracking: task_global_project
+    project_id: "ref:td_config.project_install"
+    sale_ok: true
+    purchase_ok: false
+  ac: [AC-043, AC-044]
+  source: "addons/sale_project/models/product_template.py (service_tracking: task_global_project, project_id)"
+  manual: false
+  note: "ціна монтажу — B-04; режим «монтаж у вартості замовлення» (VP-16) — td_param, механізм A-11"
