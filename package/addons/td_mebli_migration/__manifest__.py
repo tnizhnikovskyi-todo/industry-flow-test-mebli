@@ -8,7 +8,7 @@
                    'Odoo and is «reconciled» only with a zero difference or with an explanation signed by a manager. '
                    'The converters scripts/convert_bas.py and scripts/convert_bazis.py are command-line skeletons for '
                    'B-06: the export formats of BAS/BAF and BAZIS are not known yet (ВП-1, ВП-3).',
-    'version': '19.0.1.1.3',
+    'version': '19.0.1.1.4',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',

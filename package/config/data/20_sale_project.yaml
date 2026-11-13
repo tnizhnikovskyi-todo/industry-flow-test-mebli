@@ -16,13 +16,13 @@
   values:
     field_id: "ref:account.field_res_partner__property_payment_term_id"
     company_id: "ref:base.main_company"
-    json_value: "refjson:td_mebli_sale.payment_term_td_furniture"    # json id запису (ir.default зберігає id як JSON)
-  applies_if: {VP-05: true}
+    json_value: "{{VP-05:payment_default}}"    # json id запису (ir.default зберігає id як JSON)
+  transform_payment_default: {"true": "refjson:td_mebli_sale.payment_term_td_furniture", "false": "false"}
   requires_module: td_mebli_sale
   ac: [AC-019]
   source: "addons/account/models/partner.py:559 (property_payment_term_id, company_dependent); odoo/orm/fields.py:794 (get_company_dependent_fallback ← ir.default); addons/sale/models/sale_order.py:435 (payment_term_id ← partner.property_payment_term_id)"
   manual: false
-  note: "умова оплати за замовчуванням для покупців компанії → замовлення продажу; при VP-05 = false не застосовується"
+  note: "умова оплати за замовчуванням для покупців компанії → замовлення продажу. Спроба 4 (CHECKS №34): пункт застосовується завжди, без applies_if; при VP-05 = false json_value = false (default без умови — як у чистій базі, стандартна поведінка sale), тож повторне застосування з VP-05 = false не лишає default на архівну умову (записи установка не видаляє — apply-semantics)"
 - id: td_config.project_install
   kind: record
   model: project.project

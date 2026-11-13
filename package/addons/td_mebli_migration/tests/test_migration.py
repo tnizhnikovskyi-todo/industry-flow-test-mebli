@@ -186,6 +186,39 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         self.assertEqual((check.state, check.explained_by.id), ('draft', False))
         prepayment.with_user(clerk).write({'value_source': 300.0})  # open again
 
+    def test_ac_090_finance_does_not_bypass_the_signature_by_rpc(self):
+        """CHECKS.md No. 29 (security S-N1): the finance computes and writes the explanation of an open reconciliation,
+        but by RPC does not set the status, does not change a signed explanation and does not create an «explained»
+        reconciliation with somebody's signature."""
+        clerk = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Finance 2', 'login': 'td_mig_fin2',
+            'group_ids': [(6, 0, [self.env.ref('td_mebli_base.group_finance').id])]})
+        check = self._check(500.0, 2, 38.0).with_user(clerk)
+        check.action_td_compute()  # the finance computes: the status follows the difference
+        self.assertEqual(check.state, 'diff')
+        check.explanation = 'Cash payment booked after the date'
+        with self.assertRaises(AccessError):
+            check.write({'state': 'explained'})
+        with self.assertRaises(AccessError):
+            check.write({'state': 'draft'})
+        check.with_user(self.env.user).action_td_sign_explanation()
+        with self.assertRaises(AccessError):
+            check.write({'explanation': 'Another reason'})
+        with self.assertRaises(AccessError):
+            check.write({'state': 'draft'})  # not «Reset» around the manager: the old signature would stay valid
+        self.assertEqual((check.state, check.explanation), ('explained', 'Cash payment booked after the date'))
+        Check = self.env['td.mebli.migration.check'].with_user(clerk)
+        with self.assertRaises(AccessError):
+            Check.create({'name': 'Forged', 'state': 'explained', 'explanation': 'x', 'explained_by': self.env.user.id})
+        with self.assertRaises(AccessError):
+            Check.create({'name': 'Forged 2', 'state': 'reconciled'})
+        self.assertTrue(Check.create({'name': 'Draft'}))
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Sales Manager 2', 'login': 'td_mig_manager2',
+            'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_manager').id])]})
+        check.with_user(manager).write({'explanation': 'Corrected by the manager'})
+        self.assertEqual(check.explanation, 'Corrected by the manager')
+
     def test_ac_089_import_steps_follow_the_templates_of_a13(self):
         steps = self.env['td.mebli.migration.step'].search([])
         self.assertEqual(steps.mapped('sequence'), list(range(1, 29)))

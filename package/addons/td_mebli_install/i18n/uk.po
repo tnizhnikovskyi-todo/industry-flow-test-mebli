@@ -1456,3 +1456,15 @@ msgstr "Ручну позначку оплати змінив(ла) %(user)s: %(
 #: code:addons/td_mebli_install/models/accrual.py:0
 msgid "Accruals are confirmed by the shop manager or the accountant."
 msgstr "Нарахування підтверджує начальник виробництва або бухгалтер."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "A confirmed accrual is returned to draft by the head only."
+msgstr "Повернути підтверджене нарахування в чернетку може лише керівник."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "A cancelled accrual is restored by the head only."
+msgstr "Відновити скасоване нарахування може лише керівник."

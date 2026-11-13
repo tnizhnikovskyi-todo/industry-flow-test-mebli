@@ -84,17 +84,33 @@ class TdMebliMigrationCheck(models.Model):
                 line.write({'value_odoo': value,
                             'cause_order_ids': [(6, 0, causes.ids if not float_is_zero(value - line.value_source,
                                                                                        precision_digits=2) else [])]})
-            check.state = 'diff' if check.has_diff else 'reconciled'
+            # sudo: the status follows the computed difference only; the finance computes, but does not write the status
+            # itself (CHECKS.md No. 29: «Explained» and the status are guarded in write)
+            check.sudo().state = 'diff' if check.has_diff else 'reconciled'
         return True
 
     def _td_check_manager(self, message):
         if not (self.env.su or self.env.user.has_group('sales_team.group_sale_manager')):
             raise AccessError(message)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        # CHECKS.md No. 29: a reconciliation is created as a draft; «Explained» with a signature only by a manager
+        for vals in vals_list:
+            if vals.get('state', 'draft') != 'draft' or vals.get('explained_by') or vals.get('explained_on'):
+                self._td_check_manager(self.env._("Only a manager signs the explanation of a difference."))
+        return super().create(vals_list)
+
     def write(self, vals):
         # the signature of the explanation is written by «Sign the Explanation» / «Reset» only (a manager), not by RPC
         if {'explained_by', 'explained_on'} & set(vals):
             self._td_check_manager(self.env._("Only a manager signs the explanation of a difference."))
+        # CHECKS.md No. 29: the status is set by «Compute» (the difference), «Sign the Explanation» and «Reset» only; the
+        # finance writes the explanation of an open reconciliation, not of a signed or reconciled one
+        if 'state' in vals:
+            self._td_check_manager(self.env._("Only a manager changes the status of a reconciliation."))
+        if 'explanation' in vals and any(check.state in ('reconciled', 'explained') for check in self):
+            self._td_check_manager(self.env._("Only a manager changes the explanation of a closed reconciliation."))
         return super().write(vals)
 
     def action_td_sign_explanation(self):

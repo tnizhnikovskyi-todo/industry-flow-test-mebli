@@ -95,14 +95,35 @@ class TdMebliAccrual(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         vals_list = [self._td_prepare_reason(dict(vals), vals.get('kind')) for vals in vals_list]
+        for vals in vals_list:
+            if vals.get('state', 'draft') != 'draft':
+                self.browse()._td_check_state_change(vals)
         return super().create(vals_list)
+
+    def _td_check_state_change(self, vals):
+        """CHECKS.md No. 30 (security S-N2), also through RPC: draft → confirmed by the shop manager or the accountant
+        (ACCRUE_GROUPS); back to draft and cancelled only by the head (CANCEL_GROUPS), cancelled with a reason."""
+        if self.env.su:
+            return
+        state = vals['state']
+        if state == 'confirmed' and all(accrual.state in ('draft', 'confirmed') for accrual in self):
+            self._td_check_confirm_rights()
+            return
+        if not any(self.env.user.has_group(group) for group in CANCEL_GROUPS):
+            if state == 'cancel':
+                raise AccessError(self.env._("A confirmed accrual is cancelled by the head only."))
+            if state == 'draft' and any(accrual.state != 'draft' for accrual in self):
+                raise AccessError(self.env._("A confirmed accrual is returned to draft by the head only."))
+            if state == 'confirmed':
+                raise AccessError(self.env._("A cancelled accrual is restored by the head only."))
+        if state == 'cancel' and not (vals.get('cancel_reason') or '').strip():
+            raise UserError(self.env._("Specify the reason of the cancellation"))
 
     def write(self, vals):
         # A-14 security 2: the state (confirm / cancel) is changed by the head only, also through RPC — the shop master
         # writes the drafts of his section (record rule) but does not confirm his own bonuses and penalties
-        if 'state' in vals and not self.env.su and not any(self.env.user.has_group(group)
-                                                           for group in ACCRUE_GROUPS + CANCEL_GROUPS):
-            raise AccessError(self.env._("Accruals are confirmed by the shop manager or the accountant."))
+        if 'state' in vals:
+            self._td_check_state_change(vals)
         if 'hours' in vals and not self.env.su:
             raise UserError(self.env._("The hours of an accrual are the time of the tablet: they are not changed by hand."))
         # a confirmed accrual is handed over to the accounting: its figures are fixed
@@ -116,10 +137,11 @@ class TdMebliAccrual(models.Model):
                 self._td_prepare_reason(checked, vals.get('kind', accrual.kind))
         return super().write(vals)
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_confirmed(self):
+        # CHECKS.md No. 31 (lint E8140): the check is not run when the module is uninstalled
         if not self.env.su and any(a.state in ('confirmed', 'cancel') for a in self):
             raise UserError(self.env._("A confirmed accrual cannot be deleted."))
-        return super().unlink()
 
     def action_td_confirm(self):
         self._td_check_confirm_rights()

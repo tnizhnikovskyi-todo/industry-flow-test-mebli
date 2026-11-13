@@ -711,3 +711,15 @@ msgstr "Ролі атрибутів у специфікації"
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_td_04b
 msgid "Boards and edge thickness of the attribute values"
 msgstr "Плити й товщина кромки значень атрибутів"
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager changes the status of a reconciliation."
+msgstr "Змінити статус звірки може лише керівник."
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager changes the explanation of a closed reconciliation."
+msgstr "Змінити пояснення закритої звірки може лише керівник."

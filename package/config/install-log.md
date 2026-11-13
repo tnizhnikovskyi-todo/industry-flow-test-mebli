@@ -1,6 +1,15 @@
 # Лог установки конфіг-пакета
 
-- Редакції: both (з `docs/industries/mebli/OWNER-INTAKE.md`); нижче — `## Редакція ce` (перевірено, профілі A і light) і `## Редакція ee` (не перевірено: EE недоступна)
+- Редакції: both (з `docs/industries/mebli/OWNER-INTAKE.md`); нижче — `## Спроба 4 (повернення з A-14 спроби 2: `package/CHECKS.md` №33, №34)
+
+- База: `test-mebli-a114-cfga` (чиста, uk_UA, Odoo 19.0 CE @ `40e9be2b`), профіль A — 43 модулі `manifest.yaml` (137 installed, установка rc=0, ERROR 0), модулі — робоче дерево `package/addons` (A-11 спроба 4: `td_mebli_mrp` 19.0.1.1.2, `td_mebli_install` 19.0.1.1.2, `td_mebli_migration` 19.0.1.1.4). Не odoo-mcp — `odoo-bin shell`. Після роботи базу видалено.
+- Прохід 1 (VP-05 = `true`): created 8, updated 4, unchanged 14, manual 1, skipped 2, errors 0. Прохід 2: unchanged 26, created/updated 0 (ідемпотентно). Read-back 23/23 PASS (VP-05: `active` True, `ir.default` 1 = `td_mebli_sale.payment_term_td_furniture`, нове SO — «Меблі на замовлення»).
+- №34 (`td_config.default_payment_term` без `applies_if`, `json_value` = `{{VP-05:payment_default}}`): повтор на тій самій базі з VP-05 = `false` — прохід f1: updated 2 (`payment_term_furniture_active` → `active` False, `default_payment_term` → `json_value` `false`), прохід f2: unchanged 24, updated 0; read-back 23/23 PASS (VP-05: `active` False, `ir.default` 1 з `false`, default покупця — порожньо). Новий покупець і нове SO — **без умови оплати** (не архівна). Назад VP-05 = `true` — updated 2, default знову умова модуля. Критерій read-back VP-05 = `false`: «default покупця порожній, усі `ir.default` поля = `false`» (раніше — «`ir.default` = 0»; записи установка не видаляє — `apply-semantics.md`).
+- №33: «Ручні кроки» CONFIG.md і цей лог — `step_td_17` = послідовність **24** з 28 (`td_mebli_migration/data/td_mebli_migration_step_data.xml`; узгоджено з `master-data/README.md`).
+- Після конфігу — майстер-дані A-13 спроби 4, 28 кроків, помилок 0; «Шафа-купе» SO → MO (білий / дуб / графіт) — плита й кромка лише декору, кількість = з деталей (`master-data/README.md` «Тест-імпорт»).
+- Рядки нижче (спроба 3) про `td_config.default_payment_term` «skipped(applies_if)» для light — історія: зі спроби 4 пункт застосовується завжди (light: `json_value` `false`).
+
+## Редакція ce` (перевірено, профілі A і light) і `## Редакція ee` (не перевірено: EE недоступна)
 - Бази (ce), спроба 3: `test-mebli-r3cfg-A`, `test-mebli-r3cfg-light` — локальні чисті тестові бази пакета (`odoo-bin -i` у нову базу з `--load-language=uk_UA`), Odoo 19.0 CE @ `40e9be2b`, редакція ce (`web_enterprise` у списку модулів відсутній); допоміжна `test-mebli-r3cfg-std` (лише 26 стандартних модулів, для A-13); після кроку видалені (`dropdb`), сервери зупинені. Профіль B у спробі 3 не перепрогнано (правки №23, №26, config-review 1 B не змінюють, крім пункту умов оплати — той самий, що в A); B спроби 2 — read-back PASS
 - SHA гілки: `4e96a56` (база кроку, `flow/A-12-2-test`; модулі A-11 спроби 3 — знімок `git archive` `package/addons` цього SHA в `--addons-path`, бо робоче дерево модулів паралельно править інша сесія)   Версія скіла: config-as-code (версія 0.3.1)   Режим: fix (спроба 3, повернення з A-14)
 - Спосіб: **не odoo-mcp** (у тесті заборонено, `odoo_connections: []`) — локальний `odoo-bin` (база, модулі: один виклик `-i` зі списком профілю — Odoo ставить у порядку залежностей, порядок `manifest.yaml` перевірено окремо: порушень 0) і `odoo-bin shell` (preflight, дані, settings, 2-й прохід, read-back; скрипт застосування за `apply-semantics.md` — у scratchpad сесії, не в репо)
@@ -116,7 +125,7 @@ VP-02: A, light — галочок 0, груп `td_mebli_base.group_feature_*` �
 
 ## Ручні пункти
 - AC-030 шаблони листів покупцю — модуль `td_mebli_notify` (6 шаблонів є, read-back PASS); тексти — B-04.
-- AC-107 типові причини премій і штрафів (`td.mebli.accrual.reason`) — шаблон A-13 `td/17` + крок міграції `step_td_17` (послідовність 22); імпорт — B-04 / B-06.
+- AC-107 типові причини премій і штрафів (`td.mebli.accrual.reason`) — шаблон A-13 `td/17` + крок міграції `step_td_17` (послідовність 24 з 28; спроба 4, CHECKS №33); імпорт — B-04 / B-06.
 - Вихідна пошта (SMTP, пароль) — B-04.
 - Спроба 3: пункт «AC-019 розмітка `td_milestone`» закрито записом модуля `td_mebli_sale.payment_term_td_furniture` (CHECKS №22).
 

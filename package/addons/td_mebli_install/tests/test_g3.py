@@ -328,6 +328,42 @@ class TestAccrualG3(G3InstallCommon):
         self.assertEqual(mine.state, 'cancel')
         self.assertEqual(mine.cancel_reason, 'Wrong employee')
 
+    def test_ac_106_accountant_does_not_bypass_the_head_by_rpc(self):
+        """CHECKS.md No. 30 (security S-N2): the accountant confirms, but through RPC does not return a confirmed
+        accrual to draft (to change its amount), does not cancel it and does not create it cancelled; the head returns
+        to draft and cancels with a reason only. No. 31: a confirmed accrual is not deleted (ondelete)."""
+        Accrual = self.env['td.mebli.accrual']
+        accountant = _user(self.env, 'td_g3_acc2', ['account.group_account_user'])
+        line = Accrual.with_user(accountant).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0, 'reason': 'Clean site'})
+        line.with_user(accountant).write({'state': 'confirmed'})  # the accountant confirms (ACCRUE)
+        self.assertEqual(line.state, 'confirmed')
+        with self.assertRaises(AccessError):
+            line.with_user(accountant).write({'state': 'draft'})
+        with self.assertRaises(UserError):
+            line.with_user(accountant).write({'amount': 1000.0})
+        with self.assertRaises(AccessError):
+            line.with_user(accountant).write({'state': 'cancel', 'cancel_reason': 'Mistake'})
+        with self.assertRaises(AccessError):
+            Accrual.with_user(accountant).create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 5.0,
+                                                  'reason': 'Clean site', 'state': 'cancel', 'cancel_reason': 'x'})
+        with self.assertRaises(UserError):
+            line.with_user(accountant).unlink()
+        self.assertEqual((line.state, line.amount), ('confirmed', 100.0))
+        head = _user(self.env, 'td_g3_head2', ['account.group_account_manager'])
+        with self.assertRaises(UserError):  # cancelled by RPC only with a reason
+            line.with_user(head).write({'state': 'cancel'})
+        line.with_user(head).write({'state': 'draft'})
+        line.with_user(head).write({'amount': 120.0})
+        line.with_user(accountant).write({'state': 'confirmed'})
+        line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Duplicate'})
+        self.assertEqual((line.state, line.amount, line.cancel_reason), ('cancel', 120.0, 'Duplicate'))
+        with self.assertRaises(AccessError):  # a cancelled one is not confirmed again by the accountant
+            line.with_user(accountant).write({'state': 'confirmed'})
+        draft = Accrual.with_user(accountant).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 1.0, 'reason': 'Clean site'})
+        draft.with_user(accountant).unlink()  # a draft is deleted
+
     def test_ac_107_master_adds_bonus_in_his_section(self):
         Accrual = self.env['td.mebli.accrual']
         master = _user(self.env, 'td_g3_master', ['mrp.group_mrp_user'])
