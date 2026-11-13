@@ -1,0 +1,33 @@
+# ТЕСТОВИЙ наряд A-11 — збірка модулів td_mebli_* пакета «меблі» за ALLOCATION.md (A-10).
+# Склала сесія за рішенням власника (flow/decisions.md запис 49, «Приступай»); рішення з ризиком — AI, власник — вето.
+# Скіл організації odoo19-mvp-build:build-orchestrator у сесії недоступний — observations/2026-11-13-a11-no-skill.md.
+# Основа — модулі зрізу A-21 (хвиля 2 після рецензії, 146db1d), доведені до AC SPEC; тестова база — локальний Odoo 19.0 CE (odoo-mcp заборонено).
+step: A-11
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref:
+  - odoo19-mvp-build:build-orchestrator   # скіл організації, версію лише фіксуємо — недоступний
+model: opus
+effort: high
+inputs:
+  - {name: "ALLOCATION.md (AC треку код, A-11; модулі за профілями)", from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: "ТР пакета (SPEC §4 AC, §11 VP, тури §T)", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "технічний дизайн (моделі, граф залежностей, безпека, інтеграції, мости EE)", from: A-08, path: package/tr/, sha: HEAD}
+  - {name: "схема answers.yaml", from: A-09, path: package/templates/, sha: HEAD}
+  - {name: "ескалації A-12/A-13 (відсутні модулі, contract_mode)", from: A-12, path: tests/reports/A-12.md, sha: HEAD}
+  - {name: "модулі зрізу A-21 (хвиля 2)", from: A-21, path: package/addons/, sha: HEAD}
+  - {name: "DATA_POLICY", from: C-05, path: package/DATA_POLICY.md, sha: HEAD}
+where: "package/addons/"
+done: "кожен AC треку код з кроком A-11 має реалізацію в модулі з ALLOCATION і тест (або MANUAL з причиною); нові модулі td_mebli_base, td_mebli_bas, td_mebli_multico, td_mebli_migration; мости EE — код без установки (EE недоступна, «не перевірено»); усі td_mebli_* ставляться в чисту базу CE за профілями A/light/B і тести 0 failed; таблиця AC → модуль → тест у package/addons/AC-COVERAGE.md"
+check: {mode: both, how: "тести Odoo на чистій базі; check_data_model.py; рецензія архітектора (≤2 кола + контрольне); Тімлід — трасування AC → тест", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 480, lease_factor: 1.5, cost_limit_usd: 60, context_budget_tokens: 200000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []   # лише локальні бази test-mebli-a11*
+params: {mode: build}
+repo: {url: origin, base_branch: flow/A-12-test, branch: flow/A-11-test}
+attempt: 1
+returned_from: null
+git: {base: 557429e, head: null, prev_tag: null}
+date: 2026-11-13
