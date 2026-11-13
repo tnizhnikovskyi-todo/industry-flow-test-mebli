@@ -4,4 +4,4 @@
 artifacts:
   prototype-real/:
     depends_on: [research/FUNCTIONAL-MAP.md, research/BOX.md, research/SALES.md, research/REUSE.md, OWNER-INTAKE.md]
-    sha: 001c9be  # зразок (sample: true); runner ставить `git rev-parse HEAD` після коміту результату A-21
+    sha: 0695b53  # хвиля 2 зрізу; runner ставить `git rev-parse HEAD` після коміту результату A-21
