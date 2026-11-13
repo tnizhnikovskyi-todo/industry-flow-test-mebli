@@ -25,8 +25,13 @@ class ProjectTask(models.Model):
     def _td_address(self, partner):
         return ', '.join(filter(None, [partner.street, partner.street2, partner.city]))
 
+    @api.model
+    def _td_factory_tz(self):
+        """The day of the crew is the day of the factory: the time zone of the company working calendar."""
+        return pytz.timezone(self.env.company.resource_calendar_id.tz or self.env.context.get('tz') or 'Europe/Kyiv')
+
     def _td_local(self, value):
-        tz = pytz.timezone(self.env.context.get('tz') or self.env.user.tz or 'Europe/Kyiv')
+        tz = self._td_factory_tz()
         return pytz.utc.localize(value).astimezone(tz) if value else False
 
     def _td_day_plan_groups(self):
@@ -51,7 +56,7 @@ class ProjectTask(models.Model):
     @api.model
     def action_td_my_day(self):
         """The visits of the current user today (the crew on the phone)."""
-        tz = pytz.timezone(self.env.context.get('tz') or self.env.user.tz or 'Europe/Kyiv')
+        tz = self._td_factory_tz()
         today = fields.Datetime.now().replace(tzinfo=pytz.utc).astimezone(tz).date()
         start = tz.localize(datetime.combine(today, time.min)).astimezone(pytz.utc).replace(tzinfo=None)
         action = self.env['ir.actions.act_window']._for_xml_id('td_mebli_install.td_mebli_install_day_action')
@@ -66,7 +71,7 @@ class ResUsers(models.Model):
     def _td_day_plan_groups(self, days=7):
         """The day plan of a crew member: his visits from today for `days` days, a page per day."""
         self.ensure_one()
-        tz = pytz.timezone(self.tz or self.env.user.tz or 'Europe/Kyiv')
+        tz = self.env['project.task']._td_factory_tz()
         start = tz.localize(datetime.combine(fields.Datetime.now().replace(tzinfo=pytz.utc).astimezone(tz).date(), time.min)).astimezone(pytz.utc).replace(tzinfo=None)
         tasks = self.env['project.task'].search([('sale_order_id', '!=', False), ('user_ids', 'in', self.ids),
                                                  ('state', 'not in', ('1_done', '1_canceled')),

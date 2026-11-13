@@ -311,6 +311,7 @@ def seed_wave2_after(env, people, ids):
     owner.notification_type = 'inbox'
     # the factory works in Kyiv: the server-side dates of the reports, letters and the shop board in local time
     env['res.users'].search([('share', '=', False)]).write({'tz': 'Europe/Kyiv'})
+    env.company.resource_calendar_id.tz = 'Europe/Kyiv'  # the working hours of the factory (day plan, shop board)
     channel = env.ref('mail.channel_all_employees', raise_if_not_found=False)
     if channel:
         channel.name = 'Загальний'  # the standard channel of the employees: a Ukrainian name in the frame

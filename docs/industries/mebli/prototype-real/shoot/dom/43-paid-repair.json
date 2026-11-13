@@ -145,7 +145,7 @@
   },
   {
    "kind": "field",
-   "text": "3 вер.",
+   "text": "4 вер.",
    "label": "td_warranty_end",
    "name": "td_warranty_end",
    "required": false
@@ -180,7 +180,7 @@
   },
   {
    "kind": "field",
-   "text": "3 вер.",
+   "text": "4 вер.",
    "label": "Гарантія до?",
    "name": "td_warranty_end",
    "required": false
@@ -207,7 +207,7 @@
   },
   {
    "kind": "field",
-   "text": "17 лист., 00:15",
+   "text": "17 лист., 02:09",
    "label": "Запланована дата",
    "name": "schedule_date",
    "required": true

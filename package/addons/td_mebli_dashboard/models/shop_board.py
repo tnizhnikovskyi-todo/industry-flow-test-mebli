@@ -18,7 +18,8 @@ class TdMebliDashboard(models.AbstractModel):
             raise AccessError(self.env._("The shop floor board is available to the users of Manufacturing."))
         _ = self.env._
         env = self.sudo().with_company(self.env.company).env
-        tz = pytz.timezone(self.env.context.get('tz') or user.tz or 'Europe/Kyiv')
+        # the board hangs in the shop: the time zone of the company working calendar
+        tz = pytz.timezone(self.env.company.resource_calendar_id.tz or self.env.context.get('tz') or 'Europe/Kyiv')
         now = fields.Datetime.now()
         shift_start = tz.localize(datetime.combine(fields.Datetime.now().replace(tzinfo=pytz.utc).astimezone(tz).date(), time.min)).astimezone(pytz.utc).replace(tzinfo=None)
         Workorder = env['mrp.workorder']

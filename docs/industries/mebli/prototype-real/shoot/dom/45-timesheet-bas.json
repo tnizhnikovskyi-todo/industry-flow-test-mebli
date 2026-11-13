@@ -55,14 +55,14 @@
   },
   {
    "kind": "field",
-   "text": "12 лист.",
+   "text": "13 лист.",
    "label": "До дати",
    "name": "date_to",
    "required": true
   },
   {
    "kind": "field",
-   "text": "табель-BAS-імітація-2026-11-01-2026-11-12.csv",
+   "text": "табель-BAS-імітація-2026-11-01-2026-11-13.csv",
    "label": "Файл для BAS",
    "name": "file",
    "required": false

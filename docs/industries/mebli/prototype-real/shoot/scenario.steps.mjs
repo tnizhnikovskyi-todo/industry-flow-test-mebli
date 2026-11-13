@@ -234,7 +234,8 @@ const ALL = [
     // F-51 — лист «нова дата»: стандартний редактор листа з шаблоном (не надсилаємо)
     { n: 31, role: 'salon', url: `/odoo/action-sale.action_orders/${ORDER}`, name: 'new-date-letter',
       act: async (c, { press }) => { await press(c, c.page.locator('button[name=action_td_notify_new_date]')); await c.page.waitForTimeout(1200); },
-      facts: [{ name: 'new_date', sel: '.modal .o_field_widget[name=body]', re: '(?<=Нова дата: )[\\d.]+\\d' }] },
+      // значення з текстом: check_facts.py читає «18.12.2026» як число (крапки) — observations
+      facts: [{ name: 'new_date', sel: '.modal .o_field_widget[name=body]', re: 'Нова дата: [\\d.]+\\d' }] },
     // F-51 — нагадування про доплату перед монтажем у чаттері замовлення (у черзі пошти)
     { n: 32, role: 'fin', url: `/odoo/action-sale.action_orders/${W2.payment_letter_order || 0}`, name: 'payment-reminder',
       act: async (c) => { await c.page.locator('.o-mail-Message', { hasText: 'доплатити' }).first().scrollIntoViewIfNeeded().catch(() => {}); },

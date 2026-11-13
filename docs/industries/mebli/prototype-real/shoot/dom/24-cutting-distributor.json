@@ -130,7 +130,7 @@
   },
   {
    "kind": "field",
-   "text": "19 лист.",
+   "text": "20 лист.",
    "label": "Деталі повернуть?",
    "name": "return_date",
    "required": false
