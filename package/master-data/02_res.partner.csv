@@ -1,0 +1,6 @@
+id,name,is_company,supplier_rank,customer_rank,vat,company_registry,phone,email
+td_md.res_partner_demo_dsp,"ТОВ ""Демо-Постачальник ДСП""",True,1,0,,,,
+td_md.res_partner_demo_fittings,"ТОВ ""Демо-Фурнітура""",True,1,0,,,,
+td_md.res_partner_demo_facades,"ТОВ ""Демо-Фасади""",True,1,0,,,,
+td_md.res_partner_demo_cutting,"ТОВ ""Демо-Порізка""",True,1,0,,,,
+td_md.res_partner_demo_customer,"ТОВ ""Демо-Покупець""",True,0,1,,,,

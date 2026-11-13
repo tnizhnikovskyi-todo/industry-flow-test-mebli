@@ -1,0 +1,4 @@
+id,td_time_basis,td_time_rate,td_piece_rate,td_quality_point
+td_md.mrp_routing_workcenter_wardrobe_cut,per_board_m2,,,
+td_md.mrp_routing_workcenter_wardrobe_edge,per_edge_m,,,Кромка без сколів
+td_md.mrp_routing_workcenter_wardrobe_assy,fixed,,,

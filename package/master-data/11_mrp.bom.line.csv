@@ -1,0 +1,8 @@
+id,bom_id/id,product_id/id,product_qty
+td_md.mrp_bom_line_wardrobe_dsp,td_md.mrp_bom_wardrobe_01,td_md.product_product_dsp_18_w,6.5
+td_md.mrp_bom_line_wardrobe_hdf,td_md.mrp_bom_wardrobe_01,td_md.product_product_hdf_3_w,2.4
+td_md.mrp_bom_line_wardrobe_edge,td_md.mrp_bom_wardrobe_01,td_md.product_product_edge_pvc_2_w,22
+td_md.mrp_bom_line_wardrobe_facade,td_md.mrp_bom_wardrobe_01,td_md.product_product_facade_paint,2.2
+td_md.mrp_bom_line_bedside_dsp,td_md.mrp_bom_bedside_01,td_md.product_product_dsp_18_oak,1.2
+td_md.mrp_bom_line_bedside_edge,td_md.mrp_bom_bedside_01,td_md.product_product_edge_pvc_2_w,6
+td_md.mrp_bom_line_bedside_slide,td_md.mrp_bom_bedside_01,td_md.product_product_slide_450,2

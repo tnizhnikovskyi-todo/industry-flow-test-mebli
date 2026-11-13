@@ -1,0 +1,3 @@
+id,name,create_variant,display_type
+td_md.product_attribute_decor,Декор,no_variant,radio
+td_md.product_attribute_edge,Кромка,no_variant,radio

@@ -1,0 +1,6 @@
+id,name,bom_id/id,workcenter_id/id,sequence
+td_md.mrp_routing_workcenter_wardrobe_cut,Розкрій плит,td_md.mrp_bom_wardrobe_01,td_md.mrp_workcenter_cutting,10
+td_md.mrp_routing_workcenter_wardrobe_edge,Кромкування деталей,td_md.mrp_bom_wardrobe_01,td_md.mrp_workcenter_edging,20
+td_md.mrp_routing_workcenter_wardrobe_drill,Присадка,td_md.mrp_bom_wardrobe_01,td_md.mrp_workcenter_drilling,30
+td_md.mrp_routing_workcenter_wardrobe_assy,Контрольне збирання,td_md.mrp_bom_wardrobe_01,td_md.mrp_workcenter_assembly,40
+td_md.mrp_routing_workcenter_bedside_cut,Розкрій плит,td_md.mrp_bom_bedside_01,td_md.mrp_workcenter_cutting,10
