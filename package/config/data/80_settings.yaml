@@ -1,0 +1,38 @@
+# res.config.settings — останнім (apply-semantics.md, крок 4). Поля звірено за вихідниками Odoo 19.0 CE і fields_get тестової бази.
+- id: td_config.settings_stock_routes
+  kind: settings
+  model: res.config.settings
+  values: {group_stock_multi_locations: true, group_stock_adv_location: true}
+  ac: [AC-024]
+  source: "addons/stock/models/res_config_settings.py:23 (group_stock_adv_location, implied_group stock.group_adv_location)"
+  manual: false
+- id: td_config.settings_workorders
+  kind: settings
+  model: res.config.settings
+  values: {group_mrp_routings: true}
+  ac: [AC-070]
+  source: "addons/mrp/models/res_config_settings.py:17 (group_mrp_routings, implied_group mrp.group_mrp_routings)"
+  manual: false
+- id: td_config.settings_portal_sign
+  kind: settings
+  model: res.config.settings
+  values: {portal_confirmation_sign: true}
+  ac: [AC-117]
+  source: "addons/sale/models/res_company.py:16 (portal_confirmation_sign); res.config.settings related company_id"
+  manual: false
+- id: td_config.settings_attendance_pin
+  kind: settings
+  model: res.config.settings
+  values: {attendance_kiosk_use_pin: true}
+  ac: [AC-077]
+  source: "addons/hr_attendance/models/res_config_settings.py:20 (attendance_kiosk_use_pin related company_id)"
+  manual: false
+- id: td_config.settings_variants
+  kind: settings
+  model: res.config.settings
+  values: {group_product_variant: "{{VP-02:configurator}}"}
+  transform_configurator: {expr: "a['VP-01'] == 'B' and 'configurator' in a['VP-02']"}
+  ac: [AC-011]
+  source: "addons/product/models/res_config_settings.py:10 (group_product_variant, implied_group product.group_product_variant)"
+  manual: false
+  note: "атрибути й виключення виробу «Шафа-купе» — майстер-дані A-13 / B-04"

@@ -1,0 +1,3 @@
+id,product_tmpl_id/id,product_qty,type,code
+td_md.mrp_bom_wardrobe_01,td_md.product_template_wardrobe_01,1,normal,BOM-WARDROBE-01
+td_md.mrp_bom_bedside_01,td_md.product_template_bedside_01,1,normal,BOM-BEDSIDE-01

@@ -1,0 +1,3 @@
+id,td_is_parametric,td_width_nominal,td_height_nominal,td_depth_nominal,td_width_min,td_width_max,td_height_min,td_height_max,td_depth_min,td_depth_max,td_edge_allowance_mm
+td_md.product_template_wardrobe_01,True,1800,2400,600,1000,3000,2000,2700,400,700,2
+td_md.product_template_bedside_01,True,450,500,400,350,600,400,700,300,500,2

@@ -1,0 +1,28 @@
+# Облік і локалізація (AC-N.03, VP-18). Модулі account, l10n_ua — у manifest.
+- id: td_config.company_country_ua
+  kind: record
+  model: res.company
+  xmlid_target: base.main_company       # стандартний запис; оновлюються лише поля нижче
+  values: {country_id: "ref:base.ua"}
+  ac: [AC-N.03]
+  source: "addons/l10n_ua/__manifest__.py (countries: ['ua']); odoo/addons/base/models/res_company.py (country_id)"
+  manual: false
+- id: td_config.chart_ua_psbo
+  kind: chart                           # розширення видів: завантаження плану рахунків (account.chart.template.try_loading)
+  model: account.chart.template
+  xmlid_target: base.main_company
+  values: {chart_template: ua_psbo}
+  ac: [AC-N.03]
+  source: "addons/l10n_ua/models/template_ua_psbo.py (@template('ua_psbo')); addons/account/models/chart_template.py (try_loading)"
+  manual: false
+- id: td_config.company_default_taxes
+  kind: record
+  model: res.company
+  xmlid_target: base.main_company
+  values:
+    account_sale_tax_id: "{{VP-18}}"
+    account_purchase_tax_id: "{{VP-18:purchase}}"
+  transform_purchase: {"true": "account.{company_id}_purchase_tax_template_vat20_psbo", "false": null}
+  ac: [AC-N.03]
+  source: "addons/l10n_ua/models/template_ua_psbo.py:33-34 (account_sale_tax_id / account_purchase_tax_id = *_vat20_psbo)"
+  manual: false

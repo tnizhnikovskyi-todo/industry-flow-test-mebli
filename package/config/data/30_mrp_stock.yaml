@@ -1,0 +1,40 @@
+# Виробництво й склад (AC-024, AC-070, AC-116 / VP-17).
+- id: td_config.loss_power_outage
+  kind: record
+  model: mrp.workcenter.productivity.loss
+  values: {name: "Відключення світла", loss_id: "ref:mrp.category_availability", sequence: 20}
+  ac: [AC-070]
+  source: "addons/mrp/data/mrp_data.xml (block_reason*, loss_id = mrp.category_availability)"
+  manual: false
+- id: td_config.loss_no_material
+  kind: record
+  model: mrp.workcenter.productivity.loss
+  values: {name: "Немає матеріалу", loss_id: "ref:mrp.category_availability", sequence: 21}
+  ac: [AC-070]
+  source: "addons/mrp/data/mrp_data.xml"
+  manual: false
+- id: td_config.loss_breakdown
+  kind: record
+  model: mrp.workcenter.productivity.loss
+  values: {name: "Поломка", loss_id: "ref:mrp.category_availability", sequence: 22}
+  ac: [AC-070]
+  source: "addons/mrp/data/mrp_data.xml"
+  manual: false
+- id: td_config.default_bom_consumption
+  kind: record
+  model: ir.default
+  values:
+    field_id: "ref:mrp.field_mrp_bom__consumption"
+    json_value: "{{VP-17}}"
+  ac: [AC-116]
+  source: "addons/mrp/models/mrp_bom.py (consumption: flexible / warning / strict); odoo/addons/base/models/ir_default.py"
+  manual: false
+  note: "перенесення споживання на специфікації замовлення — td_mebli_mrp (A-11, AI-A08-27)"
+- id: td_config.route_mto_active
+  kind: record
+  model: stock.route
+  xmlid_target: stock.route_warehouse0_mto
+  values: {active: true}
+  ac: [AC-024]
+  source: "addons/stock/data/stock_data.xml:42 (route_warehouse0_mto, active=False за замовчуванням)"
+  manual: false

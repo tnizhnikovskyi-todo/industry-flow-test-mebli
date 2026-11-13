@@ -1,0 +1,5 @@
+id,partner_id/id,product_id/id,min_qty,delay,price
+td_md.product_supplierinfo_dsp_18_w,td_md.res_partner_demo_dsp,td_md.product_product_dsp_18_w,1,3,
+td_md.product_supplierinfo_edge_pvc_2_w,td_md.res_partner_demo_dsp,td_md.product_product_edge_pvc_2_w,1,3,
+td_md.product_supplierinfo_hinge_110,td_md.res_partner_demo_fittings,td_md.product_product_hinge_110,10,7,
+td_md.product_supplierinfo_facade_paint,td_md.res_partner_demo_facades,td_md.product_product_facade_paint,1,14,

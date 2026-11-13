@@ -1,0 +1,9 @@
+id,name,parent_id/id
+td_md.product_category_raw,Сировина,
+td_md.product_category_boards,Плитні матеріали,td_md.product_category_raw
+td_md.product_category_edge,Кромка,td_md.product_category_raw
+td_md.product_category_components,Комплектуючі,
+td_md.product_category_fittings,Фурнітура,td_md.product_category_components
+td_md.product_category_custom,Замовні позиції,td_md.product_category_components
+td_md.product_category_finished,Готова продукція,
+td_md.product_category_cabinet,Корпусні меблі,td_md.product_category_finished

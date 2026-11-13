@@ -1,0 +1,7 @@
+id,name,attribute_id/id,sequence
+td_md.product_attribute_value_decor_white,Білий,td_md.product_attribute_decor,1
+td_md.product_attribute_value_decor_oak,Дуб світлий,td_md.product_attribute_decor,2
+td_md.product_attribute_value_decor_graphite,Графіт,td_md.product_attribute_decor,3
+td_md.product_attribute_value_edge_white,Кромка біла 2 мм,td_md.product_attribute_edge,1
+td_md.product_attribute_value_edge_oak,Кромка дуб світлий 2 мм,td_md.product_attribute_edge,2
+td_md.product_attribute_value_edge_graphite,Кромка графіт 2 мм,td_md.product_attribute_edge,3

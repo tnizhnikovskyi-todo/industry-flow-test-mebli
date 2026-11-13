@@ -1,0 +1,5 @@
+id,name,code
+td_md.mrp_workcenter_cutting,Розкрій,CUT
+td_md.mrp_workcenter_edging,Кромкування,EDGE
+td_md.mrp_workcenter_drilling,Присадка,DRILL
+td_md.mrp_workcenter_assembly,Збирання,ASSY
