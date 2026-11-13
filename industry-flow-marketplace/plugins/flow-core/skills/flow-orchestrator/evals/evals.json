@@ -120,6 +120,42 @@
       "requires": [
         "фікстура: карток B-13, B-08a і кроку client-help-bot у minirepo/flow/cards немає (відкрито: додати картку кроку з бота-помічником у фікстуру); DATA_POLICY з рядком prod-ro-k01 додано"
       ]
+    },
+    {
+      "id": "a20c-veto-recalc",
+      "prompt": "Режим on-complete для гейта A-20c (scope package/mebli-1): власник натиснув «Повернути» з одним рядком вето «AI-03: не згоден — конфігуратор виробу лишаємо в MVP», gate.return_to = A-20. Runner у наряді C-02 `veto-batch` виконав check_stale; у його звіті stale: concept/features.md, research/BOX.md, research/AI-DECISIONS.md, research/owner-page/index.html. Що поставити? Стан у фікстурі.",
+      "expected_output": "Створено 2 наряди params.mode: recalc у порядку DEPENDS.yaml: A-20 (stale = features.md, BOX.md, AI-DECISIONS.md; where = ці файли), далі A-20c (stale = owner-page/index.html), без `human_substep`, без запиту власнику й без A-03c; окремого A-20b немає (A-20 recalc сам оновлює «Повнота»; власник AI-DECISIONS і REJECTED для recalc — A-20); у звіті рядок flow-map для A-20c «Повернути».",
+      "assertions": [
+        "Створено наряд A-20 з params.mode: recalc і params.stale з трьома артефактами (не по наряду на артефакт)",
+        "Наряд A-20c recalc створено після A-20 (порядок за DEPENDS.yaml)",
+        "Задач K1, human_substep для власника і A-03c не створено (K1 і сесії A-03c у 0.3.0 немає)",
+        "gate.return_to = A-20 входить до допустимих {A-20, A-03b, A-03c}",
+        "check_stale оркестратор сам не запускає; повторний прохід з тим самим base_sha не дублює наряди",
+        "У звіті є номер рядка flow-map для A-20c"
+      ],
+      "fixtures": "evals/fixtures/veto-recalc/",
+      "source": "lessons-24-ai-decisions-veto",
+      "requires": [
+        "odoo-mcp:test"
+      ]
+    },
+    {
+      "id": "recalc-all-stale",
+      "prompt": "Власник змінив рішення (запис у flow/decisions.md, змінено facts.yaml). Runner у наряді C-02 `veto-batch` виконав check_stale; у його звіті stale: concept/features.md, research/BOX.md, research/owner-page/index.html (залежності в DEPENDS.yaml; за flow/ARTIFACTS.md перші два належать A-20, третій A-20c). Поставити перерахунок.",
+      "expected_output": "Створено рівно 2 наряди params.mode: recalc — по одному на крок-власник у порядку DEPENDS.yaml: A-20 (params.stale = features.md, BOX.md; where = ці файли), потім A-20c (params.stale = owner-page/index.html); inputs[].sha нового коміту; повторний прохід не дублює.",
+      "assertions": [
+        "Створено рівно 2 наряди recalc: A-20 і A-20c (не по наряду на артефакт)",
+        "Наряд A-20 має params.stale з двома артефактами, A-20c — з одним; where збігається зі stale",
+        "Порядок кроків відповідає DEPENDS.yaml (A-20 раніше A-20c)",
+        "Кожен наряд має params.mode: recalc і inputs з OWNER-INTAKE.md та sha",
+        "Повторний виклик із тим самим base_sha не створює дублів (skipped; ключ step, scope.id, mode=recalc, base_sha)",
+        "Артефакти поза списком не перераховуються; check_stale оркестратор сам не запускає"
+      ],
+      "fixtures": "evals/fixtures/recalc-stale/",
+      "source": "mebli-r23-owner-returned-rejected",
+      "requires": [
+        "odoo-mcp:test"
+      ]
     }
   ]
 }

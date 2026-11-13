@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="board_sonoma" model="product.product">
+        <field name="name">ЛДСП Дуб Сонома 16 мм</field>
+        <field name="default_code">ЛДСП-ДС16</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="tracking">lot</field>
+        <field name="uom_id" ref="uom.product_uom_square_meter"/>
+        <field name="standard_price">520</field>
+        <field name="list_price">520</field>
+        <field name="td_material_kind">board</field>
+        <field name="td_sheet_length_mm">2800</field>
+        <field name="td_sheet_width_mm">2070</field>
+        <field name="td_thickness_mm">16</field>
+        <field name="td_waste_pct">15</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="board_white" model="product.product">
+        <field name="name">ЛДСП Білий гладкий 16 мм</field>
+        <field name="default_code">ЛДСП-БЛ16</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="tracking">lot</field>
+        <field name="uom_id" ref="uom.product_uom_square_meter"/>
+        <field name="standard_price">360</field>
+        <field name="list_price">360</field>
+        <field name="td_material_kind">board</field>
+        <field name="td_sheet_length_mm">2800</field>
+        <field name="td_sheet_width_mm">2070</field>
+        <field name="td_thickness_mm">16</field>
+        <field name="td_waste_pct">15</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="board_anthr" model="product.product">
+        <field name="name">ЛДСП Антрацит 16 мм</field>
+        <field name="default_code">ЛДСП-АН16</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="tracking">lot</field>
+        <field name="uom_id" ref="uom.product_uom_square_meter"/>
+        <field name="standard_price">480</field>
+        <field name="list_price">480</field>
+        <field name="td_material_kind">board</field>
+        <field name="td_sheet_length_mm">2800</field>
+        <field name="td_sheet_width_mm">2070</field>
+        <field name="td_thickness_mm">16</field>
+        <field name="td_waste_pct">15</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="board_mdf" model="product.product">
+        <field name="name">МДФ Білий матовий 18 мм</field>
+        <field name="default_code">МДФ-БМ18</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="tracking">lot</field>
+        <field name="uom_id" ref="uom.product_uom_square_meter"/>
+        <field name="standard_price">1150</field>
+        <field name="list_price">1150</field>
+        <field name="td_material_kind">board</field>
+        <field name="td_sheet_length_mm">2800</field>
+        <field name="td_sheet_width_mm">2070</field>
+        <field name="td_thickness_mm">18</field>
+        <field name="td_waste_pct">12</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="board_hdf" model="product.product">
+        <field name="name">ДВП біла 3 мм</field>
+        <field name="default_code">ДВП-3</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="tracking">lot</field>
+        <field name="uom_id" ref="uom.product_uom_square_meter"/>
+        <field name="standard_price">95</field>
+        <field name="list_price">95</field>
+        <field name="td_material_kind">board</field>
+        <field name="td_sheet_length_mm">2800</field>
+        <field name="td_sheet_width_mm">2070</field>
+        <field name="td_thickness_mm">3</field>
+        <field name="td_waste_pct">5</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_sonoma_04" model="product.product">
+        <field name="name">Кромка ПВХ Сонома 0,4×19 мм</field>
+        <field name="default_code">КР-ДС-04</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">11</field>
+        <field name="list_price">11</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_sonoma"/>
+        <field name="td_edge_thickness">0.4</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_sonoma_2" model="product.product">
+        <field name="name">Кромка ПВХ Сонома 2×22 мм</field>
+        <field name="default_code">КР-ДС-2</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">26</field>
+        <field name="list_price">26</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_sonoma"/>
+        <field name="td_edge_thickness">2.0</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_white_04" model="product.product">
+        <field name="name">Кромка ПВХ Білий гладкий 0,4×19 мм</field>
+        <field name="default_code">КР-БЛ-04</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">8</field>
+        <field name="list_price">8</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_white"/>
+        <field name="td_edge_thickness">0.4</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_white_2" model="product.product">
+        <field name="name">Кромка ПВХ Білий гладкий 2×22 мм</field>
+        <field name="default_code">КР-БЛ-2</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">20</field>
+        <field name="list_price">20</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_white"/>
+        <field name="td_edge_thickness">2.0</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_anthr_04" model="product.product">
+        <field name="name">Кромка ПВХ Антрацит 0,4×19 мм</field>
+        <field name="default_code">КР-АН-04</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">10</field>
+        <field name="list_price">10</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_anthr"/>
+        <field name="td_edge_thickness">0.4</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_anthr_2" model="product.product">
+        <field name="name">Кромка ПВХ Антрацит 2×22 мм</field>
+        <field name="default_code">КР-АН-2</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">24</field>
+        <field name="list_price">24</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_anthr"/>
+        <field name="td_edge_thickness">2.0</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_mdf_04" model="product.product">
+        <field name="name">Кромка ПВХ Білий матовий 0,4×19 мм</field>
+        <field name="default_code">КР-БМ-04</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">12</field>
+        <field name="list_price">12</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_mdf"/>
+        <field name="td_edge_thickness">0.4</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="edge_mdf_2" model="product.product">
+        <field name="name">Кромка ПВХ Білий матовий 2×22 мм</field>
+        <field name="default_code">КР-БМ-2</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_meter"/>
+        <field name="standard_price">30</field>
+        <field name="list_price">30</field>
+        <field name="td_material_kind">edge</field>
+        <field name="td_matches_board_id" ref="board_mdf"/>
+        <field name="td_edge_thickness">2.0</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="fit_hinge" model="product.product">
+        <field name="name">Петлі з доводчиком, комплект</field>
+        <field name="default_code">ФР-ПЕТ</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">520</field>
+        <field name="list_price">520</field>
+        <field name="td_material_kind">fitting</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="fit_slide" model="product.product">
+        <field name="name">Розсувна система РС-2 для шафи-купе</field>
+        <field name="default_code">ФР-РС2</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">5200</field>
+        <field name="list_price">5200</field>
+        <field name="td_material_kind">fitting</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="fit_guide" model="product.product">
+        <field name="name">Напрямні повного висування, комплект для комода</field>
+        <field name="default_code">ФР-НАП</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">2100</field>
+        <field name="list_price">2100</field>
+        <field name="td_material_kind">fitting</field>
+        <field name="sale_ok">False</field>
+    </record>
+
+    <record id="fit_legs" model="product.product">
+        <field name="name">Опори регульовані, к-т</field>
+        <field name="default_code">ФР-ОПО</field>
+        <field name="type">consu</field>
+        <field name="is_storable">True</field>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="standard_price">180</field>
+        <field name="list_price">180</field>
+        <field name="td_material_kind">fitting</field>
+        <field name="sale_ok">False</field>
+    </record>
+</odoo>

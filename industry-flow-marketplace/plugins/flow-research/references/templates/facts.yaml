@@ -1,0 +1,12 @@
+# facts.yaml — єдине джерело чисел (ринок, розміри, дати; без цін, годин і ставок — LESSONS §24) для research/*.md, concept/*, owner-page/*.html, prototype-real/facts.json.
+# звідки: нове (FTR 2.4); перевіряє check_facts.py (FACT-mismatch, FACT-orphan): число в тексті = значення тут.
+meta:
+  industry: "{{код}}"
+  updated: "{{YYYY-MM-DD}}"
+market:
+  snapshot_date: "{{YYYY-MM-DD}}"      # дата знімка odb-catalog — з опису MCP або inputs наряду
+  source: "odb-catalog"
+  bands:                               # смуги чисельності
+    - {id: "m-01", label: "{{10–49}}", companies: null, revenue_uah: null, growth_pct: null}
+owner_tariffs: {}                      # лише дослівно з `tariffs` власника (якщо дав), напр. {ce_entry: 12000}; AI тарифів не рахує й не обґрунтовує
+sources: []                            # ID `SRC-NNN` рядків research/sources-log.md

@@ -1,0 +1,124 @@
+{
+  "skill_name": "completeness-audit",
+  "evals": [
+    {
+      "id": "mebli-r21-incomplete-concept",
+      "prompt": "Наряд A-20, галузь mebli; у кінці кроку concept-mapper викликає самоперевірку повноти. BOX, SALES, REJECTED, AI-DECISIONS (рядки A-03b/A-20), concept/* готові, але в них немає варіанта сценарію «претензія/повернення», у BOX немає плану міграції даних клієнта. Проведи аудит повноти.",
+      "expected_output": "У research/AI-DECISIONS.md розділ «Повнота» з 14 пунктами (закрито / ризик); desk-прогалина «варіант сценарію» закрита правкою concept/scenarios.md; міграція без вигрузки — рядок AI-NN «ризик, перевірити на пілоті»; підсумок closed/risk збігається з таблицею; check_completeness.py PASS; COMPLETENESS.md не створено.",
+      "assertions": [
+        "Запущено 3 рецензентів-ролей у окремих контекстах, кожен повернув таблицю з файлом§розділом",
+        "«Повнота» має 14 пунктів зі статусом закрито/ризик і рядок «Підсумок: closed=…, risk=…», що збігається з таблицею",
+        "Відсутній варіант сценарію додано в concept/scenarios.md без перенумерації ID",
+        "Міграція без прикладу вигрузки не вигадана: рядок AI-NN «ризик, перевірити на пілоті» і посилання в колонці «Де / AI-NN»",
+        "COMPLETENESS.md, OWNER-BRIEF.md не створено; тріажу human/decision і P1–P3 немає",
+        "check_completeness.py PASS (CA-checklist, CA-gaps, CA-money, CA-rounds), поле completeness {closed, risk} у звіті"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/incomplete-concept/",
+        "chronology": "mebli r21 (FTR §1 №21)",
+        "reference": "flow-core/skills/eval-builder/references/gold/mebli.md (хронологія r21); 0.3.0: COMPLETENESS.md скасовано, розділ «Повнота» живе в AI-DECISIONS.md",
+        "fixtures_note": "неповна концепція (без варіанта «претензія/повернення» і плану міграції); перевірений розділ «Повнота» для check_completeness.py — evals/fixtures/check_completeness-ok/AI-DECISIONS.md"
+      }
+    },
+    {
+      "id": "mebli-c01-audit-catches-recommendation-against-intake",
+      "prompt": "Наряд A-20 (самоперевірка повноти), mebli. У AI-DECISIONS.md рядок AI-02 «зробити лише EE-версію», а в OWNER-INTAKE.md editions: both. Проведи аудит.",
+      "expected_output": "Рецензент (аудитор узгодженості) фіксує суперечність; desk-правка: рядок AI-02 переписано як «альтернатива» з причиною, діє анкета (both); рішення власника не ухвалено, вето не вигадано.",
+      "assertions": [
+        "Суперечність рішення AI з анкетою названо знахідкою з файлом§розділом",
+        "Рядок AI-02 переписано: рішення за анкетою, EE-лише — «альтернатива» з причиною",
+        "У flow/decisions.md нічого не записано; вето власника не вигадане",
+        "OWNER-INTAKE.md не змінено"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_completeness-ok/",
+        "chronology": "mebli С-01",
+        "reference": "research/AI-DECISIONS.md (розділ «Повнота»); COMPLETENESS.md скасовано в 0.3.0; хронологія — flow/decisions.md (рядки 4–27), flow-core/skills/eval-builder/references/gold/mebli.md"
+      }
+    },
+    {
+      "id": "critic-round-limit",
+      "prompt": "Фінальний критик (коло 1) знайшов, що пункт №4 «наскрізний сценарій + варіанти» досі не закритий кабінетно. Що має бути в результаті кроку?",
+      "expected_output": "Друге коло не запускається (CA-rounds ≤1): пункт №4 — статус «ризик» з рядком AI-NN «ризик, перевірити на пілоті»; result done (не escalated); COMPLETENESS.md не створено.",
+      "assertions": [
+        "Коло 2 не запущено; у «Повнота» рядок «Коло критика: 1»",
+        "Пункт №4 має статус «ризик» і посилання на AI-NN в колонці «Де / AI-NN»",
+        "result = done; незакрите — ризик, а не стоп",
+        "check_completeness.py: CA-rounds PASS; на фікстурі check_completeness-bad — CA-rounds FAIL"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_completeness-bad/"
+      }
+    },
+    {
+      "id": "unclosed-becomes-risk",
+      "prompt": "У тріажі: прогалина «немає прикладу вигрузки складу» (немає даних у репо) і «ціна коробки» (власник тарифів не дав). Як їх закрити?",
+      "expected_output": "Жодна не закрита вигадкою. Вигрузка — рядок AI-NN «ризик, перевірити на пілоті» (перевірка: пілот/A-23); тарифи — BOX §1 «не задано», AI їх не рахує й не обґрунтовує; типів human/decision і P1–P3 немає.",
+      "assertions": [
+        "Для вигрузки є рядок AI-NN з ризиком і перевіркою (пілот / A-23)",
+        "Тарифи в BOX §1 — «не задано» або дослівно tariffs власника; ставок і окупності не вигадано",
+        "Рішення власника не записано, flow/decisions.md не змінено",
+        "Пункт у «Повнота» має статус «ризик» і AI-NN"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_completeness-ok/"
+      }
+    },
+    {
+      "id": "ee-not-verified",
+      "prompt": "Рецензент-архітектор позначив твердження «EE-модуль X закриває вимогу» без рядка в edition-claims.md. Доступу до EE у середовищі немає.",
+      "expected_output": "Рядок AI-NN «ризик, перевірити на пілоті» («не перевірено»); основа не підвищується до «Стд EE» без вердикту; твердження не видаляється мовчки, а потрапляє в план перевірки.",
+      "assertions": [
+        "Статус «ризик» з AI-NN, не закрито вигадкою",
+        "Основа екрана не змінена на «Стд EE» без вердикту",
+        "У memo «EE не перевірено — немає доступу»",
+        "API й поля Odoo 19 не вигадано"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_completeness-ok/"
+      }
+    },
+    {
+      "id": "sum-mismatch",
+      "prompt": "AI-DECISIONS.md, «Повнота»: у таблиці 11 закрито, 2 ризик, а рядок «Підсумок» каже closed=12, risk=1, і пунктів лише 13.",
+      "expected_output": "CA-checklist і CA-sum FAIL; виправлено до 14 пунктів і правильного підсумку; completeness {closed, risk} у звіті = підрахунок таблиці.",
+      "assertions": [
+        "CA-checklist FAIL названо",
+        "CA-sum FAIL названо",
+        "Після виправлення обидві PASS",
+        "Число в звіті збігається з таблицею"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_completeness-bad/"
+      }
+    },
+    {
+      "id": "returned-rerun-keeps-ai-ids",
+      "prompt": "Наряд A-20 recalc (самоперевірка повноти), повтор: returned_from = A-20c (власник наклав вето на AI-02 і знайшов нову прогалину). У AI-DECISIONS.md на git.base є AI-01…AI-07 (AI-02 — вето, AI-05 — ризик). where охоплює research/*.md і concept/*.",
+      "expected_output": "AI-NN не перенумеровано; нова прогалина — AI-08 «ризик, перевірити на пілоті»; розділ «Повнота» оновлено; вето-рядок лишається зі статусом; result done.",
+      "assertions": [
+        "Існуючі AI-01…AI-07 на місці, ID не змінено",
+        "Нова прогалина має ID AI-08",
+        "Розділ «Повнота» оновлено, підсумок перераховано",
+        "check_completeness.py PASS"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_completeness-ok/"
+      }
+    },
+    {
+      "id": "where-too-narrow-risk-rows",
+      "prompt": "Наряд A-20 (самоперевірка повноти): where = лише research/AI-DECISIONS.md (картку не оновлено). Рецензенти знайшли desk-прогалину: у concept/scenarios.md немає варіанта «зсув строку».",
+      "expected_output": "concept/scenarios.md не змінено (поза where); в AI-DECISIONS.md рядок AI-NN «ризик, перевірити на пілоті» з поясненням «поза where»; у memo — список AI-NN і файли, які треба додати в where; статус кроку визначає A-20, під-скіл returned не ставить; тихого порушення where немає.",
+      "assertions": [
+        "Файли поза where не змінено",
+        "Прогалину внесено рядком AI-NN з поясненням «поза where»",
+        "У memo — список AI-NN; під-скіл власного result (returned) не ставить, статус кроку визначає A-20",
+        "У memo названо, які файли треба додати в where"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/incomplete-concept/"
+      }
+    }
+  ]
+}

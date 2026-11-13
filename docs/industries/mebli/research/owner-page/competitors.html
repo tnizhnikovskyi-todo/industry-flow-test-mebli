@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Конкуренти: що всередині систем</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --bg:#FCFBFA;--surface:#F3F1EE;--surface-2:#E9E6E2;--ink:#101820;--muted:#525B64;--line:#DEDAD5;
+  --accent:#FE5000;--accent-text:#B83A00;--accent-soft:#FFE9DE;
+  --good:#1F7A4D;--good-soft:#E2F2E9;--warn:#8A5A00;--warn-soft:#FBF0D9;--bad:#B4232C;--bad-soft:#FBE4E5;
+  --logo-bg:transparent;
+  --font:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --wide:1120px;--prose:68ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+    --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+    --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+    --logo-bg:#F3F1EE;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+  --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+  --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+  --logo-bg:#F3F1EE;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;margin:0;overflow-wrap:break-word;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent-text);text-underline-offset:2px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px}
+h1,h2,h3{text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.4vw,40px);font-weight:800}
+h2{font-size:clamp(23px,3vw,30px);font-weight:700}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+code{font-family:var(--mono);font-size:.88em}
+.num,table{font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--wide);margin-inline:auto}
+.prose{max-width:var(--prose)}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.small{font-size:14px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.hyp{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.tag.goal{color:var(--accent-text);border-style:dashed;border-color:var(--accent-text)}
+.sitenav{max-width:var(--wide);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding-block:calc(10px + env(safe-area-inset-top,0px)) 10px;border-bottom:1px solid var(--line)}
+.sitenav .logo{display:inline-flex;align-items:center;background:var(--logo-bg);border-radius:8px;padding:4px 8px}
+.sitenav .logo img{height:30px;width:auto;display:block}
+.sitelinks{display:flex;flex-wrap:wrap;gap:4px}
+.sitelinks a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid transparent}
+.sitelinks a:hover{color:var(--ink);background:var(--surface)}
+.sitelinks a[aria-current="page"]{color:var(--bg);background:var(--ink);border-color:var(--ink)}
+.masthead{padding-block:28px 32px;display:flex;flex-direction:column;gap:20px;border-bottom:1px solid var(--line)}
+.verdict{border-left:4px solid var(--accent);background:var(--surface);padding:16px 20px;border-radius:0 8px 8px 0;max-width:var(--prose)}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--wide);margin-inline:auto;display:flex;gap:4px;overflow-x:auto;padding:8px 0}
+.nav a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;padding:6px 10px;border-radius:6px;border:1px solid transparent}
+.nav a.on,.nav a:hover{color:var(--ink);background:var(--surface)}
+section{max-width:var(--wide);margin-inline:auto;padding-block:36px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:16px;scroll-margin-top:64px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:inherit;font-size:14px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.src{font-size:12px;font-weight:600;white-space:nowrap}
+.scroll{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{background:var(--surface);font-weight:700}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.card{border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
+.tag{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<header class="sitenav">
+  <a class="logo" href="index.html"><img src="data:image/png;base64,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" alt="ToDo" width="77" height="30"></a>
+  <nav class="sitelinks" aria-label="Сторінки набору"><a href="index.html">Концепція</a><a href="competitors.html" aria-current="page">Конкуренти</a><a href="rejected.html">Що відкинули</a></nav>
+</header>
+<div class="wrap"><div class="masthead"><span class="eyebrow">Конкуренти · пакет «меблі»</span><h1>Конкуренти: що всередині систем</h1><p class="prose">Реєстр: 46 систем у зведеній таблиці і доповнення другого проходу (дистриб'ютори з онлайн-конструктором, облікові CRM, легкі MRP, польські ERP). Глибоко розібрано 8 продуктів і ще 4 стовпці реальних замінників; джерела перевірено 11.11.2026, лише відкриті сторінки, без демо й тріалів. Назад до <a href="index.html">концепції</a>.</p></div></div>
+<div class="nav"><div class="nav-inner"><a href="#findings">Висновки</a><a href="#landscape">Ландшафт</a><a href="#profiles">Профілі</a><a href="#matrix">Матриця</a><a href="#against">Що казати проти</a><a href="#quotes">Цитати користувачів</a><a href="#conclusions">По групах</a><a href="#limits">Обмеження</a></div></div>
+<main>
+<section id="findings">
+  <span class="eyebrow">Висновки</span>
+  <h2>Головні висновки</h2>
+  <ul class="prose">
+  <li><b>Ланцюг (а) від заміру до рекламації в одній системі з доказами не закриває ніхто.</b> Висновок стосується лише систем, де невідомого менше п'ятої частини: Bimp, Viyar, БАЗИС, PRO100, KeyCRM, Katana. <span class="tag hyp">гіпотеза: відсутність у маркетингу не доводить відсутності в продукті</span></li>
+  <li><b>Ринок розпадається на три шари:</b> CAD/CAM (БАЗИС, PRO100, ViyarPro), облікова ERP (Bimp, BAS/1С, Odoo) і CRM-оболонки. Зв'язку між шарами майже ніде не задокументовано.</li>
+  <li><b>Еталон глибини обліку в Україні: Bimp.</b> Специфікація з етапами, відрядна за статусом етапу, планова й фактична собівартість. Цього рівня маємо досягти на Odoo.</li>
+  <li><b>Де слабкі всі облікові системи:</b> замір, виїзні бригади монтажу, рекламація й гарантія по замовленню.</li>
+  <li><b>Модель «плита + конструктор + порізка»</b> (Viyar, Kronas, GibLab) прибирає потребу в CAD у дрібного цеху. Для нас це партнери (рішення №7), інтеграцію проєктуємо під кількох постачальників.</li>
+  </ul>
+  <p class="small"><a class="src" href="#limits" data-src="competitor-features.md§1">CF §1</a> <a class="src" href="#limits" data-src="FUNCTIONAL-MAP.md§3.1">FM §3.1</a></p>
+</section>
+<section id="landscape">
+  <span class="eyebrow">Ландшафт</span>
+  <h2>Реєстр за типами</h2>
+  <p class="prose">Групування рядків зведеної таблиці реєстру (46 систем) наше; доповнення другого проходу в лічбу не входять.</p>
+  <div class="scroll" tabindex="0" aria-label="Ландшафт"><table style="min-width:560px"><thead><tr><th>Тип</th><th>Кількість</th><th>Розібрано глибоко</th></tr></thead><tbody>
+  <tr><td>Українські та СНД ERP і CRM (облік, CRM-інтегратори, кастом)</td><td>8</td><td>Bimp, CRM Genesis, BAS/1С ERP</td></tr>
+  <tr><td>Odoo: партнери й модулі</td><td>2</td><td>Plugit, ECOSIRE</td></tr>
+  <tr><td>CAD/CAM і розкрій</td><td>21</td><td>БАЗИС, PRO100</td></tr>
+  <tr><td>Конструктор постачальника плит + порізка</td><td>1</td><td>Viyar; у доповненні також KRONAS MASTER 3D, GibLab</td></tr>
+  <tr><td>Зарубіжні ERP для меблів і столярки</td><td>10</td><td>еталони INNERGY, Cyncly, TRIMIT (маркетинг і довідка)</td></tr>
+  <tr><td>Конфігуратори й салони</td><td>4</td><td>—</td></tr>
+  <tr><td>Доповнення: облікові CRM і легкі MRP</td><td>—</td><td>KeyCRM, Katana</td></tr>
+  </tbody></table></div>
+  <p class="small"><a class="src" href="#limits" data-src="competitors-registry.md§1">реєстр §1</a> <a class="src" href="#limits" data-src="competitors-registry.md§6">реєстр §6</a></p>
+</section>
+<section id="profiles">
+  <span class="eyebrow">Профілі</span>
+  <h2>Профілі систем</h2>
+  <div class="grid2">
+  <div class="card"><b>Bimp ERP (Україна)</b><p class="small">Хмарна ERP для виробництва; від $<span data-fact="bimp.n10_usd_year">2 390</span> на рік на 10 користувачів, $<span data-fact="bimp.n25_usd_year">5 490</span> на 25.</p><p class="small">Що всередині: специфікація, виробниче замовлення з етапами, відрядна, собівартість, склад (довідка). Чого немає в описі: замір, монтаж з актом, рекламація по замовленню.</p><p class="small">Роль: головний конкурент і еталон обліку. Джерело: довідка bimpsoft.com.</p></div>
+  <div class="card"><b>Viyar / ViyarPro Меблі</b><p class="small">Постачальник плит з онлайн-конструктором: проєкт, розрахунок, КП, порізка, кромка, свердління.</p><p class="small">Вивантаження у CSV, MPR, DXF, XML; формат обміну з нами не перевірено.</p><p class="small">Роль: партнер, джерело специфікації. Джерело: viyar.ua, навчальні відео.</p></div>
+  <div class="card"><b>KRONAS MASTER 3D, GibLab</b><p class="small">Та сама модель «плита + конструктор + порізка».</p><p class="small">Роль: партнери (№7); домовленостей про формат і API ще немає.</p></div>
+  <div class="card"><b>БАЗИС і 1С-БАЗИС (РФ)</b><p class="small">CAD/CAM: проєкт, розкрій, ЧПУ, пакування; надбудова над 1С для виробництва.</p><p class="small">Роль: CAD лишається у клієнта, ми беремо специфікацію. Компанія з РФ: аргумент міграції репутаційний. Джерело: офіційні посібники.</p></div>
+  <div class="card"><b>PRO100 (Польща)</b><p class="small">3D-проєкт салону, звіти матеріалів і ціни, розкрій. Ціна не публікується.</p><p class="small">Роль: джерело проєкту для імпорту; формат файлу не перевірено.</p></div>
+  <div class="card"><b>BAS / 1С ERP з доопрацюванням</b><p class="small">Облік специфікацій, розкрою, обрізків, собівартості через доопрацювання партнерів.</p><p class="small">Роль: облік клієнта, з яким ми обмінюємось (№5). Доказ слабкий: стаття партнера.</p></div>
+  <div class="card"><b>KeyCRM</b><p class="small">CRM зі статусами замовлень, оплатами й модулем «Виробництво»; від $<span data-fact="keycrm.usd_month">19</span> на місяць.</p><p class="small">Роль: дешевший вибір для мікроцехів, ризик для легкого тарифу.</p></div>
+  <div class="card"><b>Katana</b><p class="small">Легка MRP: специфікація, цех, субпідряд; лише англійською, без українського обліку.</p><p class="small">Роль: прямий замінник для цеху на 10–50 людей.</p></div>
+  <div class="card"><b>Plugit, ECOSIRE (Odoo)</b><p class="small">Партнер Odoo зі стандартними модулями; модуль-конфігуратор з динамічною специфікацією (опис без скриншотів і демо).</p><p class="small">Роль: інші пропозиції на Odoo; меблевого ланцюга публічно немає.</p></div>
+  <div class="card"><b>CRM Genesis (Creatio)</b><p class="small">CRM і виробничий облік під клієнта; ціни й екрани не публікуються.</p><p class="small">Роль: проєктний конкурент; порівнювати за клітинками некоректно.</p></div>
+  </div>
+  <p class="small"><a class="src" href="#limits" data-src="competitor-features.md§2.17">CF §2.17</a> <a class="src" href="#limits" data-src="competitor-features.md§2.18">CF §2.18</a> <a class="src" href="#limits" data-src="competitors-registry.md§6">реєстр §6</a></p>
+</section>
+<section id="matrix">
+  <span class="eyebrow">Матриця</span>
+  <h2>Хто закриває ланки ланцюга (а)</h2>
+  <p class="prose">● є з доказом · ◐ частково або доказ лише маркетинг · — немає чи не заявлено · <span class="tag goal">◎ ціль пакета, не факт</span>. Стовпці Odoo взято з порівняння з документацією 19.0 (11.11.2026); реєстру перевірених тверджень про редакції ще немає, тож стовпець Enterprise <span class="tag hyp">не перевірено</span>: це орієнтир, а не факт (рішення AI-11 на <a href="index.html">сторінці концепції</a>). Групи рядків: наше групування.</p>
+  <div class="filters" id="grpFilter" role="group" aria-label="Фільтр груп матриці"><button type="button" data-g="all" aria-pressed="true">Усі</button><button type="button" data-g="hyg" aria-pressed="false">гігієна</button><button type="button" data-g="par" aria-pressed="false">паритет</button><button type="button" data-g="weak" aria-pressed="false">де всі слабкі</button></div>
+  <div class="scroll" tabindex="0" aria-label="Матриця"><table style="min-width:900px"><thead><tr><th>Ланка</th><th>Bimp</th><th>KeyCRM</th><th>Katana</th><th>Viyar, Kronas</th><th>БАЗИС</th><th>PRO100</th><th>Odoo 19 Community</th><th>Odoo 19 Enterprise</th><th>наш пакет ◎</th></tr></thead><tbody>
+  <tr data-group="weak"><td>Замір</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>◐ Field Service</td><td>◎ замір-лист</td></tr>
+  <tr data-group="par"><td>Проєкт (CAD)</td><td>—</td><td>—</td><td>—</td><td>●</td><td>●</td><td>●</td><td>—</td><td>—</td><td>◎ імпорт</td></tr>
+  <tr data-group="hyg"><td>Кошторис</td><td>●</td><td>◐</td><td>◐</td><td>●</td><td>●</td><td>◐</td><td>●</td><td>●</td><td>◎ маржа до запуску</td></tr>
+  <tr data-group="hyg"><td>Специфікація</td><td>●</td><td>—</td><td>●</td><td>◐</td><td>●</td><td>●</td><td>◐ без розмірів</td><td>◐ без розмірів</td><td>◎ розміри, імпорт</td></tr>
+  <tr data-group="par"><td>Розкрій чи порізка</td><td>◐ послуга</td><td>—</td><td>◐ субпідряд</td><td>● послуга</td><td>●</td><td>◐</td><td>◐ субпідряд</td><td>◐ субпідряд</td><td>◎ перевірка, версія, етикетки</td></tr>
+  <tr data-group="par"><td>Цех</td><td>◐</td><td>◐ статуси</td><td>●</td><td>—</td><td>◐</td><td>—</td><td>◐ кнопки, без планшета</td><td>● Shop Floor</td><td>◎ кіоск для всіх</td></tr>
+  <tr data-group="weak"><td>Комплектація</td><td>◐ пакування</td><td>—</td><td>—</td><td>—</td><td>● у CAD</td><td>—</td><td>◐ пакування</td><td>◐ сканер, без контролю комплекту</td><td>◎ по місцях</td></tr>
+  <tr data-group="weak"><td>Монтаж</td><td>◐ статус</td><td>◐ статуси</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>◐ Field Service, акт через Studio</td><td>◎ акт, відсоток бригаді</td></tr>
+  <tr data-group="weak"><td>Рекламація</td><td>◐ сервіс</td><td>—</td><td>◐ повернення</td><td>◐</td><td>—</td><td>—</td><td>◐ ремонти</td><td>◐ Helpdesk</td><td>◎ строки й гарантія</td></tr>
+  <tr data-group="hyg"><td>Облік, зарплата</td><td>●</td><td>◐ оплати</td><td>◐ без України</td><td>—</td><td>◐</td><td>—</td><td>◐ рахунки без бухобліку</td><td>◐ бухоблік</td><td>◎ відрядна, обмін з BAS</td></tr>
+  </tbody></table></div>
+  <p class="small">Еталони INNERGY, Cyncly Insight і TRIMIT закривають окремі ланки; їхні докази маркетинг і заголовки довідки, тому ● у них немає. Genesis, Plugit, BAS/1С і ECOSIRE у матрицю не внесено: проєкти під клієнта або модулі без публічної документації. <a class="src" href="#limits" data-src="competitor-features.md§1">CF §1</a> <a class="src" href="#limits" data-src="AI-DECISIONS.md§Рішення">AI-11</a><a class="src" href="#limits" data-src="odoo-ecosystem.md§7.9">OE §7.9</a> <a class="src" href="#limits" data-src="competitor-features.md§2.15">CF §2.15</a></p>
+</section>
+<section id="against">
+  <span class="eyebrow">Продаж</span>
+  <h2>Що казати проти кожного</h2>
+  <div class="scroll" tabindex="0" aria-label="Що казати проти"><table style="min-width:600px"><thead><tr><th>Система</th><th>Що казати проти</th><th>Доказ</th></tr></thead><tbody>
+  <tr><td>Bimp</td><td>Сильний в обліку виробництва. У довідці не описано замір, монтаж з актом і рекламацію по замовленню; ми закриваємо ці ланки й працюємо поруч з BAS.</td><td>довідка Bimp; перевірка тріалом відкладена</td></tr>
+  <tr><td>KeyCRM</td><td>Для 1–5 людей дешевший. Для 10 і більше бачить статуси, але не специфікацію, розкрій і собівартість замовлення.</td><td>довідка KeyCRM</td></tr>
+  <tr><td>Viyar, Kronas</td><td>Не «проти», а «разом»: беремо їхній проєкт і замовляємо порізку з перевіркою версії специфікації.</td><td>сторінки й відео вендорів</td></tr>
+  <tr><td>БАЗИС + 1С</td><td>CAD лишається, облік у BAS. Аргумент переходу репутаційний, для приватного бізнесу прямої заборони немає.</td><td>посібники БАЗИС</td></tr>
+  <tr><td>PRO100</td><td>Проєкт лишається в PRO100; ми беремо специфікацію й ведемо замовлення далі.</td><td>сторінки можливостей</td></tr>
+  <tr><td>Katana</td><td>Лише англійською, без українського обліку й обміну з BAS.</td><td>сторінки вендора</td></tr>
+  <tr><td>Інші партнери Odoo</td><td>Стандартний Odoo без меблевого ланцюга: заміру, акта, рекламації з гарантією.</td><td>сторінки партнерів</td></tr>
+  <tr><td>Excel і месенджер</td><td>Ніхто не бачить, що зсув порізки чи недокомплект зірве обіцяну дату.</td><td>відгуки покупців, вакансії</td></tr>
+  </tbody></table></div>
+  <p class="small">Без слів «найкращий» і «єдиний»: тези ще не перевірено тріалами (рішення №6). <a class="src" href="#limits" data-src="SALES.md§2">SALES §2</a> <a class="src" href="#limits" data-src="competitor-features.md§1">CF §1</a></p>
+</section>
+<section id="quotes">
+  <span class="eyebrow">Голос користувачів</span>
+  <h2>Що кажуть користувачі конкурентів: лише звірені цитати</h2>
+  <p class="prose">У журналі джерел поки немає звірених рядків про конкурентів, тож дослівних цитат тут немає. Скарги на конкурентів зібрано в дослідженні як переказ; звірку й перенесення в журнал робить повтор A-03b. Узагальнено: скарги стосуються переважно порізки в дистриб'ютора (запізнення, «за вашою картою крою»), а не облікових систем.</p>
+  <p class="small"><a class="src" href="#limits" data-src="competitor-features.md§2.16">CF §2.16</a> <a class="src" href="#limits" data-src="SALES.md§2">SALES §2</a></p>
+</section>
+<section id="conclusions">
+  <span class="eyebrow">Висновки</span>
+  <h2>Висновки по групах</h2>
+  <ul class="prose">
+  <li><b>Гігієна</b> (кошторис, специфікація, облік): є в Bimp і стандарті Odoo; без цього нас не розглядатимуть.</li>
+  <li><b>Паритет</b> (проєкт, розкрій, цех): CAD і дистриб'ютори вже закривають; ми інтегруємося, а цех доводимо до кіоску для всіх.</li>
+  <li><b>Де всі слабкі</b> (замір, комплектація, монтаж, рекламація): тут наша відмінність. <span class="tag goal">◎ план, не факт</span></li>
+  </ul>
+  <p class="small"><a class="src" href="#limits" data-src="FUNCTIONAL-MAP.md§3.1">FM §3.1</a> <a class="src" href="#limits" data-src="competitor-features.md§1">CF §1</a></p>
+</section>
+<section id="limits">
+  <span class="eyebrow">Обмеження</span>
+  <h2>Обмеження й чек-лист тріалу</h2>
+  <p class="prose">Не перевірено: демо й тріали (рішення №6 їх відклало), формати файлів PRO100, ViyarPro і KRONAS, частина клітинок має позначку «не перевірено», ціни більшості систем не публічні. Чек-лист для людини, коли тріали відкриють: імпорт файлу з CAD у Bimp; замір, монтаж і рекламація в Bimp і KeyCRM; формат і API обміну з Viyar і Kronas; кіоск цеху в Katana.</p>
+  <p class="small"><a class="src" href="#limits" data-src="competitor-features.md§2.16">CF §2.16</a></p>
+</section>
+</main>
+<footer class="small">ToDo · 12.11.2026 · сторінка власника A-20c (0.3.x), конкуренти · джерела перевірено 11.11.2026 · ціни конкурентів: публічні тарифи з research/facts.yaml</footer>
+<!-- A-20c повний обсяг, recalc за concept-presentation 0.3.1: competitors.html за шаблоном flow-research/references/templates/owner-page/competitors.html; дані — competitors-registry.md, competitor-features.md, FUNCTIONAL-MAP §3.1, SALES §2; якорі на історичний OWNER-BRIEF прибрано. -->
+<script>
+(function(){var f=document.getElementById("grpFilter");if(!f)return;f.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var g=b.getAttribute("data-g");[].forEach.call(f.querySelectorAll("button"),function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});[].forEach.call(document.querySelectorAll("tr[data-group]"),function(r){r.hidden=!(g==="all"||r.getAttribute("data-group")===g);});});})();
+</script>
+</body>
+</html>

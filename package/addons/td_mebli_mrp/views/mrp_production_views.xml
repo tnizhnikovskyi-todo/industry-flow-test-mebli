@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- до запуску колонка показує зарезервоване (цілі листи й обрізки), а не спожите: підпис це відображає -->
+    <record id="mrp_production_form_td_mebli" model="ir.ui.view">
+        <field name="name">mrp.production.form.td.mebli</field>
+        <field name="model">mrp.production</field>
+        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='move_raw_ids']/list/field[@name='quantity']" position="attributes">
+                <attribute name="string">Reserved / consumed</attribute>
+            </xpath>
+            <!-- board and edge banding of an order are calculated from its parts: marked, not a new input -->
+            <xpath expr="//field[@name='move_raw_ids']/list/field[@name='product_id']" position="after">
+                <field name="td_from_parts" string="From parts" invisible="not td_from_parts" optional="show" width="110px"/>
+            </xpath>
+            <!-- the parts of the bill of materials of the order, where the shop works (read only) -->
+            <!-- position 14 (F-57): analog of a short material, replacement in one click -->
+            <xpath expr="//field[@name='move_raw_ids']/list" position="inside">
+                <field name="td_analog_id" column_invisible="1"/>
+                <field name="td_analog_hint" string="Analog" optional="show" class="text-success"/>
+                <button name="action_td_use_analog" type="object" string="Use Analog" class="btn-link"
+                        invisible="not td_analog_id or parent.state in ('draft', 'done', 'cancel')"/>
+            </xpath>
+            <xpath expr="//page[@name='components']" position="after">
+                <page string="Parts" name="td_parts" invisible="not td_part_ids">
+                    <group>
+                        <group>
+                            <field name="td_part_count"/>
+                        </group>
+                        <group>
+                            <field name="td_board_area_m2"/>
+                            <field name="td_edge_length_m"/>
+                        </group>
+                    </group>
+                    <div class="text-muted small mb-1">
+                        Quantity and sizes of the parts are for one piece; the totals above are for the whole manufacturing order.
+                    </div>
+                    <field name="td_part_ids" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="material_id" context="{'display_default_code': False}"/>
+                            <field name="qty"/>
+                            <field name="length_mm" digits="[16, 0]"/>
+                            <field name="width_mm" digits="[16, 0]"/>
+                            <field name="area_m2" sum="Total"/>
+                            <field name="edge_product_id" context="{'display_default_code': False}"/>
+                            <field name="edge_length_m" sum="Total"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- parts of the manufacturing order in a dialog of the shop tablet: short, read only; a card per part on a phone -->
+    <record id="mrp_workorder_td_parts_form" model="ir.ui.view">
+        <field name="name">mrp.workorder.td.parts.form</field>
+        <field name="model">mrp.workorder</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <form string="Parts" create="0" edit="0" delete="0">
+                <div class="d-flex flex-wrap gap-3 mb-2">
+                    <span><field name="production_id" readonly="1" options="{'no_open': True}" class="fw-bold"/></span>
+                    <span><field name="name" readonly="1"/></span>
+                    <span class="text-muted"><span>Pieces:</span> <field name="qty_production" digits="[16, 0]"/></span>
+                    <span class="text-muted"><span>Parts in the order:</span> <field name="td_part_count"/></span>
+                </div>
+                <div class="text-muted small mb-1">Quantity and sizes: for one piece.</div>
+                <field name="td_part_ids" readonly="1">
+                    <list>
+                        <field name="name"/>
+                        <field name="material_id" context="{'display_default_code': False}"/>
+                        <field name="qty"/>
+                        <field name="length_mm" digits="[16, 0]"/>
+                        <field name="width_mm" digits="[16, 0]"/>
+                        <field name="edge_product_id" context="{'display_default_code': False}"/>
+                    </list>
+                    <kanban>
+                        <templates>
+                            <t t-name="card">
+                                <div class="d-flex justify-content-between">
+                                    <field name="name" class="fw-bold"/>
+                                    <span><field name="qty"/> <span>pcs</span></span>
+                                </div>
+                                <field name="material_id" context="{'display_default_code': False}"/>
+                                <div class="text-muted small">
+                                    <field name="length_mm" digits="[16, 0]"/> x <field name="width_mm" digits="[16, 0]"/> <span>mm</span>
+                                    <span invisible="not edge_product_id"> · <field name="edge_product_id" context="{'display_default_code': False}"/></span>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </field>
+                <footer>
+                    <button string="Close" special="cancel" class="btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

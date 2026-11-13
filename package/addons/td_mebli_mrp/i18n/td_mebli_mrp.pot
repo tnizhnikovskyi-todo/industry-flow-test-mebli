@@ -1,0 +1,1076 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 22:08+0000\n"
+"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "%(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "%(name)s: %(qty)s free"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/product.py:0
+msgid ""
+"%(product)s: the %(axis)s must satisfy min <= nominal <= max (%(low)s <= "
+"%(nominal)s <= %(high)s)."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "%(w)sx%(h)sx%(d)s order BoM"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "%s is not a parametric product."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid ""
+"<i class=\"fa fa-calculator me-1\" title=\"From parts\"/>\n"
+"                    Board and edge banding marked «From parts» are calculated from the parts (tab Parts): area plus\n"
+"                    planned waste, length of the edged sides."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>Parts in the order:</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>Pieces:</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>mm</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "<span>pcs</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_analog_hint
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Analog"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_analog_id
+msgid "Analog in Stock"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_analog_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_analog_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Analogs"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__area_m2
+msgid "Area, m2"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute_value
+msgid "Attribute Value"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid "Available Hours per Week"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_bom
+msgid "Bill of Material"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_bom_line
+msgid "Bill of Material Line"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__bom_id
+msgid "Bill of Materials"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__board
+msgid "Board"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_board_area_m2
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_board_area_m2
+msgid "Board Area, m2"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_attribute_value__td_component_product_id
+msgid "Board or fitting set that this attribute value stands for."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__body_board
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__body_board
+msgid "Body board"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid ""
+"CSV or Excel (.xlsx) export of the design program: the columns are recognized by their titles\n"
+"                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves\n"
+"                    is not part of the slice."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__file
+msgid "CSV or Excel File"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Cancel"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "Choose a body decor for %s."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "Close"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid ""
+"Columns not recognized: %s. The file needs a part name, a length and a "
+"width."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "Component %(old)s is short: replaced by the analog %(new)s."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__td_component_product_id
+msgid "Component Product"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__td_component_role
+msgid "Component Role"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_currency_id
+msgid "Currency"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__depth
+msgid "Depth"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Depth min / max"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_depth
+msgid "Depth, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Designation"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Dimensions, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_edge_allowance_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_edge_allowance_mm
+msgid "Edge Allowance, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_product_id
+msgid "Edge Banding"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__td_edge_thickness
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_edge_thickness
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_edge_thickness
+msgid "Edge Thickness, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__edge
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__edge
+msgid "Edge banding"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_edge_length_m
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_edge_length_m
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_length_m
+msgid "Edge, m"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_long_sides
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__edge_long_sides
+msgid "Edged Long Sides"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_short_sides
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__edge_short_sides
+msgid "Edged Short Sides"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_edge_allowance_mm
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_edge_allowance_mm
+msgid "Extra edge banding length added for every edged side of a part."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__facade_board
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__facade_board
+msgid "Facade board"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__filename
+msgid "File Name"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__fitting
+msgid "Fitting"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__fitting_set
+msgid "Fitting set"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__fixed
+msgid "Fixed"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__fixed_material_id
+msgid "Fixed Material"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__fixed
+msgid "Fixed material"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_matches_board_id
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_matches_board_id
+msgid "For edge banding: the board decor this edge goes with."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom_line__td_from_parts
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_from_parts
+msgid "From Parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "From parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__td_dimension
+msgid "Furniture Dimension"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_part_rule
+msgid "Furniture Part Rule"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_part
+msgid "Furniture Part of an Order BoM"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Furniture Parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__height
+msgid "Height"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Height min / max"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_height
+msgid "Height, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom_line__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Import"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+#: model:ir.actions.act_window,name:td_mebli_mrp.td_mebli_spec_import_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Import of Parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_spec_import
+msgid "Import of the Parts of a Specification from CSV"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "Imported from %(file)s: %(count)s parts."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__queue
+msgid "In queue"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__work
+msgid "In work"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__length_mm
+msgid "Length, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_const
+msgid "Length: constant, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_d
+msgid "Length: x Depth"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_h
+msgid "Length: x Height"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__len_w
+msgid "Length: x Width"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid "Load Zone"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid "Load, %"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_matches_board_id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_matches_board_id
+msgid "Matches Board"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__material_id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__material_role
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Material"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_material_kind
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_material_kind
+msgid "Material Kind"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_analog_ids
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_analog_ids
+msgid ""
+"Materials that can replace this one when it is short (same thickness and "
+"use, another decor or brand). The manufacturing order suggests the first "
+"analog that is free in stock."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_max
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_max
+msgid "Max Depth, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_height_max
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_height_max
+msgid "Max Height, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_max
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_max
+msgid "Max Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_min
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_min
+msgid "Min Depth, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_height_min
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_height_min
+msgid "Min Height, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_min
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_min
+msgid "Min Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_time_rate
+msgid "Minutes per Basis Unit"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "No analog of %s is free in stock."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "No edge banding %(thickness)s mm found for %(board)s."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_nominal
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_nominal
+msgid "Nominal Depth, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_height_nominal
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_height_nominal
+msgid "Nominal Height, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_nominal
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_nominal
+msgid "Nominal Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.actions.act_window,help:td_mebli_mrp.mrp_workorder_td_load_action
+msgid ""
+"Open work orders by work center: the load of every section by week of the "
+"planned start, in percent of its weekly capacity (working calendar of the "
+"section)."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_order_bom
+msgid "Order BoM"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid ""
+"Order BoM: generated from the options of the sales order (not from a CAD file).\n"
+"                    Dimensions:"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__over
+msgid "Over capacity"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_zone
+msgid ""
+"Over capacity: the open work of the section (standard work center load) "
+"needs more hours than the section has in a week."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_is_parametric
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_is_parametric
+msgid "Parametric Product"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Parametric product"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__name
+msgid "Part"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/part_rule.py:0
+msgid ""
+"Part %(part)s has non-positive size at nominal dimensions (%(length)s x "
+"%(width)s mm)."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "Part %s has a non-positive size."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_bom.py:0
+msgid "Part %s has no material."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_part_count
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_part_count
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_part_count
+msgid "Part Count"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.actions.act_window,name:td_mebli_mrp.td_mebli_part_rule_action
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_part_rule_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_part_rule_ids
+#: model:ir.ui.menu,name:td_mebli_mrp.td_mebli_part_rule_menu
+msgid "Part Rules"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_part_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_production__td_part_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_part_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "Parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__preview_count
+msgid "Parts in the File"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_production__td_part_count
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_part_count
+msgid ""
+"Parts of the whole manufacturing order: parts of one piece times the "
+"quantity."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/mrp_workorder.py:0
+msgid "Parts: %s"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_board_m2
+msgid "Per m2 of board"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_edge_m
+msgid "Per metre of edge"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_routing_workcenter__td_time_basis__per_part
+msgid "Per part"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_piece_rate
+msgid "Piece Rate per Basis Unit"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_expected_hours
+msgid "Planned Hours"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_waste_pct
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_waste_pct
+msgid "Planned Waste, %"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.constraint,message:td_mebli_mrp.constraint_product_template_td_waste_pct_range
+msgid "Planned waste must be between 0 and 100 percent."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_template
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__product_tmpl_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_part_rule_view_search
+msgid "Product"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute
+msgid "Product Attribute"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_attribute_custom_value
+msgid "Product Attribute Custom Value"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__qty
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__qty
+msgid "Quantity"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid ""
+"Quantity and sizes of the parts are for one piece; the totals above are for "
+"the whole manufacturing order."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "Quantity and sizes: for one piece."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
+msgid ""
+"Read only: hours per week of the working calendar of the section times the "
+"number of pieces it makes in parallel (the product capacity without a "
+"product). The time efficiency is not applied here: it is already in the "
+"expected duration of the operations."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_stock_move__td_from_parts
+msgid ""
+"Read only: the quantity of this board or edge banding comes from the parts "
+"of the bill of materials (tab Parts of the manufacturing order)."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_bom_line__td_from_parts
+msgid ""
+"Read only: the quantity of this board or edge banding is calculated from the"
+" parts of the bill of materials (tab Parts): area of the parts plus the "
+"planned waste, length of the edged sides. Not marked when the quantity "
+"differs from what the parts need."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__facade
+msgid "Ready-made facade"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_material_kind
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_material_kind
+msgid ""
+"Ready-made facade: fronts bought or made outside (e.g. painted MDF); when "
+"such a line of the template bill of materials applies to the chosen "
+"attribute values, the facade parts are not cut from board."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Recognize Columns"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__mapping
+msgid "Recognized Columns"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Reserved / consumed"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__rule_id
+msgid "Rule"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__sequence
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workorder__td_load_pct
+msgid ""
+"Share of the weekly capacity of the section taken by this operation; summed "
+"over a section and the week of the planned start it is the load of that "
+"week."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_length_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_length_mm
+msgid "Sheet Length, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_sheet_width_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_sheet_width_mm
+msgid "Sheet Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_workorder__td_load_stage
+msgid "Shop Status"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__bom_id
+msgid "Specification"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_stock_move
+msgid "Stock Move"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_template_bom_id
+msgid "Template BoM"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "The Excel file cannot be read: %s"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "The file is empty."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.constraint,message:td_mebli_mrp.constraint_td_mebli_part_rule_edge_sides_range
+msgid "The number of edged sides must be between 0 and 2."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.constraint,message:td_mebli_mrp.constraint_td_mebli_part_rule_qty_positive
+msgid "The part quantity must be positive."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid ""
+"The specification has no board among its components: add the board first."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_thickness_mm
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_thickness_mm
+msgid "Thickness, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_time_basis
+msgid "Time Basis"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Total"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Use Analog"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__chain
+msgid "Waits for previous operation"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid ""
+"When this material is short, the manufacturing order suggests the first\n"
+"                        analog free in stock (position 14)."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__width
+msgid "Width"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Width min / max"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_width
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__width_mm
+msgid "Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_const
+msgid "Width: constant, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_d
+msgid "Width: x Depth"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_h
+msgid "Width: x Height"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__wid_w
+msgid "Width: x Width"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_zone__within
+msgid "Within capacity"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_workcenter
+msgid "Work Center"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.actions.act_window,name:td_mebli_mrp.mrp_workorder_td_load_action
+#: model:ir.ui.menu,name:td_mebli_mrp.td_mebli_workcenter_load_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_load_graph
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_load_pivot
+msgid "Work Center Load"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_mrp_workorder
+msgid "Work Order"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "edged long sides"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "edged short sides"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "length, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "material"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "mm."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "part"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "quantity"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "thickness"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
+msgid "x"
+msgstr ""

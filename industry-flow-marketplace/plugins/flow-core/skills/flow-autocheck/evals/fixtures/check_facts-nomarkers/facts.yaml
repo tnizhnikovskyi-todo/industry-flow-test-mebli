@@ -1,0 +1,8 @@
+meta:
+  industry: "test"
+market:
+  snapshot_date: "2026-08-01"
+  bands:
+    - {id: "m-01", label: "10-49", companies: 1200, revenue_uah: 5000000, growth_pct: 4.5}
+todo:
+  projects: 14

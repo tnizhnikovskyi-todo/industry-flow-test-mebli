@@ -1,0 +1,27 @@
+# ТЕСТОВИЙ наряд A-20b (скіли 0.2.0). Склала сесія за дорученням власника (START-HERE §3 п.4; чат 2026-11-11 «дай мне до утра результат»). Картка — step-cards.md «A-20b».
+step: A-20b
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: ["flow-research:completeness-audit@0.2.0"]
+model: opus
+effort: high
+inputs:
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: 12d8e54}
+  - {name: "concept/*", from: A-20, path: docs/industries/mebli/concept/, sha: 12d8e54}
+  - {name: "research/{OWNER-BRIEF,BOX,SALES,REJECTED,FUNCTIONAL-MAP,REUSE,COMPLETENESS}.md, facts.yaml", from: A-20, path: docs/industries/mebli/research/, sha: 12d8e54}
+where: "docs/industries/mebli/research/{COMPLETENESS.md,OWNER-BRIEF.md,BOX.md,SALES.md,REJECTED.md,facts.yaml}; docs/industries/mebli/concept/"
+template: "flow-research/references/templates/COMPLETENESS.tpl.md; checklist flow-research/references/completeness-checklist.md"
+done: "COMPLETENESS.md §1–4 (22 пункти, підсумок), реєстр G-xx; усі P1 desk закриті; human/decision — у плані перевірки / OWNER-BRIEF §8; CA-* PASS"
+check: {mode: auto, how: "check_completeness.py COMPLETENESS.md --brief OWNER-BRIEF.md; check_concept.py; check_facts.py; check_rejected.py", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 12, context_budget_tokens: 200000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — знеособлені агрегати"
+review: {checklists: [completeness.md], max_rounds: 2}
+odoo_connections: []
+params: {mode: main, sample: false, reviewers_parallel: 3}
+repo: {url: origin, base_branch: flow/A-20-2-test, branch: flow/A-20b-test}
+attempt: 1
+returned_from: null
+git: {base: 12d8e54, head: null, prev_tag: null}
+date: 2026-11-12

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_timesheet_export,td.mebli.timesheet.export,model_td_mebli_timesheet_export,hr_attendance.group_hr_attendance_officer,1,1,1,1
+access_td_mebli_timesheet_export_line,td.mebli.timesheet.export.line,model_td_mebli_timesheet_export_line,hr_attendance.group_hr_attendance_officer,1,1,1,1

@@ -1,0 +1,6 @@
+# facts.yaml (фікстура): єдине джерело чисел
+meta:
+  industry: "mebli"
+market:
+  snapshot_date: "2026-08-01"
+  companies: 1200

@@ -66,7 +66,7 @@ description: >
 (A-09) на ревізії й на попередньому тегу, `package/demo/README.md` (A-15), `package/DATA_POLICY.md`.
 Умовні: `package/demo/scenarios.md` (A-16; release, odoo-upgrade), `docs/industries/<галузь>/ТР.md` (A-08; лише ролі для
 навчання), `package/CHECKS.md` (A-14; patch — обов'язково), `package/hotfix/vX.Y.Z.md` (A-19; patch),
-`package/upgrade-<версія>.md` (D-03; odoo-upgrade). Попередній тег: `git.prev_tag` наряду, інакше `git tag -l 'package/v*' --sort=-v:refname`.
+`package/upgrade-<версія>.md` (D-03; odoo-upgrade); `docs/industries/<галузь>/OWNER-INTAKE.md` (`editions`; обов'язковий). Попередній тег: `git.prev_tag` наряду, інакше `git tag -l 'package/v*' --sort=-v:refname`.
 Шаблон розділу CHANGELOG: `references/changelog-template.md` цього скіла (спільного `flow-package-build/references/changelog-template.md` немає).
 
 ## Крок 0. Наряд, режим, доступи
@@ -78,6 +78,7 @@ description: >
 
 ## Крок 1. Передумови (нестача = ескалація, не дефект)
 - release/odoo-upgrade: `ACCEPTANCE.md` є; поле підпису заповнене (AI його не пише); є X.Y і SHA ревізії.
+- `CHECKS.md` (розділ «Редакції»): підсумок `APPROVE` або `APPROVE (CE); EE не перевірено` (при `editions: both` і недоступній EE — тег лише після рішення людини, див. «Редакції CE/EE»); інший підсумок — стоп.
 - patch: `CHECKS.md` з APPROVE усіх гейтів на SHA hotfix; `hotfix/vX.Y.Z.md` з рішенням Тімліда.
 - Для версії з попереднім тегом: запис бронювання окремого інстанса за README A-15.
 Нестача → `escalated_to` (Власник продукту; Тімліду — за інстанс), без жодних змін у репо.
@@ -124,6 +125,7 @@ description: >
 з груп td_* і конфігу); клієнтські поля — плейсхолдери для B-06/B-07. Без даних клієнтів.
 
 ## Крок 8. CHANGELOG і CI (R-07, R-09...R-11): два запуски
+- Редакції: CHANGELOG — розділи по редакціях; установка й оновлення — для кожної редакції з `editions`; EE-бази немає — «не перевірено» (WARN).
 Субагент нічого не пушить, а CI на GitHub бачить лише запушені коміти (гілку пушить runner після виконавця, `flow-step-runner` крок 14а).
 Тому CI з коміту цього ж запуску неможливий: `dispatch` з `sha` = локальний HEAD впаде на checkout.
 **Запуск 1 (фаза `release`, CI ще немає).**
@@ -159,6 +161,7 @@ description: >
 у `release-defects.md`, не CHANGELOG. `returned` без рядка у файлі неможливий.
 
 ## Крок 10. Автоперевірка і PR
+- **`ED-edition`** (рядок `checks[]`, виконує скіл): PASS — CHANGELOG має розділи по редакціях; установка й оновлення перевірено для кожної редакції з `editions`; FAIL — немає розділу чи перевірки для редакції з `editions`; WARN — EE-бази немає — «не перевірено», тег не позначати перевіреним на EE.
 Прогнати R-01...R-16 (таблиця нижче). FAIL у релізних файлах (тег/CHANGELOG/шаблони) — виправити й повторити в межах
 `maxAttempts`; FAIL пакета — крок 9. Пам'ятка перевіряльнику починається з «Невпевнений»: ліцензії, несумісні зміни, VP
 без default, відсутній тест оновлення. PR створює runner (з гілки runner); гейт «Затвердити / Повернути» — Власник продукту (`humanSla` 3 р. д.).
@@ -176,6 +179,13 @@ description: >
    команду виконує runner (`flow-step-runner` крок 14б). `get_tag` — лише перевірка, що тег з'явився. Умова runner «`sha` — вершина `base_branch`» не збігається
    з цим кроком (відкрите питання 2). Повідомлення «Версія пакета випущена» ставить оркестратор (B-11), скіл його не надсилає.
 
+## Редакції CE/EE (правила — `flow-package-build/references/editions-and-bridges.md`)
+- `CHANGELOG.md` має запис про зміни по редакціях (ядро/CE; мости `td_*_ee`/EE) — «Що нового» для клієнта CE і клієнта EE окремо.
+- Перевірка установки в чисту базу й оновлення з попереднього тега — для кожної редакції з `editions` (CE; EE при `editions: both`); результат у `release`-блоці з колонкою `edition`. EE недоступна -> `WARN`/«не перевірено», тег не позначати як перевірений на EE.
+- Тег `package/vX.Y` ставиться лише коли гейти A-14 дали `APPROVE` по всіх редакціях з `editions`. Підсумок `APPROVE (CE); EE не перевірено` (`editions: both`, EE недоступна): фаза `tag` — `waiting_human` до Власника продукту з питанням «випускаємо з неперевіреною EE?»; до відповіді тег не ставиться; рішення «так» — тег ставиться, у CHANGELOG і повідомленні тега: «EE не перевірено на <SHA>», тег не позначається як перевірений на EE; «ні» — повернення на A-14 з доступом до EE.
+- Редакція — колонка `edition` у R-09, R-10, R-11 і в CHANGELOG (розділи по редакціях).
+- Матеріали релізу (відео, one-pager, сторінка) — не цей скіл: їх робить контент-менеджер (крок A-21c `flow-research:showcase-content`, `executor: any`); у `CHANGELOG`/PR — лише посилання на картку A-21c, без створення матеріалів.
+
 ## Автоперевірка (перед здачею)
 | ID | Перевірка | FAIL -> |
 |---|---|---|
@@ -191,6 +201,7 @@ description: >
 | R-10 | Smoke після установки | A-14 |
 | R-11 | Оновлення з попереднього тега на окремому інстансі ≠ стенд A-15; id і витяг у CHANGELOG | A-14 або ескалація (немає інстанса) |
 | R-12 | `migration-plan.md`, `training.md` є, з обов'язковими розділами | повтор |
+| R-15 | `editions` з OWNER-INTAKE: для кожної редакції є рядок у R-09/R-10/R-11 і розділ CHANGELOG; `ee` без EE = `не перевірено` (WARN), не PASS; підсумок CHECKS.md ∈ {APPROVE, APPROVE (CE); EE не перевірено} | повтор / A-14 |
 | R-13 | Кожна несумісна зміна має migrations/ і рядок у CHANGELOG | A-14 -> A-11 |
 | R-14 | Немає даних клієнтів (ЄДРПОУ, +380..., email, назви з CRM) | повтор; у майстер-даних/демо — A-14 -> A-13/A-15 |
 | R-15 | `boost:odoo19-lint` по `package/addons/td_*/` на ревізії | A-14 -> A-11 |
@@ -220,6 +231,7 @@ ACCEPTANCE.md, diff лише дозволені файли; X.Y тега = ACCEP
 - [ ] У CHANGELOG усі заголовки; «Зміни анкети» = diff ключів; склад = комплект ACCEPTANCE.
 - [ ] Запуск 1: CI не запускався, `waiting_human` з resume. Запуск 2: лог CI на комітi-предку HEAD, або `NOT_RUN` і done не заявлено.
 - [ ] Фаза tag: PR змерджено, `sha` = merge-коміт, R-02 на ньому PASS.
+- [ ] Кожна редакція з `editions` має рядки R-09/R-10/R-11 і розділ CHANGELOG; тег не позначено як перевірений на EE без перевірки; випуск із `EE не перевірено` — лише після рішення Власника.
 - [ ] Дефект пакета має рядок у `release-defects.md`; тег не ставився.
 - [ ] У файлах немає даних клієнтів (R-14); жодного виклику odoo-mcp без `connection_id`.
 
@@ -248,4 +260,5 @@ ACCEPTANCE.md, diff лише дозволені файли; X.Y тега = ACCEP
 3. Код повернення — з `release-defects.md`; рядок карти A-18 -> A-14 є (`flow-map.md`), `flow-orchestrator` бере код із `returned_to` звіту (закрито). Стан «чекає CI» подано як `waiting_human` з `resume.params.ci: pending`; потрібне підтвердження, що оркестратор передає `params.resume` у повторний наряд.
 4. Тест оновлення (R-11): потрібен окремий вхід/job в `ci-pipeline-builder` (`prev_tag` + `instance`) — запит до нього; до появи R-11 = `NOT_RUN`.
 Еталони `install.sh --addons-src --tag` і `validate.py` — `flow-core/references/templates/tools-odoo/` (C-00 ставить у `tools/odoo/`).
+Ліцензія наших модулів `td_*`: LGPL-3 за замовчуванням, остаточно — рішення власника (див. `flow-package-build/references/editions-and-bridges.md`); R-06 і `license` у маніфестах не вгадувати.
 Решта — `references/open-questions.md`.

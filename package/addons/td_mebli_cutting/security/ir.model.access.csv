@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_cutting_job_user,td.mebli.cutting.job user,model_td_mebli_cutting_job,mrp.group_mrp_user,1,1,1,0
+access_td_mebli_cutting_job_manager,td.mebli.cutting.job manager,model_td_mebli_cutting_job,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_cutting_job_stock,td.mebli.cutting.job stock,model_td_mebli_cutting_job,stock.group_stock_user,1,0,0,0
+access_td_mebli_cutting_sheet_user,td.mebli.cutting.sheet user,model_td_mebli_cutting_sheet,mrp.group_mrp_user,1,1,1,0
+access_td_mebli_cutting_sheet_manager,td.mebli.cutting.sheet manager,model_td_mebli_cutting_sheet,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_cutting_sheet_stock,td.mebli.cutting.sheet stock,model_td_mebli_cutting_sheet,stock.group_stock_user,1,0,0,0
+access_td_mebli_cutting_placement_user,td.mebli.cutting.placement user,model_td_mebli_cutting_placement,mrp.group_mrp_user,1,1,1,0
+access_td_mebli_cutting_placement_manager,td.mebli.cutting.placement manager,model_td_mebli_cutting_placement,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_cutting_placement_stock,td.mebli.cutting.placement stock,model_td_mebli_cutting_placement,stock.group_stock_user,1,0,0,0
+access_td_mebli_cutting_offcut_user,td.mebli.cutting.offcut user,model_td_mebli_cutting_offcut,mrp.group_mrp_user,1,1,1,0
+access_td_mebli_cutting_offcut_manager,td.mebli.cutting.offcut manager,model_td_mebli_cutting_offcut,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_cutting_offcut_stock,td.mebli.cutting.offcut stock,model_td_mebli_cutting_offcut,stock.group_stock_user,1,1,0,0
+access_td_mebli_measure_warning_user,td.mebli.measure.warning user,model_td_mebli_measure_warning,mrp.group_mrp_user,1,1,1,1

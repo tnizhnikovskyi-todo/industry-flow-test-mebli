@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- F-28: the cutting at the distributor = a standard purchase of the cutting service; the job shows the link and the
+         expected return of the parts (read only, from the purchase order line) -->
+    <record id="td_mebli_cutting_job_view_form_distributor" model="ir.ui.view">
+        <field name="name">td.mebli.cutting.job.form.distributor</field>
+        <field name="model">td.mebli.cutting.job</field>
+        <field name="inherit_id" ref="td_mebli_cutting.td_mebli_cutting_job_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_send']" position="after">
+                <button name="action_send_distributor" string="Send to the distributor" type="object"
+                        invisible="state != 'draft'"/>
+            </xpath>
+            <xpath expr="//field[@name='export_attachment_id']" position="after">
+                <field name="purchase_id" invisible="not purchase_id"/>
+                <field name="distributor_id" invisible="not purchase_id"/>
+                <field name="return_date" invisible="not return_date" decoration-warning="return_date"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="td_mebli_cutting_job_view_list_distributor" model="ir.ui.view">
+        <field name="name">td.mebli.cutting.job.list.distributor</field>
+        <field name="model">td.mebli.cutting.job</field>
+        <field name="inherit_id" ref="td_mebli_cutting.td_mebli_cutting_job_view_list"/>
+        <field name="arch" type="xml">
+            <field name="part_count" position="after">
+                <field name="distributor_id" optional="show"/>
+                <field name="return_date" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- S-02: the banner names the cutting job and the distributor when the cutting moves the date -->
+    <record id="view_order_form_td_mebli_dates_cutting" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.dates.cutting</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="td_mebli_sale.view_order_form_td_mebli_dates"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('td_date_alert')]/span" position="attributes">
+                <attribute name="invisible">not td_late_item or td_delay_reason == 'cutting'</attribute>
+            </xpath>
+            <xpath expr="//div[hasclass('td_date_alert')]/span" position="after">
+                <span invisible="td_delay_reason != 'cutting'"> It is moved by the cutting at the distributor: <field name="td_late_item" class="oe_inline"/>.</span>
+            </xpath>
+        </field>
+    </record>
+</odoo>

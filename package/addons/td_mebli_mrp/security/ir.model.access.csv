@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_part_rule_user,td.mebli.part.rule user,model_td_mebli_part_rule,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_part_rule_manager,td.mebli.part.rule manager,model_td_mebli_part_rule,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_part_user,td.mebli.part user,model_td_mebli_part,mrp.group_mrp_user,1,1,1,0
+access_td_mebli_part_manager,td.mebli.part manager,model_td_mebli_part,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_part_stock,td.mebli.part stock user,model_td_mebli_part,stock.group_stock_user,1,0,0,0
+access_td_mebli_spec_import_mrp,td.mebli.spec.import workshop,model_td_mebli_spec_import,mrp.group_mrp_user,1,1,1,1

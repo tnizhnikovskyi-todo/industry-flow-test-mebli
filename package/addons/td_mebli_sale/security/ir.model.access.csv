@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_part_rule_salesman,td.mebli.part.rule salesman,td_mebli_mrp.model_td_mebli_part_rule,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_part_salesman,td.mebli.part salesman,td_mebli_mrp.model_td_mebli_part,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_routing_workcenter_salesman,mrp.routing.workcenter salesman,mrp.model_mrp_routing_workcenter,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_workcenter_salesman,mrp.workcenter salesman,mrp.model_mrp_workcenter,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_bom_byproduct_salesman,mrp.bom.byproduct salesman,mrp.model_mrp_bom_byproduct,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_workcenter_capacity_salesman,mrp.workcenter.capacity salesman,mrp.model_mrp_workcenter_capacity,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_production_salesman,mrp.production salesman,mrp.model_mrp_production,sales_team.group_sale_salesman,1,0,0,0
+access_mrp_workorder_salesman,mrp.workorder salesman,mrp.model_mrp_workorder,sales_team.group_sale_salesman,1,0,0,0
+access_purchase_order_salesman,purchase.order salesman (read),purchase.model_purchase_order,sales_team.group_sale_salesman,1,0,0,0
+access_purchase_order_line_salesman,purchase.order.line salesman (read),purchase.model_purchase_order_line,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_order_change_salesman,td.mebli.order.change salesman,model_td_mebli_order_change,sales_team.group_sale_salesman,1,1,1,0
+access_td_mebli_order_change_manager,td.mebli.order.change manager,model_td_mebli_order_change,sales_team.group_sale_manager,1,1,1,1
+access_td_mebli_order_change_mrp,td.mebli.order.change workshop,model_td_mebli_order_change,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_order_change_wizard_salesman,td.mebli.order.change.wizard salesman,model_td_mebli_order_change_wizard,sales_team.group_sale_salesman,1,1,1,1

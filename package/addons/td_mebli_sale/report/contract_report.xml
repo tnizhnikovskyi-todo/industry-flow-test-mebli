@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Printed contract of the order (A-21, coverage review A2). Two texts by the parameter of the company (Sales
+         settings «Printed Contract»): contract work (made to the measurements of the customer) or sale contract.
+         The text is a TEMPLATE to be checked by a lawyer (decision of the owner No 17), printed with that mark. -->
+    <record id="action_report_contract" model="ir.actions.report">
+        <field name="name">Contract</field>
+        <field name="model">sale.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_sale.report_contract</field>
+        <field name="report_file">td_mebli_sale.report_contract</field>
+        <field name="print_report_name">'Contract - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_contract_document">
+        <t t-call="web.external_layout">
+            <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
+            <t t-set="mode" t-value="doc._td_contract_mode()"/>
+            <t t-set="company" t-value="doc.company_id"/>
+            <t t-set="address">
+                <div t-field="doc.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
+            </t>
+            <div class="page td_report_contract">
+                <p class="text-end small text-danger td_lawyer_mark"><strong>Template to be checked by a lawyer (No 17)</strong></p>
+                <h2 class="text-center">
+                    <span t-if="mode == 'sale'">Sale Contract</span>
+                    <span t-else="">Contract Work Agreement</span>
+                    No <span t-field="doc.name"/>
+                </h2>
+                <p class="text-center">dated <span t-field="doc.date_order" t-options='{"widget": "date"}'/></p>
+                <p><strong t-field="company.name"/> (the Contractor<t t-if="mode == 'sale'"> — the Seller</t>) and
+                    <strong t-field="doc.partner_id.name"/> (the Customer<t t-if="mode == 'sale'"> — the Buyer</t>) have agreed as follows.</p>
+
+                <h5>1. Subject</h5>
+                <p t-if="mode == 'sale'">The Seller transfers to the Buyer the furniture listed in the specification below, and the
+                    Buyer accepts and pays for it (Civil Code of Ukraine, chapter 54).</p>
+                <p t-else="">The Contractor makes the furniture to the individual measurements of the Customer according to the
+                    specification below and the approved measurement sheet, delivers and installs it; the Customer accepts the
+                    work and pays for it (Civil Code of Ukraine, chapter 61).</p>
+                <table class="table table-sm o_main_table">
+                    <thead><tr><th>Product</th><th class="text-end">Quantity</th><th class="text-end">Amount</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="doc.order_line.filtered(lambda l: not l.display_type and not l.is_downpayment)" t-as="line">
+                            <td><span t-field="line.name"/></td>
+                            <td class="text-end"><span t-field="line.product_uom_qty"/> <span t-field="line.product_uom_id"/></td>
+                            <td class="text-end"><span t-field="line.price_total"/></td>
+                        </tr>
+                    </tbody>
+                    <tfoot><tr><td colspan="2"><strong>Total</strong></td><td class="text-end"><strong t-field="doc.amount_total"/></td></tr></tfoot>
+                </table>
+
+                <h5>2. Price and payment schedule</h5>
+                <p>The price of the contract is <strong t-field="doc.amount_total"/>. The Customer pays by the schedule:</p>
+                <table class="table table-sm td_pay_schedule">
+                    <thead><tr><th>Payment</th><th class="text-end">Share</th><th class="text-end">Amount</th></tr></thead>
+                    <tbody>
+                        <tr t-foreach="doc._td_payment_schedule()" t-as="row">
+                            <td><t t-out="row['milestone']"/></td>
+                            <td class="text-end"><t t-if="row['percent']"><t t-out="'%g' % row['percent']"/> %</t></td>
+                            <td class="text-end"><span t-out="row['amount']" t-options='{"widget": "monetary", "display_currency": doc.currency_id}'/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>The crew goes to the installation after the payments «Prepayment» and «Before installation» are received.</p>
+
+                <h5>3. Terms</h5>
+                <p t-if="doc.commitment_date">The furniture is ready for the delivery and installation by
+                    <strong t-field="doc.commitment_date" t-options='{"widget": "date"}'/>. The term is moved by the days of the
+                    late payment and of the changes asked by the Customer.</p>
+                <p t-else="">The term of the making is counted from the day of the prepayment.</p>
+
+                <h5>4. Acceptance</h5>
+                <p>The installation is accepted by the act of the installation signed by the Customer. The defects found are
+                    written in the act and fixed by the Contractor in the agreed term.</p>
+
+                <h5>5. Warranty</h5>
+                <p>The warranty on the furniture is 24 months from the day of the act, under the rules of use handed to the
+                    Customer.</p>
+
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <strong>Contractor</strong>
+                        <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        <div class="mt-4">Signature: ____________________</div>
+                    </div>
+                    <div class="col-6">
+                        <strong>Customer</strong>
+                        <div t-field="doc.partner_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
+                        <div class="mt-4">Signature: ____________________</div>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_contract">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="td_mebli_sale.report_contract_document" t-lang="doc.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+</odoo>

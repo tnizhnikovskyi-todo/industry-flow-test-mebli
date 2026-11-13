@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_measure_user,td.mebli.measure user,model_td_mebli_measure,sales_team.group_sale_salesman,1,1,1,0
+access_td_mebli_measure_mrp,td.mebli.measure workshop,model_td_mebli_measure,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_measure_manager,td.mebli.measure manager,model_td_mebli_measure,sales_team.group_sale_manager,1,1,1,1
+access_td_mebli_measure_niche_user,td.mebli.measure.niche user,model_td_mebli_measure_niche,sales_team.group_sale_salesman,1,1,1,1
+access_td_mebli_measure_niche_mrp,td.mebli.measure.niche workshop,model_td_mebli_measure_niche,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_measure_appliance_user,td.mebli.measure.appliance user,model_td_mebli_measure_appliance,sales_team.group_sale_salesman,1,1,1,1
+access_td_mebli_measure_appliance_mrp,td.mebli.measure.appliance workshop,model_td_mebli_measure_appliance,mrp.group_mrp_user,1,0,0,0
+access_td_mebli_measure_booking_user,td.mebli.measure.booking user,model_td_mebli_measure_booking,sales_team.group_sale_salesman,1,1,1,1
+access_td_mebli_measure_slot_user,td.mebli.measure.slot user,model_td_mebli_measure_slot,sales_team.group_sale_salesman,1,1,1,1

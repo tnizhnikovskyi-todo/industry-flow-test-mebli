@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="sale_order_line_td_cost_list" model="ir.ui.view">
+        <field name="name">sale.order.line.td.cost.list</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0" default_order="id" decoration-danger="margin_percent &lt; 0.15">
+                <field name="order_id" string="Order"/>
+                <field name="product_id"/>
+                <field name="td_width" optional="hide"/>
+                <field name="td_height" optional="hide"/>
+                <field name="td_depth" optional="hide"/>
+                <field name="product_uom_qty" string="Qty"/>
+                <field name="price_subtotal" string="Revenue" sum="Total"/>
+                <field name="td_planned_material_cost" string="Materials" sum="Total"/>
+                <field name="td_planned_operation_cost" string="Work" sum="Total"/>
+                <field name="margin" string="Margin" widget="monetary" sum="Total"/>
+                <field name="margin_percent" string="Margin, %" widget="percentage"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sale_order_line_td_cost_kanban" model="ir.ui.view">
+        <field name="name">sale.order.line.td.cost.kanban</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <!-- підписи карток — українською в самому поданні: Odoo не перекладає текст усередині kanban-шаблону card з po-файлу -->
+            <kanban create="0" edit="0" delete="0" default_order="margin_percent asc, id desc">
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                            <strong class="fs-4"><field name="order_id"/></strong>
+                            <field name="margin_percent" widget="percentage" class="fs-3 fw-bold"
+                                   decoration-danger="margin_percent &lt; 0.15" decoration-success="margin_percent &gt;= 0.15"/>
+                        </div>
+                        <div class="text-muted"><field name="product_id"/> · <field name="td_width"/>×<field name="td_height"/>×<field name="td_depth"/></div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span><span>Виручка:</span> <field name="price_subtotal" widget="monetary"/></span>
+                            <span><span>Маржа:</span> <field name="margin" widget="monetary"/></span>
+                        </div>
+                        <field name="currency_id" invisible="1"/>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="sale_order_line_td_cost_pivot" model="ir.ui.view">
+        <field name="name">sale.order.line.td.cost.pivot</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <pivot string="Order Cost">
+                <field name="product_id" type="row"/>
+                <field name="price_subtotal" type="measure"/>
+                <field name="td_planned_material_cost" type="measure"/>
+                <field name="td_planned_operation_cost" type="measure"/>
+                <field name="margin" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="sale_order_line_td_cost_search" model="ir.ui.view">
+        <field name="name">sale.order.line.td.cost.search</field>
+        <field name="model">sale.order.line</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="order_id"/>
+                <field name="product_id"/>
+                <filter name="confirmed" string="Confirmed orders" domain="[('state', '=', 'sale')]"/>
+                <separator/>
+                <filter name="last30" string="Останні 30 днів"
+                        domain="[('order_id.date_order', '&gt;=', (context_today() - relativedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group>
+                    <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
+                    <filter name="group_order" string="Order" context="{'group_by': 'order_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sale_order_line_td_cost_action" model="ir.actions.act_window">
+        <field name="name">Order Cost</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">pivot,list,kanban</field>
+        <field name="domain">[('td_is_parametric', '=', True), ('state', '!=', 'cancel')]</field>
+        <field name="search_view_id" ref="sale_order_line_td_cost_search"/>
+        <field name="context">{'search_default_confirmed': 1, 'search_default_last30': 1}</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'pivot', 'view_id': ref('sale_order_line_td_cost_pivot')}),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('sale_order_line_td_cost_list')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('sale_order_line_td_cost_kanban')})]"/>
+    </record>
+
+    <record id="sale_order_td_low_margin_kanban" model="ir.ui.view">
+        <field name="name">sale.order.td.low.margin.kanban</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <!-- для телефона: номер, клієнт, виручка, маржа й % (червоним, якщо нижче 15%); підписи — українською в самому поданні -->
+            <kanban create="0" edit="0" delete="0" default_order="margin_percent asc">
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                            <strong class="fs-4"><field name="name"/></strong>
+                            <field name="margin_percent" widget="percentage" class="fs-3 fw-bold"
+                                   decoration-danger="margin_percent &lt; 0.15" decoration-success="margin_percent &gt;= 0.15"/>
+                        </div>
+                        <div class="text-muted"><field name="partner_id"/></div>
+                        <div class="d-flex justify-content-between mt-2">
+                            <span><span>Виручка:</span> <field name="amount_untaxed" widget="monetary"/></span>
+                            <span><span>Маржа:</span> <field name="margin" widget="monetary"/></span>
+                        </div>
+                        <field name="currency_id" invisible="1"/>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="sale_order_td_low_margin_list" model="ir.ui.view">
+        <field name="name">sale.order.td.low.margin.list</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <list create="0" edit="0" delete="0" default_order="margin_percent asc" decoration-danger="margin_percent &lt; 0.15">
+                <field name="name"/>
+                <field name="date_order"/>
+                <field name="partner_id"/>
+                <field name="amount_untaxed" string="Revenue" sum="Total"/>
+                <field name="margin" string="Margin" sum="Total"/>
+                <field name="margin_percent" string="Margin, %" widget="percentage"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <menuitem id="sale_order_line_td_cost_menu" name="Order Cost" parent="sale.menu_sale_report"
+              action="sale_order_line_td_cost_action" sequence="30" groups="sales_team.group_sale_salesman"/>
+</odoo>

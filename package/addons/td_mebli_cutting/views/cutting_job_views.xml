@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_cutting_job_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.cutting.job.list</field>
+        <field name="model">td.mebli.cutting.job</field>
+        <field name="arch" type="xml">
+            <list decoration-muted="state == 'cancel'" decoration-success="state == 'done'">
+                <field name="name"/>
+                <field name="production_ids" widget="many2many_tags"/>
+                <field name="part_count"/>
+                <field name="result_source"/>
+                <field name="waste_pct"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="offcut_saving" optional="show"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_cutting_job_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.cutting.job.form</field>
+        <field name="model">td.mebli.cutting.job</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_send" string="Send to cutting" type="object" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_simulate" string="Get result (simulation)" type="object" class="btn-primary"
+                            invisible="state != 'sent'"/>
+                    <button name="action_simulate" string="Get result again" type="object"
+                            invisible="state != 'result'"/>
+                    <button name="action_done" string="Confirm" type="object" class="btn-primary"
+                            invisible="state != 'result'"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state not in ('draft', 'sent', 'result')"/>
+                    <button name="action_draft" string="Back to draft" type="object" invisible="state != 'cancel'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,result,done"/>
+                </header>
+                <div class="alert alert-light border-bottom rounded-0 py-1 px-3 mb-0 small text-muted" role="status" invisible="result_source != 'simulated'">
+                    The result is received from a simulation of the cutting program, not from a real one.
+                </div>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="production_ids" widget="many2many_tags" readonly="state != 'draft'"/>
+                            <field name="export_attachment_id" invisible="not export_attachment_id"/>
+                            <field name="result_source" invisible="not result_source"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="part_count"/>
+                            <field name="waste_pct" invisible="not result_source"/>
+                            <field name="offcut_used_m2" invisible="not offcut_used_m2"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="offcut_saving" invisible="not offcut_saving"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cutting Map" name="map" invisible="not sheet_ids">
+                            <field name="map_html" readonly="1" nolabel="1"/>
+                        </page>
+                        <page string="Parts" name="parts">
+                            <field name="part_ids" readonly="1">
+                                <list>
+                                    <field name="bom_id" width="230px"/>
+                                    <field name="name" width="140px"/>
+                                    <field name="material_id" context="{'display_default_code': False}"/>
+                                    <field name="qty" width="80px"/>
+                                    <field name="length_mm" width="120px"/>
+                                    <field name="width_mm" width="120px"/>
+                                    <field name="edge_product_id" context="{'display_default_code': False}"/>
+                                </list>
+                            </field>
+                        </page>
+                        
+                        <page string="Cutting Parameters" name="parameters">
+                            <group>
+                                <field name="kerf_mm" readonly="state not in ('draft', 'sent')"/>
+                                <field name="trim_mm" readonly="state not in ('draft', 'sent')"/>
+                                <field name="min_offcut_mm" readonly="state not in ('draft', 'sent')"/>
+                            </group>
+                        </page>
+                        <page string="Sheets" name="sheets" invisible="not sheet_ids">
+                            <field name="sheet_ids" readonly="1">
+                                <list>
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="product_id" context="{'display_default_code': False}"/>
+                                    <field name="lot_id"/>
+                                    <field name="length_mm"/>
+                                    <field name="width_mm"/>
+                                    <field name="used_area_m2" sum="Total"/>
+                                    <field name="offcut_area_m2" sum="Total"/>
+                                    <field name="waste_pct"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_cutting_job_view_search" model="ir.ui.view">
+        <field name="name">td.mebli.cutting.job.search</field>
+        <field name="model">td.mebli.cutting.job</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="production_ids"/>
+                <filter name="filter_open" string="Open" domain="[('state', 'in', ('draft', 'sent', 'result'))]"/>
+                <filter name="filter_done" string="Done" domain="[('state', '=', 'done')]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="td_mebli_cutting_job_action" model="ir.actions.act_window">
+        <field name="name">Cutting Jobs</field>
+        <field name="res_model">td.mebli.cutting.job</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="td_mebli_cutting_job_view_search"/>
+    </record>
+
+    <record id="td_mebli_cutting_sheet_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.cutting.sheet.form</field>
+        <field name="model">td.mebli.cutting.sheet</field>
+        <field name="arch" type="xml">
+            <form create="0" edit="0">
+                <div class="alert alert-light border-bottom rounded-0 py-1 px-3 mb-0 small text-muted" role="status" invisible="result_source != 'simulated'">
+                    The result is received from a simulation of the cutting program, not from a real one.
+                    <field name="result_source" invisible="1"/>
+                </div>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="job_id"/>
+                            <field name="product_id"/>
+                            <field name="lot_id"/>
+                        </group>
+                        <group>
+                            <field name="length_mm"/>
+                            <field name="width_mm"/>
+                            <field name="used_area_m2"/>
+                            <field name="offcut_area_m2"/>
+                            <field name="waste_pct"/>
+                        </group>
+                    </group>
+                    <field name="map_html" readonly="1" nolabel="1"/>
+                    <notebook>
+                        <page string="Placement" name="placement">
+                            <field name="placement_ids">
+                                <list>
+                                    <field name="part_id"/>
+                                    <field name="production_id"/>
+                                    <field name="index"/>
+                                    <field name="pos_x_mm"/>
+                                    <field name="pos_y_mm"/>
+                                    <field name="length_mm"/>
+                                    <field name="width_mm"/>
+                                    <field name="rotated"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Offcuts" name="offcuts">
+                            <field name="offcut_ids">
+                                <list>
+                                    <field name="pos_x_mm"/>
+                                    <field name="pos_y_mm"/>
+                                    <field name="length_mm"/>
+                                    <field name="width_mm"/>
+                                    <field name="area_m2" sum="Total"/>
+                                    <field name="lot_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_cutting_sheet_action" model="ir.actions.act_window">
+        <field name="name">Cutting Sheets</field>
+        <field name="res_model">td.mebli.cutting.sheet</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

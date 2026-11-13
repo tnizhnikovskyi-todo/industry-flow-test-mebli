@@ -1,0 +1,33 @@
+{
+ "id": "A-20c",
+ "code": "A-20c",
+ "title": "Сторінка для власника",
+ "executor": "any",
+ "skillRef": "flow-research:concept-presentation",
+ "access_profile": "base",
+ "raciR": "BA (R); Власник продукту (A, гейт)",
+ "preconditions": "A-20 done",
+ "inArtifacts": "research/*; concept/*; research/AI-DECISIONS.md",
+ "inputs": "OWNER-INTAKE.md",
+ "outputs": "research/owner-page/index.html",
+ "where": "research/owner-page/index.html",
+ "gate": "так: єдиний гейт дослідження (вето-цикл); Повернути -> A-20 / A-03b / A-03c",
+ "params": {
+  "sample": false
+ },
+ "review": {
+  "checklists": [
+   "owner-page.md",
+   "edition-claims.md"
+  ],
+  "max_rounds": 2
+ },
+ "model": "sonnet",
+ "hours": 3,
+ "costLimit": 12,
+ "maturity": "1",
+ "per": "package",
+ "maxAttempts": 3,
+ "status": "draft",
+ "notes": "мінікартка фікстури за step-cards.md"
+}

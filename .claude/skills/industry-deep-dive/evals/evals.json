@@ -1,0 +1,214 @@
+{
+  "skill_name": "industry-deep-dive",
+  "evals": [
+    {
+      "id": "mebli-r10-shallow-industry",
+      "prompt": "Наряд A-03b, scope package/<галузь>, профіль research-internal, params.mode main, sample false. Входи: OWNER-INTAKE.md (валідна), briefing.md, past-projects.md. Виконай крок; у вході немає сесій A-06 — чи достатньо BA-довідки з briefing.md замість окремого дослідження?",
+      "expected_output": "Скіл не обмежується довідкою A-03: запускає R1/R2/R3, будує реєстр 25–40, галузеву модель по підсегментах і матрицю 60–100 рядків; сесії A-06 не вимагає.",
+      "assertions": [
+        "Не вважає briefing.md достатнім продуктовим дослідженням",
+        "Запускає R1, R2, R3 паралельно, потім R4 і рішення AI",
+        "Не зупиняється через відсутність сесій A-05/A-06",
+        "Розділи ринку, замінників, підсегментів присутні; розрахунків окупності немає"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/industry-model.md; industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/subsegments-deep.md; industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/competitors-registry.md"
+      }
+    },
+    {
+      "id": "mebli-r13-no-rejected-register",
+      "prompt": "Наряд A-03b, синтез завершено, у FUNCTIONAL-MAP позиції названо «поза пакетом», але окремого реєстру немає. Що перевірити перед передачею?",
+      "expected_output": "Є research/REJECTED.md у короткому форматі «не робимо й чому» (REJ-NNN, що, чому); check_rejected.py без FAIL; rejected_count і rejected_ref у звіті.",
+      "assertions": [
+        "Створює REJECTED.md, а не лише розділ у карті",
+        "Кожен рядок має ID, що не робимо, чому",
+        "Позиції з do_not_do мають причину «рішення власника»",
+        "Звіт містить rejected_count і rejected_ref"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/REJECTED.md; flow-core/references/rejected-register.md"
+      }
+    },
+    {
+      "id": "mebli-r14-competitor-names-only",
+      "prompt": "Наряд A-03b, R4. У реєстрі 30 назв конкурентів з URL; чи можна передати без профілів?",
+      "expected_output": "Ні: 8–12 профілів за competitors.tpl.md §7 («що всередині», ціни з умовами, тріал, докази); матриця без порожніх стовпців; системи без даних — короткий профіль «матриця не застосовна».",
+      "assertions": [
+        "Профілів 8–12",
+        "Профіль — не лише назва й URL",
+        "Немає порожніх стовпців матриці",
+        "Ціни в одній валюті з курсом і датою"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/competitors/*.md; references/templates/competitors.tpl.md (від кореня плагіна flow-research)"
+      }
+    },
+    {
+      "id": "mebli-r18-sources-coverage",
+      "prompt": "Наряд A-03b. Джерела: лише сайти конкурентів і Apps Store (групи 2–3). Внутрішні дані ToDo не використано. Передавати на рецензію?",
+      "expected_output": "Ні: група 1 обов'язкова (внутрішні дані ToDo за todo_data) + ≥4 групи з 8; таблиця покриття в FUNCTIONAL-MAP §6; прогалини — ризик у план A-23, крок не зупиняється.",
+      "assertions": [
+        "Додає групу 1 з класом internal-aggregated/internal-raw",
+        "Таблиця «Група каталогу | Джерел | Статус | Що не закрито»",
+        "Прогалини — ризик у план A-23, а не стоп",
+        "Кожне джерело — рядок sources-log.md"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/FUNCTIONAL-MAP.md §6; references/needs-sources-catalog.md (від кореня плагіна flow-research)"
+      }
+    },
+    {
+      "id": "mebli-r22-ee-claim-unverified",
+      "prompt": "Наряд A-03b, R3. У odoo-ecosystem.md є речення «Enterprise дає планування цеху, CE цього не має». Доступу до коду EE немає. Як оформити?",
+      "expected_output": "Твердження — рядки edition-claims.md: CE — grep по коду 19.0 з файл:рядок; EE — URL документації 19.0 + звірена цитата, інакше вердикт «не перевірено» (WARN); у тексті лише посилання EC-NNN; check_edition_claims.py без FAIL.",
+      "assertions": [
+        "Створює рядки EC-NNN з вердиктом",
+        "EE без цитати/URL — «не перевірено», а не «повністю»",
+        "Речення в тексті замінено посиланням на EC-NNN",
+        "Запускає check_edition_claims.py"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/odoo-ecosystem.md; skills/industry-deep-dive/evals/fixtures/check_edition_claims-bad/ та -ok/"
+      }
+    },
+    {
+      "id": "weak-evidence-is-risk-not-reject",
+      "prompt": "Наряд A-03b. Для 11 функцій є лише один тип джерел (слабкий довід). Чи відкидати їх у REJECTED?",
+      "expected_output": "Ні: слабкий довід — не підстава відкинути. Функції лишаються в карті зі статусом `ризик: перевірити на пілоті`, ризик іде в FUNCTIONAL-MAP §3.5 і план A-23; у REJECTED.md лише те, що явно не потрібне галузі, з причиною; суттєві рішення — рядки AI-DECISIONS (A-03b), власник не чекається.",
+      "assertions": [
+        "Функції зі слабким доводом лишаються в карті з позначкою `ризик: перевірити на пілоті`",
+        "REJECTED.md у короткому форматі (REJ-NNN, що, чому), без груп G1–G4а",
+        "Є рядки A-03b у research/AI-DECISIONS.md",
+        "Результат не waiting_human",
+        "Окупність, TCO, години не рахуються",
+        "Рішення не вносить у flow/decisions.md сам"
+      ],
+      "input": {
+        "fixtures": "flow-core/references/rejected-register.md; references/templates/AI-DECISIONS.tpl.md (від кореня плагіна flow-research)"
+      }
+    },
+    {
+      "id": "no-owner-wait-ai-decides",
+      "prompt": "Наряд A-03b, params.sample false, R1–R3 готові. Власник недоступний. Можна одразу робити синтез?",
+      "expected_output": "Так: власника в цьому кроці не чекаємо. AI вирішує підсегмент і кандидатів на «не робимо», дописує рядки A-03b у research/AI-DECISIONS.md (≤15 рядків, без грошей), далі R4 і синтез; результат done, не waiting_human; власник має вето на гейті A-20c.",
+      "assertions": [
+        "Результат не waiting_human",
+        "Немає K1.md",
+        "Кожне суттєве рішення — рядок AI-NN з альтернативою, ризиком, перевіркою",
+        "Рядки AI-DECISIONS без грошей і годин",
+        "Вето власника — на гейті A-20c"
+      ],
+      "input": {
+        "fixtures": "references/templates/AI-DECISIONS.tpl.md (від кореня плагіна flow-research)"
+      }
+    },
+    {
+      "id": "check-edition-claims-script",
+      "prompt": "Запусти python3 -I scripts/check_edition_claims.py на evals/fixtures/check_edition_claims-ok/edition-claims.md та на ...-bad/edition-claims.md.",
+      "expected_output": "На -ok: EC-verdict PASS, EC-evidence WARN (EC-003 EE не перевірено), EC-ce-unverified WARN з лічильником (EC-005), EC-partial PASS, код 0. На -bad: EC-verdict, EC-evidence, EC-ce-unverified, EC-partial FAIL (відступ, кирилична СЕ, localhost, голе «база EE», CE без причини, ID у **жирному** та `зворотних лапках`, ID не EC-NNN, README.md:1); EC-scan на неіснуючий шлях = FAIL, код 1. На -bad додатково: рядок із 7 клітинками (EC-014) = FAIL в EC-verdict («колонок 7, треба 8»); EC-015 («ні» без команди grep/rg), EC-016 («частково» з тире) = FAIL; порожня дата = WARN.",
+      "assertions": [
+        "-ok не дає FAIL",
+        "-bad дає FAIL у EC-verdict, EC-evidence, EC-ce-unverified, EC-partial",
+        "Код виходу 1 на -bad",
+        "Рядок із 7 клітинками дає FAIL в EC-verdict, не пропуск",
+        "«ні» без команди grep/rg і «частково» з «Чого бракує» = «-» — FAIL"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_edition_claims-ok/, check_edition_claims-bad/"
+      }
+    },
+    {
+      "id": "sample-waiting-human",
+      "prompt": "Наряд A-03b, params.sample true, R1–R3 ще не запускались. Що робити?",
+      "expected_output": "До повного R1–R3: один конкурент за competitors.tpl.md §7 і 10 рядків матриці за §6, мінімальний збір лише для них; result waiting_human; повний обсяг після resume {sample: false}.",
+      "assertions": [
+        "Не запускає повний R1–R3 до приймання зразка",
+        "Профіль одного конкурента + 10 рядків матриці",
+        "result waiting_human з waiting_for"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/competitors/*.md (еталон профілю); references/templates/competitors.tpl.md"
+      }
+    },
+    {
+      "id": "recalc-rereads-rejected",
+      "prompt": "Наряд A-03b, params.mode recalc, params.stale [competitor-features.md]. Власник наклав вето на AI-03 (функцію з REJECTED). З чого почати?",
+      "expected_output": "Перечитати REJECTED.md і AI-DECISIONS.md; позицію з вето повернути в карту (рядок видалити з реєстру) і не відкидати знову; перерахувати лише stale; check_stale без STALE.",
+      "assertions": [
+        "Спершу перечитує REJECTED.md і AI-DECISIONS.md",
+        "Перераховує лише params.stale",
+        "Позицію з вето не відкидає повторно",
+        "Запускає check_stale.py"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/REJECTED.md; flow-core/references/rejected-register.md"
+      }
+    },
+    {
+      "id": "ai-alternative-vs-intake",
+      "prompt": "Наряд A-03b. Анкета: пріоритетний підсегмент X. За даними R2 краща ємність у підсегменті Y. Як подати?",
+      "expected_output": "Рекомендація AI, що суперечить анкеті, — лише як «альтернатива» з причиною в рядку AI-DECISIONS і FUNCTIONAL-MAP §1.3; підсегмент з анкети не підміняється.",
+      "assertions": [
+        "Підсегмент з анкети лишається основним",
+        "Y — лише «альтернатива» з причиною",
+        "Рішення оформлено рядком AI-DECISIONS, власника не чекаємо"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/FUNCTIONAL-MAP.md §1.3"
+      }
+    },
+    {
+      "id": "r2-outputs-present",
+      "prompt": "Наряд A-03b, синтез завершено; research/ містить FUNCTIONAL-MAP.md, але немає industry-model.md і subsegments-deep.md. Передавати на рецензію?",
+      "expected_output": "Ні: R2 має вихід у industry-model.md і subsegments-deep.md (на кожен підсегмент процеси, документи, ролі, обладнання, облік, оплата праці, KPI, ландшафт, болі, регуляторика або «рішення неможливе: …»); §1 карти лише посилається.",
+      "assertions": [
+        "Створює обидва файли R2",
+        "Кожен підсегмент — глибина або «рішення неможливе»",
+        "FUNCTIONAL-MAP §1 посилається, а не дублює"
+      ],
+      "input": {
+        "fixtures": "industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/industry-model.md; industry-flow-test-mebli, flow/A-03b-deep @008541f, docs/industries/mebli/research/subsegments-deep.md"
+      }
+    },
+    {
+      "id": "veto-recalc-returns-feature",
+      "prompt": "Наряд A-03b, mode recalc після вето власника на AI-02 («не робимо X»). Що робить скіл?",
+      "expected_output": "Рядок REJ для X видалено з REJECTED.md, функція повернена в карту зі статусом `вето власника <дата>`; AI-02 у AI-DECISIONS — статус `вето`; ризик у §3.5 і план A-23; власника не перепитуємо.",
+      "assertions": [
+        "REJ-рядок видалено, функція в карті",
+        "Статус `вето власника <дата>`",
+        "Власника не перепитує",
+        "Рішення в flow/decisions.md сам не вносить"
+      ],
+      "input": {
+        "fixtures": "references/templates/AI-DECISIONS.tpl.md (від кореня плагіна flow-research)"
+      }
+    },
+    {
+      "id": "oca-is-idea-not-dependency",
+      "prompt": "Наряд A-03b, крок синтезу. Для функції є готовий модуль OCA 19.0. Яку основу поставити в FUNCTIONAL-MAP?",
+      "expected_output": "OCA — лише ідея: основа `td_` (не «Інтегр», не «Стд»), стан гілки OCA 19.0 довідково; ядро без AGPL-залежностей. «Інтегр» — лише зовнішні сервіси/системи. Виняток — поле defaults.licenses.oca: dependency.",
+      "assertions": [
+        "Основа функції — td_, не «Інтегр»",
+        "Годин і ставок не рахує",
+        "AGPL-залежності в ядро не додаються"
+      ],
+      "input": {
+        "fixtures": "references/pitfalls.md п.14"
+      }
+    },
+    {
+      "id": "check-depth-script",
+      "prompt": "Запусти python3 -I scripts/check_depth.py на evals/fixtures/check_depth-ok/ і check_depth-bad/ (subsegments-deep.md, --features competitor-features.md, --profiles competitors/).",
+      "expected_output": "На -ok: DEPTH-subseg, DEPTH-matrix, DEPTH-profiles PASS, код 0. На -bad: DEPTH-subseg FAIL (6 підрозділів із 10; «рішення неможливе: x» без причини), DEPTH-matrix FAIL (30 рядків), DEPTH-profiles FAIL (2), код 1.",
+      "assertions": [
+        "-ok без FAIL",
+        "-bad: FAIL у трьох перевірках",
+        "Код виходу 1 на -bad"
+      ],
+      "input": {
+        "fixtures": "evals/fixtures/check_depth-ok/, check_depth-bad/"
+      }
+    }
+  ]
+}

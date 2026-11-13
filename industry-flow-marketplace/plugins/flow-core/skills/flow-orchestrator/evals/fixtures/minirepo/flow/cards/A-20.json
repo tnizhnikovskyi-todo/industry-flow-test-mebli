@@ -1,0 +1,34 @@
+{
+ "id": "A-20",
+ "code": "A-20",
+ "title": "Концепція + BOX + SALES + REJECTED + AI-DECISIONS",
+ "executor": "any",
+ "skillRef": "flow-research:concept-mapper",
+ "access_profile": "research",
+ "raciR": "BA (R); Власник продукту (A)",
+ "preconditions": "A-03c done",
+ "inArtifacts": "OWNER-INTAKE.md; research/FUNCTIONAL-MAP.md; REUSE.md; briefing.md; past-projects.md; протоколи сесій (якщо були)",
+ "inputs": "OWNER-INTAKE.md",
+ "outputs": "concept/features.md; research/BOX.md; research/SALES.md; research/REJECTED.md; research/AI-DECISIONS.md; розділ «Повнота» в research/AI-DECISIONS.md",
+ "where": "concept/features.md; research/AI-DECISIONS.md",
+ "gate": "ні (гейт у A-20c)",
+ "params": {
+  "sample": false
+ },
+ "review": {
+  "checklists": [
+   "concept.md",
+   "edition-claims.md",
+   "completeness.md"
+  ],
+  "max_rounds": 2
+ },
+ "model": "sonnet",
+ "hours": 4,
+ "costLimit": 12,
+ "maturity": "1",
+ "per": "package",
+ "maxAttempts": 3,
+ "status": "draft",
+ "notes": "мінікартка фікстури за step-cards.md"
+}

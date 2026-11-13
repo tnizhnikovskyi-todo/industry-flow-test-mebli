@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="stock_lot_form_td_mebli" model="ir.ui.view">
+        <field name="name">stock.lot.form.td.mebli</field>
+        <field name="model">stock.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="arch" type="xml">
+            <field name="ref" position="after">
+                <field name="td_length_mm"/>
+                <field name="td_width_mm"/>
+                <field name="td_area_m2"/>
+                <field name="td_is_offcut"/>
+                <field name="td_cutting_job_id" invisible="not td_cutting_job_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_list" model="ir.ui.view">
+        <field name="name">stock.lot.td.offcut.list</field>
+        <field name="model">stock.lot</field>
+        <field name="arch" type="xml">
+            <list create="0" default_order="create_date desc, id desc">
+                <field name="name" string="Offcut" width="200px"/>
+                <field name="product_id" context="{'display_default_code': False}" width="260px"/>
+                <field name="td_length_mm" width="120px"/>
+                <field name="td_width_mm" width="120px"/>
+                <field name="product_qty" string="Area, m2" sum="Total" width="150px"/>
+                <field name="td_cutting_job_id" string="Cutting job" width="160px"/>
+                <field name="create_date" string="Created" width="170px"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_kanban" model="ir.ui.view">
+        <field name="name">stock.lot.td.offcut.kanban</field>
+        <field name="model">stock.lot</field>
+        <field name="arch" type="xml">
+            <kanban create="0" default_order="create_date desc, id desc">
+                <templates>
+                    <!-- підписи карток — українською в самому поданні: Odoo не перекладає текст усередині kanban-шаблону card з po-файлу -->
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between align-items-baseline">
+                            <strong class="fs-4"><field name="name"/></strong>
+                            <span class="fs-4 fw-bold"><field name="product_qty"/> м²</span>
+                        </div>
+                        <div class="fs-5 my-1"><field name="td_length_mm"/> × <field name="td_width_mm"/> мм</div>
+                        <div class="text-muted"><field name="product_id" context="{'display_default_code': False}"/></div>
+                        <div class="mt-1" invisible="not td_reserved_m2">
+                            <span class="badge text-bg-warning">Резерв: <field name="td_reserved_m2"/> м²</span>
+                            <field name="td_reserved_for" class="ms-1"/>
+                        </div>
+                        <div class="mt-1" invisible="td_reserved_m2"><span class="badge text-bg-success">Вільний</span>
+                            <span class="text-muted ms-1"><field name="td_cutting_job_id"/></span></div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_search" model="ir.ui.view">
+        <field name="name">stock.lot.td.offcut.search</field>
+        <field name="model">stock.lot</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="product_id"/>
+                <filter name="in_stock" string="In stock" domain="[('product_qty', '>', 0)]"/>
+                <group>
+                    <filter name="group_product" string="Decor" context="{'group_by': 'product_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="stock_lot_td_offcut_action" model="ir.actions.act_window">
+        <field name="name">Business Offcuts</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list,kanban,form</field>
+        <field name="domain">[('td_is_offcut', '=', True)]</field>
+        <field name="context">{'search_default_in_stock': 1, 'search_default_group_product': 1}</field>
+        <field name="search_view_id" ref="stock_lot_td_offcut_search"/>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'list', 'view_id': ref('stock_lot_td_offcut_list')}),
+            (0, 0, {'view_mode': 'kanban', 'view_id': ref('stock_lot_td_offcut_kanban')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+    </record>
+</odoo>

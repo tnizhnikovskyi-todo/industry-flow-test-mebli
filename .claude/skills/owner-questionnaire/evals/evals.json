@@ -1,0 +1,92 @@
+{
+  "skill_name": "owner-questionnaire",
+  "evals": [
+    {
+      "id": "mebli-r16-editions-asked-late",
+      "prompt": "Наряд A-02b, mode prepare, галузь mebli, executor any, client_data none. Є рішення A-02 у flow/decisions.md і docs/industries/scoring.md. Підготуй анкету власника.",
+      "expected_output": "Створено OWNER-INTAKE.md з YAML-блоком 6 питань і блоком defaults із замовчуваннями «меблів» (editions: both); result waiting_human з resume mode validate; власник ≤5 хв; питання про редакції закрито в анкеті.",
+      "assertions": [
+        "Питання про редакції CE/EE закрито в анкеті першим блоком",
+        "Блокуючі: editions, icp, todo_data, brand, materials",
+        "result = waiting_human, resume.mode = validate",
+        "check_intake --allow-empty без FAIL",
+        "Немає ambition.scope, evidence_gate, pricing, do_not_reject, human_target",
+        "Рішення гейтів не вигадано"
+      ],
+      "input": "fixtures/intake-ok/OWNER-INTAKE.md (еталон структури)",
+      "gold": "flow/A-03b-deep @ 008541fb4d4ced7adfa7061c1edf5576eaa9bf36, docs/industries/mebli/research/ (тестове репо industry-flow-test-mebli); схема скорочена в 0.3.0",
+      "fixtures": "evals/fixtures/intake-ok/OWNER-INTAKE.md"
+    },
+    {
+      "id": "validate-blocking-empty",
+      "prompt": "Наряд A-02b, mode validate. У OWNER-INTAKE.md editions = maybe, icp.min_employees і brand.materials порожні.",
+      "expected_output": "INT-block FAIL з переліком editions=maybe, icp.min_employees, brand.materials; result waiting_human; анкету не затверджено, A-03/A-04 не ставляться.",
+      "assertions": [
+        "INT-block називає всі три поля",
+        "result = waiting_human, не done",
+        "У журнал змін не вписано вигаданих значень"
+      ],
+      "input": "fixtures/intake-bad/OWNER-INTAKE.md",
+      "fixtures": "evals/fixtures/intake-bad/OWNER-INTAKE.md"
+    },
+    {
+      "id": "mock-fidelity-rejected",
+      "prompt": "Власник у відповіді просить defaults.prototype.fidelity: mock (HTML-оболонка замість зрізу).",
+      "expected_output": "Значення не прийнято: result waiting_human з поясненням, що у 0.3.0 підтримується лише real-slice; анкету зі значенням mock не позначено готовою.",
+      "assertions": [
+        "fidelity: mock не записано як прийняте",
+        "Пояснення: підтримується лише real-slice",
+        "result = waiting_human"
+      ],
+      "input": "fixtures/intake-ok/OWNER-INTAKE.md",
+      "fixtures": "evals/fixtures/intake-ok/OWNER-INTAKE.md"
+    },
+    {
+      "id": "license-not-decided",
+      "prompt": "Власник не відповів про ліцензію модулів (licenses.own_modules).",
+      "expected_output": "Лишено замовчування LGPL-3 з приміткою «остаточно — рішення власника»; питання внесено у «Відкриті питання», не вирішено за власника; крок не блокується (поле не блокуюче).",
+      "assertions": [
+        "LGPL-3 лише як замовчування",
+        "У відкритих питаннях є ліцензія",
+        "INT-block не FAIL через licenses"
+      ],
+      "input": "fixtures/intake-ok/OWNER-INTAKE.md",
+      "fixtures": "evals/fixtures/intake-ok/OWNER-INTAKE.md"
+    },
+    {
+      "id": "other-industry-defaults-uncertain",
+      "prompt": "Наряд A-02b, prepare, галузь textile (не меблі). Підготуй анкету.",
+      "expected_output": "defaults.market.accounting_system = «уточнити» (+ рядок AI-DECISIONS), tariffs порожні; знак * з ключів прибрано; reuse.repos/projects показано як «заповніть або \"—\"»; result waiting_human.",
+      "assertions": [
+        "Меблеве замовчування accounting_system не перенесено",
+        "У файлі немає * після ключів верхнього рівня",
+        "reuse.repos у переліку питань до власника",
+        "tariffs не вигадано"
+      ],
+      "input": "галузь textile"
+    },
+    {
+      "id": "mock-fidelity-waiting-human",
+      "prompt": "Наряд A-02b, validate. Власник відповів prototype.fidelity: mock; check_intake дає PASS.",
+      "expected_output": "result waiting_human з поясненням (mock у 0.3.0 не підтримується), хоча check_intake PASS.",
+      "assertions": [
+        "Ручна перевірка fidelity виконана",
+        "result не done"
+      ],
+      "input": "fidelity mock"
+    },
+    {
+      "id": "edit-after-start-new-validate",
+      "prompt": "Власник після старту A-03b змінив editions ce -> both, посилання на повідомлення є. Що робить скіл?",
+      "expected_output": "Режим validate: поле й «Журнал змін» оновлено з джерелом; runner комітить файл і запускає check_stale --base HEAD, перелік stale: у memo; артефакти не перераховано, decisions.md не змінено; режиму amend немає.",
+      "assertions": [
+        "Є рядок у «Журналі змін»",
+        "check_stale після коміту",
+        "memo містить stale:",
+        "Режим amend не використано"
+      ],
+      "input": "fixtures/intake-ok/OWNER-INTAKE.md",
+      "fixtures": "evals/fixtures/intake-ok/OWNER-INTAKE.md"
+    }
+  ]
+}

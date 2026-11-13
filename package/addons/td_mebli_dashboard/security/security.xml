@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_td_mebli_director" model="res.groups">
+        <field name="name">Factory Director (dashboard)</field>
+        <field name="comment">Sees the one-screen dashboard of the factory: revenue, margin, cost. Granted to the owner and the finance manager.</field>
+    </record>
+</odoo>

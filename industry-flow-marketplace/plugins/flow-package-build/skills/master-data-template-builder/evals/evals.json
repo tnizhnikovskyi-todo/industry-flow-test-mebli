@@ -75,6 +75,28 @@
         "evals/fixtures/config-priority-and-pii/installed.json",
         "evals/fixtures/config-priority-and-pii/fields.json"
       ]
+    },
+    {
+      "id": "master-data-box-editions",
+      "prompt": "Наряд A-13, editions: both, є research/BOX.md §3–4 (довідники й дані на старті) і ALLOCATION. Збери шаблони майстер-даних.",
+      "expected_output": "Перелік шаблонів і порядок імпорту звірені з BOX §3–4 (розбіжності в memo); тест-імпорт на CE; шаблон EE-моделі — окремий файл з edition: ee; EE недоступна -> не перевірено.",
+      "assertions": [
+        "читалися лише BOX §3–4, не весь файл",
+        "шаблони лише зі стандартних моделей; EE-шаблон окремим файлом з позначкою edition: ee",
+        "розбіжності з BOX названо в memo",
+        "EE-тест-імпорт = не перевірено (WARN)"
+      ],
+      "files": [
+        "evals/fixtures/master-data-box-editions/OWNER-INTAKE.md",
+        "evals/fixtures/master-data-box-editions/research/BOX.md",
+        "evals/fixtures/master-data-box-editions/ALLOCATION.md"
+      ],
+      "ci_note": "",
+      "input": {
+        "naryad": "Наряд A-13, editions: both, є research/BOX",
+        "editions": "both",
+        "ee_available": false
+      }
     }
   ]
 }

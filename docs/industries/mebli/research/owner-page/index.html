@@ -1,0 +1,452 @@
+<title>Меблевий пакет ToDo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap">
+<style>
+:root{
+  --bg:#FCFBFA;--surface:#F3F1EE;--surface-2:#E9E6E2;--ink:#101820;--muted:#525B64;--line:#DEDAD5;
+  --accent:#FE5000;--accent-text:#B83A00;--accent-soft:#FFE9DE;
+  --good:#1F7A4D;--good-soft:#E2F2E9;--warn:#8A5A00;--warn-soft:#FBF0D9;--bad:#B4232C;--bad-soft:#FBE4E5;
+  --logo-bg:transparent;
+  --font:"Open Sans",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  --wide:1120px;--prose:68ch;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+    --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+    --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+    --logo-bg:#F3F1EE;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101820;--surface:#18222C;--surface-2:#212D38;--ink:#ECEFF2;--muted:#A3ADB7;--line:#2C3844;
+  --accent:#FE5000;--accent-text:#FF8A52;--accent-soft:#3A2015;
+  --good:#5CC48E;--good-soft:#173326;--warn:#E5B456;--warn-soft:#352A12;--bad:#F07A80;--bad-soft:#3A1C20;
+  --logo-bg:#F3F1EE;color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.6;margin:0;overflow-wrap:break-word;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--accent-text);text-underline-offset:2px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:2px}
+h1,h2,h3{text-wrap:balance;line-height:1.2;margin:0}
+h1{font-size:clamp(28px,4.4vw,40px);font-weight:800}
+h2{font-size:clamp(23px,3vw,30px);font-weight:700}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+code{font-family:var(--mono);font-size:.88em;overflow-wrap:anywhere}
+.num,table{font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--wide);margin-inline:auto}
+.prose{max-width:var(--prose)}
+.stack{display:flex;flex-direction:column;gap:16px;min-width:0}
+.eyebrow{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.small{font-size:14px;color:var(--muted)}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.tag.hyp{border-color:var(--warn);color:var(--warn);background:var(--warn-soft)}
+.tag.ok,.tag.std{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+.tag.td{color:var(--accent-text);border-color:var(--accent-text);background:var(--accent-soft)}
+.tag.ee{color:var(--ink);background:var(--surface-2);border-color:var(--surface-2)}
+.tag.goal{color:var(--accent-text);border-style:dashed;border-color:var(--accent-text)}
+.sitenav{max-width:var(--wide);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding-block:calc(10px + env(safe-area-inset-top,0px)) 10px;border-bottom:1px solid var(--line)}
+.sitenav .logo{display:inline-flex;align-items:center;background:var(--logo-bg);border-radius:8px;padding:4px 8px}
+.sitenav .logo img{height:30px;width:auto;display:block}
+.sitelinks{display:flex;flex-wrap:wrap;gap:4px}
+.sitelinks a{text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid transparent}
+.sitelinks a:hover{color:var(--ink);background:var(--surface)}
+.sitelinks a[aria-current="page"]{color:var(--bg);background:var(--ink);border-color:var(--ink)}
+.masthead{padding-block:28px 32px;display:flex;flex-direction:column;gap:20px;border-bottom:1px solid var(--line)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:14px;color:var(--muted)}
+.verdict{border-left:4px solid var(--accent);background:var(--surface);padding:16px 20px;border-radius:0 8px 8px 0;max-width:var(--prose);display:flex;flex-direction:column;gap:8px}
+.first{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px;align-items:start}
+@media (max-width:860px){.first{grid-template-columns:minmax(0,1fr)}}
+blockquote.pain{margin:0;border-left:4px solid var(--ink);background:var(--surface);padding:12px 16px;border-radius:0 8px 8px 0}
+blockquote.pain p.q{font-size:19px;font-weight:700;line-height:1.35}
+.decide{border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.decide ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.nav-inner{max-width:var(--wide);margin-inline:auto;display:flex;gap:4px;overflow-x:auto;padding:8px 0}
+.nav a{flex:0 0 auto;text-decoration:none;color:var(--muted);font-size:14px;font-weight:600;padding:6px 10px;border-radius:6px;border:1px solid transparent}
+.nav a.on,.nav a:hover{color:var(--ink);background:var(--surface)}
+section{max-width:var(--wide);margin-inline:auto;padding-block:36px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:16px;scroll-margin-top:64px}
+.src{font-size:12px;font-weight:600;white-space:nowrap}
+.scroll{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid var(--line)}
+th{background:var(--surface);font-weight:700}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:640px){.grid2{grid-template-columns:minmax(0,1fr)}}
+.card{border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.btn{font:inherit;font-weight:600;font-size:14px;padding:8px 14px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--bg);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.dec{display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;padding-block:12px;border-bottom:1px solid var(--line)}
+.dec .opts{display:flex;flex-wrap:wrap;gap:8px 16px}
+.dec .note{width:100%;max-width:60ch;font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink)}
+.rest{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;font-size:15px}
+textarea[readonly]{width:100%;min-height:120px;font-family:var(--mono);background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+footer{max-width:var(--wide);margin-inline:auto;padding-block:24px}
+.tag{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+</style>
+<header class="sitenav">
+  <a class="logo" href="index.html"><img src="data:image/png;base64,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" alt="ToDo" width="77" height="30"></a>
+  <nav class="sitelinks" aria-label="Сторінки набору"><a href="index.html" aria-current="page">Концепція</a><a href="competitors.html">Конкуренти</a><a href="rejected.html">Що відкинули</a></nav>
+</header>
+<div class="wrap"><div class="masthead">
+<span class="eyebrow">Концепція для власника продукту · пакет «меблі» на Odoo 19</span>
+<h1>Система замовлень меблевого цеху: від заміру до рекламації</h1>
+<div class="meta"><span class="num">12.11.2026</span><span class="tag ok">повний обсяг, перерахунок 0.3</span><span class="tag">гейт концепції: відповідь потрібна лише за незгоди</span></div>
+<div class="first">
+<div class="stack">
+<div class="verdict">
+<p><b>Що будуємо і для кого.</b> Пакет на Odoo 19 для компанії на 10–249 працівників, що робить кухні й корпусні меблі на замовлення. Одне замовлення веде весь ланцюг: замір, проєкт із CAD, розкрій чи порізка в дистриб'ютора, цех, комплектація, монтаж з актом і рекламація. Основа: Community (безкоштовна редакція); Enterprise (платна) як апгрейд з мостами вже в першому релізі. Облік лишається в BAS/BAF клієнта, ми передаємо документи. Перший реліз повний: <span data-fact="concept.screens">15</span> екранів для <span data-fact="concept.roles">8</span> ролей; клієнту поставляємо коробку A (вхід), B або C з одного пакета. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="../concept/screens.md§Екрани">екрани</a></p>
+<p><b>Три головні ризики.</b> (1) Розмір ринку не виміряно: скільки серед <span data-fact="market.companies_10_249">225</span> компаній цільової смуги саме кухонь і корпусних, невідомо; розробка чекає сигналу тесту попиту A-23. (2) Імпорт із CAD і обмін з BAS спроєктовано без зразків файлів клієнта. (3) Твердження про Enterprise не перевірено на чистій базі. <a class="src" href="#sources" data-src="SALES.md§3">SALES §3</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-11, AI-13</a></p>
+</div>
+<blockquote class="pain">
+<p class="q">«Обіцяли два місяці, вийшло три.»</p>
+<p class="small">Покупець кухні на замовлення, публічний відгук. Біль, який ми лікуємо: обіцяна клієнту дата зривається, а помилку заміру, недокомплект, запізнення замовного фасаду чи порізки видно лише тоді, коли вже пізно. <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-16</a> <a class="src" href="#sources" data-src="SALES.md§4">SALES §4, варіант 1</a></p>
+</blockquote>
+</div>
+<div class="decide">
+<span class="eyebrow">Що потрібно від вас</span>
+<p>Лише незгоди. Рішення AI (AI-01…AI-13) прийнято, доки ви не заперечите. Відмітьте рядок, напишіть, що замість, і натисніть «Скопіювати мої заперечення».</p>
+<p class="small"><b>Зверніть увагу на AI-06:</b> лендинг тесту попиту без ціни входу. Це рішення замінює замовчування із запису 32 (ціна-точка в лендингу).</p>
+<p class="small"><a href="#ai-decisions">До рішень AI</a> · <a href="#owner">Ваші рішення (записи 4–37)</a></p>
+</div>
+</div>
+</div></div>
+<div class="nav"><div class="nav-inner"><a href="#summary">Висновок</a><a href="#pain">Для кого і який біль</a><a href="#scenario">Наскрізний сценарій</a><a href="#day">День з життя ролей</a><a href="#screens">Екрани</a><a href="#current">Зріз A-21</a><a href="#competitors">Конкуренти</a><a href="#signals">Внутрішні сигнали ToDo</a><a href="#box">Коробка</a><a href="#sales">Продаж</a><a href="#owner">Ваші рішення</a><a href="#ai-decisions">Що вирішив AI</a><a href="#risks">Ризики</a><a href="#not-doing">Що не робимо</a><a href="#chain">Ланцюг</a><a href="#evidence">Докази</a><a href="#limits">Обмеження й план перевірки</a><a href="#sources">Джерела</a></div></div>
+<main>
+<section id="summary">
+  <span class="eyebrow">Висновок</span>
+  <h2>Висновок: що будуємо і для кого</h2>
+  <p class="prose">Будуємо галузевий пакет «від заміру до рекламації» для виробника кухонь і корпусних меблів на замовлення з 10–249 працівниками. Ланцюг, який конкуренти закривають частинами (облік окремо, CAD окремо, CRM окремо), ми збираємо в одному замовленні на Odoo 19 Community; облік клієнта лишається в BAS/BAF. Порядок робіт ваш: зріз A-21, тест попиту A-23, і лише після сигналу розробка. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§1.3">FM §1.3</a> <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a></p>
+  <p class="prose">Відповідь потрібна лише за незгоди з рішеннями AI нижче; ваші рішення з журналу показано як вхід і не перепитуються. <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS</a></p>
+</section>
+<section id="pain">
+  <span class="eyebrow">Біль</span>
+  <h2>Для кого і який біль</h2>
+  <p class="prose">Клієнт: компанія на 10–249 працівників, меблі на замовлення, підсегмент «кухні й корпусні». У цій смузі в реєстрі юросіб <span data-fact="market.companies_10_249">225</span> компаній (знімок серпня 2026), з них <span data-fact="market.companies_25_249">120</span> на 25–249 працівників; скільки саме кухонь і корпусних, невідомо. Мікроцехи ФОП на 1–5 людей отримують легкий тариф (ваше рішення №4); компанії на 6–9 людей поки поза цільовим клієнтом (AI-05). <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§1.1">FM §1.1</a> <a class="src" href="#sources" data-src="BOX.md§1а">BOX §1а</a></p>
+  <ul class="prose">
+  <li><b>Строки зриваються, причину бачать запізно.</b> Відгуки покупців кухонь на замовлення і вакансії керівника виробництва («контролювати строки, якість і комплектацію»). <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-16, PAIN-28</a></li>
+  <li><b>Помилку заміру видно лише на монтажі.</b> Покупець кухні: холодильник виступає з пеналу. <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-14</a></li>
+  <li><b>Порізка в дистриб'ютора зсуває дату.</b> Меблярі скаржаться на строки й помилки присадки; голос мебляра, без підтвердження від цільових клієнтів. <span class="tag hyp">ризик: перевірити на пілоті</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-19</a></li>
+  <li><b>Недокомплект виявляють на монтажі, монтаж і рекламація тягнуться.</b> Вакансії («контролювати комплектацію»), відгуки покупців (рекламацію не закривали місяцями). <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-23, PAIN-24, PAIN-26</a></li>
+  <li><b>Зміна замовлення після погодження.</b> Голос дистриб'ютора порізки, а не виробника; прямого болю цільових клієнтів немає. <span class="tag hyp">гіпотеза</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-18</a></li>
+  <li><b>Біль керівника</b> (маржа лише після закриття, щоденні цифри) перенесено з вакансій начальника виробництва; перевіряємо на розмовах A-06 і в тесті A-23 (AI-12). <span class="tag hyp">гіпотеза</span> <a class="src" href="#sources" data-src="../concept/features.md§Болі">PAIN-28</a></li>
+  </ul>
+  <p class="small prose">Хто купує: рішення ухвалює власник чи директор; заблокувати можуть бухгалтер (облік у BAS), конструктор (CAD) і начальник виробництва. <span class="tag hyp">гіпотеза до A-06, A-23</span> <a class="src" href="#sources" data-src="SALES.md§1">SALES §1</a></p>
+</section>
+<section id="scenario">
+  <span class="eyebrow">Сценарій</span>
+  <h2>Наскрізний сценарій: кухня від заміру до рекламації</h2>
+  <div class="scroll" tabindex="0" aria-label="Наскрізний сценарій"><table style="min-width:600px"><thead><tr><th>Хто</th><th>Що робить і що бачить у системі</th><th>Екран</th></tr></thead><tbody>
+  <tr><td>Менеджер салону</td><td>Приймає заявку, записує на замір</td><td>CRM, стандарт</td></tr>
+  <tr><td>Замірник</td><td>Заповнює замір-лист на телефоні: ніші, комунікації, техніка, фото, кути стін</td><td>1</td></tr>
+  <tr><td>Конструктор</td><td>Завантажує файл із PRO100, БАЗИС чи ViyarPro; бачить деталі з розмірами, кромкою й декором</td><td>4</td></tr>
+  <tr><td>Менеджер</td><td>Підбирає виріб чи ставить ціну з розмірів; складає пропозицію з маржею до запуску, графіком оплат і обіцяною датою</td><td>3, 2</td></tr>
+  <tr><td>Покупець</td><td>Підписує версію проєкту за посиланням, платить передоплату; зміна фасадів дає нову версію з новою ціною, датою й причиною зсуву</td><td>15, 2</td></tr>
+  <tr><td>Технолог</td><td>Відправляє на свій розкрій чи порізку в дистриб'ютора після перевірки специфікації; етикетки деталей</td><td>5</td></tr>
+  <tr><td>Закупівельник</td><td>Замовні позиції з довгим строком: дата постачальника входить у прогнозну дату; прайси постачальників із сигналом «ціна вища за історію»</td><td>6, 8</td></tr>
+  <tr><td>Майстер і робітники</td><td>Кіоск цеху за PIN: «Взято / Зроблено / Пауза з причиною»; на дошці видно замовлення, що зсувають дату, і чия причина</td><td>6, 7</td></tr>
+  <tr><td>Комплектувальник</td><td>Збирає по місцях за листом; відвантажує лише повний комплект</td><td>9</td></tr>
+  <tr><td>Бригада монтажу</td><td>Акт із фото, підписом, недоліками й чек-листом; відсоток бригаді рахується з акта</td><td>10, 11</td></tr>
+  <tr><td>Сервіс</td><td>Рекламація з причиною, строком і гарантією, повторне виготовлення</td><td>12</td></tr>
+  <tr><td>Керівник</td><td>Щодня дашборд: зсуви, рекламації, ціни постачальників; у кінці місяця собівартість план і факт по замовленню</td><td>16, 13</td></tr>
+  </tbody></table></div>
+  <p class="prose">Варіанти сценарію: свій розкрій чи порізка, зсув з нашої вини з причиною, недокомплект, договір на кілька виробів, рекламація; у коробці A за вашим рішенням №16 затримка замовної позиції зсуває прогнозну дату; решта «умовно», вмикаються клієнту після A-06 і A-23. Пеня й автоматичний перерахунок уже розкроєних деталей у першу версію не входять (REJ-046, REJ-051). Монтаж налаштовується: у вартості замовлення або окремою послугою (AI-08). <a class="src" href="#sources" data-src="../concept/scenarios.md§Сценарії">SC-01…SC-08</a> <a class="src" href="#sources" data-src="SALES.md§6">SALES §6</a></p>
+</section>
+<section id="day">
+  <span class="eyebrow">Ролі</span>
+  <h2>День з життя ролей</h2>
+  <ul class="prose">
+  <li><b>Замірник (SC-07).</b> Зараз папір і фото, помилку видно лише на монтажі (відгук покупця). З пакетом замір-лист одразу в замовленні.</li>
+  <li><b>Конструктор-технолог (SC-02).</b> Зараз деталізує проєкт і карти розкрою (вакансії), дані між програмами переносить вручну <span class="tag hyp">не перевірено</span>. З пакетом імпорт файлу й перевірка перед відправкою.</li>
+  <li><b>Менеджер продажу (SC-01).</b> З пакетом ціна з розмірів, версія специфікації на підпис клієнту, нова дата при зміні.</li>
+  <li><b>Начальник виробництва (SC-03).</b> Зараз про дефіцит дізнається при збиранні <span class="tag hyp">гіпотеза</span>. З пакетом забезпеченість до запуску, кіоск цеху, причина паузи.</li>
+  <li><b>Комірник-комплектувальник (SC-04).</b> Зараз недокомплект виявляє монтажник <span class="tag hyp">гіпотеза</span>. З пакетом лист по місцях і лише повний комплект.</li>
+  <li><b>Фінансист (SC-05).</b> Облік лишається в BAS; з пакетом обмін з BAS, курс НБУ в прайсі, нарахування бригаді з акта.</li>
+  <li><b>Бригадир монтажу й сервісу (SC-08).</b> Зараз відсоток бригаді рахують вручну (вакансії). З пакетом акт із фото й підписом і рекламація з причиною.</li>
+  <li><b>Керівник-покупець (SC-06).</b> Зараз маржу бачить після закриття <span class="tag hyp">гіпотеза</span>. З пакетом щоденний дашборд.</li>
+  </ul>
+  <p class="small">Злиття ролей (закупівельник у комірнику, менеджер з рекламацій у бригадирі) перевіряємо на A-06 (AI-10). <a class="src" href="#sources" data-src="../concept/scenarios.md§Сценарії">сценарії</a> <a class="src" href="#sources" data-src="../concept/scenarios.md§SC-06">SC-06</a></p>
+</section>
+<section id="screens">
+  <span class="eyebrow">Екрани</span>
+  <h2>Екрани першого релізу і їх основа</h2>
+  <p class="small"><span class="tag std">стандарт Community</span> налаштування Odoo · <span class="tag td">наш модуль</span> будуємо · <span class="tag ok">готовий модуль ToDo</span> адаптуємо · <span class="tag ee">Enterprise</span> що змінюється на платній редакції (стовпець <span class="tag hyp">не перевірено</span>, AI-11)</p>
+  <div class="scroll" tabindex="0" aria-label="Екрани"><table style="min-width:720px"><thead><tr><th>№</th><th>Екран</th><th>Основа на Community</th><th>На Enterprise</th></tr></thead><tbody>
+  <tr><td>1</td><td>Замір-лист</td><td><span class="tag td">наш</span> на задачі проєкту; телефон у браузері <span class="tag hyp">не перевірено</span></td><td>той самий модуль; мобільний застосунок Odoo є лише в Enterprise</td></tr>
+  <tr><td>2</td><td>Замовлення: калькуляція, маржа, графік оплат, дати, курс НБУ, ціна з розмірів</td><td><span class="tag std">стандарт</span> продажів + <span class="tag td">наш</span></td><td>те саме: курсу НБУ і нагадувань за графіком оплат Enterprise не дає (документація 19.0)</td></tr>
+  <tr><td>3</td><td>Підбір виробу (конфігуратор)</td><td><span class="tag td">наш</span></td><td>те саме; стандарт не рахує довільні розміри</td></tr>
+  <tr><td>4</td><td>Специфікація й імпорт з CAD</td><td><span class="tag std">стандарт</span> + <span class="tag td">наш</span>; формати не підтверджено файлами</td><td>те саме</td></tr>
+  <tr><td>5</td><td>Розкрій чи порізка, етикетки, ділові обрізки</td><td><span class="tag std">стандарт</span> субпідряду + <span class="tag td">наш</span></td><td>те саме</td></tr>
+  <tr><td>6</td><td>Дошка замовлень і прогноз дати</td><td><span class="tag std">стандарт</span> етапів + <span class="tag td">наш</span></td><td>те саме</td></tr>
+  <tr><td>7</td><td>Планшет і кіоск цеху, якість з фото</td><td><span class="tag std">стандарт</span> кнопок робочого замовлення + <span class="tag td">наш</span>; вхід за PIN без користувача <span class="tag hyp">не перевірено</span></td><td>Shop Floor: вхід за PIN, ліцензія Light на кожного; якість з фото лише в Enterprise (документація 19.0)</td></tr>
+  <tr><td>8</td><td>Дефіцит, закупівля, прайси постачальників</td><td><span class="tag std">стандарт</span> + <span class="tag td">наш</span> звіт</td><td>те саме</td></tr>
+  <tr><td>9</td><td>Комплектувальний лист і сканування</td><td><span class="tag std">стандарт</span> пакування + <span class="tag td">наш</span></td><td>Barcode частково; контроль повного комплекту наш</td></tr>
+  <tr><td>10</td><td>Календар монтажів і акт</td><td><span class="tag std">стандарт</span> задач + <span class="tag td">наш</span>: інтервал виїзду, бригада, акт</td><td>Field Service і Planning частково; акт наш</td></tr>
+  <tr><td>11</td><td>Нарахування бригаді й цеху</td><td><span class="tag td">наш</span></td><td>те саме: Payroll без України й відрядної</td></tr>
+  <tr><td>12</td><td>Рекламація</td><td><span class="tag std">стандарт</span> ремонтів + <span class="tag td">наш</span>: строки й гарантія</td><td>Helpdesk: повернення, ремонт, виїзд, SLA (документація 19.0)</td></tr>
+  <tr><td>13</td><td>Собівартість план і факт</td><td><span class="tag ok">готовий ToDo</span> адаптуємо (гейт A-03c, запис 29); вмикання аналітики без Enterprise <span class="tag hyp">не перевірено</span></td><td>те саме</td></tr>
+  <tr><td>15</td><td>Погодження й зміна замовлення</td><td><span class="tag td">наш</span></td><td>те саме; PLM веде лише інженерні зміни виробу</td></tr>
+  <tr><td>16</td><td>Дашборд керівника</td><td><span class="tag td">наш</span> на стандартних графіках</td><td>те саме</td></tr>
+  </tbody></table></div>
+  <p class="small prose">Не екрани: кілька юросіб (коробки B, C), пакет міграції BAS/BAF і БАЗИС, обмін з BAS (інтеграція). Екран 14 «Портал покупця» прибрано (REJ-017). Твердження про редакції взято з порівняння з документацією 19.0 від 11.11.2026; реєстру перевірених тверджень немає, чистої бази Enterprise теж, тому стовпець Enterprise не перевірено (рішення AI-11). Для рішень беріть стовпець Community. Мобільний вигляд Community робимо самі, без модулів OCA (AI-02). <a class="src" href="#sources" data-src="../concept/screens.md§Екрани">екрани</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§4.5">FM §4.5</a> <a class="src" href="#sources" data-src="odoo-ecosystem.md§7.9">OE §7.9</a> <a class="src" href="#sources" data-src="REUSE.md§Реєстр">REUSE</a></p>
+</section>
+<section id="current">
+  <span class="eyebrow">Зріз</span>
+  <h2>Зріз A-21: у роботі</h2>
+  <p class="prose"><span class="tag hyp">у роботі</span> Зразок зрізу (екран «Замовлення клієнта» з обіцяною й прогнозною датою і замовними позиціями) ви прийняли 12.11.2026 (запис 36). Повний обсяг на Odoo 19 Community зараз у роботі: за планом зріз охоплює всі <span data-fact="concept.screens">15</span> екранів концепції в порядку демо-сценарію. У зріз свідомо не входять мости Enterprise, справжній обмін з BAS, пакет міграції й кілька юросіб; оптимізатор розкрою не показуємо. Перелік того, що вже готово, з'явиться на цій сторінці після завершення A-21. <a class="src" href="#sources" data-src="../prototype-real/PLAN.md§1">PLAN §1</a> <a class="src" href="#sources" data-src="BOX.md§13">BOX §13</a></p>
+</section>
+<section id="competitors">
+  <span class="eyebrow">Конкуренти</span>
+  <h2>Конкуренти коротко</h2>
+  <ul class="prose">
+  <li>Ланцюг від заміру до рекламації не закриває жодна з систем, перевірених документацією (Bimp, KeyCRM, Katana, Viyar, БАЗИС, PRO100). <span class="tag hyp">гіпотеза: відсутність у маркетингу не доводить відсутності в продукті</span></li>
+  <li>Bimp: еталон глибини обліку в Україні (специфікація, відрядна, план і факт собівартості). Наші відмінності: замір, монтаж з актом, рекламація і робота поруч із BAS.</li>
+  <li>Viyar, Kronas, GibLab: «плита + конструктор + порізка». Для нас партнери (№7), не конкуренти; формат обміну не перевірено.</li>
+  <li>KeyCRM від $<span data-fact="keycrm.usd_month">19</span> на місяць дешевший для мікроцехів: ризик для легкого тарифу.</li>
+  <li>1С/BAS і БАЗИС: аргумент міграції репутаційний, для приватного бізнесу прямої заборони немає.</li>
+  </ul>
+  <p class="small">Матриця, профілі й що казати проти: <a href="competitors.html">сторінка «Конкуренти»</a>. <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a> <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§3.1">FM §3.1</a></p>
+</section>
+<section id="signals">
+  <span class="eyebrow">Сигнали</span>
+  <h2>Внутрішні сигнали ToDo (лише знеособлені агрегати)</h2>
+  <ul class="prose">
+  <li><span data-fact="crm.leads">56</span> меблевих лідів і угод у CRM ToDo. Головна причина програшу: ціна (щонайменше <span data-fact="crm.price_losses_first">17</span> у першому проході, <span data-fact="crm.price_losses_full">23</span> у повному переборі); через брак функцій програють рідко. Це класифікація менеджерів, а не слова клієнтів, і переважно не кухні й корпусні.</li>
+  <li>Найчастіші потреби: відрядна й облік виробітку, планшет чи кіоск для цеху, видимість статусу і причина зсуву, імпорт із CAD.</li>
+  <li>Облік лишається в 1С/BAS у клієнтів, які це обговорювали. Кабінет покупця не просив жоден.</li>
+  </ul>
+  <p class="small prose">Опис потреби є лише в частині записів; більшість сигналів не від кухонь і корпусних. Лише знеособлені агрегати, без назв і сум. <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§2.5.1">FM §2.5.1</a> <a class="src" href="#sources" data-src="SALES.md§1">SALES §1</a></p>
+</section>
+<section id="box">
+  <span class="eyebrow">Коробка</span>
+  <h2>Коробка: що входить у продукт</h2>
+  <p class="prose"><b>Тарифи: не задано.</b> Ви тарифів не давали; AI їх не рахує й не обґрунтовує. Що кажемо про ціну в продажу: AI-01 (Enterprise) і AI-06 (лендинг тесту попиту). <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a></p>
+  <div class="scroll" tabindex="0" aria-label="Коробки"><table style="min-width:600px"><thead><tr><th>Коробка</th><th>Для кого</th><th>Склад</th></tr></thead><tbody>
+  <tr><td>A «Community-старт»</td><td>вхід (ваше рішення №15)</td><td>тверде ядро + ціна з розмірів, дашборд керівника, прайси постачальників, премії й штрафи, фотоархів; замовні позиції в прогнозній даті (№16); одна юрособа; обмін з BAS; без конфігуратора й погодження версії</td></tr>
+  <tr><td>B «Community-повний»</td><td>кому потрібні повернуті позиції</td><td>усі екрани концепції: + конфігуратор, обрізки, розкрій кількох замовлень, якість з фото, кіоск цеху; кілька юросіб; повна міграція</td></tr>
+  <tr><td>C «Enterprise»</td><td>апгрейд (№3б)</td><td>B + мости до Field Service, Shop Floor, Quality, Helpdesk, Sign, Planning; ліцензію Enterprise клієнт купує в Odoo чи партнера</td></tr>
+  <tr><td>Легкий тариф</td><td>мікроцехи ФОП на 1–5 людей (№4)</td><td>обмежений склад на нашому сервері, без цеху за дільницями й обміну з BAS</td></tr>
+  </tbody></table></div>
+  <p class="prose">Коробки: склад поставки з одного пакета, а не етапи розробки. Входить: анкета й межа коробки, установка, шаблони довідників, дані на старт, обмін з BAS, навчання за ролями, супровід після старту. Не входить: доробки під клієнта, інтеграції поза списком. Строки запуску: ризик, перевірити на пілоті. Перехід Community на Enterprise не обіцяємо як безшовний до перевірки на чистій базі. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="BOX.md§2">BOX §2</a></p>
+</section>
+<section id="sales">
+  <span class="eyebrow">Продаж</span>
+  <h2>Продаж: як це продаємо</h2>
+  <ul class="prose">
+  <li>Продаємо «поруч з обліком у BAS», а не «замість». Головне заперечення: ціна.</li>
+  <li>Пілот платний зі знижкою за кейс (ваше рішення №20); форма «Заявка на пілот» у тесті A-23 без суми (AI-06).</li>
+  <li>Демо: одне замовлення кухні й шафи; коротке демо коробки A зі сценою замовних позицій (№16).</li>
+  <li>Межу коробки показуємо на демо явно, доробки продаємо окремо. Повернуті вами позиції подаємо як «є в пакеті», а не як «цього просять виробники».</li>
+  </ul>
+  <p class="small"><a class="src" href="#sources" data-src="SALES.md§2">SALES §2</a> <a class="src" href="#sources" data-src="SALES.md§5">SALES §5</a> <a class="src" href="#sources" data-src="SALES.md§6">SALES §6</a> <a class="src" href="#sources" data-src="SALES.md§7">SALES §7</a></p>
+</section>
+<section id="owner">
+  <span class="eyebrow">Ваші рішення</span>
+  <h2>Що вже вирішили ви (журнал, записи 4–37)</h2>
+  <p class="prose">Це вхід концепції, а не питання: сторінка їх не перепитує. Змінити рішення можна новим записом у журналі.</p>
+  <div class="scroll" tabindex="0" aria-label="Рішення власника"><table style="min-width:600px"><thead><tr><th>Запис</th><th>Рішення</th></tr></thead><tbody>
+  <tr><td>4, 16</td><td>Одразу повний пакет першого релізу; мости до Enterprise одразу</td></tr>
+  <tr><td>5, 6, 7</td><td>Перший підсегмент: кухні й корпусні на замовлення; без розмітки компаній; клієнт від 10 людей</td></tr>
+  <tr><td>8, 19</td><td>Community основний вхід, Enterprise апгрейд; коробка A як вхід</td></tr>
+  <tr><td>9</td><td>Мікроцехи ФОП: окремий легкий тариф</td></tr>
+  <tr><td>10</td><td>Облік у BAS/BAF клієнта + наш обмін</td></tr>
+  <tr><td>11, 12, 15</td><td>Тріали конкурентів відкласти; з дистриб'юторами плит партнерство щодо формату й API; CAD+T еталоном функцій</td></tr>
+  <tr><td>21, 22, 24</td><td>Підряд і купівля-продаж налаштуванням пакета; внутрішні першоджерела після рішення про підставу обробки; платний пілот зі знижкою за кейс</td></tr>
+  <tr><td>23, 27</td><td>Повернути концепцію й перезібрати зріз; <span data-fact="concept.returned_positions">11</span> позицій повернуто в концепцію</td></tr>
+  <tr><td>28, 29</td><td>Прогалини анкети й готові модулі доручено AI; гейт готових модулів затверджено (адаптуємо модуль собівартості)</td></tr>
+  <tr><td>30, 31</td><td>Перевірка стандарту Community до зрізу; склад коробки A з замовними позиціями в прогнозній даті</td></tr>
+  <tr><td>33, 34</td><td>Розробка чекає сигналу тесту попиту A-23; кабінет покупця й маржа за курсом євро відкинуті, претензія порізці після A-06</td></tr>
+  <tr><td>35, 36</td><td>Гейт концепції затверджено, зріз A-21 почато; зразок зрізу прийнято</td></tr>
+  <tr><td>37</td><td>Перехід на 0.3: гроші на етапі концепції не рахуємо; рішення за замовчуванням приймає AI з ризиком, ви маєте вето</td></tr>
+  </tbody></table></div>
+  <p class="small prose">Відкриті раніше питання (записи 14, 18, 25, 26 і 32, смуга 6–9 людей, версія Odoo на старті) за записом 37 тепер вирішує AI: рядки AI-01…AI-07 нижче. Запис 32 «діє замовчування» замінено рішенням AI-06. <a class="src" href="#sources" data-src="BOX.md§1">BOX §1</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS</a></p>
+</section>
+<section id="ai-decisions">
+  <span class="eyebrow">Рішення AI</span>
+  <h2>Що вирішив AI і з яким ризиком</h2>
+  <div class="verdict"><p>Рядки AI-01…AI-13 прийнято, доки ви не накладете вето. Відповідь потрібна лише за незгоди: відмітьте «Не згоден», напишіть, що замість, і натисніть «Скопіювати мої заперечення». Рядок AI-06 замінює замовчування запису 32.</p></div>
+  <p class="small prose">Позначки зберігаються лише у вашому браузері як особиста чернетка; вето стає записом у журналі рішень лише після копіювання й передачі. Щоб повернути позицію з «не робимо», впишіть її номер REJ-NNN у поле «що замість».</p>
+  <p class="small"><a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS.md§Рішення</a></p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="btn" id="copyBtn" type="button">Скопіювати мої заперечення</button>
+    <button class="btn ghost" id="clearBtn" type="button">Очистити</button>
+  </div>
+  <p id="copyMsg" class="small" role="status" aria-live="polite"></p>
+  <textarea id="copyOut" readonly hidden aria-label="Текст заперечень для копіювання"></textarea>
+  <div id="decList"></div>
+  <noscript><p class="small">Для відмітки незгоди потрібен JavaScript. Рішення AI: AI-01 ціна Enterprise не називається; AI-02 LGPL-3 без OCA; AI-03 A-23 у січні–лютому; AI-04 у git лише знеособлені джерела; AI-05 смуга 6–9 людей поза цільовим клієнтом; AI-06 лендинг без ціни входу; AI-07 Odoo 19; AI-08 відрядна за операцією, монтаж параметром; AI-09 колишні позиції «два типи джерел» поза першим релізом; AI-10 злиття ролей; AI-11 Enterprise «не перевірено»; AI-12 слабкі болі не відсікаємо; AI-13 обмін і міграція за шаблоном.</p></noscript>
+</section>
+<section id="risks">
+  <span class="eyebrow">Ризики</span>
+  <h2>Головні ризики і що з ними робити</h2>
+  <div class="scroll" tabindex="0" aria-label="Ризики"><table style="min-width:600px"><thead><tr><th>Ризик</th><th>Що робимо</th></tr></thead><tbody>
+  <tr><td>Розмір ринку не виміряно: частка кухонь і корпусних у цільовій смузі невідома</td><td>Розмітки не буде (ваше рішення №2); частку покажуть тест попиту A-23 і пілот; розробка чекає сигналу A-23 (запис 33).</td></tr>
+  <tr><td>Ціна: головна причина програшу у воронці ToDo; заявки без ціни в лендингу менш кваліфіковані (AI-06)</td><td>Ризик: перевірити на пілоті. A-23 рахує, яка частка заявок лишається після розмови про бюджет.</td></tr>
+  <tr><td>Клієнт зводить вибір до ціни дешевих хмарних CRM (KeyCRM, Bimp)</td><td>У лендингу й демо продаємо ланцюг, а не ціну; A-23 перевіряє реакцію на варіанти цінності.</td></tr>
+  <tr><td>Імпорт із CAD і обмін з BAS без зразків файлів (AI-13)</td><td>Основний шлях: CSV чи Excel за шаблоном; пробний обмін на етапі запуску; прямі конвертори після зразків першого клієнта.</td></tr>
+  <tr><td>Enterprise і перехід Community на Enterprise не перевірено (AI-11)</td><td>Перевірка на чистій базі Enterprise (рішення №13); до неї апгрейд не обіцяємо як безшовний.</td></tr>
+  <tr><td>Мобільний вигляд Community без модулів OCA (AI-02)</td><td>Замір, кіоск і акт на телефоні перевіряємо в пілоті.</td></tr>
+  <tr><td>Клієнт боїться залежності від нашого сервера й підтримки</td><td>Регламент копій і оновлень наш; перевірка: заперечення на A-06, звернення в пілоті.</td></tr>
+  <tr><td>Повернуті вами позиції без доказу попиту (<span data-fact="concept.returned_positions">11</span>)</td><td>Окремі пункти форми A-23; у продажі «є в пакеті», а не «цього просять».</td></tr>
+  <tr><td>Сезон: розсилка в листопаді–грудні отримає менше відповідей</td><td>A-23 у січні–лютому (AI-03); сезон відомий з одного запису, не перевірено.</td></tr>
+  <tr><td>Легкий тариф забирає клієнтів коробки A; смуга 6–9 людей іде до конкурентів</td><td>Ліміт користувачів і склад тарифу; окремий пункт форми A-23 (AI-05).</td></tr>
+  <tr><td>Норми закону (гарантія, пеня, строки ремонту) з вторинних джерел</td><td>Два режими договору налаштуванням (ваше рішення №17); значення полів після юриста.</td></tr>
+  </tbody></table></div>
+  <h3>Що самоперевірка повноти лишила ризиком</h3>
+  <p class="prose">Самоперевірка в кінці A-20 пройшла 14 пунктів без грошей: сегмент, сценарій, склад коробок і план запуску, заперечення й демо, ризики, «не робимо» закрито; решта лишилась ризиком і має свій рядок рішення AI. <span class="tag hyp">ризик: перевірити на пілоті</span></p>
+  <div class="scroll" tabindex="0" aria-label="Повнота: ризики"><table style="min-width:560px"><thead><tr><th>Пункт</th><th>Чому ризик</th><th>Рядок</th></tr></thead><tbody>
+  <tr><td>Болі з цитатами; звіти й показники керівника</td><td>частина болів лише з галузевої довідки; показники дашборда лише переліком</td><td>AI-12</td></tr>
+  <tr><td>Ролі й «день з життя»</td><td>ролі злито, у компаніях 10–249 це можуть бути окремі люди</td><td>AI-10</td></tr>
+  <tr><td>Функціональна карта й екрани з основою</td><td>основу «стандарт Enterprise» не перевірено</td><td>AI-11</td></tr>
+  <tr><td>Дані, міграція, інтеграції й формати</td><td>зразків файлів клієнта немає, контракт з BAS не перевірено</td><td>AI-13</td></tr>
+  <tr><td>Права й нефункціональні вимоги</td><td>мобільний вигляд Community без OCA; Enterprise не перевірено</td><td>AI-02, AI-11</td></tr>
+  </tbody></table></div>
+  <p class="small"><a class="src" href="#sources" data-src="SALES.md§3">SALES §3</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Повнота">AI-DECISIONS: Повнота</a> <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS: Рішення</a></p>
+</section>
+<section id="not-doing">
+  <span class="eyebrow">Межі</span>
+  <h2>Що свідомо не робимо</h2>
+  <ul class="prose">
+  <li>Власне 3D-проєктування й рендер, оптимізацію розкрою і програми ЧПУ: це шар CAD/CAM; ми беремо специфікацію й передаємо список деталей (REJ-019…021).</li>
+  <li>Повний бухоблік і зарплату: облік у BAS/BAF клієнта з нашим обміном (ваше рішення №5, REJ-023).</li>
+  <li>Кабінет покупця і перерахунок маржі відкритих замовлень за курсом євро: відкидання підтверджено вами (запис 34, REJ-017, REJ-018). Претензію постачальнику порізки повертаємо після розмов A-06 (REJ-028).</li>
+  <li>Позиції, що відпадали за правилом «два типи джерел», лишаються поза першим релізом рішенням AI (AI-09): AI-розбір рекламацій, Нова Пошта, офлайн-замір, пеня та інші.</li>
+  <li>Інші підсегменти й профілі: офісні й контрактні, серійні на склад, м'які меблі, експорт (REJ-054…059).</li>
+  <li>П'ять готових модулів ToDo, крім модуля собівартості (REJ-001…005).</li>
+  </ul>
+  <p class="prose">Повний список з причинами й умовами повернення: <a href="rejected.html">сторінка «Що відкинули»</a>. Хочете повернути позицію? Впишіть її номер REJ-NNN у поле «що замість» будь-якого рядка рішення AI вище (вийде «AI-NN: не згоден — повернути REJ-NNN»).</p>
+  <p class="small"><a class="src" href="#sources" data-src="REJECTED.md§Не робимо">REJECTED: не робимо</a> <a class="src" href="#sources" data-src="REJECTED.md§Повернуто в концепцію">REJECTED: повернуто</a></p>
+</section>
+<section id="chain">
+  <span class="eyebrow">Додаток</span>
+  <h2>Ланцюг: роль, біль, екран, сценарій</h2>
+  <div class="scroll" tabindex="0" aria-label="Ланцюг"><table style="min-width:600px"><thead><tr><th>Роль</th><th>Біль</th><th>Екрани (ID концепції)</th><th>Сценарій</th></tr></thead><tbody>
+  <tr><td>Менеджер продажу ROLE-02</td><td>ціна й зміни поза системою</td><td>3, 2, 15 (S-01, S-02, S-18)</td><td>SC-01</td></tr>
+  <tr><td>Конструктор-технолог ROLE-01</td><td>ручне перенесення з CAD</td><td>4, 5 (S-03, S-04)</td><td>SC-02</td></tr>
+  <tr><td>Начальник виробництва ROLE-03</td><td>дефіцит і простої видно запізно</td><td>6, 7 (S-05, S-06)</td><td>SC-03</td></tr>
+  <tr><td>Комірник-комплектувальник ROLE-05</td><td>недокомплект на монтажі</td><td>8, 9 (S-08, S-16)</td><td>SC-04</td></tr>
+  <tr><td>Фінансист ROLE-06</td><td>курс, собівартість, нарахування вручну</td><td>13, 11 (S-11, S-17)</td><td>SC-05</td></tr>
+  <tr><td>Керівник-покупець ROLE-08</td><td>маржа після закриття</td><td>16 (S-19)</td><td>SC-06</td></tr>
+  <tr><td>Замірник ROLE-09</td><td>помилка заміру видна на монтажі</td><td>1 (S-15)</td><td>SC-07</td></tr>
+  <tr><td>Бригадир монтажу й сервісу ROLE-10</td><td>акт і відсоток вручну, рекламації</td><td>10, 12 (S-12, S-14)</td><td>SC-08</td></tr>
+  </tbody></table></div>
+  <p class="small"><a class="src" href="#sources" data-src="../concept/features.md§Функції">features: Функції</a> <a class="src" href="#sources" data-src="../concept/features.md§Ролі">features: Ролі</a></p>
+</section>
+<section id="evidence">
+  <span class="eyebrow">Додаток</span>
+  <h2>Докази: на чому тримаються тези</h2>
+  <div class="scroll" tabindex="0" aria-label="Докази"><table style="min-width:600px"><thead><tr><th>Теза</th><th>Доказ</th><th>Рівень</th></tr></thead><tbody>
+  <tr><td>Строки зриваються, причину бачать запізно</td><td>відгуки покупців (а), вакансії</td><td>● два типи</td></tr>
+  <tr><td>Порізка зсуває дату</td><td>відгуки меблярів</td><td>◐ один тип</td></tr>
+  <tr><td>Програють через ціну</td><td>агрегати CRM ToDo, переважно не кухні й корпусні</td><td>◐</td></tr>
+  <tr><td>Імпорт із CAD як головна перевага</td><td>лише неофіційна структура файлу ViyarPro</td><td>гіпотеза</td></tr>
+  <tr><td>Розмір цільового ринку</td><td><span data-fact="market.companies_10_249">225</span> компаній у смузі 10–249; частка кухонь і корпусних невідома</td><td>гіпотеза</td></tr>
+  <tr><td>Повернуті вами позиції</td><td>ваше рішення, доказ попиту не з'явився</td><td>гіпотеза</td></tr>
+  <tr><td>Наш пакет закриває ланцюг</td><td>план концепції</td><td>◎ ціль, не факт</td></tr>
+  </tbody></table></div>
+  <p class="small"><a class="src" href="#sources" data-src="../concept/features.md§Болі">features: типи доказу</a> <a class="src" href="#sources" data-src="competitor-features.md§1">CF §1</a></p>
+</section>
+<section id="limits">
+  <span class="eyebrow">Додаток</span>
+  <h2>Обмеження й план перевірки</h2>
+  <ul class="prose">
+  <li>Твердження про редакції: лише з порівняння з документацією 19.0; реєстру перевірених тверджень і чистої бази Enterprise немає (AI-11).</li>
+  <li>Формати CAD і вивантажень BAS не підтверджено файлами; тріали конкурентів відкладено (ваше рішення №6).</li>
+  <li>Вхід за PIN, аналітика без Enterprise, телефон і планшет на Community: перевірка стандарту в межах A-21 (записи 30, 35).</li>
+  <li>Норми закону (гарантія, пеня) з вторинних джерел, до юриста (№17). Голос виробника здебільшого переказ; першоджерела після рішення про підставу обробки (№18).</li>
+  <li>Гроші на цій сторінці свідомо не рахуються (запис 37): трудомісткість оцінює A-08 після сигналу A-23.</li>
+  </ul>
+  <p class="prose">План: зріз A-21, розмови A-06, тест попиту A-23, юрист до A-08 і A-10, після сигналу розробка. <a class="src" href="#sources" data-src="FUNCTIONAL-MAP.md§3.4">FM §3.4</a> <a class="src" href="#sources" data-src="SALES.md§4">SALES §4</a></p>
+</section>
+<section id="sources">
+  <span class="eyebrow">Додаток</span>
+  <h2>Джерела (шляхи в репо)</h2>
+  <p class="prose">Підписи біля тез ведуть сюди; шлях: <code>docs/industries/mebli/research/</code> + файл і розділ з атрибута посилання. Головні: AI-DECISIONS.md, BOX.md, SALES.md, REJECTED.md, FUNCTIONAL-MAP.md, REUSE.md, odoo-ecosystem.md, competitor-features.md, competitors-registry.md; концепція: <code>concept/</code>; зріз: <code>prototype-real/PLAN.md</code>. Числа: <code>research/facts.yaml</code>. Рішення власника: <code>flow/decisions.md</code>, записи 4–37. <a class="src" href="#sources" data-src="AI-DECISIONS.md§Рішення">AI-DECISIONS</a></p>
+</section>
+</main>
+<footer class="small">ToDo · 12.11.2026 · сторінка власника A-20c, повний обсяг, перерахунок за 0.3 · числа: research/facts.yaml (A-20, спроба 4) · ринок: odb-catalog, знімок серпня 2026</footer>
+<script>
+(function(){
+  /* Блок «Що вирішив AI»: DEC заповнює скіл concept-presentation рядками research/AI-DECISIONS.md («Рішення»). st: "open" (прийнято AI, можна вето) | "veto". flag — позначка рядка, що замінює замовчування власника. */
+  var DEC=[
+  {"n":1,"id":"AI-01","q":"Ціну Odoo Enterprise для клієнта не називаємо (ваше рішення №9 було відкритим)","st":"open","ai":"Для концепції ціна Enterprise не потрібна. У продажу кажемо: ліцензію Enterprise клієнт купує в Odoo або в партнера за їхнім прайсом; склад: повні користувачі та Light для працівників цеху.","alt":"Назвати ціну з вашої нотатки до рішення №9 як ціну для клієнта.","risk":"Клієнт, що хоче Enterprise, не бачить порядку витрат і відкладає рішення.","check":"Перший клієнт на Enterprise: запит пропозиції партнера чи радника Odoo."},
+  {"n":2,"id":"AI-02","q":"Ліцензія наших модулів і модулі OCA (ваше рішення №14 було відкритим)","st":"open","ai":"Наші модулі під LGPL-3 (з анкети), без жодної залежності від OCA, зокрема без web_responsive; OCA лише як ідеї, код пишемо самі.","alt":"Власна ліцензія OPL-1 для частини модулів або web_responsive як єдина залежність OCA.","risk":"LGPL дозволяє конкурентам брати код; мобільний вигляд Community без web_responsive робимо самі, польові екрани (замір, кіоск, акт) можуть бути незручні на телефоні.","check":"Замір і акт на телефоні в пілоті; консультація юриста щодо ліцензії до A-10."},
+  {"n":3,"id":"AI-03","q":"Календар і пороги тесту попиту A-23 (ваше рішення №21 було відкритим)","st":"open","ai":"A-23 у січні–лютому під весняний старт пілоту. Числові пороги сигналів ставить крок A-23 як гіпотези, без окремого затвердження до старту; на ціну входу A-23 не чекає (AI-06).","alt":"A-23 зараз, у листопаді–грудні, з нижчими порогами.","risk":"Сезон відомий з одного запису CRM не з цільового підсегмента: якщо сезону немає, втрачаємо близько двох місяців, а розробка чекає A-23 (запис 33).","check":"A-23: відгук розсилки за тижнями; пілот, коли клієнт готовий стартувати."},
+  {"n":4,"id":"AI-04","q":"Сирі джерела дослідження в git (ваше рішення №22 було відкритим)","st":"open","ai":"У git лишаються лише знеособлені версії джерел; сирі переносяться поза git у місце, яке назве людина; нових дослівних фрагментів не додаємо. Вилучення файлів і чистку історії git робить людина.","alt":"Лишити як є, обмеживши доступ до репозиторію, з позначкою в політиці даних пакета.","risk":"Поки людина не вилучила сирі фрагменти, вони лишаються в git і в його історії.","check":"Людина: перелік файлів теки джерел після вилучення; перевірка приватності."},
+  {"n":5,"id":"AI-05","q":"Компанії на 6–9 людей і юрособи до 10 працівників","st":"open","ai":"До A-23 під цю смугу нічого не будуємо: вона поза цільовим клієнтом; на запит пропонуємо коробку A; легкий тариф лишається до 5 користувачів; у формі A-23 окремий пункт «6–9 людей».","alt":"Легкий тариф з лімітом до 9 користувачів.","risk":"Смуга йде до KeyCRM чи Bimp; якщо згодом розширимо легкий тариф, він забиратиме клієнтів коробки A.","check":"A-23: частка заявок «6–9 людей»."},
+  {"n":6,"id":"AI-06","q":"Лендинг тесту попиту без ціни входу коробки A","flag":"замінює замовчування запису 32","st":"open","ai":"У лендингу A-23 ціни немає: «вартість після демо, за складом коробки A»; заявка на пілот без суми. Підстава: запис 37 (гроші не рахуємо) і тарифів в анкеті немає. Замовчування запису 32 з ціною-точкою в лендингу цим рішенням замінено.","alt":"Лишити ціну-точку із замовчування запису 32.","risk":"Заявки без ціни менш кваліфіковані, а ціна вже головна причина програшу у воронці ToDo.","check":"A-23: яка частка заявок лишається після розмови про бюджет."},
+  {"n":7,"id":"AI-07","q":"Версія Odoo на старті розробки","st":"open","ai":"Odoo 19: на ній зроблено дослідження, зріз A-21 і готовий модуль собівартості; перенесення на 20 плановим кроком D-03.","alt":"Одразу Odoo 20.","risk":"Розробка стартує після A-23: на той час 20 може бути зрілою, і перший клієнт попросить саме її.","check":"Перед A-08 звірити стан українських модулів для 20."},
+  {"n":8,"id":"AI-08","q":"Відрядна і монтаж у пакеті","st":"open","ai":"Відрядна рахується розцінкою за операцію (у демо A-21 погодинно як спрощення зрізу); монтаж налаштовується: у вартості замовлення або окремою послугою, задача виїзду створюється в обох режимах.","alt":"Лише погодинна відрядна; монтаж лише окремою позицією.","risk":"Розцінка за операцію ускладнює довідник розцінок; фабрики продають монтаж по-різному.","check":"A-06 і пілот: як фабрика рахує відрядну і продає монтаж."},
+  {"n":9,"id":"AI-09","q":"Позиції, що відпадали за правилом «два типи джерел», лишаються поза першим релізом","st":"open","ai":"Правило скасовано, але позиції REJ-029…053 у перший реліз не повертаємо: біль для кухонь і корпусних не підтверджено або це норма закону до юриста. Повернення за сигналом A-23, A-06 чи вашим запереченням.","alt":"Повернути всі ці позиції в концепцію з позначкою «перевірити на пілоті».","risk":"Частина може виявитись потрібною (наприклад, поетапність операцій чи офлайн-замір), тоді повтор A-20.","check":"Пункти «що вам цікаво» в A-23, розмови A-06."},
+  {"n":10,"id":"AI-10","q":"Злиття ролей і позначки в прототипі","st":"open","ai":"Закупівельника злито з комірником-комплектувальником, менеджера з рекламацій із бригадиром монтажу й сервісу; конфігуратор, пакетний розкрій і обрізки в прототипі з позначкою «лише B».","alt":"Окремі ролі закупівельника й менеджера з рекламацій.","risk":"У компаніях 10–249 це можуть бути окремі люди, і сценарії доведеться розділити.","check":"A-06 і пілот: хто виконує ці обов'язки."},
+  {"n":11,"id":"AI-11","q":"Твердження про Enterprise без реєстру перевірених тверджень","st":"open","ai":"Основи екранів «стандарт Enterprise» і мости беремо з функціональної карти й огляду екосистеми; без вердикту позначаємо «не перевірено»; чистої бази Enterprise немає, тому твердження про Enterprise не подаємо як факт.","alt":"Зупинити A-20 до появи реєстру тверджень про редакції (повтор A-03b).","risk":"Міст чи стандарт Enterprise поводиться інакше, ніж описано; апгрейд з Community складніший.","check":"Перевірка на чистій базі Enterprise (рішення №13); повтор A-03b створює реєстр тверджень."},
+  {"n":12,"id":"AI-12","q":"Слабко доведені болі й показники дашборда не відсікаємо","st":"open","ai":"Болі з галузевої довідки, повернуті вами позиції і показники дашборда керівника лишаємо в концепції з позначкою «ризик: перевірити на пілоті».","alt":"Відкинути функції з одним джерелом (старе правило, скасовано).","risk":"Частина функцій і показників покупцю не потрібна, це зайва робота на A-08.","check":"A-23: карта інтересу за функціями; A-06: які цифри керівник дивиться щодня."},
+  {"n":13,"id":"AI-13","q":"Формати обміну й міграції без зразків файлів","st":"open","ai":"Обмін з BAS/BAF за першим варіантом контракту; специфікації вантажимо з CSV чи Excel за шаблоном; прямий імпорт БАЗИС і PRO100 та повна міграція після зразків вивантажень клієнта.","alt":"Будувати конвертори БАЗИС і PRO100 до пілоту.","risk":"Конфігурація BAS клієнта чи вивантаження CAD не ляже в шаблон.","check":"Етапи запуску з даними й обміном, зразки файлів від першого клієнта."}
+  ];
+  var KEY="mebli-ai-veto-v1";
+  var state={};
+  try{var raw=localStorage.getItem(KEY);if(raw){state=JSON.parse(raw)||{};}}catch(e){state={};}
+  function save(){try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  var list=document.getElementById("decList");
+  function render(){
+    var html="";
+    DEC.forEach(function(d){
+      var n=d.n;
+      if(d.st==="veto"){html+='<div class="dec closed"><span class="num">'+esc(d.id)+'</span><div class="stack"><div><b>'+esc(d.q)+'</b> <span class="tag ok">вето внесено</span></div><p class="small">'+esc(d.dec||"")+'</p></div></div>';return;}
+      html+='<div class="dec"><span class="num">'+esc(d.id)+'</span><div class="stack"><div><b>'+esc(d.q)+'</b>'+(d.flag?' <span class="tag hyp">'+esc(d.flag)+'</span>':'')+'</div><p class="small"><b>Рішення AI.</b> '+esc(d.ai||"")+'</p>'+(d.alt?'<p class="small"><b>Альтернатива.</b> '+esc(d.alt)+'</p>':'')+(d.risk?'<p class="small"><b>Ризик.</b> '+esc(d.risk)+'</p>':'')+(d.check?'<p class="small"><b>Перевірка.</b> '+esc(d.check)+'</p>':'')+'<div class="opts"><span><input type="checkbox" id="v'+n+'"> <label for="v'+n+'">Не згоден</label></span></div><textarea class="note" id="note'+n+'" rows="2" aria-label="Що замість, '+esc(d.id)+'"></textarea></div></div>';
+    });
+    list.innerHTML=html;
+    DEC.forEach(function(d){
+      if(d.st==="veto")return;
+      var s=state["d"+d.n]||{};
+      if(s.v){document.getElementById("v"+d.n).checked=true;}
+      if(s.t){document.getElementById("note"+d.n).value=s.t;}
+    });
+  }
+  render();
+  list.addEventListener("change",function(e){var t=e.target;if(t.type==="checkbox"){var n=t.id.slice(1);state["d"+n]=state["d"+n]||{};state["d"+n].v=t.checked;save();}});
+  list.addEventListener("input",function(e){var t=e.target;if(t.classList.contains("note")){var n=t.id.slice(4);state["d"+n]=state["d"+n]||{};state["d"+n].t=t.value;save();}});
+  /* Формат заперечень — «AI-NN: не згоден — <що замість>»; приймач — flow-state-keeper, режим veto-batch (flow-core/references/flow-state.md §3). */
+  function oneLine(t){return String(t||"").replace(/[\r\n|]+/g," ").trim();}
+  function buildText(){
+    var out=["Заперечення власника: пакет mebli, сторінка A-20c, 12.11.2026. Один рядок на заперечення: AI-NN: не згоден — що замість. Рядки, яких тут немає, власник приймає. flow-state-keeper (veto-batch) вносить їх у flow/decisions.md з посиланням на це повідомлення."];
+    DEC.forEach(function(d){
+      if(d.st==="veto")return;
+      var s=state["d"+d.n]||{};
+      if(!s.v)return;
+      out.push(oneLine(d.id)+": не згоден — "+(oneLine(s.t)||"що замість не вказано"));
+    });
+    if(out.length===1)out.push("Заперечень немає: усі рішення AI прийнято.");
+    return out.join("\n");
+  }
+  var msg=document.getElementById("copyMsg"),outEl=document.getElementById("copyOut");
+  function fallback(text){outEl.hidden=false;outEl.value=text;outEl.focus();outEl.select();msg.textContent="Автоматичне копіювання недоступне. Текст виділено: Ctrl+C або Cmd+C.";}
+  document.getElementById("copyBtn").addEventListener("click",function(){
+    var text=buildText();
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text).then(function(){outEl.hidden=true;msg.textContent="Скопійовано заперечення.";},function(){fallback(text);});}
+    else{fallback(text);}
+  });
+  document.getElementById("clearBtn").addEventListener("click",function(){
+    state={};save();
+    list.querySelectorAll("input[type=checkbox]").forEach(function(r){r.checked=false;});
+    list.querySelectorAll(".note").forEach(function(r){r.value="";});
+    outEl.hidden=true;msg.textContent="Позначки очищено.";
+  });
+  var links=[].slice.call(document.querySelectorAll(".nav a"));
+  var secs=links.map(function(a){return document.getElementById(a.getAttribute("href").slice(1));});
+  function onScroll(){var y=window.scrollY+90,cur=-1;secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});links.forEach(function(a,i){a.classList.toggle("on",i===cur);});}
+  window.addEventListener("scroll",onScroll,{passive:true});onScroll();
+})();
+</script>
+<!-- A-20c повний обсяг, recalc за concept-presentation 0.3.1 (params.sample: false, mode: recalc), 12.11.2026. Без грошей (LESSONS §24, запис 37); блок «Що вирішив AI» — AI-01…AI-13 з research/AI-DECISIONS.md, вето через «Скопіювати мої заперечення»; рішення власника записи 4–37 — як вхід, без кнопок. Каркас скрипта — шаблон 0.3.x; додано лише поле flag (позначка AI-06). Логотип: base64 brand-todo/todo-logo.png (той самий рядок у трьох сторінках). -->

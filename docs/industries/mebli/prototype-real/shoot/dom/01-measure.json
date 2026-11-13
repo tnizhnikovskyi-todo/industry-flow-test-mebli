@@ -1,0 +1,313 @@
+{
+ "screen": "01-measure",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Техніка"
+  },
+  {
+   "kind": "header",
+   "text": "Ніша"
+  },
+  {
+   "kind": "header",
+   "text": "Ширина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Висота, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Глибина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Перевірка"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Нагода"
+  },
+  {
+   "kind": "label",
+   "text": "Замовлення"
+  },
+  {
+   "kind": "label",
+   "text": "Клієнт"
+  },
+  {
+   "kind": "label",
+   "text": "Приміщення?"
+  },
+  {
+   "kind": "label",
+   "text": "Замірник"
+  },
+  {
+   "kind": "label",
+   "text": "Перепад підлоги, мм?"
+  },
+  {
+   "kind": "label",
+   "text": "Кут стін, °"
+  },
+  {
+   "kind": "label",
+   "text": "Продажі Замовлення До включення у рахунок Товари 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замір-листи ЗМ-0001 18 / 18"
+  },
+  {
+   "kind": "button",
+   "text": "Звірити з проєктом"
+  },
+  {
+   "kind": "button",
+   "text": "Ніші й розміри"
+  },
+  {
+   "kind": "button",
+   "text": "Техніка клієнта"
+  },
+  {
+   "kind": "button",
+   "text": "Комунікації й фото"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замір-листи"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "ЗМ-0001"
+  },
+  {
+   "kind": "field",
+   "text": "Звірено з проєктом Заміряно",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Холодильник, вбудований: глибше на 30 мм",
+   "label": "issue_text",
+   "name": "issue_text",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "ЗМ-0001",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Кухня й шафа-купе, квартира",
+   "label": "Нагода",
+   "name": "lead_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "S00123",
+   "label": "Замовлення",
+   "name": "order_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Ірина Коваленко",
+   "label": "Клієнт",
+   "name": "customer",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Кухня й передпокій",
+   "label": "Приміщення?",
+   "name": "room",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Тетяна Олійник",
+   "label": "Замірник",
+   "name": "measurer_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "6",
+   "label": "Перепад підлоги, мм?",
+   "name": "floor_slope_mm",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "89,5",
+   "label": "Кут стін, °",
+   "name": "wall_angle_deg",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Техніка Ніша Ширина, мм Висота, мм Глибина, мм Перевірка Холодильник, вбудований Ніша під холодильник (пенал) 595 2 010 590 глибше на 30 мм Духова шафа Ніша під духову шафу 595 595 550 вміщається Посудомийна машина Ніша під посудомийку 598 815 550 вміщається Додати рядок",
+   "label": "appliance_ids",
+   "name": "appliance_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "sequence",
+   "name": "sequence",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Холодильник, вбудований",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Ніша під холодильник (пенал)",
+   "label": "niche_id"
+  },
+  {
+   "kind": "cell",
+   "text": "595",
+   "label": "width_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "2 010",
+   "label": "height_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "590",
+   "label": "depth_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "глибше на 30 мм",
+   "label": "issue"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Духова шафа",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Ніша під духову шафу",
+   "label": "niche_id"
+  },
+  {
+   "kind": "cell",
+   "text": "595",
+   "label": "width_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "595",
+   "label": "height_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "550",
+   "label": "depth_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "вміщається",
+   "label": "issue"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "sequence"
+  },
+  {
+   "kind": "cell",
+   "text": "Посудомийна машина",
+   "label": "name"
+  },
+  {
+   "kind": "cell",
+   "text": "Ніша під посудомийку",
+   "label": "niche_id"
+  },
+  {
+   "kind": "cell",
+   "text": "598",
+   "label": "width_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "815",
+   "label": "height_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "550",
+   "label": "depth_mm"
+  },
+  {
+   "kind": "cell",
+   "text": "вміщається",
+   "label": "issue"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

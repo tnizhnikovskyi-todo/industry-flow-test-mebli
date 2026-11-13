@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_td_mebli_ua" model="ir.ui.view">
+        <field name="name">sale.order.form.td_mebli_ua</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_td_send_bas" type="object" string="Send to BAS (imitation)"
+                        invisible="state != 'sale' or td_bas_state == 'sent'"/>
+            </xpath>
+            <field name="payment_term_id" position="after">
+                <field name="td_bas_state" widget="badge" decoration-success="td_bas_state == 'sent'"
+                       decoration-danger="td_bas_state == 'error'" invisible="state != 'sale'"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_currency_rate_tree_td_mebli_ua" model="ir.ui.view">
+        <field name="name">res.currency.rate.list.td_mebli_ua</field>
+        <field name="model">res.currency.rate</field>
+        <field name="inherit_id" ref="base.view_currency_rate_tree"/>
+        <field name="arch" type="xml">
+            <field name="rate" position="after">
+                <field name="td_source" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>

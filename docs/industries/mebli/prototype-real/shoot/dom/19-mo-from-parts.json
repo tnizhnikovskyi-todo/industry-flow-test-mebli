@@ -1,0 +1,531 @@
+{
+ "screen": "19-mo-from-parts",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "З деталей"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Спожити"
+  },
+  {
+   "kind": "header",
+   "text": "Зарезервовано / спожито"
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Аналог"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Товар"
+  },
+  {
+   "kind": "label",
+   "text": "Опції виробу"
+  },
+  {
+   "kind": "label",
+   "text": "Кількість"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Специфікація?"
+  },
+  {
+   "kind": "label",
+   "text": "Початкова дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Статус компонентів?"
+  },
+  {
+   "kind": "label",
+   "text": "Відповідальний"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замовлення на виробництво WH/MO/00110 1 Продаж Переміщення товару Огляд 1 Розкрій 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Виготовити все"
+  },
+  {
+   "kind": "button",
+   "text": "Не планувати"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Компоненти"
+  },
+  {
+   "kind": "button",
+   "text": "Деталі"
+  },
+  {
+   "kind": "button",
+   "text": "Робочі замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Побічні товари"
+  },
+  {
+   "kind": "button",
+   "text": "Інші"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замовлення на виробництво"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "WH/MO/00110"
+  },
+  {
+   "kind": "field",
+   "text": "1 Продаж",
+   "label": "",
+   "name": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1",
+   "label": "sale_order_count",
+   "name": "sale_order_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 Розкрій",
+   "label": "td_cutting_job_count",
+   "name": "td_cutting_job_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Виконано В процесі Підтверджено Чернетка",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "ЗМ-0001: Холодильник, вбудований — глибше на 30 мм ЗМ-0001: Шафа-купе 2-дверна — глибина 600 мм, ніша «Шафа-купе в передпокої» вміщає 560 мм",
+   "label": "td_measure_problems",
+   "name": "td_measure_problems",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "priority",
+   "name": "priority",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "WH/MO/00110",
+   "label": "name",
+   "name": "name",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Шафа-купе 2-дверна",
+   "label": "Товар",
+   "name": "product_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Декор корпусу: ЛДСП Білий гладкий Декор фасаду: МДФ Білий матовий Кромка: ПВХ 2 мм Фурнітура: Преміум (доводчики) Ширина, мм: 1800 Висота, мм: 2400 Глибина, мм: 600",
+   "label": "Опції виробу",
+   "name": "product_description_variants",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1,000",
+   "label": "Кількість",
+   "name": "qty_producing",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1,000",
+   "label": "Кількість",
+   "name": "product_qty",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "Кількість",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "S00123/392 1800x2400x600: Шафа-купе 2-дверна",
+   "label": "Специфікація?",
+   "name": "bom_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "13 лист., 03:50",
+   "label": "Початкова дата?",
+   "name": "date_start",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "Статус компонентів?",
+   "name": "components_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Відповідальний",
+   "name": "user_id",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "true",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "cell",
+   "text": "[ЛДСП-БЛ16] ЛДСП Білий гладкий 16 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "9,663",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "9,663",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "Деталі"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_analog_hint"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "[МДФ-БМ18] МДФ Білий матовий 18 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "4,822",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "4,822",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "Деталі"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_analog_hint"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "[ДВП-3] ДВП біла 3 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "4,492",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "4,492",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "Деталі"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_analog_hint"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

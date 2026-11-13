@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_accrual_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.accrual.list</field>
+        <field name="model">td.mebli.accrual</field>
+        <field name="arch" type="xml">
+            <list string="Accruals" editable="bottom" decoration-danger="kind == 'penalty'" decoration-success="kind == 'bonus'">
+                <header>
+                    <button name="action_td_accrue" type="object" string="Accrue" class="btn-primary" display="always"
+                            groups="mrp.group_mrp_manager,account.group_account_user"/>
+                    <button name="action_td_confirm" type="object" string="Confirm"
+                            groups="mrp.group_mrp_manager,account.group_account_user"/>
+                </header>
+                <field name="date" readonly="state == 'confirmed'"/>
+                <field name="employee_id" readonly="state == 'confirmed'"/>
+                <field name="kind" readonly="state == 'confirmed'"/>
+                <field name="workcenter_id" optional="show"/>
+                <field name="order_ref"/>
+                <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'"/>
+                <field name="piece_rate" optional="show" invisible="kind != 'piece'"/>
+                <field name="amount" sum="Total" readonly="state == 'confirmed'"/>
+                <field name="reason" readonly="state == 'confirmed'"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" readonly="1"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_accrual_view_pivot" model="ir.ui.view">
+        <field name="name">td.mebli.accrual.pivot</field>
+        <field name="model">td.mebli.accrual</field>
+        <field name="arch" type="xml">
+            <pivot string="Accruals" sample="1">
+                <field name="employee_id" type="row"/>
+                <field name="kind" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="td_mebli_accrual_view_search" model="ir.ui.view">
+        <field name="name">td.mebli.accrual.search</field>
+        <field name="model">td.mebli.accrual</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="employee_id"/>
+                <field name="order_ref"/>
+                <filter name="this_month" string="This Month"
+                        domain="[('date', '&gt;=', (context_today() + relativedelta(day=1)).strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter name="bonus_penalty" string="Bonuses and Penalties" domain="[('kind', 'in', ('bonus', 'penalty'))]"/>
+                <group>
+                    <filter name="group_employee" string="Employee" context="{'group_by': 'employee_id'}"/>
+                    <filter name="group_kind" string="Kind" context="{'group_by': 'kind'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="td_mebli_accrual_action" model="ir.actions.act_window">
+        <field name="name">Accruals to the Shop and the Crews</field>
+        <field name="res_model">td.mebli.accrual</field>
+        <field name="view_mode">pivot,list</field>
+        <field name="context">{'search_default_this_month': 1}</field>
+    </record>
+
+    <menuitem id="td_mebli_accrual_menu" name="Accruals" parent="mrp.menu_mrp_reporting"
+              action="td_mebli_accrual_action" sequence="40"/>
+</odoo>

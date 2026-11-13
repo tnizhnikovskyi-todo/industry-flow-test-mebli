@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- F-22: the payment schedule is the standard payment terms; the only new piece is the milestone of a line -->
+    <record id="view_payment_term_form_td_mebli" model="ir.ui.view">
+        <field name="name">account.payment.term.form.td.mebli</field>
+        <field name="model">account.payment.term</field>
+        <field name="inherit_id" ref="account.view_payment_term_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='line_ids']/list/field[@name='delay_type']" position="after">
+                <field name="td_milestone" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_config_settings_view_form_td_mebli_sale" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.td.mebli.sale</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='quotation_order_setting_container']" position="after">
+                <block title="Furniture Documents" name="td_mebli_documents">
+                    <setting id="td_mebli_contract_mode" string="Printed Contract"
+                             help="The text of the contract printed from the order (a template to be checked by a lawyer).">
+                        <field name="td_mebli_contract_mode" widget="radio"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

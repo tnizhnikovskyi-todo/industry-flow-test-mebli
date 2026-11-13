@@ -1,0 +1,46 @@
+{
+ "screen": "m7-my-day",
+ "viewport": "mobile",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Мій день 2"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "13 лист., 09:00 S00102 Дмитро Савченко вул. Франка, 31, Житомир Місць: 3 Отримати до монтажу: 29 440,00 ₴"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Мій день"
+  }
+ ]
+}

@@ -1,0 +1,66 @@
+{
+ "screen": "07-offcuts",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Обрізок"
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Довжина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Ширина, мм"
+  },
+  {
+   "kind": "header",
+   "text": "Площа, м²"
+  },
+  {
+   "kind": "header",
+   "text": "Завдання розкрою"
+  },
+  {
+   "kind": "header",
+   "text": "Створено"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Склад Загальний огляд Операції Товари 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Ділові обрізки На складі Декор 1-5 / 5"
+  },
+  {
+   "kind": "label",
+   "text": "На складі"
+  },
+  {
+   "kind": "label",
+   "text": "Декор"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Ділові обрізки"
+  }
+ ]
+}

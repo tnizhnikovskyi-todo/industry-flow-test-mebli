@@ -1,0 +1,113 @@
+{
+ "screen": "06-kit",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Місце"
+  },
+  {
+   "kind": "header",
+   "text": "Вид"
+  },
+  {
+   "kind": "header",
+   "text": "Етикетка"
+  },
+  {
+   "kind": "header",
+   "text": "Позиція"
+  },
+  {
+   "kind": "header",
+   "text": "Кількість"
+  },
+  {
+   "kind": "header",
+   "text": "Запаковано"
+  },
+  {
+   "kind": "header",
+   "text": "Запакував"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "​"
+  },
+  {
+   "kind": "label",
+   "text": "Склад Загальний огляд Операції Товари Звітність Налаштування 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Комплектувальні листи Не запаковано 1-1 / 1"
+  },
+  {
+   "kind": "label",
+   "text": "Не запаковано"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Комплектувальні листи"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "1",
+   "label": "place"
+  },
+  {
+   "kind": "cell",
+   "text": "Корпус",
+   "label": "kind"
+  },
+  {
+   "kind": "cell",
+   "text": "S00009-1-04",
+   "label": "label"
+  },
+  {
+   "kind": "cell",
+   "text": "Кухонний модуль нижній 600: Задня стінка ДВП",
+   "label": "item"
+  },
+  {
+   "kind": "cell",
+   "text": "6,00",
+   "label": "qty"
+  },
+  {
+   "kind": "cell",
+   "text": "​",
+   "label": "packed"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "packed_by_id"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

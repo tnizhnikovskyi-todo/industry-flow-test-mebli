@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Position 17 (F-58): day plan of the crew -->
+    <record id="project_task_td_day_list" model="ir.ui.view">
+        <field name="name">project.task.list.td.day</field>
+        <field name="model">project.task</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <list string="My Day" create="0" default_order="date_deadline">
+                <field name="date_deadline" string="Time" widget="datetime"/>
+                <field name="sale_order_id" string="Order"/>
+                <field name="partner_id" string="Customer"/>
+                <field name="td_pay_missing" string="Collect"/>
+                <field name="state" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+    <record id="project_task_td_day_kanban" model="ir.ui.view">
+        <field name="name">project.task.kanban.td.day</field>
+        <field name="model">project.task</field>
+        <field name="priority">90</field>
+        <field name="arch" type="xml">
+            <kanban create="0" default_order="date_deadline" class="td_day_plan">
+                <field name="td_order_currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <field name="date_deadline" widget="datetime" class="fw-bold"/>
+                            <field name="sale_order_id" class="fw-bold"/>
+                        </div>
+                        <field name="partner_id"/>
+                        <field name="td_address" class="text-muted small"/>
+                        <div class="small">Places: <field name="td_places"/></div>
+                        <div class="small text-danger" invisible="not td_pay_missing">Collect before installation:
+                            <field name="td_pay_missing" widget="monetary" options="{'currency_field': 'td_order_currency_id'}"/></div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+    <record id="td_mebli_install_day_action" model="ir.actions.act_window">
+        <field name="name">My Day</field>
+        <field name="res_model">project.task</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'kanban', 'view_id': ref('project_task_td_day_kanban')}),
+                                      (0, 0, {'view_mode': 'list', 'view_id': ref('project_task_td_day_list')})]"/>
+        <field name="domain">[('sale_order_id', '!=', False)]</field>
+    </record>
+    <record id="td_mebli_install_day_server_action" model="ir.actions.server">
+        <field name="name">My Day</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="state">code</field>
+        <field name="code">action = model.action_td_my_day()</field>
+    </record>
+    <menuitem id="td_mebli_install_day_menu" name="My Day" parent="td_mebli_install_menu"
+              action="td_mebli_install_day_server_action" sequence="0"/>
+
+    <record id="action_report_day_plan" model="ir.actions.report">
+        <field name="name">Day Plan of the Crew</field>
+        <field name="model">project.task</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_install.report_day_plan</field>
+        <field name="report_file">td_mebli_install.report_day_plan</field>
+        <field name="print_report_name">'Day plan'</field>
+        <field name="binding_model_id" ref="project.model_project_task"/>
+        <field name="binding_type">report</field>
+    </record>
+    <!-- one crew member, his visits of the coming days (one document: wkhtmltopdf without patched Qt prints one
+         document per call) -->
+    <record id="action_report_day_plan_user" model="ir.actions.report">
+        <field name="name">Day Plan of the Crew</field>
+        <field name="model">res.users</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_install.report_day_plan_user</field>
+        <field name="report_file">td_mebli_install.report_day_plan_user</field>
+        <field name="print_report_name">'Day plan - %s' % (object.name)</field>
+    </record>
+    <template id="report_day_plan_user">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="user">
+                <t t-set="o" t-value="user"/>
+                <t t-set="groups" t-value="user._td_day_plan_groups()"/>
+                <t t-call="td_mebli_install.report_day_plan_pages"/>
+            </t>
+        </t>
+    </template>
+    <template id="report_day_plan">
+        <t t-call="web.html_container">
+            <t t-set="o" t-value="docs[:1]"/>
+            <t t-set="groups" t-value="docs._td_day_plan_groups()"/>
+            <t t-call="td_mebli_install.report_day_plan_pages"/>
+        </t>
+    </template>
+    <template id="report_day_plan_pages">
+        <t>
+            <t t-foreach="groups" t-as="group">
+                <t t-call="web.external_layout">
+                    <div class="page td_report_day_plan">
+                        <h2>Day Plan <t t-out="group[0].strftime('%d.%m.%Y')"/></h2>
+                        <p><strong>Crew:</strong> <t t-out="group[1] or '—'"/></p>
+                        <table class="table table-sm o_main_table">
+                            <thead><tr><th>Time</th><th>Order, customer</th><th>Address</th><th>Load (places)</th><th class="text-end">Collect</th></tr></thead>
+                            <tbody>
+                                <tr t-foreach="group[2]" t-as="row">
+                                    <td><strong t-out="row['time']"/></td>
+                                    <td><strong t-out="row['order']"/><br/><t t-out="row['customer']"/><br/><span class="text-muted" t-out="row['phone']"/></td>
+                                    <td t-out="row['address']"/>
+                                    <td>
+                                        <div t-foreach="row['places']" t-as="place" t-out="place"/>
+                                        <div t-if="row['kit_missing']" class="text-danger">Not packed: <t t-out="row['kit_missing']"/></div>
+                                    </td>
+                                    <td class="text-end"><t t-if="row['pay_missing']" t-out="row['pay_missing']" t-options="{'widget': 'monetary', 'display_currency': row['currency']}"/><t t-else="">—</t></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="row mt-4"><div class="col-6">Loaded by the warehouse: ____________</div><div class="col-6">Crew: ____________</div></div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

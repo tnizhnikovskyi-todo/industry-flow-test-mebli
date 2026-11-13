@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_mebli_dashboard.Dashboard">
+        <Layout display="{ controlPanel: {} }" className="'overflow-auto h-100'"><div class="o_action td_dash">
+            <t t-set="d" t-value="state.data"/>
+            <div class="td_dash_head">
+                <h1 t-out="d.title"/>
+                <div class="td_dash_period"><span t-out="d.company"/> · <span t-out="d.period"/></div>
+            </div>
+            <div class="td_dash_grid">
+                <t t-foreach="d.cards" t-as="c" t-key="c.key">
+                    <div t-attf-class="td_card td_#{c.tone or 'none'} td_k_#{c.key}" t-on-click="() => this.open(c)">
+                        <div class="td_label" t-out="c.label"/>
+                        <div t-if="c.value" class="td_value" t-out="c.value"/>
+                        <div t-if="c.target" class="td_target" t-out="c.target"/>
+                        <div t-if="c.rows" class="td_bars">
+                            <div class="td_bar_row" t-foreach="c.rows" t-as="row" t-key="row.name">
+                                <span class="td_bar_name" t-out="row.name"/>
+                                <span class="td_bar_track"><span t-attf-class="td_bar_fill #{row.over ? 'td_over' : ''}" t-attf-style="width: #{Math.min(row.pct, 150) / 1.5}%"/></span>
+                                <span t-attf-class="td_bar_pct #{row.over ? 'td_over_text' : ''}" t-out="row.value"/>
+                            </div>
+                        </div>
+                        <div class="td_line" t-foreach="c.lines" t-as="l" t-key="l_index" t-out="l"/>
+                        <div t-if="c.alert" class="td_alert"><b t-out="c.alert"/>
+                            <span class="td_alert_row" t-foreach="c.alert_rows" t-as="r" t-key="r_index" t-out="r"/></div>
+                    </div>
+                </t>
+            </div>
+            <div class="td_dash_note" t-out="d.note"/>
+        </div>
+        </Layout>
+    </t>
+</templates>

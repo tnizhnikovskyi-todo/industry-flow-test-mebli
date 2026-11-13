@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mrp_bom_form_td_mebli_sale" model="ir.ui.view">
+        <field name="name">mrp.bom.form.td.mebli.sale</field>
+        <field name="model">mrp.bom</field>
+        <field name="inherit_id" ref="mrp.mrp_bom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_td_open_sale_order" type="object" class="oe_stat_button" icon="fa-shopping-cart"
+                        invisible="not td_sale_order_id">
+                    <div class="o_stat_info">
+                        <field name="td_sale_order_id" invisible="1"/>
+                        <span class="o_stat_text">Sales Order</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
