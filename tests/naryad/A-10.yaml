@@ -1,0 +1,30 @@
+# ТЕСТОВИЙ наряд A-10 — ALLOCATION.md пакета «меблі» (розподіл AC за треками й модулями) після A-09.
+# Склала сесія. Скіла пакета для A-10 немає (step-skill-map: крок закривається скілом організації, skillRef з картки; у сесії такого скіла немає) —
+# формат за входами A-11/A-12/A-13 і checks/A-10.yaml (observations/2026-11-13-a10-no-skill.md). Рішення — AI (flow/decisions.md записи 28, 37, 48).
+step: A-10
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: []
+model: opus
+effort: medium
+inputs:
+  - {name: "ТР пакета (SPEC §4 AC, §5 трасування, §11 VP)", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "технічний дизайн (модулі, залежності, коробки)", from: A-08, path: package/tr/, sha: HEAD}
+  - {name: "схема answers.yaml", from: A-09, path: package/templates/answers.yaml, sha: HEAD}
+  - {name: "REUSE.md (готове)", from: A-03c, path: docs/industries/mebli/research/REUSE.md, sha: HEAD}
+  - {name: OWNER-INTAKE.md (editions), from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+where: "package/ALLOCATION.md"
+template: "немає файлом: формат — config-as-code «Входи», master-data-template-builder фікстури ALLOCATION.md, flow-autocheck checks/A-10.yaml"
+done: "кожен AC SPEC має рядок: трек (стандарт / конфіг / код / готове) → модуль Odoo (технічна назва) або td_mebli_* → коробка → VP → крок-виконавець; розділ «Формат конфіг-пакета й команда установки»"
+check: {mode: both, how: "flow-autocheck checks/A-10.yaml (ac-coverage, ac-extra, track-enum, module-col, install-section); Архітектор рішення — module-exists, затвердження", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 5, context_budget_tokens: 120000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []
+params: {}
+repo: {url: origin, base_branch: flow/A-08-2-test, branch: flow/A-09-test}
+attempt: 1
+returned_from: null
+git: {base: f13721d, head: null, prev_tag: null}   # base = коміт A-09 у flow/A-09-test (ставить runner)
+date: 2026-11-13
