@@ -43,6 +43,9 @@ class TestOrderDates(TdMebliSaleCommon):
     def _reread(self, order):
         order.invalidate_recordset()
         order._get_purchase_orders().order_line.invalidate_recordset()
+        # the forecast is stored (AC-066): the receipts and the history of the supplier are not stored dependencies,
+        # the write hooks and the daily scheduled action recompute it
+        order._td_recompute_forecast()
         return order
 
     def test_quotation_the_workshop_decides(self):
@@ -197,5 +200,6 @@ class TestOrderDates(TdMebliSaleCommon):
                  'td_late_item', 'td_delay_reason']
         for name in names:
             field = self.env['sale.order']._fields[name]
-            self.assertTrue(field.compute and not field.store and field.readonly, name)
+            # stored since A-11 (the board groups by the reason, AC-066) — still computed, never entered
+            self.assertTrue(field.compute and field.readonly, name)
         self.assertNotIn('td.mebli.order.item', self.env)

@@ -1,0 +1,761 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_measure
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:44+0000\n"
+"PO-Revision-Date: 2026-11-13 09:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "%(sheet)s: %(item)s — %(issue)s"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid ""
+"%(sheet)s: %(product)s — %(what)s %(size)s mm, the niche «%(niche)s» takes "
+"%(usable)s mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid ""
+"%(sheet)s: part «%(part)s» %(size)s mm is longer than the niche «%(niche)s» "
+"(%(longest)s mm)"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "%(what)s by %(mm)s mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.mrp_production_form_td_measure_check
+msgid ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Check before cutting\"/>\n"
+"                    <strong>Check the design against the measurement before cutting:</strong>"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.view_order_form_td_mebli_measure
+msgid "<i class=\"fa fa-exclamation-triangle me-2\" title=\"Does not fit\"/>"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "<strong>Does not fit: </strong>"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure_niche__protrusion_mm
+msgid ""
+"A pipe, a duct or a ledge that takes depth off the niche along its wall."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__td_address
+msgid "Address"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "All appliances fit their niches."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__name
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Appliance"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure_appliance
+msgid "Appliance of the Customer"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__appliance_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Appliances of the Customer"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_sale_order__td_measure_issue_count
+msgid ""
+"Appliances of the measurement sheets of the order that do not fit their "
+"niche (AC-008)."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Book"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.crm_lead_view_form_td_measure_booking
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Book a Measurement"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__booking_id
+msgid "Booking"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure_booking
+msgid "Booking of a Measurement Visit"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__td_can_link
+msgid "Can Link the Order"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__issue
+msgid "Check"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__td_check
+msgid "Check Result"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Check against the Design"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields.selection,name:td_mebli_measure.selection__td_mebli_measure__state__checked
+msgid "Checked against the Design"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Close"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__company_id
+msgid "Company"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__create_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__create_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__create_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__create_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__create_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__create_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__create_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__create_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__customer
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__partner_id
+msgid "Customer"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__day
+msgid "Day"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__days
+msgid "Days"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__depth_mm
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__depth_mm
+msgid "Depth, mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__td_measure_problems
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_problems
+msgid "Design against the Measurement"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__floor_slope_mm
+msgid "Difference of the floor level along the wall."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_issue_count
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__issue_count
+msgid "Does not Fit"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields.selection,name:td_mebli_measure.selection__td_mebli_measure_appliance__td_check__no_fit
+msgid "Does not fit"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.view_order_form_td_mebli_measure
+msgid "Does not fit by the measurement:"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "Does not fit: %s"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:calendar.alarm,name:td_mebli_measure.alarm_mail_measure_1day
+msgid "Email - 1 Day"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__stop
+msgid "End"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__fits
+#: model:ir.model.fields.selection,name:td_mebli_measure.selection__td_mebli_measure_appliance__td_check__fits
+msgid "Fits"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__floor_slope_mm
+msgid "Floor Slope, mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure_slot
+msgid "Free Window of the Measurer"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__slot_ids
+msgid "Free Windows"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid ""
+"Free windows: the working hours of the company minus the meetings of the measurer in\n"
+"                    the calendar. The visit is a standard meeting of the opportunity; the customer gets the invitation and\n"
+"                    a reminder by e-mail a day before."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__date_from
+msgid "From"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__height_mm
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__height_mm
+msgid "Height, mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_has_error
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__room
+msgid "Kitchen, hall, bedroom: where the furniture stands."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__write_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__write_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__write_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__write_uid
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__write_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__write_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__write_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__write_date
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_crm_lead
+msgid "Lead"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure_booking__partner_id
+msgid ""
+"Linked partner (optional). Usually created when converting the lead. You can"
+" find a partner by its Name, TIN, Email or Internal Reference."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__measure_id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__measure_id
+msgid "Measure"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields.selection,name:td_mebli_measure.selection__td_mebli_measure__state__draft
+msgid "Measured"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_calendar_action
+#: model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_calendar_menu
+msgid "Measurement Calendar"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Measurement Sheet"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_action
+#: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__td_measure_ids
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_ids
+#: model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_list
+msgid "Measurement Sheets"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "Measurement booked: %(day)s %(when)s, %(who)s."
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "Measurement of the room: niches, appliances, utilities."
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "Measurement: %s"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__td_measure_count
+#: model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_count
+#: model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_root_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.crm_lead_view_form_td_measure_count
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.view_order_form_td_mebli_measure
+msgid "Measurements"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__measurer_id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__measurer_id
+#: model:res.groups,name:td_mebli_measure.group_td_mebli_measurer
+msgid "Measurer"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_my_calendar_action
+#: model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_my_calendar_menu
+msgid "My Calendar"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_my_action
+#: model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_my_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_search
+msgid "My Measurements"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__niche_id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__name
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Niche"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure_niche
+msgid "Niche of a Measurement Sheet"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__niche_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Niches and Sizes"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__no_slot_text
+msgid "No Windows"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid ""
+"No free windows in the chosen period — increase the number of days or choose"
+" another measurer"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid "No opportunity to book the measurement for."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields.selection,name:td_mebli_measure.selection__td_mebli_measure_appliance__td_check__unchecked
+msgid "Not checked"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "Not checked (no sizes)"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__name
+msgid "Number"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__lead_id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__lead_id
+msgid "Opportunity"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__order_id
+msgid "Order"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__td_phone
+msgid "Phone"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__photo_ids
+msgid "Photos"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__order_line_id
+msgid "Product in the Niche"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__protrusion_mm
+msgid "Protrusion, mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_booking_form
+msgid "Refresh Windows"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__room
+msgid "Room"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_sale_order__td_measure_problems
+msgid ""
+"Rules, no AI: every appliance against its niche; the product placed in a "
+"niche (width, height, depth minus the protrusion); the longest part of its "
+"specification against the niche. Shown before the parts go to cutting."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__sequence
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.constraint,message:td_mebli_measure.constraint_td_mebli_measure_niche_positive
+msgid "Sizes of a niche cannot be negative."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__start
+msgid "Start"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__state
+msgid "Status"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__td_can_link
+msgid ""
+"Technical: the order and the opportunity are chosen by sales users only."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:res.groups,comment:td_mebli_measure.group_td_mebli_measurer
+msgid ""
+"The user goes to the measurement visits: the booking wizard offers his free windows; he sees\n"
+"            only his own measurement sheets, the address and the phone of the customer, no prices of the orders."
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/wizard/booking.py:0
+msgid ""
+"The window %(day)s %(when)s of %(who)s is already taken: refresh the free "
+"windows and choose another one."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_search
+msgid "To Check"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__utilities
+msgid "Utilities"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "Utilities and Photos"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__wall_angle_deg
+msgid "Wall Angle, °"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__utilities
+msgid "Water, drain, gas, sockets: where they are and how high."
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,help:td_mebli_measure.field_td_mebli_measure__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__issue_text
+msgid "What does not Fit"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__width_mm
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__width_mm
+msgid "Width, mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__label
+msgid "Window"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "deeper"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "depth"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "fits"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "height"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "higher"
+msgstr ""
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+msgid "mm"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "no niche"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "wider"
+msgstr ""
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "width"
+msgstr ""

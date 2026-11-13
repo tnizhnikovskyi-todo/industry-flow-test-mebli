@@ -1,0 +1,407 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_notify
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:44+0000\n"
+"PO-Revision-Date: 2026-11-13 09:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_briefing
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\" class=\"td_briefing\">\n"
+"    <t t-set=\"data\" t-value=\"briefing or object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
+"    <!-- AC-125: nothing to report &#8212; one short line, no empty sections -->\n"
+"    <p t-if=\"data['nothing']\" class=\"td_briefing_nothing\"><strong>No deviations</strong></p>\n"
+"    <t t-else=\"\">\n"
+"        <t t-if=\"data['at_risk']\">\n"
+"            <p><strong>Orders at risk: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> d. · <t t-out=\"row['reason']\"/></li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['claims']\">\n"
+"            <p><strong>Overdue claims: <t t-out=\"len(data['claims'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['claims'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · <t t-out=\"row['days']\"/> d.</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['due_after_act_count'] or data['due_before_count']\">\n"
+"            <p><strong>Money to receive</strong></p>\n"
+"            <ul>\n"
+"                <li t-if=\"data['due_after_act_count']\">After the signed final act: <t t-out=\"data['due_after_act']\"/> (orders: <t t-out=\"data['due_after_act_count']\"/>)</li>\n"
+"                <li t-if=\"data['due_before_count']\">Before the installations of the next 7 days: <t t-out=\"data['due_before']\"/> (orders: <t t-out=\"data['due_before_count']\"/>)</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['stuck']\">\n"
+"            <p><strong>Stuck orders: <t t-out=\"len(data['stuck'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['stuck'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · <t t-out=\"row['days']\"/> d. without a move</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['overdue']\">\n"
+"            <p><strong>Overdue manufacturing orders: <t t-out=\"len(data['overdue'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['overdue'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['origin']\"/> · <t t-out=\"row['days']\"/> d. late</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['downtime']\">\n"
+"            <p><strong>Downtime of the sections yesterday</strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['downtime']\" t-as=\"row\"><t t-out=\"row['center']\"/> · <t t-out=\"row['reason']\"/> · <t t-out=\"row['hours']\"/> h</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"    </t>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_measure_booking
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello!</p>\n"
+"    <p>Our measurer <t t-out=\"object.user_id.name or ''\"/> comes to you\n"
+"        <strong t-out=\"format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>.</p>\n"
+"    <p t-if=\"object.location\">The address: <strong t-out=\"object.location\"/>.</p>\n"
+"    <p>Please prepare the plan of the room and the sizes of your appliances if you have them.</p>\n"
+"    <p>Best regards, <t t-out=\"object.user_id.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_new_date
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello, <t t-out=\"object.partner_id.name or ''\"/>!</p>\n"
+"    <p>The date of your order <strong t-out=\"object.name or ''\"/> has moved.\n"
+"        The new date: <strong t-out=\"format_date(object.td_forecast_date or object.commitment_date)\"/>.</p>\n"
+"    <p t-if=\"object.td_delay_reason == 'supplier'\">The reason: a supplier delivers a part of the order later than planned.</p>\n"
+"    <p>We apologize and will keep you informed. If the new date does not suit you, please answer this letter.</p>\n"
+"    <p>Best regards, <t t-out=\"object.user_id.name or object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_payment_reminder
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello, <t t-out=\"object.partner_id.name or ''\"/>!</p>\n"
+"    <p>The installation of your order <strong t-out=\"object.name or ''\"/> is coming. Under the payment terms the payment\n"
+"        before the installation is due: <strong t-out=\"format_amount(object.td_pay_missing, object.currency_id)\"/>.</p>\n"
+"    <p>Paid so far: <t t-out=\"format_amount(object.td_pay_received, object.currency_id)\"/>.</p>\n"
+"    <p>If you have already paid, please ignore this letter.</p>\n"
+"    <p>Best regards, <t t-out=\"object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_install_reminder
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello, <t t-out=\"object.sale_order_id.partner_id.name or ''\"/>!</p>\n"
+"    <p>Our crew comes tomorrow, <strong t-out=\"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>,\n"
+"        to install your order <strong t-out=\"object.sale_order_id.name or ''\"/>.</p>\n"
+"    <p>Please make sure the room is free and there is access to sockets and water.</p>\n"
+"    <p>Best regards, <t t-out=\"object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_install_date
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello, <t t-out=\"object.sale_order_id.partner_id.name or ''\"/>!</p>\n"
+"    <p>The installation of your order <strong t-out=\"object.sale_order_id.name or ''\"/> is planned on\n"
+"        <strong t-out=\"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>.</p>\n"
+"    <p t-if=\"object.sale_order_id.partner_shipping_id.contact_address\">The address:\n"
+"        <t t-out=\"object.sale_order_id.partner_shipping_id.contact_address\"/>.</p>\n"
+"    <p t-if=\"object.sale_order_id\">Amount of the order: <t t-out=\"format_amount(object.sale_order_id.amount_total, object.sale_order_id.currency_id)\"/>.</p>\n"
+"    <p>Best regards, <t t-out=\"object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_res_partner__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_mail_thread
+msgid "Email Thread"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.activity.type,name:td_mebli_notify.mail_activity_type_td_forecast_shift
+msgid "Forecast Date Shift"
+msgstr ""
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/forecast_activity.py:0
+msgid "Forecast date %(forecast)s, promised %(promised)s. %(reason)s"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.activity.type,summary:td_mebli_notify.mail_activity_type_td_forecast_shift
+msgid "Forecast later than promised"
+msgstr ""
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/forecast_activity.py:0
+msgid "Forecast later than promised by %s days"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.actions.server,name:td_mebli_notify.ir_cron_td_forecast_activity_ir_actions_server
+msgid "Furniture: activities on the forecast date shift"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_measure_booking
+msgid "Furniture: booking of the measurement"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_install_date
+msgid "Furniture: date of the installation"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_install_reminder
+msgid "Furniture: installation tomorrow"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.actions.server,name:td_mebli_notify.ir_cron_td_morning_briefing_ir_actions_server
+#: model:mail.template,name:td_mebli_notify.mail_template_td_briefing
+msgid "Furniture: morning briefing of the owner"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_new_date
+msgid "Furniture: new date of the order"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_payment_reminder
+msgid "Furniture: payment before the installation"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.actions.server,name:td_mebli_notify.ir_cron_td_customer_reminders_ir_actions_server
+msgid "Furniture: reminders to the customers"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__td_forecast_shift_done
+msgid "Handled Forecast Shift, days"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_res_partner__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_install_reminded_for
+msgid "Installation Reminder Sent for"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_install_reminder
+msgid "Installation of {{ object.sale_order_id.name }}: tomorrow"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_install_date
+msgid ""
+"Installation of {{ object.sale_order_id.name }}: {{ "
+"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz "
+"or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
+msgstr ""
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/forecast_activity.py:0
+msgid "Letter to the Customer"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_td_mebli_dashboard
+msgid "Manager Dashboard of the Furniture Factory"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_measure_booking
+msgid ""
+"Measurement: {{ format_datetime(object.start, tz=object.user_id.tz or "
+"'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_briefing
+msgid ""
+"Morning briefing {{ format_date(ctx.get('td_today') or "
+"datetime.date.today()) }}"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_new_date
+msgid "Order {{ object.name }}: new date"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_payment_reminder
+msgid "Order {{ object.name }}: payment before the installation"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_payment_reminded_for
+msgid "Payment Reminder Sent for"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/reminder.py:0
+msgid "Remind the customer of the payment before the installation by phone."
+msgstr ""
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/reminder.py:0
+#: code:addons/td_mebli_notify/tests/test_g1_notify.py:0
+msgid "Reminder not sent: no email"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_install_reminder
+msgid "Sent by the daily reminder the day before the visit"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_payment_reminder
+msgid ""
+"Sent by the daily reminder when the visit is close and the payment is "
+"missing"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_measure_booking
+msgid "Sent by the salesperson after the booking of the measurement visit"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_install_date
+msgid "Sent by the salesperson when the date of the installation is set"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_new_date
+msgid "Sent by the salesperson when the date of the order moves"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_briefing
+msgid ""
+"Sent every morning to each owner (group of the dashboard) personally, "
+"figures of his companies"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model,name:td_mebli_notify.model_project_task
+msgid "Task"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model_terms:ir.ui.view,arch_db:td_mebli_notify.view_order_form_td_notify
+msgid "Tell the Customer the New Date"
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_payment_reminded_for
+msgid ""
+"The date of the visit for which the payment before the installation was "
+"reminded (once per visit date)."
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_install_reminded_for
+msgid ""
+"The date of the visit the customer was reminded of (once per visit date; a "
+"moved visit is reminded again)."
+msgstr ""
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/forecast_activity.py:0
+msgid "The forecast date is back within the promised date."
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_sale_order__td_forecast_shift_done
+msgid ""
+"The shift of the forecast (days) for which the salesperson already got the "
+"activity; reset when the forecast comes back within the promised date."
+msgstr ""
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"            #tags Set tags on the task\n"
+"            @user Assign the task to a user\n"
+"            ! Set the task a medium priority\n"
+"            !! Set the task a high priority\n"
+"            !!! Set the task a urgent priority\n"
+"\n"
+"            Make sure to use the right format and order e.g. Improve the configuration screen #feature #v16 @Mitchell !"
+msgstr ""

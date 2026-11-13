@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AC-035: «Installation by» in «Other Info» (only with several companies), smart buttons in both orders -->
+    <record id="view_order_form_td_mebli_multico" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.multico</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_td_view_install_orders" type="object" class="oe_stat_button" icon="fa-wrench"
+                        invisible="td_install_order_count == 0" groups="base.group_multi_company">
+                    <field name="td_install_order_count" widget="statinfo" string="Installation (FOP)"/>
+                </button>
+                <button name="action_td_view_parent_order" type="object" class="oe_stat_button" icon="fa-link"
+                        invisible="not td_parent_order_id" groups="base.group_multi_company">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Main Order</span>
+                        <field name="td_parent_order_name" class="o_stat_value"/>
+                    </div>
+                </button>
+            </div>
+            <xpath expr="//page[@name='other_information']//field[@name='company_id']" position="after">
+                <field name="td_parent_order_id" invisible="1"/>
+                <field name="td_install_company_id" groups="base.group_multi_company"
+                       readonly="state not in ('draft', 'sent')" options="{'no_create': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

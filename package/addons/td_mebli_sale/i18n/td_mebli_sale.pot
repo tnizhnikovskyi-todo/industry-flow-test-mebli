@@ -1,10 +1,13 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_sale
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:08+0000\n"
-"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"POT-Creation-Date: 2026-11-13 09:44+0000\n"
+"PO-Revision-Date: 2026-11-13 09:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -66,6 +69,20 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
+msgid ""
+"):\n"
+"                    only an additional order (a new line of the order, a new manufacturing order) is possible."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid ""
+",\n"
+"                                        the promised date"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid ". The Customer pays by the schedule:"
 msgstr ""
@@ -103,8 +120,28 @@ msgid "5. Warranty"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:mail.template,body_html:td_mebli_sale.mail_template_td_change_sign
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <t t-set=\"change\" t-value=\"object.td_change_ids.filtered(lambda c: c.state == 'done' and c.td_sign_requested).sorted('version')[-1:]\"/>\n"
+"    <p>Hello, <t t-out=\"object.partner_id.name or ''\"/>!</p>\n"
+"    <p t-if=\"change\">The change <t t-out=\"change.version\"/> of your order <strong t-out=\"object.name or ''\"/>:\n"
+"        <t t-out=\"change.note or ''\"/>. The price: <strong t-out=\"format_amount(change.amount_after, object.currency_id)\"/>,\n"
+"        the promised date: <strong t-out=\"format_date(change.date_after) if change.date_after else ''\"/>.</p>\n"
+"    <p>Please check and sign it: <a t-att-href=\"object.get_base_url() + object.get_portal_url(anchor='td_changes')\">open the order</a>.</p>\n"
+"    <p>Best regards, <t t-out=\"object.user_id.name or object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
 msgid "<i class=\"fa fa-clock-o me-1\"/>to launch:"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "<i class=\"fa fa-exclamation-triangle me-1\" title=\"Shift\"/>+"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -165,6 +202,19 @@ msgid "<strong>Total</strong>"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_is_stuck
+msgid ""
+"A confirmed order whose stage did not change for longer than «Stuck orders, "
+"days without a move» of its company (VP-10)."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__kind__reorder
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__kind__reorder
+msgid "Additional Order"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__account_payment_term_line__td_milestone__act
 msgid "After the act"
 msgstr ""
@@ -207,14 +257,31 @@ msgid "Build specification"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "By signing, you accept the change «"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
 msgid "Cancel"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__kind__change
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__kind__change
+msgid "Change"
 msgstr ""
 
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/order_change.py:0
 msgid "Change %(version)s fixed (%(reason)s): %(note)s"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/order_change.py:0
+msgid "Change %(version)s signed by the customer: %(name)s"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -234,15 +301,21 @@ msgid "Changes"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Changes of the order"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Close"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__company_id
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__company
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__company
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__company
 msgid "Company"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model,name:td_mebli_sale.model_res_config_settings
-msgid "Config Settings"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -266,16 +339,8 @@ msgid "Contract Work Agreement"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__res_config_settings__td_mebli_contract_mode__work
-msgid "Contract work"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,help:td_mebli_sale.field_res_config_settings__td_mebli_contract_mode
-msgid ""
-"Contract work: the furniture is made to the measurements of the customer "
-"(the usual case). Sale contract: ready-made furniture from the catalogue. "
-"Both texts are templates to be checked by a lawyer."
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__purchase_price
+msgid "Cost"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -315,14 +380,44 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__td_partner_id
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__customer
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__customer
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__customer
 msgid "Customer"
 msgstr ""
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_dates.py:0
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_sale_order_ids
+msgid "Customer Orders"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__distributor
+msgid "Cutting at the Distributor"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
+msgid "Date at Risk"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Delay by History"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_is_late
+msgid "Delayed"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.actions.act_window,name:td_mebli_sale.purchase_order_line_td_delayed_action
+#: model:ir.ui.menu,name:td_mebli_sale.purchase_order_line_td_delayed_menu_purchase
+#: model:ir.ui.menu,name:td_mebli_sale.purchase_order_line_td_delayed_menu_stock
+msgid "Delayed Deliveries"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -341,8 +436,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
@@ -383,6 +479,16 @@ msgid "Furniture Milestone"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:mail.template,name:td_mebli_sale.mail_template_td_change_sign
+msgid "Furniture: change of the order for signature"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.actions.server,name:td_mebli_sale.ir_cron_td_recompute_forecast_ir_actions_server
+msgid "Furniture: forecast dates of the orders"
+msgstr ""
+
+#. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid "Generate the specification first."
@@ -397,8 +503,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_config_settings__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
@@ -414,6 +521,18 @@ msgid "In production"
 msgstr ""
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/controllers/portal.py:0
+msgid "Invalid order."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/controllers/portal.py:0
+msgid "Invalid signature data."
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "It is moved by the purchase:"
 msgstr ""
@@ -421,6 +540,12 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_late_item
 msgid "Item that Moves the Date"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__kind
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__kind
+msgid "Kind"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -433,6 +558,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_date
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_late_days
+msgid "Late, days"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -458,9 +588,17 @@ msgid "Manufacturing orders of %s"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin_percent
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin_percent
+msgid "Margin (%)"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -475,6 +613,16 @@ msgid "Materials"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
+msgid "My Orders"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_need_date
+msgid "Needed by"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "No"
 msgstr ""
@@ -486,8 +634,13 @@ msgstr ""
 
 #. module: td_mebli_sale
 #. odoo-python
-#: code:addons/td_mebli_sale/models/sale_order.py:0
-msgid "Only a manufacturing user can start the production of an order."
+#: code:addons/td_mebli_sale/models/order_change.py:0
+msgid "Only a fixed change can be sent for signature."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
+msgid "Open the customer order"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -500,6 +653,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__order_id
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Order"
 msgstr ""
@@ -534,12 +688,18 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_stage
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
 msgid "Order Stage"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Order to launch, h"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:mail.template,subject:td_mebli_sale.mail_template_td_change_sign
+msgid "Order {{ object.name }}: change for your signature"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -578,6 +738,11 @@ msgid "Prepayment"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Price"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__amount_after
 msgid "Price After"
 msgstr ""
@@ -593,9 +758,13 @@ msgid "Price Change"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_config_settings__td_mebli_contract_mode
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.res_config_settings_view_form_td_mebli_sale
 msgid "Printed Contract"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_report_td_mebli_sale_report_contract
+msgid "Printed contract of the order"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -622,6 +791,11 @@ msgid "Production Started"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Promised"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__date_after
 msgid "Promised After"
 msgstr ""
@@ -638,8 +812,14 @@ msgid "Promised Date"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Purchase"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_purchase_order
+msgid "Purchase Order"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -678,6 +858,15 @@ msgid "Quotation"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_delay_reason
+msgid ""
+"Read only (AC-066): «Customer» when the last fixed change of the order was "
+"asked by the customer, «Cutting at the Distributor» when the parts cut by "
+"the distributor come back last, «Supplier» when a purchased item arrives too"
+" late for the promised date, «Company» when the workshop is late."
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_date_ready
 msgid ""
 "Read only. The expected delivery date of the line (Purchase), plus the "
@@ -705,6 +894,13 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_late_days
+msgid ""
+"Read only: the expected arrival (supplier date + the average delay of the "
+"supplier) minus the date the item is needed."
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid ""
 "Read only: the supplier date is kept in the purchase order. The forecast date\n"
@@ -712,10 +908,11 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_delay_reason
+#: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_need_date
 msgid ""
-"Read only: «Supplier» when a purchased item arrives too late for the "
-"promised date, «Company» when the workshop is late."
+"Read only: when the manufacturing order that consumes the item plans to "
+"start (the date of its component move), else the promised date of the sales "
+"order."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -752,11 +949,6 @@ msgid "Sale Contract"
 msgstr ""
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__res_config_settings__td_mebli_contract_mode__sale
-msgid "Sale contract"
-msgstr ""
-
-#. module: td_mebli_sale
 #: model:ir.model,name:td_mebli_sale.model_sale_order
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_order_id
 msgid "Sales Order"
@@ -769,8 +961,37 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/order_change.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
+msgid "Send the Change for Signature"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:mail.template,description:td_mebli_sale.mail_template_td_change_sign
+msgid ""
+"Sent by the salesperson: the customer signs the fixed change in the portal"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__td_sign_requested
+msgid "Sent for Signature"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__cut_version
+msgid "Sent to Cutting, Version"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__sent
 msgid "Sent to customer"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/payment_term.py:0
+msgid "Set the contract mode in the company settings (Sales → Settings)"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -780,6 +1001,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_reason
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
 msgid "Shift Reason"
 msgstr ""
 
@@ -790,8 +1012,55 @@ msgid "Shift, days"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Sign"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Sign the change"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/order_change.py:0
+msgid "Signature is missing."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__signature
+msgid "Signature of the Customer"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "Signature: ____________________"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "Signed"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__signed_by
+msgid "Signed by"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__state__signed
+msgid "Signed by the Customer"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__signed_on
+msgid "Signed on"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/order_change.py:0
+msgid "Signing a change by the customer is not on in this database."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -802,6 +1071,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Specification"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_stage_date
+msgid "Stage Changed"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -816,14 +1090,22 @@ msgid "Stock Rule"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_is_stuck
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
+msgid "Stuck"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__supplier
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__supplier
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__supplier
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier Date"
 msgstr ""
@@ -913,9 +1195,29 @@ msgid "The price of the contract is"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_sale_order_ids
+msgid ""
+"The sales orders this purchased item is for (standard links of the "
+"purchase)."
+msgstr ""
+
+#. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid "The specification can be rebuilt only in a quotation."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
+msgid "The specification has been sent to cutting (version"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/order_change.py:0
+msgid ""
+"The specification has been sent to cutting (version %s) — changes only by an"
+" additional order"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -924,6 +1226,14 @@ msgstr ""
 msgid ""
 "The stage follows the production: only moving a waiting order to «In "
 "production» is possible."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+msgid ""
+"The stage is computed from the documents; only the production manager "
+"launches production"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -966,6 +1276,12 @@ msgstr ""
 
 #. module: td_mebli_sale
 #. odoo-python
+#: code:addons/td_mebli_sale/models/order_change.py:0
+msgid "This change is not waiting for the signature of the customer."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order.py:0
 msgid "This order has nothing to start: it is not waiting for launch."
 msgstr ""
@@ -984,6 +1300,7 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Total"
 msgstr ""
@@ -995,6 +1312,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__version
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "Version"
 msgstr ""
 
@@ -1007,6 +1325,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__note
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__note
 msgid "What Changes"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "What changes"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -1025,6 +1348,11 @@ msgid "Work started"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
+msgid "d. ·"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "dated"
 msgstr ""
@@ -1040,6 +1368,11 @@ msgid "h"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+msgid "»: the price"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
 msgid "Останні 30 днів"
 msgstr ""
@@ -1052,15 +1385,4 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "— the Seller"
-msgstr ""
-
-#. module: td_mebli_sale
-#. odoo-python
-#: code:addons/td_mebli_sale/models/payment_term.py:0
-msgid "Set the contract mode in the company settings (Sales → Settings)"
-msgstr ""
-
-#. module: td_mebli_sale
-#: model:ir.model,name:td_mebli_sale.model_report_td_mebli_sale_report_contract
-msgid "Printed contract of the order"
 msgstr ""

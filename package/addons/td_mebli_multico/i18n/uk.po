@@ -1,0 +1,119 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_multico
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:44+0000\n"
+"PO-Revision-Date: 2026-11-13 09:44+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_multico
+#: model_terms:ir.ui.view,arch_db:td_mebli_multico.view_order_form_td_mebli_multico
+msgid "<span class=\"o_stat_text\">Main Order</span>"
+msgstr "<span class=\"o_stat_text\">Основне замовлення</span>"
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+msgid ""
+"Add the installation service line to the order: it goes to the order of %s."
+msgstr ""
+"Додайте в замовлення рядок послуги монтажу: він перейде в замовлення %s."
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,help:td_mebli_multico.field_sale_order__td_install_company_id
+msgid ""
+"Another legal entity of the group does the installation: on confirmation the"
+" installation line goes to a separate service order of that company (its own"
+" task of the installation). Empty — the seller installs."
+msgstr ""
+"Монтаж виконує інша юрособа групи: при підтвердженні рядок монтажу переходить в окреме замовлення-послугу цієї компанії (з її задачею монтажу). Порожньо — монтує продавець."
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__display_name
+msgid "Display Name"
+msgstr "Назва для відображення"
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_mebli_multico
+#: model_terms:ir.ui.view,arch_db:td_mebli_multico.view_order_form_td_mebli_multico
+msgid "Installation (FOP)"
+msgstr "Монтаж (ФОП)"
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_install_order_ids
+msgid "Installation Orders"
+msgstr "Замовлення монтажу"
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_install_order_count
+msgid "Installation Orders Count"
+msgstr "Кількість замовлень монтажу"
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_install_company_id
+msgid "Installation by"
+msgstr "Монтаж виконує"
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+msgid "Installation by %(company)s: order %(order)s."
+msgstr "Монтаж виконує %(company)s: замовлення %(order)s."
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_parent_order_id
+msgid "Main Order"
+msgstr "Основне замовлення"
+
+#. module: td_mebli_multico
+#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_parent_order_name
+msgid "Main Order No"
+msgstr "Номер основного замовлення"
+
+#. module: td_mebli_multico
+#: model:ir.model,name:td_mebli_multico.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+msgid "The installing company must be another legal entity than the seller."
+msgstr "Компанія монтажу має бути іншою юрособою, ніж продавець."
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+msgid "The main order %s is cancelled: decide on this installation order."
+msgstr ""
+"Основне замовлення %s скасовано: вирішіть долю цього замовлення монтажу."
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+msgid "The main order is cancelled"
+msgstr "Основне замовлення скасовано"
+
+#. module: td_mebli_multico
+#. odoo-python
+#: code:addons/td_mebli_multico/models/sale_order.py:0
+msgid ""
+"You do not have access to the company %s — the installation from it is "
+"arranged by a user of that company"
+msgstr ""
+"У вас немає доступу до компанії %s — монтаж від неї оформлює користувач цієї компанії"

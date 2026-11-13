@@ -1,5 +1,7 @@
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
+
+KINDS = [('change', 'Change'), ('reorder', 'Additional Order')]
 
 
 class TdMebliOrderChange(models.Model):
@@ -10,11 +12,22 @@ class TdMebliOrderChange(models.Model):
     _order = 'order_id, version'
 
     order_id = fields.Many2one('sale.order', string='Order', required=True, ondelete='cascade', index=True)
+    # AC-036 (tr/security.md §3): the company of the order and the global multi-company rule
+    company_id = fields.Many2one(related='order_id.company_id', store=True, index=True, string='Company')
     version = fields.Integer(string='Version', required=True, readonly=True)
+    # AC-119: after the parts are sent to cutting only an additional order (a new line / manufacturing order) is possible
+    kind = fields.Selection(KINDS, string='Kind', required=True, default='change', readonly=True)
     reason = fields.Selection([('customer', 'Customer'), ('company', 'Company'), ('supplier', 'Supplier')],
                               string='Reason', required=True)
     note = fields.Char(string='What Changes', required=True)
-    state = fields.Selection([('open', 'Being Changed'), ('done', 'Fixed')], string='Status', default='open', readonly=True)
+    state = fields.Selection([('open', 'Being Changed'), ('done', 'Fixed'), ('signed', 'Signed by the Customer')],
+                             string='Status', default='open', readonly=True)
+    # AC-120 (box B, group_feature_change_sign): the customer signs the fixed change in the portal of the order
+    td_sign_requested = fields.Boolean(string='Sent for Signature', readonly=True, copy=False)
+    signature = fields.Image(string='Signature of the Customer', copy=False, attachment=True, max_width=1024,
+                             max_height=1024)
+    signed_by = fields.Char(string='Signed by', copy=False, readonly=True)
+    signed_on = fields.Datetime(string='Signed on', copy=False, readonly=True)
     currency_id = fields.Many2one(related='order_id.currency_id')
     amount_before = fields.Monetary(string='Price Before', readonly=True)
     amount_after = fields.Monetary(string='Price After', readonly=True)
@@ -28,7 +41,7 @@ class TdMebliOrderChange(models.Model):
     @api.depends('date_before', 'date_after', 'amount_before', 'amount_after', 'state')
     def _compute_shift(self):
         for change in self:
-            done = change.state == 'done'
+            done = change.state in ('done', 'signed')
             change.shift_days = (change.date_after - change.date_before).days \
                 if done and change.date_before and change.date_after else 0
             change.amount_delta = change.amount_after - change.amount_before if done else 0.0
@@ -47,6 +60,38 @@ class TdMebliOrderChange(models.Model):
                 reason=dict(self._fields['reason']._description_selection(self.env))[change.reason], note=change.note))
         return True
 
+    def action_td_send_sign(self):
+        """AC-120: the letter with the link to the portal of the order, where the customer signs the fixed change."""
+        self.ensure_one()
+        if not self.env.user.has_group('td_mebli_base.group_feature_change_sign'):
+            raise AccessError(self.env._("Signing a change by the customer is not on in this database."))
+        if self.state != 'done':
+            raise UserError(self.env._("Only a fixed change can be sent for signature."))
+        self.td_sign_requested = True
+        order = self.order_id
+        order._portal_ensure_token()
+        template = self.env.ref('td_mebli_sale.mail_template_td_change_sign')
+        return {
+            'type': 'ir.actions.act_window', 'res_model': 'mail.compose.message', 'view_mode': 'form', 'target': 'new',
+            'views': [(False, 'form')], 'name': self.env._("Send the Change for Signature"),
+            'context': {'default_model': 'sale.order', 'default_res_ids': order.ids, 'default_template_id': template.id,
+                        'default_composition_mode': 'comment', 'default_email_layout_xmlid': 'mail.mail_notification_light',
+                        'td_change_id': self.id, 'mark_so_as_sent': False},
+        }
+
+    def _td_sign(self, name, signature):
+        """The signature of the customer from the portal (the caller checks the access token of the order)."""
+        self.ensure_one()
+        if self.state != 'done' or not self.td_sign_requested:
+            raise UserError(self.env._("This change is not waiting for the signature of the customer."))
+        if not signature:
+            raise UserError(self.env._("Signature is missing."))
+        self.write({'signature': signature, 'signed_by': name, 'signed_on': fields.Datetime.now(), 'state': 'signed'})
+        self.order_id.message_post(body=self.env._("Change %(version)s signed by the customer: %(name)s",
+                                                   version=self.version, name=name or ''),
+                                   subtype_xmlid='mail.mt_note')
+        return True
+
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
@@ -59,10 +104,18 @@ class SaleOrder(models.Model):
         for order in self:
             order.td_change_open = any(c.state == 'open' for c in order.td_change_ids)
 
+    def _td_cut_version(self):
+        """AC-119: the highest version of the order specifications already sent to cutting (0 — none sent):
+        mrp.bom.td_cut_version of td_mebli_mrp, set when the parts go to cutting or to the distributor."""
+        self.ensure_one()
+        return max(self.sudo().order_line.td_bom_id.mapped('td_cut_version') or [0])
+
     def action_td_open_change(self):
         self.ensure_one()
+        cut = self._td_cut_version()
         return {'type': 'ir.actions.act_window', 'res_model': 'td.mebli.order.change.wizard', 'view_mode': 'form',
-                'target': 'new', 'name': self.env._("Create a Change"), 'context': {'default_order_id': self.id}}
+                'target': 'new', 'name': self.env._("Create a Change"),
+                'context': {'default_order_id': self.id, 'default_kind': 'reorder' if cut else 'change'}}
 
     def action_td_fix_change(self):
         self.td_change_ids.action_fix()
@@ -77,14 +130,26 @@ class TdMebliOrderChangeWizard(models.TransientModel):
     reason = fields.Selection([('customer', 'Customer'), ('company', 'Company'), ('supplier', 'Supplier')],
                               string='Reason', required=True, default='customer')
     note = fields.Char(string='What Changes', required=True)
+    kind = fields.Selection(KINDS, string='Kind', required=True, default='change')
+    cut_version = fields.Integer(string='Sent to Cutting, Version', compute='_compute_cut_version')
+
+    @api.depends('order_id')
+    def _compute_cut_version(self):
+        for wizard in self:
+            wizard.cut_version = wizard.order_id._td_cut_version() if wizard.order_id else 0
 
     def action_create(self):
         self.ensure_one()
         order = self.order_id
         if order.td_change_open:
             raise UserError(self.env._("The previous change of this order is not fixed yet."))
+        cut = order._td_cut_version()
+        if cut and self.kind != 'reorder':
+            # AC-119 → the message of AC-052
+            raise UserError(self.env._("The specification has been sent to cutting (version %s) — changes only by an "
+                                       "additional order", cut))
         Change = self.env['td.mebli.order.change']
         amount, date = Change._td_snapshot(order)
         Change.create({'order_id': order.id, 'version': len(order.td_change_ids) + 2, 'reason': self.reason,
-                       'note': self.note, 'amount_before': amount, 'date_before': date})
+                       'note': self.note, 'kind': self.kind, 'amount_before': amount, 'date_before': date})
         return True

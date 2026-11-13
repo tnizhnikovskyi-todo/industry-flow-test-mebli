@@ -25,6 +25,15 @@ class TdMebliMeasureBooking(models.TransientModel):
     date_from = fields.Date(string='From', required=True, default=lambda self: fields.Date.context_today(self) + timedelta(days=1))
     days = fields.Integer(string='Days', default=5)
     slot_ids = fields.One2many('td.mebli.measure.slot', 'booking_id', string='Free Windows')
+    no_slot_text = fields.Char(string='No Windows', compute='_compute_no_slot_text')
+
+    @api.depends('slot_ids')
+    @api.depends_context('lang')
+    def _compute_no_slot_text(self):
+        """AC-003: the calendar of the measurer is busy for the whole period — say so; nothing can be booked."""
+        for booking in self:
+            booking.no_slot_text = False if booking.slot_ids else self.env._(
+                "No free windows in the chosen period — increase the number of days or choose another measurer")
 
     @api.model
     def _td_default_measurer(self):

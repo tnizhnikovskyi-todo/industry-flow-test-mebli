@@ -20,7 +20,10 @@
                         <field name="days"/>
                     </group>
                 </group>
-                <field name="slot_ids" class="td_measure_slots">
+                <div class="alert alert-warning td_no_slots" role="alert" invisible="slot_ids">
+                    <field name="no_slot_text"/>
+                </div>
+                <field name="slot_ids" class="td_measure_slots" invisible="not slot_ids">
                     <list create="0" delete="0" editable="bottom">
                         <field name="day" readonly="1"/>
                         <field name="label" readonly="1"/>

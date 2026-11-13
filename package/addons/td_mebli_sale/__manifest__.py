@@ -1,14 +1,17 @@
 {
     'name': 'ToDo Mebli: configurator, price and planned cost',
     'summary': 'Furniture dimensions in the sales configurator, size-based price, order BoM and planned margin',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',
-    'depends': ['td_mebli_base', 'td_mebli_mrp', 'sale_mrp', 'sale_margin', 'sale_purchase_stock', 'purchase_mrp'],
+    'depends': ['td_mebli_base', 'td_mebli_mrp', 'sale_mrp', 'sale_margin', 'sale_purchase_stock', 'purchase_mrp', 'portal'],
     'data': [
         'security/ir.model.access.csv',
         'security/purchase_security.xml',
+        'security/td_mebli_sale_security.xml',
+        'data/mail_template_data.xml',
+        'data/ir_cron_data.xml',
         'views/sale_order_views.xml',
         'views/mrp_bom_views.xml',
         'views/order_cost_report_views.xml',
@@ -17,6 +20,7 @@
         'views/payment_term_views.xml',
         'report/contract_report.xml',
         'views/design_visual_views.xml',
+        'views/delayed_deliveries_views.xml',
     ],
     'assets': {
         'web.assets_tests': [

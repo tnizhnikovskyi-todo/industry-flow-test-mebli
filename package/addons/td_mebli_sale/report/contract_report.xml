@@ -22,8 +22,9 @@
             <t t-set="address">
                 <div t-field="doc.partner_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
             </t>
-            <div class="page td_report_contract">
-                <p class="text-end small text-danger td_lawyer_mark"><strong>Template to be checked by a lawyer (No 17)</strong></p>
+            <div class="page td_report_contract td_mebli_report">
+                <!-- AC-033: the mark goes away when the company says «Texts checked by a lawyer» (td_legal_checked) -->
+                <p t-if="not company.td_legal_checked" class="text-end small text-danger td_lawyer_mark"><strong>Template to be checked by a lawyer (No 17)</strong></p>
                 <h2 class="text-center">
                     <span t-if="mode == 'sale'">Sale Contract</span>
                     <span t-else="">Contract Work Agreement</span>

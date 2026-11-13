@@ -145,11 +145,12 @@
             <kanban default_group_by="td_stage" group_create="false" quick_create="false"
                     class="o_kanban_small_column">
                 <field name="currency_id"/>
+                <field name="td_delay_days"/>
                 <field name="td_image"/>
                 <field name="td_launch_date"/>
                 <field name="state"/>
                 <templates>
-                    <t t-name="card">
+                    <t t-name="card" t-attf-class="{{ record.td_delay_days.raw_value > 0 ? 'border-start border-4 border-danger bg-danger-subtle' : '' }}">
                         <div class="d-flex gap-2">
                             <field name="td_image" widget="image" options="{'size': [56, 56]}" class="flex-shrink-0 rounded"/>
                             <div class="flex-grow-1 text-truncate">
@@ -161,6 +162,11 @@
                         <div class="d-flex align-items-baseline mt-2">
                             <field name="amount_total" widget="monetary" class="fw-bolder"/>
                             <field name="margin_percent" widget="percentage" class="ms-auto text-success"/>
+                        </div>
+                        <!-- AC-066: the shift of the forecast and its reason -->
+                        <div t-if="record.td_delay_days.raw_value > 0" class="small text-danger fw-bold td_card_delay">
+                            <i class="fa fa-exclamation-triangle me-1" title="Shift"/>+<field name="td_delay_days"/> d. ·
+                            <field name="td_delay_reason"/>
                         </div>
                         <footer class="align-items-center">
                             <field name="user_id" widget="many2one_avatar_user"/>
@@ -175,13 +181,57 @@
         </field>
     </record>
 
+    <!-- AC-066: the list of the board — red rows, the shift and its reason; grouped by the reason it gives KPI 2 -->
+    <record id="view_order_board_list_td_mebli" model="ir.ui.view">
+        <field name="name">sale.order.board.list.td.mebli</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <list create="0" decoration-danger="td_delay_days &gt; 0">
+                <field name="name" string="Order"/>
+                <field name="partner_id"/>
+                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="td_stage"/>
+                <field name="commitment_date" widget="date"/>
+                <field name="td_forecast_date"/>
+                <field name="td_delay_days" sum="Total"/>
+                <field name="td_delay_reason"/>
+                <field name="td_stage_date" optional="hide"/>
+                <field name="amount_total" widget="monetary" sum="Total" optional="show"/>
+                <field name="currency_id" column_invisible="True"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_order_board_search_td_mebli" model="ir.ui.view">
+        <field name="name">sale.order.board.search.td.mebli</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="user_id"/>
+                <filter name="td_at_risk" string="Date at Risk" domain="[('td_delay_days', '&gt;', 0)]"/>
+                <!-- AC-067: days without a move — the parameter of the company (VP-10), read at the time of the search -->
+                <filter name="td_stuck" string="Stuck" domain="[('td_is_stuck', '=', True)]"/>
+                <separator/>
+                <filter name="my" string="My Orders" domain="[('user_id', '=', uid)]"/>
+                <group>
+                    <filter name="group_td_delay_reason" string="Shift Reason" context="{'group_by': 'td_delay_reason'}"/>
+                    <filter name="group_td_stage" string="Order Stage" context="{'group_by': 'td_stage'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
     <record id="action_orders_board_td_mebli" model="ir.actions.act_window">
         <field name="name">Order Board</field>
         <field name="res_model">sale.order</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="domain">[('state', '!=', 'cancel')]</field>
+        <field name="search_view_id" ref="view_order_board_search_td_mebli"/>
         <field name="view_ids" eval="[(5, 0, 0), (0, 0, {'view_mode': 'kanban', 'view_id': ref('view_order_kanban_td_mebli')}),
-                                      (0, 0, {'view_mode': 'list'}), (0, 0, {'view_mode': 'form'})]"/>
+                                      (0, 0, {'view_mode': 'list', 'view_id': ref('view_order_board_list_td_mebli')}),
+                                      (0, 0, {'view_mode': 'form'})]"/>
     </record>
 
     <record id="view_order_launch_list_td_mebli" model="ir.ui.view">

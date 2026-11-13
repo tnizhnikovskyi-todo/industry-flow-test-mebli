@@ -1,5 +1,10 @@
+from datetime import timedelta
+
 from odoo import api, fields, models
+from odoo.fields import Domain
 from odoo.exceptions import UserError
+
+from .sale_order_line import MARGIN_GROUPS
 
 
 class SaleOrder(models.Model):
@@ -13,6 +18,15 @@ class SaleOrder(models.Model):
          ('progress', 'In production'), ('done', 'Made')],
         string='Order Stage', compute='_compute_td_stage', inverse='_inverse_td_stage', store=True, readonly=False,
         group_expand='_read_group_td_stage')
+    # AC-067: the last time the stage of the board changed (kept by the computation of the stage, not entered)
+    td_stage_date = fields.Datetime(string='Stage Changed', readonly=True, copy=False, index=True,
+                                    default=fields.Datetime.now)
+    td_is_stuck = fields.Boolean(string='Stuck', compute='_compute_td_is_stuck', search='_search_td_is_stuck',
+                                 help="A confirmed order whose stage did not change for longer than «Stuck orders, days "
+                                      "without a move» of its company (VP-10).")
+    # AC-018: the standard margin of sale_margin — the same groups as the planned cost
+    margin = fields.Monetary(groups=MARGIN_GROUPS)
+    margin_percent = fields.Float(groups=MARGIN_GROUPS)
     td_image = fields.Image(string='Product Image', compute='_compute_td_image', max_width=256, max_height=256)
     # position 6: the visual of the designer goes into the standard quotation PDF (sale.report_saleorder_document)
     td_design_image = fields.Image(string='Design Visual', max_width=1600, max_height=1600, copy=False,
@@ -46,8 +60,10 @@ class SaleOrder(models.Model):
 
         Only a manufacturing user may start the work, with his own rights (no sudo): a salesperson gets an error and the
         button «Start» stays in the manufacturing order."""
+        # AC-064: the text of SPEC
+        message = self.env._("The stage is computed from the documents; only the production manager launches production")
         if not (self.env.su or self.env.user.has_group('mrp.group_mrp_user')):
-            raise UserError(self.env._("Only a manufacturing user can start the production of an order."))
+            raise UserError(message)
         for order in self:
             if order.td_stage != 'progress':
                 raise UserError(self.env._("The stage follows the production: only moving a waiting order to «In production» is possible."))
@@ -60,6 +76,47 @@ class SaleOrder(models.Model):
                 first = production.workorder_ids.filtered(lambda w: w.state in ('ready', 'blocked'))[:1]
                 if first:
                     first.button_start()
+
+    def _write_multi(self, vals_list):
+        """AC-067: «Stage Changed» moves when the stored stage really changes (the stage is computed, so the low-level
+        write of the computed value is the one place that sees the old and the new stage after every override)."""
+        if any('td_stage' in vals for vals in vals_list):
+            self.env.cr.execute("SELECT id, td_stage FROM sale_order WHERE id IN %s", [tuple(self.ids)])
+            before = dict(self.env.cr.fetchall())
+            now = fields.Datetime.now()
+            vals_list = [dict(vals, td_stage_date=now)
+                         if 'td_stage' in vals and 'td_stage_date' not in vals and before.get(order.id) != vals['td_stage']
+                         else vals for order, vals in zip(self, vals_list)]
+            super()._write_multi(vals_list)
+            self.invalidate_recordset(['td_stage_date'])
+            return
+        super()._write_multi(vals_list)
+
+    @api.depends_context('uid')
+    def _compute_td_is_stuck(self):
+        stuck = self.search([('id', 'in', [o.id for o in self if isinstance(o.id, int)]), ('td_is_stuck', '=', True)])
+        for order in self:
+            order.td_is_stuck = order in stuck
+
+    @api.model
+    def _td_stuck_domain(self):
+        """AC-067: per company of the reader, the number of days of the company (VP-10) — read at the time of the
+        search, so a change of the parameter applies at once."""
+        now = fields.Datetime.now()
+        stages = [key for key, _label in self._fields['td_stage'].selection if key not in ('quote', 'sent', 'closed')]
+        by_company = Domain.OR(
+            Domain('company_id', '=', company.id)
+            & Domain('td_stage_date', '<', now - timedelta(days=company.td_stuck_days or 5))
+            for company in self.env.companies)
+        return Domain('state', '=', 'sale') & Domain('td_stage', 'in', stages) & by_company
+
+    def _search_td_is_stuck(self, operator, value):
+        if operator != 'in':
+            return NotImplemented
+        domain = Domain(self._td_stuck_domain())
+        if True in value and False in value:
+            return Domain.TRUE
+        return domain if True in value else ~domain
 
     def _compute_td_image(self):
         for order in self:
@@ -109,3 +166,10 @@ class SaleOrder(models.Model):
                 order.td_hours_to_launch = max((now - order.date_order).total_seconds() / 3600.0, 0.0)
             else:
                 order.td_hours_to_launch = 0.0
+
+
+class SaleReport(models.Model):
+    _inherit = 'sale.report'
+
+    # AC-018: the margin measure of the sales analysis — the same groups as the margin of the order
+    margin = fields.Float(groups=MARGIN_GROUPS)

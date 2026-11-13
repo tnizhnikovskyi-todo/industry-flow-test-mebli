@@ -25,10 +25,10 @@ class SaleOrder(models.Model):
         if not activity_type:
             return
         orders = self.filtered(lambda o: o.id and o.state == 'sale')
-        # the forecast fields are computed on read without stored dependencies: read them fresh
+        # the forecast is stored (td_mebli_sale) but the purchase dates and receipts are not stored dependencies:
+        # recompute it now from the documents
         self.env['purchase.order.line'].invalidate_model(['td_date_ready', 'td_supplier_delay'])
-        orders.invalidate_recordset(['td_shop_date', 'td_forecast_date', 'td_delay_days', 'td_late_item',
-                                     'td_delay_reason'])
+        orders._td_recompute_forecast()
         opened = Activity.search([('res_model', '=', 'sale.order'), ('res_id', 'in', orders.ids),
                                   ('activity_type_id', '=', activity_type.id)])
         by_order = {a.res_id: a for a in opened}

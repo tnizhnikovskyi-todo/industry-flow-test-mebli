@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AC-036 (tr/security.md §3): the changes of the orders are seen in the allowed and chosen companies only -->
+    <record id="td_mebli_order_change_rule_company" model="ir.rule">
+        <field name="name">Change of an order: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_order_change"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>
