@@ -83,8 +83,9 @@
 | мости EE | `td_mebli_*` мости | AC-113, AC-126…AC-130 |
 
 ## 4. Вхід для наступних кроків
-- **A-10 (ALLOCATION):** AC з треками — `SPEC.md` §5; модулі — `00-architecture.md` §1.
+- **A-09 (анкета):** реєстр точок варіативності VP-01…VP-18 і службові `edition`, `contract_mode` — `SPEC.md` §11.
+- **A-10 (ALLOCATION):** AC з треками — `SPEC.md` §5; модулі — `00-architecture.md` §1. VP кожного AC — хвіст «VP:» рядка трасування.
 - **A-11 (код):** беклог — `SPEC.md` §7 «Розбіжності зі зрізом» (R-01…R-22) і «нове» в кожному файлі модуля.
-- **A-12 (конфіг-пакет):** §2 цього файлу, параметри `td_mebli_base.md` §1, feature-групи `00-architecture.md` §3.
+- **A-12 (конфіг-пакет):** §2 цього файлу, параметри `td_mebli_base.md` §1, feature-групи `00-architecture.md` §3; VP → параметр — `SPEC.md` §11.1 (колонка «Де застосовується»).
 - **A-13 (майстер-дані):** `migration.md` §1.
 - **A-14 (гейти):** security-review — `security.md`; config-review — §2; track-convergence — `SPEC.md` §5–§6.

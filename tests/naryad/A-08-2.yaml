@@ -1,0 +1,33 @@
+# ТЕСТОВИЙ наряд A-08, спроба 2 — повернення з A-09 (перевірка передумов questionnaire-builder Крок 1: tr-defect no-vp-list):
+# у package/SPEC.md додати реєстр точок варіативності VP-xx і посилання AC → VP. Копія A-08.yaml. Склала сесія; рішення — AI (flow/decisions.md записи 28, 37, 48).
+# Крок закривають скіли ОРГАНІЗАЦІЇ odoo19-tr-authoring (у сесії — anthropic-skills:tr-usecases-acceptance, tr-odoo-tech-design; гейт — tr-review). Версію скілів організації лише фіксуємо у звіті.
+step: A-08
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref: ["odoo19-tr-authoring:tr-usecases-acceptance", "odoo19-tr-authoring:tr-odoo-tech-design", "odoo19-tr-authoring:tr-review"]
+model: opus
+effort: high
+inputs:
+  - {name: "concept/*", from: A-20, path: docs/industries/mebli/concept/, sha: 8863bf4}
+  - {name: "research/{AI-DECISIONS,BOX,SALES,REJECTED,REUSE,FUNCTIONAL-MAP}.md", from: A-20, path: docs/industries/mebli/research/, sha: 8863bf4}
+  - {name: "зріз A-21: PLAN.md, README.md, complexity.md, facts.json", from: A-21, path: docs/industries/mebli/prototype-real/, sha: 8863bf4}
+  - {name: "модулі зрізу (заготовка A-11)", from: A-21, path: package/addons/, sha: 8863bf4}
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: 8863bf4}
+  - {name: "рішення власника (записи 4–48)", from: A-07, path: flow/decisions.md, sha: 8863bf4}
+  - {name: "ТР спроби 1 (SPEC.md, tr/)", from: A-08, path: package/SPEC.md, sha: 10545b5}
+  - {name: "вимоги до таблиці VP: questionnaire-builder Крок 1–2, answers-schema.md", from: A-09, path: .claude/skills/questionnaire-builder/, sha: 10545b5}
+where: "package/SPEC.md + package/tr/"
+template: "формати скілів організації tr-usecases-acceptance і tr-odoo-tech-design"
+done: "спроба 2: package/SPEC.md має розділ «Точки варіативності (VP)» — таблиця VP-NN (параметр, тип, закритий список варіантів, default, де застосовується, AC, коробка, редакція, залежність), AC з параметром мають посилання на VP; решта — як у спробі 1: package/SPEC.md: use cases за ролями й сценаріями концепції, AC-xx з треком (стандарт / конфіг / код td_) і посиланням на F-xx; технічний дизайн td_ на Odoo 19 CE (EE — мости/ризики); рецензія tr-review без blocker"
+check: {mode: both, how: "tr-review (гейт A-08); кожна F-xx концепції покрита AC або в «не робимо»; трек AC узгоджений з complexity.md і таблицею «Модель даних» PLAN.md", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 30, context_budget_tokens: 250000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — знеособлені агрегати; без даних клієнтів"
+odoo_connections: []
+params: {mode: перша}
+repo: {url: origin, base_branch: flow/A-08-2-test, branch: flow/A-09-test}
+attempt: 2
+returned_from: "A-09 перевірка передумов: tr-defect no-vp-list"
+git: {base: 10545b5, head: null, prev_tag: null}
+date: 2026-11-13
