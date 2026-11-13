@@ -1,0 +1,29 @@
+# ТЕСТОВИЙ наряд A-20 (спроба 5, recalc) — концепція під склад коробок за рішеннями власника 2026-11-12 (flow/decisions.md записи 42–47) і перевірку повноти (research/COVERAGE-REVIEW.md). Склала сесія.
+step: A-20
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: research
+skill_ref: ["flow-research:concept-mapper@0.3.1"]
+model: opus
+effort: high
+inputs:
+  - {name: OWNER-INTAKE.md, from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+  - {name: FUNCTIONAL-MAP.md, from: A-03b, path: docs/industries/mebli/research/FUNCTIONAL-MAP.md, sha: HEAD}
+  - {name: COVERAGE-REVIEW.md, from: "перевірка повноти (сесія)", path: docs/industries/mebli/research/COVERAGE-REVIEW.md, sha: HEAD}
+  - {name: "рішення власника (записи 36–47)", from: A-21, path: flow/decisions.md, sha: HEAD}
+  - {name: "стан зрізу", from: A-21, path: docs/industries/mebli/prototype-real/, sha: HEAD}
+where: docs/industries/mebli/concept/
+template: "references/template/ скіла concept-mapper"
+done: "нові F-xx за записами 42–47; BOX §1 A/B; REJECTED — не взяте власником з умовою повернення; AI-DECISIONS — B3, B4; невідповідності COVERAGE-REVIEW §3 у документах концепції виправлено; самоперевірка повноти"
+check: {mode: both, how: "check_concept.py --base <git.base>; check_completeness; check_rejected.py; check_facts.py; check_privacy; усі PASS або WARN з поясненням", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 20, context_budget_tokens: 200000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — «Дозволено передавати в AI» (знеособлені агрегати)"
+review: {checklists: [concept.md], max_rounds: 2}
+odoo_connections: []
+params: {mode: recalc, stale: [docs/industries/mebli/concept/], sample: false}
+repo: {url: origin, base_branch: flow/A-21-3-test, branch: flow/A-20-5-test}
+attempt: 5
+returned_from: "рішення власника, записи 42–47 (склад коробок після перевірки повноти)"
+git: {base: 2ddf9f6, head: null, prev_tag: null}
+date: 2026-11-12
