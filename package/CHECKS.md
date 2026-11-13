@@ -1,40 +1,36 @@
-# CHECKS.md — автоперевірки пакета «меблі» (A-14, спроба 2, 2026-11-13)
+# CHECKS.md — автоперевірки пакета «меблі» (A-14, спроба 3, 2026-11-13)
 
 Гейти виконано **замінниками** (скіли організації `odoo19-mvp-build:*`, `boost:odoo19-lint` і CI C-03 у сесії недоступні; рішення AI, записи 48, 51; `observations/2026-11-13-a14-gates-substitutes.md`). Вердикт замінника не дає APPROVE кроку. Повні звіти гейтів — у звіті `tests/reports/A-14.md`.
 
 ## Ревізія package/ (commit SHA)
-`SHA: 935b591efcdc91badf2dc4f80cd16a3dbb84987d`
+`SHA: a5a10635d7d508783d9834d53e1ecaa251989c3f`
 
 ## Прогін C-03
-`SHA прогону: 935b591efcdc91badf2dc4f80cd16a3dbb84987d` · статус: `success` (замінник: локальний прогін на чистих базах, не GitHub Actions) · A 301/0 failed, light 285/0, B 306/0, A uk_UA 301/0, демо 5/0; налаштована база (модулі+конфіг+майстер-дані) A 301/0; тур конфігуратора SKIP (немає websocket-client).
+`SHA прогону: a5a10635d7d508783d9834d53e1ecaa251989c3f` · статус: `success` (замінник: локальний прогін, звіт tests/reports/A-11-4.md) · A 304/0 failed, light 288/0, B 309/0; налаштована база A (модулі+конфіг 2 проходи+майстер-дані 28 кроків) 304/0; тур конфігуратора SKIP.
 
 ## Редакції
 `editions: both` (OWNER-INTAKE).
 | edition | SHA | C-03 (SHA прогону, статус) | вердикт | примітка |
 |---|---|---|---|---|
-| ce | 935b591efcdc91badf2dc4f80cd16a3dbb84987d | 935b591efcdc91badf2dc4f80cd16a3dbb84987d success (локально) | правки | замінники гейтів |
-| ee | 935b591efcdc91badf2dc4f80cd16a3dbb84987d | не запущено | WARN: EE не перевірено | EE недоступна: немає `ODOO_EE_ADDONS_PATH`/EE-бази (ВП-4) |
+| ce | a5a10635d7d508783d9834d53e1ecaa251989c3f | a5a10635d7d508783d9834d53e1ecaa251989c3f success (локально) | правки (3 minor) | замінники гейтів |
+| ee | a5a10635d7d508783d9834d53e1ecaa251989c3f | не запущено | WARN: EE не перевірено | EE недоступна: немає `ODOO_EE_ADDONS_PATH`/EE-бази (ВП-4) |
 
 ## Гейти
 | гейт | команда або скіл | вердикт ce | вердикт ee | примітка |
 |---|---|---|---|---|
-| pr-review | замінник `odoo19-mvp-build:pr-review` | APPROVE (замінник; 1 minor) | WARN: EE не перевірено | 26/27 правок циклу 1 закрито, №9 частково |
-| config-review | замінник `odoo19-mvp-build:config-review` | APPROVE (замінник; 2 minor) | WARN: EE не перевірено | preflight PF-01…09 = SPEC §11.3 |
-| security-review | замінник `odoo19-mvp-build:security-review` (статично) | APPROVE (замінник; 2 minor) | WARN: EE не перевірено | |
-| odoo19-lint | замінник `boost:odoo19-lint` | правки (1 minor) | WARN: EE не перевірено | L-2, L-3 закрито; L-1 частково |
-| track-convergence | замінник `odoo19-mvp-build:track-convergence` | правки (1 major) | WARN: EE не перевірено | «Шафа-купе» SO→MO для 3 декорів; 28/28 кроків даних; тести на налаштованій базі 301/0 |
+| pr-review | замінник `odoo19-mvp-build:pr-review` | APPROVE (замінник) | WARN: EE не перевірено | №28–34 закрито 7/7 |
+| config-review | замінник `odoo19-mvp-build:config-review` | APPROVE (замінник) | WARN: EE не перевірено | |
+| security-review | замінник `odoo19-mvp-build:security-review` (статично) | APPROVE (замінник; 3 minor) | WARN: EE не перевірено | N3-1…3 |
+| odoo19-lint | замінник `boost:odoo19-lint` | APPROVE (замінник) | WARN: EE не перевірено | pylint-odoo 9.93/10, E8140 = 0 |
+| track-convergence | замінник `odoo19-mvp-build:track-convergence` (налаштована база A-11-4) | APPROVE (замінник) | WARN: EE не перевірено | «Шафа-купе» дуб/графіт — лише плита й кромка декору |
 
 ## Правки
-Цикл 1 (спроба 1, SHA 671b39c): 27 правок — 26 закрито, №9 частково (див. tests/reports/A-14.md). Відкриті після спроби 2:
+Цикл 1 (671b39c): 27 — закрито. Цикл 2 (935b591): №28–34 — закрито 7/7 (a5a1063). Відкриті після спроби 3:
 | № | опис | код кроку повернення (A-11 / A-12 / A-13) | джерело | редакція |
 |---|---|---|---|---|
-| 28 | major: специфікація замовлення рахує плиту й кромку двічі — рядки з деталей + статичні рядки шаблону (DSP-18-W, EDGE-W; `td_mebli_mrp/models/mrp_bom.py:194-198`, `master-data/11_mrp.bom.line.csv`); для дуба/графіту МО вимагає білу плиту (AC-013) | A-11, A-13 | track-convergence TC2-1 | ce |
-| 29 | minor (№9 залишок): фінансист через RPC змінює explanation/state звірки або створює її «поясненою» без підпису менеджера | A-11 | security S-N1 | ce |
-| 30 | minor: бухгалтер повертає підтверджене нарахування в чернетку, змінює суму, скасовує без причини | A-11 | security S-N2 | ce |
-| 31 | minor (L-1 залишок): `raise` в `unlink()` — `td_mebli_install/models/accrual.py:119-122` → `@api.ondelete` | A-11 | lint | ce |
-| 32 | minor: текст ризику R3-X-01 («за датою пропозиції») ≠ реалізація (правило прайсу на сьогодні) | A-11 | pr-review P-N1 | ce |
-| 33 | minor: CONFIG.md:115 послідовність кроку 22 → 24 | A-12 | config C-N1 | ce |
-| 34 | minor: повторне застосування з VP-05=false лишає ir.default на архівну умову оплати | A-12 | config C-N2 | ce |
+| 35 | minor: керівник через RPC повертає підтверджене нарахування в чернетку, змінює суму, відновлює скасоване без сліду (AC-106: підтверджене — лише читання, крім скасування з причиною); account_manager без account_user не підтверджує чернетку | A-11 | security N3-1 | ce |
+| 36 | minor: cancel_reason і author_id нарахування не в LOCKED — бухгалтер переписує причину скасування | A-11 | security N3-2 | ce |
+| 37 | minor: state звірки міграції копіюється при дублюванні → AccessError фінансисту (copy=False) | A-11 | security N3-3 | ce |
 
 ## Зведений вердикт
-`правки` — повернення: A-11 (№28–32), A-12 (№33, 34), A-13 (№28). EE — `WARN: EE не перевірено`. Цикл A-11/12/13 → A-14: 2.
+`правки` (3 minor, A-11) — **цикл 3 з 3 вичерпано → ескалація Архітектору рішення** (gates-aggregator «Ліміти й ескалація»). Усі п'ять гейтів — APPROVE замінників, але замінник не дає APPROVE кроку (observations/2026-11-13-a14-gates-substitutes.md). EE — `WARN: EE не перевірено`. Рішення людини: (а) прийняти замінники гейтів і закрити №35–37 позачерговим A-11-5 → APPROVE (CE); EE не перевірено, `partial: true`; або (б) дочекатися справжніх скілів-гейтів і CI C-03.
