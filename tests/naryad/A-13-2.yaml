@@ -1,0 +1,35 @@
+# Спроба 2 (запис 51 flow/decisions.md): повтор після A-11.
+# ТЕСТОВИЙ наряд A-13 — шаблони майстер-даних пакета «меблі» (master-data-template-builder, перший запуск) після A-10.
+# Склала сесія (рішення AI, flow/decisions.md записи 28, 37, 48; власник — вето). Виконується в тій самій гілці після A-12.
+# Заміна odoo-mcp: у тесті odoo-mcp заборонено (odoo_connections: []), тестова база — локальний Odoo 19.0 CE
+# (/home/user/odoo19, база test-mebli-a13md, load через odoo-bin shell; observations/2026-11-13-a12-a13-local-odoo-instead-of-mcp.md).
+step: A-13
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - flow-package-build:master-data-template-builder@0.3.1
+model: sonnet
+effort: medium
+inputs:
+  - {name: "ALLOCATION.md (треки довідників, модулі)", from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: "ТР пакета (SPEC: AC довідників)", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "ТР міграції й майстер-даних (§1 порядок шаблонів)", from: A-08, path: package/tr/migration.md, sha: HEAD}
+  - {name: "CONFIG.md «Модулі до установки» (A-12, та сама гілка)", from: A-12, path: package/config/CONFIG.md, sha: HEAD}
+  - {name: "OWNER-INTAKE.md (editions)", from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+  - {name: "BOX.md §3–4 (довідники, дані на старті)", from: A-20, path: docs/industries/mebli/research/BOX.md, sha: HEAD}
+  - {name: "DATA_POLICY (знеособлення)", from: C-05, path: package/DATA_POLICY.md, sha: HEAD}
+where: "package/master-data/, package/templates/master-data.md"
+template: "немає файлом: каркаси README і package/templates/master-data.md — master-data-template-builder/references/master-data-template.md (два каркаси в одному файлі; форму перевіряє людина), формат — master-data-format.md"
+done: "CSV-шаблони стандартних моделей з вигаданими галузевими прикладами + td/ для полів td_*; README (порядок імпорту, модулі: джерело-перелік і installed, трасування, «Потребують модулів A-11», тест-імпорт); тест-імпорт стандартних файлів у чисту тестову базу без помилок"
+check: {mode: both, how: "flow-autocheck checks/A-13.yaml; check_master_data.py (MD-*); Тімлід — покриття ТР/ALLOCATION, вигаданість прикладів", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 45, lease_factor: 1.5, cost_limit_usd: 8, context_budget_tokens: 60000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів; приклади вигадані"
+odoo_connections: []   # odoo-mcp у тесті заборонено; замість нього — локальна тестова база test-mebli-a13md (створити й видалити в межах кроку)
+params: {}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 2
+returned_from: {step: A-11, reason: "escalated спроби 1 — бракувало модулів A-11; повтор на модулях A-11 (main 4e0fdda), VP — поля res.company td_mebli_base"}
+git: {base: 4e0fdda, head: null, prev_tag: null}
+date: 2026-11-13
