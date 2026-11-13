@@ -5,7 +5,7 @@
 #   --profile — за замовчуванням package/demo/answers.yaml (ключ edition у файлі має дорівнювати <edition>);
 #   --tag — тег пакета (HEAD репо має збігатися: перевіряють clean_db.sh/install.sh C-00; A-18: git checkout <тег> -- package/demo/);
 #   --no-demo — без демо-шару td_mebli_demo (лише модулі + конфіг + шаблони A-13).
-# Паролі демо-ролей — лише змінна DEMO_USERS_PASSWORD (В-4); без неї лишаються паролі модуля td_mebli_demo (WARN).
+# Паролі демо-ролей — змінна DEMO_USERS_PASSWORD (В-4); не задано — локальний тестовий дефолт «demo-local» (WARN; лише localhost).
 # Коди: 0 готово; 2 запуск/захист; 10 чиста база; 20 модулі; 30 конфіг (preflight, apply, read-back); 40 майстер-дані;
 #       50 демо-дані/ролі/smoke; 60 знімок; 70 EE недоступна. Лог — package/demo/.logs/up-<instance>.log (не в git).
 set -euo pipefail
@@ -61,11 +61,16 @@ ALL="$MODS"
 if (( DEMO )) && [[ ",$MODS," == *",td_mebli_bas,"* ]]; then
   step 50 "модуль демо-даних td_mebli_demo" $T/install.sh "$INST" td_mebli_demo --lang uk_UA
   step 50 "демо-документи (seed)" python3 -I $T/apply.py shell --db "$INST" --script $D/data/seed_demo.py
-  if [[ -n "${DEMO_USERS_PASSWORD:-}" ]]; then
-    step 50 "паролі демо-ролей" python3 -I $T/apply.py shell --db "$INST" --script $D/data/set_passwords.py
-  else echo "WARN паролі демо-ролей: DEMO_USERS_PASSWORD не задано — паролі модуля td_mebli_demo (В-4, рішення Тімліда)"; fi
+  if [[ -z "${DEMO_USERS_PASSWORD:-}" ]]; then
+    # дефолт лише для локального тесту (стенд на localhost); для хостингу B-01 пароль задає Тімлід через змінну (В-4)
+    export DEMO_USERS_PASSWORD="demo-local"
+    echo "WARN паролі демо-ролей: DEMO_USERS_PASSWORD не задано — локальний тестовий дефолт (не для хостингу)"
+  fi
+  step 50 "паролі демо-ролей" python3 -I $T/apply.py shell --db "$INST" --script $D/data/set_passwords.py
   ALL="$MODS,td_mebli_demo"
   step 50 "smoke стенда" $T/smoke.sh "$INST" "$ALL" --script $D/data/verify_demo.py
+  # демо-шар (td_mebli_demo/data/settings_data.xml) вмикає коробку B — конфіг після нього має й далі = answers.yaml
+  step 50 "конфіг після демо-шару, read-back" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE" --mode readback
 else
   if (( DEMO )); then WHY="профіль без td_mebli_bas — td_mebli_demo від нього залежить"; else WHY="--no-demo"; fi
   echo "WARN демо-шар пропущено ($WHY): лише шаблони A-13"

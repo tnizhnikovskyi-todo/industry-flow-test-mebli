@@ -216,18 +216,54 @@ def _backdate(env, table, records, when):
     records.invalidate_recordset(['create_date'])
 
 
+def _vat20_tax(env, use):
+    """The 20 % VAT of the company for `use` (sale|purchase): the default tax of the company if it is 20 %, else any
+    20 % percent tax of the chart (ua_psbo of the package configuration has one); none -- a new one with a unique name.
+    Taxes of the chart are never renamed or changed (D-01: renaming all taxes broke the unique names of ua_psbo)."""
+    company = env.company
+    Tax = env['account.tax'].with_context(active_test=False)
+    default = company.account_sale_tax_id if use == 'sale' else company.account_purchase_tax_id
+    if default and default.amount_type == 'percent' and default.amount == 20.0 and default.active:
+        return default
+    tax = Tax.search([*Tax._check_company_domain(company), ('type_tax_use', '=', use), ('amount_type', '=', 'percent'),
+                      ('amount', '=', 20.0), ('active', '=', True)], order='sequence, id', limit=1)
+    if tax:
+        return tax
+    names = {'sale': ('ПДВ 20%', 'VAT 20%'), 'purchase': ('ПДВ 20% (закупівля)', 'VAT 20% (purchase)')}[use]
+    name_uk, name_en = names
+    while Tax.search_count([*Tax._check_company_domain(company), ('type_tax_use', '=', use), ('name', 'in', (name_uk, name_en))]):
+        name_uk, name_en = name_uk + ' (демо)', name_en + ' (demo)'
+    tax = Tax.with_context(lang='en_US').create({'name': name_en, 'amount': 20.0, 'amount_type': 'percent',
+                                                 'type_tax_use': use, 'company_id': company.id})
+    if env['res.lang'].search_count([('code', '=', 'uk_UA')]):  # the translation needs an active language
+        tax.with_context(lang='uk_UA').name = name_uk
+    return tax
+
+
+def _vat20(env):
+    """Demo documents carry VAT 20 %: the company defaults and the products of this module use the 20 % taxes."""
+    company = env.company
+    sale, purchase = _vat20_tax(env, 'sale'), _vat20_tax(env, 'purchase')
+    company.write({'account_sale_tax_id': sale.id, 'account_purchase_tax_id': purchase.id})
+    templates = env['product.template'].browse(env['ir.model.data'].search(
+        [('module', '=', 'td_mebli_demo'), ('model', '=', 'product.template')]).mapped('res_id')).exists()
+    products = env['product.product'].browse(env['ir.model.data'].search(
+        [('module', '=', 'td_mebli_demo'), ('model', '=', 'product.product')]).mapped('res_id')).exists()
+    templates |= products.product_tmpl_id
+    for template in templates.with_company(company):
+        if template.taxes_id and template.taxes_id != sale:
+            template.taxes_id = sale
+        if template.supplier_taxes_id and template.supplier_taxes_id != purchase:
+            template.supplier_taxes_id = purchase
+    return sale, purchase
+
+
 def _localize(env):
     """Ukrainian names for the units and the tax; the demo documents are created in Ukrainian."""
     unit = env.ref('uom.product_uom_unit')
     unit.with_context(lang='en_US').name = 'pcs'
     unit.with_context(lang='uk_UA').name = 'шт'
-    for tax in env['account.tax'].search([('amount', '!=', 0.0)]):
-        tax.write({'amount': 20.0})
-        tax.with_context(lang='en_US').name = 'VAT 20%'
-        tax.with_context(lang='uk_UA').name = 'ПДВ 20%'
-    for group in env['account.tax'].search([('amount', '=', 20.0)]).tax_group_id:
-        group.with_context(lang='en_US').name = 'VAT 20%'
-        group.with_context(lang='uk_UA').name = 'ПДВ 20%'
+    _vat20(env)
     for xmlid, uk, en in (('uom.product_uom_square_meter', 'м²', 'm²'), ('uom.product_uom_meter', 'м', 'm')):
         unit = env.ref(xmlid)
         unit.with_context(lang='en_US').name = en

@@ -1,9 +1,10 @@
-# Базовий профіль демо-стенда пакета «меблі» (A-15): коробка A, редакція ce. = package/templates/answers.example.yaml
-# + явні edition і contract_mode (кожна VP-xx схеми A-09 має ключ). Покриття значень — README «Файл answers.yaml і профілі».
+# Базовий профіль демо-стенда пакета «меблі» (A-15, спроба 3): коробка B, редакція ce — збігається з демо-шаром td_mebli_demo
+# (data/settings_data.xml: td_box_profile B, td_contract_mode contract, 9 функцій VP-02 без change_sign і ai_mapping), щоб read-back
+# конфігу після демо-шару = answers.yaml. Решта = package/templates/answers.example.yaml. Коробка A — profiles/answers.alt-5.yaml.
 edition: ce
-contract_mode: unset
-VP-01: A
-VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, analog, shop_board]
+contract_mode: contract
+VP-01: B
+VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, nbu, analog, shop_board]
 VP-03: single
 VP-04: true
 VP-05: true

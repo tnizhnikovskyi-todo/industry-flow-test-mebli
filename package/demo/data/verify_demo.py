@@ -29,12 +29,14 @@ for login, grp in ROLES.items():
 mails = [m for m in E['res.partner'].with_context(active_test=False).search([('email', '!=', False)]).mapped('email')
          if not (m.endswith('.example') or m.endswith('@example.com'))]
 need('emails outside .example', mails[:5], not mails)
-# пробне замовлення з демо-номенклатури (відкат)
+# пробне замовлення з демо-номенклатури (фурнітура без конфігуратора; відкат); ставка ПДВ рядка — 20 % (D-01)
 try:
     so = E['sale.order'].create({'partner_id': E.ref('td_mebli_demo.partner_salon').id,
-                                 'order_line': [(0, 0, {'product_id': E.ref('td_mebli_demo.prod_dresser').product_variant_id.id})]})
+                                 'order_line': [(0, 0, {'product_id': E.ref('td_mebli_demo.fit_hinge').product_variant_id.id,
+                                                                 'product_uom_qty': 4})]})
     so.action_confirm()
     need('trial order confirmed', so.state, so.state == 'sale')
+    need('trial order VAT 20%', so.order_line.tax_ids.mapped('amount'), so.order_line.tax_ids.mapped('amount') == [20.0])
 except Exception as e:  # noqa: BLE001
     need('trial order confirmed', repr(e)[:200], False)
 E.cr.rollback()

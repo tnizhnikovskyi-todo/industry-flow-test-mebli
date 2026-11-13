@@ -1,7 +1,7 @@
 # Дефекти установки стенда
 SHA стенда: b794c20 (`package/` = `1925fb8`)   Інстанс: demo-mebli-pkg-a   Профіль: package/demo/answers.yaml (A, ce)   Код повернення: A-14
 
-## D-01 — модуль
+## D-01 — модуль — **ЗАКРИТО** (A-11 спроба 6, `tests/reports/A-11-6.md`; `td_mebli_demo` 19.0.1.1.1; перевірено підйомом A-15 спроба 3, `tests/reports/A-15-3.md`)
 - Місце: `package/addons/td_mebli_demo/showcase.py:225–227` (`_localize`, виклик із `seed_showcase`, `showcase.py:454`); крок up.sh «демо-документи (seed)» (код 50), після кроків 1–4 (модулі, конфіг A-12, шаблони A-13 — OK).
 - Витяг з логу (`odoo-bin shell` < `package/demo/data/seed_demo.py`):
   ```
