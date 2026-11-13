@@ -62,10 +62,11 @@ class MrpWorkorder(models.Model):
     td_worker_names = fields.Char(string='Workers', compute='_compute_td_worker_names')
     td_pause_reason = fields.Char(string='Pause Reason', compute='_compute_td_worker_names')
 
-    @api.depends('td_quality_point', 'td_quality_ids.result')
+    @api.depends('td_quality_point', 'td_quality_ids.result', 'td_quality_ids.kind')
     def _compute_td_quality_state(self):
         for workorder in self:
-            last = workorder.td_quality_ids.sorted('id')[-1:]
+            # a scrap (AC-073) is a non-conformity of a part, not the quality step of the operation
+            last = workorder.td_quality_ids.filtered(lambda check: check.kind == 'check').sorted('id')[-1:]
             if not workorder.td_quality_point:
                 workorder.td_quality_state = 'none'
             else:
@@ -103,3 +104,10 @@ class TdMebliQualityCheck(models.Model):
     note = fields.Char(string='Note')
     # created only by the tablet after the PIN (sudo): the manufacturing users have no create right (ir.model.access)
     employee_id = fields.Many2one('hr.employee', string='Worker', readonly=True)
+    # AC-073 / AC-121: the journal of non-conformities — a failed quality step or a scrap at the workplace with its
+    # reason (note) and the manufacturing order of the repeat part; the dashboard counts the failed lines
+    kind = fields.Selection([('check', 'Quality Step'), ('scrap', 'Scrap')], string='Kind', required=True,
+                            default='check', index=True)
+    part_id = fields.Many2one('td.mebli.part', string='Part', readonly=True, ondelete='set null')
+    repeat_production_id = fields.Many2one('mrp.production', string='Repeat Part Order', readonly=True)
+    company_id = fields.Many2one(related='workorder_id.company_id', store=True, string='Company')

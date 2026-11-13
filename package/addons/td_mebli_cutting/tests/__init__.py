@@ -4,3 +4,4 @@ from . import test_cutting_done
 from . import test_access
 from . import test_distributor
 from . import test_measure_gate
+from . import test_g2_cutting

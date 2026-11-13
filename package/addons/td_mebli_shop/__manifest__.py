@@ -7,18 +7,21 @@
                    'shared tablet user records the time and this module adds the worker who confirmed with the PIN of '
                    'the standard employee. Quality steps (Quality is Enterprise only) and the packing list by places '
                    'are new.',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',
     'depends': ['td_mebli_sale', 'hr_hourly_cost', 'sale_stock'],
     'data': [
         'security/ir.model.access.csv',
+        'security/td_mebli_shop_security.xml',
+        'data/product_data.xml',
         'wizard/kiosk_views.xml',
         'views/shop_views.xml',
         'views/kit_views.xml',
         'report/kit_report.xml',
         'report/label_report.xml',
+        'report/workorder_sheet_report.xml',
     ],
     'installable': True,
 }

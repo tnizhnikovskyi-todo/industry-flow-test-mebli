@@ -6,19 +6,47 @@
         <field name="arch" type="xml">
             <form string="Import of Parts">
                 <p class="text-muted">CSV or Excel (.xlsx) export of the design program: the columns are recognized by their titles
-                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves
-                    is not part of the slice.</p>
+                    (part, length, width, quantity, material, edge) or by a saved mapping template.</p>
+                <div class="alert alert-warning" role="alert" invisible="not missing_columns">
+                    Columns not found in the file: <field name="missing_columns" class="oe_inline" readonly="1"/>.
+                    Set the field of the part for the columns below.
+                </div>
+                <div class="alert alert-info" role="status" invisible="not ai_note">
+                    <field name="ai_note" readonly="1"/>
+                </div>
+                <div class="alert alert-danger" role="alert" invisible="not unknown_lines">
+                    <field name="unknown_lines" readonly="1"/>
+                </div>
                 <group>
                     <field name="bom_id" readonly="1"/>
-                    <field name="file" filename="filename"/>
+                    <field name="file" filename="filename" readonly="mapping"/>
                     <field name="filename" invisible="1"/>
+                    <field name="mode" widget="radio" options="{'horizontal': True}"/>
+                    <field name="template_id" invisible="not template_id"/>
                     <field name="mapping" invisible="not mapping"/>
                     <field name="preview_count" invisible="not mapping"/>
                 </group>
+                <field name="column_ids" invisible="not column_ids or not missing_columns and template_id">
+                    <list editable="bottom" create="0" delete="0">
+                        <field name="index"/>
+                        <field name="title"/>
+                        <field name="field_name"/>
+                        <field name="suggested" groups="td_mebli_base.group_feature_ai_mapping"/>
+                    </list>
+                </field>
+                <group invisible="not column_ids or template_id">
+                    <field name="template_name" placeholder="e.g. PRO100 of the showroom"/>
+                </group>
+                <field name="material_map_ids" invisible="not material_map_ids">
+                    <list editable="bottom" create="0">
+                        <field name="code"/>
+                        <field name="material_id" options="{'no_create': True}"/>
+                    </list>
+                </field>
                 <footer>
-                    <button name="action_recognize" type="object" string="Recognize Columns" class="btn-secondary"
-                            invisible="mapping"/>
-                    <button name="action_import" type="object" string="Import" class="btn-primary" invisible="not mapping"/>
+                    <button name="action_recognize" type="object" string="Recognize Columns" class="btn-secondary"/>
+                    <button name="action_import" type="object" string="Import" class="btn-primary"
+                            invisible="not mapping or missing_columns or unknown_lines"/>
                     <button string="Cancel" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>
@@ -34,4 +62,42 @@
         <field name="binding_model_id" ref="mrp.model_mrp_bom"/>
         <field name="binding_view_types">form</field>
     </record>
+
+    <record id="td_mebli_import_template_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.import.template.list</field>
+        <field name="model">td.mebli.import.template</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="header_signature"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_import_template_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.import.template.form</field>
+        <field name="model">td.mebli.import.template</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="header_signature"/>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="active" invisible="1"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_import_template_action" model="ir.actions.act_window">
+        <field name="name">Import Templates</field>
+        <field name="res_model">td.mebli.import.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="td_mebli_import_template_menu" name="Import Templates" parent="mrp.menu_mrp_configuration"
+              action="td_mebli_import_template_action" sequence="60" groups="mrp.group_mrp_user"/>
 </odoo>

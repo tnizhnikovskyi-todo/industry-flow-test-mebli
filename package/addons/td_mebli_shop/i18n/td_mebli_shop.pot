@@ -1,0 +1,1034 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_shop
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:42+0000\n"
+"PO-Revision-Date: 2026-11-13 09:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "%(item)s is already reordered: %(production)s."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid ""
+"%(who)s is already working on %(wo)s: press «Pause» or «Done» there first."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/workorder_sheet.py:0
+msgid "%(wo)s done afterwards: %(start)s – %(end)s. Reason: %(reason)s"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "%s has no running work on this work order: nothing to pause."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/workorder_sheet.py:0
+msgid "%s is already closed."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_mo_part_labels
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_part_labels
+msgid "'Labels - %s' % (object.name)"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_kit
+msgid "'Packing list - %s' % (object.name)"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_handover_act
+msgid "'Transfer act - %s' % (object.name)"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,print_report_name:td_mebli_shop.action_report_workorder_sheet
+msgid "'Work order sheet - %s' % (object.name)"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "(by the packing list of the order)."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-pause me-1\" title=\"Pause\"/>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-th-list me-1\" title=\"Parts\"/><span>Parts:</span>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<i class=\"fa fa-user me-1\" title=\"Worker\"/>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.view_order_form_td_mebli_shop
+msgid "<span class=\"o_stat_text\">Not Packed</span>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+msgid "<span>Plan, h</span>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Address:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Buyer:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Date:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Items:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Not packed:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Order:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "<strong>Origin:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "<strong>Places:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "<strong>Product:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "<strong>Seller:</strong>"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_handover_act
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Acceptance and Transfer Act"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Accepted (buyer): ____________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__action
+msgid "Action"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "Additional order of %(item)s for %(order)s (packing list)."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "Additional order of %(item)s: %(production)s."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "An additional order is made for a part: %s is not a part."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,help:td_mebli_shop.field_td_mebli_kiosk__parent_bom_id
+msgid ""
+"Bills of Materials, also called recipes, are used to autocomplete components"
+" and work order instructions."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kit_line__kind__body
+msgid "Body"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kiosk_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_workorder_backdate_form
+msgid "Cancel"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Check"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Choose the reason of the pause."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Choose the scrapped part of this manufacturing order."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_scan_form
+msgid "Close"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Code"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__company_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__company_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__company_id
+msgid "Company"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kiosk_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_workorder_backdate_form
+msgid "Confirm"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
+msgid "Create additional order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__create_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__create_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__create_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__create_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__create_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__create_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__create_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__create_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_quality_check_view_list
+msgid "Date"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workcenter_productivity__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_stock_picking__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_part__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__display_name
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__done
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Done"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/workorder_sheet.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_workorder_backdate_form
+msgid "Done Afterwards"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_production_workorder_list_td_mebli_shop
+msgid "Done afterwards (paper sheet)"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_hr_employee
+msgid "Employee"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Enter the reason of the scrap."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Entered into Odoo: ____________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__fail
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__result__fail
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_quality_check__result__fail
+msgid "Failed"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__date_end
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Finished"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kit_line__kind__fitting
+msgid "Fittings"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kit_line__kind__facade
+msgid "Fronts"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_td_mebli_part
+msgid "Furniture Part of an Order BoM"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Goods"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Handed over (seller): ____________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_hr_employee__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workcenter_productivity__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_stock_picking__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_part__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__item
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Item"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__kind
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__kind
+msgid "Kind"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__label
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Label"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__code
+msgid "Label Code"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__last_scanned
+msgid "Last Packed"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__write_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__write_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__write_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__write_uid
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__write_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__write_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__write_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__write_date
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_mrp_production
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__production_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__production_id
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Master: ____________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Material"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__none
+msgid "No Step"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "No parts to label."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_missing
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__missing
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_search
+msgid "Not Packed"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__note
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__note
+msgid "Note"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/shop.py:0
+msgid ""
+"Only the shop floor tablet (with the PIN) or the shop manager sets the "
+"worker of a time line."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Operation"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Operations"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__order_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_scan__order_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_search
+msgid "Order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__pin
+msgid "PIN"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.act_window,name:td_mebli_shop.td_mebli_kiosk_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kiosk_view_form
+msgid "PIN of the Worker"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_scan_form
+msgid "Pack"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__packed
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Packed"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__packed_by_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Packed by"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Packed by the warehouse: ____________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_kit
+#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_line_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
+msgid "Packing List"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "Packing List %s"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_td_mebli_kit_line
+msgid "Packing List Line"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.act_window,name:td_mebli_shop.td_mebli_kit_line_action
+#: model:ir.ui.menu,name:td_mebli_shop.td_mebli_kit_menu
+msgid "Packing Lists"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__part_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__part_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Part"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_mo_part_labels
+#: model:ir.actions.report,name:td_mebli_shop.action_report_part_labels
+msgid "Part Labels (QR)"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Parts"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Pass the quality step: %s"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__pass
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__result__pass
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_quality_check__result__pass
+msgid "Passed"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__pause
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Pause"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_pause_reason
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__loss_id
+msgid "Pause Reason"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__photo
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__photo
+msgid "Photo"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "Piece"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__place
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_search
+msgid "Place"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_places
+msgid "Places"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "Places received by the crew: ____________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Places:"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Plan, h"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Planned, min"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "QR"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "Qty:"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_quality_state
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Quality"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_quality_check_view_form
+msgid "Quality Check"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_td_mebli_quality_check
+msgid "Quality Check of a Work Order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.act_window,name:td_mebli_shop.td_mebli_quality_check_action
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_quality_ids
+#: model:ir.ui.menu,name:td_mebli_shop.td_mebli_quality_check_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_quality_check_view_list
+msgid "Quality Checks"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_routing_workcenter__td_quality_point
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_quality_point
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__quality_point
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__name
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__quality
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_quality_check__kind__check
+msgid "Quality Step"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__qty
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Quantity"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__reason
+msgid "Reason"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Reason / Note"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__reorder_production_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
+msgid "Reordered"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:product.template,name:td_mebli_shop.product_td_repeat_part_product_template
+msgid "Repeat Part"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__repeat_production_id
+msgid "Repeat Part Order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_ir_actions_report
+msgid "Report Action"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__result
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__result
+msgid "Result"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+#: code:addons/td_mebli_shop/wizard/kit_scan.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_scan_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.view_order_form_td_mebli_shop
+msgid "Scan Labels"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_scan_form
+msgid "Scan the QR of a part label"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_td_mebli_kit_scan
+msgid "Scanning of the Part Labels of a Packing List"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__scrap
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_quality_check__kind__scrap
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Scrap"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__scrap_reason
+msgid "Scrap Reason"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Scrap at the workplace is a function of the workshop kiosk (box B)."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Scrap of %(part)s by %(who)s: %(reason)s. Repeat part: %(production)s."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Scrap: %s"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__scrap_part_id
+msgid "Scrapped Part"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kit_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.act_window,name:td_mebli_shop.mrp_workorder_td_tablet_action
+#: model:ir.ui.menu,name:td_mebli_shop.td_mebli_tablet_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Shop Floor Tablet"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_td_mebli_kiosk
+msgid "Shop Floor Tablet: PIN of the Worker"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Size, mm"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__parent_bom_id
+msgid "Specification"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__date_start
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Started"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_hr_employee__td_pin_locked_until
+msgid "Tablet Locked until"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Take a photo of the check."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__td_mebli_kiosk__action__start
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Taken"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Template to be checked by a lawyer (No. 17)"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/workorder_sheet.py:0
+msgid "The end date cannot be in the future"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid ""
+"The goods are checked by the buyer for completeness and visible defects. Claims on the quantity and the\n"
+"                    appearance: ______________________________________________"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kit_scan.py:0
+msgid "The label does not belong to this order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
+msgid "The packing list of the order is not built yet."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid ""
+"The seller hands over and the buyer accepts the goods of the order without "
+"installation:"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid ""
+"The set of order %(order)s is incomplete: %(count)s items are not packed "
+"(places %(places)s), for example «%(item)s». An incomplete set does not "
+"leave the warehouse."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "The specification has no parts."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/workorder_sheet.py:0
+msgid "The start must be before the end."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid ""
+"The warranty is given under the contract; assembly and installation by the buyer or a third party are\n"
+"                    not covered by the warranty of installation."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid ""
+"The work order is already done by %(who)s. Two workers on one work order "
+"from one tablet — pause it or choose another work order."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "The worker is locked until %s"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields.selection,name:td_mebli_shop.selection__mrp_workorder__td_quality_state__todo
+msgid "To Check"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_search
+msgid "To Do"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_list
+msgid "Total"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_stock_picking
+msgid "Transfer"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_handover_act_document
+msgid "Unit"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,help:td_mebli_shop.field_mrp_routing_workcenter__td_quality_point
+#: model:ir.model.fields,help:td_mebli_shop.field_mrp_workorder__td_quality_point
+#: model:ir.model.fields,help:td_mebli_shop.field_td_mebli_kiosk__quality_point
+msgid ""
+"What the worker checks and photographs before «Done», e.g. «edge without "
+"chips, photo of the end»."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,help:td_mebli_shop.field_mrp_workcenter_productivity__td_employee_id
+msgid ""
+"Who confirmed the step with the PIN on the shop floor tablet (the time "
+"itself is the standard time line)."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__workcenter_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.mrp_workorder_td_tablet_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Work Center"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_mrp_workorder
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__workorder_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__workorder_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__workorder_id
+msgid "Work Order"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_td_mebli_workorder_backdate
+msgid "Work Order Done Afterwards"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.actions.report,name:td_mebli_shop.action_report_workorder_sheet
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Work Order Sheet"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.actions.act_window,help:td_mebli_shop.mrp_workorder_td_tablet_action
+msgid ""
+"Work orders of the sections; the worker presses «Taken», «Pause» or «Done» "
+"and confirms with the PIN."
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model,name:td_mebli_shop.model_mrp_workcenter_productivity
+msgid "Workcenter Productivity Log"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workcenter_productivity__td_employee_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_kiosk__employee_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_quality_check__employee_id
+#: model:ir.model.fields,field_description:td_mebli_shop.field_td_mebli_workorder_backdate__employee_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_workorder_sheet_document
+msgid "Worker"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_mrp_workorder__td_worker_names
+msgid "Workers"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/wizard/kiosk.py:0
+msgid "Wrong PIN"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model:ir.model.fields,field_description:td_mebli_shop.field_hr_employee__td_pin_fail_count
+msgid "Wrong PINs in a Row"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_workorder_backdate_form
+msgid "e.g. power cut, done by the paper sheet"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
+msgid "mm"
+msgstr ""

@@ -51,10 +51,9 @@ class TestCuttingAtDistributor(TdMebliSaleCommon):
         order.invalidate_recordset()
         ready = job.return_date + timedelta(days=5)
         self.assertGreaterEqual(ready, before)
-        self.assertEqual(order.td_shop_date, ready)
         self.assertEqual(order.td_forecast_date, ready)
         self.assertGreater(order.td_delay_days, 0)
-        self.assertEqual(order.td_delay_reason, 'cutting')
+        self.assertEqual(order.td_delay_reason, 'distributor')  # td_mebli_sale (AC-066) via _td_distributor_date
         self.assertIn(self.distributor.name, order.td_late_item)
         # the buyer changes the date in the purchase (the only place of input): the forecast follows
         job.purchase_id.order_line.date_planned = fields.Datetime.to_datetime(job.return_date + timedelta(days=3))
@@ -66,7 +65,7 @@ class TestCuttingAtDistributor(TdMebliSaleCommon):
         order.invalidate_recordset()
         job.invalidate_recordset()
         self.assertFalse(job.return_date)
-        self.assertNotEqual(order.td_delay_reason, 'cutting')
+        self.assertNotEqual(order.td_delay_reason, 'distributor')
 
     def test_no_cutting_service_is_explained(self):
         self.service.td_material_kind = False

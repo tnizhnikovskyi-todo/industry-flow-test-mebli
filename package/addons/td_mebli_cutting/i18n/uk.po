@@ -6,15 +6,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 21:17+0000\n"
-"PO-Revision-Date: 2026-11-12 21:17+0000\n"
+"POT-Creation-Date: 2026-11-13 09:42+0000\n"
+"PO-Revision-Date: 2026-11-13 09:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_cutting
 #. odoo-python
@@ -112,6 +111,11 @@ msgid "Board"
 msgstr "Плита"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__td_cutting_mode
+msgid "Board Cutting"
+msgstr "Розкрій плити"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_is_offcut
 msgid "Business Offcut"
 msgstr "Діловий обрізок"
@@ -123,7 +127,21 @@ msgid "Business Offcuts"
 msgstr "Ділові обрізки"
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+msgid ""
+"CSV of the cutting map from the cutting program: one row per placed part or offcut —\n"
+"                    sheet; material; sheet_length; sheet_width; lot; type (part / offcut); code (code of the part from\n"
+"                    the cutting file); x; y; length; width; rotated."
+msgstr ""
+"CSV карти розкрою з програми розкрою: рядок на кожну розміщену деталь або "
+"обрізок — sheet (аркуш); material (матеріал); sheet_length; sheet_width; lot"
+" (партія); type (part — деталь / offcut — обрізок); code (код деталі з файлу"
+" розкрою); x; y; length; width; rotated (поворот)."
+
+#. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_offcut_pick_form
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -151,6 +169,12 @@ msgid "Check of the Design against the Measurement before Cutting"
 msgstr "Перевірка проєкту за заміром перед розкроєм"
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Choose a free offcut of the same board, not smaller than the part."
+msgstr "Оберіть вільний обрізок тієї самої плити, не менший за деталь."
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__company_id
 msgid "Company"
 msgstr "Компанія"
@@ -174,8 +198,10 @@ msgstr "Створено"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__create_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__create_uid
 msgid "Created by"
 msgstr "Створив"
 
@@ -183,8 +209,10 @@ msgstr "Створив"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__create_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -214,6 +242,8 @@ msgstr "Файл розкрою"
 #: code:addons/td_mebli_cutting/models/mrp_production.py:0
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_job
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_cutting_job_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__job_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__job_id
 msgid "Cutting Job"
 msgstr "Завдання розкрою"
 
@@ -297,10 +327,13 @@ msgstr "Проєкт проти заміру"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__distributor_id
@@ -331,6 +364,11 @@ msgid "Edge Trim, mm"
 msgstr "Обрізка краю, мм"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__filename
+msgid "File Name"
+msgstr "Ім'я файлу"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_follower_ids
 msgid "Followers"
 msgstr "Підписники"
@@ -341,14 +379,19 @@ msgid "Followers (Partners)"
 msgstr "Підписники (партнери)"
 
 #. module: td_mebli_cutting
-#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
-msgid "Get result (simulation)"
-msgstr "Отримати результат (імітація)"
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__candidate_ids
+msgid "Free Offcuts"
+msgstr "Вільні обрізки"
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_part
+msgid "Furniture Part of an Order BoM"
+msgstr "Деталь виробу зі специфікації замовлення"
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
-msgid "Get result again"
-msgstr "Отримати результат ще раз"
+msgid "Get result (simulation)"
+msgstr "Отримати результат (імітація)"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__has_message
@@ -363,8 +406,11 @@ msgstr "Є повідомлення"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__id
 msgid "ID"
 msgstr "ID"
 
@@ -380,8 +426,35 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Якщо позначено, під час доставки деяких повідомлень сталася помилка."
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+msgid "Import"
+msgstr "Імпортувати"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+msgid "Import Result"
+msgstr "Імпорт результату"
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_result_import
+msgid "Import of the Result of the Cutting Program"
+msgstr "Імпорт результату програми розкрою"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Import result"
+msgstr "Імпортувати результат"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Import result again"
+msgstr "Імпортувати результат ще раз"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_cutting_job__result_source__imported
-msgid "Imported"
+msgid "Imported from the cutting program"
 msgstr "Імпортовано"
 
 #. module: td_mebli_cutting
@@ -413,8 +486,10 @@ msgstr "Пропил, мм"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__write_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__write_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__write_uid
 msgid "Last Updated by"
 msgstr "Останнє оновлення"
 
@@ -422,8 +497,10 @@ msgstr "Останнє оновлення"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__write_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__write_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -449,6 +526,7 @@ msgstr "Партія/Серійний номер"
 #. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_mrp_production
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__production_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__td_production_id
 msgid "Manufacturing Order"
 msgstr "Замовлення на виробництво"
 
@@ -489,6 +567,11 @@ msgid "Name"
 msgstr "Назва"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__td_measure_missing
+msgid "No Measurement"
+msgstr "Заміру немає"
+
+#. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/distributor.py:0
 msgid ""
@@ -499,6 +582,12 @@ msgstr ""
 "Немає послуги порізки з дистриб'ютором: створіть товар-послугу виду «Послуга"
 " порізки» з дистриб'ютором як постачальником (вкладка «Закупівля», зі "
 "строком поставки)."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Not a number in column %(column)s: «%(value)s»."
+msgstr "Не число в колонці %(column)s: «%(value)s»."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_needaction_counter
@@ -521,9 +610,22 @@ msgid "Number of messages with delivery error"
 msgstr "Кількість повідомлень з помилкою доставки"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__lot_id
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
 msgid "Offcut"
 msgstr "Обрізок"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Offcut %(lot)s (%(size)s mm) reserved for part %(part)s."
+msgstr "Обрізок %(lot)s (%(size)s мм) зарезервовано під деталь %(part)s."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Offcut %s is not in the stock of the manufacturing order."
+msgstr "Обрізка %s немає на складі виробничого замовлення."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__lot_id
@@ -542,14 +644,38 @@ msgid "Offcuts, m2"
 msgstr "Обрізки, м²"
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "Only one board material in one cutting job."
+msgstr "В одному завданні розкрою — лише один матеріал плити"
+
+#. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_search
 msgid "Open"
 msgstr "Відкриті"
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Open the part from its cutting job."
+msgstr "Відкрийте деталь із її завдання розкрою."
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__td_order_name
+msgid "Order"
+msgstr "Замовлення"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__part_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__part_id
 msgid "Part"
 msgstr "Деталь"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Part %s does not belong to the job"
+msgstr "Деталь %s не належить завданню"
 
 #. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_placement
@@ -566,6 +692,23 @@ msgstr "Деталі"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__return_date
 msgid "Parts Expected Back"
 msgstr "Деталі повернуть"
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_offcut_pick
+msgid "Pick a Business Offcut for a Part"
+msgstr "Підбір ділового обрізка під деталь"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_offcut_pick_form
+msgid "Pick an Offcut"
+msgstr "Підібрати обрізок"
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Pick an offcut"
+msgstr "Підібрати обрізок"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__index
@@ -589,9 +732,15 @@ msgid "Product"
 msgstr "Товар"
 
 #. module: td_mebli_cutting
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__rating_ids
-msgid "Ratings"
-msgstr "Оцінки"
+#: model:ir.model.fields,help:td_mebli_cutting.field_sale_order__td_delay_reason
+msgid ""
+"Read only (AC-066): «Customer» when the last fixed change of the order was "
+"asked by the customer, «Cutting at the Distributor» when the parts cut by "
+"the distributor come back last, «Supplier» when a purchased item arrives too"
+" late for the promised date, «Company» when the workshop is late."
+msgstr ""
+"Лише читання: «Постачальник» — закупівля надходить запізно для обіцяної "
+"дати, «Компанія» — запізнюється цех."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__return_date
@@ -601,15 +750,6 @@ msgid ""
 msgstr ""
 "Лише читання: очікувана дата рядка послуги порізки в замовленні "
 "дистриб'ютору. Порожньо, коли деталі повернулись (результат отримано)."
-
-#. module: td_mebli_cutting
-#: model:ir.model.fields,help:td_mebli_cutting.field_sale_order__td_delay_reason
-msgid ""
-"Read only: «Supplier» when a purchased item arrives too late for the "
-"promised date, «Company» when the workshop is late."
-msgstr ""
-"Лише читання: «Постачальник» — закупівля надходить запізно для обіцяної "
-"дати, «Компанія» — запізнюється цех."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,help:td_mebli_cutting.field_product_product__td_material_kind
@@ -629,6 +769,11 @@ msgid "Reference"
 msgstr "Номер"
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_offcut_pick_form
+msgid "Reserve for the Job"
+msgstr "Зарезервувати під завдання"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_reserved_for
 msgid "Reserved For"
 msgstr "Зарезервовано для"
@@ -637,6 +782,11 @@ msgstr "Зарезервовано для"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_reserved_m2
 msgid "Reserved, m2"
 msgstr "Зарезервовано, м²"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__file
+msgid "Result File (CSV)"
+msgstr "Файл результату (CSV)"
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__result_source
@@ -696,6 +846,16 @@ msgid "Send to the distributor"
 msgstr "Передати дистриб'ютору"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__sent_by
+msgid "Sent by"
+msgstr "Відправив"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__sent_on
+msgid "Sent on"
+msgstr "Відправлено"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_cutting_job__state__sent
 msgid "Sent to cutting"
 msgstr "Передано на розкрій"
@@ -712,10 +872,26 @@ msgid "Sequence"
 msgstr "Послідовність"
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid ""
+"Several manufacturing orders in one cutting job is the function «Cutting "
+"Batches»: create one job per manufacturing order."
+msgstr ""
+"Кілька виробничих замовлень в одному завданні розкрою — функція «Пакет "
+"розкрою»: створіть окреме завдання на кожне виробниче замовлення."
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__sheet_id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__sheet_id
 msgid "Sheet"
 msgstr "Лист"
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Sheet %s: the board is not known."
+msgstr "Аркуш %s: плиту не визначено."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__lot_id
@@ -739,6 +915,11 @@ msgid "Simulation"
 msgstr "Імітація"
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__bom_version
+msgid "Specification Version"
+msgstr "Версія специфікації"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__state
 msgid "State"
 msgstr "Стан"
@@ -760,9 +941,42 @@ msgid "The cutting file of %s is attached."
 msgstr "Файл порізки %s додано."
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid ""
+"The cutting file of a sent job does not change: make a new cutting job."
+msgstr ""
+"Файл відправленого завдання не змінюється: створіть нове завдання розкрою."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "The file is empty."
+msgstr "Файл порожній."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "The manufacturing order of the part does not consume %s."
+msgstr "Виробниче замовлення деталі не витрачає %s."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/measure_check.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "The measurement is not filled in — the check is skipped"
+msgstr "Замір не заповнено — перевірку пропущено"
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__purchase_id
 msgid "The purchase of the cutting service from the distributor (Purchase)."
 msgstr "Закупівля послуги порізки в дистриб'ютора (Закупівлі)."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "The result file has no columns: %s."
+msgstr "У файлі результату немає колонок: %s."
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
@@ -772,6 +986,12 @@ msgid ""
 "real one."
 msgstr ""
 "Результат отримано з імітації програми розкрою, а не з реальної програми."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/mrp_production.py:0
+msgid "There are no cutting parts in manufacturing order %s"
+msgstr "У виробничому замовленні %s немає деталей розкрою"
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
@@ -784,6 +1004,11 @@ msgstr "Разом"
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__used_area_m2
 msgid "Used, m2"
 msgstr "Використано, м²"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__td_cutting_mode
+msgid "VP-09: «Distributor only» — the menus of own cutting are hidden."
+msgstr "VP-09: «Лише дистриб'ютор» — меню власного розкрою приховано."
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__waste_pct

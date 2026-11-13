@@ -24,11 +24,13 @@
             <form>
                 <header>
                     <button name="action_send" string="Send to cutting" type="object" class="btn-primary"
-                            invisible="state != 'draft'"/>
-                    <button name="action_simulate" string="Get result (simulation)" type="object" class="btn-primary"
+                            invisible="state != 'draft' or td_cutting_mode == 'distributor'"/>
+                    <button name="action_td_import_result" string="Import result" type="object" class="btn-primary"
                             invisible="state != 'sent'"/>
-                    <button name="action_simulate" string="Get result again" type="object"
+                    <button name="action_td_import_result" string="Import result again" type="object"
                             invisible="state != 'result'"/>
+                    <button name="action_simulate" string="Get result (simulation)" type="object"
+                            invisible="state not in ('sent', 'result')" groups="base.group_no_one"/>
                     <button name="action_done" string="Confirm" type="object" class="btn-primary"
                             invisible="state != 'result'"/>
                     <button name="action_cancel" string="Cancel" type="object"
@@ -39,6 +41,12 @@
                 <div class="alert alert-light border-bottom rounded-0 py-1 px-3 mb-0 small text-muted" role="status" invisible="result_source != 'simulated'">
                     The result is received from a simulation of the cutting program, not from a real one.
                 </div>
+                <div class="alert alert-warning border-bottom rounded-0 py-1 px-3 mb-0" role="status"
+                     invisible="not td_measure_missing or state != 'draft'">
+                    The measurement is not filled in — the check is skipped
+                </div>
+                <field name="td_cutting_mode" invisible="1"/>
+                <field name="td_measure_missing" invisible="1"/>
                 <sheet>
                     <div class="oe_title">
                         <h1><field name="name"/></h1>
@@ -47,6 +55,9 @@
                         <group>
                             <field name="production_ids" widget="many2many_tags" readonly="state != 'draft'"/>
                             <field name="export_attachment_id" invisible="not export_attachment_id"/>
+                            <field name="bom_version" invisible="not bom_version"/>
+                            <field name="sent_on" invisible="not sent_on"/>
+                            <field name="sent_by" invisible="not sent_by"/>
                             <field name="result_source" invisible="not result_source"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
@@ -63,15 +74,20 @@
                             <field name="map_html" readonly="1" nolabel="1"/>
                         </page>
                         <page string="Parts" name="parts">
-                            <field name="part_ids" readonly="1">
+                            <field name="part_ids" readonly="1" context="{'td_job_id': id}">
                                 <list>
-                                    <field name="bom_id" width="230px"/>
+                                    <field name="td_production_id" width="140px"/>
+                                    <field name="td_order_name" width="120px"/>
+                                    <field name="bom_id" width="230px" optional="hide"/>
                                     <field name="name" width="140px"/>
                                     <field name="material_id" context="{'display_default_code': False}"/>
                                     <field name="qty" width="80px"/>
                                     <field name="length_mm" width="120px"/>
                                     <field name="width_mm" width="120px"/>
                                     <field name="edge_product_id" context="{'display_default_code': False}"/>
+                                    <button name="action_td_pick_offcut" type="object" string="Pick an offcut"
+                                            icon="fa-puzzle-piece" groups="td_mebli_base.group_feature_offcut"
+                                            invisible="parent.state not in ('draft', 'sent')"/>
                                 </list>
                             </field>
                         </page>

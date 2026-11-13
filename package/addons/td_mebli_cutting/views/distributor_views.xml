@@ -38,10 +38,10 @@
         <field name="inherit_id" ref="td_mebli_sale.view_order_form_td_mebli_dates"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('td_date_alert')]/span" position="attributes">
-                <attribute name="invisible">not td_late_item or td_delay_reason == 'cutting'</attribute>
+                <attribute name="invisible">not td_late_item or td_delay_reason == 'distributor'</attribute>
             </xpath>
             <xpath expr="//div[hasclass('td_date_alert')]/span" position="after">
-                <span invisible="td_delay_reason != 'cutting'"> It is moved by the cutting at the distributor: <field name="td_late_item" class="oe_inline"/>.</span>
+                <span invisible="td_delay_reason != 'distributor'"> It is moved by the cutting at the distributor: <field name="td_late_item" class="oe_inline"/>.</span>
             </xpath>
         </field>
     </record>

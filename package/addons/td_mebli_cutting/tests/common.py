@@ -17,6 +17,13 @@ class TdMebliCuttingCommon(TdMebliCommon):
         cls.sheet_lots = cls._add_lots(cls.board_a, 3)
         cls.facade_lots = cls._add_lots(cls.facade, 2)
         cls.back_lots = cls._add_lots(cls.back, 2)
+        # box B function «business offcuts» (VP-02): on for the fixtures, a test of box A switches it off
+        cls._feature('offcut')
+
+    @classmethod
+    def _feature(cls, name, on=True, user=None):
+        group = cls.env.ref(f'td_mebli_base.group_feature_{name}')
+        (user or cls.env.user).write({'group_ids': [(4 if on else 3, group.id)]})
 
     @classmethod
     def _add_lots(cls, product, count, length=2800, width=2070, offcut=False, prefix='SHEET'):

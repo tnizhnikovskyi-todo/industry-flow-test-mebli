@@ -76,6 +76,13 @@ class TdMebliCuttingJob(models.Model):
                                                                                 'res_id': purchase.id}).ids)
         return True
 
+    def write(self, vals):
+        result = super().write(vals)
+        if {'state', 'purchase_id'} & set(vals):
+            # the forecast of the orders follows the cutting at the distributor (sent / back / cancelled)
+            self.sudo().filtered('purchase_id').production_ids._td_sale_orders()._td_recompute_forecast()
+        return result
+
     def action_view_purchase(self):
         self.ensure_one()
         return self.purchase_id._get_records_action(name=self.env._("Distributor Order"))
@@ -95,14 +102,14 @@ class MrpProduction(models.Model):
 
 
 class SaleOrder(models.Model):
-    """S-02: the cutting at the distributor moves the workshop date of the order (F-28).
+    """S-02: the cutting at the distributor moves the forecast date of the order (F-28).
 
     The parts are back on the expected date of the distributor purchase; the workshop needs the manufacturing lead time
     of the bill of materials after that (standard produce_delay, the same assumption as for a purchased item), or, when
-    the BoM has none, the expected time of its open work orders (standard duration_expected) in shifts."""
+    the BoM has none, the expected time of its open work orders (standard duration_expected) in shifts. The forecast and
+    the reason «Cutting at the Distributor» are computed by td_mebli_sale (AC-066) through the hook
+    _td_distributor_date."""
     _inherit = 'sale.order'
-
-    td_delay_reason = fields.Selection(selection_add=[('cutting', 'Cutting at the distributor')])
 
     def _td_cutting_ready(self):
         """(date, job): the latest date the workshop is ready after the parts come back from the distributor."""
@@ -116,15 +123,24 @@ class SaleOrder(models.Model):
                     best, best_job = ready, job
         return best, best_job
 
-    def _td_shop_date(self):
-        shop = super()._td_shop_date()
-        cutting, _job = self._td_cutting_ready()
-        return max(shop, cutting) if cutting else shop
+    def _td_distributor_date(self):
+        ready, _job = self._td_cutting_ready()
+        return ready or super()._td_distributor_date()
 
     def _compute_td_forecast(self):
         super()._compute_td_forecast()
-        for order in self.filtered(lambda o: o.td_delay_reason == 'company'):
-            cutting, job = order._td_cutting_ready()
-            if cutting and cutting >= order.td_forecast_date:
-                order.td_delay_reason = 'cutting'
+        for order in self.filtered(lambda o: o.td_delay_reason == 'distributor' and not o.td_late_item):
+            _ready, job = order._td_cutting_ready()
+            if job:
                 order.td_late_item = f"{job.name} — {job.distributor_id.name}"
+
+
+class PurchaseOrderLine(models.Model):
+    _inherit = 'purchase.order.line'
+
+    def _td_sale_orders(self):
+        """The cutting service bought from the distributor moves the orders of its cutting job (td_mebli_sale recomputes
+        their forecast when the date of the line changes)."""
+        orders = super()._td_sale_orders()
+        jobs = self.env['td.mebli.cutting.job'].sudo().search([('purchase_id', 'in', self.order_id.ids)])
+        return orders | jobs.production_ids._td_sale_orders()

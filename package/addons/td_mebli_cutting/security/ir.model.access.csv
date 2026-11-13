@@ -12,3 +12,5 @@ access_td_mebli_cutting_offcut_user,td.mebli.cutting.offcut user,model_td_mebli_
 access_td_mebli_cutting_offcut_manager,td.mebli.cutting.offcut manager,model_td_mebli_cutting_offcut,mrp.group_mrp_manager,1,1,1,1
 access_td_mebli_cutting_offcut_stock,td.mebli.cutting.offcut stock,model_td_mebli_cutting_offcut,stock.group_stock_user,1,1,0,0
 access_td_mebli_measure_warning_user,td.mebli.measure.warning user,model_td_mebli_measure_warning,mrp.group_mrp_user,1,1,1,1
+access_td_mebli_cutting_result_import_user,td.mebli.cutting.result.import user,model_td_mebli_cutting_result_import,mrp.group_mrp_user,1,1,1,1
+access_td_mebli_offcut_pick_user,td.mebli.offcut.pick user,model_td_mebli_offcut_pick,mrp.group_mrp_user,1,1,1,1

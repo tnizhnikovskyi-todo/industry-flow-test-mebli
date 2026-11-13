@@ -7,6 +7,19 @@ class TdMebliCuttingJob(models.Model):
     _inherit = 'td.mebli.cutting.job'
 
     td_measure_problems = fields.Text(string='Design against the Measurement', compute='_compute_td_measure_problems')
+    td_measure_missing = fields.Boolean(string='No Measurement', compute='_compute_td_measure_missing')
+
+    def _compute_td_measure_missing(self):
+        """AC-056: an order of the job has no measurement sheet — the check against the measurement is skipped."""
+        for job in self:
+            orders = job.production_ids._td_sale_orders()
+            job.td_measure_missing = not orders or any(not order.sudo().td_measure_ids for order in orders)
+
+    def _td_warn_no_measure(self):
+        if self.env.context.get('td_measure_ack'):
+            return  # the check against the measurement found problems: there is a measurement
+        for job in self.filtered('td_measure_missing'):
+            job.message_post(body=self.env._("The measurement is not filled in — the check is skipped"))
 
     def _compute_td_measure_problems(self):
         for job in self:
@@ -28,10 +41,20 @@ class TdMebliCuttingJob(models.Model):
                 'target': 'new', 'name': self.env._("Check before Cutting")}
 
     def action_send(self):
-        return self._td_measure_gate('action_send') or super().action_send()
+        gate = self._td_measure_gate('action_send')
+        if gate:
+            return gate
+        if not self.env.context.get('td_measure_warned'):
+            self._td_warn_no_measure()  # AC-056: a warning, the sending is not blocked
+        return super().action_send()
 
     def action_send_distributor(self):
-        return self._td_measure_gate('action_send_distributor') or super().action_send_distributor()
+        gate = self._td_measure_gate('action_send_distributor')
+        if gate:
+            return gate
+        self._td_warn_no_measure()
+        # the distributor sending calls action_send itself: one warning is enough
+        return super(TdMebliCuttingJob, self.with_context(td_measure_warned=True)).action_send_distributor()
 
 
 class TdMebliMeasureWarning(models.TransientModel):

@@ -17,8 +17,10 @@
             <!-- position 14 (F-57): analog of a short material, replacement in one click -->
             <xpath expr="//field[@name='move_raw_ids']/list" position="inside">
                 <field name="td_analog_id" column_invisible="1"/>
-                <field name="td_analog_hint" string="Analog" optional="show" class="text-success"/>
+                <field name="td_analog_hint" string="Analog" optional="show" class="text-success"
+                       groups="td_mebli_base.group_feature_analog"/>
                 <button name="action_td_use_analog" type="object" string="Use Analog" class="btn-link"
+                        groups="td_mebli_base.group_feature_analog"
                         invisible="not td_analog_id or parent.state in ('draft', 'done', 'cancel')"/>
             </xpath>
             <xpath expr="//page[@name='components']" position="after">
