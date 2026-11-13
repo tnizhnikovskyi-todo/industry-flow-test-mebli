@@ -1,0 +1,194 @@
+# tr: package/SPEC.md@HEAD  (SPEC §11 «Точки варіативності (VP)», спроба 2 A-08; HEAD = коміт гілки flow/A-09-test з цією спробою)
+# schema: 1
+# Схема відповідей пакета mebli (A-09, questionnaire-builder, режим first). Формат — answers-schema.md (questionnaire-builder).
+# Службові ключі edition / contract_mode — §2а; обмеження між параметрами — SPEC §11.3.
+VP-01:
+  param: Профіль коробки
+  question: Q-01
+  type: enum
+  allowed: [light, A, B]
+  default: A
+  default_from: tr
+  ac: [AC-N.07, AC-089, AC-121]
+  deprecated: false
+VP-02:
+  param: Функції коробки B
+  question: Q-02
+  type: multi
+  allowed: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, ai_mapping, analog, shop_board]
+  default: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, analog, shop_board]
+  default_from: tr
+  ac: [AC-011, AC-012, AC-037, AC-038, AC-050, AC-057, AC-058, AC-059, AC-060, AC-062, AC-071, AC-072, AC-073, AC-074, AC-075, AC-079, AC-088, AC-120, AC-121]
+  applies_if: {VP-01: B}
+  deprecated: false
+VP-03:
+  param: Юрособи компанії
+  question: Q-03
+  type: enum
+  allowed: [single, multi, multi_install_fop]
+  default: single
+  default_from: tr
+  ac: [AC-035, AC-036]
+  applies_if: {VP-01: B}
+  deprecated: false
+VP-04:
+  param: Обмін з BAS/BAF
+  question: Q-04
+  type: bool
+  default: true
+  default_from: tr
+  ac: [AC-021, AC-039, AC-040, AC-041, AC-042, AC-078, AC-109]
+  deprecated: false
+VP-05:
+  param: Оплата замовлення етапами
+  question: Q-05
+  type: bool
+  default: true
+  default_from: tr
+  ac: [AC-019, AC-020, AC-031, AC-042, AC-065]
+  deprecated: false
+VP-06:
+  param: Контроль доплати перед виїздом
+  question: Q-06
+  type: enum
+  allowed: [warn, block]
+  default: warn
+  default_from: tr
+  ac: [AC-020, AC-021]
+  applies_if: {VP-05: true}
+  deprecated: false
+VP-07:
+  param: Нагадування про доплату, днів до виїзду
+  question: Q-07
+  type: int
+  min: 1
+  max: 7
+  unit: "днів"
+  default: 2
+  default_from: tr
+  ac: [AC-031]
+  applies_if: {VP-05: true}
+  deprecated: false
+VP-08:
+  param: Менеджер бачить маржу
+  question: Q-08
+  type: bool
+  default: false
+  default_from: tr
+  ac: [AC-017, AC-018]
+  deprecated: false
+VP-09:
+  param: Розкрій плит
+  question: Q-09
+  type: enum
+  allowed: [both, distributor]
+  default: both
+  default_from: tr
+  ac: [AC-026, AC-027, AC-028, AC-053, AC-054, AC-055, AC-056, AC-131]
+  deprecated: false
+VP-10:
+  param: Застряглі замовлення, днів без руху
+  question: Q-10
+  type: int
+  min: 1
+  max: 30
+  unit: "днів"
+  default: 5
+  default_from: tr
+  ac: [AC-067, AC-124]
+  deprecated: false
+VP-11:
+  param: Поріг ціни закупівлі вище історії, %
+  question: Q-11
+  type: int
+  min: 1
+  max: 50
+  unit: "%"
+  default: 5
+  default_from: tr
+  ac: [AC-085, AC-086]
+  deprecated: false
+VP-12:
+  param: Мінімальний діловий обрізок, мм
+  question: Q-12
+  type: int
+  min: 100
+  max: 1000
+  unit: "мм"
+  default: 300
+  default_from: tr
+  ac: [AC-059, AC-060]
+  applies_if: {VP-01: B}
+  deprecated: false
+VP-13:
+  param: Строк закриття рекламації, днів
+  question: Q-13
+  type: int
+  min: 1
+  max: 60
+  unit: "днів"
+  default: 14
+  default_from: tr
+  ac: [AC-110, AC-124]
+  deprecated: false
+VP-14:
+  param: Поділ % бригаді між виконавцями
+  question: Q-14
+  type: enum
+  allowed: [equal, time]
+  default: equal
+  default_from: tr
+  ac: [AC-104]
+  deprecated: false
+VP-15:
+  param: База нарахування % бригаді
+  question: Q-15
+  type: enum
+  allowed: [final, stage]
+  default: final
+  default_from: tr
+  ac: [AC-103, AC-104]
+  deprecated: false
+VP-16:
+  param: Монтаж у вартості замовлення
+  question: Q-16
+  type: bool
+  default: true
+  default_from: ai
+  ac: [AC-043]
+  deprecated: false
+VP-17:
+  param: Перевитрата матеріалу у виробництві
+  question: Q-17
+  type: enum
+  allowed: [flexible, warning, strict]
+  default: warning
+  default_from: tr
+  ac: [AC-116]
+  deprecated: false
+VP-18:
+  param: Платник ПДВ
+  question: Q-18
+  type: bool
+  default: true
+  default_from: tr
+  ac: [AC-N.03]
+  deprecated: false
+edition:
+  param: Редакція Odoo
+  question: Q-19
+  type: enum
+  allowed: [ce, ee]
+  default: ce
+  default_from: ai
+  ac: [AC-113, AC-126, AC-127, AC-128, AC-129, AC-130]
+  deprecated: false
+contract_mode:
+  param: Режим договору
+  question: Q-20
+  type: enum
+  allowed: [contract, sale, unset]
+  default: unset
+  default_from: tr
+  ac: [AC-033, AC-034, AC-101]
+  deprecated: false
