@@ -7,9 +7,9 @@
             <list string="Accruals" editable="bottom" decoration-danger="kind == 'penalty'" decoration-success="kind == 'bonus'">
                 <header>
                     <button name="action_td_accrue_wizard" type="object" string="Accrue" class="btn-primary" display="always"
-                            groups="mrp.group_mrp_manager,account.group_account_user"/>
+                            groups="mrp.group_mrp_manager,account.group_account_user,account.group_account_manager"/>
                     <button name="action_td_confirm" type="object" string="Confirm"
-                            groups="mrp.group_mrp_manager,account.group_account_user"/>
+                            groups="mrp.group_mrp_manager,account.group_account_user,account.group_account_manager"/>
                     <button name="action_td_cancel_wizard" type="object" string="Cancel Confirmed"
                             groups="mrp.group_mrp_manager,account.group_account_manager"/>
                 </header>
@@ -107,7 +107,7 @@
     </record>
 
     <menuitem id="td_mebli_accrual_reason_menu" name="Reasons of Bonuses and Penalties" parent="mrp.menu_mrp_configuration"
-              action="td_mebli_accrual_reason_action" sequence="40" groups="mrp.group_mrp_manager,account.group_account_user"/>
+              action="td_mebli_accrual_reason_action" sequence="40" groups="mrp.group_mrp_manager,account.group_account_user,account.group_account_manager"/>
 
     <!-- AC-104/105: «Accrue» for a period, the summary of the operations without a piece rate -->
     <record id="td_mebli_accrual_wizard_view_form" model="ir.ui.view">

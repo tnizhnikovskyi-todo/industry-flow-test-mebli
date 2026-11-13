@@ -219,6 +219,30 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         check.with_user(manager).write({'explanation': 'Corrected by the manager'})
         self.assertEqual(check.explanation, 'Corrected by the manager')
 
+    def test_ac_090_duplicate_is_a_new_draft(self):
+        """CHECKS.md No. 37 (security N3-3): «Duplicate» of a computed or signed reconciliation by the finance is a new
+        draft without the status, the explanation and the signature of the original (no AccessError)."""
+        clerk = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Finance 3', 'login': 'td_mig_fin3',
+            'group_ids': [(6, 0, [self.env.ref('td_mebli_base.group_finance').id])]})
+        check = self._check(500.0, 2, 38.0).with_user(clerk)
+        check.action_td_compute()
+        self.assertEqual(check.state, 'diff')
+        diff_copy = check.copy()
+        self.assertEqual((diff_copy.state, len(diff_copy.line_ids)), ('draft', len(check.line_ids)))
+        self.assertEqual(diff_copy.line_ids.mapped('value_odoo'), [0.0] * len(check.line_ids))
+        self.assertFalse(diff_copy.line_ids.cause_order_ids)
+        check.explanation = 'Cash payment booked after the date'
+        check.with_user(self.env.user).action_td_sign_explanation()
+        signed_copy = check.copy()
+        self.assertEqual((signed_copy.state, signed_copy.explanation, signed_copy.explained_by.id,
+                          signed_copy.explained_on), ('draft', False, False, False))
+        self.assertEqual(check.state, 'explained')
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Sales Manager 3', 'login': 'td_mig_manager3',
+            'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_manager').id])]})
+        self.assertEqual(check.with_user(manager).copy().state, 'draft')
+
     def test_ac_089_import_steps_follow_the_templates_of_a13(self):
         steps = self.env['td.mebli.migration.step'].search([])
         self.assertEqual(steps.mapped('sequence'), list(range(1, 29)))

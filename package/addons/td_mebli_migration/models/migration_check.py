@@ -18,10 +18,10 @@ class TdMebliMigrationCheck(models.Model):
                        help="The date of the stock and of the payments in the source (one date, box A).")
     state = fields.Selection([('draft', 'Draft'), ('diff', 'Difference'), ('reconciled', 'Reconciled'),
                               ('explained', 'Explained')], string='Status', default='draft', required=True,
-                             readonly=True, tracking=True)
+                             readonly=True, tracking=True, copy=False)  # CHECKS.md No. 37: «Duplicate» is a new draft
     line_ids = fields.One2many('td.mebli.migration.check.line', 'check_id', string='Lines', copy=True)
     has_diff = fields.Boolean(string='Has a Difference', compute='_compute_has_diff')
-    explanation = fields.Text(string='Explanation', tracking=True,
+    explanation = fields.Text(string='Explanation', tracking=True, copy=False,
                               help="Why the difference is accepted; signed by a manager (button «Sign the Explanation»).")
     explained_by = fields.Many2one('res.users', string='Signed by', readonly=True, copy=False)
     explained_on = fields.Datetime(string='Signed on', readonly=True, copy=False)
@@ -146,9 +146,10 @@ class TdMebliMigrationCheckLine(models.Model):
                                  "document. Empty — all open orders.")
     product_id = fields.Many2one('product.product', string='Product')
     value_source = fields.Float(string='Source', digits=(16, 2))
-    value_odoo = fields.Float(string='Odoo', digits=(16, 2), readonly=True)
+    # CHECKS.md No. 37: a duplicated reconciliation is computed again («Compute»), the values of Odoo are not copied
+    value_odoo = fields.Float(string='Odoo', digits=(16, 2), readonly=True, copy=False)
     diff = fields.Float(string='Difference', digits=(16, 2), compute='_compute_diff', store=True)
-    cause_order_ids = fields.Many2many('sale.order', string='Records to Check', readonly=True,
+    cause_order_ids = fields.Many2many('sale.order', string='Records to Check', readonly=True, copy=False,
                                        help="Orders behind a difference: open orders with a prepayment (or the order "
                                             "of the line).")
     note = fields.Char(string='Note')

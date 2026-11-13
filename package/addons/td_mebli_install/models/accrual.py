@@ -3,11 +3,15 @@ from datetime import timedelta
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 
-ACCRUE_GROUPS = ('mrp.group_mrp_manager', 'account.group_account_user')
+# AC-104/107: the head confirms the drafts and accrues — the production manager or the accountant; the accounting
+# administrator does the same as the accountant (CHECKS.md No. 35: in Odoo 19 account.group_account_manager does not
+# imply account.group_account_user, account/security/account_security.xml)
+ACCRUE_GROUPS = ('mrp.group_mrp_manager', 'account.group_account_user', 'account.group_account_manager')
 # AC-106: the head who confirms the accruals cancels a confirmed line (with a reason): production or accounting manager
 CANCEL_GROUPS = ('mrp.group_mrp_manager', 'account.group_account_manager')
+# CHECKS.md No. 36: the reason of the cancellation and the author are fixed as well (written by `action_td_cancel` only)
 LOCKED = ('employee_id', 'date', 'kind', 'hours', 'piece_rate', 'amount', 'reason', 'reason_id', 'productivity_id',
-          'act_id', 'company_id')
+          'act_id', 'company_id', 'cancel_reason', 'author_id')
 
 
 class TdMebliAccrualReason(models.Model):
@@ -101,22 +105,30 @@ class TdMebliAccrual(models.Model):
         return super().create(vals_list)
 
     def _td_check_state_change(self, vals):
-        """CHECKS.md No. 30 (security S-N2), also through RPC: draft → confirmed by the shop manager or the accountant
-        (ACCRUE_GROUPS); back to draft and cancelled only by the head (CANCEL_GROUPS), cancelled with a reason."""
+        """AC-106 (CHECKS.md No. 30, 35), also through RPC and for the head: the only changes of the state are
+        draft → confirmed (ACCRUE_GROUPS) and draft or confirmed → cancelled (CANCEL_GROUPS, with a reason).
+        A confirmed accrual is never returned to draft and a cancelled one is never restored (superuser only)."""
         if self.env.su:
             return
         state = vals['state']
-        if state == 'confirmed' and all(accrual.state in ('draft', 'confirmed') for accrual in self):
+        if state == 'confirmed':
+            if any(accrual.state == 'cancel' for accrual in self):
+                raise AccessError(self.env._("A confirmed or cancelled accrual is read-only: the head only cancels it "
+                                             "with a reason."))
             self._td_check_confirm_rights()
             return
+        if state == 'draft':
+            if any(accrual.state != 'draft' for accrual in self):
+                raise AccessError(self.env._("A confirmed or cancelled accrual is read-only: the head only cancels it "
+                                             "with a reason."))
+            return
+        # cancel
         if not any(self.env.user.has_group(group) for group in CANCEL_GROUPS):
-            if state == 'cancel':
-                raise AccessError(self.env._("A confirmed accrual is cancelled by the head only."))
-            if state == 'draft' and any(accrual.state != 'draft' for accrual in self):
-                raise AccessError(self.env._("A confirmed accrual is returned to draft by the head only."))
-            if state == 'confirmed':
-                raise AccessError(self.env._("A cancelled accrual is restored by the head only."))
-        if state == 'cancel' and not (vals.get('cancel_reason') or '').strip():
+            raise AccessError(self.env._("A confirmed accrual is cancelled by the head only."))
+        if not self or any(accrual.state == 'cancel' for accrual in self):  # created cancelled / the reason rewritten
+            raise AccessError(self.env._("A confirmed or cancelled accrual is read-only: the head only cancels it "
+                                         "with a reason."))
+        if not (vals.get('cancel_reason') or '').strip():
             raise UserError(self.env._("Specify the reason of the cancellation"))
 
     def write(self, vals):
@@ -127,7 +139,10 @@ class TdMebliAccrual(models.Model):
         if 'hours' in vals and not self.env.su:
             raise UserError(self.env._("The hours of an accrual are the time of the tablet: they are not changed by hand."))
         # a confirmed accrual is handed over to the accounting: its figures are fixed
-        if set(vals) & set(LOCKED) and not self.env.su and any(a.state in ('confirmed', 'cancel') for a in self):
+        locked = set(vals) & set(LOCKED)
+        if vals.get('state') == 'cancel':
+            locked.discard('cancel_reason')  # the cancellation itself, checked by _td_check_state_change
+        if locked and not self.env.su and any(a.state in ('confirmed', 'cancel') for a in self):
             raise UserError(self.env._("A confirmed accrual cannot be changed: add a new bonus or penalty instead."))
         if {'kind', 'reason_id', 'reason'} & set(vals):
             for accrual in self:

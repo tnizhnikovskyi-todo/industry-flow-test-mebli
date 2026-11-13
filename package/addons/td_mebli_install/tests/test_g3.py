@@ -353,16 +353,84 @@ class TestAccrualG3(G3InstallCommon):
         head = _user(self.env, 'td_g3_head2', ['account.group_account_manager'])
         with self.assertRaises(UserError):  # cancelled by RPC only with a reason
             line.with_user(head).write({'state': 'cancel'})
-        line.with_user(head).write({'state': 'draft'})
-        line.with_user(head).write({'amount': 120.0})
-        line.with_user(accountant).write({'state': 'confirmed'})
         line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Duplicate'})
-        self.assertEqual((line.state, line.amount, line.cancel_reason), ('cancel', 120.0, 'Duplicate'))
+        self.assertEqual((line.state, line.amount, line.cancel_reason), ('cancel', 100.0, 'Duplicate'))
         with self.assertRaises(AccessError):  # a cancelled one is not confirmed again by the accountant
             line.with_user(accountant).write({'state': 'confirmed'})
         draft = Accrual.with_user(accountant).create({
             'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 1.0, 'reason': 'Clean site'})
         draft.with_user(accountant).unlink()  # a draft is deleted
+
+    def test_ac_106_head_does_not_change_a_confirmed_accrual_by_rpc(self):
+        """CHECKS.md No. 35 (security N3-1): AC-106 «confirmed — read only for everybody, except the cancellation by the
+        head with a reason» holds for the head too: through RPC the production manager and the accounting administrator
+        do not return a confirmed accrual to draft, do not change its amount, do not restore a cancelled one and do not
+        rewrite the reason of the cancellation."""
+        Accrual = self.env['td.mebli.accrual']
+        heads = (_user(self.env, 'td_g3_head3', ['account.group_account_manager']),
+                 _user(self.env, 'td_g3_head4', ['mrp.group_mrp_manager']))
+        for head in heads:
+            line = Accrual.with_user(head).create({
+                'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0, 'reason': 'Clean site'})
+            line.with_user(head).action_td_confirm()
+            self.assertEqual(line.state, 'confirmed')
+            with self.assertRaises(AccessError):
+                line.with_user(head).write({'state': 'draft'})
+            with self.assertRaises(UserError):
+                line.with_user(head).write({'amount': 120.0})
+            with self.assertRaises(UserError):  # the cancellation does not change the figures
+                line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Mistake', 'amount': 1.0})
+            line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Mistake'})
+            with self.assertRaises(AccessError):  # not restored
+                line.with_user(head).write({'state': 'confirmed'})
+            with self.assertRaises(AccessError):
+                line.with_user(head).write({'state': 'draft'})
+            with self.assertRaises(AccessError):  # not cancelled again with another reason
+                line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Other'})
+            line.with_user(head).action_td_cancel('Other')  # the button cancels confirmed lines only: no change
+            with self.assertRaises(AccessError):  # not created cancelled
+                Accrual.with_user(head).create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 5.0,
+                                                'reason': 'Clean site', 'state': 'cancel', 'cancel_reason': 'x'})
+            self.assertEqual((line.state, line.amount, line.cancel_reason), ('cancel', 100.0, 'Mistake'))
+
+    def test_ac_106_cancel_reason_and_author_are_locked(self):
+        """CHECKS.md No. 36 (security N3-2): the reason of the cancellation and the author of a confirmed or cancelled
+        accrual are not rewritten through RPC (the accountant has write access to all the accruals)."""
+        Accrual = self.env['td.mebli.accrual']
+        accountant = _user(self.env, 'td_g3_acc3', ['account.group_account_user'])
+        head = _user(self.env, 'td_g3_head5', ['account.group_account_manager'])
+        line = Accrual.with_user(accountant).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0, 'reason': 'Clean site'})
+        self.assertEqual(line.author_id, accountant)
+        line.with_user(accountant).action_td_confirm()
+        with self.assertRaises(UserError):
+            line.with_user(accountant).write({'author_id': head.id})
+        line.with_user(head).action_td_cancel('Wrong employee')
+        for user in (accountant, head):
+            with self.assertRaises(UserError):
+                line.with_user(user).write({'cancel_reason': 'Rewritten'})
+            with self.assertRaises(UserError):
+                line.with_user(user).write({'author_id': user.id})
+        self.assertEqual((line.cancel_reason, line.author_id), ('Wrong employee', accountant))
+
+    def test_ac_106_accounting_administrator_does_what_the_accountant_does(self):
+        """CHECKS.md No. 35: in Odoo 19 account.group_account_manager does not imply account.group_account_user
+        (account/security/account_security.xml); the accounting administrator confirms the drafts, accrues for a period
+        and reads the reasons, like the accountant, and cancels as the head."""
+        admin = _user(self.env, 'td_g3_accadm', ['account.group_account_manager'])
+        self.assertFalse(admin.has_group('account.group_account_user'))
+        Accrual = self.env['td.mebli.accrual'].with_user(admin)
+        draft = Accrual.create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0,
+                                'reason': 'Clean site'})
+        draft.action_td_confirm()
+        self.assertEqual(draft.state, 'confirmed')
+        self.assertTrue(Accrual.action_td_accrue_wizard())
+        wizard = self.env['td.mebli.accrual.wizard'].with_user(admin).create({})
+        wizard.action_accrue()
+        self.assertEqual(wizard.state, 'done')
+        self.assertTrue(self.env['td.mebli.accrual.reason'].with_user(admin).create({'name': 'Late', 'kind': 'penalty'}))
+        draft.action_td_cancel('Wrong employee')
+        self.assertEqual(draft.state, 'cancel')
 
     def test_ac_107_master_adds_bonus_in_his_section(self):
         Accrual = self.env['td.mebli.accrual']

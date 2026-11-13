@@ -1460,11 +1460,9 @@ msgstr "Нарахування підтверджує начальник вир�
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/accrual.py:0
-msgid "A confirmed accrual is returned to draft by the head only."
-msgstr "Повернути підтверджене нарахування в чернетку може лише керівник."
-
-#. module: td_mebli_install
-#. odoo-python
-#: code:addons/td_mebli_install/models/accrual.py:0
-msgid "A cancelled accrual is restored by the head only."
-msgstr "Відновити скасоване нарахування може лише керівник."
+msgid ""
+"A confirmed or cancelled accrual is read-only: the head only cancels it with"
+" a reason."
+msgstr ""
+"Підтверджене чи скасоване нарахування — лише для читання: керівник може "
+"лише скасувати його з причиною."
