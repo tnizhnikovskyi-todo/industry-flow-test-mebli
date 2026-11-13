@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- channels -->
+    <record id="td_mebli_bas_channel_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.bas.channel.list</field>
+        <field name="model">td.mebli.bas.channel</field>
+        <field name="arch" type="xml">
+            <list string="Exchange Channels">
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="transport"/>
+                <field name="last_run"/>
+            </list>
+        </field>
+    </record>
+    <record id="td_mebli_bas_channel_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.bas.channel.form</field>
+        <field name="model">td.mebli.bas.channel</field>
+        <field name="arch" type="xml">
+            <form string="Exchange Channel">
+                <header>
+                    <button name="action_td_exchange" type="object" string="Send to BAS" class="btn-primary"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="user_id"/>
+                            <field name="active" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="transport"/>
+                            <field name="endpoint" invisible="transport != 'http'"/>
+                            <field name="api_key" password="True" invisible="transport != 'http'"/>
+                            <field name="schema_version"/>
+                            <field name="last_run"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-info" role="status">
+                        The format of the batch is our draft schema until the exchange contract with the franchisee of
+                        BAS/BAF; the transport «HTTP» is enabled after the contract.
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="td_mebli_bas_channel_action" model="ir.actions.act_window">
+        <field name="name">Exchange Channels</field>
+        <field name="res_model">td.mebli.bas.channel</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- batches -->
+    <record id="td_mebli_bas_batch_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.bas.batch.list</field>
+        <field name="model">td.mebli.bas.batch</field>
+        <field name="arch" type="xml">
+            <list string="Exchange Batches" decoration-danger="state == 'error' or error_count" decoration-muted="state == 'draft'">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="direction"/>
+                <field name="kind"/>
+                <field name="line_count" sum="Total"/>
+                <field name="error_count" sum="Total"/>
+                <field name="state" widget="badge" decoration-success="state in ('sent', 'accepted')"
+                       decoration-danger="state == 'error'"/>
+            </list>
+        </field>
+    </record>
+    <record id="td_mebli_bas_batch_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.bas.batch.form</field>
+        <field name="model">td.mebli.bas.batch</field>
+        <field name="arch" type="xml">
+            <form string="Exchange Batch">
+                <header>
+                    <button name="action_td_import" type="object" string="Import" class="btn-primary"
+                            invisible="direction != 'in' or state != 'draft'" groups="td_mebli_base.group_finance"/>
+                    <button name="action_td_retry" type="object" string="Retry"
+                            invisible="state == 'draft' or (not error_count and state != 'error')"
+                            groups="td_mebli_base.group_finance"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,accepted"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="channel_id" readonly="id"/>
+                            <field name="direction" readonly="id"/>
+                            <field name="kind" readonly="id"/>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="attachment_id" invisible="not attachment_id"/>
+                            <field name="file" filename="filename" invisible="direction != 'in' or state != 'draft'"/>
+                            <field name="filename" invisible="1"/>
+                            <field name="line_count"/>
+                            <field name="error_count"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-danger" role="alert" invisible="not message">
+                        <field name="message" nolabel="1"/>
+                    </div>
+                    <field name="log_ids" readonly="1">
+                        <list decoration-danger="state == 'error'" decoration-warning="state == 'unmatched'">
+                            <field name="document"/>
+                            <field name="state"/>
+                            <field name="message"/>
+                        </list>
+                    </field>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="td_mebli_bas_batch_view_search" model="ir.ui.view">
+        <field name="name">td.mebli.bas.batch.search</field>
+        <field name="model">td.mebli.bas.batch</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <filter name="errors" string="Errors" domain="['|', ('state', '=', 'error'), ('error_count', '>', 0)]"/>
+                <separator/>
+                <filter name="outgoing" string="Odoo → BAS" domain="[('direction', '=', 'out')]"/>
+                <filter name="incoming" string="BAS → Odoo" domain="[('direction', '=', 'in')]"/>
+                <group>
+                    <filter name="group_kind" string="Kind" context="{'group_by': 'kind'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="td_mebli_bas_batch_action" model="ir.actions.act_window">
+        <field name="name">Exchange Batches</field>
+        <field name="res_model">td.mebli.bas.batch</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- log -->
+    <record id="td_mebli_bas_log_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.bas.log.list</field>
+        <field name="model">td.mebli.bas.log</field>
+        <field name="arch" type="xml">
+            <list string="Exchange Log" create="0" decoration-danger="state == 'error'" decoration-warning="state == 'unmatched'">
+                <field name="date"/>
+                <field name="batch_id"/>
+                <field name="document"/>
+                <field name="state"/>
+                <field name="message"/>
+            </list>
+        </field>
+    </record>
+    <record id="td_mebli_bas_log_view_search" model="ir.ui.view">
+        <field name="name">td.mebli.bas.log.search</field>
+        <field name="model">td.mebli.bas.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="batch_id"/>
+                <field name="message"/>
+                <filter name="errors" string="Errors" domain="[('state', 'in', ('error', 'unmatched'))]"/>
+            </search>
+        </field>
+    </record>
+    <record id="td_mebli_bas_log_action" model="ir.actions.act_window">
+        <field name="name">Exchange Log</field>
+        <field name="res_model">td.mebli.bas.log</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_errors': 1}</field>
+    </record>
+
+    <menuitem id="td_mebli_bas_menu" name="Exchange with BAS" parent="account.menu_finance" sequence="30"
+              groups="td_mebli_base.group_finance"/>
+    <menuitem id="td_mebli_bas_batch_menu" name="Batches" parent="td_mebli_bas_menu" action="td_mebli_bas_batch_action"
+              sequence="10"/>
+    <menuitem id="td_mebli_bas_log_menu" name="Log" parent="td_mebli_bas_menu" action="td_mebli_bas_log_action" sequence="20"/>
+    <menuitem id="td_mebli_bas_channel_menu" name="Channels" parent="td_mebli_bas_menu" action="td_mebli_bas_channel_action"
+              sequence="30"/>
+</odoo>

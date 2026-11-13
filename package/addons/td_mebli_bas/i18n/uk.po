@@ -1,0 +1,812 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_bas
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:43+0000\n"
+"PO-Revision-Date: 2026-11-13 09:43+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: uk\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.view_move_form_td_mebli_bas
+msgid "): corrections only by a reversal."
+msgstr "): виправлення лише сторно."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "A company has one active exchange channel with BAS."
+msgstr "У компанії один активний канал обміну з BAS."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__api_key
+msgid "API Key"
+msgstr "Ключ API"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__state__accepted
+msgid "Accepted"
+msgstr "Прийнято"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_td_mebli_accrual
+msgid "Accrual to a Worker or a Crew"
+msgstr "Нарахування працівнику чи бригаді"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__kind__accruals
+msgid "Accruals"
+msgstr "Нарахування"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_needaction
+msgid "Action Needed"
+msgstr "Потрібна дія"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__active
+msgid "Active"
+msgstr "Активний"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_ids
+msgid "Activities"
+msgstr "Активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_exception_decoration
+msgid "Activity Exception Decoration"
+msgstr "Оформлення винятку активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_state
+msgid "Activity State"
+msgstr "Стан активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_type_icon
+msgid "Activity Type Icon"
+msgstr "Іконка типу активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_channel__endpoint
+msgid "Address of the HTTP service of BAS (transport «HTTP»)."
+msgstr "Адреса HTTP-сервісу BAS (транспорт «HTTP»)."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "Already imported: %s"
+msgstr "Уже імпортовано: %s"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_channel_view_form
+msgid "Archived"
+msgstr "Архівовано"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_attachment_count
+msgid "Attachment Count"
+msgstr "Кількість вкладень"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_bank_statement_line__td_bas_batch_id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_move__td_bas_batch_id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_accrual__bas_batch_id
+msgid "BAS Batch"
+msgstr "Пакет BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_hr_employee__td_bas_code
+#: model:ir.model.fields,field_description:td_mebli_bas.field_product_product__td_bas_code
+#: model:ir.model.fields,field_description:td_mebli_bas.field_res_partner__td_bas_code
+#: model:ir.model.fields,field_description:td_mebli_bas.field_res_users__td_bas_code
+msgid "BAS Code"
+msgstr "Код BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_td_mebli_bas_batch
+msgid "BAS Exchange Batch"
+msgstr "Пакет обміну з BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_td_mebli_bas_channel
+msgid "BAS Exchange Channel"
+msgstr "Канал обміну з BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_td_mebli_bas_log
+msgid "BAS Exchange Log"
+msgstr "Журнал обміну з BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_payment__td_bas_ref
+msgid "BAS Reference"
+msgstr "Посилання BAS"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "BAS rejected: %s"
+msgstr "BAS відхилив: %s"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__direction__in
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_search
+msgid "BAS → Odoo"
+msgstr "BAS → Odoo"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__batch_id
+msgid "Batch"
+msgstr "Пакет"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message
+msgid "Batch Error"
+msgstr "Помилка пакета"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__batch_ids
+#: model:ir.ui.menu,name:td_mebli_bas.td_mebli_bas_batch_menu
+msgid "Batches"
+msgstr "Пакети"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/timesheet_export.py:0
+msgid "Build the file first."
+msgstr "Спершу сформуйте файл."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__kind__catalog
+msgid "Catalogs"
+msgstr "Довідники"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__channel_id
+msgid "Channel"
+msgstr "Канал"
+
+#. module: td_mebli_bas
+#: model:ir.ui.menu,name:td_mebli_bas.td_mebli_bas_channel_menu
+msgid "Channels"
+msgstr "Канали"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__company_id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__company_id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__company_id
+msgid "Company"
+msgstr "Компанія"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_res_partner
+msgid "Contact"
+msgstr "Контакт"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__create_uid
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__create_uid
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__create_date
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__create_date
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__date
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__date
+msgid "Date"
+msgstr "Дата"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__direction
+msgid "Direction"
+msgstr "Напрям"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_move__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_payment__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_product_product__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_res_partner__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_accrual__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__display_name
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_timesheet_export__display_name
+msgid "Display Name"
+msgstr "Назва для відображення"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__document
+msgid "Document"
+msgstr "Документ"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__res_id
+msgid "Document ID"
+msgstr "ID документа"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__res_model
+msgid "Document Model"
+msgstr "Модель документа"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__line_count
+msgid "Documents"
+msgstr "Документів"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__state__draft
+msgid "Draft"
+msgstr "Чернетка"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_hr_employee
+msgid "Employee"
+msgstr "Співробітник"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__endpoint
+msgid "Endpoint"
+msgstr "Адреса сервісу"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__state__error
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_log__state__error
+msgid "Error"
+msgstr "Помилка"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__error_count
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_log_view_search
+msgid "Errors"
+msgstr "Помилки"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_form
+msgid "Exchange Batch"
+msgstr "Пакет обміну"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_batch.py:0
+#: model:ir.actions.act_window,name:td_mebli_bas.td_mebli_bas_batch_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_list
+msgid "Exchange Batches"
+msgstr "Пакети обміну"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_channel_view_form
+msgid "Exchange Channel"
+msgstr "Канал обміну"
+
+#. module: td_mebli_bas
+#: model:ir.actions.act_window,name:td_mebli_bas.td_mebli_bas_channel_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_channel_view_list
+msgid "Exchange Channels"
+msgstr "Канали обміну"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__account_move__td_bas_state__error
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__sale_order__td_bas_state__error
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_accrual__bas_state__error
+msgid "Exchange Error"
+msgstr "Помилка обміну"
+
+#. module: td_mebli_bas
+#: model:ir.actions.act_window,name:td_mebli_bas.td_mebli_bas_log_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_log_view_list
+msgid "Exchange Log"
+msgstr "Журнал обміну"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.view_move_form_td_mebli_bas
+msgid "Exchange error with BAS: see the log of the batch and «Retry»."
+msgstr "Помилка обміну з BAS: див. журнал пакета і «Повторити»."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_bank_statement_line__td_bas_state
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_move__td_bas_state
+#: model:ir.model.fields,field_description:td_mebli_bas.field_sale_order__td_bas_state
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_accrual__bas_state
+#: model:ir.ui.menu,name:td_mebli_bas.td_mebli_bas_menu
+msgid "Exchange with BAS"
+msgstr "Обмін з BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_hr_employee__td_bas_code
+#: model:ir.model.fields,help:td_mebli_bas.field_product_product__td_bas_code
+#: model:ir.model.fields,help:td_mebli_bas.field_res_partner__td_bas_code
+#: model:ir.model.fields,help:td_mebli_bas.field_res_users__td_bas_code
+msgid ""
+"External code of the record in the BAS/BAF database of this company; the "
+"exchange matches by it."
+msgstr "Зовнішній код запису в базі BAS/BAF цієї компанії; обмін зіставляє за ним."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__attachment_id
+msgid "File"
+msgstr "Файл"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__filename
+msgid "File Name"
+msgstr "Назва файлу"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_channel__transport__file
+msgid "File in a Folder / Attachment"
+msgstr "Файл у теці / вкладення"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_channel__user_id
+msgid "Finance user who gets the activities about the payments not matched."
+msgstr "Фінансист, який отримує активності про незіставлені оплати."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_follower_ids
+msgid "Followers"
+msgstr "Підписники"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Підписники (партнери)"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__activity_type_icon
+msgid "Font awesome icon e.g. fa-tasks"
+msgstr "Іконка Font Awesome, напр. fa-tasks"
+
+#. module: td_mebli_bas
+#: model:ir.actions.server,name:td_mebli_bas.ir_cron_td_bas_exchange_ir_actions_server
+msgid "Furniture: exchange with BAS"
+msgstr "Меблі: обмін з BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_channel__transport__http
+msgid "HTTP Service of BAS"
+msgstr "HTTP-сервіс BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__has_message
+msgid "Has Message"
+msgstr "Є повідомлення"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_move__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_payment__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_hr_employee__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_product_product__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_res_partner__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_accrual__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__id
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_timesheet_export__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_exception_icon
+msgid "Icon"
+msgstr "Іконка"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__activity_exception_icon
+msgid "Icon to indicate an exception activity."
+msgstr "Іконка винятку активності."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Якщо позначено, нові повідомлення потребують вашої уваги."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__message_has_error
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Якщо позначено, деякі повідомлення мають помилку доставки."
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_form
+msgid "Import"
+msgstr "Імпортувати"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__file
+msgid ""
+"Incoming batch: the file from BAS (draft JSON schema until the contract, "
+"ВП-1)."
+msgstr "Вхідний пакет: файл з BAS (чернеткова схема JSON до контракту, ВП-1)."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_is_follower
+msgid "Is Follower"
+msgstr "Підписник"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_account_move
+msgid "Journal Entry"
+msgstr "Запис у журналі"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__kind
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_search
+msgid "Kind"
+msgstr "Вид"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__last_run
+msgid "Last Exchange"
+msgstr "Останній обмін"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__write_uid
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__write_uid
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__write_uid
+msgid "Last Updated by"
+msgstr "Оновив"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__write_date
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__write_date
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__write_date
+msgid "Last Updated on"
+msgstr "Оновлено"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__log_ids
+#: model:ir.ui.menu,name:td_mebli_bas.td_mebli_bas_log_menu
+msgid "Log"
+msgstr "Журнал"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__message
+msgid "Message"
+msgstr "Повідомлення"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_has_error
+msgid "Message Delivery error"
+msgstr "Помилка доставки повідомлення"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_ids
+msgid "Messages"
+msgstr "Повідомлення"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__my_activity_date_deadline
+msgid "My Activity Deadline"
+msgstr "Строк моєї активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__name
+msgid "Name"
+msgstr "Назва"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_date_deadline
+msgid "Next Activity Deadline"
+msgstr "Строк наступної активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_summary
+msgid "Next Activity Summary"
+msgstr "Опис наступної активності"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_type_id
+msgid "Next Activity Type"
+msgstr "Тип наступної активності"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/accrual.py:0
+msgid "No confirmed accruals to send to BAS."
+msgstr "Немає підтверджених нарахувань для передачі в BAS."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "No exchange channel with BAS for the company %s."
+msgstr "Немає каналу обміну з BAS для компанії %s."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_log__state__unmatched
+msgid "Not Matched"
+msgstr "Не зіставлено"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__sale_order__td_bas_state__none
+msgid "Not Sent"
+msgstr "Не передано"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "Not matched: payment %(ref)s, amount %(amount)s, invoice «%(number)s»."
+msgstr "Не зіставлено: оплата %(ref)s, сума %(amount)s, рахунок «%(number)s»."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_batch.py:0
+msgid "Nothing to retry: the batch has no documents with an error."
+msgstr "Нічого повторювати: у пакеті немає документів з помилкою."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Кількість дій"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_has_error_counter
+msgid "Number of errors"
+msgstr "Кількість помилок"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Кількість повідомлень, що потребують дії"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Кількість повідомлень з помилкою доставки"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__direction__out
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_search
+msgid "Odoo → BAS"
+msgstr "Odoo → BAS"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_batch.py:0
+msgid "Only an incoming batch of payments is imported."
+msgstr "Імпортується лише вхідний пакет оплат."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_batch.py:0
+msgid "Only the finance users run the exchange with BAS."
+msgstr "Обмін з BAS запускає лише фінансист."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "Payment %(ref)s → invoice %(number)s"
+msgstr "Оплата %(ref)s → рахунок %(number)s"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_account_payment
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__kind__payments
+msgid "Payments"
+msgstr "Платежі"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "Payments from BAS not matched: %s"
+msgstr "Не зіставлено оплат з BAS: %s"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_product_product
+msgid "Product Variant"
+msgstr "Варіант товару"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__kind__purchases
+msgid "Purchases"
+msgstr "Закупівлі"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__rating_ids
+msgid "Ratings"
+msgstr "Оцінки"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_account_payment__td_bas_ref
+msgid ""
+"Reference of the payment in BAS: a repeated import does not double the "
+"payment."
+msgstr "Посилання оплати в BAS: повторний імпорт не дублює оплату."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__user_id
+msgid "Responsible"
+msgstr "Відповідальний"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_user_id
+msgid "Responsible User"
+msgstr "Відповідальний"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_log__state
+msgid "Result"
+msgstr "Результат"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_form
+msgid "Retry"
+msgstr "Повторити"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr "Помилка доставки SMS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__kind__sales
+msgid "Sales"
+msgstr "Продажі"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_sale_order
+msgid "Sales Order"
+msgstr "Замовлення на продаж"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__schema_version
+msgid "Schema Version"
+msgstr "Версія схеми"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_accrual_view_list_td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_channel_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_timesheet_export_form_td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.view_order_form_td_mebli_bas
+msgid "Send to BAS"
+msgstr "Передати в BAS"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__state__sent
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_log__state__sent
+msgid "Sent"
+msgstr "Передано"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__account_move__td_bas_state__sent
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__sale_order__td_bas_state__sent
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_accrual__bas_state__sent
+msgid "Sent to BAS"
+msgstr "Передано в BAS"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.view_move_form_td_mebli_bas
+msgid "Sent to BAS ("
+msgstr "Передано в BAS ("
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__state
+msgid "Status"
+msgstr "Стан"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__activity_state
+msgid ""
+"Status based on activities\n"
+"Overdue: Due date is already passed\n"
+"Today: Activity date is today\n"
+"Planned: Future activities."
+msgstr "Стан за активностями\nПрострочено: строк минув\nСьогодні: активність на сьогодні\nЗаплановано: майбутні активності."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid ""
+"The HTTP transport waits for the exchange contract with the franchisee."
+msgstr "HTTP-транспорт — після контракту обміну з франчайзі."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/account_move.py:0
+msgid ""
+"The document has already been sent to BAS — corrections only by a reversal."
+msgstr "Документ уже передано в BAS — виправлення лише сторно"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "The employee %s has no BAS code."
+msgstr "Працівник %s не має коду BAS."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "The file of the batch is not read: %s"
+msgstr "Файл пакета не прочитано: %s"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_channel_view_form
+msgid ""
+"The format of the batch is our draft schema until the exchange contract with the franchisee of\n"
+"                        BAS/BAF; the transport «HTTP» is enabled after the contract."
+msgstr "Формат пакета — наша чернеткова схема до контракту обміну з франчайзі BAS/BAF; транспорт «HTTP» вмикається після контракту."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/sale_order.py:0
+msgid "The order %s has no posted invoices to send to BAS."
+msgstr "Замовлення %s не має проведених рахунків для передачі в BAS."
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "The partner %s has no BAS code."
+msgstr "Контрагент %s не має коду BAS."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields.selection,name:td_mebli_bas.selection__td_mebli_bas_batch__kind__timesheet
+msgid "Time Sheet"
+msgstr "Табель"
+
+#. module: td_mebli_bas
+#: model:ir.model,name:td_mebli_bas.model_td_mebli_timesheet_export
+msgid "Time Sheet Export for BAS"
+msgstr "Вивантаження табеля в BAS (імітація)"
+
+#. module: td_mebli_bas
+#: model_terms:ir.ui.view,arch_db:td_mebli_bas.td_mebli_bas_batch_view_list
+msgid "Total"
+msgstr "Разом"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__transport
+msgid "Transport"
+msgstr "Транспорт"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__activity_exception_decoration
+msgid "Type of the exception activity on record."
+msgstr "Тип активності-винятку запису."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__file
+msgid "Upload File"
+msgstr "Завантажити файл"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_batch.py:0
+msgid "Upload the file of the batch first."
+msgstr "Спершу завантажте файл пакета."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_channel__schema_version
+msgid "Version of our schema of the batch until the exchange contract (ВП-1)."
+msgstr "Версія нашої схеми пакета до контракту обміну (ВП-1)."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__website_message_ids
+msgid "Website Messages"
+msgstr "Повідомлення сайту"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__website_message_ids
+msgid "Website communication history"
+msgstr "Історія спілкування на сайті"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- the form of the work order (standard mrp, also opened from Shop Floor) shows the parts of the order -->
+    <record id="mrp_workorder_form_td_mebli_shopfloor" model="ir.ui.view">
+        <field name="name">mrp.workorder.form.td_mebli_shopfloor</field>
+        <field name="model">mrp.workorder</field>
+        <field name="inherit_id" ref="mrp.mrp_production_workorder_form_view_inherit"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Parts" name="td_parts">
+                    <field name="td_part_ids" readonly="1"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

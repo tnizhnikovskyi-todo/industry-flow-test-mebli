@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- view id of Helpdesk Enterprise — assumption until ВП-4 (helpdesk.helpdesk_ticket_view_form) -->
+    <record id="helpdesk_ticket_view_form_td_mebli_helpdesk" model="ir.ui.view">
+        <field name="name">helpdesk.ticket.form.td_mebli_helpdesk</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_td_create_claim" type="object" string="Claim" invisible="td_repair_id"/>
+                <button name="action_td_remake" type="object" string="Remake"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="td_sale_order_id"/>
+                <field name="td_part_id" invisible="not td_sale_order_id"/>
+                <field name="td_repair_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

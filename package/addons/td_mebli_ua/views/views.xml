@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_order_form_td_mebli_ua" model="ir.ui.view">
-        <field name="name">sale.order.form.td_mebli_ua</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//header" position="inside">
-                <button name="action_td_send_bas" type="object" string="Send to BAS (imitation)"
-                        invisible="state != 'sale' or td_bas_state == 'sent'"/>
-            </xpath>
-            <field name="payment_term_id" position="after">
-                <field name="td_bas_state" widget="badge" decoration-success="td_bas_state == 'sent'"
-                       decoration-danger="td_bas_state == 'error'" invisible="state != 'sale'"/>
-            </field>
-        </field>
-    </record>
-
     <record id="view_currency_rate_tree_td_mebli_ua" model="ir.ui.view">
         <field name="name">res.currency.rate.list.td_mebli_ua</field>
         <field name="model">res.currency.rate</field>
@@ -26,4 +10,15 @@
             </field>
         </field>
     </record>
+
+    <!-- AC-037: box B function «nbu» (VP-02); the method checks the group «Finance» -->
+    <record id="action_td_update_prices_by_rate" model="ir.actions.server">
+        <field name="name">Update Prices at the Rate</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">action = model.td_action_update_prices_by_rate()</field>
+        <field name="group_ids" eval="[(6, 0, [ref('td_mebli_base.group_finance')])]"/>
+    </record>
+    <menuitem id="menu_td_update_prices_by_rate" name="Update Prices at the Rate" parent="sale.sale_order_menu"
+              action="action_td_update_prices_by_rate" sequence="90" groups="td_mebli_base.group_feature_nbu"/>
 </odoo>

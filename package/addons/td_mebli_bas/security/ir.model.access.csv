@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_bas_channel_finance,td.mebli.bas.channel finance,model_td_mebli_bas_channel,td_mebli_base.group_finance,1,1,1,0
+access_td_mebli_bas_channel_system,td.mebli.bas.channel system,model_td_mebli_bas_channel,base.group_system,1,1,1,1
+access_td_mebli_bas_batch_finance,td.mebli.bas.batch finance,model_td_mebli_bas_batch,td_mebli_base.group_finance,1,1,1,0
+access_td_mebli_bas_batch_system,td.mebli.bas.batch system,model_td_mebli_bas_batch,base.group_system,1,1,1,1
+access_td_mebli_bas_log_finance,td.mebli.bas.log finance,model_td_mebli_bas_log,td_mebli_base.group_finance,1,0,1,1
+access_td_mebli_bas_log_system,td.mebli.bas.log system,model_td_mebli_bas_log,base.group_system,1,1,1,1

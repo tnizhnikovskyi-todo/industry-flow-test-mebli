@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- import steps -->
+    <record id="td_mebli_migration_step_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.migration.step.list</field>
+        <field name="model">td.mebli.migration.step</field>
+        <field name="arch" type="xml">
+            <list string="Import Order" create="0" decoration-muted="not model_installed">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="template"/>
+                <field name="model_name"/>
+                <field name="depends_on"/>
+                <field name="box"/>
+                <field name="note" optional="show"/>
+                <field name="model_installed" column_invisible="True"/>
+                <button name="action_td_import" type="object" string="Import" icon="fa-upload" invisible="not model_installed"/>
+            </list>
+        </field>
+    </record>
+    <record id="td_mebli_migration_step_action" model="ir.actions.act_window">
+        <field name="name">Import Order of the Templates</field>
+        <field name="res_model">td.mebli.migration.step</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p>The CSV templates of the package (step A-13) are imported in this order with the standard import.</p>
+        </field>
+    </record>
+
+    <!-- reconciliation -->
+    <record id="td_mebli_migration_check_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.migration.check.list</field>
+        <field name="model">td.mebli.migration.check</field>
+        <field name="arch" type="xml">
+            <list string="Migration Reconciliation" decoration-danger="state == 'diff'" decoration-success="state in ('reconciled', 'explained')">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+    <record id="td_mebli_migration_check_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.migration.check.form</field>
+        <field name="model">td.mebli.migration.check</field>
+        <field name="arch" type="xml">
+            <form string="Migration Reconciliation">
+                <header>
+                    <button name="action_td_compute" type="object" string="Compare with Odoo" class="btn-primary"
+                            invisible="state in ('reconciled', 'explained')"/>
+                    <button name="action_td_sign_explanation" type="object" string="Sign the Explanation"
+                            invisible="state != 'diff'" groups="sales_team.group_sale_manager"/>
+                    <button name="action_td_reset" type="object" string="Reset to Draft" invisible="state == 'draft'"
+                            groups="sales_team.group_sale_manager"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,diff,reconciled"/>
+                </header>
+                <sheet>
+                    <div class="oe_title"><h1><field name="name" placeholder="e.g. Start of the system"/></h1></div>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group invisible="not explained_by">
+                            <field name="explained_by"/>
+                            <field name="explained_on"/>
+                        </group>
+                    </group>
+                    <div class="alert alert-warning" role="alert" invisible="state != 'diff'">
+                        Difference with the source: stage 3 of the launch plan is not done until the difference is zero
+                        or a manager signs the explanation.
+                    </div>
+                    <field name="line_ids" readonly="state in ('reconciled', 'explained')">
+                        <list editable="bottom" decoration-danger="diff != 0">
+                            <field name="sequence" widget="handle"/>
+                            <field name="metric"/>
+                            <field name="order_ref" optional="show" invisible="metric != 'prepayment'"/>
+                            <field name="product_id" invisible="metric != 'stock'" required="metric == 'stock'"/>
+                            <field name="value_source"/>
+                            <field name="value_odoo"/>
+                            <field name="diff"/>
+                            <field name="cause_order_ids" widget="many2many_tags" optional="show"/>
+                            <field name="note" optional="hide"/>
+                        </list>
+                    </field>
+                    <group string="Explanation of the Difference" invisible="state == 'draft'">
+                        <field name="explanation" nolabel="1" colspan="2" readonly="state in ('reconciled', 'explained')"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="td_mebli_migration_check_action" model="ir.actions.act_window">
+        <field name="name">Migration Reconciliation</field>
+        <field name="res_model">td.mebli.migration.check</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="td_mebli_migration_check_report" model="ir.actions.report">
+        <field name="name">Migration Reconciliation</field>
+        <field name="model">td.mebli.migration.check</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_migration.report_migration_check</field>
+        <field name="binding_model_id" ref="model_td_mebli_migration_check"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_migration_check">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="check">
+                <t t-call="web.external_layout">
+                    <div class="page td_mebli_report">
+                        <h2>Migration Reconciliation: <span t-field="check.name"/></h2>
+                        <p>Date of the data: <span t-field="check.date"/> — Status: <span t-field="check.state"/></p>
+                        <table class="table table-sm">
+                            <thead><tr><th>Metric</th><th>Order / Product</th><th class="text-end">Source</th>
+                                <th class="text-end">Odoo</th><th class="text-end">Difference</th><th>Records to Check</th></tr></thead>
+                            <tbody>
+                                <tr t-foreach="check.line_ids" t-as="line">
+                                    <td><span t-field="line.metric"/></td>
+                                    <td><span t-out="line.order_ref or line.product_id.display_name or ''"/></td>
+                                    <td class="text-end"><span t-field="line.value_source"/></td>
+                                    <td class="text-end"><span t-field="line.value_odoo"/></td>
+                                    <td class="text-end"><span t-field="line.diff"/></td>
+                                    <td><span t-out="', '.join(line.cause_order_ids.mapped('name'))"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p t-if="check.explanation">Explanation: <span t-field="check.explanation"/>
+                            (<span t-field="check.explained_by"/>, <span t-field="check.explained_on"/>)</p>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <menuitem id="td_mebli_migration_menu" name="Migration" parent="sale.menu_sale_config" sequence="90"
+              groups="sales_team.group_sale_manager,td_mebli_base.group_finance"/>
+    <menuitem id="td_mebli_migration_step_menu" name="Import Order of the Templates" parent="td_mebli_migration_menu"
+              action="td_mebli_migration_step_action" sequence="10"/>
+    <menuitem id="td_mebli_migration_check_menu" name="Reconciliation" parent="td_mebli_migration_menu"
+              action="td_mebli_migration_check_action" sequence="20"/>
+</odoo>
