@@ -1,14 +1,15 @@
 import time
+from datetime import timedelta
 
 from odoo import fields, models
 from odoo.exceptions import UserError
 
-# wrong PIN: a short delay on every failure and a lock of the worker after several failures in a row (in the memory of
-# the server process: the transaction of a failed attempt is rolled back, so a counter in the database would be lost)
+# AC-071: wrong PIN — a short delay on every failure; 5 failures in a row lock the worker for 15 minutes. The counter is
+# kept on the employee and written in its own transaction (the transaction of the failed attempt is rolled back by the
+# error), so it survives a restart and is shared by all the server workers (AI-A08-12, R-11).
 PIN_DELAY_SECONDS = 1.0
 PIN_MAX_FAILURES = 5
-PIN_LOCK_SECONDS = 300
-_PIN_FAILURES = {}  # (database, employee id) -> (failures in a row, time of the last failure)
+PIN_LOCK_MINUTES = 15
 
 
 class TdMebliKiosk(models.TransientModel):
@@ -16,7 +17,8 @@ class TdMebliKiosk(models.TransientModel):
     _description = 'Shop Floor Tablet: PIN of the Worker'
 
     workorder_id = fields.Many2one('mrp.workorder', string='Work Order', required=True)
-    action = fields.Selection([('start', 'Taken'), ('pause', 'Pause'), ('done', 'Done'), ('quality', 'Quality Step')],
+    action = fields.Selection([('start', 'Taken'), ('pause', 'Pause'), ('done', 'Done'), ('quality', 'Quality Step'),
+                               ('scrap', 'Scrap')],
                               string='Action', required=True, default='start')
     # shop workers: employees without an own Odoo user, they work through the shared tablet with the PIN
     employee_id = fields.Many2one('hr.employee', string='Worker', required=True,
@@ -29,19 +31,40 @@ class TdMebliKiosk(models.TransientModel):
     result = fields.Selection([('pass', 'Passed'), ('fail', 'Failed')], string='Result', default='pass')
     photo = fields.Image(string='Photo', max_width=1024, max_height=1024)
     note = fields.Char(string='Note')
+    # AC-073: scrap at the workplace — the part and the reason; a repeat part is made by a new manufacturing order
+    production_id = fields.Many2one(related='workorder_id.production_id')
+    scrap_part_id = fields.Many2one('td.mebli.part', string='Scrapped Part',
+                                    domain="[('bom_id', '=', parent_bom_id)]")
+    parent_bom_id = fields.Many2one(related='workorder_id.production_id.bom_id', string='Specification')
+    scrap_reason = fields.Char(string='Scrap Reason')
+
+    def _td_pin_failure(self, employee):
+        """+1 wrong PIN of the worker, in a transaction of its own (committed even though the attempt fails)."""
+        lock_until = fields.Datetime.now() + timedelta(minutes=PIN_LOCK_MINUTES)
+        with self.env.registry.cursor() as cr:
+            cr.execute("""
+                UPDATE hr_employee
+                   SET td_pin_fail_count = CASE WHEN COALESCE(td_pin_fail_count, 0) + 1 >= %(max)s THEN 0
+                                                ELSE COALESCE(td_pin_fail_count, 0) + 1 END,
+                       td_pin_locked_until = CASE WHEN COALESCE(td_pin_fail_count, 0) + 1 >= %(max)s THEN %(until)s
+                                                  ELSE td_pin_locked_until END
+                 WHERE id = %(id)s
+            """, {'max': PIN_MAX_FAILURES, 'until': lock_until, 'id': employee.id})
+        employee.invalidate_recordset(['td_pin_fail_count', 'td_pin_locked_until'])
 
     def _check_pin(self):
         employee = self.employee_id.sudo()  # the PIN is an HR field; the tablet user only compares it
-        key = (self.env.cr.dbname, employee.id)
-        failures, last = _PIN_FAILURES.get(key, (0, 0.0))
-        if failures >= PIN_MAX_FAILURES and time.monotonic() - last < PIN_LOCK_SECONDS:
-            raise UserError(self.env._("Too many wrong PINs: try again in 5 minutes or ask the shop manager."))
+        locked = employee.td_pin_locked_until
+        if locked and locked > fields.Datetime.now():
+            raise UserError(self.env._("The worker is locked until %s",
+                                       fields.Datetime.context_timestamp(self, locked).strftime('%H:%M')))
         # one message for every failure: the tablet does not tell whether the worker has a PIN at all
         if employee.user_id or not employee.pin or (self.pin or '') != employee.pin:
-            _PIN_FAILURES[key] = (failures + 1 if failures < PIN_MAX_FAILURES else 1, time.monotonic())
+            self._td_pin_failure(employee)
             time.sleep(PIN_DELAY_SECONDS)
-            raise UserError(self.env._("Wrong worker or PIN."))
-        _PIN_FAILURES.pop(key, None)
+            raise UserError(self.env._("Wrong PIN"))
+        if employee.td_pin_fail_count or locked:
+            employee.write({'td_pin_fail_count': 0, 'td_pin_locked_until': False})
 
     def _check_timers(self, open_work):
         """One worker at a time on a work order of the tablet. In Community the timer of a work order belongs to the
@@ -53,8 +76,9 @@ class TdMebliKiosk(models.TransientModel):
         others = open_work.filtered(lambda t: t.td_employee_id and t.td_employee_id != employee)
         if others:
             who = others[0].td_employee_id.name or others[0].user_id.name
-            raise UserError(_("%(who)s is working on %(wo)s now: one worker at a time. %(who)s presses «Pause» or "
-                              "«Done» first.", who=who, wo=workorder.display_name))
+            # AC-072, SPEC text
+            raise UserError(_("The work order is already done by %(who)s. Two workers on one work order from one tablet "
+                              "— pause it or choose another work order.", who=who))
         if self.action == 'start':
             elsewhere = self.env['mrp.workcenter.productivity'].search([
                 ('td_employee_id', '=', employee.id), ('date_end', '=', False), ('loss_type', '=', 'productive'),
@@ -94,11 +118,38 @@ class TdMebliKiosk(models.TransientModel):
             self.env['td.mebli.quality.check'].sudo().create({
                 'workorder_id': workorder.id, 'name': workorder.td_quality_point or self.env._("Check"),
                 'result': self.result, 'photo': self.photo, 'note': self.note, 'employee_id': self.employee_id.id})
+        elif self.action == 'scrap':
+            self._td_scrap()
         elif self.action == 'done':
             if workorder.td_quality_point and workorder.td_quality_state != 'pass':
-                raise UserError(self.env._("First the quality step: «%s», with a photo.", workorder.td_quality_point))
+                # AC-075, SPEC text
+                raise UserError(self.env._("Pass the quality step: %s", workorder.td_quality_point))
             open_pauses._close()
             workorder.button_finish()
         # the worker confirmed with the PIN: the tablet (sudo) writes him on the new time lines
         (workorder.time_ids - before).sudo().write({'td_employee_id': self.employee_id.id})
         return {'type': 'ir.actions.act_window_close'}
+
+    def _td_scrap(self):
+        """AC-073: «Scrap» on the tablet — a manufacturing order for the repeat part (origin: the work order, the
+        reason) and a line of the journal of non-conformities (td.mebli.quality.check, kind «scrap»: the dashboard)."""
+        if not self.env.user.has_group('td_mebli_base.group_feature_kiosk'):
+            raise UserError(self.env._("Scrap at the workplace is a function of the workshop kiosk (box B)."))
+        if not self.scrap_part_id or self.scrap_part_id.bom_id != self.workorder_id.production_id.bom_id:
+            raise UserError(self.env._("Choose the scrapped part of this manufacturing order."))
+        if not (self.scrap_reason or '').strip():
+            raise UserError(self.env._("Enter the reason of the scrap."))
+        workorder = self.workorder_id
+        origin = f"{workorder.production_id.name} / {workorder.name}"
+        production = self.scrap_part_id._td_make_production(
+            self.scrap_part_id.qty, origin, self.env._("Scrap: %s", self.scrap_reason))
+        check = self.env['td.mebli.quality.check'].sudo().create({
+            'workorder_id': workorder.id, 'kind': 'scrap', 'result': 'fail',
+            'name': self.env._("Scrap: %s", self.scrap_part_id.name), 'note': self.scrap_reason,
+            'part_id': self.scrap_part_id.id, 'repeat_production_id': production.id,
+            'employee_id': self.employee_id.id})
+        workorder.production_id.sudo().message_post(body=self.env._(
+            "Scrap of %(part)s by %(who)s: %(reason)s. Repeat part: %(production)s.",
+            part=self.scrap_part_id.name, who=self.employee_id.name, reason=self.scrap_reason,
+            production=production.name))
+        return check

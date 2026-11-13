@@ -2,6 +2,9 @@ from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 AXES = ('width', 'height', 'depth')
+# AC-018 (tr/security.md §4): cost and margin are seen by the sales manager, the finance and the salesperson only when the
+# company lets him (td_mebli_base.group_margin_view follows «The salesperson sees the margin»)
+MARGIN_GROUPS = 'td_mebli_base.group_margin_view,td_mebli_base.group_finance,sales_team.group_sale_manager'
 
 
 class SaleOrderLine(models.Model):
@@ -16,9 +19,13 @@ class SaleOrderLine(models.Model):
     td_bom_id = fields.Many2one('mrp.bom', string='Order BoM', copy=False, index='btree_not_null',
                                 ondelete='set null')
     td_planned_material_cost = fields.Monetary(string='Planned Materials', compute='_compute_td_planned_cost',
-                                               store=True, currency_field='currency_id')
+                                               store=True, currency_field='currency_id', groups=MARGIN_GROUPS)
     td_planned_operation_cost = fields.Monetary(string='Planned Operations', compute='_compute_td_planned_cost',
-                                                store=True, currency_field='currency_id')
+                                                store=True, currency_field='currency_id', groups=MARGIN_GROUPS)
+    # standard sale_margin fields (groups="base.group_user" there): the same groups as the planned cost
+    margin = fields.Float(groups=MARGIN_GROUPS)
+    margin_percent = fields.Float(groups=MARGIN_GROUPS)
+    purchase_price = fields.Float(groups=MARGIN_GROUPS)
 
     # ------------------------------------------------------------------
     # Dimensions
@@ -89,7 +96,18 @@ class SaleOrderLine(models.Model):
     def _compute_price_unit(self):
         return super()._compute_price_unit()
 
+    def _td_is_install(self):
+        """The installation service: a service that creates a task in a project (standard sale_project service_tracking;
+        read by name so that td_mebli_sale does not depend on sale_project)."""
+        self.ensure_one()
+        product = self.product_id
+        return bool(product.type == 'service' and 'service_tracking' in product._fields
+                    and product.service_tracking not in (False, 'no'))
+
     def _get_display_price(self):
+        # AC-043, VP-16: «installation in the price of the order» — the line of the installation costs nothing
+        if self.order_id.company_id.td_install_in_price and self._td_is_install():
+            return 0.0
         price = super()._get_display_price()
         if self.td_is_parametric:
             dims = self._td_get_dims()

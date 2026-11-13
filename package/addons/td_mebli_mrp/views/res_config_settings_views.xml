@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_td_mebli_mrp" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.td.mebli.mrp</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="td_mebli_base.res_config_settings_view_form_td_mebli_base"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='group_td_feature_ai_mapping']" position="after">
+                <div class="mt8" invisible="not group_td_feature_ai_mapping">
+                    <field name="td_ai_mapping_url" placeholder="https://… (after the decision under DATA_POLICY)"/>
+                    <div class="text-muted">Only the column titles and at most 10 rows of the file are sent.</div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

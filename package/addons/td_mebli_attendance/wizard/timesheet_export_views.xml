@@ -4,10 +4,10 @@
         <field name="name">td.mebli.timesheet.export.form</field>
         <field name="model">td.mebli.timesheet.export</field>
         <field name="arch" type="xml">
-            <form string="Time Sheet for BAS (imitation)">
-                <div class="alert alert-light border small text-muted mb-2 td_bas_imitation" role="status">
-                    Imitation of the exchange with BAS: the file is made from the standard attendances (kiosk with a PIN),
-                    nothing is sent.
+            <form string="Time Sheet for BAS">
+                <div class="alert alert-light border small text-muted mb-2 td_bas_format" role="status">
+                    The file is made from the standard attendances (kiosk with a PIN) in the draft format of the exchange
+                    contract: employee, personnel code, days, hours.
                 </div>
                 <group>
                     <group>
@@ -39,7 +39,7 @@
         </field>
     </record>
     <record id="td_mebli_timesheet_export_action" model="ir.actions.act_window">
-        <field name="name">Time Sheet for BAS (imitation)</field>
+        <field name="name">Time Sheet for BAS</field>
         <field name="res_model">td.mebli.timesheet.export</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>

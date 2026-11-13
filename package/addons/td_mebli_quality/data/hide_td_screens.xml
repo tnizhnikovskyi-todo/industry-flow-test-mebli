@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_mebli_shop.td_mebli_quality_check_menu" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.set([ref('td_mebli_quality.group_td_old_screens')])]"/>
+    </record>
+</odoo>

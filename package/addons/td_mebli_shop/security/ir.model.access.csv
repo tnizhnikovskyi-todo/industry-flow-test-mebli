@@ -5,3 +5,5 @@ access_td_mebli_quality_check_sale,td.mebli.quality.check sale,model_td_mebli_qu
 access_td_mebli_kiosk_user,td.mebli.kiosk user,model_td_mebli_kiosk,mrp.group_mrp_user,1,1,1,1
 access_td_mebli_kit_line_stock,td.mebli.kit.line stock,model_td_mebli_kit_line,stock.group_stock_user,1,1,1,1
 access_td_mebli_kit_line_sale,td.mebli.kit.line sale,model_td_mebli_kit_line,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_kit_scan_stock,td.mebli.kit.scan stock,model_td_mebli_kit_scan,stock.group_stock_user,1,1,1,1
+access_td_mebli_workorder_backdate_mrp,td.mebli.workorder.backdate mrp,model_td_mebli_workorder_backdate,mrp.group_mrp_user,1,1,1,1

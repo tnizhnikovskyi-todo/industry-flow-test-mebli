@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- the measurers of the salon: the booking of a measurement offers the first of them by default (no login rule) -->
+    <!-- the measurers of the salon: the booking of a measurement offers the first of them by default (no login rule).
+         AC-006: the group gives no right on Sales (no prices, amounts or margins of the orders): only his own measurement
+         sheets and his visits in the calendar. The xmlid stays in this module (moving it to td_mebli_base changes the
+         rights of the users; tr/security.md §1 — later, with a migration). -->
     <record id="group_td_mebli_measurer" model="res.groups">
-        <field name="name">Measurer (measurement visits)</field>
-        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
-        <field name="comment">The user goes to the measurement visits: the booking wizard offers his free windows.</field>
+        <field name="name">Measurer</field>
+        <field name="privilege_id" ref="td_mebli_base.res_groups_privilege_mebli"/>
+        <field name="implied_ids" eval="[Command.set([ref('base.group_user')])]"/>
+        <field name="comment">The user goes to the measurement visits: the booking wizard offers his free windows; he sees
+            only his own measurement sheets, the address and the phone of the customer, no prices of the orders.</field>
+    </record>
+
+    <record id="td_mebli_measure_rule_measurer" model="ir.rule">
+        <field name="name">Measurement sheet: the measurer sees his own</field>
+        <field name="model_id" ref="model_td_mebli_measure"/>
+        <field name="domain_force">[('measurer_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_td_mebli_measurer'))]"/>
     </record>
 
     <!-- a salesperson with «own documents only» sees the measurements she made or that belong to her order or
@@ -29,5 +41,60 @@
         <field name="model_id" ref="model_td_mebli_measure"/>
         <field name="global" eval="True"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- review A-11 (AC-036): the lines of a sheet follow the sheet — the company of the sheet for everybody, and the
+         measurer sees the lines of his own sheets only (like the sheet itself) -->
+    <record id="td_mebli_measure_niche_rule_company" model="ir.rule">
+        <field name="name">Niche of a measurement sheet: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_measure_niche"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('measure_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="td_mebli_measure_appliance_rule_company" model="ir.rule">
+        <field name="name">Appliance of a measurement sheet: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_measure_appliance"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('measure_id.company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="td_mebli_measure_niche_rule_measurer" model="ir.rule">
+        <field name="name">Niche of a measurement sheet: the measurer sees his own sheets</field>
+        <field name="model_id" ref="model_td_mebli_measure_niche"/>
+        <field name="domain_force">[('measure_id.measurer_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_td_mebli_measurer'))]"/>
+    </record>
+    <record id="td_mebli_measure_appliance_rule_measurer" model="ir.rule">
+        <field name="name">Appliance of a measurement sheet: the measurer sees his own sheets</field>
+        <field name="model_id" ref="model_td_mebli_measure_appliance"/>
+        <field name="domain_force">[('measure_id.measurer_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('group_td_mebli_measurer'))]"/>
+    </record>
+    <!-- the other groups see the lines of the sheets that the rules of the sheet give them (the rules of the groups
+         are combined with OR: a measurer who is also a salesperson keeps what the salesperson sees) -->
+    <record id="td_mebli_measure_niche_rule_own" model="ir.rule">
+        <field name="name">Niche of a measurement sheet: as the sheet, own measurements</field>
+        <field name="model_id" ref="model_td_mebli_measure_niche"/>
+        <field name="domain_force">['|', '|', ('measure_id.measurer_id', '=', user.id),
+                                    ('measure_id.order_id.user_id', '=', user.id), ('measure_id.lead_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+    <record id="td_mebli_measure_niche_rule_all" model="ir.rule">
+        <field name="name">Niche of a measurement sheet: as the sheet, all measurements</field>
+        <field name="model_id" ref="model_td_mebli_measure_niche"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads')), (4, ref('mrp.group_mrp_user'))]"/>
+    </record>
+    <record id="td_mebli_measure_appliance_rule_own" model="ir.rule">
+        <field name="name">Appliance of a measurement sheet: as the sheet, own measurements</field>
+        <field name="model_id" ref="model_td_mebli_measure_appliance"/>
+        <field name="domain_force">['|', '|', ('measure_id.measurer_id', '=', user.id),
+                                    ('measure_id.order_id.user_id', '=', user.id), ('measure_id.lead_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+    </record>
+    <record id="td_mebli_measure_appliance_rule_all" model="ir.rule">
+        <field name="name">Appliance of a measurement sheet: as the sheet, all measurements</field>
+        <field name="model_id" ref="model_td_mebli_measure_appliance"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads')), (4, ref('mrp.group_mrp_user'))]"/>
     </record>
 </odoo>

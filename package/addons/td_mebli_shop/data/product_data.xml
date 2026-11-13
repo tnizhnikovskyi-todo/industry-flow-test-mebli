@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- AC-073 / AC-093: the product of a manufacturing order for one part (repeat part, additional order) -->
+    <record id="product_td_repeat_part" model="product.product">
+        <field name="name">Repeat Part</field>
+        <field name="type">consu</field>
+        <field name="is_storable" eval="False"/>
+        <field name="sale_ok" eval="False"/>
+        <field name="purchase_ok" eval="False"/>
+        <field name="default_code">TD-REPEAT-PART</field>
+    </record>
+</odoo>

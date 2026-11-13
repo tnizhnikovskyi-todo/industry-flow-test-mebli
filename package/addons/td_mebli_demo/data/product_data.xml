@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
+    <!-- AC-111: the warranty term of the furniture of the demo factory (24 months, the default of the package) -->
+    <record id="categ_furniture" model="product.category">
+        <field name="name">Меблі на замовлення</field>
+        <field name="td_warranty_months">24</field>
+    </record>
+
     <record id="prod_wardrobe" model="product.template">
+        <field name="categ_id" ref="categ_furniture"/>
         <field name="name">Шафа-купе 2-дверна</field>
         <field name="type">consu</field>
         <field name="is_storable">True</field>
@@ -90,6 +97,7 @@
     </record>
 
     <record id="prod_dresser" model="product.template">
+        <field name="categ_id" ref="categ_furniture"/>
         <field name="name">Комод 4 шухляди</field>
         <field name="type">consu</field>
         <field name="is_storable">True</field>
@@ -179,6 +187,7 @@
     </record>
 
     <record id="prod_kitchen" model="product.template">
+        <field name="categ_id" ref="categ_furniture"/>
         <field name="name">Кухонний модуль нижній 600</field>
         <field name="type">consu</field>
         <field name="is_storable">True</field>

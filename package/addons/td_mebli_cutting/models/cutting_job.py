@@ -12,6 +12,10 @@ from odoo.tools.misc import formatLang
 
 from . import optimizer, sheet_map
 
+# Review A-11: the bypass of the AC-028 lock is not a context flag a client could send over RPC, but this private
+# object (only the code of this module has it; JSON-RPC can pass strings, numbers and lists, never this object)
+CUTTING_SEND = object()
+
 # the offcuts of one order take at most this share of its cost: the rest of the sheet is paid by the order
 OFFCUT_COST_SHARE_CAP = 10.0
 
@@ -36,9 +40,16 @@ class TdMebliCuttingJob(models.Model):
     sheet_ids = fields.One2many('td.mebli.cutting.sheet', 'job_id', string='Sheets')
     kerf_mm = fields.Integer(string='Kerf, mm', default=4)
     trim_mm = fields.Integer(string='Edge Trim, mm', default=10)
-    min_offcut_mm = fields.Integer(string='Min Offcut Side, mm', default=300)
-    result_source = fields.Selection([('simulated', 'Simulation'), ('imported', 'Imported')],
+    # VP-12: the smallest kept side of an offcut is the parameter of the company (td_mebli_base), 300 mm by default
+    min_offcut_mm = fields.Integer(string='Min Offcut Side, mm',
+                                   default=lambda self: self.env.company.td_min_offcut_mm or 300)
+    result_source = fields.Selection([('simulated', 'Simulation'), ('imported', 'Imported from the cutting program')],
                                      string='Result Source', readonly=True, copy=False)
+    # AC-028: what was sent, which version of the specification and when; set by the system on sending
+    bom_version = fields.Char(string='Specification Version', readonly=True, copy=False)
+    sent_on = fields.Datetime(string='Sent on', readonly=True, copy=False)
+    sent_by = fields.Many2one('res.users', string='Sent by', readonly=True, copy=False)
+    td_cutting_mode = fields.Selection(related='company_id.td_cutting_mode')
     waste_pct = fields.Float(string='Waste, %', compute='_compute_waste_pct', digits=(16, 1))
     export_attachment_id = fields.Many2one('ir.attachment', string='Cutting File', readonly=True, copy=False)
     currency_id = fields.Many2one(related='company_id.currency_id')
@@ -88,7 +99,50 @@ class TdMebliCuttingJob(models.Model):
         for vals in vals_list:
             if vals.get('name', 'New') == 'New':
                 vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.cutting.job') or 'New'
-        return super().create(vals_list)
+            if not vals.get('company_id') and vals.get('production_ids'):
+                # the company of the manufacturing orders (AC-036: the job is seen in that company only)
+                ids = []
+                for command in vals['production_ids']:
+                    if command[0] == 6:
+                        ids += list(command[2])
+                    elif command[0] == 4:
+                        ids.append(command[1])
+                productions = self.env['mrp.production'].browse(ids)
+                if productions[:1].company_id:
+                    vals['company_id'] = productions[:1].company_id.id
+        jobs = super().create(vals_list)
+        jobs._td_check_batch()
+        return jobs
+
+    def write(self, vals):
+        # the bypass is a private object of this module: a context sent over RPC (JSON) can never be this object
+        if 'export_attachment_id' in vals and self.env.context.get('td_cutting_send') is not CUTTING_SEND:
+            # AC-028: the file that went to cutting does not change; a change is a new job (additional order)
+            if any(job.export_attachment_id and job.state != 'draft' for job in self):
+                raise UserError(self.env._("The cutting file of a sent job does not change: make a new cutting job."))
+        result = super().write(vals)
+        if 'production_ids' in vals:
+            self._td_check_batch()
+        return result
+
+    @api.model
+    def _td_board_set(self, production):
+        return frozenset(production.bom_id.td_part_ids.material_id.ids)
+
+    def _td_check_batch(self):
+        """AC-057 / AC-058: several manufacturing orders in one job is the function «cutting batch» of box B, and only
+        for one decor: every order cuts the same boards."""
+        if self.env.su:
+            return  # the system (demo scripts, migrations) is not a technologist pressing the button
+        for job in self:
+            if len(job.production_ids) < 2:
+                continue
+            if not self.env.user.has_group('td_mebli_base.group_feature_cutting_batch'):
+                raise UserError(self.env._(
+                    "Several manufacturing orders in one cutting job is the function «Cutting Batches»: create one job "
+                    "per manufacturing order."))
+            if len({self._td_board_set(production) for production in job.production_ids}) > 1:
+                raise UserError(self.env._("Only one board material in one cutting job."))
 
     def _check_state(self, *states):
         for job in self:
@@ -123,11 +177,12 @@ class TdMebliCuttingJob(models.Model):
                 raise UserError(self.env._("%s has no parts to cut.", job.name))
             buffer = io.StringIO()
             writer = csv.writer(buffer, delimiter=';')
-            writer.writerow(['material', 'length_mm', 'width_mm', 'qty', 'edge_long', 'edge_short', 'order', 'part'])
+            writer.writerow(['code', 'material', 'length_mm', 'width_mm', 'qty', 'edge_long', 'edge_short', 'order',
+                             'part'])
             for production in job.production_ids:
-                for part in production.bom_id.td_part_ids:
+                for code, part in job._td_part_codes(production):
                     writer.writerow([
-                        part.material_id.display_name, part.length_mm, part.width_mm,
+                        code, part.material_id.default_code or part.material_id.name, part.length_mm, part.width_mm,
                         part.qty * int(production.product_qty), part.edge_long_sides, part.edge_short_sides,
                         production.origin or production.name, part.name])
             attachment = self.env['ir.attachment'].create({
@@ -135,9 +190,30 @@ class TdMebliCuttingJob(models.Model):
                 'datas': base64.b64encode(buffer.getvalue().encode()),
                 'res_model': job._name, 'res_id': job.id, 'mimetype': 'text/csv',
             })
-            job.write({'export_attachment_id': attachment.id, 'state': 'sent'})
+            # AC-028 / AC-052: the next version of every specification is sent, its parts are locked from now on
+            versions = job.production_ids.bom_id._td_mark_sent_to_cutting()
+            boms = job.production_ids.bom_id
+            version = str(versions[boms.id]) if len(boms) == 1 else ', '.join(
+                f"{bom.display_name}: {versions[bom.id]}" for bom in boms)
+            job.with_context(td_cutting_send=CUTTING_SEND).write({
+                'export_attachment_id': attachment.id, 'state': 'sent', 'bom_version': version,
+                'sent_on': fields.Datetime.now(), 'sent_by': self.env.uid})
             job.production_ids.write({'td_cutting_job_ids': [(4, job.id)]})
         return True
+
+    @api.model
+    def _td_part_codes(self, production):
+        """[(code, part)] — the code of a part in the cutting file, the result file of the cutting program and on the
+        label of the manufacturing order (td_mebli_shop): <manufacturing order>-<No. of the part>."""
+        return [(f"{production.name}-{index:02d}", part)
+                for index, part in enumerate(production.bom_id.td_part_ids, start=1)]
+
+    def action_td_import_result(self):
+        """AC-131: «Import result» — the result file of the cutting program."""
+        self.ensure_one()
+        self._check_state('sent', 'result')
+        return {'type': 'ir.actions.act_window', 'res_model': 'td.mebli.cutting.result.import', 'view_mode': 'form',
+                'target': 'new', 'name': self.env._("Import Result"), 'context': {'default_job_id': self.id}}
 
     def action_simulate(self):
         """SIMULATION of the external cutting program: build the payload and apply it."""
@@ -161,7 +237,8 @@ class TdMebliCuttingJob(models.Model):
     def action_draft(self):
         self._check_state('cancel')
         self.sheet_ids.unlink()
-        self.write({'state': 'draft', 'result_source': False})
+        self.with_context(td_cutting_send=CUTTING_SEND).write({'state': 'draft', 'result_source': False,
+                                                       'export_attachment_id': False})
         return True
 
     # ------------------------------------------------------------------
@@ -286,6 +363,8 @@ class TdMebliCuttingJob(models.Model):
         # cost share of the by-products: value of the offcut against the material cost consumed by the order
         base = {production: production._td_material_cost() for production in self.production_ids}
         allocated = defaultdict(float)  # cost share already given to the by-products of one order
+        if not self.env.user.has_group('td_mebli_base.group_feature_offcut'):
+            offcut_jobs = []  # box A: the rests of the sheets are waste, no business offcuts (VP-02)
         for production, sheet, offcut in offcut_jobs:
             lot = self.env['stock.lot'].create({
                 'name': sheet._td_next_offcut_name(),

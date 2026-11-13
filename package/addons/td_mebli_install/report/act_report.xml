@@ -20,7 +20,10 @@
             <t t-set="address">
                 <div t-field="order.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}'/>
             </t>
-            <div class="page td_report_act">
+            <div class="page td_mebli_report td_report_act">
+                <!-- AC-102: the text is a template until the conclusion of the lawyer (No 17, td_legal_checked of the company) -->
+                <p t-if="not (doc.company_id or order.company_id).td_legal_checked" class="text-end small text-danger td_lawyer_mark">
+                    <strong>Template to be checked by a lawyer</strong></p>
                 <h2 class="mt-2">
                     <span t-if="doc.kind == 'final'">Act of the Installation</span>
                     <span t-else="">Act of an Installation Stage</span>
@@ -62,7 +65,7 @@
                     <h5>Photos</h5>
                     <img t-foreach="photos[:4]" t-as="photo" t-att-src="image_data_uri(photo.datas)" style="max-height: 110px; margin-right: 8px;" alt="Photo"/>
                 </div>
-                <p t-if="doc.photo_archive" class="small">The customer agrees that the photos of the installed furniture may be used in the
+                <p t-if="doc.photo_consent" class="small">The customer agrees that the photos of the installed furniture may be used in the
                     portfolio of the manufacturer (without the address and the name of the customer).</p>
                 <div class="row mt-4">
                     <div class="col-6">

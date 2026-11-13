@@ -12,7 +12,8 @@
                 <field name="product_id"/>
                 <field name="product_qty"/>
                 <field name="price_unit"/>
-                <field name="td_history_price"/>
+                <field name="td_history_price" invisible="not td_history_price"/>
+                <field name="td_history_note" decoration-danger="td_over_history" decoration-muted="not td_history_price"/>
                 <field name="td_price_delta_pct"/>
                 <field name="td_overpay" sum="Total"/>
                 <field name="td_over_history" column_invisible="True"/>
@@ -37,6 +38,21 @@
                     <filter name="group_product" string="Product" context="{'group_by': 'product_id'}"/>
                 </group>
             </search>
+        </field>
+    </record>
+
+    <!-- the mark in the purchase order itself, next to the price -->
+    <record id="purchase_order_form_td_mebli_purchase" model="ir.ui.view">
+        <field name="name">purchase.order.form.td_mebli_purchase</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/list/field[@name='price_unit']" position="after">
+                <field name="td_over_history" column_invisible="True"/>
+                <field name="td_history_price" column_invisible="True"/>
+                <field name="td_history_note" string="History" optional="show"
+                       decoration-danger="td_over_history" decoration-muted="not td_history_price"/>
+            </xpath>
         </field>
     </record>
 

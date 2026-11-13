@@ -7,5 +7,5 @@
     <menuitem id="td_mebli_cutting_sheet_menu" name="Cutting Sheets" parent="td_mebli_cutting_menu"
               action="td_mebli_cutting_sheet_action" sequence="20"/>
     <menuitem id="td_mebli_offcut_menu" name="Business Offcuts" parent="stock.menu_stock_inventory_control"
-              action="stock_lot_td_offcut_action" sequence="40" groups="stock.group_stock_user"/>
+              action="stock_lot_td_offcut_action" sequence="40" groups="td_mebli_base.group_feature_offcut"/>
 </odoo>

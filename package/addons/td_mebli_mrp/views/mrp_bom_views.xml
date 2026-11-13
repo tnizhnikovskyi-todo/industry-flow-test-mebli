@@ -36,7 +36,13 @@
                 <field name="td_from_parts" string="From parts" invisible="not td_from_parts" optional="show" width="110px"/>
             </xpath>
             <xpath expr="//notebook" position="inside">
-                <page string="Parts" name="td_parts" invisible="not td_order_bom">
+                <page string="Parts" name="td_parts" invisible="not td_order_bom and not td_part_ids">
+                    <div class="alert alert-warning py-2 mb-2" role="status" invisible="not td_cut_version">
+                        Sent to cutting (version <field name="td_cut_version" class="oe_inline" readonly="1"/>): the parts
+                        are changed only by an additional order.
+                    </div>
+                    <button name="action_td_import_parts" type="object" string="Import Parts" icon="fa-upload"
+                            class="btn-secondary mb-2" invisible="td_cut_version or not id"/>
                     <group>
                         <group>
                             <field name="td_part_count"/>

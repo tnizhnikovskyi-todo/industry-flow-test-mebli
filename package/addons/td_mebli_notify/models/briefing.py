@@ -45,15 +45,28 @@ class TdMebliDashboard(models.AbstractModel):
         losses = env['mrp.workcenter.productivity'].search([('loss_type', '!=', 'productive'),
                                                             ('date_start', '>=', today - timedelta(days=1)),
                                                             ('date_start', '<', today)] + in_companies)
+        # AC-124: overdue claims (VP-13 — the claim module computes «overdue» by the parameter of the company)
+        claims = env['repair.order'].search([('td_claim_order_id', '!=', False), ('state', 'not in', ('done', 'cancel'))]
+                                            + in_companies).filtered('td_overdue')
+        claim_rows = [{'name': c.name, 'customer': c.partner_id.name or '', 'days': c.td_days_open} for c in claims]
+        # AC-124, AC-067: stuck orders (VP-10, the parameter of each company)
+        stuck = env['sale.order'].with_context(allowed_company_ids=companies.ids).search(
+            [('td_is_stuck', '=', True)] + in_companies, order='td_stage_date')
+        stuck_rows = [{'name': o.name, 'customer': o.partner_id.name, 'days': (now - o.td_stage_date).days}
+                      for o in stuck]
         downtime = {}
         for row in losses:
             key = (row.workcenter_id.name, row.loss_id.name)
             downtime[key] = downtime.get(key, 0.0) + row.duration
+        downtime_rows = [{'center': c, 'reason': r, 'hours': self._num(m / 60.0)}
+                         for (c, r), m in sorted(downtime.items())]
+        nothing = not (at_risk or overdue_rows or claim_rows or stuck_rows or after_act or before or downtime_rows)
         return {
+            'nothing': nothing, 'claims': claim_rows, 'stuck': stuck_rows,
             'at_risk': at_risk, 'overdue': overdue_rows,
             'due_after_act': self._money(sum(after_act.mapped('td_dash_due'))), 'due_after_act_count': len(after_act),
             'due_before': self._money(sum(before.mapped('td_pay_missing'))), 'due_before_count': len(before),
-            'downtime': [{'center': c, 'reason': r, 'hours': self._num(m / 60.0)} for (c, r), m in sorted(downtime.items())],
+            'downtime': downtime_rows,
         }
 
 

@@ -12,6 +12,8 @@ class TestShop(TdMebliSaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # the wrong PIN counter is written in a cursor of its own (AC-071): in the tests it wraps the test cursor
+        cls.registry_enter_test_mode_cls()
         cls.worker = cls.env['hr.employee'].create({'name': 'Worker', 'pin': '1234', 'hourly_cost': 150.0})
         cls.order = cls._make_order()
         cls.order.action_confirm()
@@ -64,11 +66,11 @@ class TestShop(TdMebliSaleCommon):
             return self.env['td.mebli.kiosk'].create({'workorder_id': self.workorder.id, 'action': action,
                                                       'employee_id': employee.id, 'pin': pin, **vals}).action_confirm()
         self._kiosk('start')
-        with self.assertRaisesRegex(UserError, 'one worker at a time'):
+        with self.assertRaisesRegex(UserError, 'Two workers on one work order'):
             kiosk('start', second, '5678')
-        with self.assertRaisesRegex(UserError, 'one worker at a time'):
+        with self.assertRaisesRegex(UserError, 'Two workers on one work order'):
             kiosk('pause', second, '5678', loss_id=loss.id)
-        with self.assertRaisesRegex(UserError, 'one worker at a time'):
+        with self.assertRaisesRegex(UserError, 'Two workers on one work order'):
             kiosk('done', second, '5678')
         open_lines = self.workorder.time_ids.filtered(lambda t: not t.date_end)
         self.assertEqual(open_lines.td_employee_id, self.worker)  # the timer of the first worker still runs

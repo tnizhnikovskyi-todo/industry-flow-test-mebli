@@ -64,6 +64,52 @@
         <field name="auto_delete" eval="False"/>
     </record>
 
+    <!-- AC-030: «Booking of the measurement» — the date, the time and the address of the measurement visit (standard
+         meeting of the opportunity, td_mebli_measure); chosen in the standard composer of the meeting -->
+    <record id="mail_template_td_measure_booking" model="mail.template">
+        <field name="name">Furniture: booking of the measurement</field>
+        <field name="model_id" ref="calendar.model_calendar_event"/>
+        <field name="subject">Measurement: {{ format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ ','.join(str(p.id) for p in object.partner_ids if p != object.user_id.partner_id) }}</field>
+        <field name="lang">{{ object.opportunity_id.partner_id.lang or user.lang }}</field>
+        <field name="description">Sent by the salesperson after the booking of the measurement visit</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p>Hello!</p>
+    <p>Our measurer <t t-out="object.user_id.name or ''"/> comes to you
+        <strong t-out="format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')"/>.</p>
+    <p t-if="object.location">The address: <strong t-out="object.location"/>.</p>
+    <p>Please prepare the plan of the room and the sizes of your appliances if you have them.</p>
+    <p>Best regards, <t t-out="object.user_id.company_id.name or ''"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
+    <!-- AC-030: «Date of the installation» — the date of the visit and the address of the order -->
+    <record id="mail_template_td_install_date" model="mail.template">
+        <field name="name">Furniture: date of the installation</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="subject">Installation of {{ object.sale_order_id.name }}: {{ format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.sale_order_id.partner_id.id }}</field>
+        <field name="lang">{{ object.sale_order_id.partner_id.lang }}</field>
+        <field name="description">Sent by the salesperson when the date of the installation is set</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p>Hello, <t t-out="object.sale_order_id.partner_id.name or ''"/>!</p>
+    <p>The installation of your order <strong t-out="object.sale_order_id.name or ''"/> is planned on
+        <strong t-out="format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')"/>.</p>
+    <p t-if="object.sale_order_id.partner_shipping_id.contact_address">The address:
+        <t t-out="object.sale_order_id.partner_shipping_id.contact_address"/>.</p>
+    <p t-if="object.sale_order_id">Amount of the order: <t t-out="format_amount(object.sale_order_id.amount_total, object.sale_order_id.currency_id)"/>.</p>
+    <p>Best regards, <t t-out="object.company_id.name or ''"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
     <!-- Position 32 (F-64): morning briefing of the owner — a template filled by fixed rules (no AI) -->
     <record id="mail_template_td_briefing" model="mail.template">
         <field name="name">Furniture: morning briefing of the owner</field>
@@ -76,24 +122,47 @@
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;" class="td_briefing">
     <t t-set="data" t-value="briefing or object.env['td.mebli.dashboard']._td_briefing_data()"/>
-    <p><strong>Orders at risk: <t t-out="len(data['at_risk'])"/></strong></p>
-    <ul t-if="data['at_risk']">
-        <li t-foreach="data['at_risk'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['customer']"/> · +<t t-out="row['days']"/> d. · <t t-out="row['reason']"/></li>
-    </ul>
-    <p><strong>Overdue manufacturing orders: <t t-out="len(data['overdue'])"/></strong></p>
-    <ul t-if="data['overdue']">
-        <li t-foreach="data['overdue'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['origin']"/> · <t t-out="row['days']"/> d. late</li>
-    </ul>
-    <p><strong>Money to receive</strong></p>
-    <ul>
-        <li>After the signed final act: <t t-out="data['due_after_act']"/> (orders: <t t-out="data['due_after_act_count']"/>)</li>
-        <li>Before the installations of the next 7 days: <t t-out="data['due_before']"/> (orders: <t t-out="data['due_before_count']"/>)</li>
-    </ul>
-    <p><strong>Downtime of the sections yesterday</strong></p>
-    <ul t-if="data['downtime']">
-        <li t-foreach="data['downtime']" t-as="row"><t t-out="row['center']"/> · <t t-out="row['reason']"/> · <t t-out="row['hours']"/> h</li>
-    </ul>
-    <p t-else="">No downtime.</p>
+    <!-- AC-125: nothing to report — one short line, no empty sections -->
+    <p t-if="data['nothing']" class="td_briefing_nothing"><strong>No deviations</strong></p>
+    <t t-else="">
+        <t t-if="data['at_risk']">
+            <p><strong>Orders at risk: <t t-out="len(data['at_risk'])"/></strong></p>
+            <ul>
+                <li t-foreach="data['at_risk'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['customer']"/> · +<t t-out="row['days']"/> d. · <t t-out="row['reason']"/></li>
+            </ul>
+        </t>
+        <t t-if="data['claims']">
+            <p><strong>Overdue claims: <t t-out="len(data['claims'])"/></strong></p>
+            <ul>
+                <li t-foreach="data['claims'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['customer']"/> · <t t-out="row['days']"/> d.</li>
+            </ul>
+        </t>
+        <t t-if="data['due_after_act_count'] or data['due_before_count']">
+            <p><strong>Money to receive</strong></p>
+            <ul>
+                <li t-if="data['due_after_act_count']">After the signed final act: <t t-out="data['due_after_act']"/> (orders: <t t-out="data['due_after_act_count']"/>)</li>
+                <li t-if="data['due_before_count']">Before the installations of the next 7 days: <t t-out="data['due_before']"/> (orders: <t t-out="data['due_before_count']"/>)</li>
+            </ul>
+        </t>
+        <t t-if="data['stuck']">
+            <p><strong>Stuck orders: <t t-out="len(data['stuck'])"/></strong></p>
+            <ul>
+                <li t-foreach="data['stuck'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['customer']"/> · <t t-out="row['days']"/> d. without a move</li>
+            </ul>
+        </t>
+        <t t-if="data['overdue']">
+            <p><strong>Overdue manufacturing orders: <t t-out="len(data['overdue'])"/></strong></p>
+            <ul>
+                <li t-foreach="data['overdue'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['origin']"/> · <t t-out="row['days']"/> d. late</li>
+            </ul>
+        </t>
+        <t t-if="data['downtime']">
+            <p><strong>Downtime of the sections yesterday</strong></p>
+            <ul>
+                <li t-foreach="data['downtime']" t-as="row"><t t-out="row['center']"/> · <t t-out="row['reason']"/> · <t t-out="row['hours']"/> h</li>
+            </ul>
+        </t>
+    </t>
 </div>
         </field>
         <field name="auto_delete" eval="False"/>

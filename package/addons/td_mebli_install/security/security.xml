@@ -90,6 +90,8 @@
     </record>
 
     <record id="td_mebli_install_defect_rule_all_read" model="ir.rule">
+        <!-- review A-11: «all» is all the defects of the allowed companies — the global rule
+             td_mebli_install_defect_rule_company limits this rule like any other -->
         <field name="name">Defect of an installation act: project managers and «all documents» salespeople read all</field>
         <field name="model_id" ref="model_td_mebli_install_defect"/>
         <field name="domain_force">[(1, '=', 1)]</field>
@@ -118,5 +120,98 @@
         <field name="model_id" ref="model_td_mebli_accrual"/>
         <field name="global" eval="True"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <!-- AC-106/107: every employee reads his own accruals; the shop master (department manager or the manager of the
+         employee) reads the accruals of his section and adds bonuses and penalties there as drafts; the production
+         manager and the accountant see and accrue all -->
+    <record id="td_mebli_accrual_rule_own" model="ir.rule">
+        <field name="name">Accrual: own lines</field>
+        <field name="model_id" ref="model_td_mebli_accrual"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('base.group_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_accrual_rule_section_read" model="ir.rule">
+        <field name="name">Accrual: the shop master reads his section</field>
+        <field name="model_id" ref="model_td_mebli_accrual"/>
+        <field name="domain_force">['|', ('employee_id.department_id.manager_id.user_id', '=', user.id),
+                                         ('employee_id.parent_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="False"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_accrual_rule_section_write" model="ir.rule">
+        <field name="name">Accrual: the shop master adds bonuses and penalties of his section as drafts</field>
+        <field name="model_id" ref="model_td_mebli_accrual"/>
+        <field name="domain_force">[('kind', 'in', ('bonus', 'penalty')), ('state', '=', 'draft'),
+                                    '|', ('employee_id.department_id.manager_id.user_id', '=', user.id),
+                                         ('employee_id.parent_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <record id="td_mebli_accrual_rule_all" model="ir.rule">
+        <field name="name">Accrual: production manager and accountant — all</field>
+        <field name="model_id" ref="model_td_mebli_accrual"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('mrp.group_mrp_manager')), (4, ref('account.group_account_user')), (4, ref('account.group_account_manager'))]"/>
+    </record>
+
+    <record id="td_mebli_accrual_reason_rule_company" model="ir.rule">
+        <field name="name">Reason of a bonus or a penalty: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_accrual_reason"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <!-- installation acts and manual payment marks: the companies of the user (multi-company, security.md §3) -->
+    <record id="td_mebli_install_act_rule_company" model="ir.rule">
+        <field name="name">Installation act: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_install_act"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+
+    <record id="td_mebli_pay_mark_rule_company" model="ir.rule">
+        <field name="name">Manual payment mark: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_pay_mark"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+
+    <!-- the hours of the crew follow their act: editable while the act is a draft -->
+    <record id="td_mebli_install_act_crew_rule_write" model="ir.rule">
+        <field name="name">Hours of the crew: editable while the act is a draft</field>
+        <field name="model_id" ref="model_td_mebli_install_act_crew"/>
+        <field name="domain_force">[('act_id.state', '=', 'draft')]</field>
+        <field name="groups" eval="[(4, ref('project.group_project_user'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- review A-11 (AC-036): the lines of an act follow the company of the act for everybody (global rules) -->
+    <record id="td_mebli_install_defect_rule_company" model="ir.rule">
+        <field name="name">Defect of an installation act: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <record id="td_mebli_install_act_crew_rule_company" model="ir.rule">
+        <field name="name">Hours of the crew of an installation act: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_install_act_crew"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('act_id.company_id', 'in', company_ids + [False])]</field>
     </record>
 </odoo>

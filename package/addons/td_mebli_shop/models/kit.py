@@ -20,6 +20,9 @@ class TdMebliKitLine(models.Model):
     label = fields.Char(string='Label', compute='_compute_label')
     packed = fields.Boolean(string='Packed')
     packed_by_id = fields.Many2one('res.users', string='Packed by', readonly=True)
+    company_id = fields.Many2one(related='order_id.company_id', store=True, string='Company')
+    # AC-093: «Create additional order» — a manufacturing order of the missing part, linked to the sales order
+    reorder_production_id = fields.Many2one('mrp.production', string='Reordered', readonly=True, copy=False)
 
     @api.depends('order_id.name', 'place', 'sequence')
     def _compute_label(self):
@@ -33,6 +36,24 @@ class TdMebliKitLine(models.Model):
 
     def action_td_pack(self):
         self.write({'packed': True})
+        return True
+
+    def action_td_reorder(self):
+        """AC-093: the part is missing in the set — a manufacturing order of the part with the sales order as origin; the
+        line is marked «Reordered»."""
+        for line in self:
+            if not line.part_id:
+                raise UserError(self.env._("An additional order is made for a part: %s is not a part.", line.item))
+            if line.reorder_production_id:
+                raise UserError(self.env._("%(item)s is already reordered: %(production)s.",
+                                           item=line.item, production=line.reorder_production_id.name))
+            production = line.part_id._td_make_production(
+                line.qty, line.order_id.name,
+                self.env._("Additional order of %(item)s for %(order)s (packing list).",
+                           item=line.item, order=line.order_id.name))
+            line.reorder_production_id = production
+            line.order_id.message_post(body=self.env._("Additional order of %(item)s: %(production)s.",
+                                                       item=line.item, production=production.name))
         return True
 
 
@@ -81,6 +102,12 @@ class SaleOrder(models.Model):
         self.ensure_one()
         places = sorted(set(self.td_kit_line_ids.mapped('place')))
         return [(place, self.td_kit_line_ids.filtered(lambda line: line.place == place)) for place in places]
+
+    def action_td_scan_labels(self):
+        """AC-062: scanning of the part labels into the packing list (box B)."""
+        self.ensure_one()
+        return {'type': 'ir.actions.act_window', 'res_model': 'td.mebli.kit.scan', 'view_mode': 'form', 'target': 'new',
+                'name': self.env._("Scan Labels"), 'context': {'default_order_id': self.id}}
 
     def action_td_view_kit(self):
         self.ensure_one()

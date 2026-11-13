@@ -6,22 +6,28 @@
         <field name="arch" type="xml">
             <list string="Accruals" editable="bottom" decoration-danger="kind == 'penalty'" decoration-success="kind == 'bonus'">
                 <header>
-                    <button name="action_td_accrue" type="object" string="Accrue" class="btn-primary" display="always"
+                    <button name="action_td_accrue_wizard" type="object" string="Accrue" class="btn-primary" display="always"
                             groups="mrp.group_mrp_manager,account.group_account_user"/>
                     <button name="action_td_confirm" type="object" string="Confirm"
                             groups="mrp.group_mrp_manager,account.group_account_user"/>
+                    <button name="action_td_cancel_wizard" type="object" string="Cancel Confirmed"
+                            groups="mrp.group_mrp_manager,account.group_account_manager"/>
                 </header>
-                <field name="date" readonly="state == 'confirmed'"/>
-                <field name="employee_id" readonly="state == 'confirmed'"/>
-                <field name="kind" readonly="state == 'confirmed'"/>
+                <field name="date" readonly="state != 'draft'"/>
+                <field name="employee_id" readonly="state != 'draft'"/>
+                <field name="kind" readonly="state != 'draft'"/>
                 <field name="workcenter_id" optional="show"/>
                 <field name="order_ref"/>
                 <field name="hours" sum="Total" optional="show" invisible="kind != 'piece'"/>
                 <field name="piece_rate" optional="show" invisible="kind != 'piece'"/>
-                <field name="amount" sum="Total" readonly="state == 'confirmed'"/>
-                <field name="reason" readonly="state == 'confirmed'"/>
+                <field name="amount" sum="Total" readonly="state != 'draft'"/>
+                <field name="reason_id" readonly="state != 'draft'" required="kind in ('bonus', 'penalty') and not reason"
+                       options="{'no_create': True}"/>
+                <field name="reason" readonly="state != 'draft'" optional="show"/>
+                <field name="author_id" optional="hide"/>
+                <field name="cancel_reason" optional="hide"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="state" widget="badge" decoration-success="state == 'confirmed'" readonly="1"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-muted="state == 'cancel'" readonly="1"/>
             </list>
         </field>
     </record>
@@ -66,4 +72,83 @@
 
     <menuitem id="td_mebli_accrual_menu" name="Accruals" parent="mrp.menu_mrp_reporting"
               action="td_mebli_accrual_action" sequence="40"/>
+
+    <!-- AC-106: the crew opens its own accruals (record rule «own lines») from the Installation menu -->
+    <record id="td_mebli_accrual_my_action" model="ir.actions.act_window">
+        <field name="name">My Accruals</field>
+        <field name="res_model">td.mebli.accrual</field>
+        <field name="view_mode">list,pivot</field>
+        <field name="domain">[('employee_id.user_id', '=', uid)]</field>
+        <field name="context">{'create': False, 'edit': False}</field>
+    </record>
+    <menuitem id="td_mebli_accrual_my_menu" name="My Accruals" parent="td_mebli_install_menu"
+              action="td_mebli_accrual_my_action" sequence="10"/>
+
+    <!-- AC-107: the reasons of the bonuses and the penalties -->
+    <record id="td_mebli_accrual_reason_view_list" model="ir.ui.view">
+        <field name="name">td.mebli.accrual.reason.list</field>
+        <field name="model">td.mebli.accrual.reason</field>
+        <field name="arch" type="xml">
+            <list string="Reasons of Bonuses and Penalties" editable="bottom">
+                <field name="name"/>
+                <field name="kind"/>
+                <field name="default_amount"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="company_id" groups="base.group_multi_company" optional="show"/>
+                <field name="active" widget="boolean_toggle" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_mebli_accrual_reason_action" model="ir.actions.act_window">
+        <field name="name">Reasons of Bonuses and Penalties</field>
+        <field name="res_model">td.mebli.accrual.reason</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="td_mebli_accrual_reason_menu" name="Reasons of Bonuses and Penalties" parent="mrp.menu_mrp_configuration"
+              action="td_mebli_accrual_reason_action" sequence="40" groups="mrp.group_mrp_manager,account.group_account_user"/>
+
+    <!-- AC-104/105: «Accrue» for a period, the summary of the operations without a piece rate -->
+    <record id="td_mebli_accrual_wizard_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.accrual.wizard.form</field>
+        <field name="model">td.mebli.accrual.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Accrue">
+                <field name="state" invisible="1"/>
+                <group invisible="state != 'draft'">
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </group>
+                <group invisible="state != 'done'">
+                    <field name="accrual_count"/>
+                    <field name="summary" class="fw-bold"/>
+                    <field name="missing_rate_list" invisible="not missing_rate_count"/>
+                    <field name="missing_rate_count" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_accrue" type="object" string="Accrue" class="btn-primary" invisible="state != 'draft'"/>
+                    <button special="cancel" string="Close"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_mebli_accrual_cancel_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.accrual.cancel.form</field>
+        <field name="model">td.mebli.accrual.cancel</field>
+        <field name="arch" type="xml">
+            <form string="Cancel Accruals">
+                <group>
+                    <field name="reason"/>
+                    <field name="accrual_ids" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_cancel" type="object" string="Cancel the Accruals" class="btn-primary"/>
+                    <button special="cancel" string="Discard"/>
+                </footer>
+            </form>
+        </field>
+    </record>
 </odoo>

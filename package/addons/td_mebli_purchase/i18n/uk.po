@@ -6,21 +6,26 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:08+0000\n"
-"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"POT-Creation-Date: 2026-11-13 09:42+0000\n"
+"PO-Revision-Date: 2026-11-13 09:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_over_history
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Above History"
 msgstr "Понад історію"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/models/purchase.py:0
+msgid "Above history +%s %%"
+msgstr "Вище історії +%s %%"
 
 #. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_price_delta_pct
@@ -89,7 +94,7 @@ msgstr "Поточна ціна"
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__display_name
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__file
@@ -105,6 +110,12 @@ msgstr "Назва файлу"
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__has_delay
 msgid "Has Delay"
 msgstr "Є строк"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_history_note
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_form_td_mebli_purchase
+msgid "History"
+msgstr "Історія"
 
 #. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__id
@@ -171,6 +182,17 @@ msgid "Not found: %s."
 msgstr "Не знайдено: %s."
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__error
+msgid "Not recognized"
+msgstr "Не розпізнано"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Not written, errors: %s."
+msgstr "Не записано, не розпізнано: %s."
+
+#. module: td_mebli_purchase
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
 msgid "Order Date"
 msgstr "Дата замовлення"
@@ -222,6 +244,11 @@ msgid "Prices to Write"
 msgstr "Цін до запису"
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__error
+msgid "Problem"
+msgstr "Проблема"
+
+#. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__product_id
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Product"
@@ -251,6 +278,16 @@ msgstr "Розпізнані колонки"
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__status
 msgid "Result"
 msgstr "Результат"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__error_count
+msgid "Rows not Recognized"
+msgstr "Нерозпізнаних рядків"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,help:td_mebli_purchase.field_td_mebli_price_import__error_count
+msgid "Rows whose price or quantity is not a number: they are not written."
+msgstr "Рядки, де ціна чи кількість — не число: їх не записано."
 
 #. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__partner_id
@@ -299,6 +336,11 @@ msgid "Vendor"
 msgstr "Постачальник"
 
 #. module: td_mebli_purchase
+#: model:ir.model.fields,help:td_mebli_purchase.field_td_mebli_price_import_line__error
+msgid "Why the row is not written, or what is not written (the lead time)."
+msgstr "Чому рядок не записано або що саме не записано (строк постачання)."
+
+#. module: td_mebli_purchase
 #: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__wizard_id
 msgid "Wizard"
 msgstr "Майстер"
@@ -317,6 +359,12 @@ msgstr "код"
 #. module: td_mebli_purchase
 #. odoo-python
 #: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "lead time «%s» is not recognized: the current lead time is kept"
+msgstr "строк «%s» не розпізнано: лишається поточний строк"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
 msgid "lead time, days"
 msgstr "строк, днів"
 
@@ -329,57 +377,20 @@ msgstr "мінімальна кількість"
 #. module: td_mebli_purchase
 #. odoo-python
 #: code:addons/td_mebli_purchase/wizard/price_import.py:0
-msgid "price"
-msgstr "ціна"
-
-#. module: td_mebli_purchase
-#. odoo-python
-#: code:addons/td_mebli_purchase/wizard/price_import.py:0
-msgid "product"
-msgstr "товар"
-
-#. module: td_mebli_purchase
-#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__error
-msgid "Not recognized"
-msgstr "Не розпізнано"
-
-#. module: td_mebli_purchase
-#. odoo-python
-#: code:addons/td_mebli_purchase/wizard/price_import.py:0
-msgid "Not written, errors: %s."
-msgstr "Не записано, не розпізнано: %s."
-
-#. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__error
-msgid "Problem"
-msgstr "Проблема"
-
-#. module: td_mebli_purchase
-#: model:ir.model.fields,help:td_mebli_purchase.field_td_mebli_price_import__error_count
-msgid "Rows whose price or quantity is not a number: they are not written."
-msgstr "Рядки, де ціна чи кількість — не число: їх не записано."
-
-#. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__error_count
-msgid "Rows not Recognized"
-msgstr "Нерозпізнаних рядків"
-
-#. module: td_mebli_purchase
-#: model:ir.model.fields,help:td_mebli_purchase.field_td_mebli_price_import_line__error
-msgid "Why the row is not written, or what is not written (the lead time)."
-msgstr "Чому рядок не записано або що саме не записано (строк постачання)."
-
-#. module: td_mebli_purchase
-#. odoo-python
-#: code:addons/td_mebli_purchase/wizard/price_import.py:0
-msgid "lead time «%s» is not recognized: the current lead time is kept"
-msgstr "строк «%s» не розпізнано: лишається поточний строк"
-
-#. module: td_mebli_purchase
-#. odoo-python
-#: code:addons/td_mebli_purchase/wizard/price_import.py:0
 msgid "minimal quantity «%s» is not a number"
 msgstr "мінімальна кількість «%s» — не число"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/models/purchase.py:0
+msgid "no history"
+msgstr "немає історії"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "price"
+msgstr "ціна"
 
 #. module: td_mebli_purchase
 #. odoo-python
@@ -392,3 +403,9 @@ msgstr "ціна %s не більша за нуль"
 #: code:addons/td_mebli_purchase/wizard/price_import.py:0
 msgid "price «%s» is not a number"
 msgstr "ціна «%s» — не число"
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "product"
+msgstr "товар"

@@ -1,0 +1,35 @@
+// AC-N.06: font of the package reports with the full Cyrillic set (no fallback font of wkhtmltopdf).
+// Roboto (Apache License 2.0) is shipped with Odoo itself (web/static/fonts/google/Roboto); the standard
+// web/static/fonts/fonts.scss declares only its regular face, here the regular, italic, bold and bold italic faces are
+// declared under an own family name, so the layout font of the company stays as it is for the standard reports.
+@font-face {
+    font-family: 'TdMebli Roboto';
+    src: url('/web/static/fonts/google/Roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TdMebli Roboto';
+    src: url('/web/static/fonts/google/Roboto/Roboto-Italic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+@font-face {
+    font-family: 'TdMebli Roboto';
+    src: url('/web/static/fonts/google/Roboto/Roboto-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'TdMebli Roboto';
+    src: url('/web/static/fonts/google/Roboto/Roboto-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+// Root class of every report of the package (contract, acts, labels, kit sheet): the groups add it to their templates.
+.td_mebli_report {
+    &, h1, h2, h3, h4, h5, h6, table, th, td, p, span, div, strong, b, em {
+        font-family: 'TdMebli Roboto', sans-serif;
+    }
+}

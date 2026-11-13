@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:08+0000\n"
-"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"POT-Creation-Date: 2026-11-13 09:40+0000\n"
+"PO-Revision-Date: 2026-11-13 09:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk\n"
@@ -39,12 +39,6 @@ msgstr "До монтажу без доплати: %s"
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
 msgid "Behind"
 msgstr "Відстає"
-
-#. module: td_mebli_dashboard
-#. odoo-javascript
-#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
-msgid "Operations behind the plan"
-msgstr "Операцій відстає від плану"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -128,19 +122,13 @@ msgstr "Дні зсуву обіцяних дат"
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_dashboard
 #. odoo-javascript
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
 msgid "Done"
 msgstr "Зроблено"
-
-#. module: td_mebli_dashboard
-#. odoo-javascript
-#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
-msgid "Operations done in the shift"
-msgstr "Операцій виконано за зміну"
 
 #. module: td_mebli_dashboard
 #: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__td_dash_due
@@ -157,6 +145,12 @@ msgstr "Керівник фабрики (дашборд)"
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Factory on one screen"
 msgstr "Фабрика на одному екрані"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Failed quality checks and defects of the shop, %s days"
+msgstr "Невдалі перевірки якості й брак цеху, %s днів"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -230,6 +224,18 @@ msgid "Manager Dashboard of the Furniture Factory"
 msgstr "Дашборд керівника меблевої фабрики"
 
 #. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Manufacturing orders: %s"
+msgstr "Виробничих замовлень: %s"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Scraps: %s"
+msgstr "Браку: %s"
+
+#. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Margin"
 msgstr "Маржа"
@@ -261,6 +267,14 @@ msgstr "Маржа, зважена"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid ""
+"Margin: one weighted figure (margin ÷ revenue) on the dashboard and in the "
+"reports."
+msgstr "Маржа: одна зважена цифра (маржа ÷ виручка) на дашборді й у звітах."
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
 msgid "Measurement to contract"
 msgstr "Замір → договір"
 
@@ -285,8 +299,14 @@ msgstr "Замірів: %(all)s, договорів: %(ok)s"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "No move in production for more than %s days"
-msgstr "Без руху у виробництві понад %s дн."
+msgid "No data"
+msgstr "Немає даних"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "No change of the stage for more than %s days"
+msgstr "Етап не змінювався понад %s дн."
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -309,6 +329,18 @@ msgid ""
 msgstr ""
 "Відкрита робота, розпочата або з плановим стартом за 7 днів ÷ годин "
 "календаря дільниці на тиждень"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Operations behind the plan"
+msgstr "Операцій відстає від плану"
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Operations done in the shift"
+msgstr "Операцій виконано за зміну"
 
 #. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
@@ -404,12 +436,8 @@ msgstr "Рядків закупівель: %s"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid ""
-"Quality nonconformities: in the B box only. Margin: one weighted figure "
-"(margin ÷ revenue) on the dashboard and in the reports."
-msgstr ""
-"Невідповідності якості — лише в коробці B. Маржа — одна зважена цифра (маржа"
-" ÷ виручка) на дашборді й у звітах."
+msgid "Quality nonconformities"
+msgstr "Невідповідності якості"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -538,6 +566,12 @@ msgid "Total margin ÷ total revenue of the report, %s days"
 msgstr "Σ маржі ÷ Σ виручки звіту, %s днів"
 
 #. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Without a work center"
+msgstr "Без дільниці"
+
+#. module: td_mebli_dashboard
 #. odoo-javascript
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
 msgid "d."
@@ -554,4 +588,3 @@ msgstr "год"
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
 msgid "planned end has passed"
 msgstr "плановий кінець минув"
-

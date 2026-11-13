@@ -6,3 +6,18 @@ access_td_mebli_install_defect_user,td.mebli.install.defect user,model_td_mebli_
 access_td_mebli_install_defect_sale,td.mebli.install.defect sale,model_td_mebli_install_defect,sales_team.group_sale_salesman,1,0,0,0
 access_td_mebli_accrual_mrp,td.mebli.accrual workshop,model_td_mebli_accrual,mrp.group_mrp_manager,1,1,1,0
 access_td_mebli_accrual_account,td.mebli.accrual accounting,model_td_mebli_accrual,account.group_account_user,1,1,1,1
+access_td_mebli_accrual_user,td.mebli.accrual own,model_td_mebli_accrual,base.group_user,1,0,0,0
+access_td_mebli_accrual_master,td.mebli.accrual shop master,model_td_mebli_accrual,mrp.group_mrp_user,1,1,1,1
+access_td_mebli_accrual_reason_user,td.mebli.accrual.reason user,model_td_mebli_accrual_reason,base.group_user,1,0,0,0
+access_td_mebli_accrual_reason_mrp,td.mebli.accrual.reason workshop,model_td_mebli_accrual_reason,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_accrual_reason_account,td.mebli.accrual.reason accounting,model_td_mebli_accrual_reason,account.group_account_user,1,1,1,1
+access_td_mebli_accrual_wizard_mrp,td.mebli.accrual.wizard workshop,model_td_mebli_accrual_wizard,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_accrual_wizard_account,td.mebli.accrual.wizard accounting,model_td_mebli_accrual_wizard,account.group_account_user,1,1,1,1
+access_td_mebli_accrual_cancel_mrp,td.mebli.accrual.cancel workshop,model_td_mebli_accrual_cancel,mrp.group_mrp_manager,1,1,1,1
+access_td_mebli_accrual_cancel_account,td.mebli.accrual.cancel accounting,model_td_mebli_accrual_cancel,account.group_account_manager,1,1,1,1
+access_td_mebli_install_act_crew_user,td.mebli.install.act.crew user,model_td_mebli_install_act_crew,project.group_project_user,1,1,1,1
+access_td_mebli_install_act_crew_sale,td.mebli.install.act.crew sale,model_td_mebli_install_act_crew,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_pay_mark_sale,td.mebli.pay.mark sale,model_td_mebli_pay_mark,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_pay_mark_crew,td.mebli.pay.mark crew,model_td_mebli_pay_mark,project.group_project_user,1,0,0,0
+access_td_mebli_pay_mark_finance,td.mebli.pay.mark finance,model_td_mebli_pay_mark,td_mebli_base.group_finance,1,1,1,0
+access_td_mebli_accrual_account_manager,td.mebli.accrual accounting manager,model_td_mebli_accrual,account.group_account_manager,1,1,1,1

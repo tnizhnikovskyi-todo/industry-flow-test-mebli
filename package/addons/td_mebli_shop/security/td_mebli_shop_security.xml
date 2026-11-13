@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- AC-036 (tr/security.md §3): the packing list and the quality journal belong to the company of the document -->
+    <record id="td_mebli_kit_line_company_rule" model="ir.rule">
+        <field name="name">Packing list: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_kit_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="td_mebli_quality_check_company_rule" model="ir.rule">
+        <field name="name">Quality checks: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_quality_check"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="seq_td_mebli_bas_batch" model="ir.sequence">
+        <field name="name">BAS exchange batch</field>
+        <field name="code">td.mebli.bas.batch</field>
+        <field name="prefix">BAS/%(year)s/</field>
+        <field name="padding">5</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="ir_cron_td_bas_exchange" model="ir.cron">
+        <field name="name">Furniture: exchange with BAS</field>
+        <field name="model_id" ref="model_td_mebli_bas_channel"/>
+        <field name="state">code</field>
+        <field name="code">model._td_cron_exchange()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+</odoo>

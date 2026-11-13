@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AC-133: paper work order sheet of a manufacturing order for a power cut: operations with fields to mark, parts
+         with the QR of their labels. After the power is back the master marks «Done afterwards» on the work order. -->
+    <record id="action_report_workorder_sheet" model="ir.actions.report">
+        <field name="name">Work Order Sheet</field>
+        <field name="model">mrp.production</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_shop.report_workorder_sheet</field>
+        <field name="report_file">td_mebli_shop.report_workorder_sheet</field>
+        <field name="print_report_name">'Work order sheet - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="mrp.model_mrp_production"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_workorder_sheet_document">
+        <t t-call="web.external_layout">
+            <div class="page td_mebli_report td_report_workorder_sheet">
+                <h2>Work Order Sheet <span t-field="doc.name"/></h2>
+                <div class="row mb-3">
+                    <div class="col-6"><strong>Product:</strong> <span t-field="doc.product_id"/></div>
+                    <div class="col-6"><strong>Origin:</strong> <span t-field="doc.origin"/></div>
+                </div>
+                <h5>Operations</h5>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr><th>Operation</th><th>Work Center</th><th class="text-end">Planned, min</th>
+                            <th>Started</th><th>Finished</th><th>Worker</th><th>Reason / Note</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc.workorder_ids" t-as="workorder">
+                            <td><span t-field="workorder.name"/></td>
+                            <td><span t-field="workorder.workcenter_id"/></td>
+                            <td class="text-end"><span t-esc="round(workorder.duration_expected)"/></td>
+                            <td>____:____</td><td>____:____</td><td>__________</td><td>______________</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h5 class="mt-3">Parts</h5>
+                <p t-if="not doc.bom_id.td_part_ids">The specification has no parts.</p>
+                <table class="table table-sm o_main_table" t-if="doc.bom_id.td_part_ids">
+                    <thead>
+                        <tr><th>QR</th><th>Code</th><th>Part</th><th>Size, mm</th><th>Material</th>
+                            <th class="text-end">Quantity</th><th class="text-center">Done</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="doc._td_sheet_parts()" t-as="part">
+                            <td><img t-att-src="part['qr']" style="width:18mm;height:18mm" alt="QR"/></td>
+                            <td><t t-out="part['code']"/></td>
+                            <td><t t-out="part['item']"/></td>
+                            <td><t t-out="part['size']"/></td>
+                            <td><t t-out="part['material']"/></td>
+                            <td class="text-end"><t t-out="part['qty']"/></td>
+                            <td class="text-center">☐</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row mt-4">
+                    <div class="col-6">Master: ____________________</div>
+                    <div class="col-6">Entered into Odoo: ____________________</div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_workorder_sheet">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="td_mebli_shop.report_workorder_sheet_document"/>
+            </t>
+        </t>
+    </template>
+</odoo>

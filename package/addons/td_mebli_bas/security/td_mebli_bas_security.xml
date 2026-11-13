@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- several legal entities (box B): a channel per company, the user sees the exchange of the selected companies -->
+    <record id="rule_td_mebli_bas_channel_company" model="ir.rule">
+        <field name="name">BAS channel: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_bas_channel"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_td_mebli_bas_batch_company" model="ir.rule">
+        <field name="name">BAS batch: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_bas_batch"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="rule_td_mebli_bas_log_company" model="ir.rule">
+        <field name="name">BAS log: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_bas_log"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

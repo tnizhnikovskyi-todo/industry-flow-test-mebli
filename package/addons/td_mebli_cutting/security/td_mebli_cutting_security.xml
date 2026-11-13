@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- AC-036 (tr/security.md §3): a cutting job belongs to the company of its manufacturing orders -->
+    <record id="td_mebli_cutting_job_company_rule" model="ir.rule">
+        <field name="name">Cutting jobs: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_cutting_job"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+</odoo>

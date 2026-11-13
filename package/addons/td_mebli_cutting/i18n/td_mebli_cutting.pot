@@ -1,10 +1,13 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_cutting
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 21:17+0000\n"
-"PO-Revision-Date: 2026-11-12 21:17+0000\n"
+"POT-Creation-Date: 2026-11-13 09:42+0000\n"
+"PO-Revision-Date: 2026-11-13 09:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -102,6 +105,11 @@ msgid "Board"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__td_cutting_mode
+msgid "Board Cutting"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_is_offcut
 msgid "Business Offcut"
 msgstr ""
@@ -113,7 +121,17 @@ msgid "Business Offcuts"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+msgid ""
+"CSV of the cutting map from the cutting program: one row per placed part or offcut —\n"
+"                    sheet; material; sheet_length; sheet_width; lot; type (part / offcut); code (code of the part from\n"
+"                    the cutting file); x; y; length; width; rotated."
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_offcut_pick_form
 msgid "Cancel"
 msgstr ""
 
@@ -141,6 +159,12 @@ msgid "Check of the Design against the Measurement before Cutting"
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Choose a free offcut of the same board, not smaller than the part."
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__company_id
 msgid "Company"
 msgstr ""
@@ -164,8 +188,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__create_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -173,8 +199,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__create_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__create_date
 msgid "Created on"
 msgstr ""
 
@@ -204,6 +232,8 @@ msgstr ""
 #: code:addons/td_mebli_cutting/models/mrp_production.py:0
 #: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_job
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_cutting_job_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__job_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__job_id
 msgid "Cutting Job"
 msgstr ""
 
@@ -285,8 +315,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -319,6 +352,11 @@ msgid "Edge Trim, mm"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__filename
+msgid "File Name"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_follower_ids
 msgid "Followers"
 msgstr ""
@@ -329,13 +367,18 @@ msgid "Followers (Partners)"
 msgstr ""
 
 #. module: td_mebli_cutting
-#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
-msgid "Get result (simulation)"
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__candidate_ids
+msgid "Free Offcuts"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_part
+msgid "Furniture Part of an Order BoM"
 msgstr ""
 
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
-msgid "Get result again"
+msgid "Get result (simulation)"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -351,8 +394,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__id
 msgid "ID"
 msgstr ""
 
@@ -368,8 +414,35 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+msgid "Import"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_result_import_form
+msgid "Import Result"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_cutting_result_import
+msgid "Import of the Result of the Cutting Program"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Import result"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Import result again"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_cutting_job__result_source__imported
-msgid "Imported"
+msgid "Imported from the cutting program"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -401,8 +474,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__write_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__write_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -410,8 +485,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__write_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__write_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -437,6 +514,7 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model,name:td_mebli_cutting.model_mrp_production
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__production_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__td_production_id
 msgid "Manufacturing Order"
 msgstr ""
 
@@ -477,12 +555,23 @@ msgid "Name"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__td_measure_missing
+msgid "No Measurement"
+msgstr ""
+
+#. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/models/distributor.py:0
 msgid ""
 "No cutting service with a distributor: create a service product of the kind "
 "«Cutting service» with the distributor as its vendor (Purchase tab, with the"
 " lead time)."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Not a number in column %(column)s: «%(value)s»."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -506,8 +595,21 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__lot_id
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
 msgid "Offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Offcut %(lot)s (%(size)s mm) reserved for part %(part)s."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Offcut %s is not in the stock of the manufacturing order."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -527,13 +629,37 @@ msgid "Offcuts, m2"
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "Only one board material in one cutting job."
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_search
 msgid "Open"
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "Open the part from its cutting job."
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_part__td_order_name
+msgid "Order"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__part_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_offcut_pick__part_id
 msgid "Part"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Part %s does not belong to the job"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -550,6 +676,23 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__return_date
 msgid "Parts Expected Back"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_offcut_pick
+msgid "Pick a Business Offcut for a Part"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_offcut_pick_form
+msgid "Pick an Offcut"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "Pick an offcut"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -574,8 +717,12 @@ msgid "Product"
 msgstr ""
 
 #. module: td_mebli_cutting
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__rating_ids
-msgid "Ratings"
+#: model:ir.model.fields,help:td_mebli_cutting.field_sale_order__td_delay_reason
+msgid ""
+"Read only (AC-066): «Customer» when the last fixed change of the order was "
+"asked by the customer, «Cutting at the Distributor» when the parts cut by "
+"the distributor come back last, «Supplier» when a purchased item arrives too"
+" late for the promised date, «Company» when the workshop is late."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -583,13 +730,6 @@ msgstr ""
 msgid ""
 "Read only: the expected date of the cutting service line in the distributor "
 "purchase order. Empty once the parts are back (result received)."
-msgstr ""
-
-#. module: td_mebli_cutting
-#: model:ir.model.fields,help:td_mebli_cutting.field_sale_order__td_delay_reason
-msgid ""
-"Read only: «Supplier» when a purchased item arrives too late for the "
-"promised date, «Company» when the workshop is late."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -607,6 +747,11 @@ msgid "Reference"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_offcut_pick_form
+msgid "Reserve for the Job"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_reserved_for
 msgid "Reserved For"
 msgstr ""
@@ -614,6 +759,11 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__td_reserved_m2
 msgid "Reserved, m2"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_result_import__file
+msgid "Result File (CSV)"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -672,6 +822,16 @@ msgid "Send to the distributor"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__sent_by
+msgid "Sent by"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__sent_on
+msgid "Sent on"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_cutting_job__state__sent
 msgid "Sent to cutting"
 msgstr ""
@@ -688,9 +848,23 @@ msgid "Sequence"
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid ""
+"Several manufacturing orders in one cutting job is the function «Cutting "
+"Batches»: create one job per manufacturing order."
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__sheet_id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__sheet_id
 msgid "Sheet"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Sheet %s: the board is not known."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -715,6 +889,11 @@ msgid "Simulation"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__bom_version
+msgid "Specification Version"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__state
 msgid "State"
 msgstr ""
@@ -736,8 +915,40 @@ msgid "The cutting file of %s is attached."
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid ""
+"The cutting file of a sent job does not change: make a new cutting job."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "The file is empty."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/offcut_pick.py:0
+msgid "The manufacturing order of the part does not consume %s."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/measure_check.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
+msgid "The measurement is not filled in — the check is skipped"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__purchase_id
 msgid "The purchase of the cutting service from the distributor (Purchase)."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "The result file has no columns: %s."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -746,6 +957,12 @@ msgstr ""
 msgid ""
 "The result is received from a simulation of the cutting program, not from a "
 "real one."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/mrp_production.py:0
+msgid "There are no cutting parts in manufacturing order %s"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -758,6 +975,11 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__used_area_m2
 msgid "Used, m2"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__td_cutting_mode
+msgid "VP-09: «Distributor only» — the menus of own cutting are hidden."
 msgstr ""
 
 #. module: td_mebli_cutting

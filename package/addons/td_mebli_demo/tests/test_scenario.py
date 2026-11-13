@@ -26,5 +26,8 @@ class TestDemoScenario(TransactionCase):
         self.assertEqual(set(productions.mapped('state')), {'done'})
         job = result['job']
         self.assertEqual(job.state, 'done')
+        # the offcuts of the job become lots only with the feature «offcut» of box B (G2, AC-059): the demo switches
+        # the box B functions it shows on (data/settings_data.xml)
+        self.assertTrue(self.env.ref('base.group_user').implied_ids & self.env.ref('td_mebli_base.group_feature_offcut'))
         self.assertTrue(self.env['stock.lot'].search_count([('td_cutting_job_id', '=', job.id)]))
         self.assertGreater(line.margin, 0)

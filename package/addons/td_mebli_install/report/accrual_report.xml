@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AC-134: the sheet of the accruals of a month — by employees and kinds (piecework, crew percent, bonus, penalty)
+         with the reasons, the totals and the place of the signature of the head; drafts and cancelled lines are left out -->
+    <record id="action_report_accrual_sheet" model="ir.actions.report">
+        <field name="name">Accruals Sheet</field>
+        <field name="model">td.mebli.accrual</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">td_mebli_install.report_accrual_sheet</field>
+        <field name="report_file">td_mebli_install.report_accrual_sheet</field>
+        <field name="print_report_name">'Accruals sheet'</field>
+        <field name="binding_model_id" ref="model_td_mebli_accrual"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_accrual_sheet">
+        <t t-call="web.html_container">
+            <t t-set="lines" t-value="docs.filtered(lambda a: a.state == 'confirmed').sorted(lambda a: (a.employee_id.name or '', a.kind, a.date))"/>
+            <t t-set="company" t-value="lines[:1].company_id or res_company"/>
+            <t t-set="o" t-value="lines[:1]"/>
+            <t t-call="web.external_layout">
+                <div class="page td_mebli_report td_report_accrual_sheet">
+                    <h2 class="mt-2">Accruals Sheet</h2>
+                    <p t-if="lines">
+                        <strong>Period:</strong>
+                        <span t-out="min(lines.mapped('date'))" t-options='{"widget": "date"}'/> –
+                        <span t-out="max(lines.mapped('date'))" t-options='{"widget": "date"}'/>
+                    </p>
+                    <p t-if="not lines">No confirmed accruals.</p>
+                    <t t-foreach="lines.employee_id" t-as="employee">
+                        <t t-set="own" t-value="lines.filtered(lambda a: a.employee_id == employee)"/>
+                        <h5 class="mt-3" t-out="employee.name"/>
+                        <table class="table table-sm o_main_table">
+                            <thead>
+                                <tr><th>Kind</th><th>Date</th><th>Order</th><th>Reason</th><th class="text-end">Amount</th></tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="['piece', 'crew', 'bonus', 'penalty']" t-as="kind">
+                                    <t t-set="of_kind" t-value="own.filtered(lambda a: a.kind == kind)"/>
+                                    <tr t-foreach="of_kind" t-as="line">
+                                        <td><span t-field="line.kind"/></td>
+                                        <td><span t-field="line.date"/></td>
+                                        <td><span t-field="line.order_ref"/></td>
+                                        <td><span t-out="line.reason_id.name or line.reason or ''"/></td>
+                                        <td class="text-end"><span t-field="line.amount"/></td>
+                                    </tr>
+                                    <tr t-if="of_kind" class="fst-italic">
+                                        <td colspan="4">Total: <span t-field="of_kind[:1].kind"/></td>
+                                        <td class="text-end"><span t-out="sum(of_kind.mapped('amount'))" t-options='{"widget": "monetary", "display_currency": of_kind[:1].currency_id}'/></td>
+                                    </tr>
+                                </t>
+                                <tr class="fw-bold">
+                                    <td colspan="4">Total of the employee</td>
+                                    <td class="text-end"><span t-out="sum(own.mapped('amount'))" t-options='{"widget": "monetary", "display_currency": own[:1].currency_id}'/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </t>
+                    <p t-if="lines" class="fw-bold mt-3">
+                        Total: <span t-out="sum(lines.mapped('amount'))" t-options='{"widget": "monetary", "display_currency": lines[:1].currency_id}'/>
+                    </p>
+                    <div class="row mt-5">
+                        <div class="col-6">Head: ____________________ / ____________________</div>
+                        <div class="col-6">Date: ____________________</div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

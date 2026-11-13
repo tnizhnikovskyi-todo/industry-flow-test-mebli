@@ -19,6 +19,11 @@ class MrpBom(models.Model):
     td_part_count = fields.Integer(string='Part Count', compute='_compute_td_totals')
     td_board_area_m2 = fields.Float(string='Board Area, m2', compute='_compute_td_totals', digits=(16, 3))
     td_edge_length_m = fields.Float(string='Edge, m', compute='_compute_td_totals', digits=(16, 3))
+    # AC-052 / AC-028: number of the version sent to cutting; 0 — not sent. Set by the system (td_mebli_cutting) when the
+    # parts go to cutting or to the distributor; while > 0 the parts are locked (td.mebli.part._td_check_not_sent)
+    td_cut_version = fields.Integer(string='Cutting Version', readonly=True, copy=False, default=0,
+                                    help="Version of the specification sent to cutting. 0 — not sent yet. Once sent, the "
+                                         "parts are changed only by an additional order.")
 
     @api.depends('td_part_ids.qty', 'td_part_ids.area_m2', 'td_part_ids.edge_length_m')
     def _compute_td_totals(self):
@@ -26,6 +31,14 @@ class MrpBom(models.Model):
             bom.td_part_count = sum(bom.td_part_ids.mapped('qty'))
             bom.td_board_area_m2 = sum(bom.td_part_ids.mapped('area_m2'))
             bom.td_edge_length_m = sum(bom.td_part_ids.mapped('edge_length_m'))
+
+    def _td_mark_sent_to_cutting(self):
+        """Called by the cutting (system): the next version of every specification is sent; returns {bom: version}."""
+        versions = {}
+        for bom in self.sudo():
+            bom.td_cut_version += 1
+            versions[bom.id] = bom.td_cut_version
+        return versions
 
     @api.model
     def _bom_find_domain(self, products, picking_type=None, company_id=False, bom_type=False):
@@ -185,6 +198,27 @@ class MrpBom(models.Model):
                 'product_uom_id': line.product_uom_id.id,
             }))
         return lines
+
+    def _td_recompute_component_lines(self):
+        """AC-045: after an import the board and edge banding lines are the quantities the parts need (marked «From
+        parts»); fittings and the other lines stay as they are."""
+        uom_m2 = self.env.ref('uom.product_uom_square_meter')
+        uom_m = self.env.ref('uom.product_uom_meter')
+        for bom in self:
+            commands = [(2, line.id) for line in bom.bom_line_ids
+                        if line.product_id.td_material_kind in ('board', 'edge')]
+            commands += [(0, 0, {'product_id': product.id, 'product_qty': qty,
+                                 'product_uom_id': (uom_m if product.td_material_kind == 'edge' else uom_m2).id})
+                         for product, qty in bom._td_part_quantities().items()]
+            bom.write({'bom_line_ids': commands})
+
+    def action_td_import_parts(self):
+        """Button «Import parts» of the specification (hidden once the specification is sent to cutting)."""
+        self.ensure_one()
+        self.env['td.mebli.part']._td_check_not_sent(self)
+        action = self.env['ir.actions.act_window']._for_xml_id('td_mebli_mrp.td_mebli_spec_import_action')
+        action['context'] = {'default_bom_id': self.id}
+        return action
 
     def _td_prepare_operations(self, template_bom):
         self.ensure_one()

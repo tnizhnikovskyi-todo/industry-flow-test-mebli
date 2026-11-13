@@ -6,62 +6,130 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:08+0000\n"
-"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"POT-Creation-Date: 2026-11-13 09:44+0000\n"
+"PO-Revision-Date: 2026-11-13 09:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: \n"
 
 #. module: td_mebli_notify
 #: model:mail.template,body_html:td_mebli_notify.mail_template_td_briefing
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\" class=\"td_briefing\">\n"
 "    <t t-set=\"data\" t-value=\"briefing or object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
-"    <p><strong>Orders at risk: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
-"    <ul t-if=\"data['at_risk']\">\n"
-"        <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> d. · <t t-out=\"row['reason']\"/></li>\n"
-"    </ul>\n"
-"    <p><strong>Overdue manufacturing orders: <t t-out=\"len(data['overdue'])\"/></strong></p>\n"
-"    <ul t-if=\"data['overdue']\">\n"
-"        <li t-foreach=\"data['overdue'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['origin']\"/> · <t t-out=\"row['days']\"/> d. late</li>\n"
-"    </ul>\n"
-"    <p><strong>Money to receive</strong></p>\n"
-"    <ul>\n"
-"        <li>After the signed final act: <t t-out=\"data['due_after_act']\"/> (orders: <t t-out=\"data['due_after_act_count']\"/>)</li>\n"
-"        <li>Before the installations of the next 7 days: <t t-out=\"data['due_before']\"/> (orders: <t t-out=\"data['due_before_count']\"/>)</li>\n"
-"    </ul>\n"
-"    <p><strong>Downtime of the sections yesterday</strong></p>\n"
-"    <ul t-if=\"data['downtime']\">\n"
-"        <li t-foreach=\"data['downtime']\" t-as=\"row\"><t t-out=\"row['center']\"/> · <t t-out=\"row['reason']\"/> · <t t-out=\"row['hours']\"/> h</li>\n"
-"    </ul>\n"
-"    <p t-else=\"\">No downtime.</p>\n"
+"    <!-- AC-125: nothing to report &#8212; one short line, no empty sections -->\n"
+"    <p t-if=\"data['nothing']\" class=\"td_briefing_nothing\"><strong>No deviations</strong></p>\n"
+"    <t t-else=\"\">\n"
+"        <t t-if=\"data['at_risk']\">\n"
+"            <p><strong>Orders at risk: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> d. · <t t-out=\"row['reason']\"/></li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['claims']\">\n"
+"            <p><strong>Overdue claims: <t t-out=\"len(data['claims'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['claims'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · <t t-out=\"row['days']\"/> d.</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['due_after_act_count'] or data['due_before_count']\">\n"
+"            <p><strong>Money to receive</strong></p>\n"
+"            <ul>\n"
+"                <li t-if=\"data['due_after_act_count']\">After the signed final act: <t t-out=\"data['due_after_act']\"/> (orders: <t t-out=\"data['due_after_act_count']\"/>)</li>\n"
+"                <li t-if=\"data['due_before_count']\">Before the installations of the next 7 days: <t t-out=\"data['due_before']\"/> (orders: <t t-out=\"data['due_before_count']\"/>)</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['stuck']\">\n"
+"            <p><strong>Stuck orders: <t t-out=\"len(data['stuck'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['stuck'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · <t t-out=\"row['days']\"/> d. without a move</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['overdue']\">\n"
+"            <p><strong>Overdue manufacturing orders: <t t-out=\"len(data['overdue'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['overdue'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['origin']\"/> · <t t-out=\"row['days']\"/> d. late</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['downtime']\">\n"
+"            <p><strong>Downtime of the sections yesterday</strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['downtime']\" t-as=\"row\"><t t-out=\"row['center']\"/> · <t t-out=\"row['reason']\"/> · <t t-out=\"row['hours']\"/> h</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"    </t>\n"
 "</div>\n"
 "        "
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\" class=\"td_briefing\">\n"
 "    <t t-set=\"data\" t-value=\"briefing or object.env['td.mebli.dashboard']._td_briefing_data()\"/>\n"
-"    <p><strong>Замовлення під загрозою: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
-"    <ul t-if=\"data['at_risk']\">\n"
-"        <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> дн. · <t t-out=\"row['reason']\"/></li>\n"
-"    </ul>\n"
-"    <p><strong>Прострочені виробничі замовлення: <t t-out=\"len(data['overdue'])\"/></strong></p>\n"
-"    <ul t-if=\"data['overdue']\">\n"
-"        <li t-foreach=\"data['overdue'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['origin']\"/> · <t t-out=\"row['days']\"/> дн. запізнення</li>\n"
-"    </ul>\n"
-"    <p><strong>Гроші до отримання</strong></p>\n"
-"    <ul>\n"
-"        <li>Після підписаного фінального акта: <t t-out=\"data['due_after_act']\"/> (замовлень: <t t-out=\"data['due_after_act_count']\"/>)</li>\n"
-"        <li>Перед монтажами найближчих 7 днів: <t t-out=\"data['due_before']\"/> (замовлень: <t t-out=\"data['due_before_count']\"/>)</li>\n"
-"    </ul>\n"
-"    <p><strong>Простої дільниць учора</strong></p>\n"
-"    <ul t-if=\"data['downtime']\">\n"
-"        <li t-foreach=\"data['downtime']\" t-as=\"row\"><t t-out=\"row['center']\"/> · <t t-out=\"row['reason']\"/> · <t t-out=\"row['hours']\"/> год</li>\n"
-"    </ul>\n"
-"    <p t-else=\"\">Простоїв не було.</p>\n"
+"    <!-- AC-125: nothing to report &#8212; one short line, no empty sections -->\n"
+"    <p t-if=\"data['nothing']\" class=\"td_briefing_nothing\"><strong>Відхилень немає</strong></p>\n"
+"    <t t-else=\"\">\n"
+"        <t t-if=\"data['at_risk']\">\n"
+"            <p><strong>Замовлення під загрозою: <t t-out=\"len(data['at_risk'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['at_risk'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · +<t t-out=\"row['days']\"/> дн. · <t t-out=\"row['reason']\"/></li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['claims']\">\n"
+"            <p><strong>Прострочені рекламації: <t t-out=\"len(data['claims'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['claims'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · <t t-out=\"row['days']\"/> дн.</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['due_after_act_count'] or data['due_before_count']\">\n"
+"            <p><strong>Гроші до отримання</strong></p>\n"
+"            <ul>\n"
+"                <li t-if=\"data['due_after_act_count']\">Після підписаного фінального акта: <t t-out=\"data['due_after_act']\"/> (замовлень: <t t-out=\"data['due_after_act_count']\"/>)</li>\n"
+"                <li t-if=\"data['due_before_count']\">Перед монтажами найближчих 7 днів: <t t-out=\"data['due_before']\"/> (замовлень: <t t-out=\"data['due_before_count']\"/>)</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['stuck']\">\n"
+"            <p><strong>Застряглі замовлення: <t t-out=\"len(data['stuck'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['stuck'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['customer']\"/> · <t t-out=\"row['days']\"/> дн. без руху</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['overdue']\">\n"
+"            <p><strong>Прострочені виробничі замовлення: <t t-out=\"len(data['overdue'])\"/></strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['overdue'][:8]\" t-as=\"row\"><t t-out=\"row['name']\"/> · <t t-out=\"row['origin']\"/> · <t t-out=\"row['days']\"/> дн. запізнення</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"        <t t-if=\"data['downtime']\">\n"
+"            <p><strong>Простої дільниць учора</strong></p>\n"
+"            <ul>\n"
+"                <li t-foreach=\"data['downtime']\" t-as=\"row\"><t t-out=\"row['center']\"/> · <t t-out=\"row['reason']\"/> · <t t-out=\"row['hours']\"/> год</li>\n"
+"            </ul>\n"
+"        </t>\n"
+"    </t>\n"
+"</div>\n"
+"        "
+
+#. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_measure_booking
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello!</p>\n"
+"    <p>Our measurer <t t-out=\"object.user_id.name or ''\"/> comes to you\n"
+"        <strong t-out=\"format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>.</p>\n"
+"    <p t-if=\"object.location\">The address: <strong t-out=\"object.location\"/>.</p>\n"
+"    <p>Please prepare the plan of the room and the sizes of your appliances if you have them.</p>\n"
+"    <p>Best regards, <t t-out=\"object.user_id.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Вітаємо!</p>\n"
+"    <p>Наш замірник <t t-out=\"object.user_id.name or ''\"/> приїде до вас\n"
+"        <strong t-out=\"format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>.</p>\n"
+"    <p t-if=\"object.location\">Адреса: <strong t-out=\"object.location\"/>.</p>\n"
+"    <p>Підготуйте, будь ласка, план приміщення й розміри вашої техніки, якщо вони є.</p>\n"
+"    <p>З повагою, <t t-out=\"object.user_id.company_id.name or ''\"/></p>\n"
 "</div>\n"
 "        "
 
@@ -133,6 +201,31 @@ msgstr ""
 "        "
 
 #. module: td_mebli_notify
+#: model:mail.template,body_html:td_mebli_notify.mail_template_td_install_date
+msgid ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Hello, <t t-out=\"object.sale_order_id.partner_id.name or ''\"/>!</p>\n"
+"    <p>The installation of your order <strong t-out=\"object.sale_order_id.name or ''\"/> is planned on\n"
+"        <strong t-out=\"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>.</p>\n"
+"    <p t-if=\"object.sale_order_id.partner_shipping_id.contact_address\">The address:\n"
+"        <t t-out=\"object.sale_order_id.partner_shipping_id.contact_address\"/>.</p>\n"
+"    <p t-if=\"object.sale_order_id\">Amount of the order: <t t-out=\"format_amount(object.sale_order_id.amount_total, object.sale_order_id.currency_id)\"/>.</p>\n"
+"    <p>Best regards, <t t-out=\"object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <p>Вітаємо, <t t-out=\"object.sale_order_id.partner_id.name or ''\"/>!</p>\n"
+"    <p>Монтаж вашого замовлення <strong t-out=\"object.sale_order_id.name or ''\"/> заплановано на\n"
+"        <strong t-out=\"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')\"/>.</p>\n"
+"    <p t-if=\"object.sale_order_id.partner_shipping_id.contact_address\">Адреса:\n"
+"        <t t-out=\"object.sale_order_id.partner_shipping_id.contact_address\"/>.</p>\n"
+"    <p t-if=\"object.sale_order_id\">Сума замовлення: <t t-out=\"format_amount(object.sale_order_id.amount_total, object.sale_order_id.currency_id)\"/>.</p>\n"
+"    <p>З повагою, <t t-out=\"object.company_id.name or ''\"/></p>\n"
+"</div>\n"
+"        "
+
+#. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_res_partner
 msgid "Contact"
 msgstr "Контакт"
@@ -146,7 +239,7 @@ msgstr "Контакт"
 #: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__display_name
 msgid "Display Name"
-msgstr "Назва"
+msgstr "Назва для відображення"
 
 #. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_mail_thread
@@ -181,6 +274,16 @@ msgid "Furniture: activities on the forecast date shift"
 msgstr "Меблі: дії на зсув прогнозної дати"
 
 #. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_measure_booking
+msgid "Furniture: booking of the measurement"
+msgstr "Меблі: запис на замір"
+
+#. module: td_mebli_notify
+#: model:mail.template,name:td_mebli_notify.mail_template_td_install_date
+msgid "Furniture: date of the installation"
+msgstr "Меблі: дата монтажу"
+
+#. module: td_mebli_notify
 #: model:mail.template,name:td_mebli_notify.mail_template_td_install_reminder
 msgid "Furniture: installation tomorrow"
 msgstr "Меблі: монтаж завтра"
@@ -207,6 +310,11 @@ msgid "Furniture: reminders to the customers"
 msgstr "Меблі: нагадування покупцям"
 
 #. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__td_forecast_shift_done
+msgid "Handled Forecast Shift, days"
+msgstr "Опрацьований зсув прогнозу, дн."
+
+#. module: td_mebli_notify
 #: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__id
 #: model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__id
 #: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__id
@@ -218,9 +326,23 @@ msgid "ID"
 msgstr "ID"
 
 #. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_install_reminded_for
+msgid "Installation Reminder Sent for"
+msgstr "Нагадування про монтаж надіслано на"
+
+#. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_install_reminder
 msgid "Installation of {{ object.sale_order_id.name }}: tomorrow"
 msgstr "Монтаж {{ object.sale_order_id.name }}: завтра"
+
+#. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_install_date
+msgid ""
+"Installation of {{ object.sale_order_id.name }}: {{ "
+"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz "
+"or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
+msgstr ""
+"Монтаж {{ object.sale_order_id.name }}: {{ format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
 
 #. module: td_mebli_notify
 #. odoo-python
@@ -239,9 +361,21 @@ msgid "Manufacturing Order"
 msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_notify
+#: model:mail.template,subject:td_mebli_notify.mail_template_td_measure_booking
+msgid ""
+"Measurement: {{ format_datetime(object.start, tz=object.user_id.tz or "
+"'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
+msgstr ""
+"Замір: {{ format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
+
+#. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_briefing
-msgid "Morning briefing {{ format_date(ctx.get('td_today') or datetime.date.today()) }}"
-msgstr "Ранковий брифінг {{ format_date(ctx.get('td_today') or datetime.date.today()) }}"
+msgid ""
+"Morning briefing {{ format_date(ctx.get('td_today') or "
+"datetime.date.today()) }}"
+msgstr ""
+"Ранковий брифінг {{ format_date(ctx.get('td_today') or "
+"datetime.date.today()) }}"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_new_date
@@ -254,9 +388,27 @@ msgid "Order {{ object.name }}: payment before the installation"
 msgstr "Замовлення {{ object.name }}: доплата перед монтажем"
 
 #. module: td_mebli_notify
+#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_payment_reminded_for
+msgid "Payment Reminder Sent for"
+msgstr "Нагадування про доплату надіслано на"
+
+#. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_purchase_order_line
 msgid "Purchase Order Line"
 msgstr "Рядок замовлення на купівлю"
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/reminder.py:0
+msgid "Remind the customer of the payment before the installation by phone."
+msgstr "Нагадайте покупцю про оплату перед монтажем телефоном."
+
+#. module: td_mebli_notify
+#. odoo-python
+#: code:addons/td_mebli_notify/models/reminder.py:0
+#: code:addons/td_mebli_notify/tests/test_g1_notify.py:0
+msgid "Reminder not sent: no email"
+msgstr "Нагадування не надіслано: немає email"
 
 #. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_sale_order
@@ -276,14 +428,27 @@ msgid ""
 msgstr "Щоденне нагадування, коли виїзд близько, а доплати немає"
 
 #. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_measure_booking
+msgid "Sent by the salesperson after the booking of the measurement visit"
+msgstr "Надсилає менеджер після запису на замір"
+
+#. module: td_mebli_notify
+#: model:mail.template,description:td_mebli_notify.mail_template_td_install_date
+msgid "Sent by the salesperson when the date of the installation is set"
+msgstr "Надсилає менеджер, коли призначено дату монтажу"
+
+#. module: td_mebli_notify
 #: model:mail.template,description:td_mebli_notify.mail_template_td_new_date
 msgid "Sent by the salesperson when the date of the order moves"
 msgstr "Надсилає менеджер, коли дата замовлення зсувається"
 
 #. module: td_mebli_notify
 #: model:mail.template,description:td_mebli_notify.mail_template_td_briefing
-msgid "Sent every morning to each owner (group of the dashboard) personally, figures of his companies"
-msgstr "Щоранку кожному власнику (група дашборда) особисто, цифри його компаній"
+msgid ""
+"Sent every morning to each owner (group of the dashboard) personally, "
+"figures of his companies"
+msgstr ""
+"Щоранку кожному власнику (група дашборда) особисто, цифри його компаній"
 
 #. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_project_task
@@ -296,10 +461,37 @@ msgid "Tell the Customer the New Date"
 msgstr "Повідомити клієнта про нову дату"
 
 #. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_payment_reminded_for
+msgid ""
+"The date of the visit for which the payment before the installation was "
+"reminded (once per visit date)."
+msgstr ""
+"Дата виїзду, для якої нагадано про доплату перед монтажем (один раз на дату "
+"виїзду)."
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_install_reminded_for
+msgid ""
+"The date of the visit the customer was reminded of (once per visit date; a "
+"moved visit is reminded again)."
+msgstr ""
+"Дата виїзду, про яку нагадано клієнту (один раз на дату виїзду; перенесений "
+"виїзд — нове нагадування)."
+
+#. module: td_mebli_notify
 #. odoo-python
 #: code:addons/td_mebli_notify/models/forecast_activity.py:0
 msgid "The forecast date is back within the promised date."
 msgstr "Прогнозна дата повернулась у межі обіцяної."
+
+#. module: td_mebli_notify
+#: model:ir.model.fields,help:td_mebli_notify.field_sale_order__td_forecast_shift_done
+msgid ""
+"The shift of the forecast (days) for which the salesperson already got the "
+"activity; reset when the forecast comes back within the promised date."
+msgstr ""
+"Зсув прогнозу (дні), для якого продавець уже отримав дію; скидається, коли "
+"прогноз повертається в обіцяну дату."
 
 #. module: td_mebli_notify
 #: model:ir.model.fields,help:td_mebli_notify.field_project_task__display_name
@@ -324,45 +516,3 @@ msgstr ""
 "!!! Встановіть для завдання терміновий пріоритет\n"
 "\n"
 "Переконайтеся, що ви використовуєте правильний формат і порядок, наприклад, Покращте екран конфігурації 5 год. #feature #v16 @Mitchell !"
-
-#. module: td_mebli_notify
-#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__td_forecast_shift_done
-msgid "Handled Forecast Shift, days"
-msgstr "Опрацьований зсув прогнозу, дн."
-
-#. module: td_mebli_notify
-#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_install_reminded_for
-msgid "Installation Reminder Sent for"
-msgstr "Нагадування про монтаж надіслано на"
-
-#. module: td_mebli_notify
-#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__td_payment_reminded_for
-msgid "Payment Reminder Sent for"
-msgstr "Нагадування про доплату надіслано на"
-
-#. module: td_mebli_notify
-#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_payment_reminded_for
-msgid ""
-"The date of the visit for which the payment before the installation was "
-"reminded (once per visit date)."
-msgstr ""
-"Дата виїзду, для якої нагадано про доплату перед монтажем (один раз на дату "
-"виїзду)."
-
-#. module: td_mebli_notify
-#: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_install_reminded_for
-msgid ""
-"The date of the visit the customer was reminded of (once per visit date; a "
-"moved visit is reminded again)."
-msgstr ""
-"Дата виїзду, про яку нагадано клієнту (один раз на дату виїзду; перенесений "
-"виїзд — нове нагадування)."
-
-#. module: td_mebli_notify
-#: model:ir.model.fields,help:td_mebli_notify.field_sale_order__td_forecast_shift_done
-msgid ""
-"The shift of the forecast (days) for which the salesperson already got the "
-"activity; reset when the forecast comes back within the promised date."
-msgstr ""
-"Зсув прогнозу (дні), для якого продавець уже отримав дію; скидається, коли "
-"прогноз повертається в обіцяну дату."

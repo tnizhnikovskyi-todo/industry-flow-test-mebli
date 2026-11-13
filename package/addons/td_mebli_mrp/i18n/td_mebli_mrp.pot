@@ -1,10 +1,13 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_mrp
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:08+0000\n"
-"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"POT-Creation-Date: 2026-11-13 09:42+0000\n"
+"PO-Revision-Date: 2026-11-13 09:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,6 +50,20 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid ""
+"): the parts\n"
+"                        are changed only by an additional order."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid ""
+".\n"
+"                    Set the field of the part for the columns below."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid ""
 "<i class=\"fa fa-calculator me-1\" title=\"From parts\"/>\n"
 "                    Board and edge banding marked «From parts» are calculated from the parts (tab Parts): area plus\n"
 "                    planned waste, length of the edged sides."
@@ -70,6 +87,38 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
 msgid "<span>pcs</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__ai_note
+msgid "AI Hint"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_res_config_settings__td_ai_mapping_url
+msgid "AI Mapping Provider"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__suggested
+msgid "AI Suggestion"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid ""
+"AI suggestion: check the columns marked as suggested before the import."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__active
+msgid "Active"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import__mode__append
+msgid "Add to the existing parts"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -121,6 +170,7 @@ msgid "Bill of Materials"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__material_id
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_template__td_material_kind__board
 msgid "Board"
 msgstr ""
@@ -146,8 +196,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
 msgid ""
 "CSV or Excel (.xlsx) export of the design program: the columns are recognized by their titles\n"
-"                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves\n"
-"                    is not part of the slice."
+"                    (part, length, width, quantity, material, edge) or by a saved mapping template."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -172,11 +221,40 @@ msgid "Close"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_spec_import_column
+msgid "Column of a Parts File"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__title
+msgid "Column of the File"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__column_ids
+msgid "Columns"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__missing_columns
+msgid "Columns not Found"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "Columns not found in the file:"
+msgstr ""
+
+#. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
 msgid ""
-"Columns not recognized: %s. The file needs a part name, a length and a "
-"width."
+"Columns not found in the file: %s. Check the headers or set the mapping."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__company_id
+msgid "Company"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -196,22 +274,38 @@ msgid "Component Role"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__create_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__create_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__create_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__create_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__create_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__create_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__create_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__create_date
 msgid "Created on"
 msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_currency_id
 msgid "Currency"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_bom__td_cut_version
+msgid "Cutting Version"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -250,10 +344,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__display_name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__display_name
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -291,12 +389,14 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_long_sides
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__edge_long_sides
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__edge_long_sides
 msgid "Edged Long Sides"
 msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__edge_short_sides
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__edge_short_sides
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__edge_short_sides
 msgid "Edged Short Sides"
 msgstr ""
 
@@ -310,6 +410,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_component_role__facade_board
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_part_rule__material_role__facade_board
 msgid "Facade board"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__field_name
+msgid "Field of the Part"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -381,6 +486,11 @@ msgid "Furniture Parts"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__header_signature
+msgid "Header Signature"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__height
 msgid "Height"
 msgstr ""
@@ -406,16 +516,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_custom_value__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_attribute_value__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_res_config_settings__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__id
 msgid "ID"
 msgstr ""
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
 msgid "Import"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Import Parts"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.actions.act_window,name:td_mebli_mrp.td_mebli_import_template_action
+#: model:ir.ui.menu,name:td_mebli_mrp.td_mebli_import_template_menu
+msgid "Import Templates"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -434,7 +559,7 @@ msgstr ""
 #. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "Imported from %(file)s: %(count)s parts."
+msgid "Imported from %(file)s: %(count)s parts, mode: %(mode)s."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -448,17 +573,28 @@ msgid "In work"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__write_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_uid
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__write_uid
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__write_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__write_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__write_date
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__write_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__write_date
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__length_mm
+msgid "Length"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -502,6 +638,21 @@ msgid "Manufacturing Order"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__mapping_json
+msgid "Mapping"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__template_id
+msgid "Mapping Template"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_import_template
+msgid "Mapping Template of the Columns of a Parts File"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_matches_board_id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_matches_board_id
 msgid "Matches Board"
@@ -510,6 +661,7 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__material_id
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__material_role
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__material
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
 msgid "Material"
 msgstr ""
@@ -521,12 +673,33 @@ msgid "Material Kind"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__code
+msgid "Material in the File"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "Material not found in rows %s: map the material or remove the rows."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_td_mebli_spec_import_material
+msgid "Material of a Parts File Mapped by Hand"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_analog_ids
 #: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_analog_ids
 msgid ""
 "Materials that can replace this one when it is short (same thickness and "
 "use, another decor or brand). The manufacturing order suggests the first "
 "analog that is free in stock."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__material_map_ids
+msgid "Materials to Map"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -571,6 +744,23 @@ msgid "Minutes per Basis Unit"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__mode
+msgid "Mode"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__name
+msgid "Name"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_td_mebli_spec_import__template_name
+msgid ""
+"Name of the template, e.g. «PRO100 of the showroom»: the next file with the "
+"same headers is recognized without this step."
+msgstr ""
+
+#. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/models/analog.py:0
 msgid "No analog of %s is free in stock."
@@ -580,6 +770,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/td_mebli_mrp/models/mrp_bom.py:0
 msgid "No edge banding %(thickness)s mm found for %(board)s."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__index
+msgid "No."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -598,6 +793,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_width_nominal
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_width_nominal
 msgid "Nominal Width, mm"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_td_mebli_import_template__header_signature
+msgid ""
+"Normalized titles of the columns of the file: a file with the same titles is"
+" recognized by this template."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_td_mebli_import_template__mapping_json
+msgid "Number of the column of the file for every field of the part."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.res_config_settings_view_form_td_mebli_mrp
+msgid "Only the column titles and at most 10 rows of the file are sent."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -646,6 +858,7 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__name
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__name
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__name
 msgid "Part"
 msgstr ""
 
@@ -769,6 +982,7 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__qty
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__qty
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__qty
 msgid "Quantity"
 msgstr ""
 
@@ -834,13 +1048,44 @@ msgid "Recognized Columns"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import__mode__replace
+msgid "Replace the parts"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
 msgid "Reserved / consumed"
 msgstr ""
 
 #. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "Row %(row)s: «%(code)s» — Material not found"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__unknown_lines
+msgid "Rows with an Unknown Material"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__rule_id
 msgid "Rule"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__template_name
+msgid "Save the Mapping as Template"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__locked
+msgid "Sent to Cutting"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
+msgid "Sent to cutting (version"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -891,8 +1136,16 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid ""
+"The analog %(new)s is counted in %(unit)s, the component in %(old_unit)s: "
+"the quantity cannot be converted."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "The Excel file cannot be read: %s"
+msgid "The file cannot be read: %s"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -913,9 +1166,15 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+#: code:addons/td_mebli_mrp/models/part.py:0
 msgid ""
-"The specification has no board among its components: add the board first."
+"The specification was sent to cutting (version %s) — change only by an "
+"additional order."
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__thickness
+msgid "Thickness"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -941,6 +1200,13 @@ msgid "Use Analog"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_mrp_bom__td_cut_version
+msgid ""
+"Version of the specification sent to cutting. 0 — not sent yet. Once sent, "
+"the parts are changed only by an additional order."
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__chain
 msgid "Waits for previous operation"
 msgstr ""
@@ -954,6 +1220,7 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__product_attribute__td_dimension__width
+#: model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__width_mm
 msgid "Width"
 msgstr ""
 
@@ -994,6 +1261,12 @@ msgid "Within capacity"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_column__wizard_id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import_material__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model,name:td_mebli_mrp.model_mrp_workcenter
 msgid "Work Center"
 msgstr ""
@@ -1017,56 +1290,18 @@ msgid "Work Order"
 msgstr ""
 
 #. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "edged long sides"
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid "e.g. PRO100 of the showroom"
 msgstr ""
 
 #. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "edged short sides"
-msgstr ""
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "length, mm"
-msgstr ""
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "material"
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.res_config_settings_view_form_td_mebli_mrp
+msgid "https://… (after the decision under DATA_POLICY)"
 msgstr ""
 
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli
 msgid "mm."
-msgstr ""
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "part"
-msgstr ""
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "quantity"
-msgstr ""
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "thickness"
-msgstr ""
-
-#. module: td_mebli_mrp
-#. odoo-python
-#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
-msgid "width, mm"
 msgstr ""
 
 #. module: td_mebli_mrp

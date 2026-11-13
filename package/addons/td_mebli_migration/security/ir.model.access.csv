@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_mebli_migration_step_user,td.mebli.migration.step user,model_td_mebli_migration_step,base.group_user,1,0,0,0
+access_td_mebli_migration_step_system,td.mebli.migration.step system,model_td_mebli_migration_step,base.group_system,1,1,1,1
+access_td_mebli_migration_check_salesman,td.mebli.migration.check salesman,model_td_mebli_migration_check,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_migration_check_finance,td.mebli.migration.check finance,model_td_mebli_migration_check,td_mebli_base.group_finance,1,1,1,0
+access_td_mebli_migration_check_manager,td.mebli.migration.check manager,model_td_mebli_migration_check,sales_team.group_sale_manager,1,1,1,1
+access_td_mebli_migration_check_line_salesman,td.mebli.migration.check.line salesman,model_td_mebli_migration_check_line,sales_team.group_sale_salesman,1,0,0,0
+access_td_mebli_migration_check_line_finance,td.mebli.migration.check.line finance,model_td_mebli_migration_check_line,td_mebli_base.group_finance,1,1,1,1
+access_td_mebli_migration_check_line_manager,td.mebli.migration.check.line manager,model_td_mebli_migration_check_line,sales_team.group_sale_manager,1,1,1,1

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- tr/security.md §3: the mapping templates belong to a company -->
+    <record id="td_mebli_import_template_company_rule" model="ir.rule">
+        <field name="name">Import templates: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_import_template"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <!-- review A-11 (AC-036, R-03): the parts belong to the company of their specification (a shared specification
+         without a company — to everybody) -->
+    <record id="td_mebli_part_company_rule" model="ir.rule">
+        <field name="name">Parts of a specification: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_part"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+</odoo>

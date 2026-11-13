@@ -49,7 +49,7 @@ class ProjectTask(models.Model):
                 'phone': order.partner_id.phone or '',
                 'address': task._td_address(order.partner_shipping_id or task.partner_id),
                 'places': places, 'kit_missing': order.td_kit_missing if order else 0,
-                'pay_missing': order.td_pay_missing if order else 0.0, 'currency': order.currency_id,
+                'pay_missing': order.td_pay_missing if order and task.td_visit_kind != 'service' else 0.0, 'currency': order.currency_id,
             })
         return [(day, crew, rows) for (day, crew), rows in sorted(groups.items())]
 

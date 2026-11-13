@@ -24,7 +24,7 @@ class SaleOrder(models.Model):
 
     @api.depends('picking_ids.state', 'picking_ids.scheduled_date', 'commitment_date', 'amount_total',
                  'td_act_ids.state', 'td_act_ids.kind', 'td_task_ids.state', 'order_line.invoice_lines.move_id.payment_state',
-                 'order_line.invoice_lines.move_id.amount_residual')
+                 'order_line.invoice_lines.move_id.amount_residual', 'td_pay_mark_ids.amount', 'td_pay_mark_ids.cancelled')
     def _compute_td_stage(self):
         super()._compute_td_stage()
         for order in self.filtered(lambda o: o.td_stage == 'done'):
@@ -37,7 +37,8 @@ class SaleOrder(models.Model):
         delivered = bool(deliveries) and all(p.state == 'done' for p in deliveries)
         paid_full = order._td_paid_amount() >= order.amount_total - ROUNDING
         final_signed = order.td_act_ids.filtered(lambda a: a.kind == 'final' and a.state == 'signed')
-        visits_open = order.td_task_ids.filtered(lambda t: t.state not in ('1_done', '1_canceled'))
+        visits_open = order.td_task_ids.filtered(
+            lambda t: t.state not in ('1_done', '1_canceled') and t.td_visit_kind != 'service')
         if paid_full and (final_signed or (delivered and not order.td_act_ids and not visits_open)):
             return 'closed'
         if order.td_act_ids:

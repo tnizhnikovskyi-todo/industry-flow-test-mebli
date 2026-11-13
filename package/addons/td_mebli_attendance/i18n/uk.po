@@ -6,15 +6,24 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 22:08+0000\n"
-"PO-Revision-Date: 2026-11-12 22:08+0000\n"
+"POT-Creation-Date: 2026-11-13 09:43+0000\n"
+"PO-Revision-Date: 2026-11-13 09:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
+"Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,help:td_mebli_attendance.field_td_mebli_timesheet_export__warning
+msgid ""
+"An empty period, or employees without a personnel code (Badge ID): BAS "
+"cannot match them, they are left out."
+msgstr ""
+"Працівники без табельного номера (номер бейджа): BAS не зіставить їх, у файл"
+" вони не йдуть."
 
 #. module: td_mebli_attendance
 #: model_terms:ir.ui.view,arch_db:td_mebli_attendance.td_mebli_timesheet_export_form
@@ -86,21 +95,6 @@ msgid "ID"
 msgstr "ID"
 
 #. module: td_mebli_attendance
-#: model_terms:ir.ui.view,arch_db:td_mebli_attendance.td_mebli_timesheet_export_form
-msgid ""
-"Imitation of the exchange with BAS: the file is made from the standard attendances (kiosk with a PIN),\n"
-"                    nothing is sent."
-msgstr ""
-"Імітація обміну з BAS: файл формується зі стандартних відміток (кіоск з PIN),\n"
-"                    нічого не надсилається."
-
-#. module: td_mebli_attendance
-#. odoo-python
-#: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
-msgid "Imitation of the exchange with BAS: the file is made, nothing is sent"
-msgstr "Імітація обміну з BAS: файл сформовано, нічого не надіслано"
-
-#. module: td_mebli_attendance
 #: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__write_uid
 #: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export_line__write_uid
 msgid "Last Updated by"
@@ -113,57 +107,10 @@ msgid "Last Updated on"
 msgstr "Оновлено"
 
 #. module: td_mebli_attendance
-#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__line_ids
-msgid "Time Sheet"
-msgstr "Табель"
-
-#. module: td_mebli_attendance
-#: model:ir.model,name:td_mebli_attendance.model_td_mebli_timesheet_export
-msgid "Time Sheet Export for BAS (imitation)"
-msgstr "Вивантаження табеля в BAS (імітація)"
-
-#. module: td_mebli_attendance
-#: model:ir.model,name:td_mebli_attendance.model_td_mebli_timesheet_export_line
-msgid "Time Sheet Line for BAS"
-msgstr "Рядок табеля для BAS"
-
-#. module: td_mebli_attendance
-#: model:ir.ui.menu,name:td_mebli_attendance.td_mebli_timesheet_export_menu
-msgid "Time Sheet for BAS"
-msgstr "Табель для BAS"
-
-#. module: td_mebli_attendance
 #. odoo-python
 #: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
-#: model:ir.actions.act_window,name:td_mebli_attendance.td_mebli_timesheet_export_action
-#: model_terms:ir.ui.view,arch_db:td_mebli_attendance.td_mebli_timesheet_export_form
-msgid "Time Sheet for BAS (imitation)"
-msgstr "Табель для BAS (імітація)"
-
-#. module: td_mebli_attendance
-#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__date_to
-msgid "To"
-msgstr "До дати"
-
-#. module: td_mebli_attendance
-#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export_line__wizard_id
-msgid "Wizard"
-msgstr "Майстер"
-
-#. module: td_mebli_attendance
-#. odoo-python
-#: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
-msgid "timesheet-BAS-imitation-%(start)s-%(end)s.csv"
-msgstr "табель-BAS-імітація-%(start)s-%(end)s.csv"
-
-#. module: td_mebli_attendance
-#: model:ir.model.fields,help:td_mebli_attendance.field_td_mebli_timesheet_export__warning
-msgid ""
-"Employees without a personnel code (Badge ID): BAS cannot match them, they "
-"are left out."
-msgstr ""
-"Працівники без табельного номера (номер бейджа): BAS не зіставить їх, у файл"
-" вони не йдуть."
+msgid "No attendances in the period: the file is empty."
+msgstr "За період немає відвідувань: файл порожній."
 
 #. module: td_mebli_attendance
 #. odoo-python
@@ -178,7 +125,66 @@ msgid "No personnel code: left out of the file."
 msgstr "Немає табельного номера: не у файлі."
 
 #. module: td_mebli_attendance
-#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__warning
 #: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export_line__skipped
 msgid "Not in the File"
 msgstr "Не у файлі"
+
+#. module: td_mebli_attendance
+#: model_terms:ir.ui.view,arch_db:td_mebli_attendance.td_mebli_timesheet_export_form
+msgid ""
+"The file is made from the standard attendances (kiosk with a PIN) in the draft format of the exchange\n"
+"                    contract: employee, personnel code, days, hours."
+msgstr "Файл формується зі стандартних відвідувань (кіоск з PIN) у чернетковому форматі контракту обміну: працівник, табельний код, днів, годин."
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__line_ids
+msgid "Time Sheet"
+msgstr "Табель"
+
+#. module: td_mebli_attendance
+#: model:ir.model,name:td_mebli_attendance.model_td_mebli_timesheet_export
+msgid "Time Sheet Export for BAS"
+msgstr "Вивантаження табеля в BAS (імітація)"
+
+#. module: td_mebli_attendance
+#: model:ir.model,name:td_mebli_attendance.model_td_mebli_timesheet_export_line
+msgid "Time Sheet Line for BAS"
+msgstr "Рядок табеля для BAS"
+
+#. module: td_mebli_attendance
+#. odoo-python
+#: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
+#: model:ir.actions.act_window,name:td_mebli_attendance.td_mebli_timesheet_export_action
+#: model:ir.ui.menu,name:td_mebli_attendance.td_mebli_timesheet_export_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_attendance.td_mebli_timesheet_export_form
+msgid "Time Sheet for BAS"
+msgstr "Табель для BAS (імітація)"
+
+#. module: td_mebli_attendance
+#. odoo-python
+#: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
+msgid ""
+"Time sheet for BAS: draft format of the exchange contract (until agreed with"
+" the franchisee)"
+msgstr "Табель для BAS: чернетковий формат контракту обміну (до узгодження з франчайзі)"
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__date_to
+msgid "To"
+msgstr "До дати"
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export__warning
+msgid "Warning"
+msgstr "Не у файлі"
+
+#. module: td_mebli_attendance
+#: model:ir.model.fields,field_description:td_mebli_attendance.field_td_mebli_timesheet_export_line__wizard_id
+msgid "Wizard"
+msgstr "Майстер"
+
+#. module: td_mebli_attendance
+#. odoo-python
+#: code:addons/td_mebli_attendance/wizard/timesheet_export.py:0
+msgid "timesheet-BAS-%(start)s-%(end)s.csv"
+msgstr "tabel-BAS-%(start)s-%(end)s.csv"

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- tr/ee-bridges.md: on Enterprise the screen of the package for this step is hidden by a group; the td_ data
+         stay for the history. A user who needs the old screen is added to this group. -->
+    <record id="group_td_old_screens" model="res.groups">
+        <field name="name">Furniture: old screens replaced by Quality</field>
+        <field name="comment">Members still see the td_ screens that Quality (Enterprise) replaces.</field>
+    </record>
+</odoo>

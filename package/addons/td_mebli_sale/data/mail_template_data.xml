@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- AC-120 (box B): the letter with the link to the portal of the order where the customer signs the fixed change -->
+    <record id="mail_template_td_change_sign" model="mail.template">
+        <field name="name">Furniture: change of the order for signature</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Order {{ object.name }}: change for your signature</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="description">Sent by the salesperson: the customer signs the fixed change in the portal</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <t t-set="change" t-value="object.td_change_ids.filtered(lambda c: c.state == 'done' and c.td_sign_requested).sorted('version')[-1:]"/>
+    <p>Hello, <t t-out="object.partner_id.name or ''"/>!</p>
+    <p t-if="change">The change <t t-out="change.version"/> of your order <strong t-out="object.name or ''"/>:
+        <t t-out="change.note or ''"/>. The price: <strong t-out="format_amount(change.amount_after, object.currency_id)"/>,
+        the promised date: <strong t-out="format_date(change.date_after) if change.date_after else ''"/>.</p>
+    <p>Please check and sign it: <a t-att-href="object.get_base_url() + object.get_portal_url(anchor='td_changes')">open the order</a>.</p>
+    <p>Best regards, <t t-out="object.user_id.name or object.company_id.name or ''"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</odoo>

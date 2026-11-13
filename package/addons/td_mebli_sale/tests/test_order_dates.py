@@ -1,4 +1,5 @@
 from datetime import timedelta
+from unittest.mock import patch
 
 from odoo import fields
 from odoo.exceptions import AccessError, UserError
@@ -43,6 +44,9 @@ class TestOrderDates(TdMebliSaleCommon):
     def _reread(self, order):
         order.invalidate_recordset()
         order._get_purchase_orders().order_line.invalidate_recordset()
+        # the forecast is stored (AC-066): the receipts and the history of the supplier are not stored dependencies,
+        # the write hooks and the daily scheduled action recompute it
+        order._td_recompute_forecast()
         return order
 
     def test_quotation_the_workshop_decides(self):
@@ -197,5 +201,74 @@ class TestOrderDates(TdMebliSaleCommon):
                  'td_late_item', 'td_delay_reason']
         for name in names:
             field = self.env['sale.order']._fields[name]
-            self.assertTrue(field.compute and not field.store and field.readonly, name)
+            # stored since A-11 (the board groups by the reason, AC-066) — still computed, never entered
+            self.assertTrue(field.compute and field.readonly, name)
         self.assertNotIn('td.mebli.order.item', self.env)
+
+    def test_cron_recomputes_only_open_orders_in_batches(self):
+        """Review A-11: the daily cron takes the confirmed orders that are not delivered in full, in batches."""
+        open_order, _start = self._confirmed(20)
+        quotation, _start = self._order(20)
+        domain = self.env['sale.order']._td_forecast_open_domain()
+        found = self.env['sale.order'].search(domain)
+        self.assertIn(open_order, found)
+        self.assertNotIn(quotation, found)
+        full = self.env['sale.order'].search(domain + [('delivery_status', '=', 'full')])
+        self.assertFalse(full, "a delivered order is finished: its forecast is not recomputed")
+        seen = []
+        original = type(self.env['sale.order'])._td_recompute_forecast
+
+        def spy(records):
+            seen.append(records.ids)
+            return original(records)
+        self.env['ir.config_parameter'].sudo().set_param('td_mebli_sale.forecast_cursor', '0')
+        with patch.object(type(self.env['sale.order']), '_td_recompute_forecast', spy):
+            self.env['sale.order']._cron_td_recompute_forecast(batch_size=1)
+        self.assertTrue(all(len(ids) == 1 for ids in seen))
+        self.assertIn([open_order.id], seen)
+        self.assertNotIn([quotation.id], seen)
+
+    def test_delay_days_in_the_time_zone_of_the_company(self):
+        """Review A-11: the promised day is the day in the time zone of the company, not of the computing user (the
+        cron has none): 22:30 UTC is already the next day in Kyiv."""
+        self.env.company.resource_calendar_id.tz = 'Europe/Kyiv'
+        order, start = self._order(5)
+        order.commitment_date = fields.Datetime.to_datetime(start + timedelta(days=4)) + timedelta(hours=22, minutes=30)
+        self.assertEqual(order._td_company_date(order.commitment_date), start + timedelta(days=5))
+        # the workshop needs 5 days: in Kyiv the promise is day 5 — no delay (UTC would say day 4, one day late)
+        order.with_context(tz='UTC')._td_recompute_forecast()
+        self.assertEqual(order.td_forecast_date, start + timedelta(days=5))
+        self.assertEqual(order.td_delay_days, 0)
+
+    def test_cron_continues_after_the_cursor(self):
+        """Review A-11 (round 2): a run of the cron stopped after the first batch (time over) keeps the cursor; the
+        next run recomputes the rest only; after the full pass the cursor is 0 again."""
+        first, _start = self._confirmed(20)
+        second, _start = self._confirmed(20)
+        Param = self.env['ir.config_parameter'].sudo()
+        Param.set_param('td_mebli_sale.forecast_cursor', '0')
+        SaleOrder = type(self.env['sale.order'])
+        IrCron = type(self.env['ir.cron'])
+        seen = []
+        original = SaleOrder._td_recompute_forecast
+
+        def spy(records):
+            seen.append(records.ids)
+            return original(records)
+        cron = self.env['sale.order'].with_context(ir_cron_progress_id=1)
+        # the first call announces «remaining», the second (after the first batch) says the time is over
+        with patch.object(SaleOrder, '_td_recompute_forecast', spy), \
+                patch.object(IrCron, '_commit_progress', side_effect=[100.0, 0.0]) as progress:
+            cron._cron_td_recompute_forecast(batch_size=1)
+        open_ids = self.env['sale.order'].search(self.env['sale.order']._td_forecast_open_domain(), order='id').ids
+        self.assertEqual(seen, [open_ids[:1]], "one batch, then the run stops")
+        self.assertEqual(Param.get_param('td_mebli_sale.forecast_cursor'), str(open_ids[0]))
+        self.assertEqual(progress.call_args_list[0].kwargs, {'remaining': len(open_ids)})
+        seen.clear()
+        with patch.object(SaleOrder, '_td_recompute_forecast', spy), \
+                patch.object(IrCron, '_commit_progress', return_value=100.0):
+            cron._cron_td_recompute_forecast(batch_size=1)
+        self.assertEqual([ids[0] for ids in seen], open_ids[1:], "the second run goes on after the cursor")
+        self.assertIn(second.id, open_ids)
+        self.assertIn(first.id, open_ids)
+        self.assertEqual(Param.get_param('td_mebli_sale.forecast_cursor'), '0', "full pass: the cursor is reset")

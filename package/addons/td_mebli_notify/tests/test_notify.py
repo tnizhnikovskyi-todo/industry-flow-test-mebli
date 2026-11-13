@@ -85,7 +85,7 @@ class TestNotify(TdMebliSaleCommon):
         self.assertTrue(task.message_ids.filtered(lambda m: order.name in (m.subject or '')))
         self.assertTrue(task.td_install_reminded_for)
         again = self.env['project.task']._cron_td_customer_reminders()
-        self.assertEqual(again, {'install': 0, 'payment': 0}, "once per visit date: the next run sends nothing")
+        self.assertEqual(again, {'install': 0, 'payment': 0, 'no_email': 0}, "once per visit date: the next run sends nothing")
         if result['payment']:
             payment = self.env.ref('td_mebli_notify.mail_template_td_payment_reminder')
             subject = payment._render_field('subject', order.ids, compute_lang=True)[order.id]

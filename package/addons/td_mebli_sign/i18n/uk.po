@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_sign
+# Written by hand: the bridge is not installable on Community, the file was not exported (ВП-4).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_sign
+#: model:ir.model,name:td_mebli_sign.model_td_mebli_sign_mixin
+msgid "Furniture: Sign Request from a Report"
+msgstr "Меблі: запит Sign зі звіту"
+
+#. module: td_mebli_sign
+#: model_terms:ir.ui.view,arch_db:td_mebli_sign.view_order_form_td_mebli_sign
+msgid "Sign the Contract (Sign)"
+msgstr "Підписати договір (Sign)"
+
+#. module: td_mebli_sign
+#. odoo-python
+#: code:addons/td_mebli_sign/models/sign.py:0
+msgid "Signed in Sign: %s"
+msgstr "Підписано в Sign: %s"

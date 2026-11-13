@@ -1,0 +1,777 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_base
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:12+0000\n"
+"PO-Revision-Date: 2026-11-13 09:12+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_base
+#. odoo-python
+#: code:addons/td_mebli_base/models/res_company.py:0
+msgid ""
+"%(field)s: the value %(value)s is outside the allowed range "
+"%(low)s–%(high)s."
+msgstr "%(field)s: значення %(value)s поза допустимим діапазоном %(low)s–%(high)s."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "<span>%</span>"
+msgstr "<span>%</span>"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "<span>days</span>"
+msgstr "<span>днів</span>"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "<span>mm</span>"
+msgstr "<span>мм</span>"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_ai_mapping
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "AI Column Mapping"
+msgstr "AI-підказка колонок"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid ""
+"AI hint for the columns of an imported file (F-27); off until the provider "
+"is chosen."
+msgstr "AI-підказка колонок файлу імпорту (F-27); вимкнена до вибору постачальника."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Accounting of the offcuts of boards and their reuse (F-11)."
+msgstr "Облік обрізків плит і їх повторне використання (F-11)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_act_checklist
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_act_checklist
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Act Checklist"
+msgstr "Чек-лист акта"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_legal_checked
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_legal_checked
+msgid ""
+"After the conclusion of the lawyer (No 17): the mark «Template to be checked"
+" by a lawyer» disappears from the contract and the acts."
+msgstr "Після висновку юриста (№17): позначка «Шаблон до перевірки юристом» зникає з договору й актів."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_analog
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Analogs"
+msgstr "Аналоги"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Analogs of the materials when a material is short (F-57)."
+msgstr "Аналоги матеріалів, коли матеріалу бракує (F-57)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_payment_control__block
+msgid "Block"
+msgstr "Блокувати"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_cutting_mode
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_cutting_mode
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Board Cutting"
+msgstr "Розкрій плит"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Board of the workshop on a TV screen (F-65)."
+msgstr "Табло цеху на екрані ТВ (F-65)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_box_profile__a
+msgid "Box A"
+msgstr "Коробка A"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_box_profile__b
+msgid "Box B (full)"
+msgstr "Коробка B (повна)"
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_ai_mapping
+msgid "Box B function «ai_mapping» (VP-02)."
+msgstr "Функція коробки B «ai_mapping» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_analog
+msgid "Box B function «analog» (VP-02)."
+msgstr "Функція коробки B «analog» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_change_sign
+msgid "Box B function «change_sign» (VP-02)."
+msgstr "Функція коробки B «change_sign» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_configurator
+msgid "Box B function «configurator» (VP-02)."
+msgstr "Функція коробки B «configurator» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_cutting_batch
+msgid "Box B function «cutting_batch» (VP-02)."
+msgstr "Функція коробки B «cutting_batch» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_kiosk
+msgid "Box B function «kiosk» (VP-02)."
+msgstr "Функція коробки B «kiosk» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_label_scan
+msgid "Box B function «label_scan» (VP-02)."
+msgstr "Функція коробки B «label_scan» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_nbu
+msgid "Box B function «nbu» (VP-02)."
+msgstr "Функція коробки B «nbu» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_offcut
+msgid "Box B function «offcut» (VP-02)."
+msgstr "Функція коробки B «offcut» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_quality
+msgid "Box B function «quality» (VP-02)."
+msgstr "Функція коробки B «quality» (VP-02)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_feature_shop_board
+msgid "Box B function «shop_board» (VP-02)."
+msgstr "Функція коробки B «shop_board» (VP-02)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_box_profile__c
+msgid "Box C (full + Enterprise)"
+msgstr "Коробка C (повна + Enterprise)"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_box_profile
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_box_profile
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Box Profile"
+msgstr "Профіль коробки"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_crew_base__stage
+msgid "By stages"
+msgstr "За етапами"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_crew_base__final
+msgid "By the final act"
+msgstr "За фінальним актом"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_crew_split__time
+msgid "By time"
+msgstr "За часом"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Checks of the parts and the 12th card of the dashboard (F-34)."
+msgstr "Контроль деталей і 12-та картка дашборда (F-34)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Claim Overdue"
+msgstr "Прострочка рекламації"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_claim_overdue_days
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_claim_overdue_days
+msgid "Claim Overdue, Days"
+msgstr "Прострочка рекламації, днів"
+
+#. module: td_mebli_base
+#: model:ir.model,name:td_mebli_base.model_res_company
+msgid "Companies"
+msgstr "Компанії"
+
+#. module: td_mebli_base
+#: model:ir.model,name:td_mebli_base.model_res_config_settings
+msgid "Config Settings"
+msgstr "Налаштування конфігурації"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Configurator of standard products by parameters (F-03)."
+msgstr "Конфігуратор типових виробів за параметрами (F-03)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_contract_mode
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_contract_mode
+msgid "Contract Mode"
+msgstr "Режим договору"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Contract and Payment"
+msgstr "Договір і оплата"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_contract_mode__contract
+msgid "Contract work"
+msgstr "Договір підряду"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Control"
+msgstr "Контроль"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_crew_pct
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_crew_pct
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Crew Percent"
+msgstr "% бригаді"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_crew_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_crew_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Crew Percent Base"
+msgstr "База % бригаді"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_crew_split
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_crew_split
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Crew Percent Split"
+msgstr "Поділ % бригаді"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_cutting_batch
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Cutting Batches"
+msgstr "Пакети розкрою"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid ""
+"Daily exchange rates of the National Bank for the price lists in currency "
+"(F-26)."
+msgstr "Щоденний курс НБУ для прайсів у валюті (F-26)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid ""
+"Days before the visit when the customer is reminded of the payment (1–7)."
+msgstr "За скільки днів до виїзду нагадати покупцю про доплату (1–7)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Days of an open claim (1–60)."
+msgstr "Днів відкритої рекламації (1–60)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Days without a move (1–30)."
+msgstr "Днів без руху (1–30)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_crew_pct
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_crew_pct
+msgid ""
+"Default percent of the order amount for the crew of a new act (data of the "
+"client, not a VP)."
+msgstr "Типовий % від суми замовлення бригаді для нового акта (дані клієнта, не VP)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Default percent of the order amount for the crew of a new act."
+msgstr "Типовий % від суми замовлення бригаді для нового акта."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_product_category__display_name
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__display_name
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_users__display_name
+msgid "Display Name"
+msgstr "Відображуване ім'я"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_cutting_mode__distributor
+msgid "Distributor only"
+msgstr "Лише в дистриб'ютора"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_crew_split__equal
+msgid "Equally"
+msgstr "Порівну"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_finance
+msgid "Finance"
+msgstr "Фінансист"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Functions of Box B"
+msgstr "Функції коробки B"
+
+#. module: td_mebli_base
+#: model:res.groups.privilege,name:td_mebli_base.res_groups_privilege_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Furniture"
+msgstr "Меблі"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_ai_mapping
+msgid "Furniture feature: AI Column Mapping"
+msgstr "Функція меблів: AI-підказка колонок"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_analog
+msgid "Furniture feature: Analogs"
+msgstr "Функція меблів: аналоги"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_configurator
+msgid "Furniture feature: Configurator"
+msgstr "Функція меблів: конфігуратор"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_cutting_batch
+msgid "Furniture feature: Cutting Batches"
+msgstr "Функція меблів: пакети розкрою"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_label_scan
+msgid "Furniture feature: Label Scanning"
+msgstr "Функція меблів: сканування етикеток"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_nbu
+msgid "Furniture feature: NBU Exchange Rates"
+msgstr "Функція меблів: курс НБУ"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_offcut
+msgid "Furniture feature: Offcuts"
+msgstr "Функція меблів: обрізки"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_quality
+msgid "Furniture feature: Quality Control"
+msgstr "Функція меблів: контроль якості"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_change_sign
+msgid "Furniture feature: Signature of Order Changes"
+msgstr "Функція меблів: підпис зміни замовлення"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_shop_board
+msgid "Furniture feature: Workshop Board"
+msgstr "Функція меблів: табло цеху"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_feature_kiosk
+msgid "Furniture feature: Workshop Kiosk"
+msgstr "Функція меблів: кіоск цеху"
+
+#. module: td_mebli_base
+#: model:res.groups,name:td_mebli_base.group_margin_view
+msgid "Furniture: Sees the Margin"
+msgstr "Меблі: Бачить маржу"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_product_category__id
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__id
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__id
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_users__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Information only: functions are switched on below."
+msgstr "Лише інформаційно: функції вмикаються нижче."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Installation"
+msgstr "Монтаж"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_install_in_price
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_install_in_price
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Installation in the Order Price"
+msgstr "Монтаж у вартості замовлення"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Kiosk of the workshop by PIN, defects at the workplace (F-32, F-18)."
+msgstr "Кіоск цеху за PIN, брак на робочому місці (F-32, F-18)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_label_scan
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Label Scanning"
+msgstr "Сканування етикеток"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_box_profile__light
+msgid "Light"
+msgstr "Легкий"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Minimal Offcut"
+msgstr "Мінімальний обрізок"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_min_offcut_mm
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_min_offcut_mm
+msgid "Minimal Offcut, mm"
+msgstr "Мінімальний обрізок, мм"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_nbu
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "NBU Exchange Rates"
+msgstr "Курс НБУ"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_offcut
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Offcuts"
+msgstr "Обрізки"
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_cutting_mode__both
+msgid "Own cutting and distributor"
+msgstr "Власний розкрій і дистриб'ютор"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_payment_control
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_payment_control
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Payment Control Before the Visit"
+msgstr "Контроль доплати перед виїздом"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Payment Reminder"
+msgstr "Нагадування про доплату"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_pay_reminder_days
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_pay_reminder_days
+msgid "Payment Reminder, Days Before the Visit"
+msgstr "Нагадування про доплату, днів до виїзду"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Percent above the average of the earlier purchases (1–50)."
+msgstr "% вище середньої ціни попередніх закупівель (1–50)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_act_checklist
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_act_checklist
+msgid ""
+"Points of the installation act, one per line (data of the client, not a VP)."
+msgstr "Пункти акта монтажу, по одному в рядку (дані клієнта, не VP)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Points of the installation act, one per line."
+msgstr "Пункти акта монтажу, по одному в рядку."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Price Above History"
+msgstr "Ціна вище історії"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_price_threshold_pct
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_price_threshold_pct
+msgid "Price Above History, %"
+msgstr "Поріг ціни вище історії, %"
+
+#. module: td_mebli_base
+#: model:ir.model,name:td_mebli_base.model_product_category
+msgid "Product Category"
+msgstr "Категорія товару"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_configurator
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Product Configurator"
+msgstr "Конфігуратор виробів"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_quality
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Quality Control"
+msgstr "Контроль якості"
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_finance
+msgid ""
+"ROLE-06: payments, accruals, exchange with the accounting; sees costs and "
+"margins."
+msgstr "ROLE-06: оплати, нарахування, обмін з обліком; бачить собівартість і маржу."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid ""
+"Removes the mark «Template to be checked by a lawyer» from the contract and "
+"the acts."
+msgstr "Прибирає позначку «Шаблон до перевірки юристом» з договору й актів."
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_contract_mode__sale
+msgid "Sale contract"
+msgstr "Купівля-продаж"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_margin_to_salesman
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_margin_to_salesman
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Salesman Sees the Margin"
+msgstr "Менеджер бачить маржу"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Scanning of the part labels when the kit is assembled (F-29)."
+msgstr "Сканування етикеток деталей під час комплектації (F-29)."
+
+#. module: td_mebli_base
+#: model:res.groups,comment:td_mebli_base.group_margin_view
+msgid ""
+"Set automatically by the parameter of the company «Salesman Sees the Margin»"
+" (VP-08, AC-018)."
+msgstr "Ставиться автоматично за параметром компанії «Менеджер бачить маржу» (VP-08, AC-018)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Several orders in one cutting job (F-30)."
+msgstr "Кілька замовлень в одному завданні розкрою (F-30)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_change_sign
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Signature of Order Changes"
+msgstr "Підпис зміни замовлення"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Smallest kept rest of a board (100–1000)."
+msgstr "Найменший залишок плити, що зберігається (100–1000)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Stuck Orders"
+msgstr "Застряглі замовлення"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_stuck_days
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_stuck_days
+msgid "Stuck Orders, Days"
+msgstr "Застряглі, днів"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_contract_mode
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_contract_mode
+msgid ""
+"Text of the printed contract (contract_mode of the questionnaire). Empty — "
+"not chosen yet: the contract is not printed until the customer and the "
+"lawyer choose the mode (AC-034)."
+msgstr "Текст друкованого договору (contract_mode анкети). Порожньо — ще не обрано: договір не друкується, доки замовник і юрист не оберуть режим (AC-034)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_company__td_legal_checked
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__td_legal_checked
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Texts Checked by a Lawyer"
+msgstr "Тексти перевірено юристом"
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "The customer signs the change of the order in the portal (F-44)."
+msgstr "Покупець підписує зміну замовлення на порталі (F-44)."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "The installation is a service line with a zero price."
+msgstr "Монтаж — рядок-послуга з нульовою ціною."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid ""
+"The users of «Sales: own documents» see the costs and the margin of the "
+"orders."
+msgstr "Користувачі «Продажі: власні документи» бачать собівартість і маржу замовлень."
+
+#. module: td_mebli_base
+#. odoo-python
+#: code:addons/td_mebli_base/models/product_category.py:0
+msgid "The warranty term cannot be negative."
+msgstr "Гарантійний строк не може бути від'ємним."
+
+#. module: td_mebli_base
+#: model:ir.model,name:td_mebli_base.model_res_users
+msgid "User"
+msgstr "Користувач"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_box_profile
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_box_profile
+msgid ""
+"VP-01, information only: the functions are switched on by the feature groups"
+" of box B."
+msgstr "VP-01, лише інформаційно: функції вмикають feature-групи коробки B."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_payment_control
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_payment_control
+msgid ""
+"VP-06: what happens when the crew is sent to an order whose payments before "
+"the installation are not paid."
+msgstr "VP-06: що відбувається, коли бригаду відправляють на замовлення з несплаченою доплатою перед монтажем."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_pay_reminder_days
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_pay_reminder_days
+msgid ""
+"VP-07: the customer is reminded of the payment before the installation this "
+"many days before the visit (1–7)."
+msgstr "VP-07: за скільки днів до виїзду покупцю нагадують про доплату перед монтажем (1–7)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_margin_to_salesman
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_margin_to_salesman
+msgid ""
+"VP-08: the users of «Sales: own documents» of the company get the group "
+"«Sees the margin»."
+msgstr "VP-08: користувачі «Продажі: власні документи» компанії отримують групу «Бачить маржу»."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_cutting_mode
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_cutting_mode
+msgid "VP-09: «Distributor only» — the menus of own cutting are hidden."
+msgstr "VP-09: «Лише в дистриб'ютора» — меню власного розкрою приховано."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_stuck_days
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_stuck_days
+msgid ""
+"VP-10: an order without a move for longer than this many days is «stuck» "
+"(1–30)."
+msgstr "VP-10: замовлення без руху довше за стільки днів — «застрягле» (1–30)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_price_threshold_pct
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_price_threshold_pct
+msgid ""
+"VP-11: a purchase price above the average of the earlier purchases by more "
+"than this percent is marked (1–50)."
+msgstr "VP-11: ціна закупівлі вище середньої попередніх закупівель більш ніж на цей % позначається (1–50)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_min_offcut_mm
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_min_offcut_mm
+msgid ""
+"VP-12: a rest of a board not smaller than this on both sides is kept as an "
+"offcut (100–1000)."
+msgstr "VP-12: залишок плити, не менший за це значення з обох боків, зберігається як обрізок (100–1000)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_claim_overdue_days
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_claim_overdue_days
+msgid "VP-13: a claim open for longer than this many days is overdue (1–60)."
+msgstr "VP-13: рекламація, відкрита довше за стільки днів, прострочена (1–60)."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_crew_split
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_crew_split
+msgid ""
+"VP-14: how the percent of the crew is split between the installers of the "
+"act."
+msgstr "VP-14: як % бригаді ділиться між монтажниками акта."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_crew_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_crew_base
+msgid ""
+"VP-15: the percent of the crew is accrued from the final act or from the act"
+" of every stage."
+msgstr "VP-15: % бригаді нараховується з фінального акта або з акта кожного етапу."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_res_company__td_install_in_price
+#: model:ir.model.fields,help:td_mebli_base.field_res_config_settings__td_install_in_price
+msgid ""
+"VP-16: the installation is a service line with a zero price included in the "
+"price of the furniture."
+msgstr "VP-16: монтаж — рядок-послуга з нульовою ціною, включений у вартість меблів."
+
+#. module: td_mebli_base
+#: model:ir.model.fields.selection,name:td_mebli_base.selection__res_company__td_payment_control__warn
+msgid "Warn"
+msgstr "Попереджати"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,help:td_mebli_base.field_product_category__td_warranty_months
+msgid ""
+"Warranty term of the products of this category (AC-111). Empty until the "
+"conclusion of the lawyer (No 17): the claim then shows «Warranty term is not"
+" set» and the service decides by hand."
+msgstr "Гарантійний строк товарів цієї категорії (AC-111). Порожньо до висновку юриста (№17): рекламація тоді показує «Гарантійний строк не задано», рішення ставить сервіс вручну."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_product_category__td_warranty_months
+msgid "Warranty, Months"
+msgstr "Гарантія, міс."
+
+#. module: td_mebli_base
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid ""
+"What happens when the crew is sent to an order with unpaid payments before "
+"the installation."
+msgstr "Що відбувається, коли бригаду відправляють на замовлення з несплаченою доплатою перед монтажем."
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_shop_board
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Workshop Board"
+msgstr "Табло цеху"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_kiosk
+#: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
+msgid "Workshop Kiosk"
+msgstr "Кіоск цеху"
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_users__td_margin_auto
+msgid "Margin Visibility by the Company Parameter"
+msgstr "«Бачить маржу» за параметром компанії"

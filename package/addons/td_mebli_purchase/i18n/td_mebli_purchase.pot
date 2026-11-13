@@ -1,0 +1,405 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_purchase
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-13 09:42+0000\n"
+"PO-Revision-Date: 2026-11-13 09:42+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_over_history
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+msgid "Above History"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/models/purchase.py:0
+msgid "Above history +%s %%"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_price_delta_pct
+msgid "Against History, %"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_history_price
+msgid "Average Earlier Price"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,help:td_mebli_purchase.field_purchase_order_line__td_history_price
+msgid ""
+"Average unit price of the confirmed purchases of this product during the 180"
+" days before this order."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Cancel"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__code
+msgid "Code"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__unknown_count
+msgid "Codes not Found"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Columns not recognized: the file needs a price and a code or a name."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+msgid "Confirmed"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_uid
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_date
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__old_price
+msgid "Current Price"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__display_name
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__file
+msgid "Excel or CSV File"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__filename
+msgid "File Name"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__has_delay
+msgid "Has Delay"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_history_note
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_form_td_mebli_purchase
+msgid "History"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__id
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__id
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.ui.menu,name:td_mebli_purchase.td_mebli_price_import_menu
+msgid "Import of a Price List"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+#: model:ir.actions.act_window,name:td_mebli_purchase.td_mebli_price_import_action
+#: model:ir.model,name:td_mebli_purchase.model_td_mebli_price_import
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Import of a Supplier Price List"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_uid
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_date
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__delay
+msgid "Lead Time, days"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__min_qty
+msgid "Minimal Quantity"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__price
+msgid "New Price"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__new
+msgid "New price line"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__unknown
+msgid "Not found"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Not found: %s."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__error
+msgid "Not recognized"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Not written, errors: %s."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
+msgid "Order Date"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_overpay
+msgid "Overpay"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields.selection,name:td_mebli_purchase.selection__td_mebli_price_import_line__status__update
+msgid "Price changed"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "Price list imported from «%(file)s»: %(done)s prices written."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model,name:td_mebli_purchase.model_td_mebli_price_import_line
+msgid "Price of a Supplier Price List in the File"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__supplierinfo_id
+msgid "Pricelist Line"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__date_start
+msgid "Prices Valid From"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.ui.menu,name:td_mebli_purchase.purchase_order_line_td_price_menu
+msgid "Prices against History"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__line_ids
+msgid "Prices in the File"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__change_count
+msgid "Prices to Write"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__error
+msgid "Problem"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__product_id
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+msgid "Product"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__name
+msgid "Product in the File"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model,name:td_mebli_purchase.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Recognize Columns"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__mapping
+msgid "Recognized Columns"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__status
+msgid "Result"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__error_count
+msgid "Rows not Recognized"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,help:td_mebli_purchase.field_td_mebli_price_import__error_count
+msgid "Rows whose price or quantity is not a number: they are not written."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__partner_id
+msgid "Supplier"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.actions.act_window,name:td_mebli_purchase.purchase_order_line_td_price_action
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
+msgid "Supplier Prices against History"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "The file cannot be read: %s"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "The file has no prices."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid ""
+"The price list of the supplier (Excel .xlsx or CSV): the columns are recognized by their\n"
+"                    titles (code, product, price, minimal quantity, lead time). The prices go into the standard vendor\n"
+"                    pricelist of the products (Purchase › Products › Vendor Pricelists); nothing else is kept."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
+msgid "Total"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+msgid "Vendor"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,help:td_mebli_purchase.field_td_mebli_price_import_line__error
+msgid "Why the row is not written, or what is not written (the lead time)."
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__wizard_id
+msgid "Wizard"
+msgstr ""
+
+#. module: td_mebli_purchase
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+msgid "Write Prices"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "code"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "lead time «%s» is not recognized: the current lead time is kept"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "lead time, days"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "minimal quantity"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "minimal quantity «%s» is not a number"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/models/purchase.py:0
+msgid "no history"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "price"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "price %s is not positive"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "price «%s» is not a number"
+msgstr ""
+
+#. module: td_mebli_purchase
+#. odoo-python
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0
+msgid "product"
+msgstr ""

@@ -16,7 +16,11 @@ class MrpProduction(models.Model):
             production.td_cutting_job_count = len(production.td_cutting_job_ids)
 
     def action_td_create_cutting_job(self):
-        productions = self.filtered(lambda mo: mo.state in ('confirmed', 'progress', 'to_close') and mo.bom_id.td_part_ids)
+        # AC-054: a manufacturing order without parts is named, nothing is created
+        for production in self:
+            if not production.bom_id.td_part_ids:
+                raise UserError(self.env._("There are no cutting parts in manufacturing order %s", production.name))
+        productions = self.filtered(lambda mo: mo.state in ('confirmed', 'progress', 'to_close'))
         if not productions:
             raise UserError(self.env._("Select confirmed manufacturing orders that have an order BoM with parts."))
         job = self.env['td.mebli.cutting.job'].create({'production_ids': [(6, 0, productions.ids)]})

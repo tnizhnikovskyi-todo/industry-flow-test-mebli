@@ -1,0 +1,32 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_shopfloor
+# Written by hand: the bridge is not installable on Community, the file was not exported (ВП-4).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_shopfloor
+#: model:res.groups,name:td_mebli_shopfloor.group_td_old_screens
+msgid "Furniture: old screens replaced by Shop Floor"
+msgstr "Меблі: старі екрани, замінені Shop Floor"
+
+#. module: td_mebli_shopfloor
+#: model:res.groups,comment:td_mebli_shopfloor.group_td_old_screens
+msgid "Members still see the td_ screens that Shop Floor (Enterprise) replaces."
+msgstr "Учасники групи й далі бачать екрани td_, які замінює Shop Floor (Enterprise)."
+
+#. module: td_mebli_shopfloor
+#: model:ir.model.fields,field_description:td_mebli_shopfloor.field_mrp_workorder__td_part_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_shopfloor.mrp_workorder_form_td_mebli_shopfloor
+msgid "Parts"
+msgstr "Деталі"

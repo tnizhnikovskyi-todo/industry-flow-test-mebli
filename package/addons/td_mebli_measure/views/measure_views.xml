@@ -17,9 +17,12 @@
                     <div class="oe_title"><h1><field name="name"/></h1></div>
                     <group>
                         <group>
-                            <field name="lead_id"/>
-                            <field name="order_id"/>
+                            <field name="td_can_link" invisible="1"/>
+                            <field name="lead_id" readonly="not td_can_link" options="{'no_open': not td_can_link}"/>
+                            <field name="order_id" readonly="not td_can_link" options="{'no_open': not td_can_link}"/>
                             <field name="customer"/>
+                            <field name="td_address"/>
+                            <field name="td_phone" widget="phone"/>
                             <field name="room"/>
                         </group>
                         <group>
@@ -41,6 +44,27 @@
                                     <field name="protrusion_mm" optional="show"/>
                                     <field name="order_line_id" optional="show" options="{'no_create': True}"/>
                                 </list>
+                                <!-- AC-007: on a phone the niches are cards (the standard x2many takes the kanban on a small screen) -->
+                                <kanban>
+                                    <templates>
+                                        <t t-name="card">
+                                            <field name="name" class="fw-bold"/>
+                                            <div class="small text-muted">
+                                                <field name="width_mm"/> × <field name="height_mm"/> × <field name="depth_mm"/> mm
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="Niche">
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="width_mm"/>
+                                        <field name="height_mm"/>
+                                        <field name="depth_mm"/>
+                                        <field name="protrusion_mm"/>
+                                        <field name="order_line_id" options="{'no_create': True}"/>
+                                    </group>
+                                </form>
                             </field>
                         </page>
                         <page string="Appliances of the Customer" name="appliances">
@@ -53,8 +77,31 @@
                                     <field name="height_mm"/>
                                     <field name="depth_mm"/>
                                     <field name="fits" column_invisible="True"/>
-                                    <field name="issue"/>
+                                    <field name="td_check" column_invisible="True"/>
+                                    <field name="issue" decoration-muted="td_check == 'unchecked'"/>
                                 </list>
+                                <kanban>
+                                    <field name="fits"/>
+                                    <templates>
+                                        <t t-name="card">
+                                            <field name="name" class="fw-bold"/>
+                                            <div class="small text-muted">
+                                                <field name="width_mm"/> × <field name="height_mm"/> × <field name="depth_mm"/> mm
+                                            </div>
+                                            <field name="issue" t-att-class="record.fits.raw_value ? 'small' : 'small text-danger fw-bold'"/>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                                <form string="Appliance">
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="niche_id"/>
+                                        <field name="width_mm"/>
+                                        <field name="height_mm"/>
+                                        <field name="depth_mm"/>
+                                        <field name="issue"/>
+                                    </group>
+                                </form>
                             </field>
                         </page>
                         <page string="Utilities and Photos" name="photos">
@@ -118,11 +165,52 @@
                     <field name="td_measure_count" widget="statinfo" string="Measurements"/>
                 </button>
             </div>
+            <!-- AC-008: the appliances that do not fit — a banner on the order -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger mb-0 td_measure_issue_alert" role="alert" invisible="td_measure_issue_count == 0">
+                    <i class="fa fa-exclamation-triangle me-2" title="Does not fit"/>
+                    <strong>Does not fit by the measurement: <field name="td_measure_issue_count" class="oe_inline"/></strong>
+                </div>
+            </xpath>
         </field>
     </record>
 
     <menuitem id="td_mebli_measure_menu" name="Measurement Sheets" parent="sale.sale_order_menu"
-              action="td_mebli_measure_action" sequence="3"/>
+              action="td_mebli_measure_action" sequence="3" groups="sales_team.group_sale_salesman"/>
+
+    <!-- AC-006: the measurer has no Sales menu; his own app «Measurements»: his sheets and his visits -->
+    <record id="td_mebli_measure_my_action" model="ir.actions.act_window">
+        <field name="name">My Measurements</field>
+        <field name="res_model">td.mebli.measure</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_my': 1}</field>
+    </record>
+    <record id="td_mebli_measure_my_calendar_action" model="ir.actions.act_window">
+        <field name="name">My Calendar</field>
+        <field name="res_model">calendar.event</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+    <menuitem id="td_mebli_measure_root_menu" name="Measurements" web_icon="crm,static/description/icon.png"
+              groups="group_td_mebli_measurer" sequence="8"/>
+    <menuitem id="td_mebli_measure_my_menu" name="My Measurements" parent="td_mebli_measure_root_menu"
+              action="td_mebli_measure_my_action" sequence="1"/>
+    <menuitem id="td_mebli_measure_my_calendar_menu" name="My Calendar" parent="td_mebli_measure_root_menu"
+              action="td_mebli_measure_my_calendar_action" sequence="2"/>
+
+    <!-- AC-005: the smart button «Measurements» of the opportunity -->
+    <record id="crm_lead_view_form_td_measure_count" model="ir.ui.view">
+        <field name="name">crm.lead.form.td.mebli.measure.count</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_td_view_measures" type="object" class="oe_stat_button" icon="fa-arrows-alt"
+                        invisible="td_measure_count == 0">
+                    <field name="td_measure_count" widget="statinfo" string="Measurements"/>
+                </button>
+            </div>
+        </field>
+    </record>
 
     <!-- Position 28: the design against the measurement before cutting (rules, no AI) — on the manufacturing order -->
     <record id="mrp_production_form_td_measure_check" model="ir.ui.view">
@@ -149,5 +237,5 @@
         <field name="domain">[('opportunity_id', '!=', False)]</field>
     </record>
     <menuitem id="td_mebli_measure_calendar_menu" name="Measurement Calendar" parent="sale.sale_order_menu"
-              action="td_mebli_measure_calendar_action" sequence="4"/>
+              action="td_mebli_measure_calendar_action" sequence="4" groups="sales_team.group_sale_salesman"/>
 </odoo>

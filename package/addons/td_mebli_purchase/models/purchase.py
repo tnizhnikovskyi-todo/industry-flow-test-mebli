@@ -3,7 +3,6 @@ from datetime import timedelta
 from odoo import api, fields, models
 
 HISTORY_DAYS = 180
-OVER_PCT = 5.0
 
 
 class PurchaseOrderLine(models.Model):
@@ -16,6 +15,20 @@ class PurchaseOrderLine(models.Model):
                                       digits=(16, 1), aggregator='avg')
     td_overpay = fields.Monetary(string='Overpay', compute='_compute_td_history_price', store=True)
     td_over_history = fields.Boolean(string='Above History', compute='_compute_td_history_price', store=True)
+    # AC-085 / AC-086: the mark of the line — «Above history +8 %», or the hint «no history» (not an error)
+    td_history_note = fields.Char(string='History', compute='_compute_td_history_note')
+
+    @api.depends('td_history_price', 'td_over_history', 'td_price_delta_pct')
+    def _compute_td_history_note(self):
+        for line in self:
+            if not line.product_id or line.display_type:
+                line.td_history_note = False
+            elif not line.td_history_price:
+                line.td_history_note = self.env._("no history")
+            elif line.td_over_history:
+                line.td_history_note = self.env._("Above history +%s %%", round(line.td_price_delta_pct))
+            else:
+                line.td_history_note = False
 
     @api.depends('price_unit', 'product_id', 'product_qty', 'order_id.date_order', 'order_id.state')
     def _compute_td_history_price(self):
@@ -32,4 +45,4 @@ class PurchaseOrderLine(models.Model):
             line.td_history_price = history
             line.td_price_delta_pct = (line.price_unit - history) / history * 100.0 if history else 0.0
             line.td_overpay = (line.price_unit - history) * line.product_qty if history and line.price_unit > history else 0.0
-            line.td_over_history = bool(history) and line.td_price_delta_pct > OVER_PCT
+            line.td_over_history = bool(history) and line.td_price_delta_pct > line.company_id.td_price_threshold_pct  # VP-11

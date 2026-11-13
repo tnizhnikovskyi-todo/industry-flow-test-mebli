@@ -8,7 +8,7 @@
                    'promised one, closed when it comes back, never twice), mail.template letters posted in the chatter '
                    'of the record and queued for sending, scheduled actions (ir.cron). The briefing is a template filled '
                    'from the data of the package by fixed rules, no AI. No SMS and no external services.',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',
