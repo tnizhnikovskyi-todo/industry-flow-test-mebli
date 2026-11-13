@@ -129,7 +129,7 @@
   },
   {
    "kind": "field",
-   "text": "12 лист., 09:00",
+   "text": "13 лист., 09:00",
    "label": "Кінцевий термін",
    "name": "date_deadline",
    "required": false

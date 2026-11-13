@@ -1,5 +1,9 @@
+from dateutil.relativedelta import relativedelta
+
 from odoo import api, fields, models
 from odoo.exceptions import UserError
+
+PARAM_WARRANTY = 'td_mebli_claim.warranty_months'
 
 
 class RepairOrder(models.Model):
@@ -14,6 +18,12 @@ class RepairOrder(models.Model):
     # is the standard «Under Warranty» (the factory pays, the customer gets the parts at price 0): no own fields
     td_photo = fields.Image(string='Photo', max_width=1024, max_height=1024)
     td_remake_production_id = fields.Many2one('mrp.production', string='Remake', readonly=True, copy=False)
+    # position 10 (F-55): after the warranty the repair is paid — the standard «Under Warranty» is unticked and the
+    # standard quotation of the repair (action_create_sale_order) invoices the customer; here only the end of warranty
+    td_warranty_end = fields.Date(string='Warranty until', compute='_compute_td_warranty',
+                                  help="Delivery of the claimed order (standard effective date of the order) plus the "
+                                       "warranty period of the package (months, a parameter of the package).")
+    td_after_warranty = fields.Boolean(string='After Warranty', compute='_compute_td_warranty')
     td_days_open = fields.Integer(string='Days Open', compute='_compute_td_days_open')
     td_overdue = fields.Boolean(string='Overdue', compute='_compute_td_days_open')
 
@@ -25,6 +35,33 @@ class RepairOrder(models.Model):
             start = repair.create_date or now
             repair.td_days_open = max(0, (end - start).days)
             repair.td_overdue = repair.state not in ('done', 'cancel') and bool(repair.schedule_date) and repair.schedule_date < now
+
+    @api.model
+    def _td_warranty_months(self):
+        return int(self.env['ir.config_parameter'].sudo().get_param(PARAM_WARRANTY, '24'))
+
+    @api.depends('td_claim_order_id.effective_date', 'td_claim_order_id.date_order', 'create_date')
+    def _compute_td_warranty(self):
+        months = self._td_warranty_months()
+        for repair in self:
+            order = repair.td_claim_order_id.sudo()
+            start = order.effective_date or order.date_order
+            repair.td_warranty_end = (start.date() + relativedelta(months=months)) if start else False
+            claimed = (repair.create_date or fields.Datetime.now()).date()
+            repair.td_after_warranty = bool(repair.td_warranty_end) and claimed > repair.td_warranty_end
+
+    @api.onchange('td_claim_order_id')
+    def _onchange_td_claim_warranty(self):
+        if self.td_claim_order_id:
+            self.under_warranty = not self.td_after_warranty
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        repairs = super().create(vals_list)
+        for repair, vals in zip(repairs, vals_list):
+            if 'under_warranty' not in vals and repair.td_claim_order_id:
+                repair.under_warranty = not repair.td_after_warranty
+        return repairs
 
     def action_td_remake(self):
         """Remake in production: a standard manufacturing order of the claimed product."""

@@ -1,13 +1,10 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* td_mebli_mrp
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 18:18+0000\n"
-"PO-Revision-Date: 2026-11-12 18:18+0000\n"
+"POT-Creation-Date: 2026-11-12 22:08+0000\n"
+"PO-Revision-Date: 2026-11-12 22:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +16,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/td_mebli_mrp/models/mrp_bom.py:0
 msgid "%(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "%(name)s: %(qty)s free"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -67,6 +70,24 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
 msgid "<span>pcs</span>"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_analog_hint
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Analog"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_stock_move__td_analog_id
+msgid "Analog in Stock"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_analog_ids
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_analog_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid "Analogs"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -122,16 +143,16 @@ msgid "Body board"
 msgstr ""
 
 #. module: td_mebli_mrp
-#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__file
-msgid "CSV File"
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
+msgid ""
+"CSV or Excel (.xlsx) export of the design program: the columns are recognized by their titles\n"
+"                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves\n"
+"                    is not part of the slice."
 msgstr ""
 
 #. module: td_mebli_mrp
-#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.td_mebli_spec_import_form
-msgid ""
-"CSV export of the design program: the columns are recognized by their titles\n"
-"                    (part, length, width, quantity, material, edge). Reading the files of the design programs themselves\n"
-"                    is not part of the slice."
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_spec_import__file
+msgid "CSV or Excel File"
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -156,6 +177,12 @@ msgstr ""
 msgid ""
 "Columns not recognized: %s. The file needs a part name, a length and a "
 "width."
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "Component %(old)s is short: replaced by the analog %(new)s."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -494,6 +521,15 @@ msgid "Material Kind"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_product__td_analog_ids
+#: model:ir.model.fields,help:td_mebli_mrp.field_product_template__td_analog_ids
+msgid ""
+"Materials that can replace this one when it is short (same thickness and "
+"use, another decor or brand). The manufacturing order suggests the first "
+"analog that is free in stock."
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_product__td_depth_max
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_product_template__td_depth_max
 msgid "Max Depth, mm"
@@ -532,6 +568,12 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_mrp_routing_workcenter__td_time_rate
 msgid "Minutes per Basis Unit"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/models/analog.py:0
+msgid "No analog of %s is free in stock."
 msgstr ""
 
 #. module: td_mebli_mrp
@@ -850,6 +892,12 @@ msgstr ""
 #. module: td_mebli_mrp
 #. odoo-python
 #: code:addons/td_mebli_mrp/wizard/spec_import.py:0
+msgid "The Excel file cannot be read: %s"
+msgstr ""
+
+#. module: td_mebli_mrp
+#. odoo-python
+#: code:addons/td_mebli_mrp/wizard/spec_import.py:0
 msgid "The file is empty."
 msgstr ""
 
@@ -888,8 +936,20 @@ msgid "Total"
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_production_form_td_mebli
+msgid "Use Analog"
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields.selection,name:td_mebli_mrp.selection__mrp_workorder__td_load_stage__chain
 msgid "Waits for previous operation"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model_terms:ir.ui.view,arch_db:td_mebli_mrp.product_template_form_td_mebli
+msgid ""
+"When this material is short, the manufacturing order suggests the first\n"
+"                        analog free in stock (position 14)."
 msgstr ""
 
 #. module: td_mebli_mrp

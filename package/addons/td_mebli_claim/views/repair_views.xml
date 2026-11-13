@@ -9,8 +9,19 @@
                 <button name="action_td_remake" type="object" string="Remake in Production"
                         invisible="td_remake_production_id or state in ('done', 'cancel')"/>
             </xpath>
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-info mb-0 td_warranty_alert" role="status"
+                     invisible="not td_after_warranty or under_warranty">
+                    <i class="fa fa-money me-2" title="Paid repair"/>
+                    <strong>The warranty ended on <field name="td_warranty_end" class="oe_inline" readonly="1"/>: the repair
+                        is paid by the customer.</strong> The parts and the work go to the quotation of the repair
+                    (button «Create Quotation»), then the standard invoice.
+                </div>
+            </xpath>
             <field name="partner_id" position="after">
                 <field name="td_claim_order_id"/>
+                <field name="td_warranty_end" invisible="not td_claim_order_id"/>
+                <field name="td_after_warranty" invisible="1"/>
                 <field name="td_part_id" invisible="not td_claim_order_id"/>
                 <field name="td_remake_production_id" invisible="not td_remake_production_id"/>
             </field>

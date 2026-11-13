@@ -1,0 +1,131 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_maint
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-12 21:17+0000\n"
+"PO-Revision-Date: 2026-11-12 21:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid ""
+": the time\n"
+"                    is written to the standard log of the work center (loss reason «Equipment Failure»)."
+msgstr ""
+": час\n"
+"                    пишеться в стандартний журнал дільниці (причина «Поломка обладнання»)."
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid "<i class=\"fa fa-ban me-2\" title=\"Section down\"/>"
+msgstr "<i class=\"fa fa-ban me-2\" title=\"Дільниця стоїть\"/>"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_equipment__display_name
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_request__display_name
+#: model:ir.model.fields,field_description:td_mebli_maint.field_mrp_workcenter__display_name
+msgid "Display Name"
+msgstr "Назва"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_request__td_downtime_id
+msgid "Downtime"
+msgstr "Простій"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_request__td_downtime_hours
+msgid "Downtime, h"
+msgstr "Простій, год"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_equipment__id
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_request__id
+#: model:ir.model.fields,field_description:td_mebli_maint.field_mrp_workcenter__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_mrp_workcenter__td_equipment_count
+msgid "Machines"
+msgstr "Верстати"
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.mrp_workcenter_view_td_maintenance
+msgid "Maintenance"
+msgstr "Обслуговування"
+
+#. module: td_mebli_maint
+#: model:ir.model,name:td_mebli_maint.model_maintenance_equipment
+msgid "Maintenance Equipment"
+msgstr "Технічне обслуговування"
+
+#. module: td_mebli_maint
+#: model:ir.model,name:td_mebli_maint.model_maintenance_request
+msgid "Maintenance Request"
+msgstr "Запит на технічне обслуговування"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_mrp_workcenter__td_request_open_count
+msgid "Open Requests"
+msgstr "Відкриті заявки"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_request__td_downtime_open
+msgid "Section Down"
+msgstr "Дільниця стоїть"
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid "Section Works Again"
+msgstr "Дільниця знову працює"
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid "Section is Down"
+msgstr "Дільниця стоїть"
+
+#. module: td_mebli_maint
+#. odoo-python
+#: code:addons/td_mebli_maint/models/maintenance.py:0
+msgid "The machine has no work center: set it on the equipment."
+msgstr "Верстат не прив'язано до дільниці: вкажіть її в обладнанні."
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid "The section"
+msgstr "Дільниця"
+
+#. module: td_mebli_maint
+#: model:ir.model.fields,help:td_mebli_maint.field_maintenance_equipment__td_workcenter_id
+#: model:ir.model.fields,help:td_mebli_maint.field_maintenance_request__td_workcenter_id
+msgid ""
+"The section of the shop floor where the machine works: its breakdowns stop "
+"this work center."
+msgstr "Дільниця цеху, де працює верстат: його поломка зупиняє цю дільницю."
+
+#. module: td_mebli_maint
+#: model:ir.model,name:td_mebli_maint.model_mrp_workcenter
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_equipment__td_workcenter_id
+#: model:ir.model.fields,field_description:td_mebli_maint.field_maintenance_request__td_workcenter_id
+msgid "Work Center"
+msgstr "Робочий центр"
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid "is down"
+msgstr "стоїть"
+
+#. module: td_mebli_maint
+#: model_terms:ir.ui.view,arch_db:td_mebli_maint.hr_equipment_request_view_form_td_downtime
+msgid "since"
+msgstr "з"

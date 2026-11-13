@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Position 22 (F-60): machines of the sections, breakdowns and the downtime of the section -->
+    <record id="hr_equipment_view_form_td_workcenter" model="ir.ui.view">
+        <field name="name">maintenance.equipment.form.td.workcenter</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_form"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position="after">
+                <field name="td_workcenter_id"/>
+            </field>
+        </field>
+    </record>
+    <record id="hr_equipment_view_list_td_workcenter" model="ir.ui.view">
+        <field name="name">maintenance.equipment.list.td.workcenter</field>
+        <field name="model">maintenance.equipment</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="td_workcenter_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="hr_equipment_request_view_form_td_downtime" model="ir.ui.view">
+        <field name="name">maintenance.request.form.td.downtime</field>
+        <field name="model">maintenance.request</field>
+        <field name="inherit_id" ref="maintenance.hr_equipment_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_td_start_downtime" type="object" string="Section is Down" class="btn-primary"
+                        invisible="td_downtime_id or not td_workcenter_id or done or maintenance_type != 'corrective'"/>
+                <button name="action_td_stop_downtime" type="object" string="Section Works Again"
+                        invisible="not td_downtime_open"/>
+            </xpath>
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger mb-0 td_downtime_alert" role="alert" invisible="not td_downtime_open">
+                    <i class="fa fa-ban me-2" title="Section down"/>
+                    <strong>The section <field name="td_workcenter_id" class="oe_inline" readonly="1"/> is down</strong>
+                    since <field name="td_downtime_id" class="oe_inline" readonly="1" options="{'no_open': True}"/>: the time
+                    is written to the standard log of the work center (loss reason «Equipment Failure»).
+                </div>
+            </xpath>
+            <field name="equipment_id" position="after">
+                <field name="td_workcenter_id" invisible="not td_workcenter_id"/>
+                <field name="td_downtime_hours" invisible="not td_downtime_id"/>
+                <field name="td_downtime_open" invisible="1"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="mrp_workcenter_view_td_maintenance" model="ir.ui.view">
+        <field name="name">mrp.workcenter.form.td.maintenance</field>
+        <field name="model">mrp.workcenter</field>
+        <field name="inherit_id" ref="mrp.mrp_workcenter_view"/>
+        <field name="arch" type="xml">
+            <div name="button_box" position="inside">
+                <button name="action_td_view_requests" type="object" class="oe_stat_button" icon="fa-wrench">
+                    <field name="td_request_open_count" widget="statinfo" string="Maintenance"/>
+                </button>
+            </div>
+        </field>
+    </record>
+</odoo>

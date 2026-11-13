@@ -68,7 +68,7 @@ def _employees(env, people):
     Employee = env['hr.employee'].sudo()
     by_center, team, crew = {}, {}, Employee
     for index, (name, job, code, cost, pin) in enumerate(WORKERS, start=1):
-        vals = {'name': name, 'job_title': job, 'hourly_cost': cost, 'pin': pin,
+        vals = {'name': name, 'job_title': job, 'hourly_cost': cost, 'pin': pin, 'barcode': f'00{index:02d}',
                 'work_phone': f'+380 00 000 01 {index:02d}', 'work_email': f'worker{index}@demo-fabryka.example'}
         if code is None:
             vals['user_id'] = people['fitter2'].id
@@ -79,7 +79,7 @@ def _employees(env, people):
         else:
             crew |= employee
     crew |= Employee.create({'name': people['fitter'].name, 'job_title': 'Бригадир монтажників', 'hourly_cost': 190.0,
-                             'user_id': people['fitter'].id, 'pin': '6666', 'work_email': 'fitter@demo-fabryka.example'})
+                             'user_id': people['fitter'].id, 'pin': '6666', 'barcode': '0099', 'work_email': 'fitter@demo-fabryka.example'})
     return by_center, team, crew
 
 
@@ -329,7 +329,10 @@ def _show_visits(env, show, crew_users, rnd):
     promised = show.commitment_date
     task.write({'name': f'{show.name}: монтаж корпусів', 'date_deadline': _work(promised - timedelta(days=4), rnd),
                 'user_ids': [(6, 0, crew_users.ids)]})
-    second = task.copy({'name': f'{show.name}: монтаж стільниці', 'date_deadline': _work(promised - timedelta(days=1), rnd),
+    # the worktop the day before the promised date, in the morning: a promised date late on Friday or on a weekend must
+    # not push it past the promised date into the next week (out of the calendar month of the show)
+    second = task.copy({'name': f'{show.name}: монтаж стільниці',
+                        'date_deadline': _work((promised - timedelta(days=1)).replace(hour=7, minute=0), rnd),
                         'user_ids': [(6, 0, crew_users.ids)], 'sale_line_id': task.sale_line_id.id})
     env['td.mebli.install.act'].create({'task_id': task.id, 'kind': 'stage', 'crew_pct': 0.0})
     return task | second
@@ -540,4 +543,7 @@ def seed_full(env, people, partners, orders, show, rnd):
     _calibrate_load(env, {'CUT': 74, 'EDG': 112, 'DRL': 83, 'ASM': 91})
     # after the calendars of the sections: their change replans the open manufacturing orders
     state['distributor_job'] = _distributor_cutting(env, people, orders, rnd)
+    # wave 2 of the A box (decisions 42-47): own random sequence, the data above stays as it was
+    from .wave2 import seed_wave2
+    state['wave2'] = seed_wave2(env, people, orders, show, rnd)
     return state

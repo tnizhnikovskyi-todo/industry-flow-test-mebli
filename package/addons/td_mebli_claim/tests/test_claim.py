@@ -24,3 +24,31 @@ class TestClaim(TdMebliSaleCommon):
         claim.action_td_remake()
         self.assertEqual(claim.td_remake_production_id.product_id, self.cabinet)
         self.assertIn(claim.name, claim.td_remake_production_id.origin)
+
+
+@tagged('post_install', '-at_install')
+class TestPaidRepair(TdMebliSaleCommon):
+    """F-55: after the warranty the repair is paid: the standard «Under Warranty» is off, the quotation invoices."""
+
+    def test_after_warranty_the_customer_pays(self):
+        from datetime import timedelta
+        from odoo import fields
+        order = self._make_order()
+        order.action_confirm()
+        order.flush_recordset()
+        old = fields.Datetime.now() - timedelta(days=800)
+        self.env.cr.execute('UPDATE sale_order SET effective_date = %s WHERE id = %s', (old, order.id))
+        order.invalidate_recordset(['effective_date'])
+        claim = self.env['repair.order'].create({'partner_id': self.partner.id, 'product_id': self.cabinet.id,
+                                                 'td_claim_order_id': order.id})
+        self.assertTrue(claim.td_after_warranty)
+        self.assertLess(claim.td_warranty_end, fields.Date.today(), "24 months after the delivery")
+        self.assertFalse(claim.under_warranty, "the standard flag: parts are not at price 0")
+        recent = self.env['repair.order'].create({'partner_id': self.partner.id, 'product_id': self.cabinet.id,
+                                                  'td_claim_order_id': self._confirmed_recent().id})
+        self.assertTrue(recent.under_warranty)
+
+    def _confirmed_recent(self):
+        order = self._make_order()
+        order.action_confirm()
+        return order

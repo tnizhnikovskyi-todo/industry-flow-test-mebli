@@ -1,13 +1,10 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* td_mebli_sale
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 20:20+0000\n"
-"PO-Revision-Date: 2026-11-12 20:20+0000\n"
+"POT-Creation-Date: 2026-11-12 22:08+0000\n"
+"PO-Revision-Date: 2026-11-12 22:08+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,7 +60,9 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-msgid ") or the last purchased item arrives and is made into the product."
+msgid ""
+") or the last purchased item arrives and is made into the product. «Delay by History» — the average delay of the\n"
+"                        supplier over the past year (days), added to the supplier date."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -119,6 +118,11 @@ msgid "<i class=\"fa fa-hourglass-half me-1\"/>waiting:"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.res_partner_view_td_supplier_delay
+msgid "<span class=\"o_stat_text\">Average Delay, days</span>"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.mrp_bom_form_td_mebli_sale
 msgid "<span class=\"o_stat_text\">Sales Order</span>"
 msgstr ""
@@ -138,6 +142,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "<strong>Contractor</strong>"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_saleorder_document_td_design
+msgid "<strong>Customer Reference</strong>"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -169,6 +178,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
 msgid "Average"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__td_supplier_delay_avg
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_users__td_supplier_delay_avg
+msgid "Average Delay, days"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -233,6 +248,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
 msgid "Confirmed orders"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_res_partner
+msgid "Contact"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -301,8 +321,20 @@ msgid "Customer"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+msgid "Delay by History"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_depth
 msgid "Depth, mm"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_design_image
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_saleorder_document_td_design
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_design
+msgid "Design Visual"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -311,6 +343,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
@@ -366,6 +399,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_res_config_settings__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
@@ -646,10 +680,28 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_date_ready
 msgid ""
-"Read only. The expected delivery date of the line (Purchase) plus the "
+"Read only. The expected delivery date of the line (Purchase), plus the "
+"average delay of this supplier in the history of receipts, plus the "
 "manufacturing lead time of the bill of materials that consumes it: when the "
 "sales order can be ready if only this item is waited for. Empty when the "
 "item is received or the purchase is cancelled."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_res_partner__td_supplier_delay_avg
+#: model:ir.model.fields,help:td_mebli_sale.field_res_users__td_supplier_delay_avg
+msgid ""
+"Read only: received purchase lines of the past year, the receipt date "
+"against the expected arrival; early deliveries count as on time. Added to "
+"the supplier date in the forecast date of the order."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_supplier_delay
+msgid ""
+"Read only: the average delay of the supplier over the past year (received "
+"purchase lines: the receipt date against the expected arrival), rounded to "
+"days; early deliveries count as on time."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -675,6 +727,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__reason
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__reason
 msgid "Reason"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__td_supplier_delay_lines
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_users__td_supplier_delay_lines
+msgid "Receipts in the Statistics"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -768,6 +826,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier Date"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_supplier_delay
+msgid "Supplier Delay by History, days"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -878,6 +941,20 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.constraint,message:td_mebli_sale.constraint_td_mebli_order_change_version_unique
 msgid "The version of a change is unique in an order."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_design
+msgid ""
+"The visual is printed in the quotation (Print › Quotation / Order) under the\n"
+"                        order details."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_design_image
+msgid ""
+"The visual of the project from the designer: printed in the quotation under "
+"the order details."
 msgstr ""
 
 #. module: td_mebli_sale

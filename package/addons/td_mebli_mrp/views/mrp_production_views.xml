@@ -14,6 +14,13 @@
                 <field name="td_from_parts" string="From parts" invisible="not td_from_parts" optional="show" width="110px"/>
             </xpath>
             <!-- the parts of the bill of materials of the order, where the shop works (read only) -->
+            <!-- position 14 (F-57): analog of a short material, replacement in one click -->
+            <xpath expr="//field[@name='move_raw_ids']/list" position="inside">
+                <field name="td_analog_id" column_invisible="1"/>
+                <field name="td_analog_hint" string="Analog" optional="show" class="text-success"/>
+                <button name="action_td_use_analog" type="object" string="Use Analog" class="btn-link"
+                        invisible="not td_analog_id or parent.state in ('draft', 'done', 'cancel')"/>
+            </xpath>
             <xpath expr="//page[@name='components']" position="after">
                 <page string="Parts" name="td_parts" invisible="not td_part_ids">
                     <group>

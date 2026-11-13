@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_mebli_dashboard.ShopBoard">
+        <div class="o_action td_board h-100 overflow-auto">
+            <t t-set="d" t-value="state.data"/>
+            <div class="td_board_head">
+                <h1 t-out="d.title"/>
+                <div class="td_board_clock" t-out="d.clock"/>
+            </div>
+            <div class="td_dash_grid td_board_grid">
+                <div class="td_card td_ok td_k_board_done">
+                    <div class="td_label">Operations done in the shift</div>
+                    <div class="td_value"><t t-out="d.done"/></div>
+                    <div class="td_target"><t t-out="d.done_hours"/> h</div>
+                </div>
+                <div class="td_card td_none td_k_board_working">
+                    <div class="td_label">In work now</div>
+                    <div class="td_value" t-out="d.working"/>
+                    <div class="td_line" t-foreach="d.people" t-as="p" t-key="p_index"><t t-out="p.center"/> · <t t-out="p.order"/><t t-if="p.worker"> · <t t-out="p.worker"/></t></div>
+                </div>
+                <div t-attf-class="td_card td_k_board_risk #{d.risk_count ? 'td_bad' : 'td_ok'}">
+                    <div class="td_label">Orders at risk</div>
+                    <div class="td_value" t-out="d.risk_count"/>
+                    <div class="td_line" t-foreach="d.risk" t-as="r" t-key="r.name"><t t-out="r.name"/> · <t t-out="r.customer"/> · +<t t-out="r.days"/> d.</div>
+                </div>
+                <div t-attf-class="td_card td_k_board_behind #{d.behind ? 'td_warn' : 'td_ok'}">
+                    <div class="td_label">Operations behind the plan</div>
+                    <div class="td_value" t-out="d.behind"/>
+                    <div class="td_target">planned end has passed</div>
+                </div>
+            </div>
+            <table class="td_board_table">
+                <thead><tr><th>Section</th><th>Done</th><th>Hours done</th><th>In work</th><th>Behind</th><th>Hours behind</th></tr></thead>
+                <tbody>
+                    <tr t-foreach="d.centers" t-as="c" t-key="c.name" t-attf-class="#{c.behind ? 'td_board_behind' : ''}">
+                        <td t-out="c.name"/><td t-out="c.done"/><td t-out="c.done_hours"/><td t-out="c.working"/>
+                        <td t-out="c.behind"/><td t-out="c.behind_hours"/>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </t>
+</templates>

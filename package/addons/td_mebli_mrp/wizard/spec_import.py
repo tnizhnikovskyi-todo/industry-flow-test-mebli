@@ -1,6 +1,4 @@
 import base64
-import csv
-import io
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
@@ -23,16 +21,32 @@ class TdMebliSpecImport(models.TransientModel):
     _description = 'Import of the Parts of a Specification from CSV'
 
     bom_id = fields.Many2one('mrp.bom', string='Specification', required=True)
-    file = fields.Binary(string='CSV File', required=True)
+    file = fields.Binary(string='CSV or Excel File', required=True)
     filename = fields.Char(string='File Name')
     mapping = fields.Text(string='Recognized Columns', readonly=True)
     preview_count = fields.Integer(string='Parts in the File', readonly=True)
 
     def _rows(self):
+        """Position 4: rows of text of the file, read by the standard reader of the import of Odoo (base_import: CSV,
+        XLSX, XLS, ODS) — the same reader the import of the price lists of the suppliers uses (td_mebli_purchase)."""
         raw = base64.b64decode(self.file or b'')
-        text = raw.decode('utf-8-sig', errors='replace')
-        dialect = csv.Sniffer().sniff(text[:2048], delimiters=';,\t')
-        return list(csv.reader(io.StringIO(text), dialect))
+        if not raw:
+            return []
+        try:
+            raw.decode('utf-8')
+            encoding = 'utf-8-sig'
+        except UnicodeDecodeError:
+            encoding = ''  # the standard guesses the encoding (e.g. windows-1251 of an old Excel)
+        importer = self.env['base_import.import'].create({'res_model': self._name, 'file': raw,
+                                                          'file_name': self.filename or ''})
+        try:
+            result = importer._read_file({'quoting': '"', 'separator': '', 'encoding': encoding})
+        except UserError:
+            raise
+        except Exception as error:  # noqa: BLE001 — any broken file is a user error, not a crash
+            raise UserError(self.env._("The file cannot be read: %s", error)) from error
+        rows = result[1] if result else []
+        return [['' if cell is None else str(cell) for cell in row] for row in rows]
 
     @api.model
     def _td_map_header(self, header):

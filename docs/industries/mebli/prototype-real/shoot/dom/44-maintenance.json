@@ -1,0 +1,206 @@
+{
+ "screen": "44-maintenance",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Запит"
+  },
+  {
+   "kind": "label",
+   "text": "Створено"
+  },
+  {
+   "kind": "label",
+   "text": "Обладнання"
+  },
+  {
+   "kind": "label",
+   "text": "Робочий центр?"
+  },
+  {
+   "kind": "label",
+   "text": "Простій, год"
+  },
+  {
+   "kind": "label",
+   "text": "Категорія"
+  },
+  {
+   "kind": "label",
+   "text": "Дата запиту?"
+  },
+  {
+   "kind": "label",
+   "text": "Тип обслуговування"
+  },
+  {
+   "kind": "label",
+   "text": "Коригування"
+  },
+  {
+   "kind": "label",
+   "text": "Профілактика"
+  },
+  {
+   "kind": "label",
+   "text": "Команда"
+  },
+  {
+   "kind": "label",
+   "text": "Відповідальний"
+  },
+  {
+   "kind": "label",
+   "text": "Запланована дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Заплановане Завершення?"
+  },
+  {
+   "kind": "label",
+   "text": "Пріоритет"
+  },
+  {
+   "kind": "label",
+   "text": "Обслуговування Панель приладів Обслуговування Обладнання Звітність Налаштування 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Запити на технічне обслуговування Не прижимає кромку, перегрів клейового вузла 1 / 1"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Примітки"
+  },
+  {
+   "kind": "button",
+   "text": "Інструкції"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Запити на технічне обслуговування"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Не прижимає кромку, перегрів клейового вузла"
+  },
+  {
+   "kind": "field",
+   "text": "Брак Відремонтовано В процесі Новий запит",
+   "label": "stage_id",
+   "name": "stage_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "kanban_state",
+   "name": "kanban_state",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Не прижимає кромку, перегрів клейового вузла",
+   "label": "Запит",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Створено",
+   "name": "employee_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Кромкооблицювальний верстат/КО-450",
+   "label": "Обладнання",
+   "name": "equipment_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Крайкування",
+   "label": "Робочий центр?",
+   "name": "td_workcenter_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1,5",
+   "label": "Простій, год",
+   "name": "td_downtime_hours",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Категорія",
+   "name": "category_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "12 лист.",
+   "label": "Дата запиту?",
+   "name": "request_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "on",
+   "label": "Коригування",
+   "name": "maintenance_type",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Внутрішнє обслуговування",
+   "label": "Команда",
+   "name": "maintenance_team_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Ігор Савчук",
+   "label": "Відповідальний",
+   "name": "user_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Запланована дата?",
+   "name": "schedule_date",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Заплановане Завершення?",
+   "name": "schedule_end",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Пріоритет",
+   "name": "priority",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "description",
+   "name": "description",
+   "required": false
+  }
+ ]
+}

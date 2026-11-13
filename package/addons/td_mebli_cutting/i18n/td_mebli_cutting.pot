@@ -1,13 +1,10 @@
-# Translation of Odoo Server.
-# This file contains the translation of the following modules:
-# 	* td_mebli_cutting
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-12 20:20+0000\n"
-"PO-Revision-Date: 2026-11-12 20:20+0000\n"
+"POT-Creation-Date: 2026-11-12 21:17+0000\n"
+"PO-Revision-Date: 2026-11-12 21:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -49,8 +46,22 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_form_td_measure
+msgid ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Check before cutting\"/>\n"
+"                    <strong>The design does not match the measurement:</strong>"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
 msgid "<span class=\"badge text-bg-success\">Вільний</span>"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_measure_warning_form
+msgid ""
+"<strong>The design of the order does not match the measurement sheet.</strong>\n"
+"                    Check with the measurer and the designer before the board is cut."
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -78,6 +89,11 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
 msgid "Back to draft"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_measure_warning_form
+msgid "Back, fix the design"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -113,6 +129,18 @@ msgid "Cannot cut %(product)s: %(reason)s."
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/measure_check.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_measure_warning_form
+msgid "Check before Cutting"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model,name:td_mebli_cutting.model_td_mebli_measure_warning
+msgid "Check of the Design against the Measurement before Cutting"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__company_id
 msgid "Company"
 msgstr ""
@@ -137,6 +165,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__create_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__create_uid
 msgid "Created by"
 msgstr ""
 
@@ -145,6 +174,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__create_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__create_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__create_date
 msgid "Created on"
 msgstr ""
 
@@ -182,6 +212,7 @@ msgstr ""
 #: code:addons/td_mebli_cutting/models/mrp_production.py:0
 #: model:ir.actions.act_window,name:td_mebli_cutting.td_mebli_cutting_job_action
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_mrp_production__td_cutting_job_ids
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__job_ids
 #: model:ir.ui.menu,name:td_mebli_cutting.td_mebli_cutting_job_menu
 msgid "Cutting Jobs"
 msgstr ""
@@ -242,6 +273,11 @@ msgid "Decor"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__td_measure_problems
+msgid "Design against the Measurement"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_product_template__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__display_name
@@ -250,6 +286,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -315,6 +352,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__id
 msgid "ID"
 msgstr ""
 
@@ -364,6 +402,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__write_uid
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__write_uid
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -372,6 +411,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__write_date
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__write_date
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -419,6 +459,11 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__message_ids
 msgid "Messages"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__method
+msgid "Method"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -610,11 +655,18 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_measure_warning_form
+msgid "Send anyway"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_measure_warning__method__action_send
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
 msgid "Send to cutting"
 msgstr ""
 
 #. module: td_mebli_cutting
+#: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_measure_warning__method__action_send_distributor
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form_distributor
 msgid "Send to the distributor"
 msgstr ""
@@ -622,6 +674,12 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields.selection,name:td_mebli_cutting.selection__td_mebli_cutting_job__state__sent
 msgid "Sent to cutting"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/measure_check.py:0
+msgid "Sent to cutting despite the check against the measurement: %s"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -716,6 +774,11 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,help:td_mebli_cutting.field_td_mebli_cutting_job__website_message_ids
 msgid "Website communication history"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_measure_warning__problems
+msgid "What does not Fit"
 msgstr ""
 
 #. module: td_mebli_cutting

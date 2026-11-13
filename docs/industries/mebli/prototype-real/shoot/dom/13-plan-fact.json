@@ -376,7 +376,7 @@
   },
   {
    "kind": "label",
-   "text": "Продажі Замовлення До включення у рахунок Товари Звітність Налаштування 2 Меблева фабрика «Демо»"
+   "text": "Продажі Замовлення До включення у рахунок Товари Звітність Налаштування 3 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
@@ -427,22 +427,22 @@
   },
   {
    "kind": "cell",
-   "text": "7 589,27 ₴",
+   "text": "7 372,23 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "34 862,69 ₴",
+   "text": "34 645,65 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "27,2",
+   "text": "27,7",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "2,2",
+   "text": "1,6",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -486,22 +486,22 @@
   },
   {
    "kind": "cell",
-   "text": "7 800,18 ₴",
+   "text": "7 857,83 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "35 073,60 ₴",
+   "text": "35 131,25 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "26,8",
+   "text": "26,6",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "2,8",
+   "text": "3,0",
    "label": "td_cost_deviation_pct"
   },
   {
@@ -545,22 +545,22 @@
   },
   {
    "kind": "cell",
-   "text": "19 459,07 ₴",
+   "text": "19 662,64 ₴",
    "label": "td_cost_work"
   },
   {
    "kind": "cell",
-   "text": "52 493,04 ₴",
+   "text": "52 696,61 ₴",
    "label": "td_cost_fact"
   },
   {
    "kind": "cell",
-   "text": "28,7",
+   "text": "28,4",
    "label": "td_margin_fact_pct"
   },
   {
    "kind": "cell",
-   "text": "6,4",
+   "text": "6,8",
    "label": "td_cost_deviation_pct"
   }
  ]

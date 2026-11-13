@@ -116,7 +116,7 @@
   },
   {
    "kind": "label",
-   "text": "Продажі Замовлення До включення у рахунок Товари 2 Меблева фабрика «Демо»"
+   "text": "Продажі Замовлення До включення у рахунок Товари 3 1 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
@@ -148,6 +148,10 @@
   },
   {
    "kind": "button",
+   "text": "Повідомити клієнта про нову дату"
+  },
+  {
+   "kind": "button",
    "text": "Рядки замовлення"
   },
   {
@@ -161,6 +165,10 @@
   {
    "kind": "button",
    "text": "Зміни"
+  },
+  {
+   "kind": "button",
+   "text": "Візуалізація проєкту"
   },
   {
    "kind": "breadcrumb",
@@ -193,7 +201,7 @@
   },
   {
    "kind": "field",
-   "text": "14",
+   "text": "15",
    "label": "td_delay_days",
    "name": "td_delay_days",
    "required": false
@@ -221,21 +229,21 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 19:27",
+   "text": "7 лист., 00:47",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
   },
   {
    "kind": "field",
-   "text": "12 лист., 15:29",
+   "text": "12 лист., 14:52",
    "label": "Виробництво розпочато",
    "name": "td_launch_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "140,0",
+   "text": "134,1",
    "label": "До запуску, год",
    "name": "td_hours_to_launch",
    "required": false
@@ -263,21 +271,21 @@
   },
   {
    "kind": "field",
-   "text": "4 груд.",
+   "text": "5 груд.",
    "label": "Обіцяна дата?",
    "name": "commitment_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "18 груд.",
+   "text": "20 груд.",
    "label": "Прогнозна дата?",
    "name": "td_forecast_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "14",
+   "text": "15",
    "label": "Зсув, дн.",
    "name": "td_delay_days",
    "required": false

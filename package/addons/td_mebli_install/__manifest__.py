@@ -21,6 +21,7 @@
         'views/accrual_views.xml',
         'views/payment_views.xml',
         'report/act_report.xml',
+        'views/day_plan_views.xml',
     ],
     'installable': True,
 }

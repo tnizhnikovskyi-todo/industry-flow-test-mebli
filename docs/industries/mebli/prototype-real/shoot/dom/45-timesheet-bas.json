@@ -1,0 +1,244 @@
+{
+ "screen": "45-timesheet-bas",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Працівник"
+  },
+  {
+   "kind": "header",
+   "text": "Днів"
+  },
+  {
+   "kind": "header",
+   "text": "Години"
+  },
+  {
+   "kind": "header",
+   "text": "Не у файлі"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Від дати"
+  },
+  {
+   "kind": "label",
+   "text": "До дати"
+  },
+  {
+   "kind": "label",
+   "text": "Файл для BAS"
+  },
+  {
+   "kind": "label",
+   "text": "Годин усього"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "3 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Табель для BAS (імітація)"
+  },
+  {
+   "kind": "button",
+   "text": "Сформувати файл"
+  },
+  {
+   "kind": "button",
+   "text": "Закрити"
+  },
+  {
+   "kind": "field",
+   "text": "1 лист.",
+   "label": "Від дати",
+   "name": "date_from",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "13 лист.",
+   "label": "До дати",
+   "name": "date_to",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "табель-BAS-імітація-2026-11-01-2026-11-13.csv",
+   "label": "Файл для BAS",
+   "name": "file",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "566,9",
+   "label": "Годин усього",
+   "name": "total_hours",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "false",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "Андрій Мельник",
+   "label": "employee_id"
+  },
+  {
+   "kind": "cell",
+   "text": "9",
+   "label": "days"
+  },
+  {
+   "kind": "cell",
+   "text": "72,4",
+   "label": "hours"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "skipped"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "Василь Ткач",
+   "label": "employee_id"
+  },
+  {
+   "kind": "cell",
+   "text": "9",
+   "label": "days"
+  },
+  {
+   "kind": "cell",
+   "text": "73,1",
+   "label": "hours"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "skipped"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "Оксана Литвин",
+   "label": "employee_id"
+  },
+  {
+   "kind": "cell",
+   "text": "7",
+   "label": "days"
+  },
+  {
+   "kind": "cell",
+   "text": "57,5",
+   "label": "hours"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "skipped"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  }
+ ]
+}

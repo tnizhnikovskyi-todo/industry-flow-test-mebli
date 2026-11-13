@@ -24,6 +24,10 @@
   },
   {
    "kind": "header",
+   "text": "Запізнення за історією"
+  },
+  {
+   "kind": "header",
    "text": "Готовність"
   },
   {
@@ -72,7 +76,7 @@
   },
   {
    "kind": "label",
-   "text": "Продажі Замовлення До включення у рахунок Товари 2 Меблева фабрика «Демо»"
+   "text": "Продажі Замовлення До включення у рахунок Товари 3 1 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
@@ -104,6 +108,10 @@
   },
   {
    "kind": "button",
+   "text": "Повідомити клієнта про нову дату"
+  },
+  {
+   "kind": "button",
    "text": "Рядки замовлення"
   },
   {
@@ -117,6 +125,10 @@
   {
    "kind": "button",
    "text": "Зміни"
+  },
+  {
+   "kind": "button",
+   "text": "Візуалізація проєкту"
   },
   {
    "kind": "breadcrumb",
@@ -149,7 +161,7 @@
   },
   {
    "kind": "field",
-   "text": "14",
+   "text": "15",
    "label": "td_delay_days",
    "name": "td_delay_days",
    "required": false
@@ -177,21 +189,21 @@
   },
   {
    "kind": "field",
-   "text": "6 лист., 19:27",
+   "text": "7 лист., 00:47",
    "label": "Дата замовлення?",
    "name": "date_order",
    "required": true
   },
   {
    "kind": "field",
-   "text": "12 лист., 15:29",
+   "text": "12 лист., 14:52",
    "label": "Виробництво розпочато",
    "name": "td_launch_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "140,0",
+   "text": "134,1",
    "label": "До запуску, год",
    "name": "td_hours_to_launch",
    "required": false
@@ -219,21 +231,21 @@
   },
   {
    "kind": "field",
-   "text": "4 груд.",
+   "text": "5 груд.",
    "label": "Обіцяна дата?",
    "name": "commitment_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "18 груд.",
+   "text": "20 груд.",
    "label": "Прогнозна дата?",
    "name": "td_forecast_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "14",
+   "text": "15",
    "label": "Зсув, дн.",
    "name": "td_delay_days",
    "required": false
@@ -247,14 +259,14 @@
   },
   {
    "kind": "field",
-   "text": "Товар Постачальник Закупівля Дата постачання Отримано Готовність Профіль шафи-купе, алюміній шампань Профіль-Систем P00003 11 лист. 1,000 Стільниця кварцова 38 мм Камінь-Майстер P00002 15 лист. 0,000 27 лист. Фасади МДФ фарбовані, RAL 9010 мат Фарбоцех «Палітра» P00001 6 груд. 0,000 18 груд. ​",
+   "text": "Товар Постачальник Закупівля Дата постачання Отримано Запізнення за історією Готовність Профіль шафи-купе, алюміній шампань Профіль-Систем P00003 12 лист. 1,000 2 Стільниця кварцова 38 мм Камінь-Майстер P00002 16 лист. 0,000 6 4 груд. Фасади МДФ фарбовані, RAL 9010 мат Фарбоцех «Палітра» P00001 7 груд. 0,000 1 20 груд. ​",
    "label": "td_purchase_line_ids",
    "name": "td_purchase_line_ids",
    "required": false
   },
   {
    "kind": "field",
-   "text": "24 лист.",
+   "text": "25 лист.",
    "label": "td_shop_date",
    "name": "td_shop_date",
    "required": false
@@ -276,13 +288,18 @@
   },
   {
    "kind": "cell",
-   "text": "11 лист.",
+   "text": "12 лист.",
    "label": "date_planned"
   },
   {
    "kind": "cell",
    "text": "1,000",
    "label": "qty_received"
+  },
+  {
+   "kind": "cell",
+   "text": "2",
+   "label": "td_supplier_delay"
   },
   {
    "kind": "cell",
@@ -306,7 +323,7 @@
   },
   {
    "kind": "cell",
-   "text": "15 лист.",
+   "text": "16 лист.",
    "label": "date_planned"
   },
   {
@@ -316,7 +333,12 @@
   },
   {
    "kind": "cell",
-   "text": "27 лист.",
+   "text": "6",
+   "label": "td_supplier_delay"
+  },
+  {
+   "kind": "cell",
+   "text": "4 груд.",
    "label": "td_date_ready"
   },
   {
@@ -336,7 +358,7 @@
   },
   {
    "kind": "cell",
-   "text": "6 груд.",
+   "text": "7 груд.",
    "label": "date_planned"
   },
   {
@@ -346,7 +368,12 @@
   },
   {
    "kind": "cell",
-   "text": "18 груд.",
+   "text": "1",
+   "label": "td_supplier_delay"
+  },
+  {
+   "kind": "cell",
+   "text": "20 груд.",
    "label": "td_date_ready"
   }
  ]

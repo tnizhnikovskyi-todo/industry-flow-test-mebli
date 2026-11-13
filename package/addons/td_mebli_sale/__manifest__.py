@@ -16,6 +16,7 @@
         'views/order_change_views.xml',
         'views/payment_term_views.xml',
         'report/contract_report.xml',
+        'views/design_visual_views.xml',
     ],
     'assets': {
         'web.assets_tests': [

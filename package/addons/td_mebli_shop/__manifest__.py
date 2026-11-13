@@ -18,6 +18,7 @@
         'views/shop_views.xml',
         'views/kit_views.xml',
         'report/kit_report.xml',
+        'report/label_report.xml',
     ],
     'installable': True,
 }

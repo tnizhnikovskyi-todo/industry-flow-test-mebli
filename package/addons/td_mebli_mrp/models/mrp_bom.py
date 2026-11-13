@@ -123,6 +123,9 @@ class MrpBom(models.Model):
             'product_qty': 1.0,
             'product_uom_id': template_bom.product_uom_id.id or tmpl.uom_id.id,
             'type': 'normal',
+            # position 3: overconsumption of the materials of an order is shown before the order is closed (standard
+            # «Flexible Consumption: Allowed with warning», mrp.consumption.warning)
+            'consumption': 'warning',
             'code': self.env._("%(w)sx%(h)sx%(d)s order BoM", w=dims['width'], h=dims['height'], d=dims['depth']),
             'td_order_bom': True,
             'td_template_bom_id': template_bom.id,

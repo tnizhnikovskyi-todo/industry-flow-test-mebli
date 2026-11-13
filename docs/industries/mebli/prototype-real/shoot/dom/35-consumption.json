@@ -1,0 +1,562 @@
+{
+ "screen": "35-consumption",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "З деталей"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Спожити"
+  },
+  {
+   "kind": "header",
+   "text": "Зарезервовано / спожито"
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Аналог"
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": ""
+  },
+  {
+   "kind": "header",
+   "text": "Товар"
+  },
+  {
+   "kind": "header",
+   "text": "Одиниці"
+  },
+  {
+   "kind": "header",
+   "text": "Спожити"
+  },
+  {
+   "kind": "header",
+   "text": "Спожитий"
+  },
+  {
+   "kind": "label",
+   "text": "Товар"
+  },
+  {
+   "kind": "label",
+   "text": "Опції виробу"
+  },
+  {
+   "kind": "label",
+   "text": "Кількість"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Специфікація?"
+  },
+  {
+   "kind": "label",
+   "text": "Початкова дата?"
+  },
+  {
+   "kind": "label",
+   "text": "Статус компонентів?"
+  },
+  {
+   "kind": "label",
+   "text": "Відповідальний"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": "Виробництво Планшет цеху Операції Товари Звітність Розкрій Налаштування 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Замовлення на виробництво WH/MO/00101 1 Продаж Переміщення товару Огляд 1 Розкрій 1 / 1"
+  },
+  {
+   "kind": "label",
+   "text": "Застереження споживання"
+  },
+  {
+   "kind": "button",
+   "text": "Виготовити все"
+  },
+  {
+   "kind": "button",
+   "text": "Не планувати"
+  },
+  {
+   "kind": "button",
+   "text": "Скасувати"
+  },
+  {
+   "kind": "button",
+   "text": "Компоненти"
+  },
+  {
+   "kind": "button",
+   "text": "Деталі"
+  },
+  {
+   "kind": "button",
+   "text": "Робочі замовлення"
+  },
+  {
+   "kind": "button",
+   "text": "Побічні товари"
+  },
+  {
+   "kind": "button",
+   "text": "Інші"
+  },
+  {
+   "kind": "button",
+   "text": "Підтвердити"
+  },
+  {
+   "kind": "button",
+   "text": "Встановіть Кількість та Підтвердіть"
+  },
+  {
+   "kind": "button",
+   "text": "Відмінити"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Замовлення на виробництво"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "WH/MO/00101"
+  },
+  {
+   "kind": "field",
+   "text": "1 Продаж",
+   "label": "",
+   "name": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1",
+   "label": "sale_order_count",
+   "name": "sale_order_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "1 Розкрій",
+   "label": "td_cutting_job_count",
+   "name": "td_cutting_job_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Виконано В процесі Підтверджено Чернетка",
+   "label": "state",
+   "name": "state",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "priority",
+   "name": "priority",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "WH/MO/00101",
+   "label": "name",
+   "name": "name",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Шафа-купе 2-дверна",
+   "label": "Товар",
+   "name": "product_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Декор корпусу: ЛДСП Дуб Сонома Декор фасаду: МДФ Білий матовий Кромка: ПВХ 0,4 мм Фурнітура: Стандарт Ширина, мм: 1900 Висота, мм: 2400 Глибина, мм: 600",
+   "label": "Опції виробу",
+   "name": "product_description_variants",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "3,000",
+   "label": "Кількість",
+   "name": "qty_producing",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "3,000",
+   "label": "Кількість",
+   "name": "product_qty",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "Кількість",
+   "name": "product_uom_id",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "S00108/215 1900x2400x600: Шафа-купе 2-дверна",
+   "label": "Специфікація?",
+   "name": "bom_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "10 лист., 08:12",
+   "label": "Початкова дата?",
+   "name": "date_start",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "Статус компонентів?",
+   "name": "components_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Ігор Савчук",
+   "label": "Відповідальний",
+   "name": "user_id",
+   "required": false
+  },
+  {
+   "kind": "flag",
+   "text": "true",
+   "label": "",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м²",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "В наявності",
+   "label": "forecast_availability",
+   "name": "forecast_availability",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "шт",
+   "label": "product_uom",
+   "name": "product_uom",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "Товар Одиниці Спожити Спожитий [КР-ДС-04] Кромка ПВХ Сонома 0,4×19 мм м 44,61 52,64 ​ ​ ​",
+   "label": "mrp_consumption_warning_line_ids",
+   "name": "mrp_consumption_warning_line_ids",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "м",
+   "label": "product_uom_id",
+   "name": "product_uom_id",
+   "required": false
+  },
+  {
+   "kind": "cell",
+   "text": "[ЛДСП-ДС16] ЛДСП Дуб Сонома 16 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "29,805",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "29,805",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "Деталі"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_analog_hint"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "[МДФ-БМ18] МДФ Білий матовий 18 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "15,252",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "15,252",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "Деталі"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_analog_hint"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "[ДВП-3] ДВП біла 3 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_from_parts"
+  },
+  {
+   "kind": "cell",
+   "text": "В наявності",
+   "label": "forecast_availability"
+  },
+  {
+   "kind": "cell",
+   "text": "14,229",
+   "label": "product_uom_qty"
+  },
+  {
+   "kind": "cell",
+   "text": "14,229",
+   "label": "quantity"
+  },
+  {
+   "kind": "cell",
+   "text": "м²",
+   "label": "product_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "Деталі"
+  },
+  {
+   "kind": "cell",
+   "text": "",
+   "label": "td_analog_hint"
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": ""
+  },
+  {
+   "kind": "cell",
+   "text": "[КР-ДС-04] Кромка ПВХ Сонома 0,4×19 мм",
+   "label": "product_id"
+  },
+  {
+   "kind": "cell",
+   "text": "м",
+   "label": "product_uom_id"
+  },
+  {
+   "kind": "cell",
+   "text": "44,61",
+   "label": "product_expected_qty_uom"
+  },
+  {
+   "kind": "cell",
+   "text": "52,64",
+   "label": "product_consumed_qty_uom"
+  }
+ ]
+}

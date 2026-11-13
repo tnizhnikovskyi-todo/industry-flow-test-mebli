@@ -5,7 +5,7 @@
         <field name="model">td.mebli.spec.import</field>
         <field name="arch" type="xml">
             <form string="Import of Parts">
-                <p class="text-muted">CSV export of the design program: the columns are recognized by their titles
+                <p class="text-muted">CSV or Excel (.xlsx) export of the design program: the columns are recognized by their titles
                     (part, length, width, quantity, material, edge). Reading the files of the design programs themselves
                     is not part of the slice.</p>
                 <group>

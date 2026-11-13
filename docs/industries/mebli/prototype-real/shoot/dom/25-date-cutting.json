@@ -140,11 +140,19 @@
   },
   {
    "kind": "button",
+   "text": "Повідомити клієнта про нову дату"
+  },
+  {
+   "kind": "button",
    "text": "Рядки замовлення"
   },
   {
    "kind": "button",
    "text": "Інша інформація"
+  },
+  {
+   "kind": "button",
+   "text": "Візуалізація проєкту"
   },
   {
    "kind": "breadcrumb",
@@ -184,7 +192,7 @@
   },
   {
    "kind": "field",
-   "text": "2",
+   "text": "3",
    "label": "td_delay_days",
    "name": "td_delay_days",
    "required": false
@@ -247,14 +255,14 @@
   },
   {
    "kind": "field",
-   "text": "21 лист.",
+   "text": "22 лист.",
    "label": "Прогнозна дата?",
    "name": "td_forecast_date",
    "required": false
   },
   {
    "kind": "field",
-   "text": "2",
+   "text": "3",
    "label": "Зсув, дн.",
    "name": "td_delay_days",
    "required": false

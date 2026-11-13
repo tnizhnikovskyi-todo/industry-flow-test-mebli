@@ -1,0 +1,230 @@
+{
+ "screen": "34-supplier-reliability",
+ "viewport": "desktop",
+ "items": [
+  {
+   "kind": "label",
+   "text": "Фізична особа"
+  },
+  {
+   "kind": "label",
+   "text": "Компанія"
+  },
+  {
+   "kind": "label",
+   "text": "Адреса"
+  },
+  {
+   "kind": "label",
+   "text": "ІПН?"
+  },
+  {
+   "kind": "label",
+   "text": "Веб-сайт"
+  },
+  {
+   "kind": "label",
+   "text": "Мітки"
+  },
+  {
+   "kind": "label",
+   "text": "Купівля Замовлення Товари 2 Меблева фабрика «Демо»"
+  },
+  {
+   "kind": "label",
+   "text": "Новий Постачальники Камінь-Майстер 0 Зустрічі 5 Купівлі 6,3 Середнє запізнення, дн. 0 % Відсоток вчасної доставки Партійні/серійні номери 1 / 1"
+  },
+  {
+   "kind": "label",
+   "text": "Додати Контакт"
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "label",
+   "text": ""
+  },
+  {
+   "kind": "button",
+   "text": "Контакти"
+  },
+  {
+   "kind": "button",
+   "text": "Продажі та купівля"
+  },
+  {
+   "kind": "button",
+   "text": "Призначення партнера"
+  },
+  {
+   "kind": "button",
+   "text": "Примітки"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Постачальники"
+  },
+  {
+   "kind": "breadcrumb",
+   "text": "Камінь-Майстер"
+  },
+  {
+   "kind": "field",
+   "text": "0 Зустрічі",
+   "label": "meeting_count",
+   "name": "meeting_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "5 Купівлі",
+   "label": "purchase_order_count",
+   "name": "purchase_order_count",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "6,3",
+   "label": "td_supplier_delay_avg",
+   "name": "td_supplier_delay_avg",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "0",
+   "label": "on_time_rate",
+   "name": "on_time_rate",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Add Photo",
+   "label": "image_1920",
+   "name": "image_1920",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "on",
+   "label": "Фізична особа",
+   "name": "company_type",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Камінь-Майстер",
+   "label": "name",
+   "name": "name",
+   "required": true
+  },
+  {
+   "kind": "field",
+   "text": "orders2@supplier-demo.example",
+   "label": "email",
+   "name": "email",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "+380 00 000 00 61",
+   "label": "phone",
+   "name": "phone",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Адреса",
+   "name": "street",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Адреса",
+   "name": "street2",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Житомир",
+   "label": "Адреса",
+   "name": "city",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Адреса",
+   "name": "state_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Адреса",
+   "name": "zip",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Україна",
+   "label": "Адреса",
+   "name": "country_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "ІПН?",
+   "name": "vat",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Веб-сайт",
+   "name": "website",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "Мітки",
+   "name": "category_id",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "",
+   "label": "properties",
+   "name": "properties",
+   "required": false
+  },
+  {
+   "kind": "field",
+   "text": "Додати Контакт",
+   "label": "child_ids",
+   "name": "child_ids",
+   "required": false
+  }
+ ]
+}

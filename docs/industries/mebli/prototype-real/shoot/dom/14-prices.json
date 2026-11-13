@@ -56,7 +56,7 @@
   },
   {
    "kind": "label",
-   "text": "Купівля Замовлення Товари Звітність Налаштування 2 Меблева фабрика «Демо»"
+   "text": "Купівля Замовлення Товари Звітність Налаштування 3 Меблева фабрика «Демо»"
   },
   {
    "kind": "label",
@@ -80,7 +80,7 @@
   },
   {
    "kind": "cell",
-   "text": "3 лист., 20:28",
+   "text": "3 лист., 23:48",
    "label": "date_order"
   },
   {
@@ -105,22 +105,22 @@
   },
   {
    "kind": "cell",
-   "text": "3 548,52",
+   "text": "3 587,54",
    "label": "price_unit"
   },
   {
    "kind": "cell",
-   "text": "3 351,47 ₴",
+   "text": "3 320,67 ₴",
    "label": "td_history_price"
   },
   {
    "kind": "cell",
-   "text": "5,9",
+   "text": "8,0",
    "label": "td_price_delta_pct"
   },
   {
    "kind": "cell",
-   "text": "1 182,29 ₴",
+   "text": "1 601,23 ₴",
    "label": "td_overpay"
   },
   {
@@ -129,7 +129,7 @@
   },
   {
    "kind": "cell",
-   "text": "3 лист., 16:28",
+   "text": "4 лист., 01:48",
    "label": "date_order"
   },
   {
@@ -154,22 +154,22 @@
   },
   {
    "kind": "cell",
-   "text": "70,11",
+   "text": "68,52",
    "label": "price_unit"
   },
   {
    "kind": "cell",
-   "text": "62,86 ₴",
+   "text": "62,97 ₴",
    "label": "td_history_price"
   },
   {
    "kind": "cell",
-   "text": "11,5",
+   "text": "8,8",
    "label": "td_price_delta_pct"
   },
   {
    "kind": "cell",
-   "text": "2 173,80 ₴",
+   "text": "1 665,60 ₴",
    "label": "td_overpay"
   }
  ]

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Position 1 (F-50): standard activity type of the sales order — the forecast date passed the promised one -->
+    <record id="mail_activity_type_td_forecast_shift" model="mail.activity.type">
+        <field name="name">Forecast Date Shift</field>
+        <field name="summary">Forecast later than promised</field>
+        <field name="res_model">sale.order</field>
+        <field name="icon">fa-calendar-times-o</field>
+        <field name="decoration_type">warning</field>
+        <field name="delay_count">0</field>
+    </record>
+</odoo>

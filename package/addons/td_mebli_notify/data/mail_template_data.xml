@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Position 2 (F-51): letters to the customer, standard mail templates. The measurement reminder is the standard
+         calendar alarm (td_mebli_measure). -->
+    <record id="mail_template_td_new_date" model="mail.template">
+        <field name="name">Furniture: new date of the order</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Order {{ object.name }}: new date</field>
+        <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="description">Sent by the salesperson when the date of the order moves</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p>Hello, <t t-out="object.partner_id.name or ''"/>!</p>
+    <p>The date of your order <strong t-out="object.name or ''"/> has moved.
+        The new date: <strong t-out="format_date(object.td_forecast_date or object.commitment_date)"/>.</p>
+    <p t-if="object.td_delay_reason == 'supplier'">The reason: a supplier delivers a part of the order later than planned.</p>
+    <p>We apologize and will keep you informed. If the new date does not suit you, please answer this letter.</p>
+    <p>Best regards, <t t-out="object.user_id.name or object.company_id.name or ''"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
+    <record id="mail_template_td_payment_reminder" model="mail.template">
+        <field name="name">Furniture: payment before the installation</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="subject">Order {{ object.name }}: payment before the installation</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="lang">{{ object.partner_id.lang }}</field>
+        <field name="description">Sent by the daily reminder when the visit is close and the payment is missing</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p>Hello, <t t-out="object.partner_id.name or ''"/>!</p>
+    <p>The installation of your order <strong t-out="object.name or ''"/> is coming. Under the payment terms the payment
+        before the installation is due: <strong t-out="format_amount(object.td_pay_missing, object.currency_id)"/>.</p>
+    <p>Paid so far: <t t-out="format_amount(object.td_pay_received, object.currency_id)"/>.</p>
+    <p>If you have already paid, please ignore this letter.</p>
+    <p>Best regards, <t t-out="object.company_id.name or ''"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
+    <record id="mail_template_td_install_reminder" model="mail.template">
+        <field name="name">Furniture: installation tomorrow</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="subject">Installation of {{ object.sale_order_id.name }}: tomorrow</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.sale_order_id.partner_id.id }}</field>
+        <field name="lang">{{ object.sale_order_id.partner_id.lang }}</field>
+        <field name="description">Sent by the daily reminder the day before the visit</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p>Hello, <t t-out="object.sale_order_id.partner_id.name or ''"/>!</p>
+    <p>Our crew comes tomorrow, <strong t-out="format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm')"/>,
+        to install your order <strong t-out="object.sale_order_id.name or ''"/>.</p>
+    <p>Please make sure the room is free and there is access to sockets and water.</p>
+    <p>Best regards, <t t-out="object.company_id.name or ''"/></p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+
+    <!-- Position 32 (F-64): morning briefing of the owner — a template filled by fixed rules (no AI) -->
+    <record id="mail_template_td_briefing" model="mail.template">
+        <field name="name">Furniture: morning briefing of the owner</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="subject">Morning briefing {{ format_date(ctx.get('td_today') or datetime.date.today()) }}</field>
+        <field name="email_from">{{ (user.company_id.email_formatted or user.email_formatted) }}</field>
+        <field name="partner_to">{{ object.id }}</field>
+        <field name="lang">{{ object.lang }}</field>
+        <field name="description">Sent every morning to each owner (group of the dashboard) personally, figures of his companies</field>
+        <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;" class="td_briefing">
+    <t t-set="data" t-value="briefing or object.env['td.mebli.dashboard']._td_briefing_data()"/>
+    <p><strong>Orders at risk: <t t-out="len(data['at_risk'])"/></strong></p>
+    <ul t-if="data['at_risk']">
+        <li t-foreach="data['at_risk'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['customer']"/> · +<t t-out="row['days']"/> d. · <t t-out="row['reason']"/></li>
+    </ul>
+    <p><strong>Overdue manufacturing orders: <t t-out="len(data['overdue'])"/></strong></p>
+    <ul t-if="data['overdue']">
+        <li t-foreach="data['overdue'][:8]" t-as="row"><t t-out="row['name']"/> · <t t-out="row['origin']"/> · <t t-out="row['days']"/> d. late</li>
+    </ul>
+    <p><strong>Money to receive</strong></p>
+    <ul>
+        <li>After the signed final act: <t t-out="data['due_after_act']"/> (orders: <t t-out="data['due_after_act_count']"/>)</li>
+        <li>Before the installations of the next 7 days: <t t-out="data['due_before']"/> (orders: <t t-out="data['due_before_count']"/>)</li>
+    </ul>
+    <p><strong>Downtime of the sections yesterday</strong></p>
+    <ul t-if="data['downtime']">
+        <li t-foreach="data['downtime']" t-as="row"><t t-out="row['center']"/> · <t t-out="row['reason']"/> · <t t-out="row['hours']"/> h</li>
+    </ul>
+    <p t-else="">No downtime.</p>
+</div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</odoo>
