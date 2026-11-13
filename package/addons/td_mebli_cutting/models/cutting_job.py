@@ -12,6 +12,10 @@ from odoo.tools.misc import formatLang
 
 from . import optimizer, sheet_map
 
+# Review A-11: the bypass of the AC-028 lock is not a context flag a client could send over RPC, but this private
+# object (only the code of this module has it; JSON-RPC can pass strings, numbers and lists, never this object)
+CUTTING_SEND = object()
+
 # the offcuts of one order take at most this share of its cost: the rest of the sheet is paid by the order
 OFFCUT_COST_SHARE_CAP = 10.0
 
@@ -111,7 +115,8 @@ class TdMebliCuttingJob(models.Model):
         return jobs
 
     def write(self, vals):
-        if 'export_attachment_id' in vals and not self.env.context.get('td_cutting_send'):
+        # the bypass is a private object of this module: a context sent over RPC (JSON) can never be this object
+        if 'export_attachment_id' in vals and self.env.context.get('td_cutting_send') is not CUTTING_SEND:
             # AC-028: the file that went to cutting does not change; a change is a new job (additional order)
             if any(job.export_attachment_id and job.state != 'draft' for job in self):
                 raise UserError(self.env._("The cutting file of a sent job does not change: make a new cutting job."))
@@ -190,7 +195,7 @@ class TdMebliCuttingJob(models.Model):
             boms = job.production_ids.bom_id
             version = str(versions[boms.id]) if len(boms) == 1 else ', '.join(
                 f"{bom.display_name}: {versions[bom.id]}" for bom in boms)
-            job.with_context(td_cutting_send=True).write({
+            job.with_context(td_cutting_send=CUTTING_SEND).write({
                 'export_attachment_id': attachment.id, 'state': 'sent', 'bom_version': version,
                 'sent_on': fields.Datetime.now(), 'sent_by': self.env.uid})
             job.production_ids.write({'td_cutting_job_ids': [(4, job.id)]})
@@ -232,7 +237,7 @@ class TdMebliCuttingJob(models.Model):
     def action_draft(self):
         self._check_state('cancel')
         self.sheet_ids.unlink()
-        self.with_context(td_cutting_send=True).write({'state': 'draft', 'result_source': False,
+        self.with_context(td_cutting_send=CUTTING_SEND).write({'state': 'draft', 'result_source': False,
                                                        'export_attachment_id': False})
         return True
 

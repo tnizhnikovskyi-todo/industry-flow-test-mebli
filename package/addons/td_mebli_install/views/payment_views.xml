@@ -95,7 +95,7 @@
                     <group>
                         <group>
                             <field name="order_id" readonly="1" force_save="1"/>
-                            <field name="amount"/>
+                            <field name="amount" readonly="id"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="reason" required="1" placeholder="e.g. the payment is in the bank statement of today"/>
                         </group>
@@ -121,7 +121,7 @@
             <list string="Manual Payment Marks" editable="bottom" decoration-muted="cancelled">
                 <field name="date"/>
                 <field name="user_id"/>
-                <field name="amount" sum="Total"/>
+                <field name="amount" sum="Total" readonly="id"/>
                 <field name="currency_id" column_invisible="True"/>
                 <field name="reason"/>
                 <field name="cancelled" widget="boolean_toggle"/>

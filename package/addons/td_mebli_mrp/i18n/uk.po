@@ -263,6 +263,7 @@ msgstr ""
 
 #. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_import_template__company_id
+#: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__company_id
 msgid "Company"
 msgstr "Компанія"
 

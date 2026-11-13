@@ -62,7 +62,8 @@ class TestCost(TdMebliSaleCommon):
         act = env['td.mebli.install.act'].create({'task_id': task.id, 'kind': 'final', 'crew_pct': 0.0})
         crew = env['td.mebli.accrual'].create({'employee_id': employee.id, 'kind': 'crew', 'amount': 400.0})
         crew.sudo().act_id = act
-        draft = env['td.mebli.accrual'].create({'employee_id': employee.id, 'kind': 'crew', 'amount': 9999.0})
+        helper = env['hr.employee'].create({'name': 'Helper'})  # one live crew accrual per employee and act
+        draft = env['td.mebli.accrual'].create({'employee_id': helper.id, 'kind': 'crew', 'amount': 9999.0})
         draft.sudo().act_id = act
         (piece | crew).action_td_confirm()
         order.invalidate_recordset()
@@ -109,5 +110,12 @@ class TestCost(TdMebliSaleCommon):
         found = self.env['sale.order'].search([('td_overconsumption', '=', True)])
         self.assertIn(over, found)
         self.assertNotIn(normal, found)
+        # review A-11: the stored flag of the manufacturing order; the search keeps to the allowed companies
+        self.assertTrue(over.mrp_production_ids.td_overconsumed)
+        self.assertFalse(normal.mrp_production_ids.td_overconsumed)
+        other = self.env['res.company'].create({'name': 'Second factory of the cost'})
+        found_other = self.env['sale.order'].with_context(allowed_company_ids=other.ids).search(
+            [('td_overconsumption', '=', True)])
+        self.assertNotIn(over, found_other)
         search = self.env.ref('td_mebli_cost.sale_order_td_cost_fact_search').arch
         self.assertIn('name="td_overconsumption" string="Overconsumption"', search)

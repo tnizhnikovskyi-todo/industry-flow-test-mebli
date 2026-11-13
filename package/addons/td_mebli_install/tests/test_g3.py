@@ -3,6 +3,7 @@ from datetime import date, datetime, timedelta
 
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests import TransactionCase, tagged
+from odoo.tools import mute_logger
 
 from odoo.addons.td_mebli_sale.tests.common import TdMebliSaleCommon
 
@@ -101,6 +102,15 @@ class TestPaymentG3(G3InstallCommon):
         mark.cancelled = True  # the payment came by the exchange (AC-042): the mark no longer counts
         order.invalidate_recordset()
         self.assertFalse(order.td_pay_ok)
+        # review A-11: the amount is fixed after the creation; any change of the mark goes to the chatter
+        self.assertIn('Manual payment mark cancelled', order.message_ids[:1].body)
+        with self.assertRaisesRegex(UserError, 'is not changed'):
+            mark.with_user(self.fin).amount = 1.0
+        mark.with_user(self.fin).reason = 'Bank statement of yesterday'
+        body = order.message_ids[:1].body
+        self.assertIn('Manual payment mark changed', body)
+        self.assertIn('Bank statement of today', body)
+        self.assertIn('Bank statement of yesterday', body)
 
     def test_ac_042_cancel_marks_on_bas_payment(self):
         order = self._order()
@@ -239,6 +249,25 @@ class TestAccrualG3(G3InstallCommon):
         self.assertAlmostEqual(crew.filtered(lambda a: a.employee_id == self.employee2).amount, 125.0)
         again, _no_rate = self.env['td.mebli.accrual']._td_accrue()  # the same period again: no double lines
         self.assertFalse(again.filtered(lambda a: a.act_id == act))
+
+    def test_ac_104_crew_of_the_company_once_and_unique(self):
+        """Review A-11: the crew percent goes to the employees of the company of the act only (a user can have an
+        employee in another company); a cancelled accrual is accrued again; the database refuses a second live one."""
+        other = self.env['res.company'].create({'name': 'Second company of the crew'})
+        foreign = self.env['hr.employee'].create({'name': 'Fitter One (other)', 'user_id': self.fitter.id,
+                                                  'company_id': other.id})
+        act = self._final()
+        accruals, _no_rate = self.env['td.mebli.accrual']._td_accrue()
+        crew = accruals.filtered(lambda a: a.act_id == act)
+        self.assertEqual(crew.employee_id, self.employee | self.employee2)
+        self.assertNotIn(foreign, crew.employee_id)
+        crew.write({'state': 'cancel'})
+        again, _no_rate = self.env['td.mebli.accrual']._td_accrue()  # the cancelled ones do not count as accrued
+        self.assertEqual(again.filtered(lambda a: a.act_id == act).employee_id, self.employee | self.employee2)
+        with self.assertRaises(Exception), self.cr.savepoint(), mute_logger('odoo.sql_db'):
+            self.env['td.mebli.accrual'].create({'employee_id': self.employee.id, 'kind': 'crew', 'amount': 1.0,
+                                                 'act_id': act.id})
+            self.env.flush_all()
 
     def test_ac_104_default_percent_of_the_company(self):
         self.company.td_crew_pct = 7.5

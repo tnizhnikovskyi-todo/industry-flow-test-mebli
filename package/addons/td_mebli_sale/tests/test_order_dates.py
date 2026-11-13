@@ -1,4 +1,5 @@
 from datetime import timedelta
+from unittest.mock import patch
 
 from odoo import fields
 from odoo.exceptions import AccessError, UserError
@@ -203,3 +204,37 @@ class TestOrderDates(TdMebliSaleCommon):
             # stored since A-11 (the board groups by the reason, AC-066) — still computed, never entered
             self.assertTrue(field.compute and field.readonly, name)
         self.assertNotIn('td.mebli.order.item', self.env)
+
+    def test_cron_recomputes_only_open_orders_in_batches(self):
+        """Review A-11: the daily cron takes the confirmed orders that are not delivered in full, in batches."""
+        open_order, _start = self._confirmed(20)
+        quotation, _start = self._order(20)
+        domain = self.env['sale.order']._td_forecast_open_domain()
+        found = self.env['sale.order'].search(domain)
+        self.assertIn(open_order, found)
+        self.assertNotIn(quotation, found)
+        full = self.env['sale.order'].search(domain + [('delivery_status', '=', 'full')])
+        self.assertFalse(full, "a delivered order is finished: its forecast is not recomputed")
+        seen = []
+        original = type(self.env['sale.order'])._td_recompute_forecast
+
+        def spy(records):
+            seen.append(records.ids)
+            return original(records)
+        with patch.object(type(self.env['sale.order']), '_td_recompute_forecast', spy):
+            self.env['sale.order']._cron_td_recompute_forecast(batch_size=1)
+        self.assertTrue(all(len(ids) == 1 for ids in seen))
+        self.assertIn([open_order.id], seen)
+        self.assertNotIn([quotation.id], seen)
+
+    def test_delay_days_in_the_time_zone_of_the_company(self):
+        """Review A-11: the promised day is the day in the time zone of the company, not of the computing user (the
+        cron has none): 22:30 UTC is already the next day in Kyiv."""
+        self.env.company.resource_calendar_id.tz = 'Europe/Kyiv'
+        order, start = self._order(5)
+        order.commitment_date = fields.Datetime.to_datetime(start + timedelta(days=4)) + timedelta(hours=22, minutes=30)
+        self.assertEqual(order._td_company_date(order.commitment_date), start + timedelta(days=5))
+        # the workshop needs 5 days: in Kyiv the promise is day 5 — no delay (UTC would say day 4, one day late)
+        order.with_context(tz='UTC')._td_recompute_forecast()
+        self.assertEqual(order.td_forecast_date, start + timedelta(days=5))
+        self.assertEqual(order.td_delay_days, 0)

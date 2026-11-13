@@ -38,6 +38,22 @@ class TestG2Cutting(TdMebliCuttingCommon):
         with self.assertRaisesRegex(UserError, r'version 1\)'):
             production.bom_id.td_part_ids[0].length_mm = 100
 
+    def test_ac_028_rpc_context_does_not_unlock_the_sent_file(self):
+        """Review A-11: the context flag of a client (JSON-RPC can send `td_cutting_send: true`) does not lift the lock;
+        only the private object of the module does (the send and the reset to draft use it)."""
+        job = self._job(self._make_production())
+        job.action_send()
+        other = self.env['ir.attachment'].create({'name': 'x.csv', 'datas': base64.b64encode(b'x')})
+        for value in (True, 1, 'CUTTING_SEND'):
+            with self.assertRaisesRegex(UserError, 'does not change'):
+                job.with_context(td_cutting_send=value).write({'export_attachment_id': other.id})
+        part = job.production_ids.bom_id.td_part_ids[0]
+        with self.assertRaisesRegex(UserError, r'version 1\)'):
+            part.with_context(td_cut_unlock=True).length_mm = 100
+        job.action_cancel()
+        job.action_draft()  # the module itself still resets the file through its private object
+        self.assertFalse(job.export_attachment_id)
+
     # AC-054 -------------------------------------------------------------
     def test_ac_054_manufacturing_order_without_parts(self):
         plain_bom = self.env['mrp.bom'].create({

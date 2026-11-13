@@ -71,6 +71,21 @@ class TestCompanyParams(TransactionCase):
         self.company.td_margin_to_salesman = True
         self.assertNotIn(self.margin, user.all_group_ids)  # not a salesman
 
+    def test_ac_018_manual_grant_of_the_administrator_stays(self):
+        """Review A-11: the parameter takes back only what it gave — «Sees the margin» given by an administrator by
+        hand stays when the parameter is switched off."""
+        self.company.td_margin_to_salesman = False
+        manual = new_test_user(self.env, 'td_salesman_manual', groups='sales_team.group_sale_salesman',
+                               company_id=self.company.id)
+        manual.group_ids = [(4, self.margin.id)]  # the administrator gives the group by hand
+        self.assertFalse(manual.td_margin_auto)
+        self.company.td_margin_to_salesman = True
+        self.assertTrue(self.salesman.td_margin_auto)
+        self.assertFalse(manual.td_margin_auto, "the group was there before: not marked as given by the parameter")
+        self.company.td_margin_to_salesman = False
+        self.assertNotIn(self.margin, self.salesman.all_group_ids)  # given by the parameter — taken back
+        self.assertIn(self.margin, manual.all_group_ids)  # given by hand — stays
+
     def test_ac_018_finance_group(self):
         """tr/security.md §1: «Finance» includes the standard invoicing group; both groups exist for the groups= of G1."""
         finance = self.env.ref('td_mebli_base.group_finance')

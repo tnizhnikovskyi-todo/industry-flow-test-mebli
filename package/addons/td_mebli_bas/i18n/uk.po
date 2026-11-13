@@ -810,3 +810,25 @@ msgstr "Повідомлення сайту"
 #: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_batch__website_message_ids
 msgid "Website communication history"
 msgstr "Історія спілкування на сайті"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_channel__start_date
+msgid "Exchange Start Date"
+msgstr "Дата початку обміну"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,help:td_mebli_bas.field_td_mebli_bas_channel__start_date
+msgid "Documents dated before this day are not sent to BAS (they are already in BAS). Empty — all the posted documents."
+msgstr "Документи з датою до цього дня не надсилаються в BAS (вони вже є в BAS). Порожньо — усі проведені документи."
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_move__td_bas_missing_code
+#: model:ir.model.fields,field_description:td_mebli_bas.field_account_bank_statement_line__td_bas_missing_code
+msgid "BAS Code Missing"
+msgstr "Немає коду BAS"
+
+#. module: td_mebli_bas
+#. odoo-python
+#: code:addons/td_mebli_bas/models/bas_channel.py:0
+msgid "Row %(row)s (payment %(ref)s): %(error)s"
+msgstr "Рядок %(row)s (платіж %(ref)s): %(error)s"

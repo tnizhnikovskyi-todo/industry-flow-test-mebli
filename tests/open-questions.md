@@ -25,3 +25,5 @@
 | 2026-11-13 | A-08 ВП-5 | Перевірити наживо API курсу НБУ (формат, ліміти) перед A-11 |
 | 2026-11-13 | A-12 / A-13 | Ключі VP треку «код»: конфіг-пакет пише `ir.config_parameter` `td_mebli.<vp>` (AI-A12-01), модулі зрізу читають `td_mebli_install.payment_control` і `td_mebli_sale.contract_mode` (`work`/`sale`), схема A-09 — `contract_mode: contract|sale|unset`, ТР — поля `res.company.td_*`. Який контракт — до A-11 / Архітектора рішення (власник — вето) |
 | 2026-11-13 | A-12 / A-13 | Одиниці «лист», «комплект» і теги рекламацій (`repair.tags`) — BOX §3 і `tr/migration.md` відносять до конфіг-пакета, але в ALLOCATION для них немає AC; A-12 їх не створив. Додати рядки в ALLOCATION (A-10) чи віддати A-13 / B-04 |
+| 2026-11-13 | A-11 | Ліцензія мостів EE (td_mebli_shopfloor, _quality, _fsm, _planning, _helpdesk, _sign): зараз LGPL-3, але вони залежать від модулів Odoo EE — потрібна OEEL-1 / OPL-1? Рішення власників пакета |
+| 2026-11-13 | A-11 | Ключі VP після A-11: значення тепер у полях `res.company.td_*` (td_mebli_base); `vp-map.yaml` A-12 (`a11_target`) переписати на поля — повтор A-12 після затвердження A-11 |

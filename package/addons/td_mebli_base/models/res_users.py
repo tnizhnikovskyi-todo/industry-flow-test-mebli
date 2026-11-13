@@ -1,8 +1,13 @@
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class ResUsers(models.Model):
     _inherit = 'res.users'
+
+    # review A-11: «Sees the margin» was given by the parameter of the company (AC-018), not by an administrator — only
+    # such a grant is taken back when the parameter is switched off
+    td_margin_auto = fields.Boolean(string='Margin Visibility by the Company Parameter', readonly=True, copy=False,
+                                    groups='base.group_system')
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -26,5 +31,10 @@ class ResUsers(models.Model):
         for user in self.sudo().filtered(lambda u: not u.share):
             wanted = salesman in user.all_group_ids and user.company_id.td_margin_to_salesman
             has = margin in user.group_ids
-            if wanted != has:
-                user.with_context(td_margin_sync=True).write({'group_ids': [(4 if wanted else 3, margin.id)]})
+            if wanted and not has:
+                user.with_context(td_margin_sync=True).write({'group_ids': [(4, margin.id)], 'td_margin_auto': True})
+            elif not wanted and has and user.td_margin_auto:
+                user.with_context(td_margin_sync=True).write({'group_ids': [(3, margin.id)], 'td_margin_auto': False})
+            elif not has and user.td_margin_auto:
+                user.with_context(td_margin_sync=True).write({'td_margin_auto': False})
+            # not wanted, has, no marker: the administrator gave the group by hand — it stays

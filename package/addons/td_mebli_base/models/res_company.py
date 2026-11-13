@@ -97,9 +97,6 @@ class ResCompany(models.Model):
         margin = self.env.ref('td_mebli_base.group_margin_view', raise_if_not_found=False)
         if not salesman or not margin:
             return
-        for company in self:
-            users = salesman.sudo().all_user_ids.filtered(lambda u: not u.share and u.company_id == company)
-            if not users:
-                continue
-            command = 4 if company.td_margin_to_salesman else 3
-            margin.sudo().write({'user_ids': [(command, user.id) for user in users]})
+        # review A-11: per user (res.users._td_sync_margin_group) — a grant of the administrator is not taken back
+        users = (salesman | margin).sudo().all_user_ids.filtered(lambda u: not u.share and u.company_id in self)
+        users._td_sync_margin_group()

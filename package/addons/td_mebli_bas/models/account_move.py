@@ -16,6 +16,8 @@ class AccountMove(models.Model):
     td_bas_state = fields.Selection([('sent', 'Sent to BAS'), ('error', 'Exchange Error')], string='Exchange with BAS',
                                     readonly=True, copy=False, tracking=True, index=True)
     td_bas_batch_id = fields.Many2one('td.mebli.bas.batch', string='BAS Batch', readonly=True, copy=False)
+    # review A-11: the error is the missing BAS code of the partner — the daily job sends it again once the code is set
+    td_bas_missing_code = fields.Boolean(string='BAS Code Missing', readonly=True, copy=False)
 
     def _td_check_bas_lock(self):
         if not self.env.su and any(move.td_bas_state == 'sent' for move in self):

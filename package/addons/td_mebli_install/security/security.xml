@@ -90,6 +90,8 @@
     </record>
 
     <record id="td_mebli_install_defect_rule_all_read" model="ir.rule">
+        <!-- review A-11: «all» is all the defects of the allowed companies — the global rule
+             td_mebli_install_defect_rule_company limits this rule like any other -->
         <field name="name">Defect of an installation act: project managers and «all documents» salespeople read all</field>
         <field name="model_id" ref="model_td_mebli_install_defect"/>
         <field name="domain_force">[(1, '=', 1)]</field>
@@ -197,5 +199,19 @@
         <field name="perm_write" eval="True"/>
         <field name="perm_create" eval="True"/>
         <field name="perm_unlink" eval="True"/>
+    </record>
+
+    <!-- review A-11 (AC-036): the lines of an act follow the company of the act for everybody (global rules) -->
+    <record id="td_mebli_install_defect_rule_company" model="ir.rule">
+        <field name="name">Defect of an installation act: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_install_defect"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('company_id', 'in', company_ids + [False])]</field>
+    </record>
+    <record id="td_mebli_install_act_crew_rule_company" model="ir.rule">
+        <field name="name">Hours of the crew of an installation act: multi-company</field>
+        <field name="model_id" ref="model_td_mebli_install_act_crew"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[('act_id.company_id', 'in', company_ids + [False])]</field>
     </record>
 </odoo>

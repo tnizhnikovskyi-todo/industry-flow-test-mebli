@@ -2,7 +2,7 @@ import base64
 import time
 from unittest.mock import patch
 
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 from odoo.tests import tagged
 
 from .common import TdMebliCommon
@@ -192,5 +192,36 @@ class TestG2Spec(TdMebliCommon):
         with self.assertRaisesRegex(UserError, message):
             self._import(bom, CSV, mode='append')
         self.assertEqual(part.length_mm, 700)
+        # review A-11: a context flag from a client (RPC) does not unlock; the private object of the module does
+        with self.assertRaisesRegex(UserError, message):
+            part.with_context(td_cut_unlock=True).length_mm = 650
+        from odoo.addons.td_mebli_mrp.models.part import CUT_UNLOCK
+        part.with_context(td_cut_unlock=CUT_UNLOCK).length_mm = 690
+        self.assertEqual(part.length_mm, 690)
         bom._td_mark_sent_to_cutting()
         self.assertEqual(bom.td_cut_version, 2)
+
+    # AC-036 (review A-11) ------------------------------------------------
+    def test_ac_036_parts_by_company_of_the_specification(self):
+        """The part has the company of its specification (stored related) and a rule of the allowed companies:
+        a technologist of company 1 does not see the parts of a specification of company 2; a shared specification
+        (without a company) is seen by both."""
+        env = self.env
+        other = env['res.company'].create({'name': 'Second factory of the parts'})
+        shared = self._bom()
+        own = self._bom()
+        own.company_id = env.company
+        foreign = env['mrp.bom'].create({'product_tmpl_id': self.cabinet_tmpl.id, 'company_id': other.id})
+        Part = env['td.mebli.part']
+        parts = Part.browse()
+        for bom in (shared, own, foreign):
+            parts |= Part.create({'bom_id': bom.id, 'name': 'Side', 'material_id': self.board_a.id,
+                                  'length_mm': 720, 'width_mm': 560})
+        self.assertEqual(parts.mapped('company_id'), env.company | other)
+        tech = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Technologist MC', 'login': 'td_tech_mc', 'company_id': env.company.id,
+            'company_ids': [(6, 0, env.company.ids)], 'group_ids': [(6, 0, [env.ref('mrp.group_mrp_user').id])]})
+        visible = Part.with_user(tech).search([('id', 'in', parts.ids)])
+        self.assertEqual(visible, parts.filtered(lambda p: p.bom_id in shared | own))
+        with self.assertRaises(AccessError):
+            parts.filtered(lambda p: p.bom_id == foreign).with_user(tech).read(['name'])

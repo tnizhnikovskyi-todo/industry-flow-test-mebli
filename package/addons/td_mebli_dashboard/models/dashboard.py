@@ -55,7 +55,14 @@ class TdMebliDashboard(models.AbstractModel):
     @api.model
     def _final_acts(self, env, since):
         return env['td.mebli.install.act'].search([('kind', '=', 'final'), ('state', '=', 'signed'),
+                                                   ('company_id', 'in', self._company_ids(env)),
                                                    ('signed_on', '>=', since)])
+
+    @api.model
+    def _company_ids(self, env):
+        """The companies of the cards: the companies selected by the director (self.env.companies before sudo, kept in
+        the context of get_data), never the whole database — sudo would otherwise ignore the multi-company rules."""
+        return env.context.get('td_dash_company_ids') or env.company.ids
 
     @api.model
     def _card_on_time(self, env, since):
@@ -117,11 +124,14 @@ class TdMebliDashboard(models.AbstractModel):
         """Payments due: after a signed final act (the card value, the drill-down) and, as a line, the coming visits
         of the made orders that are not paid before the installation (the same control as on the visit, F-22)."""
         _ = self.env._
-        acts = env['td.mebli.install.act'].search([('kind', '=', 'final'), ('state', '=', 'signed')])
+        company_ids = self._company_ids(env)
+        acts = env['td.mebli.install.act'].search([('kind', '=', 'final'), ('state', '=', 'signed'),
+                                                   ('company_id', 'in', company_ids)])
         orders = acts.order_id.filtered(lambda o: o.td_dash_due > 0.5)
         due = sum(orders.mapped('td_dash_due'))
         visits = env['project.task'].search([('sale_order_id', '!=', False), ('state', 'not in', ('1_done', '1_canceled')),
-                                             ('sale_order_id.state', '=', 'sale')])
+                                             ('sale_order_id.state', '=', 'sale'),
+                                             ('sale_order_id.company_id', 'in', company_ids)])
         unpaid = visits.sale_order_id.filtered(
             lambda o: o.td_stage in ('done', 'wait', 'shipped', 'install') and not o.td_pay_ok
             and not o.td_act_ids.filtered(lambda a: a.kind == 'final' and a.state == 'signed'))
@@ -135,7 +145,8 @@ class TdMebliDashboard(models.AbstractModel):
     @api.model
     def _card_claims(self, env, since):
         _ = self.env._
-        claims = env['repair.order'].search([('td_claim_order_id', '!=', False), ('create_date', '>=', since)])
+        claims = env['repair.order'].search([('td_claim_order_id', '!=', False), ('create_date', '>=', since),
+                                             ('company_id', 'in', self._company_ids(env))])
         installed = len(self._final_acts(env, since).order_id)
         per100 = len(claims) / installed * 100.0 if installed else 0.0
         closed = claims.filtered(lambda r: r.state == 'done')
@@ -179,18 +190,21 @@ class TdMebliDashboard(models.AbstractModel):
     def _card_load(self, env):
         _ = self.env._
         start, end = self._week()
+        company_ids = self._company_ids(env)
+        centers = env['mrp.workcenter'].search([('company_id', 'in', company_ids + [False])])
         week = env['mrp.workorder'].search([('state', 'not in', ('done', 'cancel')), ('date_start', '!=', False),
-                                            ('date_start', '<', end)])
+                                            ('date_start', '<', end), ('production_id.company_id', 'in', company_ids)])
         rows, over = [], 0
-        for center in env['mrp.workcenter'].search([]).filtered(lambda c: c.td_capacity_hours > 0):
+        for center in centers.filtered(lambda c: c.td_capacity_hours > 0):
             hours = sum(week.filtered(lambda w: w.workcenter_id == center).mapped('td_expected_hours'))
             if hours:
                 pct = round(hours / center.td_capacity_hours * 100.0)
                 rows.append({'name': center.name, 'pct': pct, 'value': f"{pct}%", 'over': pct > 100})
                 over += pct > 100
         rows.sort(key=lambda row: -row['pct'])
-        queue = env['mrp.workorder'].search([('state', 'not in', ('done', 'cancel'))])
-        capacity = sum(env['mrp.workcenter'].search([]).mapped('td_capacity_hours'))
+        queue = env['mrp.workorder'].search([('state', 'not in', ('done', 'cancel')),
+                                             ('production_id.company_id', 'in', company_ids)])
+        capacity = sum(centers.mapped('td_capacity_hours'))
         weeks = sum(queue.mapped('td_expected_hours')) / capacity if capacity else 0.0
         return {'label': _("Section load, 7 days"), 'rows': rows,
                 'target': _("Open work started or planned to start in 7 days ÷ weekly hours of the section calendar"),
@@ -202,7 +216,8 @@ class TdMebliDashboard(models.AbstractModel):
     @api.model
     def _card_conversion(self, env, since):
         _ = self.env._
-        sheets = env['td.mebli.measure'].search([('create_date', '>=', since)])
+        sheets = env['td.mebli.measure'].search([('create_date', '>=', since),
+                                                 ('company_id', 'in', self._company_ids(env))])
         signed = sheets.filtered(lambda s: s.order_id.state == 'sale')
         pct = len(signed) / len(sheets) * 100.0 if sheets else 0.0
         return {'label': _("Measurement to contract"), 'value': self._pct(pct) if sheets else self._no_data(),
@@ -283,7 +298,9 @@ class TdMebliDashboard(models.AbstractModel):
         user = self.env.user
         if not (self.env.su or user.has_group(GROUP) or user.has_group('base.group_system')):
             raise AccessError(self.env._("The factory dashboard is available to the factory director only."))
-        env = self.sudo().with_company(self.env.company).env
+        # the companies the director works in now (validated against the user's companies before sudo)
+        company_ids = self.env.companies.ids
+        env = self.sudo().with_company(self.env.company).with_context(td_dash_company_ids=company_ids).env
         company = env.company
         today, since = self._period()
         _ = self.env._

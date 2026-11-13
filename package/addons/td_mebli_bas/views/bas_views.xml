@@ -35,6 +35,7 @@
                             <field name="endpoint" invisible="transport != 'http'"/>
                             <field name="api_key" password="True" invisible="transport != 'http'"/>
                             <field name="schema_version"/>
+                            <field name="start_date"/>
                             <field name="last_run"/>
                         </group>
                     </group>

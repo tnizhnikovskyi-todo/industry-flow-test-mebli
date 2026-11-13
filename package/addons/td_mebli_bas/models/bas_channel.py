@@ -35,6 +35,10 @@ class TdMebliBasChannel(models.Model):
                               help="Finance user who gets the activities about the payments not matched.")
     active = fields.Boolean(default=True)
     last_run = fields.Datetime(string='Last Exchange', readonly=True)
+    # review A-11: the history before the start of the exchange stays in the old accounting (it is already in BAS)
+    start_date = fields.Date(string='Exchange Start Date',
+                             help="Documents dated before this day are not sent to BAS (they are already in BAS). "
+                                  "Empty — all the posted documents.")
     batch_ids = fields.One2many('td.mebli.bas.batch', 'channel_id', string='Batches')
 
     @api.constrains('company_id', 'active')
@@ -137,23 +141,38 @@ class TdMebliBasChannel(models.Model):
             else:
                 records.append((move, self._td_move_data(move)))
 
+        no_code = {move.id for move, _reason in errors}
+
         def set_state(move, state, batch):
-            move.sudo().write({'td_bas_state': state, 'td_bas_batch_id': batch.id})
+            move.sudo().write({'td_bas_state': state, 'td_bas_batch_id': batch.id,
+                               'td_bas_missing_code': state == 'error' and move.id in no_code})
         return self._td_send(batch, records, errors, set_state)
 
-    def _td_moves_to_send(self, move_types):
+    def _td_moves_to_send(self, move_types, retry_errors=True):
+        """Posted documents of the company not sent yet (from the exchange start date). `retry_errors=False` (the daily
+        job, review A-11): a document with «Exchange Error» is not sent again every day without a change — only when its
+        cause is fixed (the partner got the BAS code); a document rejected by BAS goes again by a button only."""
         self.ensure_one()
-        return self.env['account.move'].search([
-            ('company_id', '=', self.company_id.id), ('state', '=', 'posted'), ('move_type', 'in', move_types),
-            ('td_bas_state', '!=', 'sent')], order='date, id')
+        domain = [('company_id', '=', self.company_id.id), ('state', '=', 'posted'), ('move_type', 'in', move_types)]
+        if self.start_date:
+            domain.append(('date', '>=', self.start_date))
+        if retry_errors:
+            return self.env['account.move'].search(domain + [('td_bas_state', '!=', 'sent')], order='date, id')
+        new = self.env['account.move'].search(domain + [('td_bas_state', '=', False)])
+        fixed = self.env['account.move'].search(domain + [('td_bas_state', '=', 'error'), ('td_bas_missing_code', '=', True)])
+        fixed = fixed.filtered(lambda m: m.commercial_partner_id.with_company(self.company_id).td_bas_code)
+        return (new | fixed).sorted(lambda m: (m.date, m.id))
 
     def action_td_exchange(self):
-        """«Send to BAS» on the channel and the daily job: sales and purchases of the company."""
+        """«Send to BAS» on the channel: sales and purchases of the company, the documents with an error included."""
+        return self._td_exchange(retry_errors=True)
+
+    def _td_exchange(self, retry_errors=True):
         batches = self.env['td.mebli.bas.batch']
         for channel in self:
             channel = channel.with_company(channel.company_id)
-            batches |= channel._td_export_moves(channel._td_moves_to_send(SALE_TYPES), 'sales')
-            batches |= channel._td_export_moves(channel._td_moves_to_send(PURCHASE_TYPES), 'purchases')
+            batches |= channel._td_export_moves(channel._td_moves_to_send(SALE_TYPES, retry_errors), 'sales')
+            batches |= channel._td_export_moves(channel._td_moves_to_send(PURCHASE_TYPES, retry_errors), 'purchases')
             channel.last_run = fields.Datetime.now()
         return batches
 
@@ -162,7 +181,7 @@ class TdMebliBasChannel(models.Model):
         for channel in self.search([]):
             try:
                 with self.env.cr.savepoint():
-                    channel.action_td_exchange()
+                    channel._td_exchange(retry_errors=False)
             except Exception as error:  # one channel does not stop the others; the error is in the server log
                 _logger.exception('td_mebli_bas: exchange of the channel %s failed: %s', channel.name, error)
 
@@ -218,44 +237,62 @@ class TdMebliBasChannel(models.Model):
             batch.write({'state': 'error', 'message': self.env._("The file of the batch is not read: %s", error)})
             return batch
         Log = self.env['td.mebli.bas.log']
-        Payment = self.env['account.payment']
         journal = self.env['account.journal'].search([('type', '=', 'bank'), ('company_id', '=', company.id)], limit=1)
         done = unmatched = 0
         batch.log_ids.unlink()  # a repeated import writes the log again; the payments are not doubled (BAS reference)
-        for row in records:
-            ref, number = str(row.get('bas_ref') or ''), row.get('invoice_number') or ''
-            existing = Payment.search([('td_bas_ref', '=', ref), ('company_id', '=', company.id)], limit=1) if ref else Payment
-            if existing:
-                Log.create({'batch_id': batch.id, 'res_model': 'account.payment', 'res_id': existing.id, 'state': 'sent',
-                            'message': self.env._("Already imported: %s", ref)})
-                done += 1
+        failed = 0
+        for index, row in enumerate(records, start=1):
+            # review A-11: every row in its own savepoint — an error of one payment does not break the batch
+            try:
+                with self.env.cr.savepoint():
+                    result = self._td_import_payment_row(batch, row, company, journal)
+            except Exception as error:  # noqa: BLE001 — any error of a row is logged on the row, the batch goes on
+                _logger.warning('td_mebli_bas: row %s of the batch %s failed: %s', index, batch.name, error)
+                Log.create({'batch_id': batch.id, 'state': 'error', 'message': self.env._(
+                    "Row %(row)s (payment %(ref)s): %(error)s", row=index,
+                    ref=str((row or {}).get('bas_ref') or '') if isinstance(row, dict) else '', error=error)})
+                failed += 1
                 continue
-            invoice = self.env['account.move'].search([
-                ('company_id', '=', company.id), ('move_type', '=', 'out_invoice'), ('state', '=', 'posted'),
-                ('name', '=', number)], limit=1) if number else self.env['account.move']
-            if not invoice or invoice.payment_state in ('paid', 'in_payment', 'reversed') or not journal:
-                Log.create({'batch_id': batch.id, 'state': 'unmatched', 'message': self.env._(
-                    "Not matched: payment %(ref)s, amount %(amount)s, invoice «%(number)s».",
-                    ref=ref, amount=row.get('amount'), number=number)})
+            if result == 'unmatched':
                 unmatched += 1
-                continue
-            wizard = self.env['account.payment.register'].with_company(company).with_context(
-                active_model='account.move', active_ids=invoice.ids).create({
-                    'amount': float(row['amount']), 'journal_id': journal.id,
-                    'payment_date': row.get('date') or fields.Date.context_today(self)})
-            payment = wizard._create_payments()
-            payment.td_bas_ref = ref
-            Log.create({'batch_id': batch.id, 'res_model': 'account.payment', 'res_id': payment.id, 'state': 'sent',
-                        'message': self.env._("Payment %(ref)s → invoice %(number)s", ref=ref, number=invoice.name)})
-            self._td_after_bas_payment(invoice, payment)
-            done += 1
-        batch.write({'state': 'accepted', 'line_count': done, 'error_count': unmatched, 'message': False})
+            else:
+                done += 1
+        batch.write({'state': 'accepted', 'line_count': done, 'error_count': unmatched + failed, 'message': False})
         if unmatched:
             batch.activity_schedule(
                 'mail.mail_activity_data_todo', user_id=(self.user_id or self.env.user).id,
                 summary=self.env._("Payments from BAS not matched: %s", unmatched))
         self.last_run = fields.Datetime.now()
         return batch
+
+    def _td_import_payment_row(self, batch, row, company, journal):
+        """One payment of the batch: 'done' (imported or already imported) or 'unmatched'."""
+        Log = self.env['td.mebli.bas.log']
+        Payment = self.env['account.payment']
+        ref, number = str(row.get('bas_ref') or ''), row.get('invoice_number') or ''
+        existing = Payment.search([('td_bas_ref', '=', ref), ('company_id', '=', company.id)], limit=1) if ref else Payment
+        if existing:
+            Log.create({'batch_id': batch.id, 'res_model': 'account.payment', 'res_id': existing.id, 'state': 'sent',
+                        'message': self.env._("Already imported: %s", ref)})
+            return 'done'
+        invoice = self.env['account.move'].search([
+            ('company_id', '=', company.id), ('move_type', '=', 'out_invoice'), ('state', '=', 'posted'),
+            ('name', '=', number)], limit=1) if number else self.env['account.move']
+        if not invoice or invoice.payment_state in ('paid', 'in_payment', 'reversed') or not journal:
+            Log.create({'batch_id': batch.id, 'state': 'unmatched', 'message': self.env._(
+                "Not matched: payment %(ref)s, amount %(amount)s, invoice «%(number)s».",
+                ref=ref, amount=row.get('amount'), number=number)})
+            return 'unmatched'
+        wizard = self.env['account.payment.register'].with_company(company).with_context(
+            active_model='account.move', active_ids=invoice.ids).create({
+                'amount': float(row['amount']), 'journal_id': journal.id,
+                'payment_date': row.get('date') or fields.Date.context_today(self)})
+        payment = wizard._create_payments()
+        payment.td_bas_ref = ref
+        Log.create({'batch_id': batch.id, 'res_model': 'account.payment', 'res_id': payment.id, 'state': 'sent',
+                    'message': self.env._("Payment %(ref)s → invoice %(number)s", ref=ref, number=invoice.name)})
+        self._td_after_bas_payment(invoice, payment)
+        return 'done'
 
     def _td_after_bas_payment(self, invoice, payment):
         """Hook after a payment from BAS is reconciled (tr/integrations.md §1.3 п.3, AC-042): the manual payment marks

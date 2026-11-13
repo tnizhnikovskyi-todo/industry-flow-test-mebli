@@ -56,6 +56,15 @@ class TdMebliAccrual(models.Model):
     author_id = fields.Many2one('res.users', string='Author', default=lambda self: self.env.user, readonly=True)
     cancel_reason = fields.Char(string='Cancellation Reason', readonly=True, copy=False)
 
+    # review A-11: «Accrue» twice (two users at once, or a retry) never makes a second live accrual of the same time
+    # line or of the same installer of the same act; a cancelled accrual does not count
+    _unique_piece = models.UniqueIndex(
+        "(productivity_id) WHERE state != 'cancel' AND productivity_id IS NOT NULL",
+        'The time line is already accrued.')
+    _unique_crew = models.UniqueIndex(
+        "(act_id, employee_id) WHERE state != 'cancel' AND act_id IS NOT NULL",
+        'The crew percent of this act is already accrued to this employee.')
+
     _reason_required = models.Constraint(
         "CHECK(kind NOT IN ('bonus', 'penalty') OR reason IS NOT NULL)",
         'A bonus or a penalty needs a reason.')
@@ -153,7 +162,7 @@ class TdMebliAccrual(models.Model):
         all_lines = self.env['mrp.workcenter.productivity'].sudo().search(domain)
         lines = all_lines.filtered(lambda line: line.workorder_id.operation_id.td_piece_rate > 0)
         no_rate = (all_lines - lines).workorder_id
-        done = set(self.sudo().search([('productivity_id', 'in', lines.ids)]).productivity_id.ids)
+        done = set(self.sudo().search([('productivity_id', 'in', lines.ids), ('state', '!=', 'cancel')]).productivity_id.ids)
         for workorder, wo_lines in lines.grouped('workorder_id').items():
             operation = workorder.operation_id
             if not workorder.qty_produced:  # nothing produced: no piecework (not «one piece» by default)
@@ -173,9 +182,10 @@ class TdMebliAccrual(models.Model):
         if end:
             act_domain.append(('signed_on', '<', end))
         acts = self.env['td.mebli.install.act'].sudo().search(act_domain)
-        accrued = set(self.sudo().search([('act_id', 'in', acts.ids)]).act_id.ids)
+        accrued = set(self.sudo().search([('act_id', 'in', acts.ids), ('state', '!=', 'cancel')]).act_id.ids)
         for act in acts.filtered(lambda a: a.id not in accrued):
-            crew = act.crew_user_ids.employee_ids
+            # review A-11: a user has an employee in every company — only the employees of the company of the act
+            crew = act.crew_user_ids.employee_ids.filtered(lambda e: e.company_id == company)
             for employee, share in act._td_crew_split(crew).items():  # VP-14: equally or by the hours of the act
                 vals.append({'employee_id': employee.id, 'date': fields.Date.context_today(self, act.signed_on),
                              'kind': 'crew', 'amount': round(act.crew_amount * share, 2), 'act_id': act.id,

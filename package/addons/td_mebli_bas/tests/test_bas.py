@@ -205,6 +205,47 @@ class TestBasExchange(AccountTestInvoicingCommon):
         self.assertEqual(batch.state, 'error')
         self.assertTrue(batch.message)
 
+    def test_ac_042_bad_row_does_not_break_the_batch(self):
+        """Review A-11: every row in its own savepoint — a row with a broken amount is an error of the row, the
+        good payment of the same batch is imported."""
+        invoice = self._invoice()
+        rows = [{'bas_ref': 'P-B1', 'date': '2026-11-10', 'amount': 'not a number', 'invoice_number': invoice.name},
+                {'bas_ref': 'P-B2', 'date': '2026-11-10', 'amount': invoice.amount_total, 'invoice_number': invoice.name}]
+        batch = self._incoming(rows)
+        self.assertEqual((batch.state, batch.line_count, batch.error_count), ('accepted', 1, 1))
+        self.assertEqual(self.env['account.payment'].search_count([('td_bas_ref', '=', 'P-B2')]), 1)
+        self.assertFalse(self.env['account.payment'].search_count([('td_bas_ref', '=', 'P-B1')]))
+        error = batch.log_ids.filtered(lambda l: l.state == 'error')
+        self.assertIn('Row 1', error.message)
+
+    def test_ac_039_start_date_and_errors_not_repeated_daily(self):
+        """Review A-11: the history before the exchange start date is not sent; a document with «Exchange Error» is
+        not sent again by the daily job without a change — after the fix (the BAS code) or by the button only."""
+        old = self.init_invoice('out_invoice', partner=self.partner_a, products=self.product_a, amounts=[100.0],
+                                post=True, invoice_date='2018-01-31')
+        self.channel.start_date = '2018-06-01'  # the other invoices of the test are of 2019
+        bad = self._invoice(partner=self.partner_b)
+        Channel = self.env['td.mebli.bas.channel']
+        Channel._td_cron_exchange()
+        self.assertFalse(old.td_bas_state, "the history before the start date stays out of the exchange")
+        self.assertEqual(bad.td_bas_state, 'error')
+        batch = bad.td_bas_batch_id
+        Channel._td_cron_exchange()  # the next day, nothing changed: no new batch, no new error
+        self.assertEqual(bad.td_bas_batch_id, batch)
+        self.partner_b.td_bas_code = 'K-0003'  # the cause is fixed: the daily job sends it
+        Channel._td_cron_exchange()
+        self.assertEqual(bad.td_bas_state, 'sent')
+        # a document rejected by BAS waits for the button
+        rejected = self._invoice()
+        with patch.object(type(Channel), '_td_deliver', return_value={f'account.move,{rejected.id}': 'contract'}):
+            Channel._td_cron_exchange()
+        self.assertEqual(rejected.td_bas_state, 'error')
+        first = rejected.td_bas_batch_id
+        Channel._td_cron_exchange()
+        self.assertEqual(rejected.td_bas_batch_id, first)
+        self.channel.action_td_exchange()  # «Send to BAS» on the channel retries it
+        self.assertEqual(rejected.td_bas_state, 'sent')
+
     # ------------------------------------------------------------------ AC-078
     def test_ac_078_time_sheet_batch_with_the_bas_code(self):
         env = self.env

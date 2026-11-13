@@ -2,6 +2,7 @@ from markupsafe import Markup
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.fields import Domain
 
 ROUNDING = 0.5  # UAH: an amount due below it is paid (rounding of the bank)
 
@@ -164,13 +165,38 @@ class TdMebliPayMark(models.Model):
         return marks
 
     def write(self, vals):
+        """Review A-11: the amount of a mark is fixed once it is saved (a new mark instead); every change of a mark
+        is written to the chatter of the order — the cancellation and any other field."""
+        if 'amount' in vals and not self.env.su and any(
+                mark.currency_id.compare_amounts(mark.amount, vals['amount']) for mark in self):
+            raise UserError(self.env._("The amount of a manual payment mark is not changed: cancel it and add a new one."))
+        logged = [name for name in vals if name in self._fields and name not in ('cancelled', 'write_date', 'write_uid')]
+        before = {mark.id: {name: mark[name] for name in logged} for mark in self}
         res = super().write(vals)
-        if vals.get('cancelled'):
-            for mark in self:
+        for mark in self:
+            if vals.get('cancelled'):
                 mark.order_id.sudo().message_post(body=self.env._(
                     "Manual payment mark cancelled: %(amount)s, %(user)s.",
                     amount=f"{mark.amount:,.2f}".replace(',', ' '), user=self.env.user.name))
+            elif 'cancelled' in vals:
+                mark.order_id.sudo().message_post(body=self.env._(
+                    "Manual payment mark restored: %(amount)s, %(user)s.",
+                    amount=f"{mark.amount:,.2f}".replace(',', ' '), user=self.env.user.name))
+            changes = [f"{mark._fields[name].get_description(self.env)['string']}: "
+                       f"{mark._td_log_value(name, before[mark.id][name])} → {mark._td_log_value(name, mark[name])}"
+                       for name in logged if before[mark.id][name] != mark[name]]
+            if changes:
+                mark.order_id.sudo().message_post(body=self.env._(
+                    "Manual payment mark changed by %(user)s: %(changes)s",
+                    user=self.env.user.name, changes='; '.join(changes)))
         return res
+
+    def _td_log_value(self, name, value):
+        if isinstance(value, models.BaseModel):
+            return value.display_name or '—'
+        if self._fields[name].type == 'monetary':
+            return f"{value:,.2f}".replace(',', ' ')
+        return '—' if value in (False, None, '') else str(value)
 
     def action_td_save(self):
         """The button of the dialog: the record is saved by the client before the call."""
@@ -179,6 +205,12 @@ class TdMebliPayMark(models.Model):
 
 class SaleOrderPayMark(models.Model):
     _inherit = 'sale.order'
+
+    @api.model
+    def _td_forecast_open_domain(self):
+        """Review A-11: an order with a signed final act is finished — the forecast cron skips it."""
+        return Domain(super()._td_forecast_open_domain()) & Domain(
+            'td_act_ids', 'not any', [('kind', '=', 'final'), ('state', '=', 'signed')])
 
     def _td_cancel_pay_marks(self, amount=None):
         """AC-042: a payment of the order arrived by the exchange with BAS — the manual marks that stood in for it are

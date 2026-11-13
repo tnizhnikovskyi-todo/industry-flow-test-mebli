@@ -56,53 +56,87 @@ class SaleOrder(models.Model):
     def _td_actual_cost(self):
         """Actual cost of the finished manufacturing orders of the order, as the standard MO Overview counts it."""
         self.ensure_one()
-        material = work = 0.0
-        all_productions = self._td_productions()
-        productions = all_productions.filtered(lambda p: p.state == 'done')
-        for production in productions:
-            for move in production.move_raw_ids.filtered(lambda m: m.state == 'done'):
-                qty = move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id)
-                material += qty * move.product_id.standard_price
-            for workorder in production.workorder_ids:
-                work += workorder.duration / 60.0 * workorder.workcenter_id.costs_hour
-        return bool(productions) and all(p.state == 'done' for p in all_productions), material, work
+        return self._td_actual_costs()[self.id]
+
+    def _td_actual_costs(self):
+        """{order id: (has fact, material, work)} for the whole recordset: the manufacturing orders, their moves and
+        work orders are read in batches (prefetch of the recordset), not order by order (review A-11, N+1)."""
+        result = {}
+        orders = self.sudo()
+        all_productions = orders.mrp_production_ids
+        all_productions.move_raw_ids.mapped('quantity')  # one prefetch of the moves and the work orders of the batch
+        all_productions.workorder_ids.mapped('duration')
+        for order in orders:
+            productions = order.mrp_production_ids
+            done = productions.filtered(lambda p: p.state == 'done')
+            material = work = 0.0
+            for production in done:
+                for move in production.move_raw_ids.filtered(lambda m: m.state == 'done'):
+                    qty = move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id)
+                    material += qty * move.product_id.standard_price
+                for workorder in production.workorder_ids:
+                    work += workorder.duration / 60.0 * workorder.workcenter_id.costs_hour
+            result[order.id] = (bool(done) and all(p.state == 'done' for p in productions), material, work)
+        return result
 
     def _td_cutting_cost(self):
         """The confirmed purchases of the cutting service of the jobs of the order; a job of several orders is shared
         by the number of its manufacturing orders."""
         self.ensure_one()
-        productions = self._td_productions()
+        return self._td_cutting_costs()[self.id]
+
+    def _td_cutting_costs(self):
+        """{order id: cutting cost} with one search of the jobs for the whole recordset."""
+        orders = self.sudo()
+        result = dict.fromkeys(self.ids, 0.0)
+        productions = orders.mrp_production_ids
         if not productions:
-            return 0.0
+            return result
         jobs = self.env['td.mebli.cutting.job'].sudo().search([('production_ids', 'in', productions.ids),
-                                                               ('purchase_id', '!=', False)])
-        cost = 0.0
-        for job in jobs:
-            purchase = job.purchase_id
-            if purchase.state not in ('purchase', 'done'):
-                continue
-            amount = purchase.currency_id._convert(purchase.amount_untaxed, self.currency_id, self.company_id,
-                                                   purchase.date_order or fields.Date.today())
-            cost += amount * len(job.production_ids & productions) / len(job.production_ids)
-        return cost
+                                                               ('purchase_id', '!=', False),
+                                                               ('purchase_id.state', 'in', ('purchase', 'done'))])
+        for order in orders:
+            own = order.mrp_production_ids
+            for job in jobs.filtered(lambda j: j.production_ids & own):
+                purchase = job.purchase_id
+                amount = purchase.currency_id._convert(purchase.amount_untaxed, order.currency_id, order.company_id,
+                                                       purchase.date_order or fields.Date.today())
+                result[order.id] += amount * len(job.production_ids & own) / len(job.production_ids)
+        return result
 
     def _td_labour_cost(self):
         """Confirmed accruals of the order: (piecework of its manufacturing orders, crew percent of its acts)."""
         self.ensure_one()
+        return self._td_labour_costs()[self.id]
+
+    def _td_labour_costs(self):
+        """{order id: (piecework, crew)} with two searches of the accruals for the whole recordset."""
+        orders = self.sudo()
+        result = {order_id: [0.0, 0.0] for order_id in self.ids}
         Accrual = self.env['td.mebli.accrual'].sudo()
-        productions = self._td_productions()
-        piece = Accrual.search([('state', '=', 'confirmed'), ('kind', '=', 'piece'),
-                                ('productivity_id.production_id', 'in', productions.ids)]) if productions else Accrual
-        crew = Accrual.search([('state', '=', 'confirmed'), ('kind', '=', 'crew'), ('act_id.order_id', '=', self.id)])
-        return sum(piece.mapped('amount')), sum(crew.mapped('amount'))
+        productions = orders.mrp_production_ids
+        if productions:
+            by_production = {production.id: order.id for order in orders for production in order.mrp_production_ids}
+            for accrual in Accrual.search([('state', '=', 'confirmed'), ('kind', '=', 'piece'),
+                                           ('productivity_id.production_id', 'in', productions.ids)]):
+                result[by_production[accrual.productivity_id.production_id.id]][0] += accrual.amount
+        for accrual in Accrual.search([('state', '=', 'confirmed'), ('kind', '=', 'crew'),
+                                       ('act_id.order_id', 'in', self.ids)]):
+            result[accrual.act_id.order_id.id][1] += accrual.amount
+        return {order_id: tuple(values) for order_id, values in result.items()}
 
     @api.depends('order_line.purchase_price', 'order_line.product_uom_qty', 'amount_untaxed', 'margin')
     def _compute_td_cost(self):
+        real = self.filtered('id')
+        actual = real._td_actual_costs()
+        with_fact = real.filtered(lambda o: actual[o.id][0])
+        cuttings = with_fact._td_cutting_costs()
+        labours = with_fact._td_labour_costs()
         for order in self:
             plan = order.amount_untaxed - order.margin
-            has_fact, material, work = order._td_actual_cost() if order.id else (False, 0.0, 0.0)
-            cutting = order._td_cutting_cost() if has_fact else 0.0
-            piece, crew = order._td_labour_cost() if has_fact else (0.0, 0.0)
+            has_fact, material, work = actual.get(order.id, (False, 0.0, 0.0))
+            cutting = cuttings.get(order.id, 0.0)
+            piece, crew = labours.get(order.id, (0.0, 0.0))
             piecework = (order.company_id or self.env.company).td_cost_piecework
             fact = material + cutting + crew + (piece if piecework else work) if has_fact else 0.0
             order.td_cost_plan = plan
@@ -125,34 +159,53 @@ class SaleOrder(models.Model):
     @api.model
     def _td_overconsumed_productions(self, productions):
         """Done manufacturing orders that consumed more of a component than the bill of materials expects for the
-        produced quantity (what the standard consumption warning compares, consumption = 'warning')."""
-        over = self.env['mrp.production'].sudo()
-        for production in productions.sudo().filtered(lambda p: p.state == 'done' and p.bom_id):
-            bom = production.bom_id
-            factor = production.product_uom_id._compute_quantity(
-                production.qty_produced or production.product_qty, bom.product_uom_id) / (bom.product_qty or 1.0)
-            _boms, lines = bom.explode(production.product_id, factor)
-            expected = {}
-            for line, data in lines:
-                qty = line.product_uom_id._compute_quantity(data['qty'], line.product_id.uom_id)
-                expected[line.product_id] = expected.get(line.product_id, 0.0) + qty
-            consumed = {}
-            for move in production.move_raw_ids.filtered(lambda m: m.state == 'done'):
-                qty = move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id)
-                consumed[move.product_id] = consumed.get(move.product_id, 0.0) + qty
-            if any(qty - expected.get(product, 0.0) > product.uom_id.rounding for product, qty in consumed.items()):
-                over |= production
-        return over
+        produced quantity — the stored flag of the manufacturing order (computed once, when it is done)."""
+        return productions.sudo().filtered('td_overconsumed')
 
     def _compute_td_overconsumption(self):
         for order in self:
             order.td_overconsumption = bool(order.id and self._td_overconsumed_productions(order._td_productions()))
 
     def _search_td_overconsumption(self, operator, value):
+        """Review A-11: the stored flag of the manufacturing orders of the allowed companies — no scan of the whole
+        history of the done manufacturing orders at every search."""
         if operator not in ('=', '!=') or not isinstance(value, bool):
             return NotImplemented
-        productions = self.env['mrp.production'].sudo().search([('state', '=', 'done'), ('bom_id', '!=', False)])
-        over = self._td_overconsumed_productions(productions)
+        over = self.env['mrp.production'].sudo().search([('td_overconsumed', '=', True),
+                                                         ('company_id', 'in', self.env.companies.ids)])
         orders = over.reference_ids.sale_ids | over.sale_line_id.order_id
         positive = (operator == '=') == value
         return [('id', 'in' if positive else 'not in', orders.ids)]
+
+
+class MrpProduction(models.Model):
+    _inherit = 'mrp.production'
+
+    # AC-116 (review A-11): computed when the manufacturing order is done (or its consumption changes), searched by
+    # the filter «Overconsumption» of the orders
+    td_overconsumed = fields.Boolean(string='Overconsumption', compute='_compute_td_overconsumed', store=True,
+                                     copy=False)
+
+    @api.depends('state', 'bom_id', 'qty_produced', 'product_qty', 'move_raw_ids.state', 'move_raw_ids.quantity')
+    def _compute_td_overconsumed(self):
+        """More of a component than the bill of materials expects for the produced quantity (what the standard
+        consumption warning compares, consumption = 'warning')."""
+        for production in self:
+            production.td_overconsumed = production.state == 'done' and bool(production.bom_id) \
+                and production._td_is_overconsumed()
+
+    def _td_is_overconsumed(self):
+        self.ensure_one()
+        bom = self.bom_id
+        factor = self.product_uom_id._compute_quantity(
+            self.qty_produced or self.product_qty, bom.product_uom_id) / (bom.product_qty or 1.0)
+        _boms, lines = bom.explode(self.product_id, factor)
+        expected = {}
+        for line, data in lines:
+            qty = line.product_uom_id._compute_quantity(data['qty'], line.product_id.uom_id)
+            expected[line.product_id] = expected.get(line.product_id, 0.0) + qty
+        consumed = {}
+        for move in self.move_raw_ids.filtered(lambda m: m.state == 'done'):
+            qty = move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id)
+            consumed[move.product_id] = consumed.get(move.product_id, 0.0) + qty
+        return any(qty - expected.get(product, 0.0) > product.uom_id.rounding for product, qty in consumed.items())

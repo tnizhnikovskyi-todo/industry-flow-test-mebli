@@ -147,3 +147,30 @@ class TestG1Measure(TransactionCase):
         user.company_ids = [(4, fop.id)]
         both = Measure.with_context(allowed_company_ids=[env.company.id, fop.id])
         self.assertEqual(both.search([('id', 'in', (tov_sheet | fop_sheet).ids)]), tov_sheet | fop_sheet)
+
+    def test_ac_036_lines_of_the_sheet_by_company_and_measurer(self):
+        """Review A-11: the niches and the appliances follow the sheet — a user of company 1 does not read the lines
+        of a sheet of company 2; the measurer reads the lines of his own sheets only and cannot delete a sheet."""
+        env = self.env
+        fop = env['res.company'].create({'name': 'ФОП Тест 2'})
+        user = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Менеджер ТОВ 2', 'login': 'td_g1_tov_manager2', 'company_id': env.company.id,
+            'company_ids': [(6, 0, env.company.ids)],
+            'group_ids': [(6, 0, [env.ref('sales_team.group_sale_manager').id])]})
+        lines = {'niche_ids': [(0, 0, {'name': 'Ніша', 'width_mm': 600})],
+                 'appliance_ids': [(0, 0, {'name': 'Духова шафа', 'width_mm': 560})]}
+        tov_sheet = self._sheet(measurer_id=self.measurer.id, **lines)
+        fop_sheet = self._sheet(company_id=fop.id, measurer_id=self.measurer.id, **lines)
+        foreign = self._sheet(**lines)  # a sheet of another measurer
+        for model, field in (('td.mebli.measure.niche', 'niche_ids'), ('td.mebli.measure.appliance', 'appliance_ids')):
+            all_lines = (tov_sheet | fop_sheet | foreign).mapped(field)
+            visible = env[model].with_user(user).search([('id', 'in', all_lines.ids)])
+            self.assertEqual(visible, (tov_sheet | foreign).mapped(field), model)
+            with self.assertRaises(AccessError):
+                fop_sheet[field].with_user(user).read(['name'])
+            measurer = env[model].with_user(self.measurer).with_context(allowed_company_ids=env.company.ids)
+            self.assertEqual(measurer.search([('id', 'in', all_lines.ids)]), tov_sheet[field], model)
+            with self.assertRaises(AccessError):
+                foreign[field].with_user(self.measurer).read(['name'])
+        with self.assertRaises(AccessError):  # the measurer does not delete the sheets (review A-11)
+            tov_sheet.with_user(self.measurer).unlink()

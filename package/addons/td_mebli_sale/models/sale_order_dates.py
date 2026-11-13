@@ -1,9 +1,12 @@
 from collections import defaultdict
 from datetime import timedelta
 
+import pytz
+
 from odoo import api, fields, models
 from odoo.fields import Domain
 
+FORECAST_BATCH = 200  # orders per batch of the daily forecast cron (review A-11)
 FORECAST_FIELDS = ('td_shop_date', 'td_forecast_date', 'td_delay_days', 'td_late_item', 'td_delay_reason')
 
 # when the order has no manufacturing order yet, the workshop is assumed to need this many days
@@ -248,6 +251,14 @@ class SaleOrder(models.Model):
             late = order._td_late_line(lines, order._td_shop_date()) if order.state != 'cancel' else lines.browse()
             order.td_late_line_id = late.sudo(False)
 
+    def _td_company_date(self, value):
+        """The date of a UTC datetime in the time zone of the company of the order (its working calendar, then its
+        partner; Europe/Kyiv by default) — not in the time zone of the user who happens to compute."""
+        self.ensure_one()
+        company = self.company_id or self.env.company
+        tz = pytz.timezone(company.resource_calendar_id.tz or company.partner_id.tz or 'Europe/Kyiv')
+        return pytz.utc.localize(fields.Datetime.to_datetime(value)).astimezone(tz).date()
+
     def _td_distributor_date(self):
         """The date the parts cut by the distributor come back (VP-09). No cutting job here: td_mebli_cutting overrides
         it (A-11 G2 tail). False = no cutting at the distributor."""
@@ -264,8 +275,24 @@ class SaleOrder(models.Model):
         orders._recompute_recordset(FORECAST_FIELDS)
 
     @api.model
-    def _cron_td_recompute_forecast(self):
-        self.search([('state', '=', 'sale')])._td_recompute_forecast()
+    def _td_forecast_open_domain(self):
+        """Orders whose forecast still matters (review A-11): confirmed and not delivered in full. td_mebli_install
+        adds «without a signed final act»."""
+        return [('state', '=', 'sale'), ('delivery_status', '!=', 'full')]
+
+    @api.model
+    def _cron_td_recompute_forecast(self, batch_size=FORECAST_BATCH):
+        """Daily: the forecast of the open orders only, in batches; each batch is committed (`_commit_progress`) so a
+        long run is resumed by the next call instead of starting again."""
+        orders = self.search(self._td_forecast_open_domain(), order='id')
+        in_cron = bool(self.env.context.get('ir_cron_progress_id'))
+        if in_cron:
+            self.env['ir.cron']._commit_progress(remaining=len(orders))
+        for start in range(0, len(orders), batch_size):
+            batch = orders[start:start + batch_size]
+            batch._td_recompute_forecast()
+            if in_cron and not self.env['ir.cron']._commit_progress(len(batch)):
+                break  # the time of the run is over: the next run continues
 
     @api.depends('state', 'commitment_date', 'date_order', 'order_line.td_bom_id.produce_delay',
                  'stock_reference_ids.production_ids.date_finished', 'stock_reference_ids.production_ids.state',
@@ -288,7 +315,8 @@ class SaleOrder(models.Model):
             order.td_forecast_date = forecast
             order.td_late_item = f'{late.product_id.name} — {late.partner_id.name}' if late else False
             if order.commitment_date:
-                promised = fields.Date.context_today(order, order.commitment_date)
+                # review A-11: the promised day in the time zone of the company (the cron has no user time zone)
+                promised = order._td_company_date(order.commitment_date)
                 order.td_delay_days = max((forecast - promised).days, 0)
             else:
                 order.td_delay_days = 0

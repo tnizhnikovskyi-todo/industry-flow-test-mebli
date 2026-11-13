@@ -125,6 +125,16 @@ class TestWarranty(ClaimCommon):
         self.assertTrue(claim.under_warranty)
         self.assertEqual(claim.td_warranty_note, "On warranty")
 
+    def test_ac_111_claim_without_product_follows_the_category_of_the_order(self):
+        """Review A-11: a claim without a product takes the term from the category of the lines of the order; when
+        the term of that category is set later, the stored warranty end is recomputed."""
+        order, act = self._installed(days_ago=100)
+        claim = self._claim(order)
+        self.assertTrue(claim.td_warranty_unset)
+        self.category.td_warranty_months = 24
+        self.assertFalse(claim.td_warranty_unset)
+        self.assertEqual(claim.td_warranty_end, act.signed_on.date() + relativedelta(months=24))
+
     def test_ac_111_term_not_set(self):
         self.assertFalse(self.category.td_warranty_months)
         self.env['ir.config_parameter'].sudo().set_param('td_mebli_claim.warranty_months', '24')  # not read any more

@@ -67,7 +67,9 @@ class RepairOrder(models.Model):
         start = final.signed_on or order.effective_date
         return start.date() if start else False
 
+    # review A-11: without a product the category comes from the lines of the order — their categories are dependencies
     @api.depends('product_id.categ_id.td_warranty_months', 'td_claim_order_id.effective_date',
+                 'td_claim_order_id.order_line.product_id.categ_id.td_warranty_months',
                  'td_claim_order_id.td_act_ids.signed_on', 'td_claim_order_id.td_act_ids.state', 'create_date')
     def _compute_td_warranty(self):
         for repair in self:

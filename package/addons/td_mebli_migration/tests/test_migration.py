@@ -3,7 +3,7 @@ import os
 import tempfile
 
 from odoo.exceptions import AccessError, UserError, ValidationError
-from odoo.tests import tagged
+from odoo.tests import TransactionCase, tagged
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.td_mebli_migration.scripts import convert_bas, convert_bazis, convert_core
@@ -135,3 +135,24 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         for step in missing:
             with self.assertRaises(UserError):
                 step.action_td_import()
+
+
+@tagged('post_install', '-at_install')
+class TestMigrationCompanies(TransactionCase):
+
+    def test_ac_036_reconciliation_lines_by_company(self):
+        """Review A-11: the lines of a reconciliation follow its company (a global rule of the lines)."""
+        env = self.env
+        other = env['res.company'].create({'name': 'Second company of the migration'})
+        checks = {company: env['td.mebli.migration.check'].create({
+            'name': f'Start {company.name}', 'company_id': company.id,
+            'line_ids': [(0, 0, {'metric': 'open_orders', 'value_source': 1})]}) for company in (env.company, other)}
+        manager = env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Migration manager', 'login': 'td_mig_mc_manager', 'company_id': env.company.id,
+            'company_ids': [(6, 0, env.company.ids)],
+            'group_ids': [(6, 0, [env.ref('sales_team.group_sale_manager').id])]})
+        all_lines = checks[env.company].line_ids | checks[other].line_ids
+        Line = env['td.mebli.migration.check.line'].with_user(manager)
+        self.assertEqual(Line.search([('id', 'in', all_lines.ids)]), checks[env.company].line_ids)
+        with self.assertRaises(AccessError):
+            checks[other].line_ids.with_user(manager).read(['metric'])

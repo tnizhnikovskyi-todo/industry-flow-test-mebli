@@ -1416,3 +1416,31 @@ msgstr "усунено"
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "to be fixed"
 msgstr "усунути"
+
+#. module: td_mebli_install
+#: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_unique_piece
+msgid "The time line is already accrued."
+msgstr "Цей рядок часу вже нараховано."
+
+#. module: td_mebli_install
+#: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_unique_crew
+msgid "The crew percent of this act is already accrued to this employee."
+msgstr "Відсоток бригади за цим актом цьому працівнику вже нараховано."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "The amount of a manual payment mark is not changed: cancel it and add a new one."
+msgstr "Сума ручної позначки оплати не змінюється: скасуйте її й додайте нову."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "Manual payment mark restored: %(amount)s, %(user)s."
+msgstr "Ручну позначку оплати відновлено: %(amount)s, %(user)s."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "Manual payment mark changed by %(user)s: %(changes)s"
+msgstr "Ручну позначку оплати змінив(ла) %(user)s: %(changes)s"

@@ -1,6 +1,11 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError
 
+# Review A-11: the unlock of the AC-052 lock is a private object of the module, not a context flag (a context sent over
+# RPC is JSON and can never be this object); a server code that must change sent parts passes
+# with_context(td_cut_unlock=CUT_UNLOCK)
+CUT_UNLOCK = object()
+
 
 class TdMebliPart(models.Model):
     _name = 'td.mebli.part'
@@ -8,6 +13,8 @@ class TdMebliPart(models.Model):
     _order = 'bom_id, sequence, id'
 
     bom_id = fields.Many2one('mrp.bom', string='Bill of Materials', required=True, ondelete='cascade', index=True)
+    # review A-11 (AC-036, R-03): the company of the specification, for the multi-company rule of the parts
+    company_id = fields.Many2one(related='bom_id.company_id', store=True, index=True, string='Company')
     rule_id = fields.Many2one('td.mebli.part.rule', string='Rule', ondelete='set null')
     sequence = fields.Integer(default=10)
     name = fields.Char(string='Part', required=True)
@@ -30,7 +37,7 @@ class TdMebliPart(models.Model):
 
     def _td_check_not_sent(self, boms=None):
         """AC-052: parts of a specification sent to cutting are not changed — a change is a new additional order."""
-        if self.env.context.get('td_cut_unlock'):
+        if self.env.context.get('td_cut_unlock') is CUT_UNLOCK:
             return
         sent = (boms if boms is not None else self.bom_id).filtered('td_cut_version')
         if sent:
