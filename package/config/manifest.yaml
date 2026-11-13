@@ -1,5 +1,5 @@
-# Конфіг-пакет пакета mebli (A-12, config-as-code (версія 0.3.1), режим build). Формат — config-as-code/references/config-package-format.md.
-# Порядок модулів = порядок установки (топологічний за depends; перевірено скриптом за __manifest__.py Odoo 19.0 CE @40e9be2b і package/addons).
+# Конфіг-пакет пакета mebli (A-12, config-as-code (версія 0.3.1), спроба 2, режим fix — модулі A-11 @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
+# Порядок модулів = порядок установки (топологічний за depends; перевірено скриптом за __manifest__.py Odoo 19.0 CE @40e9be2b і package/addons @4e0fdda: порушень 0).
 # when: — умова за answers.yaml (профіль коробки VP-01 / VP-03 / VP-04); без when — у всіх профілях light / A / B.
 # Профіль light = A без td_mebli_bas (VP-04=false) — AI-A10-05; профіль B = A + td_mebli_multico (VP-03=multi_install_fop) + feature-групи VP-02.
 # td_mebli_demo клієнтам не ставиться (лише A-15).
@@ -16,7 +16,7 @@ edition_profiles:
       - {name: mail, origin: std-ce, source: standard, ac: [AC-030]}
       - {name: calendar, origin: std-ce, source: standard, ac: [AC-001, AC-004]}
       - {name: portal, origin: std-ce, source: standard, ac: [AC-117]}
-      - {name: hr, origin: std-ce, source: standard, ac: [AC-077]}   # залежність hr_attendance, td_mebli_base
+      - {name: hr, origin: std-ce, source: standard, ac: [AC-077]}   # залежність hr_attendance, hr_hourly_cost
       - {name: crm, origin: std-ce, source: standard, ac: [AC-001]}
       - {name: stock, origin: std-ce, source: standard, ac: [AC-024, AC-082]}
       - {name: mrp, origin: std-ce, source: standard, ac: [AC-070, AC-082, AC-116]}
@@ -38,7 +38,7 @@ edition_profiles:
       - {name: hr_hourly_cost, origin: std-ce, source: standard, ac: [AC-061]}   # залежність td_mebli_shop
       - {name: maintenance, origin: std-ce, source: standard, ac: [AC-076]}   # залежність td_mebli_maint
       - {name: base_import, origin: std-ce, source: standard, ac: [AC-089]}   # залежність td_mebli_migration
-      - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # немає в package/addons (новий, A-11)
+      - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # поля VP res.company.td_*, feature-групи VP-02
       - {name: td_mebli_mrp, origin: td, source: code, ac: [AC-011, AC-116]}
       - {name: td_mebli_sale, origin: td, source: code, ac: [AC-019, AC-024]}
       - {name: td_mebli_measure, origin: td, source: code, ac: [AC-002, AC-005]}
@@ -49,20 +49,20 @@ edition_profiles:
       - {name: td_mebli_install, origin: td, source: code, ac: [AC-020, AC-063]}
       - {name: td_mebli_claim, origin: td, source: code, ac: [AC-080, AC-110]}
       - {name: td_mebli_cost, origin: td, source: code, ac: [AC-114]}
-      - {name: td_mebli_maint, origin: td, source: code, ac: [AC-076]}   # немає в package/addons (хвиля 2, A-11)
-      - {name: td_mebli_attendance, origin: td, source: code, ac: [AC-078]}   # немає в package/addons (хвиля 2, A-11)
-      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true"}   # немає в package/addons (новий, A-11)
-      - {name: td_mebli_migration, origin: td, source: code, ac: [AC-089, AC-090]}   # немає в package/addons (новий, A-11)
-      - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}   # немає в package/addons (новий, A-11)
+      - {name: td_mebli_maint, origin: td, source: code, ac: [AC-076]}
+      - {name: td_mebli_attendance, origin: td, source: code, ac: [AC-078]}
+      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true"}
+      - {name: td_mebli_migration, origin: td, source: code, ac: [AC-089, AC-090]}
+      - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
-      - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}   # немає в package/addons (хвиля 2, A-11)
+      - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}
   ee:                     # ee ⊇ ce + std-ee + мости auto_install; не перевірено — доступу до Odoo 19 EE немає
     modules:
       - {name: base_setup, origin: std-ce, source: standard, ac: [AC-N.07]}   # залежність td_mebli_base
       - {name: mail, origin: std-ce, source: standard, ac: [AC-030]}
       - {name: calendar, origin: std-ce, source: standard, ac: [AC-001, AC-004]}
       - {name: portal, origin: std-ce, source: standard, ac: [AC-117]}
-      - {name: hr, origin: std-ce, source: standard, ac: [AC-077]}   # залежність hr_attendance, td_mebli_base
+      - {name: hr, origin: std-ce, source: standard, ac: [AC-077]}   # залежність hr_attendance, hr_hourly_cost
       - {name: crm, origin: std-ce, source: standard, ac: [AC-001]}
       - {name: stock, origin: std-ce, source: standard, ac: [AC-024, AC-082]}
       - {name: mrp, origin: std-ce, source: standard, ac: [AC-070, AC-082, AC-116]}
@@ -84,7 +84,7 @@ edition_profiles:
       - {name: hr_hourly_cost, origin: std-ce, source: standard, ac: [AC-061]}   # залежність td_mebli_shop
       - {name: maintenance, origin: std-ce, source: standard, ac: [AC-076]}   # залежність td_mebli_maint
       - {name: base_import, origin: std-ce, source: standard, ac: [AC-089]}   # залежність td_mebli_migration
-      - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # немає в package/addons (новий, A-11)
+      - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # поля VP res.company.td_*, feature-групи VP-02
       - {name: td_mebli_mrp, origin: td, source: code, ac: [AC-011, AC-116]}
       - {name: td_mebli_sale, origin: td, source: code, ac: [AC-019, AC-024]}
       - {name: td_mebli_measure, origin: td, source: code, ac: [AC-002, AC-005]}
@@ -95,25 +95,25 @@ edition_profiles:
       - {name: td_mebli_install, origin: td, source: code, ac: [AC-020, AC-063]}
       - {name: td_mebli_claim, origin: td, source: code, ac: [AC-080, AC-110]}
       - {name: td_mebli_cost, origin: td, source: code, ac: [AC-114]}
-      - {name: td_mebli_maint, origin: td, source: code, ac: [AC-076]}   # немає в package/addons (хвиля 2, A-11)
-      - {name: td_mebli_attendance, origin: td, source: code, ac: [AC-078]}   # немає в package/addons (хвиля 2, A-11)
-      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true"}   # немає в package/addons (новий, A-11)
-      - {name: td_mebli_migration, origin: td, source: code, ac: [AC-089, AC-090]}   # немає в package/addons (новий, A-11)
-      - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}   # немає в package/addons (новий, A-11)
+      - {name: td_mebli_maint, origin: td, source: code, ac: [AC-076]}
+      - {name: td_mebli_attendance, origin: td, source: code, ac: [AC-078]}
+      - {name: td_mebli_bas, origin: td, source: code, ac: [AC-039, AC-040], when: "VP-04 == true"}
+      - {name: td_mebli_migration, origin: td, source: code, ac: [AC-089, AC-090]}
+      - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
-      - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}   # немає в package/addons (хвиля 2, A-11)
+      - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}
       - {name: mrp_workorder, origin: std-ee, source: standard, ac: [AC-126]}   # EE; не перевірено (доступу до EE немає)
       - {name: quality_control, origin: std-ee, source: standard, ac: [AC-127]}   # EE; не перевірено (доступу до EE немає)
       - {name: industry_fsm, origin: std-ee, source: standard, ac: [AC-128]}   # EE; не перевірено (доступу до EE немає)
       - {name: planning, origin: std-ee, source: standard, ac: [AC-128]}   # EE; не перевірено (доступу до EE немає)
       - {name: helpdesk, origin: std-ee, source: standard, ac: [AC-129]}   # EE; не перевірено (доступу до EE немає)
       - {name: sign, origin: std-ee, source: standard, ac: [AC-130]}   # EE; не перевірено (доступу до EE немає)
-      - {name: td_mebli_shopfloor, origin: td, source: code, ac: [AC-126], auto_install: true}   # міст EE; немає в package/addons (новий, A-11)
-      - {name: td_mebli_quality, origin: td, source: code, ac: [AC-127], auto_install: true}   # міст EE; немає в package/addons (новий, A-11)
-      - {name: td_mebli_fsm, origin: td, source: code, ac: [AC-128], auto_install: true}   # міст EE; немає в package/addons (новий, A-11)
-      - {name: td_mebli_planning, origin: td, source: code, ac: [AC-128], auto_install: true}   # міст EE; немає в package/addons (новий, A-11)
-      - {name: td_mebli_helpdesk, origin: td, source: code, ac: [AC-129], auto_install: true}   # міст EE; немає в package/addons (новий, A-11)
-      - {name: td_mebli_sign, origin: td, source: code, ac: [AC-130], auto_install: true}   # міст EE; немає в package/addons (новий, A-11)
+      - {name: td_mebli_shopfloor, origin: td, source: code, ac: [AC-126], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
+      - {name: td_mebli_quality, origin: td, source: code, ac: [AC-127], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
+      - {name: td_mebli_fsm, origin: td, source: code, ac: [AC-128], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
+      - {name: td_mebli_planning, origin: td, source: code, ac: [AC-128], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
+      - {name: td_mebli_helpdesk, origin: td, source: code, ac: [AC-129], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
+      - {name: td_mebli_sign, origin: td, source: code, ac: [AC-130], auto_install: true}   # міст EE (A-11, 19.0.1.1.0, LGPL-3 — ліцензія під питанням, tests/open-questions.md); не встановлювався: EE недоступна
 data_files:
   - data/15_accounting.yaml
   - data/20_sale_project.yaml

@@ -1,103 +1,124 @@
-# Значення VP треку «код» і службові параметри (kind td_param). Ключ td_mebli.<vp> в ir.config_parameter — контракт до рішення A-11
-# (WARN); цільове поле компанії — vp-map.yaml a11_target. Моделі/поля td_* тут не згадуються (CFG-td-isolation).
+# Значення VP треку «код» (kind td_param) — поля res.company.td_* модуля td_mebli_base (API G0, package/addons/AC-COVERAGE.md;
+# рішення AI-A12-01 спроби 2). Запис — у компанію base.main_company; власного запису td_config немає (id пункту — ідентифікатор у лозі,
+# ir.model.data не створюється). Діапазони перевіряє модуль (res_company.TD_RANGES, ValidationError). CFG-td-isolation: поля td_* —
+# лише в пунктах kind td_param (дозволено таблицею «Автоперевірка»).
 - id: td_config.param_vp_01
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_01, value: "{{VP-01}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_box_profile: "{{VP-01}}"}
   ac: [AC-N.07, AC-089, AC-121]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_box_profile); SPEC §11"
   manual: false
 - id: td_config.param_vp_06
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_06, value: "{{VP-06}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_payment_control: "{{VP-06}}"}
   applies_if: {VP-05: true}
   ac: [AC-020, AC-021]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_payment_control); SPEC §11"
   manual: false
 - id: td_config.param_vp_07
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_07, value: "{{VP-07}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_pay_reminder_days: "{{VP-07}}"}
   applies_if: {VP-05: true}
   ac: [AC-031]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_pay_reminder_days); SPEC §11"
   manual: false
 - id: td_config.param_vp_08
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_08, value: "{{VP-08}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_margin_to_salesman: "{{VP-08}}"}
   ac: [AC-017, AC-018]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_margin_to_salesman); SPEC §11"
   manual: false
 - id: td_config.param_vp_09
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_09, value: "{{VP-09}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_cutting_mode: "{{VP-09}}"}
   ac: [AC-026, AC-027, AC-028, AC-053, AC-054, AC-055, AC-056, AC-131]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_cutting_mode); SPEC §11"
   manual: false
 - id: td_config.param_vp_10
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_10, value: "{{VP-10}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_stuck_days: "{{VP-10}}"}
   ac: [AC-067, AC-124]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_stuck_days); SPEC §11"
   manual: false
 - id: td_config.param_vp_11
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_11, value: "{{VP-11}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_price_threshold_pct: "{{VP-11}}"}
   ac: [AC-085, AC-086]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_price_threshold_pct); SPEC §11"
   manual: false
 - id: td_config.param_vp_12
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_12, value: "{{VP-12}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_min_offcut_mm: "{{VP-12}}"}
   applies_if: {VP-01: B}
   ac: [AC-059, AC-060]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_min_offcut_mm); SPEC §11"
   manual: false
 - id: td_config.param_vp_13
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_13, value: "{{VP-13}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_claim_overdue_days: "{{VP-13}}"}
   ac: [AC-110, AC-124]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_claim_overdue_days); SPEC §11"
   manual: false
 - id: td_config.param_vp_14
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_14, value: "{{VP-14}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_crew_split: "{{VP-14}}"}
   ac: [AC-104]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_crew_split); SPEC §11"
   manual: false
 - id: td_config.param_vp_15
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_15, value: "{{VP-15}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_crew_base: "{{VP-15}}"}
   ac: [AC-103, AC-104]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_crew_base); SPEC §11"
   manual: false
 - id: td_config.param_vp_16
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.vp_16, value: "{{VP-16}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_install_in_price: "{{VP-16}}"}
   ac: [AC-043]
-  source: "odoo/addons/base/models/ir_config_parameter.py (set_param/get_param); SPEC §11.1"
-  manual: false
-- id: td_config.param_edition
-  kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.edition, value: "{{edition}}"}
-  ac: [AC-113, AC-126, AC-127, AC-128, AC-129, AC-130]
-  source: "odoo/addons/base/models/ir_config_parameter.py; SPEC §11.2"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_install_in_price); SPEC §11"
   manual: false
 - id: td_config.param_contract_mode
   kind: td_param
-  model: ir.config_parameter
-  values: {key: td_mebli.contract_mode, value: "{{contract_mode}}"}
+  model: res.company
+  xmlid_target: base.main_company
+  values: {td_contract_mode: "{{contract_mode}}"}
   ac: [AC-033, AC-034, AC-101]
-  source: "odoo/addons/base/models/ir_config_parameter.py (порожнє значення = параметра немає); SPEC §11.2"
+  requires_module: td_mebli_base
+  source: "package/addons/td_mebli_base/models/res_company.py (td_contract_mode); SPEC §11"
   manual: false
