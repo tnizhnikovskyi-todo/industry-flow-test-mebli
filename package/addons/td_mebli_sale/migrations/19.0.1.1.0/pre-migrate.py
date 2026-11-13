@@ -15,8 +15,16 @@ def migrate(cr, version):
     view_ids = [row[0] for row in cr.fetchall()]
     if not view_ids:
         return
-    cr.execute("DELETE FROM ir_ui_view WHERE id = ANY(%s) OR inherit_id = ANY(%s)", (view_ids, view_ids))
+    # review A-11 (round 2): the whole tree of the views that inherit from it (any depth), with their xmlids —
+    # ON DELETE CASCADE of inherit_id would delete the children but leave their ir.model.data behind
     cr.execute("""
-        DELETE FROM ir_model_data
-         WHERE module = 'td_mebli_ua' AND model = 'ir.ui.view' AND name = 'view_order_form_td_mebli_ua'
-    """)
+        WITH RECURSIVE tree(id) AS (
+            SELECT id FROM ir_ui_view WHERE id = ANY(%s)
+            UNION
+            SELECT v.id FROM ir_ui_view v JOIN tree t ON v.inherit_id = t.id
+        )
+        SELECT id FROM tree
+    """, (view_ids,))
+    tree_ids = [row[0] for row in cr.fetchall()]
+    cr.execute("DELETE FROM ir_model_data WHERE model = 'ir.ui.view' AND res_id = ANY(%s)", (tree_ids,))
+    cr.execute("DELETE FROM ir_ui_view WHERE id = ANY(%s)", (tree_ids,))

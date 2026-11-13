@@ -221,6 +221,7 @@ class TestOrderDates(TdMebliSaleCommon):
         def spy(records):
             seen.append(records.ids)
             return original(records)
+        self.env['ir.config_parameter'].sudo().set_param('td_mebli_sale.forecast_cursor', '0')
         with patch.object(type(self.env['sale.order']), '_td_recompute_forecast', spy):
             self.env['sale.order']._cron_td_recompute_forecast(batch_size=1)
         self.assertTrue(all(len(ids) == 1 for ids in seen))
@@ -238,3 +239,36 @@ class TestOrderDates(TdMebliSaleCommon):
         order.with_context(tz='UTC')._td_recompute_forecast()
         self.assertEqual(order.td_forecast_date, start + timedelta(days=5))
         self.assertEqual(order.td_delay_days, 0)
+
+    def test_cron_continues_after_the_cursor(self):
+        """Review A-11 (round 2): a run of the cron stopped after the first batch (time over) keeps the cursor; the
+        next run recomputes the rest only; after the full pass the cursor is 0 again."""
+        first, _start = self._confirmed(20)
+        second, _start = self._confirmed(20)
+        Param = self.env['ir.config_parameter'].sudo()
+        Param.set_param('td_mebli_sale.forecast_cursor', '0')
+        SaleOrder = type(self.env['sale.order'])
+        IrCron = type(self.env['ir.cron'])
+        seen = []
+        original = SaleOrder._td_recompute_forecast
+
+        def spy(records):
+            seen.append(records.ids)
+            return original(records)
+        cron = self.env['sale.order'].with_context(ir_cron_progress_id=1)
+        # the first call announces «remaining», the second (after the first batch) says the time is over
+        with patch.object(SaleOrder, '_td_recompute_forecast', spy), \
+                patch.object(IrCron, '_commit_progress', side_effect=[100.0, 0.0]) as progress:
+            cron._cron_td_recompute_forecast(batch_size=1)
+        open_ids = self.env['sale.order'].search(self.env['sale.order']._td_forecast_open_domain(), order='id').ids
+        self.assertEqual(seen, [open_ids[:1]], "one batch, then the run stops")
+        self.assertEqual(Param.get_param('td_mebli_sale.forecast_cursor'), str(open_ids[0]))
+        self.assertEqual(progress.call_args_list[0].kwargs, {'remaining': len(open_ids)})
+        seen.clear()
+        with patch.object(SaleOrder, '_td_recompute_forecast', spy), \
+                patch.object(IrCron, '_commit_progress', return_value=100.0):
+            cron._cron_td_recompute_forecast(batch_size=1)
+        self.assertEqual([ids[0] for ids in seen], open_ids[1:], "the second run goes on after the cursor")
+        self.assertIn(second.id, open_ids)
+        self.assertIn(first.id, open_ids)
+        self.assertEqual(Param.get_param('td_mebli_sale.forecast_cursor'), '0', "full pass: the cursor is reset")

@@ -1,9 +1,11 @@
+from datetime import timedelta
+
 from odoo import fields
 from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase, tagged
 
 # the cards that searched without a company before (review of A-11, MAJOR-1): their drill-downs are checked here
-CARDS = ('on_time', 'claims', 'payments', 'load', 'conversion')
+CARDS = ('shift', 'on_time', 'margin', 'claims', 'payments', 'load', 'conversion', 'quality')
 
 
 @tagged('post_install', '-at_install')
@@ -32,6 +34,12 @@ class TestDashboardCompanies(TransactionCase):
         project = env['project.project'].create({'name': 'Installation', 'company_id': company.id})
         task = env['project.task'].create({'name': 'Visit', 'project_id': project.id, 'company_id': company.id})
         task.sale_order_id = order
+        order.action_confirm()  # the margin card counts the confirmed orders of the period
+        # a fixed change that moved the promised date by 5 days (the card «Date shift by reason»)
+        change = env['td.mebli.order.change'].create({'order_id': order.id, 'version': 2, 'reason': 'customer',
+                                                      'note': 'Other decor'})
+        today = fields.Date.today()
+        change.write({'state': 'done', 'date_before': today, 'date_after': today + timedelta(days=5)})
         act = env['td.mebli.install.act'].create({'task_id': task.id, 'kind': 'final', 'crew_pct': 0.0})
         act.write({'state': 'signed', 'signed_on': fields.Datetime.now()})
         claim = env['repair.order'].create({'partner_id': cls.partner.id, 'td_claim_order_id': order.id,
@@ -59,11 +67,13 @@ class TestDashboardCompanies(TransactionCase):
                 'name': 'Bazis', 'company_id': company.id, 'header_signature': f'sig-{company.id}',
                 'mapping_json': {'name': 0}}),
         }
-        return {'on_time': order, 'payments': order, 'claims': claim, 'load': production.workorder_ids,
+        return {'shift': order, 'margin': order, 'quality': cls.g2[company.id]['td.mebli.quality.check'],
+                'on_time': order, 'payments': order, 'claims': claim, 'load': production.workorder_ids,
                 'conversion': sheet}
 
     def _director(self, company):
-        group_ids = [self.env.ref(xmlid).id for xmlid in ('base.group_user', 'td_mebli_dashboard.group_td_mebli_director')]
+        group_ids = [self.env.ref(xmlid).id for xmlid in ('base.group_user', 'td_mebli_dashboard.group_td_mebli_director',
+                                                          'td_mebli_base.group_feature_quality')]  # 12 cards
         return self.env['res.users'].with_context(no_reset_password=True).create({
             'name': f'Director {company.id}', 'login': f'td_dash_dir_{company.id}', 'company_id': company.id,
             'company_ids': [(6, 0, (self.main | self.other).ids)], 'group_ids': [(6, 0, group_ids)]})
@@ -108,3 +118,28 @@ class TestDashboardCompanies(TransactionCase):
             self.assertEqual(found, own, model)
             with self.assertRaises(AccessError, msg=model):
                 alien.with_user(tech).read(['company_id'])
+
+    def _assert_drills_in(self, data, companies):
+        """Every card of the dashboard (all 12) shows only the records of the selected companies."""
+        for card in data['cards']:
+            drill = card['drill']
+            records = self.env[drill['res_model']].browse(drill['ids'])
+            company_of = {'td.mebli.cutting.job': 'company_id', 'mrp.workorder': 'production_id.company_id'}.get(
+                drill['res_model'], 'company_id')
+            self.assertLessEqual(set(records.mapped(company_of).ids), set(companies.ids), card['key'])
+
+    def test_ac_036_every_card_by_the_selected_companies(self):
+        """Review A-11 (round 2): the cards shift, stuck, margin, ready, waste, prices and quality use the same
+        companies as the others — one company selected: only its records; both selected: the records of both."""
+        director = self._director(self.main)
+        Dashboard = self.env['td.mebli.dashboard'].with_user(director)
+        one = Dashboard.with_context(allowed_company_ids=self.main.ids).get_data()
+        self.assertEqual(len(one['cards']), 12)
+        self._assert_drills_in(one, self.main)
+        self.assertNotIn(self.data[self.other.id]['shift'].id, one['by_key']['shift']['drill']['ids'],
+                         "the shifts of company 2 are not on the dashboard of company 1")
+        both = Dashboard.with_context(allowed_company_ids=(self.main | self.other).ids).get_data()
+        self._assert_drills_in(both, self.main | self.other)
+        for key in ('shift', 'margin', 'quality'):
+            for company in (self.main, self.other):
+                self.assertIn(self.data[company.id][key].id, both['by_key'][key]['drill']['ids'], (key, company.name))

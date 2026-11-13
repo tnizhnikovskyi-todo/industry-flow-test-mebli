@@ -7,6 +7,7 @@ from odoo import api, fields, models
 from odoo.fields import Domain
 
 FORECAST_BATCH = 200  # orders per batch of the daily forecast cron (review A-11)
+FORECAST_CURSOR = 'td_mebli_sale.forecast_cursor'  # id of the last order of the forecast cron
 FORECAST_FIELDS = ('td_shop_date', 'td_forecast_date', 'td_delay_days', 'td_late_item', 'td_delay_reason')
 
 # when the order has no manufacturing order yet, the workshop is assumed to need this many days
@@ -282,17 +283,27 @@ class SaleOrder(models.Model):
 
     @api.model
     def _cron_td_recompute_forecast(self, batch_size=FORECAST_BATCH):
-        """Daily: the forecast of the open orders only, in batches; each batch is committed (`_commit_progress`) so a
-        long run is resumed by the next call instead of starting again."""
-        orders = self.search(self._td_forecast_open_domain(), order='id')
+        """Daily: the forecast of the open orders only, in batches. The id of the last recomputed order is kept in
+        `td_mebli_sale.forecast_cursor` (review A-11, round 2): a run stopped by the time limit of the cron continues
+        after it next time instead of starting from the beginning; after a full pass the cursor is reset to 0. Each
+        batch is committed with `ir.cron._commit_progress` (done / remaining)."""
+        Param = self.env['ir.config_parameter'].sudo()
+        try:
+            cursor = int(Param.get_param(FORECAST_CURSOR) or 0)
+        except ValueError:
+            cursor = 0
+        orders = self.search(self._td_forecast_open_domain() + [('id', '>', cursor)], order='id')
         in_cron = bool(self.env.context.get('ir_cron_progress_id'))
+        Cron = self.env['ir.cron']
         if in_cron:
-            self.env['ir.cron']._commit_progress(remaining=len(orders))
+            Cron._commit_progress(remaining=len(orders))
         for start in range(0, len(orders), batch_size):
             batch = orders[start:start + batch_size]
             batch._td_recompute_forecast()
-            if in_cron and not self.env['ir.cron']._commit_progress(len(batch)):
-                break  # the time of the run is over: the next run continues
+            Param.set_param(FORECAST_CURSOR, str(batch[-1].id))
+            if in_cron and not Cron._commit_progress(len(batch), remaining=len(orders) - start - len(batch)):
+                return  # the time of the run is over: the next run continues after the cursor
+        Param.set_param(FORECAST_CURSOR, '0')  # the full pass is done: the next day starts from the beginning
 
     @api.depends('state', 'commitment_date', 'date_order', 'order_line.td_bom_id.produce_delay',
                  'stock_reference_ids.production_ids.date_finished', 'stock_reference_ids.production_ids.state',
