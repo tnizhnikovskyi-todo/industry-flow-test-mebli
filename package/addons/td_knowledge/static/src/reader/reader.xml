@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_knowledge.Reader">
+        <div class="td_knowledge o_action h-100 d-flex flex-row flex-nowrap overflow-hidden">
+            <aside t-if="state.showTree or !ui.isSmall" class="td_knowledge_tree border-end bg-view d-flex flex-column">
+                <div class="p-3 pb-2">
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fa fa-search"/></span>
+                        <input type="text" class="form-control td_knowledge_search" placeholder="Search in the articles..."
+                               aria-label="Search in the articles" t-att-value="state.query" t-on-input="onSearch"/>
+                    </div>
+                    <button t-if="state.isEditor" class="btn btn-primary btn-sm w-100 mt-2 td_knowledge_new" t-on-click="() => this.create()">
+                        <i class="fa fa-plus me-1"/>New article
+                    </button>
+                </div>
+                <nav class="flex-grow-1 overflow-auto px-2 pb-3">
+                    <t t-call="td_knowledge.ReaderTree">
+                        <t t-set="items" t-value="roots"/>
+                        <t t-set="level" t-value="0"/>
+                    </t>
+                    <div t-if="!state.articles.length" class="text-muted small px-2 py-3">Nothing found.</div>
+                </nav>
+            </aside>
+            <main t-if="!ui.isSmall or !state.showTree" class="td_knowledge_page flex-grow-1 overflow-auto">
+                <div t-if="state.article" class="td_knowledge_article mx-auto px-4 py-4">
+                    <div class="d-flex align-items-center gap-2 mb-1 small text-muted">
+                        <button t-if="ui.isSmall" class="btn btn-link p-0 me-2 td_knowledge_back" t-on-click="() => { state.showTree = true }">
+                            <i class="fa fa-arrow-left me-1"/>Sections
+                        </button>
+                        <t t-foreach="state.article.path" t-as="crumb" t-key="crumb.id">
+                            <a href="#" t-on-click.prevent="() => this.open(crumb.id)" t-esc="crumb.name"/>
+                            <span>/</span>
+                        </t>
+                    </div>
+                    <div class="d-flex align-items-start gap-2">
+                        <h1 class="flex-grow-1 td_knowledge_title"><t t-if="state.article.icon" t-esc="state.article.icon + ' '"/><t t-esc="state.article.name"/></h1>
+                        <button t-if="state.isEditor" class="btn btn-secondary td_knowledge_edit" t-on-click="edit">
+                            <i class="fa fa-pencil me-1"/>Edit
+                        </button>
+                    </div>
+                    <div class="small text-muted mb-3">
+                        Updated <t t-esc="state.article.write_date"/> · <t t-esc="state.article.author"/>
+                    </div>
+                    <div class="td_knowledge_body o_readonly" t-out="state.article.body"/>
+                    <div t-if="state.article.attachments.length" class="mt-4">
+                        <h5>Files</h5>
+                        <ul class="list-unstyled">
+                            <li t-foreach="state.article.attachments" t-as="att" t-key="att.id">
+                                <a t-attf-href="/web/content/{{att.id}}?download=true"><i class="fa fa-paperclip me-1"/><t t-esc="att.name"/></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div t-if="state.article.children.length" class="mt-4 td_knowledge_children">
+                        <h5>In this section</h5>
+                        <div class="row g-2">
+                            <div t-foreach="state.article.children" t-as="child" t-key="child.id" class="col-12 col-md-6">
+                                <a href="#" class="d-block border rounded p-2 text-reset" t-on-click.prevent="() => this.open(child.id)">
+                                    <t t-esc="(child.icon or '📄') + ' ' + child.name"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div t-else="" class="text-center text-muted py-5">
+                    <p>The knowledge base is empty.</p>
+                    <button t-if="state.isEditor" class="btn btn-primary" t-on-click="() => this.create()">Write the first article</button>
+                </div>
+            </main>
+        </div>
+    </t>
+
+    <t t-name="td_knowledge.ReaderTree">
+        <ul class="list-unstyled mb-0" t-att-class="{'ms-3': level}">
+            <li t-foreach="items" t-as="item" t-key="item.id">
+                <div class="td_knowledge_node d-flex align-items-center rounded px-1"
+                     t-att-class="{'active': state.article and state.article.id === item.id, 'fw-bold': item.match}">
+                    <button class="btn btn-link btn-sm p-0 text-muted td_knowledge_caret" t-att-class="{'invisible': !hasChildren(item)}"
+                            t-on-click="() => this.toggle(item)">
+                        <i t-att-class="state.collapsed[item.id] ? 'fa fa-caret-right' : 'fa fa-caret-down'"/>
+                    </button>
+                    <a href="#" class="flex-grow-1 text-reset py-1 ps-1 text-truncate td_knowledge_link" t-att-data-article-id="item.id"
+                       t-on-click.prevent="() => this.open(item.id)">
+                        <t t-esc="(item.icon or '📄') + ' ' + item.name"/>
+                    </a>
+                </div>
+                <t t-if="hasChildren(item) and !state.collapsed[item.id]" t-call="td_knowledge.ReaderTree">
+                    <t t-set="items" t-value="childrenOf(item.id)"/>
+                    <t t-set="level" t-value="level + 1"/>
+                </t>
+            </li>
+        </ul>
+    </t>
+</templates>

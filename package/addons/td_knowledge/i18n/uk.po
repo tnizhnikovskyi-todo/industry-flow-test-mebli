@@ -1,0 +1,419 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 22:01+0000\n"
+"PO-Revision-Date: 2026-11-14 22:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_knowledge
+#. odoo-python
+#: code:addons/td_knowledge/models/td_knowledge_article.py:0
+msgid "A section cannot be inside its own article."
+msgstr "Розділ не може бути всередині власної статті."
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_needaction
+msgid "Action Needed"
+msgstr "Потрібна дія"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__active
+msgid "Active"
+msgstr "Активна"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Add an article to this screen"
+msgstr "Додати статтю до цього екрана"
+
+#. module: td_knowledge
+#: model:ir.actions.act_window,name:td_knowledge.action_td_knowledge_article
+#: model:ir.ui.menu,name:td_knowledge.menu_td_knowledge_all
+msgid "All articles"
+msgstr "Усі статті"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__menu_ids
+msgid "Applications and menus"
+msgstr "Застосунки й меню"
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Archived"
+msgstr "В архіві"
+
+#. module: td_knowledge
+#: model:ir.ui.menu,name:td_knowledge.menu_td_knowledge_reader
+msgid "Articles"
+msgstr "Статті"
+
+#. module: td_knowledge
+#: model_terms:ir.actions.act_window,help:td_knowledge.action_td_knowledge_article
+msgid ""
+"Articles can be linked to screens: then the «Help» icon in the top bar shows"
+" them there."
+msgstr ""
+"Статті можна прив'язати до екранів: тоді значок «Довідка» у верхній панелі "
+"покаже їх там."
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__child_ids
+msgid "Articles of the section"
+msgstr "Статті розділу"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_attachment_count
+msgid "Attachment Count"
+msgstr "Кількість вкладень"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__body
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Content"
+msgstr "Зміст"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__display_name
+msgid "Display Name"
+msgstr "Відображувана назва"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Edit"
+msgstr "Редагувати"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__group_ids
+msgid ""
+"Empty: every internal user reads the article. Otherwise only these groups "
+"(the editors always see it)."
+msgstr ""
+"Порожньо: статтю читають усі працівники. Інакше — лише ці групи (редактори "
+"бачать завжди)."
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Files"
+msgstr "Файли"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_follower_ids
+msgid "Followers"
+msgstr "Підписники"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_partner_ids
+msgid "Followers (Partners)"
+msgstr "Підписники (контакти)"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__is_package
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "From the package"
+msgstr "З пакета"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__has_message
+msgid "Has Message"
+msgstr "Є повідомлення"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.js:0
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Help for this screen"
+msgstr "Довідка до цього екрана"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__icon
+msgid "Icon"
+msgstr "Значок"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr "Якщо позначено, нові повідомлення потребують вашої уваги."
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr "Якщо позначено, деякі повідомлення не доставлено."
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "In this section"
+msgstr "У цьому розділі"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_is_follower
+msgid "Is Follower"
+msgstr "Підписник"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.js:0
+#: model:ir.actions.client,name:td_knowledge.action_td_knowledge_reader
+#: model:ir.ui.menu,name:td_knowledge.menu_td_knowledge_root
+#: model:res.groups.privilege,name:td_knowledge.res_groups_privilege_td_knowledge
+msgid "Knowledge Base"
+msgstr "База знань"
+
+#. module: td_knowledge
+#: model:res.groups,name:td_knowledge.group_td_knowledge_editor
+msgid "Knowledge Base Editor"
+msgstr "Редактор бази знань"
+
+#. module: td_knowledge
+#: model:ir.model,name:td_knowledge.model_td_knowledge_article
+msgid "Knowledge article"
+msgstr "Стаття бази знань"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__write_uid
+msgid "Last Updated by"
+msgstr "Востаннє оновив"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__write_date
+msgid "Last Updated on"
+msgstr "Востаннє оновлено"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_has_error
+msgid "Message Delivery error"
+msgstr "Помилка доставки повідомлення"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_ids
+msgid "Messages"
+msgstr "Повідомлення"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "New article"
+msgstr "Нова стаття"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Nothing found."
+msgstr "Нічого не знайдено."
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_needaction_counter
+msgid "Number of Actions"
+msgstr "Кількість дій"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_has_error_counter
+msgid "Number of errors"
+msgstr "Кількість помилок"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr "Кількість повідомлень, що потребують дії"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr "Кількість недоставлених повідомлень"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__icon
+msgid "One emoji shown before the title in the tree."
+msgstr "Один емодзі перед назвою в дереві."
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Open the knowledge base"
+msgstr "Відкрити базу знань"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__parent_path
+msgid "Parent Path"
+msgstr "Шлях розділу"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__group_ids
+msgid "Readers"
+msgstr "Читачі"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Screen:"
+msgstr "Екран:"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__model_ids
+msgid "Screens (models)"
+msgstr "Екрани (моделі)"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Search in the articles"
+msgstr "Пошук у статтях"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Search in the articles..."
+msgstr "Пошук у статтях..."
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__text_search
+msgid ""
+"Search in the title and the content with word forms: «монтажу» finds "
+"«монтаж»."
+msgstr ""
+"Пошук у назві й тексті з урахуванням форм слова: «монтажу» знайде «монтаж»."
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__search_terms
+msgid "Search index"
+msgstr "Пошуковий індекс"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__parent_id
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Section"
+msgstr "Розділ"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Sections"
+msgstr "Розділи"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__sequence
+msgid "Sequence"
+msgstr "Порядок"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__is_package
+msgid ""
+"Shipped by a ToDo module. An update of the package does not overwrite "
+"changes."
+msgstr "Прийшла з модулем ToDo. Оновлення пакета не затирає змін."
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__search_terms
+msgid ""
+"Stems of the words of the title and the content (word forms in the search)."
+msgstr "Основи слів назви й тексту (для пошуку за формами слова)."
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__text_search
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Text"
+msgstr "Текст"
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__menu_ids
+msgid "The article is shown by «Help» everywhere in these applications."
+msgstr "«Довідка» показує статтю всюди в цих застосунках."
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__model_ids
+msgid "The article is shown by «Help» on the lists and forms of these models."
+msgstr "«Довідка» показує статтю на списках і формах цих моделей."
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "The knowledge base is empty."
+msgstr "База знань порожня."
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "There are no articles for this screen yet."
+msgstr "До цього екрана ще немає статей."
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__name
+msgid "Title"
+msgstr "Назва"
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Title of the article"
+msgstr "Назва статті"
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Top level"
+msgstr "Верхній рівень"
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_list
+msgid "Updated"
+msgstr "Оновлено"
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Where to show"
+msgstr "Де показувати"
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Write the article: steps, screenshots, tables..."
+msgstr "Напишіть статтю: кроки, скриншоти, таблиці..."
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+#: model_terms:ir.actions.act_window,help:td_knowledge.action_td_knowledge_article
+msgid "Write the first article"
+msgstr "Написати першу статтю"
+
+#. module: td_knowledge
+#: model:res.groups,comment:td_knowledge.group_td_knowledge_editor
+msgid ""
+"Writes and edits the articles of the knowledge base, links them to screens."
+msgstr "Пише й редагує статті бази знань, прив'язує їх до екранів."
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Written here"
+msgstr "Написані тут"
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__rating_ids
+msgid "Ratings"
+msgstr "Оцінки"

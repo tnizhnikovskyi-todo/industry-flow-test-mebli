@@ -1,0 +1,416 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_knowledge
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 22:01+0000\n"
+"PO-Revision-Date: 2026-11-14 22:01+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_knowledge
+#. odoo-python
+#: code:addons/td_knowledge/models/td_knowledge_article.py:0
+msgid "A section cannot be inside its own article."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__active
+msgid "Active"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Add an article to this screen"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.actions.act_window,name:td_knowledge.action_td_knowledge_article
+#: model:ir.ui.menu,name:td_knowledge.menu_td_knowledge_all
+msgid "All articles"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__menu_ids
+msgid "Applications and menus"
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Archived"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.ui.menu,name:td_knowledge.menu_td_knowledge_reader
+msgid "Articles"
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.actions.act_window,help:td_knowledge.action_td_knowledge_article
+msgid ""
+"Articles can be linked to screens: then the «Help» icon in the top bar shows"
+" them there."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__child_ids
+msgid "Articles of the section"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__body
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Content"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Edit"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__group_ids
+msgid ""
+"Empty: every internal user reads the article. Otherwise only these groups "
+"(the editors always see it)."
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Files"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__is_package
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "From the package"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.js:0
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Help for this screen"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__id
+msgid "ID"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__icon
+msgid "Icon"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "In this section"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.js:0
+#: model:ir.actions.client,name:td_knowledge.action_td_knowledge_reader
+#: model:ir.ui.menu,name:td_knowledge.menu_td_knowledge_root
+#: model:res.groups.privilege,name:td_knowledge.res_groups_privilege_td_knowledge
+msgid "Knowledge Base"
+msgstr ""
+
+#. module: td_knowledge
+#: model:res.groups,name:td_knowledge.group_td_knowledge_editor
+msgid "Knowledge Base Editor"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model,name:td_knowledge.model_td_knowledge_article
+msgid "Knowledge article"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "New article"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Nothing found."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__icon
+msgid "One emoji shown before the title in the tree."
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Open the knowledge base"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__parent_path
+msgid "Parent Path"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__group_ids
+msgid "Readers"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "Screen:"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__model_ids
+msgid "Screens (models)"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Search in the articles"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Search in the articles..."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__text_search
+msgid ""
+"Search in the title and the content with word forms: «монтажу» finds "
+"«монтаж»."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__search_terms
+msgid "Search index"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__parent_id
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Section"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "Sections"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__is_package
+msgid ""
+"Shipped by a ToDo module. An update of the package does not overwrite "
+"changes."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__search_terms
+msgid ""
+"Stems of the words of the title and the content (word forms in the search)."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__text_search
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Text"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__menu_ids
+msgid "The article is shown by «Help» everywhere in these applications."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__model_ids
+msgid "The article is shown by «Help» on the lists and forms of these models."
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+msgid "The knowledge base is empty."
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/systray/help_systray.xml:0
+msgid "There are no articles for this screen yet."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__name
+msgid "Title"
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Title of the article"
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Top level"
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_list
+msgid "Updated"
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Where to show"
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_form
+msgid "Write the article: steps, screenshots, tables..."
+msgstr ""
+
+#. module: td_knowledge
+#. odoo-javascript
+#: code:addons/td_knowledge/static/src/reader/reader.xml:0
+#: model_terms:ir.actions.act_window,help:td_knowledge.action_td_knowledge_article
+msgid "Write the first article"
+msgstr ""
+
+#. module: td_knowledge
+#: model:res.groups,comment:td_knowledge.group_td_knowledge_editor
+msgid ""
+"Writes and edits the articles of the knowledge base, links them to screens."
+msgstr ""
+
+#. module: td_knowledge
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Written here"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__rating_ids
+msgid "Ratings"
+msgstr ""

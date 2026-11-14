@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_knowledge_article_user,td.knowledge.article user,model_td_knowledge_article,base.group_user,1,0,0,0
+access_td_knowledge_article_editor,td.knowledge.article editor,model_td_knowledge_article,group_td_knowledge_editor,1,1,1,1
+access_ir_model_td_knowledge_editor,ir.model td_knowledge editor (choose screens),base.model_ir_model,group_td_knowledge_editor,1,0,0,0

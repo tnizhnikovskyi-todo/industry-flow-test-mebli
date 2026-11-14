@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_knowledge.Systray">
+        <div class="o_nav_entry td_knowledge_systray">
+            <button class="btn btn-link px-2 text-reset position-relative" title="Help for this screen"
+                    aria-label="Help for this screen" t-on-click="open">
+                <i class="fa fa-book fa-lg"/>
+                <span t-if="state.count" class="o_badge badge rounded-pill td_knowledge_count" t-esc="state.count"/>
+            </button>
+        </div>
+    </t>
+
+    <t t-name="td_knowledge.HelpDialog">
+        <Dialog title="title" size="'md'" contentClass="'td_knowledge_help'">
+            <p t-if="state.modelName" class="text-muted small mb-2">Screen: <t t-esc="state.modelName"/></p>
+            <div t-if="state.articles.length" class="list-group">
+                <a t-foreach="state.articles" t-as="article" t-key="article.id" href="#"
+                   class="list-group-item list-group-item-action td_knowledge_help_item" t-on-click.prevent="() => this.openArticle(article)">
+                    <div class="fw-bold"><t t-esc="(article.icon or '📄') + ' ' + article.name"/></div>
+                    <div t-if="article.path" class="small text-muted" t-esc="article.path"/>
+                    <div t-if="article.snippet" class="small" t-esc="article.snippet"/>
+                </a>
+            </div>
+            <p t-else="" class="text-muted td_knowledge_help_empty">There are no articles for this screen yet.</p>
+            <t t-set-slot="footer">
+                <button t-if="state.isEditor" class="btn btn-primary td_knowledge_help_add" t-on-click="addArticle">
+                    <i class="fa fa-plus me-1"/>Add an article to this screen
+                </button>
+                <button class="btn btn-secondary" t-on-click="openAll">Open the knowledge base</button>
+            </t>
+        </Dialog>
+    </t>
+</templates>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Screens are linked by the technical name of the model: a screen of a module that is not installed is skipped. -->
+    <record id="article_mebli_section" model="td.knowledge.article">
+        <field name="name">Меблі: як ми працюємо</field>
+        <field name="icon">🪑</field>
+        <field name="sequence">5</field>
+        <field name="is_package" eval="True"/>
+        <field name="body" type="html">
+<div>
+<p>Шлях замовлення меблів у системі: <b>заявка → замір → замовлення і договір → виробництво й розкрій → монтаж і акт → рекламація</b> (якщо є). Нижче — стаття до кожного кроку; ту саму статтю показує значок «Довідка» на відповідному екрані.</p>
+<p>Статті підготувала ToDo як основу. Допишіть їх під свої правила: хто відповідає, строки, телефони.</p>
+</div>
+        </field>
+    </record>
+
+    <record id="article_mebli_order" model="td.knowledge.article">
+        <field name="name">Замовлення меблів</field>
+        <field name="icon">🧾</field>
+        <field name="sequence">10</field>
+        <field name="parent_id" ref="article_mebli_section"/>
+        <field name="is_package" eval="True"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'sale.order')]"/>
+        <field name="body" type="html">
+<div>
+<p>Замовлення — стандартна пропозиція/замовлення на продаж Odoo; пакет додає до неї меблеві дані.</p>
+<ol>
+<li>Створіть пропозицію з картки клієнта або з угоди CRM.</li>
+<li>Додайте вироби; для виробів із розмірами вкажіть розміри — ціна рахується з них.</li>
+<li>Перевірте суму, графік оплат і маржу (якщо вам її видно).</li>
+<li>Підтвердіть замовлення, коли клієнт погодив склад і ціну.</li>
+</ol>
+<p><i>Допишіть:</i> хто погоджує знижки, яка передоплата обов'язкова.</p>
+</div>
+        </field>
+    </record>
+
+    <record id="article_mebli_measure" model="td.knowledge.article">
+        <field name="name">Замір</field>
+        <field name="icon">📏</field>
+        <field name="sequence">20</field>
+        <field name="parent_id" ref="article_mebli_section"/>
+        <field name="is_package" eval="True"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'td.mebli.measure')]"/>
+        <field name="body" type="html">
+<div>
+<p>Заявка й виїзд — стандартна угода CRM і зустріч у календарі. Аркуш заміру зберігає те, чого в стандарті немає: ніші, техніку клієнта та її розміри.</p>
+<ol>
+<li>Запишіть виїзд у вільне вікно замірника — клієнт отримає стандартне нагадування листом.</li>
+<li>На місці внесіть ніші й техніку з розмірами, додайте фото.</li>
+<li>Система підсвітить техніку, що не вміщується в нішу, — виправте розміри або проєкт.</li>
+<li>Перед розкроєм проєкт замовлення звіряється із заміром за правилами.</li>
+</ol>
+</div>
+        </field>
+    </record>
+
+    <record id="article_mebli_cutting" model="td.knowledge.article">
+        <field name="name">Розкрій</field>
+        <field name="icon">🪚</field>
+        <field name="sequence">30</field>
+        <field name="parent_id" ref="article_mebli_section"/>
+        <field name="is_package" eval="True"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'td.mebli.cutting.job')]"/>
+        <field name="body" type="html">
+<div>
+<p>Завдання розкрою збирає деталі зі специфікацій виробничих замовлень.</p>
+<ol>
+<li>Сформуйте завдання й передайте файл у програму розкрою.</li>
+<li>Отримайте карту розкрою: листи резервуються за партіями.</li>
+<li>Ділові обрізки стають новими партіями на складі — використовуйте їх у наступних завданнях.</li>
+</ol>
+<p><i>Допишіть:</i> яка програма розкрою у вас, хто запускає верстат.</p>
+</div>
+        </field>
+    </record>
+
+    <record id="article_mebli_install" model="td.knowledge.article">
+        <field name="name">Монтаж і акт</field>
+        <field name="icon">🛠️</field>
+        <field name="sequence">40</field>
+        <field name="parent_id" ref="article_mebli_section"/>
+        <field name="is_package" eval="True"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'td.mebli.install.act')]"/>
+        <field name="body" type="html">
+<div>
+<p>Виїзд бригади — стандартна задача проєкту замовлення в календарі монтажу; акт монтажу — документ пакета.</p>
+<ol>
+<li>Перевірте, що доплата внесена до виїзду (система попередить або не дасть запланувати — залежить від налаштування).</li>
+<li>На об'єкті заповніть акт: фото, недоліки, підпис клієнта.</li>
+<li>Підписаний фінальний акт дає бригаді нарахування за відсотком.</li>
+</ol>
+</div>
+        </field>
+    </record>
+
+    <record id="article_mebli_claim" model="td.knowledge.article">
+        <field name="name">Рекламація</field>
+        <field name="icon">🔧</field>
+        <field name="sequence">50</field>
+        <field name="parent_id" ref="article_mebli_section"/>
+        <field name="is_package" eval="True"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'repair.order')]"/>
+        <field name="body" type="html">
+<div>
+<p>Рекламація — стандартне замовлення на ремонт Odoo, пов'язане із замовленням меблів і його деталлю.</p>
+<ol>
+<li>Створіть ремонт, оберіть замовлення клієнта й деталь, додайте фото.</li>
+<li>Причину вкажіть тегом; якщо ремонт гарантійний — платить фабрика.</li>
+<li>Ведіть етапи, запчастини й дати як у стандартному ремонті.</li>
+</ol>
+</div>
+        </field>
+    </record>
+</odoo>
