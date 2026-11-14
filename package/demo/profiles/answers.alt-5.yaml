@@ -1,0 +1,22 @@
+# alt-5 — «A» (коробка A, ce) = package/templates/answers.example.yaml + edition, contract_mode. Демо-шар td_mebli_demo показує коробку B,
+# тож A піднімається з --no-demo (модулі + конфіг + шаблони A-13). Покриття — README «Файл answers.yaml і профілі».
+edition: ce
+contract_mode: unset
+VP-01: A
+VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, analog, shop_board]
+VP-03: single
+VP-04: true
+VP-05: true
+VP-06: warn
+VP-07: 2
+VP-08: false
+VP-09: both
+VP-10: 5
+VP-11: 5
+VP-12: 300
+VP-13: 14
+VP-14: equal
+VP-15: final
+VP-16: true
+VP-17: warning
+VP-18: true

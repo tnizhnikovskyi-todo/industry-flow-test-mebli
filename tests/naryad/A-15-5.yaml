@@ -1,0 +1,29 @@
+# ТЕСТОВИЙ наряд A-15 (спроба 5) — перебудова демо-стенда з коду A-11-8 (D-16, D-17); EE не перевірено.
+step: A-15
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - flow-package-build:demo-base-builder@0.3.1
+model: sonnet
+effort: medium
+inputs:
+  - {name: "CHECKS.md (APPROVE (CE); EE не перевірено)", from: A-14, path: package/CHECKS.md, sha: HEAD}
+  - {name: "конфіг-пакет", from: A-12, path: package/config/, sha: HEAD}
+  - {name: "майстер-дані", from: A-13, path: package/master-data/, sha: HEAD}
+  - {name: "модулі", from: A-11, path: package/addons/, sha: HEAD}
+  - {name: "дефекти A-16 (D-02…D-15, закриття A-11-7)", from: A-16, path: package/demo/defects.md, sha: HEAD}
+  - {name: "OWNER-INTAKE (editions)", from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+where: "package/demo/"
+done: "package/demo/ (up.sh, reset.sh, answers.yaml і profiles/, синтетичні дані, README.md з SHA, defects.md); стенд ce піднято на чистій базі за скриптами tools/odoo/ (C-00); ee — не перевірено"
+check: {mode: both, how: "Автоперевірка demo-base-builder", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 120, lease_factor: 1.5, cost_limit_usd: 15, context_budget_tokens: 80000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []
+params: {mode: повтор}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 5
+returned_from: {step: A-16, attempt: 2, reason: "D-17 (report.url стенда) і D-16 виправлено в A-11-8 — перебудувати стенд з DEMO_REPORT_URL"}
+git: {base: 4cfad1c, head: null, prev_tag: null}
+date: 2026-11-14

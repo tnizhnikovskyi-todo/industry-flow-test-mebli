@@ -1,3 +1,3 @@
 id,name,default_code,type,is_storable,categ_id/id,uom_id/id,sale_ok,purchase_ok,route_ids/id
-td_md.product_template_wardrobe_01,Шафа-купе,WARDROBE-01,consu,True,td_md.product_category_cabinet,uom.product_uom_unit,True,False,"mrp.route_warehouse0_manufacture,stock.route_warehouse0_mto"
-td_md.product_template_bedside_01,Тумба приліжкова,BEDSIDE-01,consu,True,td_md.product_category_cabinet,uom.product_uom_unit,True,False,"mrp.route_warehouse0_manufacture,stock.route_warehouse0_mto"
+td_md.product_template_wardrobe_01,Шафа-купе,WARDROBE-01,consu,True,td_md.product_category_cabinet,uom.product_uom_unit,True,False,stock.route_warehouse0_mto
+td_md.product_template_bedside_01,Тумба приліжкова,BEDSIDE-01,consu,True,td_md.product_category_cabinet,uom.product_uom_unit,True,False,stock.route_warehouse0_mto

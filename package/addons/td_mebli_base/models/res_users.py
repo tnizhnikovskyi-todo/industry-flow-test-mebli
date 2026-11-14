@@ -28,6 +28,7 @@ class ResUsers(models.Model):
         margin = self.env.ref('td_mebli_base.group_margin_view', raise_if_not_found=False)
         if not salesman or not margin:
             return
+        # sudo: the group «Sees the margin» follows the parameter of the company also when a salesman edits his preferences
         for user in self.sudo().filtered(lambda u: not u.share):
             wanted = salesman in user.all_group_ids and user.company_id.td_margin_to_salesman
             has = margin in user.group_ids

@@ -12,6 +12,7 @@
                 <field name="model_name"/>
                 <field name="depends_on"/>
                 <field name="box"/>
+                <field name="module_name" optional="show"/>
                 <field name="note" optional="show"/>
                 <field name="model_installed" column_invisible="True"/>
                 <button name="action_td_import" type="object" string="Import" icon="fa-upload" invisible="not model_installed"/>

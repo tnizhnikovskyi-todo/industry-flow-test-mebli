@@ -87,7 +87,9 @@ class PurchaseOrderLine(models.Model):
         chain of destination moves is followed (standard _rollup_move_dests, as purchase_mrp does in the MO overview).
         Read only: sudo reads the stock moves, which a salesperson may not read; nothing is written."""
         self.ensure_one()
+        # sudo: read only — the stock moves of the manufacturing orders, which a salesperson may not read
         Move = self.env['stock.move'].sudo()
+        # sudo: read only — the destination moves of the purchase line (same reason as above)
         moves = Move.browse(self.sudo().move_dest_ids._rollup_move_dests())
         return moves.raw_material_production_id
 
@@ -115,6 +117,7 @@ class PurchaseOrderLine(models.Model):
     def _td_sale_orders(self):
         """The sales orders whose forecast this purchase line moves (read only)."""
         orders = self.env['sale.order']
+        # sudo: read only — the sales orders of the purchase line for a purchase user without sales rights
         for line in self.sudo():
             orders |= line._td_productions().reference_ids.sale_ids | line.sale_line_id.order_id
         return orders
@@ -159,6 +162,7 @@ class ResPartner(models.Model):
         partners = self.filtered('id')
         if not partners:
             return {}
+        # sudo: read only — a system parameter of purchase_stock
         days = int(self.env['ir.config_parameter'].sudo().get_param('purchase_stock.on_time_delivery_days', default='365'))
         # sudo: read only — the forecast date of a sales order is computed for a salesperson too
         moves = self.env['stock.move'].sudo().search_fetch([
@@ -231,8 +235,8 @@ class SaleOrder(models.Model):
         order of this order (a request for quotation may be merged with the purchases of other orders,
         purchase_stock _merge_po_post_process) or is bought for one of its lines (sale_purchase services)."""
         self.ensure_one()
-        # sudo: read only — the forecast date and the reason are computed for a salesperson too; the lines are given to
-        # the views without sudo (the access rule «purchases of my orders» decides what he reads)
+        # the lines are given to the views without sudo (the access rule «purchases of my orders» decides what he reads)
+        # sudo: read only — the forecast date and the reason are computed for a salesperson too
         order = self.sudo()
         productions = order.mrp_production_ids
         return order._get_purchase_orders().order_line.filtered(
@@ -247,6 +251,7 @@ class SaleOrder(models.Model):
     def _compute_td_purchase_lines(self):
         """The tab and the late purchase line: for the users of Purchase only (the standard purchase rights)."""
         for order in self:
+            # sudo: an empty recordset only (a new order has no purchase lines); the lines are given back without sudo
             lines = order._td_purchase_lines() if order.id else self.env['purchase.order.line'].sudo()
             order.td_purchase_line_ids = lines.sudo(False)
             late = order._td_late_line(lines, order._td_shop_date()) if order.state != 'cancel' else lines.browse()
@@ -287,6 +292,7 @@ class SaleOrder(models.Model):
         `td_mebli_sale.forecast_cursor` (review A-11, round 2): a run stopped by the time limit of the cron continues
         after it next time instead of starting from the beginning; after a full pass the cursor is reset to 0. Each
         batch is committed with `ir.cron._commit_progress` (done / remaining)."""
+        # sudo: the cursor of the cron is a system parameter, read and written by the cron
         Param = self.env['ir.config_parameter'].sudo()
         try:
             cursor = int(Param.get_param(FORECAST_CURSOR) or 0)
@@ -310,6 +316,7 @@ class SaleOrder(models.Model):
                  'td_change_ids.state', 'td_change_ids.reason')
     def _compute_td_forecast(self):
         for order in self:
+            # sudo: an empty recordset only (a new order has no purchase lines)
             lines = order._td_purchase_lines() if order.id else self.env['purchase.order.line'].sudo()
             if order.state == 'cancel':
                 order.td_shop_date = order.td_forecast_date = False

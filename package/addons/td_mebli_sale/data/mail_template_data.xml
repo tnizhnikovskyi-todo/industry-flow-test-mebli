@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
     <!-- AC-120 (box B): the letter with the link to the portal of the order where the customer signs the fixed change -->
     <record id="mail_template_td_change_sign" model="mail.template">
         <field name="name">Furniture: change of the order for signature</field>

@@ -108,6 +108,7 @@ class SaleOrder(models.Model):
         """AC-119: the highest version of the order specifications already sent to cutting (0 — none sent):
         mrp.bom.td_cut_version of td_mebli_mrp, set when the parts go to cutting or to the distributor."""
         self.ensure_one()
+        # sudo: read only — the cut version of the specifications for a salesperson without manufacturing rights
         return max(self.sudo().order_line.td_bom_id.mapped('td_cut_version') or [0])
 
     def action_td_open_change(self):

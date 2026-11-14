@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 09:42+0000\n"
-"PO-Revision-Date: 2026-11-13 09:42+0000\n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -166,6 +166,9 @@ msgstr ""
 
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__company_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_offcut__company_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_placement__company_id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_sheet__company_id
 msgid "Company"
 msgstr ""
 
@@ -276,11 +279,6 @@ msgid "Cutting Sheets"
 msgstr ""
 
 #. module: td_mebli_cutting
-#: model:ir.model.fields.selection,name:td_mebli_cutting.selection__sale_order__td_delay_reason__cutting
-msgid "Cutting at the distributor"
-msgstr ""
-
-#. module: td_mebli_cutting
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_list
 msgid "Cutting job"
 msgstr ""
@@ -310,6 +308,7 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_product_template__display_name
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_purchase_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__display_name
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__display_name
@@ -389,6 +388,7 @@ msgstr ""
 #. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_mrp_production__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_product_template__id
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_purchase_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_stock_lot__id
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__id
@@ -555,6 +555,12 @@ msgid "Name"
 msgstr ""
 
 #. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "New"
+msgstr ""
+
+#. module: td_mebli_cutting
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__td_measure_missing
 msgid "No Measurement"
 msgstr ""
@@ -659,6 +665,12 @@ msgstr ""
 #. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Part %(code)s is placed %(placed)s times, the job has %(qty)s pieces"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
 msgid "Part %s does not belong to the job"
 msgstr ""
 
@@ -717,12 +729,13 @@ msgid "Product"
 msgstr ""
 
 #. module: td_mebli_cutting
-#: model:ir.model.fields,help:td_mebli_cutting.field_sale_order__td_delay_reason
-msgid ""
-"Read only (AC-066): «Customer» when the last fixed change of the order was "
-"asked by the customer, «Cutting at the Distributor» when the parts cut by "
-"the distributor come back last, «Supplier» when a purchased item arrives too"
-" late for the promised date, «Company» when the workshop is late."
+#: model:ir.model,name:td_mebli_cutting.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__rating_ids
+msgid "Ratings"
 msgstr ""
 
 #. module: td_mebli_cutting
@@ -864,6 +877,14 @@ msgstr ""
 #. module: td_mebli_cutting
 #. odoo-python
 #: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid ""
+"Sheet %(sheet)s: lot %(lot)s of this board is not found in the company of "
+"the job."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
 msgid "Sheet %s: the board is not known."
 msgstr ""
 
@@ -876,11 +897,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__sheet_ids
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.td_mebli_cutting_job_view_form
 msgid "Sheets"
-msgstr ""
-
-#. module: td_mebli_cutting
-#: model:ir.model.fields,field_description:td_mebli_cutting.field_sale_order__td_delay_reason
-msgid "Shift Reason"
 msgstr ""
 
 #. module: td_mebli_cutting

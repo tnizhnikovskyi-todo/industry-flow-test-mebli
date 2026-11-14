@@ -1,0 +1,22 @@
+# alt-1 — «light» (легкий тариф, ce): обмеження SPEC §11.3 / manifest.yaml preflight PF-02…PF-05 (VP-04, VP-05 = false;
+# VP-09 = distributor); покриває ще VP-08 true, VP-17 flexible, VP-18 false, contract_mode sale, межі VP-10/11/13.
+edition: ce
+contract_mode: sale
+VP-01: light
+VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, analog, shop_board]
+VP-03: single
+VP-04: false
+VP-05: false
+VP-06: warn
+VP-07: 2
+VP-08: true
+VP-09: distributor
+VP-10: 1
+VP-11: 1
+VP-12: 300
+VP-13: 1
+VP-14: equal
+VP-15: final
+VP-16: true
+VP-17: flexible
+VP-18: false

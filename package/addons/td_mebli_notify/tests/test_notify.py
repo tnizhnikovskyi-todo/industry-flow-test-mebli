@@ -35,6 +35,21 @@ class TestNotify(TdMebliSaleCommon):
         order.commitment_date = fields.Datetime.to_datetime(start + timedelta(days=365))
         self.assertFalse(self._activities(order), "the forecast came back: the activity is done")
 
+    def test_d13_activity_in_the_language_of_the_salesperson(self):
+        """D-13 (AC-N.01): the cron (system user, en_US) writes the activity in the language of the salesperson."""
+        self.env['res.lang']._activate_lang('uk_UA')
+        order = self._make_order()
+        order.user_id.lang = 'uk_UA'
+        order.action_confirm()
+        start = fields.Date.context_today(order, order.date_order)
+        order.with_context(td_no_forecast_activity=True).commitment_date = fields.Datetime.to_datetime(
+            start - timedelta(days=10))
+        order.with_context(lang='en_US')._cron_td_forecast_activity()
+        activity = self._activities(order)
+        self.assertEqual(len(activity), 1)
+        self.assertNotIn('Forecast later', activity.summary)
+        self.assertIn('%s' % order.td_delay_days, activity.summary)
+
     def test_new_date_letter_opens_the_composer(self):
         order = self._make_order()
         action = order.action_td_notify_new_date()

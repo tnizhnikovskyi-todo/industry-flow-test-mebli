@@ -1,0 +1,23 @@
+# Базовий профіль демо-стенда пакета «меблі» (A-15, спроба 3): коробка B, редакція ce — збігається з демо-шаром td_mebli_demo
+# (data/settings_data.xml: td_box_profile B, td_contract_mode contract, 9 функцій VP-02 без change_sign і ai_mapping), щоб read-back
+# конфігу після демо-шару = answers.yaml. Решта = package/templates/answers.example.yaml. Коробка A — profiles/answers.alt-5.yaml.
+edition: ce
+contract_mode: contract
+VP-01: B
+VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, nbu, analog, shop_board]
+VP-03: single
+VP-04: true
+VP-05: true
+VP-06: warn
+VP-07: 2
+VP-08: false
+VP-09: both
+VP-10: 5
+VP-11: 5
+VP-12: 300
+VP-13: 14
+VP-14: equal
+VP-15: final
+VP-16: true
+VP-17: warning
+VP-18: true

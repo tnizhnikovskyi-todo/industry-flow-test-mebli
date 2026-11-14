@@ -198,6 +198,7 @@ class SaleOrder(models.Model):
                                           "%(usable)s mm", sheet=sheet.name, product=line.product_id.name, what=what,
                                           size=size, niche=niche.name, usable=usable[key]))
                 longest = max(usable['width_mm'], usable['height_mm'])
+                # sudo: read only: the parts of the order BoM (the measurer has no manufacturing rights)
                 for part in line.sudo().td_bom_id.td_part_ids:
                     if longest and max(part.length_mm, part.width_mm) > longest:
                         problems.append(_("%(sheet)s: part «%(part)s» %(size)s mm is longer than the niche «%(niche)s» "

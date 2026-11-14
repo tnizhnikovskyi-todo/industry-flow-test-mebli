@@ -566,4 +566,27 @@ def seed_full(env, people, partners, orders, show, rnd):
     # wave 2 of the A box (decisions 42-47): own random sequence, the data above stays as it was
     from .wave2 import seed_wave2
     state['wave2'] = seed_wave2(env, people, orders, show, rnd)
+    _bas_codes(env, orders['done'].sorted('date_order')[-1:].partner_id.commercial_partner_id)
     return state
+
+
+def _bas_codes(env, error_partner):
+    """D-09 (AC-109, scenario T-07): the BAS codes of the demo factory (synthetic, like the rest of the demo): every
+    employee, every partner of an invoice or a vendor bill and every product sold or bought has a code, so «Send to BAS»
+    of the confirmed accruals and of the invoices goes without errors. One customer stays without a code on purpose: his
+    invoices show «Exchange Error» with the reason (AC-040, set by _bas_exchange)."""
+    company = env.company
+    Employee = env['hr.employee'].sudo().with_company(company)
+    employees = Employee.with_context(active_test=False).search([('company_id', 'in', (False, company.id))], order='id')
+    for index, employee in enumerate(employees.filtered(lambda e: not e.td_bas_code), start=1):
+        employee.td_bas_code = f'П-{index:04d}'
+    moves = env['account.move'].search([('company_id', '=', company.id), ('state', '=', 'posted'),
+                                        ('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))])
+    partners = (moves.commercial_partner_id - error_partner).with_company(company).filtered(lambda p: not p.td_bas_code)
+    taken = len(env['res.partner'].with_company(company).search([('td_bas_code', '!=', False)]))
+    for index, partner in enumerate(partners.sorted('id'), start=taken + 1):
+        partner.td_bas_code = f'К-{index:04d}'
+    products = moves.invoice_line_ids.product_id.with_company(company).filtered(lambda p: not p.td_bas_code)
+    taken = len(env['product.product'].with_company(company).search([('td_bas_code', '!=', False)]))
+    for index, product in enumerate(products.sorted('id'), start=taken + 1):
+        product.td_bas_code = f'Н-{index:04d}'

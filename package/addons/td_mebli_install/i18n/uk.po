@@ -47,9 +47,7 @@ msgid "<i class=\"fa fa-money me-1\" title=\"Payment\"/>no payment:"
 msgstr "<i class=\"fa fa-money me-1\" title=\"Оплата\"/>немає доплати:"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
 msgid "<i class=\"fa fa-money me-2\" title=\"Payment before installation\"/>"
 msgstr "<i class=\"fa fa-money me-2\" title=\"Оплата до монтажу\"/>"
 
@@ -120,8 +118,7 @@ msgstr "Премія чи штраф потребують причини."
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/accrual.py:0
-msgid ""
-"A confirmed accrual cannot be changed: add a new bonus or penalty instead."
+msgid "A confirmed accrual cannot be changed: add a new bonus or penalty instead."
 msgstr "Підтверджене нарахування не змінюється: додайте нову премію чи штраф."
 
 #. module: td_mebli_install
@@ -137,15 +134,24 @@ msgid "A confirmed accrual is cancelled by the head only."
 msgstr "Підтверджене нарахування скасовує лише керівник."
 
 #. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "A confirmed or cancelled accrual is read-only: the head only cancels it with a reason."
+msgstr "Підтверджене чи скасоване нарахування — лише для читання: керівник може лише скасувати його з причиною."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+msgid "A signed act cannot be changed"
+msgstr "Підписаний акт змінювати не можна"
+
+#. module: td_mebli_install
 #: model:ir.model,name:td_mebli_install.model_td_mebli_accrual
 msgid "Accrual to a Worker or a Crew"
 msgstr "Нарахування працівнику чи бригаді"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__accrual_ids
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_accrual_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_pivot
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__accrual_ids model:ir.ui.menu,name:td_mebli_install.td_mebli_accrual_menu model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_pivot
 msgid "Accruals"
 msgstr "Нарахування"
 
@@ -155,10 +161,15 @@ msgid "Accruals Created"
 msgstr "Створено нарахувань"
 
 #. module: td_mebli_install
-#: model:ir.actions.report,name:td_mebli_install.action_report_accrual_sheet
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
+#: model:ir.actions.report,name:td_mebli_install.action_report_accrual_sheet model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
 msgid "Accruals Sheet"
 msgstr "Відомість нарахувань"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/accrual.py:0
+msgid "Accruals are confirmed by the shop manager or the accountant."
+msgstr "Нарахування підтверджує начальник виробництва або бухгалтер."
 
 #. module: td_mebli_install
 #. odoo-python
@@ -173,9 +184,7 @@ msgstr "Нарахування цеху й бригадам"
 
 #. module: td_mebli_install
 #. odoo-python
-#: code:addons/td_mebli_install/models/accrual.py:0
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_wizard_view_form
+#: code:addons/td_mebli_install/models/accrual.py:0 model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_wizard_view_form
 msgid "Accrue"
 msgstr "Нарахувати"
 
@@ -185,9 +194,7 @@ msgid "Accrue for a Period"
 msgstr "Нарахувати за період"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__act_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__act_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__act_id
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__act_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__act_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__act_id
 msgid "Act"
 msgstr "Акт"
 
@@ -212,21 +219,17 @@ msgid "Active"
 msgstr "Активна"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_act_count
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_act_count model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_install
 msgid "Acts"
 msgstr "Акти"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_address
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_day_plan_pages
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_address model_terms:ir.ui.view,arch_db:td_mebli_install.report_day_plan_pages
 msgid "Address"
 msgstr "Адреса"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__amount
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__amount
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__amount model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__amount model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
 msgid "Amount"
 msgstr "Сума"
 
@@ -246,8 +249,7 @@ msgid "Block"
 msgstr "Блокувати"
 
 #. module: td_mebli_install
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__kind__bonus
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual_reason__kind__bonus
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__kind__bonus model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual_reason__kind__bonus
 msgid "Bonus"
 msgstr "Премія"
 
@@ -258,8 +260,7 @@ msgstr "Премії й штрафи"
 
 #. module: td_mebli_install
 #. odoo-python
-#: code:addons/td_mebli_install/models/accrual.py:0
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_cancel_view_form
+#: code:addons/td_mebli_install/models/accrual.py:0 model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_cancel_view_form
 msgid "Cancel Accruals"
 msgstr "Скасувати нарахування"
 
@@ -284,14 +285,12 @@ msgid "Cancellation Reason"
 msgstr "Причина скасування"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__cancelled
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__cancel
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__cancelled model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__cancel
 msgid "Cancelled"
 msgstr "Скасовано"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__checklist
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__checklist model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Checklist"
 msgstr "Чек-лист"
 
@@ -306,8 +305,7 @@ msgid "Closed"
 msgstr "Закрито"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_day_plan_pages
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list model_terms:ir.ui.view,arch_db:td_mebli_install.report_day_plan_pages
 msgid "Collect"
 msgstr "Отримати"
 
@@ -322,12 +320,7 @@ msgid "Comment"
 msgstr "Причина"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__company_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__company_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__company_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__company_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__company_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__company_id
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__company_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__company_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__company_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__company_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__company_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__company_id
 msgid "Company"
 msgstr "Компанія"
 
@@ -347,26 +340,12 @@ msgid "Confirmed"
 msgstr "Підтверджено"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__create_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__create_uid
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__create_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__create_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__create_date
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__create_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -386,8 +365,7 @@ msgid "Crew Amount at the Signature"
 msgstr "Сума бригаді на момент підпису"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__crew_line_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__crew_line_ids model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
 msgid "Crew Hours"
 msgstr "Години бригади"
 
@@ -403,9 +381,7 @@ msgstr "База % бригаді"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__stage_pct
-msgid ""
-"Crew percent «By stages» (VP-15): the share of the order work done at this "
-"stage; the final act gets the rest of 100 %."
+msgid "Crew percent «By stages» (VP-15): the share of the order work done at this stage; the final act gets the rest of 100 %."
 msgstr "% бригаді «За етапами» (VP-15): частка робіт замовлення, виконана на цьому етапі; фінальний акт отримує решту до 100 %."
 
 #. module: td_mebli_install
@@ -419,10 +395,7 @@ msgid "Crew: ____________"
 msgstr "Бригада: ____________"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__currency_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__currency_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__currency_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__currency_id
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__currency_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__currency_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__currency_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__currency_id
 msgid "Currency"
 msgstr "Валюта"
 
@@ -437,8 +410,7 @@ msgid "Customer Consents to Publish the Photos"
 msgstr "Згода покупця на публікацію фото"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__date
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__date model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
 msgid "Date"
 msgstr "Дата"
 
@@ -453,8 +425,7 @@ msgid "Day Plan"
 msgstr "План дня"
 
 #. module: td_mebli_install
-#: model:ir.actions.report,name:td_mebli_install.action_report_day_plan
-#: model:ir.actions.report,name:td_mebli_install.action_report_day_plan_user
+#: model:ir.actions.report,name:td_mebli_install.action_report_day_plan model:ir.actions.report,name:td_mebli_install.action_report_day_plan_user
 msgid "Day Plan of the Crew"
 msgstr "Денний план бригади"
 
@@ -464,8 +435,7 @@ msgid "Default Amount"
 msgstr "Типова сума"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__name
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__name model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Defect"
 msgstr "Недолік"
 
@@ -475,36 +445,22 @@ msgid "Defect in an Installation Act"
 msgstr "Недолік в акті монтажу"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__defect_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__defect_ids model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
 msgid "Defects"
 msgstr "Недоліки"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_cancel_view_form
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_cancel_view_form model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_form
 msgid "Discard"
 msgstr "Скасувати"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_res_users__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__display_name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__display_name
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__display_name model:ir.model.fields,field_description:td_mebli_install.field_res_users__display_name model:ir.model.fields,field_description:td_mebli_install.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
 #. module: td_mebli_install
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__draft
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_install_act__state__draft
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__draft model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_install_act__state__draft
 msgid "Draft"
 msgstr "Чернетка"
 
@@ -514,8 +470,7 @@ msgid "Due before Installation"
 msgstr "До сплати до монтажу"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__employee_id
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_search
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__employee_id model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_search
 msgid "Employee"
 msgstr "Працівник"
 
@@ -569,8 +524,7 @@ msgid "Head: ____________________ / ____________________"
 msgstr "Керівник: ____________________ / ____________________"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__hours
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__hours
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__hours model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__hours
 msgid "Hours"
 msgstr "Години"
 
@@ -581,22 +535,11 @@ msgstr "Години монтажника на виїзді"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__crew_line_ids
-msgid ""
-"Hours of every installer at the visit: the crew percent «By time» (VP-14)."
+msgid "Hours of every installer at the visit: the crew percent «By time» (VP-14)."
 msgstr "Години кожного монтажника на виїзді: % бригаді «За часом» (VP-14)."
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_res_users__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__id
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__id model:ir.model.fields,field_description:td_mebli_install.field_res_users__id model:ir.model.fields,field_description:td_mebli_install.field_sale_order__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__id
 msgid "ID"
 msgstr "ID"
 
@@ -606,8 +549,7 @@ msgid "If checked, new messages require your attention."
 msgstr "Якщо позначено, нові повідомлення потребують уваги."
 
 #. module: td_mebli_install
-#: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__message_has_error
-#: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__message_has_sms_error
+#: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__message_has_error model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Якщо позначено, деякі повідомлення мають помилку доставки."
 
@@ -617,40 +559,29 @@ msgid "In the Photo Archive"
 msgstr "У фотоархіві"
 
 #. module: td_mebli_install
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__project_task__td_visit_kind__install
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_stage__install
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_install_menu
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__project_task__td_visit_kind__install model:ir.model.fields.selection,name:td_mebli_install.selection__sale_order__td_stage__install model:ir.ui.menu,name:td_mebli_install.td_mebli_install_menu
 msgid "Installation"
 msgstr "Монтаж"
 
 #. module: td_mebli_install
-#: model:ir.actions.report,name:td_mebli_install.action_report_install_act
-#: model:ir.model,name:td_mebli_install.model_td_mebli_install_act
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model:ir.actions.report,name:td_mebli_install.action_report_install_act model:ir.model,name:td_mebli_install.model_td_mebli_install_act model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
 msgid "Installation Act"
 msgstr "Акт монтажу"
 
 #. module: td_mebli_install
-#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_act_action
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_act_ids
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_act_ids
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_install_act_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_list
+#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_act_action model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_act_ids model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_act_ids model:ir.ui.menu,name:td_mebli_install.td_mebli_install_act_menu model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_list
 msgid "Installation Acts"
 msgstr "Акти монтажу"
 
 #. module: td_mebli_install
-#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_calendar_action
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_install_calendar_menu
+#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_calendar_action model:ir.ui.menu,name:td_mebli_install.td_mebli_install_calendar_menu
 msgid "Installation Calendar"
 msgstr "Календар монтажів"
 
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/payment.py:0
-msgid ""
-"Installation blocked: the payment of %(missing)s is not received. Contact "
-"the manager"
+msgid "Installation blocked: the payment of %(missing)s is not received. Contact the manager"
 msgstr "Монтаж заблоковано: не отримано доплату %(missing)s. Зверніться до менеджера"
 
 #. module: td_mebli_install
@@ -669,35 +600,17 @@ msgid "Is Follower"
 msgstr "Підписник"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__kind
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__kind
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__kind
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_search
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__kind model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__kind model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__kind model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_search
 msgid "Kind"
 msgstr "Вид"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__write_uid
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__write_uid
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__write_uid model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__write_uid
 msgid "Last Updated by"
 msgstr "Останнє оновлення"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__write_date
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__write_date
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__write_date model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -712,15 +625,12 @@ msgid "Loaded by the warehouse: ____________"
 msgstr "Завантажив склад: ____________"
 
 #. module: td_mebli_install
-#: model:ir.model,name:td_mebli_install.model_td_mebli_pay_mark
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_form
+#: model:ir.model,name:td_mebli_install.model_td_mebli_pay_mark model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_form
 msgid "Manual Payment Mark"
 msgstr "Ручна позначка оплати"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_mark_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay_mark
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_mark_ids model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_list model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay_mark
 msgid "Manual Payment Marks"
 msgstr "Ручні позначки оплати"
 
@@ -731,16 +641,25 @@ msgid "Manual payment mark cancelled: %(amount)s, %(user)s."
 msgstr "Ручну позначку оплати скасовано: %(amount)s, %(user)s."
 
 #. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "Manual payment mark changed by %(user)s: %(changes)s"
+msgstr "Ручну позначку оплати змінив(ла) %(user)s: %(changes)s"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "Manual payment mark restored: %(amount)s, %(user)s."
+msgstr "Ручну позначку оплати відновлено: %(amount)s, %(user)s."
+
+#. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__user_id
 msgid "Marked by"
 msgstr "Хто позначив"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__photo_consent
-msgid ""
-"Marked by the crew from the words of the customer (or by the contract) "
-"before the signature; without it the photos do not go to the photo archive "
-"(AC-100)."
+msgid "Marked by the crew from the words of the customer (or by the contract) before the signature; without it the photos do not go to the photo archive (AC-100)."
 msgstr "Позначає бригада зі слів покупця (або за договором) до підпису; без неї фото не потрапляють у фотоархів (AC-100)."
 
 #. module: td_mebli_install
@@ -759,23 +678,17 @@ msgid "Messages"
 msgstr "Повідомлення"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_missing
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_missing
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_missing
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_missing model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_missing model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_missing
 msgid "Missing before Installation"
 msgstr "Бракує до монтажу"
 
 #. module: td_mebli_install
-#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_accrual_my_action
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_accrual_my_menu
+#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_accrual_my_action model:ir.ui.menu,name:td_mebli_install.td_mebli_accrual_my_menu
 msgid "My Accruals"
 msgstr "Мої нарахування"
 
 #. module: td_mebli_install
-#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_day_action
-#: model:ir.actions.server,name:td_mebli_install.td_mebli_install_day_server_action
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_install_day_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list
+#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_day_action model:ir.actions.server,name:td_mebli_install.td_mebli_install_day_server_action model:ir.ui.menu,name:td_mebli_install.td_mebli_install_day_menu model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list
 msgid "My Day"
 msgstr "Мій день"
 
@@ -841,11 +754,7 @@ msgid "Operations without a Piece Rate"
 msgstr "Операції без розцінки"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__order_ref
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__order_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__order_id
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__order_ref model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__order_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__order_id model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
 msgid "Order"
 msgstr "Замовлення"
 
@@ -865,23 +774,18 @@ msgid "Order, customer"
 msgstr "Замовлення, клієнт"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_ok
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_ok
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_ok
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_ok model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_ok model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_ok
 msgid "Paid before Installation"
 msgstr "Доплату до монтажу отримано"
 
 #. module: td_mebli_install
 #. odoo-python
-#: code:addons/td_mebli_install/models/payment.py:0
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay_mark
+#: code:addons/td_mebli_install/models/payment.py:0 model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay_mark
 msgid "Payment Confirmed by Hand"
 msgstr "Оплату підтверджено вручну"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form_pay model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
 msgid "Payment before installation not received:"
 msgstr "Не отримано доплату перед монтажем:"
 
@@ -894,14 +798,11 @@ msgstr "Не отримано доплату перед монтажем: %(miss
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/payment.py:0
-msgid ""
-"Payment confirmed by hand: %(amount)s %(currency)s, %(user)s, %(date)s. "
-"Reason: %(reason)s"
+msgid "Payment confirmed by hand: %(amount)s %(currency)s, %(user)s, %(date)s. Reason: %(reason)s"
 msgstr "Оплату підтверджено вручну: %(amount)s %(currency)s, %(user)s, %(date)s. Причина: %(reason)s"
 
 #. module: td_mebli_install
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__kind__penalty
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual_reason__kind__penalty
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__kind__penalty model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual_reason__kind__penalty
 msgid "Penalty"
 msgstr "Штраф"
 
@@ -911,8 +812,7 @@ msgid "Period"
 msgstr "Період"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__photo
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__photo model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Photo"
 msgstr "Фото"
 
@@ -922,8 +822,7 @@ msgid "Photo Archive"
 msgstr "Фотоархів"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__photo_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__photo_ids model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Photos"
 msgstr "Фото"
 
@@ -969,28 +868,16 @@ msgstr "Оцінки"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_sale_order__td_pay_before_install
-msgid ""
-"Read only: the lines of the payment terms that are not «After the act» (the "
-"whole amount when the terms have no milestones)."
-msgstr ""
-"Лише читання: рядки умов оплати, крім «Після акта» (уся сума, якщо в умовах "
-"немає етапів)."
+msgid "Read only: the lines of the payment terms that are not «After the act» (the whole amount when the terms have no milestones)."
+msgstr "Лише читання: рядки умов оплати, крім «Після акта» (уся сума, якщо в умовах немає етапів)."
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_sale_order__td_pay_received
-msgid ""
-"Read only: what the customer has paid on the posted invoices of the order "
-"(the down payments included), less the credit notes."
-msgstr ""
-"Лише читання: що клієнт сплатив за проведеними рахунками замовлення (з "
-"передоплатами), мінус повернення."
+msgid "Read only: what the customer has paid on the posted invoices of the order (the down payments included), less the credit notes."
+msgstr "Лише читання: що клієнт сплатив за проведеними рахунками замовлення (з передоплатами), мінус повернення."
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__reason_id
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__reason
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__name
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__reason
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__reason_id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__reason model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__reason model_terms:ir.ui.view,arch_db:td_mebli_install.report_accrual_sheet
 msgid "Reason"
 msgstr "Причина"
 
@@ -1000,15 +887,12 @@ msgid "Reason of a Bonus or a Penalty"
 msgstr "Причина премії або штрафу"
 
 #. module: td_mebli_install
-#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_accrual_reason_action
-#: model:ir.ui.menu,name:td_mebli_install.td_mebli_accrual_reason_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_reason_view_list
+#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_accrual_reason_action model:ir.ui.menu,name:td_mebli_install.td_mebli_accrual_reason_menu model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_reason_view_list
 msgid "Reasons of Bonuses and Penalties"
 msgstr "Причини премій і штрафів"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_received
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_received model_terms:ir.ui.view,arch_db:td_mebli_install.view_order_form_td_mebli_pay
 msgid "Received"
 msgstr "Отримано"
 
@@ -1049,9 +933,7 @@ msgstr "Частка робіт, %"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__crew_pct
-msgid ""
-"Share of the order amount (without taxes) paid to the crew for the "
-"installation (default: the percent of the company)."
+msgid "Share of the order amount (without taxes) paid to the crew for the installation (default: the percent of the company)."
 msgstr "Частка суми замовлення (без ПДВ), яку сплачують бригаді за монтаж."
 
 #. module: td_mebli_install
@@ -1071,8 +953,7 @@ msgid "Sign the act"
 msgstr "Підписати акт"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
 msgid "Signature"
 msgstr "Підпис"
 
@@ -1087,8 +968,7 @@ msgid "Signature: ____________________"
 msgstr "Підпис: ____________________"
 
 #. module: td_mebli_install
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_install_act__state__signed
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_search
+#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_install_act__state__signed model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_search
 msgid "Signed"
 msgstr "Підписано"
 
@@ -1132,8 +1012,7 @@ msgstr "Почати монтаж"
 
 #. module: td_mebli_install
 #. odoo-python
-#: code:addons/td_mebli_install/models/act.py:0
-#: code:addons/td_mebli_install/models/payment.py:0
+#: code:addons/td_mebli_install/models/act.py:0 code:addons/td_mebli_install/models/payment.py:0
 msgid "Start the installation"
 msgstr "Почати монтаж"
 
@@ -1143,15 +1022,12 @@ msgid "State"
 msgstr "Стан"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__state
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__state
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__state model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__state model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Status"
 msgstr "Стан"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__summary
-#: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual_wizard__state__done
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__summary model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual_wizard__state__done
 msgid "Summary"
 msgstr "Підсумок"
 
@@ -1161,11 +1037,15 @@ msgid "Task"
 msgstr "Завдання"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_control
-#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_control
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_control
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__td_pay_control model:ir.model.fields,field_description:td_mebli_install.field_sale_order__td_pay_control model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__pay_control
 msgid "Td Pay Control"
 msgstr "Контроль оплати"
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/payment.py:0
+msgid "The amount of a manual payment mark is not changed: cancel it and add a new one."
+msgstr "Сума ручної позначки оплати не змінюється: скасуйте її й додайте нову."
 
 #. module: td_mebli_install
 #. odoo-python
@@ -1178,42 +1058,31 @@ msgstr "Сума ручної позначки оплати має бути до
 msgid ""
 "The crew has installed the furniture of the order at the address of the customer. The customer has checked\n"
 "                    the installed furniture; the results of the check are below."
-msgstr ""
-"Бригада змонтувала меблі замовлення за адресою замовника. Замовник перевірив"
-" змонтовані меблі; результати перевірки — нижче."
+msgstr "Бригада змонтувала меблі замовлення за адресою замовника. Замовник перевірив змонтовані меблі; результати перевірки — нижче."
+
+#. module: td_mebli_install
+#: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_unique_crew
+msgid "The crew percent of this act is already accrued to this employee."
+msgstr "Відсоток бригади за цим актом цьому працівнику вже нараховано."
 
 #. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid ""
 "The customer agrees that the photos of the installed furniture may be used in the\n"
 "                    portfolio of the manufacturer (without the address and the name of the customer)."
-msgstr ""
-"Замовник погоджується, що фото змонтованих меблів можуть використовуватися в"
-" портфоліо виробника (без адреси й імені замовника)."
-
-#. module: td_mebli_install
-#. odoo-python
-#: code:addons/td_mebli_install/models/act.py:0
-msgid "The customer signs the act with a finger on the screen first."
-msgstr "Спершу клієнт підписує акт пальцем на екрані."
+msgstr "Замовник погоджується, що фото змонтованих меблів можуть використовуватися в портфоліо виробника (без адреси й імені замовника)."
 
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/accrual.py:0
-msgid ""
-"The hours of an accrual are the time of the tablet: they are not changed by "
-"hand."
+msgid "The hours of an accrual are the time of the tablet: they are not changed by hand."
 msgstr "Години нарахування — це час із планшета цеху: вручну їх не змінюють."
 
 #. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/act.py:0
-msgid ""
-"The order %s already has a final act: one final act per order, the other "
-"visits get stage acts."
-msgstr ""
-"Замовлення %s уже має фінальний акт: один фінальний акт на замовлення, інші "
-"виїзди — акти етапу."
+msgid "The order %s already has a final act: one final act per order, the other visits get stage acts."
+msgstr "Замовлення %s уже має фінальний акт: один фінальний акт на замовлення, інші виїзди — акти етапу."
 
 #. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.view_task_form2_td_mebli_pay
@@ -1233,9 +1102,7 @@ msgstr "Фото додано у фотоархів."
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__photo_archive
-msgid ""
-"The photos may be used for advertising (only with the consent of the "
-"customer)."
+msgid "The photos may be used for advertising (only with the consent of the customer)."
 msgstr "Фото можна використати для реклами (згода — в акті)."
 
 #. module: td_mebli_install
@@ -1245,13 +1112,23 @@ msgid "The start of the period is after its end."
 msgstr "Початок періоду пізніше за його кінець."
 
 #. module: td_mebli_install
+#: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_unique_piece
+msgid "The time line is already accrued."
+msgstr "Цей рядок часу вже нараховано."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+msgid "There is no signature of the customer"
+msgstr "Немає підпису клієнта"
+
+#. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_search
 msgid "This Month"
 msgstr "Цей місяць"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_day_plan_pages
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.project_task_td_day_list model_terms:ir.ui.view,arch_db:td_mebli_install.report_day_plan_pages
 msgid "Time"
 msgstr "Час"
 
@@ -1271,10 +1148,7 @@ msgid "To the Photo Archive"
 msgstr "У фотоархів"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_accrual_view_list model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_list model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_pay_mark_view_list
 msgid "Total"
 msgstr "Разом"
 
@@ -1319,9 +1193,7 @@ msgstr "Користувач"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__crew_base
-msgid ""
-"VP-15: the percent of the crew is accrued from the final act or from the act"
-" of every stage."
+msgid "VP-15: the percent of the crew is accrued from the final act or from the act of every stage."
 msgstr "VP-15: % бригаді нараховується з фінального акта або з акта кожного етапу."
 
 #. module: td_mebli_install
@@ -1341,9 +1213,7 @@ msgstr "Виїзди"
 
 #. module: td_mebli_install
 #: model_terms:ir.actions.act_window,help:td_mebli_install.td_mebli_install_calendar_action
-msgid ""
-"Visits of the installation crews: a standard task of the order with the date"
-" of the visit."
+msgid "Visits of the installation crews: a standard task of the order with the date of the visit."
 msgstr "Виїзди монтажних бригад: стандартна задача замовлення з датою виїзду."
 
 #. module: td_mebli_install
@@ -1416,31 +1286,3 @@ msgstr "усунено"
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "to be fixed"
 msgstr "усунути"
-
-#. module: td_mebli_install
-#: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_unique_piece
-msgid "The time line is already accrued."
-msgstr "Цей рядок часу вже нараховано."
-
-#. module: td_mebli_install
-#: model:ir.model.constraint,message:td_mebli_install.constraint_td_mebli_accrual_unique_crew
-msgid "The crew percent of this act is already accrued to this employee."
-msgstr "Відсоток бригади за цим актом цьому працівнику вже нараховано."
-
-#. module: td_mebli_install
-#. odoo-python
-#: code:addons/td_mebli_install/models/payment.py:0
-msgid "The amount of a manual payment mark is not changed: cancel it and add a new one."
-msgstr "Сума ручної позначки оплати не змінюється: скасуйте її й додайте нову."
-
-#. module: td_mebli_install
-#. odoo-python
-#: code:addons/td_mebli_install/models/payment.py:0
-msgid "Manual payment mark restored: %(amount)s, %(user)s."
-msgstr "Ручну позначку оплати відновлено: %(amount)s, %(user)s."
-
-#. module: td_mebli_install
-#. odoo-python
-#: code:addons/td_mebli_install/models/payment.py:0
-msgid "Manual payment mark changed by %(user)s: %(changes)s"
-msgstr "Ручну позначку оплати змінив(ла) %(user)s: %(changes)s"

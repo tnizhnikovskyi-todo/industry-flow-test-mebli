@@ -1,0 +1,8 @@
+# Зауваження: обмеження між параметрами (SPEC «перевіряють A-12 і B-02») у форматі конфіг-пакета (A-12/A-13 спроба 3, 2026-11-13)
+
+- Скіли: `flow-package-build:config-as-code` 0.3.1 (references/config-package-format.md, apply-semantics.md) ↔ `flow-package-build:questionnaire-builder` (answers-schema.md); `master-data-template-builder` 0.3.1 (scripts/check_master_data.py).
+- Що очікували: формат конфіг-пакета має місце для правил між параметрами (SPEC §11.3 вимагає перевірки в A-12 і B-02) і для «не застосовується в профілі X».
+- Що вийшло: у `config-package-format.md` є лише `applies_if` як рівність (`{VP-05: true}`); заперечення/«одне з» і правила «якщо A, то B» не описано. A-14 config-review повернув це як minor (CHECKS №23). У спробі 3 додано розширення (рішення AI, не формат скіла): `manifest.yaml` → `preflight` (`when` / `require` / `on_violation: error|ignore|warn` / `message`), перевірка до установки модулів; `applies_if` зі значенням-списком = «одне з». Скрипт застосування (scratchpad) підтримує обидва.
+- Тип: (а) прогалина формату скіла.
+- Пропозиція: описати `preflight` і `applies_if` зі списком у `config-package-format.md` і `apply-semantics.md`, додати рядок `CFG-preflight` в «Автоперевірку»; `answers-schema.md` — `applies_if` зі списком (VP-14/15 у light).
+- Дрібне (master-data): `check_master_data.py` MD-order і далі дає хибний FAIL на двопрохідних `td/NNb` (спроби 1–3); MD-req — хибний FAIL на полях, які створює ORM (`product_tmpl_id`, `product_variant_ids`, `resource_id`, `version_id` …), якщо `--fields` зібрано через `default_get` лише обов'язкових полів — у спробі 3 знову довелося правити fields.json вручну.

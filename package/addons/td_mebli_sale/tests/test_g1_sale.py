@@ -107,6 +107,26 @@ class TestG1Sale(TdMebliSaleCommon):
         salesman.invalidate_recordset()
         self.assertEqual(set(env['sale.order'].with_user(salesman).fields_get(['margin'])), {'margin'})
 
+    def test_l3_cost_report_views_without_inconsistency(self):
+        """Review A-14 L-3: the lists of the cost report have no list attribute on the restricted margin fields (no
+        «Access Rights Inconsistency»); the action is for the margin groups; a salesperson without them who gets the
+        list anyway sees it without the margin and without an error."""
+        env = self.env
+        env.company.td_margin_to_salesman = False
+        salesman = self._user('td_l3_salesman', 'sales_team.group_sale_salesman')
+        manager = self._user('td_l3_sale_manager', 'sales_team.group_sale_manager')
+        views = env.ref('td_mebli_sale.sale_order_line_td_cost_list') | env.ref('td_mebli_sale.sale_order_td_low_margin_list')
+        with self.assertNoLogs('odoo.addons.base.models.ir_ui_view', level='WARNING'):
+            views._check_xml()
+        action = env.ref('td_mebli_sale.sale_order_line_td_cost_action')
+        self.assertEqual(action.group_ids, env.ref('td_mebli_base.group_margin_view') | env.ref('td_mebli_base.group_finance')
+                         | env.ref('sales_team.group_sale_manager'))
+        for view in views:
+            arch = env[view.model].with_user(salesman).get_views([(view.id, 'list')])['views']['list']['arch']
+            self.assertNotIn('margin', arch)
+            arch = env[view.model].with_user(manager).get_views([(view.id, 'list')])['views']['list']['arch']
+            self.assertIn('margin_percent', arch)
+
     def test_ac_033_lawyer_mark_goes_away(self):
         env = self.env
         env.company.td_contract_mode = 'contract'

@@ -286,7 +286,17 @@ class TestBasExchange(AccountTestInvoicingCommon):
         self.assertEqual((bonus.bas_state, other.bas_state, draft.bas_state), ('sent', 'error', False))
         with self.assertRaisesRegex(UserError, LOCKED):
             bonus.write({'reason': 'Changed'})
-        with self.assertRaisesRegex(UserError, LOCKED):
+        with self.assertRaises(UserError):  # a confirmed accrual (td_mebli_install) sent to BAS is not deleted
             bonus.unlink()
+        self.assertTrue(bonus.exists())
+        # review A-14 L-1: the lock of BAS is an `ondelete` check that does not block the uninstallation of the module
+        with self.assertRaisesRegex(UserError, LOCKED):
+            bonus._unlink_except_sent_to_bas()
+        ondelete = [m for m in env['td.mebli.accrual']._ondelete_methods
+                    if m.__name__ == '_unlink_except_sent_to_bas']
+        self.assertEqual(len(ondelete), 1)
+        self.assertFalse(ondelete[0]._ondelete)
+        draft.unlink()  # not sent to BAS: deleted as before
+        self.assertFalse(draft.exists())
         with self.assertRaises(UserError):
             bonus.action_td_send_bas()  # already sent: nothing to send

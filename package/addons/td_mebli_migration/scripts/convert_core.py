@@ -12,6 +12,7 @@ Mapping of one target file: {"<target column>": <rule>}, a rule is
 """
 import csv
 import json
+import os
 import re
 import unicodedata
 
@@ -36,10 +37,13 @@ def template_header(path):
 
 
 def convert_rows(rows, mapping, header):
-    """Rows of the export (dicts) → rows of the template (lists in the order of `header`). Columns of the mapping that
-    the template has not (e.g. td_bas_code) are added at the end. Returns (columns, rows, problems)."""
-    columns = list(header) + [column for column in mapping if column not in header]
-    result, problems = [], []
+    """Rows of the export (dicts) → rows of the template (lists in the order of `header`). The header of the template is
+    kept as it is: a column of the mapping that the template has not (e.g. td_bas_code in a standard template) is not
+    written and is reported — the fields td_* have their own templates td/ of A-13. Returns (columns, rows, problems)."""
+    columns = list(header)
+    problems = [f'column «{column}» is not in the template: not written (fields td_* go into the templates td/)'
+                for column in mapping if column not in header]
+    result = []
     for number, row in enumerate(rows, start=2):
         out = []
         for column in columns:
@@ -90,7 +94,9 @@ def run(args, default_mappings):
         source = f"{args.source}/{spec['source']}"
         header = template_header(f'{args.templates}/{target}')
         columns, rows, problems = convert_rows(read_export(source, spec.get('delimiter', ';')), spec['columns'], header)
-        write_template(f'{args.out}/{target}', columns, rows)
+        out = os.path.join(args.out, target)
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        write_template(out, columns, rows)
         problems_all += [f'{target}: {problem}' for problem in problems]
         print(f'{target}: {len(rows)} rows')
     for problem in problems_all:

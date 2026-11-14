@@ -14,6 +14,7 @@ class MrpRoutingWorkcenter(models.Model):
 
     def _td_sync_quality_points(self):
         """AC-127: an operation with a quality step gets one quality point of Quality (not doubled on a repeat)."""
+        # sudo: the quality points follow the operations of the technologist (Quality is admin managed)
         Point = self.env['quality.point'].sudo()
         created = Point
         for operation in self.filtered('td_quality_point'):

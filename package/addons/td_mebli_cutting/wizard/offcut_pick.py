@@ -12,6 +12,7 @@ class TdMebliPart(models.Model):
 
     @api.depends('bom_id')
     def _compute_td_production(self):
+        # sudo: read only: the manufacturing orders of the BoM for the offcut wizard of the technologist
         productions = self.env['mrp.production'].sudo().search(
             [('bom_id', 'in', self.bom_id.ids), ('state', '!=', 'cancel')], order='id')
         by_bom = {}

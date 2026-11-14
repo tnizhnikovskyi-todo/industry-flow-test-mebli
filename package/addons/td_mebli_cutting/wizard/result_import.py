@@ -42,7 +42,8 @@ class TdMebliCuttingResultImport(models.TransientModel):
         parts = {}
         for production in job.production_ids:
             for code, part in job._td_part_codes(production):
-                parts[code] = (part, production)
+                # the pieces of the part in the job: the same quantity as in the cutting file (action_send)
+                parts[code] = (part, production, part.qty * int(production.product_qty))
 
         def integer(row, key):
             try:
@@ -52,6 +53,7 @@ class TdMebliCuttingResultImport(models.TransientModel):
                                            column=key, value=row.get(key))) from error
 
         Product = self.env['product.product']
+        company_domain = [('company_id', 'in', [False, job.company_id.id])]
         sheets, counters = {}, {}
         for row in rows:
             kind = (row.get('type') or 'part').lower()
@@ -62,9 +64,9 @@ class TdMebliCuttingResultImport(models.TransientModel):
             if key not in sheets:
                 material = row.get('material') or ''
                 product = Product.search([('td_material_kind', '=', 'board'), '|', ('default_code', '=', material),
-                                          ('name', '=', material)], limit=1) if material else Product
-                lot = self.env['stock.lot'].search([('name', '=', row['lot'])], limit=1) if row.get('lot') else False
-                sheets[key] = {'product_id': product.id, 'lot_id': lot.id if lot else False,
+                                          ('name', '=', material), *company_domain], limit=1) if material else Product
+                # the lot is looked up below, when the board of the sheet is known (A-14 pr-review m8)
+                sheets[key] = {'product_id': product.id, 'lot_name': row.get('lot') or '',
                                'length': integer(row, 'sheet_length'), 'width': integer(row, 'sheet_width'),
                                'placements': [], 'offcuts': []}
             sheet = sheets[key]
@@ -72,17 +74,28 @@ class TdMebliCuttingResultImport(models.TransientModel):
                 sheet['offcuts'].append({'x': integer(row, 'x'), 'y': integer(row, 'y'),
                                          'length': integer(row, 'length'), 'width': integer(row, 'width')})
                 continue
-            part, production = parts[code]
+            part, production, qty = parts[code]
             if not sheet['product_id']:
                 sheet['product_id'] = part.material_id.id
             counters[code] = counters.get(code, 0) + 1
+            if counters[code] > qty:
+                raise UserError(self.env._("Part %(code)s is placed %(placed)s times, the job has %(qty)s pieces",
+                                           code=code, placed=counters[code], qty=qty))
             sheet['placements'].append({
                 'part_id': part.id, 'production_id': production.id, 'index': counters[code] - 1,
                 'x': integer(row, 'x'), 'y': integer(row, 'y'), 'length': integer(row, 'length'),
                 'width': integer(row, 'width'), 'rotated': (row.get('rotated') or '').lower() in ('1', 'yes', 'true', 'так')})
+        Lot = self.env['stock.lot']
         for key, sheet in sheets.items():
             if not sheet['product_id']:
                 raise UserError(self.env._("Sheet %s: the board is not known.", key))
+            lot_name = sheet.pop('lot_name')
+            lot = Lot.search([('name', '=', lot_name), ('product_id', '=', sheet['product_id']),
+                              *company_domain], limit=1) if lot_name else Lot
+            if lot_name and not lot:
+                raise UserError(self.env._("Sheet %(sheet)s: lot %(lot)s of this board is not found in the company of "
+                                           "the job.", sheet=key, lot=lot_name))
+            sheet['lot_id'] = lot.id
         return {'source': 'imported', 'sheets': [sheets[key] for key in sheets]}
 
     def action_import(self):

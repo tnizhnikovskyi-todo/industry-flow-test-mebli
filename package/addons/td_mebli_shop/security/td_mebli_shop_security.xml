@@ -11,4 +11,11 @@
         <field name="model_id" ref="model_td_mebli_quality_check"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
+    <!-- A-14 security 1: a wizard line of the tablet (the worker and the PIN typed for him) is read only by the user
+         who created it; the PIN itself is erased right after the check (wizard/kiosk.py) -->
+    <record id="td_mebli_kiosk_own_rule" model="ir.rule">
+        <field name="name">Shop floor tablet: own lines only</field>
+        <field name="model_id" ref="model_td_mebli_kiosk"/>
+        <field name="domain_force">[('create_uid', '=', user.id)]</field>
+    </record>
 </odoo>

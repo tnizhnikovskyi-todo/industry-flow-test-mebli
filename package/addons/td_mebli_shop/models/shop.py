@@ -42,6 +42,7 @@ class MrpWorkcenterProductivity(models.Model):
         copies = super().copy(default)
         for line, new in zip(self, copies):
             if line.td_employee_id:
+                # sudo: the split copy of a time line keeps its worker; td_employee_id is protected from users
                 new.sudo().write({'td_employee_id': line.td_employee_id.id})
         return copies
 

@@ -16,6 +16,17 @@ from . import optimizer, sheet_map
 # object (only the code of this module has it; JSON-RPC can pass strings, numbers and lists, never this object)
 CUTTING_SEND = object()
 
+# A-14 security 4: a text cell of the cutting file that a spreadsheet would run as a formula is written as text. The same
+# rule as csv_safe of td_mebli_attendance (wizard/timesheet_export.py); kept here because the cutting module does not
+# depend on the attendance module (one shared helper in td_mebli_base — risk R3-Y-01 of AC-COVERAGE.md).
+CSV_FORMULA_START = ('=', '+', '-', '@', '\t', '\r')
+
+
+def csv_safe(value):
+    text = '' if value is None else str(value)
+    return "'" + text if text.startswith(CSV_FORMULA_START) else text
+
+
 # the offcuts of one order take at most this share of its cost: the rest of the sheet is paid by the order
 OFFCUT_COST_SHARE_CAP = 10.0
 
@@ -26,7 +37,8 @@ class TdMebliCuttingJob(models.Model):
     _inherit = ['mail.thread']
     _order = 'id desc'
 
-    name = fields.Char(string='Reference', required=True, copy=False, readonly=True, default='New')
+    name = fields.Char(string='Reference', required=True, copy=False, readonly=True,
+                       default=lambda self: self.env._('New'))  # D-13: «Новий» in uk_UA until the number is given
     state = fields.Selection(
         [('draft', 'Draft'), ('sent', 'Sent to cutting'), ('result', 'Result received'),
          ('done', 'Done'), ('cancel', 'Cancelled')],
@@ -97,8 +109,8 @@ class TdMebliCuttingJob(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('name', 'New') == 'New':
-                vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.cutting.job') or 'New'
+            if vals.get('name', 'New') in ('New', self.env._('New')):
+                vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.cutting.job') or self.env._('New')
             if not vals.get('company_id') and vals.get('production_ids'):
                 # the company of the manufacturing orders (AC-036: the job is seen in that company only)
                 ids = []
@@ -181,10 +193,11 @@ class TdMebliCuttingJob(models.Model):
                              'part'])
             for production in job.production_ids:
                 for code, part in job._td_part_codes(production):
+                    # the names come from the file of the design program (AC-046): no formulas in the spreadsheet
                     writer.writerow([
-                        code, part.material_id.default_code or part.material_id.name, part.length_mm, part.width_mm,
-                        part.qty * int(production.product_qty), part.edge_long_sides, part.edge_short_sides,
-                        production.origin or production.name, part.name])
+                        csv_safe(code), csv_safe(part.material_id.default_code or part.material_id.name),
+                        part.length_mm, part.width_mm, part.qty * int(production.product_qty), part.edge_long_sides,
+                        part.edge_short_sides, csv_safe(production.origin or production.name), csv_safe(part.name)])
             attachment = self.env['ir.attachment'].create({
                 'name': f'{job.name.replace("/", "-")}-{self.env._("parts")}.csv',
                 'datas': base64.b64encode(buffer.getvalue().encode()),
@@ -406,6 +419,8 @@ class TdMebliCuttingSheet(models.Model):
     _order = 'job_id, sequence, id'
 
     job_id = fields.Many2one('td.mebli.cutting.job', required=True, ondelete='cascade', index=True)
+    # AC-036: the sheet belongs to the company of its job (record rule td_mebli_cutting_sheet_company_rule)
+    company_id = fields.Many2one(related='job_id.company_id', store=True, index=True)
     sequence = fields.Integer(default=10)
     name = fields.Char(compute='_compute_name')
     product_id = fields.Many2one('product.product', string='Board', required=True)
@@ -482,6 +497,7 @@ class TdMebliCuttingPlacement(models.Model):
     _order = 'sheet_id, pos_y_mm, pos_x_mm'
 
     sheet_id = fields.Many2one('td.mebli.cutting.sheet', required=True, ondelete='cascade', index=True)
+    company_id = fields.Many2one(related='sheet_id.company_id', store=True, index=True)  # AC-036
     part_id = fields.Many2one('td.mebli.part', string='Part', required=True)
     production_id = fields.Many2one('mrp.production', string='Manufacturing Order')
     index = fields.Integer(string='Piece No.')
@@ -504,6 +520,7 @@ class TdMebliCuttingOffcut(models.Model):
     _order = 'sheet_id, id'
 
     sheet_id = fields.Many2one('td.mebli.cutting.sheet', required=True, ondelete='cascade', index=True)
+    company_id = fields.Many2one(related='sheet_id.company_id', store=True, index=True)  # AC-036
     pos_x_mm = fields.Integer(string='X, mm')
     pos_y_mm = fields.Integer(string='Y, mm')
     length_mm = fields.Integer(string='Length, mm')

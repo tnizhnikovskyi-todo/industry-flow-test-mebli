@@ -97,6 +97,19 @@ class SaleOrder(models.Model):
             Line.create(vals)
         return True
 
+    def action_td_form_kit(self):
+        """D-11 (AC-091): the button «Build the Packing List» of the order (or of its delivery) for the warehouse: the
+        list is built from the order bills of materials and opened by place. A list with packed lines is not rebuilt
+        (the marks «packed» stay): the button only opens it."""
+        self.ensure_one()
+        if not self.order_line.filtered('td_bom_id'):
+            raise UserError(self.env._(
+                "The order %s has no bill of materials of a product yet: the packing list is built from the bills of "
+                "materials of the order lines.", self.name))
+        if not self.td_kit_line_ids.filtered('packed'):
+            self.action_td_build_kit()
+        return self.action_td_view_kit()
+
     def _td_kit_by_place(self):
         """The packing list grouped by place, for the printed list: [(place, lines)]."""
         self.ensure_one()
@@ -120,6 +133,13 @@ class SaleOrder(models.Model):
 
 class StockPicking(models.Model):
     _inherit = 'stock.picking'
+
+    def action_td_form_kit(self):
+        """D-11 (AC-091): the same button on the delivery of the order."""
+        self.ensure_one()
+        if not self.sale_id:
+            raise UserError(self.env._("The transfer %s has no sales order: there is nothing to pack.", self.name))
+        return self.sale_id.action_td_form_kit()
 
     def button_validate(self):
         for picking in self.filtered(lambda p: p.picking_type_code == 'outgoing' and p.sale_id):

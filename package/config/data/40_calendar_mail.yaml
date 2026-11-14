@@ -1,4 +1,5 @@
-# Календар і листи (AC-004, AC-030).
+# Календар і листи (AC-001, AC-004, AC-030). Нагадування за 1 день до заміру (AC-004) — запис td_mebli_measure.alarm_mail_measure_1day
+# модуля (майстер запису на замір ставить його на зустріч); пункт спроби 1 td_config.alarm_mail_1day прибрано як дубль.
 - id: td_config.event_type_measure
   kind: record
   model: calendar.event.type
@@ -6,19 +7,6 @@
   ac: [AC-001, AC-004]
   source: "addons/calendar/models/calendar_event_type.py (name, color)"
   manual: false
-- id: td_config.alarm_mail_1day
-  kind: record
-  model: calendar.alarm
-  values:
-    name: "Email - 1 день"
-    alarm_type: email
-    duration: 1
-    interval: days
-    mail_template_id: "ref:calendar.calendar_template_meeting_reminder"
-  ac: [AC-004]
-  source: "addons/calendar/data/calendar_data.xml:34 (alarm_mail_1: alarm_type email, mail_template_id calendar_template_meeting_reminder); addons/calendar/models/calendar_alarm.py"
-  manual: false
-  note: "зв'язку «тип зустрічі -> нагадування» в CE немає (calendar.event.type: name, color); нагадування за замовчуванням для зустрічі «Замір» ставить td_mebli_measure (A-11) — Відкриті питання"
 - id: td_config.mail_templates_customer
   kind: mail_template
   model: mail.template
@@ -26,4 +14,4 @@
   ac: [AC-030]
   source: "SPEC AC-030; tr/td_mebli_dashboard_notify.md"
   manual: true
-  reason: "шаблони «Запис на замір», «Дата монтажу», «Нагадування про доплату», «Нова дата» — data/*.xml модуля td_mebli_notify (A-11, хвиля 2); модуля немає в package/addons гілки кроку"
+  reason: "шаблони «Запис на замір», «Дата монтажу», «Нагадування про доплату», «Нова дата», «Нагадування про монтаж», «Брифінг» постачає модуль td_mebli_notify (data/mail_template_data.xml, A-11); конфіг-пакет їх не дублює — read-back перевіряє наявність 6 xml-id td_mebli_notify.mail_template_td_* (install-log.md); тексти править B-04"

@@ -63,10 +63,7 @@ msgstr "Налаштування"
 
 #. module: td_mebli_cost
 #: model_terms:ir.actions.act_window,help:td_mebli_cost.sale_order_td_cost_fact_action
-msgid ""
-"Confirmed orders with manufacturing: the planned cost of the quotation "
-"against the consumed materials, the real hours, the cutting and the accruals"
-" of the finished orders."
+msgid "Confirmed orders with manufacturing: the planned cost of the quotation against the consumed materials, the real hours, the cutting and the accruals of the finished orders."
 msgstr "Підтверджені замовлення з виробництвом: планова собівартість пропозиції проти спожитих матеріалів, фактичних годин, порізки й нарахувань завершених замовлень."
 
 #. module: td_mebli_cost
@@ -75,17 +72,12 @@ msgid "Cost Deviation, %"
 msgstr "Відхилення собівартості, %"
 
 #. module: td_mebli_cost
-#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__td_cost_piecework
-#: model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__td_cost_piecework
-#: model_terms:ir.ui.view,arch_db:td_mebli_cost.res_config_settings_view_form_td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__td_cost_piecework model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__td_cost_piecework model_terms:ir.ui.view,arch_db:td_mebli_cost.res_config_settings_view_form_td_mebli_cost
 msgid "Cost: Piecework instead of Hours"
 msgstr "Собівартість: відрядна замість годин"
 
 #. module: td_mebli_cost
-#: model:ir.actions.act_window,name:td_mebli_cost.sale_order_td_cost_fact_action
-#: model:ir.ui.menu,name:td_mebli_cost.sale_order_td_cost_fact_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
+#: model:ir.actions.act_window,name:td_mebli_cost.sale_order_td_cost_fact_action model:ir.ui.menu,name:td_mebli_cost.sale_order_td_cost_fact_menu model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
 msgid "Cost: Plan vs Actual"
 msgstr "Собівартість: план і факт"
 
@@ -100,18 +92,19 @@ msgid "Cutting"
 msgstr "Порізка"
 
 #. module: td_mebli_cost
-#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__display_name
-#: model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_cost.field_res_company__display_name model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__display_name model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
 #. module: td_mebli_cost
-#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__id
-#: model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__id
-#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_cost.field_res_company__id model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__id model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__id
 msgid "ID"
 msgstr "ID"
+
+#. module: td_mebli_cost
+#: model:ir.model,name:td_mebli_cost.model_mrp_production
+msgid "Manufacturing Order"
+msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_cost
 #. odoo-python
@@ -120,20 +113,13 @@ msgid "No actual yet"
 msgstr "Факту ще немає"
 
 #. module: td_mebli_cost
-#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_overconsumption
-#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
-#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__td_overconsumed
+#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__td_overconsumed model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_overconsumption model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
 msgid "Overconsumption"
 msgstr "Перевитрата"
 
 #. module: td_mebli_cost
-#: model:ir.model.fields,help:td_mebli_cost.field_res_company__td_cost_piecework
-#: model:ir.model.fields,help:td_mebli_cost.field_res_config_settings__td_cost_piecework
-msgid ""
-"Parameter of the report «Cost: plan vs actual» (AC-114): the actual work is "
-"the piecework accruals instead of the hours at the hourly cost of the work "
-"center (no double count when the hourly cost has no wages). The crew percent"
-" is always added."
+#: model:ir.model.fields,help:td_mebli_cost.field_res_company__td_cost_piecework model:ir.model.fields,help:td_mebli_cost.field_res_config_settings__td_cost_piecework
+msgid "Parameter of the report «Cost: plan vs actual» (AC-114): the actual work is the piecework accruals instead of the hours at the hourly cost of the work center (no double count when the hourly cost has no wages). The crew percent is always added."
 msgstr "Параметр звіту «Собівартість план ↔ факт» (AC-114): фактичні роботи — нарахування відрядної замість годин за вартістю години дільниці (без подвійного обліку, коли вартість години не містить зарплати). % бригаді додається завжди."
 
 #. module: td_mebli_cost
@@ -167,16 +153,13 @@ msgid "Planned Margin, %"
 msgstr "Планова маржа, %"
 
 #. module: td_mebli_cost
-#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_has_fact
-#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_has_fact model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
 msgid "Production Finished"
 msgstr "Виробництво завершено"
 
 #. module: td_mebli_cost
 #: model:ir.model.fields,help:td_mebli_cost.field_sale_order__td_cost_cutting
-msgid ""
-"Purchases of the cutting service from the distributor for the manufacturing "
-"orders of the order (a job of several orders is shared by its orders)."
+msgid "Purchases of the cutting service from the distributor for the manufacturing orders of the order (a job of several orders is shared by its orders)."
 msgstr "Закупівлі послуги порізки в дистриб'ютора для МО замовлення (завдання кількох замовлень ділиться між ними)."
 
 #. module: td_mebli_cost
@@ -191,9 +174,7 @@ msgstr "Замовлення на продаж"
 
 #. module: td_mebli_cost
 #: model_terms:ir.ui.view,arch_db:td_mebli_cost.res_config_settings_view_form_td_mebli_cost
-msgid ""
-"The actual work of the report «Cost: plan vs actual» is the piecework, not "
-"the hours at the hourly cost."
+msgid "The actual work of the report «Cost: plan vs actual» is the piecework, not the hours at the hourly cost."
 msgstr "Фактичні роботи у звіті «Собівартість план ↔ факт» — відрядна, а не години за вартістю години."
 
 #. module: td_mebli_cost

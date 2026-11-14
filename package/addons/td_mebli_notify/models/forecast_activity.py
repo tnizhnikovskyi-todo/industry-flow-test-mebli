@@ -20,6 +20,7 @@ class SaleOrder(models.Model):
     def _td_sync_forecast_activity(self):
         if self.env.context.get('td_no_forecast_activity'):  # bulk loads (demo data, migration) run the cron after
             return
+        # sudo: the activity of the salesperson is searched and created by the system (cron, writes of purchase/MO users)
         Activity = self.env['mail.activity'].sudo()
         activity_type = self.env.ref(ACTIVITY, raise_if_not_found=False)
         if not activity_type:
@@ -35,9 +36,13 @@ class SaleOrder(models.Model):
         for order in orders:
             current = by_order.get(order.id)
             late = order.td_delay_days > 0 and order.delivery_status != 'full'
+            # D-13 (AC-N.01): the texts of the activity are in the language of the salesperson who reads it, not of
+            # whoever moved the date (the cron runs as the system user, en_US)
+            lang = (order.user_id or self.env.user).lang or self.env.lang
+            lang_env = self.with_context(lang=lang).env
             if late:
-                summary = self.env._("Forecast later than promised by %s days", order.td_delay_days)
-                note = self.env._("Forecast date %(forecast)s, promised %(promised)s. %(reason)s",
+                summary = lang_env._("Forecast later than promised by %s days", order.td_delay_days)
+                note = lang_env._("Forecast date %(forecast)s, promised %(promised)s. %(reason)s",
                                   forecast=fields.Date.to_string(order.td_forecast_date),
                                   promised=fields.Date.to_string(fields.Date.context_today(order, order.commitment_date)),
                                   reason=order.td_late_item or '')
@@ -46,18 +51,22 @@ class SaleOrder(models.Model):
                     if current.summary != summary or html2plaintext(current.note or '').strip() != note.strip():
                         current.write({'summary': summary, 'note': note})
                 elif order.td_delay_days > order.td_forecast_shift_done:
+                    # sudo: the activity goes to the salesperson of the order also when a purchase or production user moved the date
                     order.sudo().activity_schedule(
                         ACTIVITY, date_deadline=fields.Date.context_today(order), summary=summary, note=note,
                         user_id=(order.user_id or self.env.user).id)
                 else:
                     continue  # marked «Done» for this shift (or a larger one): not repeated
                 if order.td_forecast_shift_done != order.td_delay_days:
+                    # sudo: a technical counter of the order, written by whoever moved the date (purchase, manufacturing)
                     order.sudo().td_forecast_shift_done = order.td_delay_days
             else:
                 if current:
-                    order.sudo().activity_feedback([ACTIVITY], feedback=self.env._("The forecast date is back within "
-                                                                                   "the promised date."))
+                    # sudo: the activity of the salesperson is closed also when a purchase or production user moved the date
+                    order.sudo().activity_feedback([ACTIVITY], feedback=lang_env._("The forecast date is back within "
+                                                                                  "the promised date."))
                 if order.td_forecast_shift_done:
+                    # sudo: a technical counter of the order, written by whoever moved the date (purchase, manufacturing)
                     order.sudo().td_forecast_shift_done = 0
 
     @api.model
@@ -92,6 +101,7 @@ class PurchaseOrderLine(models.Model):
         result = super().write(vals)
         if 'date_planned' in vals or 'qty_received' in vals:
             orders = self.env['sale.order']
+            # sudo: read only — the sales orders of the purchase line are found also for a purchase user without sales rights
             for line in self.sudo():
                 orders |= line._td_productions().reference_ids.sale_ids | line.sale_line_id.order_id
             orders._td_sync_forecast_activity()
@@ -104,5 +114,6 @@ class MrpProduction(models.Model):
     def write(self, vals):
         result = super().write(vals)
         if 'date_finished' in vals or 'date_start' in vals:
+            # sudo: read only — the sales orders of the manufacturing order are found also for a user without sales rights
             (self.sudo().reference_ids.sale_ids | self.sudo().sale_line_id.order_id)._td_sync_forecast_activity()
         return result

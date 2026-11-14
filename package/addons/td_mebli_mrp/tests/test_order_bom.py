@@ -134,3 +134,38 @@ class TestOrderBom(TdMebliCommon):
         custom = self.env['product.attribute.custom.value'].create({
             'custom_product_template_attribute_value_id': ptav.id, 'custom_value': '1800'})
         self.assertEqual(custom.name, f'{attribute.name}: 1800')
+
+    def test_static_board_and_edge_of_the_template_are_not_counted_twice(self):
+        """CHECKS.md No. 28 (AC-013): the template has static lines of the white board and its edge banding (as a
+        standard bill of materials would). The order specification takes board and edge banding from the parts only:
+        for decor B there is no board A / edge A, for decor A the quantity is the one of the parts. Other lines of the
+        template (a back panel board without a part rule, a fitting) are copied."""
+        panel = self.env['product.product'].create({
+            'name': 'Plinth board', 'type': 'consu', 'td_material_kind': 'board',
+            'uom_id': self.env.ref('uom.product_uom_square_meter').id})
+        self.cabinet_tmpl.attribute_line_ids = [
+            (0, 0, {'attribute_id': self.attr_body.id, 'value_ids': [(6, 0, (self.val_a | self.val_b).ids)]})]
+        self.template_bom.bom_line_ids = [
+            (0, 0, {'product_id': self.board_a.id, 'product_qty': 6.5}),
+            (0, 0, {'product_id': self.edge_a.id, 'product_qty': 22.0}),
+            (0, 0, {'product_id': panel.id, 'product_qty': 0.3}),
+            (0, 0, {'product_id': self.fitting.id, 'product_qty': 4.0}),
+        ]
+        bom_b = self._generate(selections=self.val_b | self.val_f | self.val_e04 | self.val_fit)
+        lines_b = bom_b.bom_line_ids
+        self.assertNotIn(self.board_a, lines_b.product_id, "decor B must not need the white board of the template")
+        self.assertNotIn(self.edge_a, lines_b.product_id)
+        self.assertAlmostEqual(sum(lines_b.filtered(lambda l: l.product_id == self.board_b).mapped('product_qty')),
+                               1.084 * 1.1, places=2)
+        self.assertEqual(len(lines_b.filtered(lambda l: l.product_id == self.board_b)), 1)
+        self.assertIn(panel, lines_b.product_id)
+        self.assertEqual(sum(lines_b.filtered(lambda l: l.product_id == self.fitting).mapped('product_qty')), 5.0)
+        bom_a = self._generate()
+        board_lines = bom_a.bom_line_ids.filtered(lambda l: l.product_id == self.board_a)
+        self.assertEqual(len(board_lines), 1)
+        self.assertAlmostEqual(board_lines.product_qty, 1.084 * 1.1, places=2)
+        edge_lines = bom_a.bom_line_ids.filtered(lambda l: l.product_id == self.edge_a)
+        self.assertEqual(len(edge_lines), 1)
+        self.assertAlmostEqual(edge_lines.product_qty, 2 * (0.7 + 0.03) + 2 * (0.768 + 0.03), places=2)
+        self.assertTrue(all(bom_a.bom_line_ids.filtered(
+            lambda l: l.product_id.td_material_kind in ('board', 'edge') and l.product_id != panel).mapped('td_from_parts')))

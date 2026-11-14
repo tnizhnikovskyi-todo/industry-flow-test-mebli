@@ -1,3 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_td_mebli_price_import,td.mebli.price.import,model_td_mebli_price_import,purchase.group_purchase_user,1,1,1,1
 access_td_mebli_price_import_line,td.mebli.price.import.line,model_td_mebli_price_import_line,purchase.group_purchase_user,1,1,1,1
+access_product_supplierinfo_td_purchase_user,product.supplierinfo td purchase user,product.model_product_supplierinfo,purchase.group_purchase_user,1,1,1,0

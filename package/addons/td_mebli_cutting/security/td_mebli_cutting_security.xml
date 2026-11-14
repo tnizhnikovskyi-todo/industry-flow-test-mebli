@@ -6,4 +6,20 @@
         <field name="model_id" ref="model_td_mebli_cutting_job"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
+    <!-- AC-036 (A-14 security 3): the sheets, the placements and the offcuts of a job belong to its company -->
+    <record id="td_mebli_cutting_sheet_company_rule" model="ir.rule">
+        <field name="name">Cutting sheets: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_cutting_sheet"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="td_mebli_cutting_placement_company_rule" model="ir.rule">
+        <field name="name">Cutting placements: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_cutting_placement"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
+    <record id="td_mebli_cutting_offcut_company_rule" model="ir.rule">
+        <field name="name">Cutting offcuts: allowed companies</field>
+        <field name="model_id" ref="model_td_mebli_cutting_offcut"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+    </record>
 </odoo>

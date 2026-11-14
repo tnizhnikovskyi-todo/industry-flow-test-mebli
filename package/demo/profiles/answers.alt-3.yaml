@@ -1,0 +1,22 @@
+# alt-3 — «B, кілька юросіб без ФОП» (ce): покриває VP-03 multi (td_mebli_multico не ставиться) і VP-02 з частиною функцій,
+# VP-12 нижня межа (100), VP-07 нижня межа (1).
+edition: ce
+contract_mode: unset
+VP-01: B
+VP-02: [configurator, kiosk, quality]
+VP-03: multi
+VP-04: true
+VP-05: true
+VP-06: warn
+VP-07: 1
+VP-08: false
+VP-09: both
+VP-10: 5
+VP-11: 5
+VP-12: 100
+VP-13: 14
+VP-14: equal
+VP-15: final
+VP-16: true
+VP-17: warning
+VP-18: true

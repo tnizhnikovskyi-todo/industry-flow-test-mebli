@@ -13,16 +13,24 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from convert_core import run  # noqa: E402
 
 # draft until ВП-1: <template of A-13>: {source: <file of the export>, columns: {<template column>: <rule>}}
+# The code of BAS (td_bas_code, module td_mebli_bas, VP-04) goes into the separate templates td/19b, td/20b, td/21b (second
+# pass of the same ids), never into the standard templates 02, 05, 13: these must stay importable without td_mebli_bas
+# (light profile). Without td_mebli_bas leave the td/ targets out (--mapping) or do not import their files.
 DRAFT_MAPPING = {
     '02_res.partner.csv': {'source': 'partners.csv', 'columns': {
         'id': {'xmlid': 'res_partner', 'from': 'Код'}, 'name': 'Наименование', 'is_company': {'const': 'True'},
-        'vat': 'ИНН', 'company_registry': 'ЕДРПОУ', 'td_bas_code': 'Код'}},
+        'vat': 'ИНН', 'company_registry': 'ЕДРПОУ'}},
     '05_product.product.csv': {'source': 'products.csv', 'columns': {
         'id': {'xmlid': 'product_product', 'from': 'Код'}, 'name': 'Наименование', 'default_code': 'Артикул',
-        'type': {'const': 'consu'}, 'is_storable': {'const': 'True'}, 'td_bas_code': 'Код'}},
+        'type': {'const': 'consu'}, 'is_storable': {'const': 'True'}}},
     '13_hr.employee.csv': {'source': 'employees.csv', 'columns': {
-        'id': {'xmlid': 'hr_employee', 'from': 'Табельный номер'}, 'name': 'Сотрудник', 'job_title': 'Должность',
-        'td_bas_code': 'Табельный номер'}},
+        'id': {'xmlid': 'hr_employee', 'from': 'Табельный номер'}, 'name': 'Сотрудник', 'job_title': 'Должность'}},
+    'td/19b_res.partner.csv': {'source': 'partners.csv', 'columns': {
+        'id': {'xmlid': 'res_partner', 'from': 'Код'}, 'td_bas_code': 'Код'}},
+    'td/20b_product.product.csv': {'source': 'products.csv', 'columns': {
+        'id': {'xmlid': 'product_product', 'from': 'Код'}, 'td_bas_code': 'Код'}},
+    'td/21b_hr.employee.csv': {'source': 'employees.csv', 'columns': {
+        'id': {'xmlid': 'hr_employee', 'from': 'Табельный номер'}, 'td_bas_code': 'Табельный номер'}},
 }
 
 

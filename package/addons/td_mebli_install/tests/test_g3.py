@@ -22,6 +22,11 @@ class G3InstallCommon(TransactionCase):
         super().setUpClass()
         env = cls.env
         env['res.lang']._activate_lang('uk_UA')
+        # the terms of uk.po: a base without uk_UA (en_US admin) gets them only now (AC-102 prints in the customer language)
+        env['ir.module.module']._load_module_terms(['td_mebli_install'], ['uk_UA'], overwrite=True)
+        # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
+        # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
+        cls.env.company.td_install_in_price = False
         cls.company = env.company
         cls.term = env['account.payment.term'].create({'name': '50/40/10', 'line_ids': [
             (0, 0, {'value': 'percent', 'value_amount': 50.0, 'nb_days': 0, 'td_milestone': 'order'}),
@@ -160,6 +165,27 @@ class TestActG3(G3InstallCommon):
         act.action_sign()
         return act
 
+    def test_ac_098_sign_without_signature_and_change_of_a_signed_act(self):
+        """AC-098: SPEC texts «Немає підпису клієнта» / «Підписаний акт змінювати не можна»; the data do not change."""
+        order = self._order()
+        act = self.env['td.mebli.install.act'].create({'task_id': order.tasks_ids.id, 'kind': 'final'})
+        for lang, text in (('en_US', "There is no signature of the customer"), ('uk_UA', "Немає підпису клієнта")):
+            with self.assertRaises(UserError) as error:
+                act.with_user(self.fitter).with_context(lang=lang).action_sign()
+            self.assertEqual(str(error.exception), text)
+        self.assertEqual(act.state, 'draft')
+        act.write({'signature': PHOTO, 'signed_by': 'Customer'})
+        act.with_user(self.fitter).action_sign()
+        for lang, text in (('en_US', "A signed act cannot be changed"),
+                           ('uk_UA', "Підписаний акт змінювати не можна")):
+            with self.assertRaises(UserError) as error:  # the crew of the visit
+                act.with_user(self.fitter).with_context(lang=lang).write({'signed_by': 'Somebody else'})
+            self.assertEqual(str(error.exception), text)
+            with self.assertRaises(UserError) as error:  # «Sign» again
+                act.with_user(self.fitter).with_context(lang=lang).action_sign()
+            self.assertEqual(str(error.exception), text)
+        self.assertEqual(act.signed_by, 'Customer')
+
     def test_ac_100_photo_archive_needs_the_consent(self):
         order = self._order()
         act = self._signed(order)
@@ -185,6 +211,11 @@ class TestActG3(G3InstallCommon):
         order = self._order()
         act = self._signed(order, defect_ids=[(0, 0, {'name': 'Gap on the left door'})], checklist='Fronts adjusted')
         report = self.env['ir.actions.report']
+        # the act is printed in the language of the customer: set explicitly (A-14 convergence 4, not the base language)
+        order.partner_id.lang = 'uk_UA'
+        html, _kind = report._render_qweb_html('td_mebli_install.report_install_act', act.ids)
+        self.assertIn('Шаблон до перевірки юристом'.encode(), html)
+        order.partner_id.lang = 'en_US'
         html, _kind = report._render_qweb_html('td_mebli_install.report_install_act', act.ids)
         self.assertIn(b'Template to be checked by a lawyer', html)
         self.assertIn(b'Gap on the left door', html)
@@ -297,6 +328,110 @@ class TestAccrualG3(G3InstallCommon):
         self.assertEqual(mine.state, 'cancel')
         self.assertEqual(mine.cancel_reason, 'Wrong employee')
 
+    def test_ac_106_accountant_does_not_bypass_the_head_by_rpc(self):
+        """CHECKS.md No. 30 (security S-N2): the accountant confirms, but through RPC does not return a confirmed
+        accrual to draft (to change its amount), does not cancel it and does not create it cancelled; the head returns
+        to draft and cancels with a reason only. No. 31: a confirmed accrual is not deleted (ondelete)."""
+        Accrual = self.env['td.mebli.accrual']
+        accountant = _user(self.env, 'td_g3_acc2', ['account.group_account_user'])
+        line = Accrual.with_user(accountant).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0, 'reason': 'Clean site'})
+        line.with_user(accountant).write({'state': 'confirmed'})  # the accountant confirms (ACCRUE)
+        self.assertEqual(line.state, 'confirmed')
+        with self.assertRaises(AccessError):
+            line.with_user(accountant).write({'state': 'draft'})
+        with self.assertRaises(UserError):
+            line.with_user(accountant).write({'amount': 1000.0})
+        with self.assertRaises(AccessError):
+            line.with_user(accountant).write({'state': 'cancel', 'cancel_reason': 'Mistake'})
+        with self.assertRaises(AccessError):
+            Accrual.with_user(accountant).create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 5.0,
+                                                  'reason': 'Clean site', 'state': 'cancel', 'cancel_reason': 'x'})
+        with self.assertRaises(UserError):
+            line.with_user(accountant).unlink()
+        self.assertEqual((line.state, line.amount), ('confirmed', 100.0))
+        head = _user(self.env, 'td_g3_head2', ['account.group_account_manager'])
+        with self.assertRaises(UserError):  # cancelled by RPC only with a reason
+            line.with_user(head).write({'state': 'cancel'})
+        line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Duplicate'})
+        self.assertEqual((line.state, line.amount, line.cancel_reason), ('cancel', 100.0, 'Duplicate'))
+        with self.assertRaises(AccessError):  # a cancelled one is not confirmed again by the accountant
+            line.with_user(accountant).write({'state': 'confirmed'})
+        draft = Accrual.with_user(accountant).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 1.0, 'reason': 'Clean site'})
+        draft.with_user(accountant).unlink()  # a draft is deleted
+
+    def test_ac_106_head_does_not_change_a_confirmed_accrual_by_rpc(self):
+        """CHECKS.md No. 35 (security N3-1): AC-106 «confirmed — read only for everybody, except the cancellation by the
+        head with a reason» holds for the head too: through RPC the production manager and the accounting administrator
+        do not return a confirmed accrual to draft, do not change its amount, do not restore a cancelled one and do not
+        rewrite the reason of the cancellation."""
+        Accrual = self.env['td.mebli.accrual']
+        heads = (_user(self.env, 'td_g3_head3', ['account.group_account_manager']),
+                 _user(self.env, 'td_g3_head4', ['mrp.group_mrp_manager']))
+        for head in heads:
+            line = Accrual.with_user(head).create({
+                'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0, 'reason': 'Clean site'})
+            line.with_user(head).action_td_confirm()
+            self.assertEqual(line.state, 'confirmed')
+            with self.assertRaises(AccessError):
+                line.with_user(head).write({'state': 'draft'})
+            with self.assertRaises(UserError):
+                line.with_user(head).write({'amount': 120.0})
+            with self.assertRaises(UserError):  # the cancellation does not change the figures
+                line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Mistake', 'amount': 1.0})
+            line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Mistake'})
+            with self.assertRaises(AccessError):  # not restored
+                line.with_user(head).write({'state': 'confirmed'})
+            with self.assertRaises(AccessError):
+                line.with_user(head).write({'state': 'draft'})
+            with self.assertRaises(AccessError):  # not cancelled again with another reason
+                line.with_user(head).write({'state': 'cancel', 'cancel_reason': 'Other'})
+            line.with_user(head).action_td_cancel('Other')  # the button cancels confirmed lines only: no change
+            with self.assertRaises(AccessError):  # not created cancelled
+                Accrual.with_user(head).create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 5.0,
+                                                'reason': 'Clean site', 'state': 'cancel', 'cancel_reason': 'x'})
+            self.assertEqual((line.state, line.amount, line.cancel_reason), ('cancel', 100.0, 'Mistake'))
+
+    def test_ac_106_cancel_reason_and_author_are_locked(self):
+        """CHECKS.md No. 36 (security N3-2): the reason of the cancellation and the author of a confirmed or cancelled
+        accrual are not rewritten through RPC (the accountant has write access to all the accruals)."""
+        Accrual = self.env['td.mebli.accrual']
+        accountant = _user(self.env, 'td_g3_acc3', ['account.group_account_user'])
+        head = _user(self.env, 'td_g3_head5', ['account.group_account_manager'])
+        line = Accrual.with_user(accountant).create({
+            'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0, 'reason': 'Clean site'})
+        self.assertEqual(line.author_id, accountant)
+        line.with_user(accountant).action_td_confirm()
+        with self.assertRaises(UserError):
+            line.with_user(accountant).write({'author_id': head.id})
+        line.with_user(head).action_td_cancel('Wrong employee')
+        for user in (accountant, head):
+            with self.assertRaises(UserError):
+                line.with_user(user).write({'cancel_reason': 'Rewritten'})
+            with self.assertRaises(UserError):
+                line.with_user(user).write({'author_id': user.id})
+        self.assertEqual((line.cancel_reason, line.author_id), ('Wrong employee', accountant))
+
+    def test_ac_106_accounting_administrator_does_what_the_accountant_does(self):
+        """CHECKS.md No. 35: in Odoo 19 account.group_account_manager does not imply account.group_account_user
+        (account/security/account_security.xml); the accounting administrator confirms the drafts, accrues for a period
+        and reads the reasons, like the accountant, and cancels as the head."""
+        admin = _user(self.env, 'td_g3_accadm', ['account.group_account_manager'])
+        self.assertFalse(admin.has_group('account.group_account_user'))
+        Accrual = self.env['td.mebli.accrual'].with_user(admin)
+        draft = Accrual.create({'employee_id': self.employee.id, 'kind': 'bonus', 'amount': 100.0,
+                                'reason': 'Clean site'})
+        draft.action_td_confirm()
+        self.assertEqual(draft.state, 'confirmed')
+        self.assertTrue(Accrual.action_td_accrue_wizard())
+        wizard = self.env['td.mebli.accrual.wizard'].with_user(admin).create({})
+        wizard.action_accrue()
+        self.assertEqual(wizard.state, 'done')
+        self.assertTrue(self.env['td.mebli.accrual.reason'].with_user(admin).create({'name': 'Late', 'kind': 'penalty'}))
+        draft.action_td_cancel('Wrong employee')
+        self.assertEqual(draft.state, 'cancel')
+
     def test_ac_107_master_adds_bonus_in_his_section(self):
         Accrual = self.env['td.mebli.accrual']
         master = _user(self.env, 'td_g3_master', ['mrp.group_mrp_user'])
@@ -315,7 +450,13 @@ class TestAccrualG3(G3InstallCommon):
                                               'reason_id': reason.id})
         with self.assertRaises(AccessError):  # not a bonus or a penalty
             Accrual.with_user(master).create({'employee_id': self.employee.id, 'kind': 'piece', 'amount': 50.0})
-        bonus.action_td_confirm()  # the head confirms
+        # A-14 security 2: the master does not confirm his own drafts — neither by the button nor by RPC write
+        with self.assertRaises(AccessError):
+            bonus.with_user(master).action_td_confirm()
+        with self.assertRaises(AccessError):
+            bonus.with_user(master).write({'state': 'confirmed'})
+        self.assertEqual(bonus.state, 'draft')
+        bonus.with_env(self.env).action_td_confirm()  # the head confirms
         with self.assertRaises(UserError):  # AccessError is a UserError too
             bonus.with_user(master).write({'reason': 'Other'})
 

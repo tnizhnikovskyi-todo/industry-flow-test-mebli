@@ -58,6 +58,7 @@ class ProjectTask(models.Model):
         tomorrow = tomorrow.filtered(lambda t: t.td_install_reminded_for != visit_day(t))
         tomorrow._td_post_letter('td_mebli_notify.mail_template_td_install_reminder')
         for task in tomorrow:
+            # sudo: a technical mark of the visit (reminded for this date), written by the cron for any project
             task.sudo().td_install_reminded_for = visit_day(task)
         soon = self._td_visits_between(to_utc(today), to_utc(today + timedelta(days=MAX_PAYMENT_DAYS + 1)))
         soon = soon.filtered(
@@ -69,11 +70,13 @@ class ProjectTask(models.Model):
         for order in orders - with_email:
             # AC-031: no e-mail — a note in the chatter and an activity of the salesperson (once, as the letter)
             order.message_post(body=self.env._("Reminder not sent: no email"), subtype_xmlid='mail.mt_note')
+            # sudo: the cron schedules the activity of the salesperson of the order (AC-031)
             order.sudo().activity_schedule(
                 'mail.mail_activity_data_todo', date_deadline=fields.Date.context_today(order),
                 summary=self.env._("Reminder not sent: no email"),
                 note=self.env._("Remind the customer of the payment before the installation by phone."),
                 user_id=(order.user_id or self.env.user).id)
         for task in soon:
+            # sudo: a technical mark of the visit (reminded for this date), written by the cron for any project
             task.sudo().td_payment_reminded_for = visit_day(task)
         return {'install': len(tomorrow), 'payment': len(with_email), 'no_email': len(orders - with_email)}

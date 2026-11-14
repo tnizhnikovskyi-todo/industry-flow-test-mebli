@@ -11,9 +11,12 @@ class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
     td_is_parametric = fields.Boolean(related='product_id.product_tmpl_id.td_is_parametric')
-    td_width = fields.Integer(string='Width, mm', compute='_compute_td_dims', store=True, readonly=False, precompute=True)
-    td_height = fields.Integer(string='Height, mm', compute='_compute_td_dims', store=True, readonly=False, precompute=True)
-    td_depth = fields.Integer(string='Depth, mm', compute='_compute_td_dims', store=True, readonly=False, precompute=True)
+    td_width = fields.Integer(string='Width, mm', compute='_compute_td_dims', inverse='_inverse_td_dims', store=True,
+                           readonly=False, precompute=True)
+    td_height = fields.Integer(string='Height, mm', compute='_compute_td_dims', inverse='_inverse_td_dims', store=True,
+                           readonly=False, precompute=True)
+    td_depth = fields.Integer(string='Depth, mm', compute='_compute_td_dims', inverse='_inverse_td_dims', store=True,
+                           readonly=False, precompute=True)
     td_size_factor = fields.Float(string='Size Factor', compute='_compute_td_size_factor', store=True,
                                   precompute=True, digits=(16, 3))
     td_bom_id = fields.Many2one('mrp.bom', string='Order BoM', copy=False, index='btree_not_null',
@@ -62,6 +65,24 @@ class SaleOrderLine(models.Model):
             dims = line._td_get_dims()
             line.td_width, line.td_height, line.td_depth = (dims[axis] for axis in AXES)
 
+    def _inverse_td_dims(self):
+        """D-04 / AC-015: a size typed in the line goes back to the value of the configurator, so that the description,
+        the specification and the price follow the same size."""
+        for line in self.filtered('td_is_parametric'):
+            for custom in line.product_custom_attribute_value_ids:
+                axis = custom.custom_product_template_attribute_value_id.attribute_id.td_dimension
+                if axis and (custom.custom_value or '').strip() != str(line[f'td_{axis}']):
+                    old_label = custom.name
+                    custom.custom_value = str(line[f'td_{axis}'])
+                    # the description of the line (printed in the quotation) reads the new size too
+                    if old_label and line.name and old_label in line.name:
+                        line.name = line.name.replace(old_label, custom.name)
+
+    def _td_axis_label(self, axis):
+        """D-13: the axis in the language of the user (the selection of product.attribute.td_dimension)."""
+        labels = dict(self.env['product.attribute']._fields['td_dimension']._description_selection(self.env))
+        return (labels.get(axis) or axis).lower()
+
     @api.constrains('product_id', 'product_custom_attribute_value_ids', 'td_width', 'td_height', 'td_depth')
     def _check_td_dims(self):
         for line in self.filtered('td_is_parametric'):
@@ -70,14 +91,15 @@ class SaleOrderLine(models.Model):
                 if not raw.isdigit():
                     raise ValidationError(self.env._(
                         "%(product)s: the %(axis)s must be a whole number of millimetres, got '%(raw)s'.",
-                        product=tmpl.display_name, axis=axis, raw=raw))
+                        product=tmpl.display_name, axis=line._td_axis_label(axis), raw=raw))
             for axis in AXES:
                 value = line[f'td_{axis}']
                 low, high = tmpl[f'td_{axis}_min'], tmpl[f'td_{axis}_max']
                 if not low <= value <= high:
                     raise ValidationError(self.env._(
                         "%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm.",
-                        product=tmpl.display_name, axis=axis, value=value, low=low, high=high))
+                        product=tmpl.display_name, axis=line._td_axis_label(axis), value=value,
+                        low=low, high=high))
 
     def _td_size_factor_for(self, width, height):
         tmpl = self.product_id.product_tmpl_id
@@ -110,8 +132,8 @@ class SaleOrderLine(models.Model):
             return 0.0
         price = super()._get_display_price()
         if self.td_is_parametric:
-            dims = self._td_get_dims()
-            price *= self._td_size_factor_for(dims['width'], dims['height'])
+            # D-04 / AC-015: the size of the line (typed in the line or in the configurator), not only the configurator
+            price *= self._td_size_factor_for(self.td_width, self.td_height)
         return price
 
     # ------------------------------------------------------------------
@@ -124,10 +146,12 @@ class SaleOrderLine(models.Model):
 
     def _td_generate_bom(self):
         """(Re)create the order BoM of the line; a BoM that already has manufacturing orders is kept."""
-        # a salesperson has no manufacturing rights: the specification is built and replaced as the system
+        # sudo: a salesperson has no manufacturing rights: the order specification is built and replaced as the system
         Bom = self.env['mrp.bom'].sudo()
         for line in self.filtered('td_is_parametric'):
+            # sudo: the old specification is read and replaced as the system (no manufacturing rights of the salesperson)
             old = line.td_bom_id.sudo()
+            # sudo: read only — is the old specification used by a manufacturing order
             if old and self.env['mrp.production'].sudo().search_count([('bom_id', '=', old.id)], limit=1):
                 continue
             dims = {axis: line[f'td_{axis}'] for axis in AXES}

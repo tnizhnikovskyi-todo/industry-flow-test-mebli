@@ -119,8 +119,7 @@ msgid "Days of shift of the promised dates"
 msgstr "Дні зсуву обіцяних дат"
 
 #. module: td_mebli_dashboard
-#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__display_name
-#: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__display_name
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -171,8 +170,7 @@ msgid "Hours done"
 msgstr "Годин зроблено"
 
 #. module: td_mebli_dashboard
-#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__id
-#: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__id
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__id model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__id
 msgid "ID"
 msgstr "ID"
 
@@ -213,8 +211,7 @@ msgid "Last %(days)s days · %(date)s"
 msgstr "Останні %(days)s днів · %(date)s"
 
 #. module: td_mebli_dashboard
-#: model:ir.actions.client,name:td_mebli_dashboard.action_dashboard
-#: model:ir.ui.menu,name:td_mebli_dashboard.menu_dashboard_root
+#: model:ir.actions.client,name:td_mebli_dashboard.action_dashboard model:ir.ui.menu,name:td_mebli_dashboard.menu_dashboard_root
 msgid "Manager Dashboard"
 msgstr "Керівник"
 
@@ -230,12 +227,6 @@ msgid "Manufacturing orders: %s"
 msgstr "Виробничих замовлень: %s"
 
 #. module: td_mebli_dashboard
-#. odoo-python
-#: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "Scraps: %s"
-msgstr "Браку: %s"
-
-#. module: td_mebli_dashboard
 #: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Margin"
 msgstr "Маржа"
@@ -248,8 +239,7 @@ msgstr "Маржа %(margin)s з виручки %(revenue)s, замовлень 
 
 #. module: td_mebli_dashboard
 #. odoo-python
-#: code:addons/td_mebli_dashboard/models/dashboard.py:0
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0 model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Margin of the orders"
 msgstr "Маржа замовлень"
 
@@ -267,9 +257,7 @@ msgstr "Маржа, зважена"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid ""
-"Margin: one weighted figure (margin ÷ revenue) on the dashboard and in the "
-"reports."
+msgid "Margin: one weighted figure (margin ÷ revenue) on the dashboard and in the reports."
 msgstr "Маржа: одна зважена цифра (маржа ÷ виручка) на дашборді й у звітах."
 
 #. module: td_mebli_dashboard
@@ -299,14 +287,14 @@ msgstr "Замірів: %(all)s, договорів: %(ok)s"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "No data"
-msgstr "Немає даних"
+msgid "No change of the stage for more than %s days"
+msgstr "Етап не змінювався понад %s дн."
 
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid "No change of the stage for more than %s days"
-msgstr "Етап не змінювався понад %s дн."
+msgid "No data"
+msgstr "Немає даних"
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -323,12 +311,8 @@ msgstr "Відкрита черга: %s тижн. роботи"
 #. module: td_mebli_dashboard
 #. odoo-python
 #: code:addons/td_mebli_dashboard/models/dashboard.py:0
-msgid ""
-"Open work started or planned to start in 7 days ÷ weekly hours of the "
-"section calendar"
-msgstr ""
-"Відкрита робота, розпочата або з плановим стартом за 7 днів ÷ годин "
-"календаря дільниці на тиждень"
+msgid "Open work started or planned to start in 7 days ÷ weekly hours of the section calendar"
+msgstr "Відкрита робота, розпочата або з плановим стартом за 7 днів ÷ годин календаря дільниці на тиждень"
 
 #. module: td_mebli_dashboard
 #. odoo-javascript
@@ -462,6 +446,12 @@ msgid "Saved by business offcuts: %s"
 msgstr "Економія від ділових обрізків: %s"
 
 #. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Scraps: %s"
+msgstr "Браку: %s"
+
+#. module: td_mebli_dashboard
 #. odoo-javascript
 #: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
 msgid "Section"
@@ -475,12 +465,8 @@ msgstr "Завантаження дільниць, 7 днів"
 
 #. module: td_mebli_dashboard
 #: model:res.groups,comment:td_mebli_dashboard.group_td_mebli_director
-msgid ""
-"Sees the one-screen dashboard of the factory: revenue, margin, cost. Granted"
-" to the owner and the finance manager."
-msgstr ""
-"Бачить дашборд фабрики на одному екрані: виручка, маржа, собівартість. "
-"Надається власнику й фінансисту."
+msgid "Sees the one-screen dashboard of the factory: revenue, margin, cost. Granted to the owner and the finance manager."
+msgstr "Бачить дашборд фабрики на одному екрані: виручка, маржа, собівартість. Надається власнику й фінансисту."
 
 #. module: td_mebli_dashboard
 #. odoo-python
@@ -553,9 +539,7 @@ msgid "The shop floor board is available to the users of Manufacturing."
 msgstr "Табло цеху доступне користувачам Виробництва."
 
 #. module: td_mebli_dashboard
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_due_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_due_list model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
 msgid "Total"
 msgstr "Разом"
 

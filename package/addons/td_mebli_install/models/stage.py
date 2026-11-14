@@ -27,11 +27,14 @@ class SaleOrder(models.Model):
                  'order_line.invoice_lines.move_id.amount_residual', 'td_pay_mark_ids.amount', 'td_pay_mark_ids.cancelled')
     def _compute_td_stage(self):
         super()._compute_td_stage()
-        for order in self.filtered(lambda o: o.td_stage == 'done'):
-            order.td_stage = order._td_stage_after_made()
+
+    def _td_stage_value(self):
+        value = super()._td_stage_value()
+        return self._td_stage_after_made() if value == 'done' else value
 
     def _td_stage_after_made(self):
         self.ensure_one()
+        # sudo: read only: the stage is shown to the salesperson, the documents stay with their modules
         order = self.sudo()  # read only: the stage is shown to the salesperson, the documents stay with their modules
         deliveries = order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing' and p.state != 'cancel')
         delivered = bool(deliveries) and all(p.state == 'done' for p in deliveries)

@@ -1,6 +1,6 @@
 # CONFIG — конфіг-пакет пакета mebli (A-12)
 
-Скіл: `flow-package-build:config-as-code (версія 0.3.1)`, режим `build`, спроба 1. Входи: `package/ALLOCATION.md`, `package/SPEC.md` (§4, §11), `package/tr/00-architecture.md`, `package/templates/answers.yaml` і `answers.example.yaml` @ `351d4a8`. Формат — `config-as-code/references/config-package-format.md` (`format: 2`), редакції — `flow-package-build/references/editions-and-bridges.md`.
+Скіл: `flow-package-build:config-as-code (версія 0.3.1)`, спроба 1 — режим `build` @ `351d4a8` (escalated: бракувало модулів A-11); спроба 2 — режим `fix` @ `4e0fdda` (повтор після A-11: модулі `td_mebli_*` є в `package/addons`, VP треку «код» — поля `res.company.td_*` модуля `td_mebli_base`, API G0 `package/addons/AC-COVERAGE.md`); **спроба 3 — режим `fix` @ `4e96a56`** (повернення з A-14: `package/CHECKS.md` №23, №26 і config-review 1; модулі A-11 спроби 3); **спроба 4 — режим `fix` @ `21b4a9f`** (повернення з A-14 спроби 2: `package/CHECKS.md` №33, №34). Входи: `package/ALLOCATION.md`, `package/SPEC.md` (§4, §11), `package/tr/00-architecture.md`, `package/templates/answers.yaml` і `answers.example.yaml`, `package/addons/` @ `4e0fdda`. Формат — `config-as-code/references/config-package-format.md` (`format: 2`), редакції — `flow-package-build/references/editions-and-bridges.md`.
 
 Зміст по AC складено напряму з SPEC/ALLOCATION: скіла `odoo19-mvp-build:config-spec` у сесії немає (див. «Відкриті питання»). Пункт без AC з ALLOCATION сюди не потрапляє. Кожне поле й запис звірено з вихідниками Odoo 19.0 CE @ `40e9be2b` і з чистою тестовою базою (`fields_get`, `ir.model.data`).
 
@@ -18,23 +18,25 @@
 | AC | Що налаштовується | Пункт даних (`data/`) | Вид |
 |---|---|---|---|
 | AC-001 | CRM + календар (стандарт), тип зустрічі «Замір» | `40_calendar_mail.yaml`: `td_config.event_type_measure` | record |
-| AC-004 | нагадування листом за 1 день | `40_calendar_mail.yaml`: `td_config.alarm_mail_1day` (шаблон `calendar.calendar_template_meeting_reminder`) | record |
+| AC-004 | нагадування листом за 1 день до заміру | запис модуля `td_mebli_measure.alarm_mail_measure_1day` (майстер запису ставить його на зустріч); тип зустрічі — `td_config.event_type_measure`; пункт спроби 1 `td_config.alarm_mail_1day` прибрано (дубль) | record (модуль) |
 | AC-011 | варіанти товару (конфігуратор коробки B) | `80_settings.yaml`: `td_config.settings_variants` (`group_product_variant` = VP-01 `B` і `configurator` у VP-02) | settings |
-| AC-019 | умови оплати етапами 50/40/10 | `20_sale_project.yaml`: `td_config.payment_term_stages` (`active` = VP-05) | record |
+| AC-019 | умови оплати етапами 50/40/10 з розміткою `td_milestone` | запис модуля `td_mebli_sale.payment_term_td_furniture` (A-11, noupdate); `20_sale_project.yaml`: `td_config.payment_term_furniture_active` (`active` = VP-05) і `td_config.default_payment_term` (`ir.default` `res.partner.property_payment_term_id` компанії → умова замовлення продажу; VP-05 = `true` — умова модуля, `false` — `false`, тобто без default, як у чистій базі; спроба 4, CHECKS №34) | record |
 | AC-024 | MTO + «Купити», багатокрокові маршрути | `30_mrp_stock.yaml`: `td_config.route_mto_active` (`stock.route_warehouse0_mto.active`); `80_settings.yaml`: `td_config.settings_stock_routes` | record, settings |
-| AC-030 | шаблони листів покупцю | `40_calendar_mail.yaml`: `td_config.mail_templates_customer` — **manual** (шаблони в `td_mebli_notify`, A-11) | mail_template |
+| AC-030 | шаблони листів покупцю | `40_calendar_mail.yaml`: `td_config.mail_templates_customer` — **manual**: 6 шаблонів постачає `td_mebli_notify` (`data/mail_template_data.xml`), read-back перевіряє їх xml-id | mail_template |
 | AC-043, AC-044 | проєкт «Монтажі», послуга «Монтаж» зі створенням задачі | `20_sale_project.yaml`: `td_config.project_install`, `td_config.product_install` (`service_tracking: task_global_project`) | record |
 | AC-070 | причини втрат «Відключення світла», «Немає матеріалу», «Поломка»; робочі завдання | `30_mrp_stock.yaml`: `td_config.loss_*`; `80_settings.yaml`: `td_config.settings_workorders` | record, settings |
-| AC-077 | кіоск відвідувань за PIN | `80_settings.yaml`: `td_config.settings_attendance_pin` | settings |
+| AC-077 | кіоск відвідувань за PIN (у всіх коробках, крім light — SPEC §11.4) | `80_settings.yaml`: `td_config.settings_attendance_pin` (`applies_if` VP-01 ∈ A, B) | settings |
 | AC-082, AC-084 | стандарт (резерв, аналіз закупівель) | лише модулі `stock`, `mrp`, `purchase` | — |
 | AC-095 | графік бригад у проєкті «Монтажі» | `td_config.project_install` (календар задач — стандарт) | record |
 | AC-116 | споживання специфікацій (VP-17) | `30_mrp_stock.yaml`: `td_config.default_bom_consumption` (`ir.default` поля `mrp.bom.consumption`) | record |
 | AC-117 | онлайн-підпис пропозиції | `80_settings.yaml`: `td_config.settings_portal_sign` (`portal_confirmation_sign`) | settings |
 | AC-N.01 | мова uk_UA | установка бази з `--load-language=uk_UA` (`manifest.yaml: install.language`); переклади `td_*` — A-11 | — |
 | AC-N.03 | `l10n_ua`, план рахунків `ua_psbo`, ПДВ 20 % (VP-18) | `15_accounting.yaml`: `td_config.company_country_ua`, `td_config.chart_ua_psbo`, `td_config.company_default_taxes` | record, chart |
-| AC-N.07 | профіль коробки (VP-01, VP-02) | `manifest.yaml` (`when:`), `60_td_params.yaml`: `td_config.param_vp_01`, `70_feature_groups.yaml`: `td_config.feature_groups_box` | td_param, group |
+| AC-N.07 | профіль коробки (VP-01, VP-02) | `manifest.yaml` (`when:`), `60_td_params.yaml`: `td_config.param_vp_01` (`res.company.td_box_profile`), `70_feature_groups.yaml`: `td_config.feature_groups_box` (галочки `group_td_feature_*`) | td_param, settings |
 
-Значення VP: `{{VP-xx}}` — `transform` з `vp-map.yaml`; `{{VP-xx:<ім'я>}}` — `transform_<ім'я>` того самого пункту (коли одне VP дає два поля або значення залежить від кількох VP). `applies_if` — зі схеми: невиконана умова = пункт не застосовується.
+Значення VP: `{{VP-xx}}` — `transform` з `vp-map.yaml`; `{{VP-xx:<ім'я>}}` — `transform_<ім'я>` того самого пункту (коли одне VP дає два поля або значення залежить від кількох VP). `applies_if` — зі схеми: невиконана умова = пункт не застосовується; значення-список = «одне з» (спроба 3).
+
+**Обмеження між параметрами (SPEC §11.3, CHECKS №23).** `manifest.yaml` → `preflight` (PF-01…PF-09) перевіряється **до установки модулів** за `answers.yaml` (з default схеми): `error` — застосування зупиняється з поясненням (відповідь суперечить коробці, виправити в B-02): `edition: ee` ⇒ VP-01 = `B`; VP-01 = `light` ⇒ `edition: ce`, VP-04 = `false`, VP-05 = `false`, VP-09 = `distributor` (default схеми VP-04 = `true`, VP-05 = `true` — у light їх треба задати явно); `ignore` — значення не пишеться, у компанії лишається default модуля: VP-14, VP-15 і кіоск за PIN у light, VP-02/03/12 поза B, VP-06/07 без VP-05; `warn` — VP-12 без `offcut` у VP-02. Додатково `td_mebli_bas` має `when: VP-04 == true and VP-01 != 'light'`. Перевірено: light за §11.3 — preflight OK (3 ignore); light із default схеми і `edition: ee` з VP-01 = A — STOP до установки (`install-log.md`).
 
 ## Модулі до установки
 
@@ -72,71 +74,103 @@
 | 45–50 | `mrp_workorder`, `quality_control`, `industry_fsm`, `planning`, `helpdesk`, `sign` | стандарт EE (`origin: std-ee`) | AC-126…AC-130 | EE |
 | 51–56 | мости `td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign` (`auto_install`) | код (A-11) | AC-126…AC-130 | EE |
 
-Модулів «готове» (вендорених) немає. Ліцензії залежностей ядра: AGPL — 0 (перевірено за маніфестами Odoo 19 CE і `package/addons`); модулі `td_*`, яких ще немає в `package/addons`, — «ліцензія не перевірена» (WARN).
+Модулів «готове» (вендорених) немає. Ліцензії залежностей ядра: AGPL — 0 (перевірено за маніфестами Odoo 19 CE і `package/addons`); модулі `td_*` — LGPL-3 (маніфести `package/addons` @ `4e0fdda`); мости EE залежать від модулів EE, яких немає в CE-вихідниках — «ліцензія залежності не перевірена» (WARN), ліцензія самих мостів — відкрите питання (`tests/open-questions.md`).
 
 ## Параметри установки (VP-xx)
 
 | VP | Ключ (якір) | Трек | Ціль | AC |
 |---|---|---|---|---|
-| VP-01 | `ir.config_parameter:[key=td_mebli.vp_01]:value` + `manifest when:` | конфіг | профіль модулів light / A / B; поле `res.company.td_box_profile` реалізує модуль td_* (A-11) | AC-N.07, AC-089, AC-121 |
-| VP-02 | `res.groups:xml_id=base.group_user:implied_ids` (групи `td_mebli_base.group_feature_*`) | конфіг | feature-групи коробки B; групи створює A-11; лише при VP-01 = `B` | AC-011, AC-012, AC-037, … AC-121 (19 AC) |
+| VP-01 | `res.company:xml_id=base.main_company:td_box_profile` + `manifest when:` | конфіг | профіль модулів light / A / B + поле `res.company.td_box_profile` (td_mebli_base) | AC-N.07, AC-089, AC-121 |
+| VP-02 | `res.config.settings` `group_td_feature_<значення>` → `td_mebli_base.group_feature_*` у `implied_ids` `base.group_user` | конфіг | feature-групи коробки B (галочки налаштувань td_mebli_base); лише при VP-01 = `B` | AC-011, AC-012, AC-037, … AC-121 (19 AC) |
 | VP-03 | `ir.module.module:[name=td_mebli_multico]:state` | конфіг | `multi_install_fop` → модуль `td_mebli_multico`; юрособи — B-04; лише при VP-01 = `B` | AC-035, AC-036 |
-| VP-04 | `ir.module.module:[name=td_mebli_bas]:state` | конфіг | `true` → модуль `td_mebli_bas` | AC-021, AC-039…AC-042, AC-078, AC-109 |
-| VP-05 | `account.payment.term:xml_id=td_config.payment_term_stages:active` | конфіг | умови оплати етапами активні / архівні | AC-019, AC-020, AC-031, AC-042, AC-065 |
-| VP-06 | `ir.config_parameter:[key=td_mebli.vp_06]:value` | код | реалізує модуль td_* (A-11): `res.company.td_payment_control`; лише при VP-05 = `true` | AC-020, AC-021 |
-| VP-07 | `ir.config_parameter:[key=td_mebli.vp_07]:value` | код | реалізує модуль td_* (A-11): `td_pay_reminder_days`; лише при VP-05 = `true` | AC-031 |
-| VP-08 | `ir.config_parameter:[key=td_mebli.vp_08]:value` | код | реалізує модуль td_* (A-11): `td_margin_to_salesman` | AC-017, AC-018 |
-| VP-09 | `ir.config_parameter:[key=td_mebli.vp_09]:value` | код | реалізує модуль td_* (A-11): меню розкрою `td_mebli_cutting` | AC-026…AC-028, AC-053…AC-056, AC-131 |
-| VP-10 | `ir.config_parameter:[key=td_mebli.vp_10]:value` | код | реалізує модуль td_* (A-11): `td_stuck_days` | AC-067, AC-124 |
-| VP-11 | `ir.config_parameter:[key=td_mebli.vp_11]:value` | код | реалізує модуль td_* (A-11): `td_price_threshold_pct` | AC-085, AC-086 |
-| VP-12 | `ir.config_parameter:[key=td_mebli.vp_12]:value` | код | реалізує модуль td_* (A-11): `td_min_offcut_mm`; лише при VP-01 = `B` | AC-059, AC-060 |
-| VP-13 | `ir.config_parameter:[key=td_mebli.vp_13]:value` | код | реалізує модуль td_* (A-11): `td_claim_overdue_days` | AC-110, AC-124 |
-| VP-14 | `ir.config_parameter:[key=td_mebli.vp_14]:value` | код | реалізує модуль td_* (A-11): `td_crew_split` | AC-104 |
-| VP-15 | `ir.config_parameter:[key=td_mebli.vp_15]:value` | код | реалізує модуль td_* (A-11): `td_crew_base` | AC-103, AC-104 |
-| VP-16 | `ir.config_parameter:[key=td_mebli.vp_16]:value` | код | реалізує модуль td_* (A-11): `td_install_in_price` | AC-043 |
+| VP-04 | `ir.module.module:[name=td_mebli_bas]:state` | конфіг | `true` → модуль `td_mebli_bas`; у light — `false` (PF-03) | AC-021, AC-039…AC-042, AC-078, AC-109 |
+| VP-05 | `account.payment.term:xml_id=td_mebli_sale.payment_term_td_furniture:active` | конфіг | умова оплати модуля активна + default покупців компанії / архівна, default = `false` (не на архівну); light — `false` (PF-04) | AC-019, AC-020, AC-031, AC-042, AC-065 |
+| VP-06 | `res.company:xml_id=base.main_company:td_payment_control` | код | реалізує модуль td_* (A-11): `res.company.td_payment_control`; лише при VP-05 = `true` | AC-020, AC-021 |
+| VP-07 | `res.company:xml_id=base.main_company:td_pay_reminder_days` | код | реалізує модуль td_* (A-11): `td_pay_reminder_days`; лише при VP-05 = `true` | AC-031 |
+| VP-08 | `res.company:xml_id=base.main_company:td_margin_to_salesman` | код | реалізує модуль td_* (A-11): `td_margin_to_salesman` | AC-017, AC-018 |
+| VP-09 | `res.company:xml_id=base.main_company:td_cutting_mode` | код | реалізує модуль td_* (A-11): `td_cutting_mode` (`distributor` ховає меню власного розкрою) | AC-026…AC-028, AC-053…AC-056, AC-131 |
+| VP-10 | `res.company:xml_id=base.main_company:td_stuck_days` | код | реалізує модуль td_* (A-11): `td_stuck_days` | AC-067, AC-124 |
+| VP-11 | `res.company:xml_id=base.main_company:td_price_threshold_pct` | код | реалізує модуль td_* (A-11): `td_price_threshold_pct` | AC-085, AC-086 |
+| VP-12 | `res.company:xml_id=base.main_company:td_min_offcut_mm` | код | реалізує модуль td_* (A-11): `td_min_offcut_mm`; лише при VP-01 = `B` | AC-059, AC-060 |
+| VP-13 | `res.company:xml_id=base.main_company:td_claim_overdue_days` | код | реалізує модуль td_* (A-11): `td_claim_overdue_days` | AC-110, AC-124 |
+| VP-14 | `res.company:xml_id=base.main_company:td_crew_split` | код | реалізує модуль td_* (A-11): `td_crew_split`; у light не застосовується (SPEC §11.3, PF-06) | AC-104 |
+| VP-15 | `res.company:xml_id=base.main_company:td_crew_base` | код | реалізує модуль td_* (A-11): `td_crew_base`; у light не застосовується (SPEC §11.3, PF-06) | AC-103, AC-104 |
+| VP-16 | `res.company:xml_id=base.main_company:td_install_in_price` | код | реалізує модуль td_* (A-11): `td_install_in_price`; default схеми = default поля модуля = `true` (A-11 спроба 3) | AC-043 |
 | VP-17 | `ir.default:xml_id=td_config.default_bom_consumption:json_value` | конфіг | споживання нових специфікацій `flexible` / `warning` / `strict` | AC-116 |
 | VP-18 | `res.company:xml_id=base.main_company:account_sale_tax_id` | конфіг | `true` → ПДВ 20 % `ua_psbo` за замовчуванням продажу й закупівлі; `false` → без податку за замовчуванням | AC-N.03 |
-| edition | `ir.config_parameter:[key=td_mebli.edition]:value` + `manifest edition_profiles` | конфіг | профіль `ce` / `ee` | AC-113, AC-126…AC-130 |
-| contract_mode | `ir.config_parameter:[key=td_mebli.contract_mode]:value` | код | реалізує модуль td_* (A-11): `res.company.td_contract_mode`; `unset` → параметра немає | AC-033, AC-034, AC-101 |
+| edition | `manifest edition_profiles`; read-back — `ir.module.module:[name=web_enterprise]:state` (`ce` = відсутній) | конфіг | профіль `ce` / `ee` | AC-113, AC-126…AC-130 |
+| contract_mode | `res.company:xml_id=base.main_company:td_contract_mode` | код | реалізує модуль td_* (A-11): `res.company.td_contract_mode`; `unset` → поле порожнє | AC-033, AC-034, AC-101 |
 
-Ключ `td_mebli.<vp>` — контракт за замовчуванням `config-as-code` до рішення A-11 (WARN `td_param`); цільове поле компанії — `vp-map.yaml` `a11_target` (рішення AI-A12-01 нижче).
+Трек «код»: `kind: td_param` з якорем — поле `res.company.td_*` модуля `td_mebli_base` (AI-A08-04, рішення AI-A12-01 спроби 2); ключі `ir.config_parameter` `td_mebli.<vp>` спроби 1 більше не пишуться (`post_init_hook` `td_mebli_base` переносить їх у поля, якщо вони є в базі). Запис — у `base.main_company`; у базі з кількома юрособами (B-04, VP-03) — значення на кожну компанію.
 
 ## Команда установки
 
-Версія 0.1: команди немає — скриптів `tools/odoo/` немає (C-00 ще не скопіював еталони). Застосовано **не через odoo-mcp** (у тесті заборонено), а локальним Odoo 19.0 CE: `odoo-bin` для бази й модулів і `odoo-bin shell` (команди зі stdin, файлів у репо не створено) за семантикою `apply-semantics.md`. Покрокова інструкція (q29) — `install-log.md`, розділ «Покрокова установка». Вручну — за runbook (`config-runbook`). `install-one-command: N/A`.
+Версія 0.1: команди немає — скриптів `tools/odoo/` немає (C-00 ще не скопіював еталони). Застосовано **не через odoo-mcp** (у тесті заборонено), а локальним Odoo 19.0 CE: `odoo-bin` для бази й модулів і `odoo-bin shell` (скрипт застосування — у scratchpad сесії, не в репо) за семантикою `apply-semantics.md`. Покрокова інструкція (q29) — `install-log.md`, розділ «Покрокова установка». Вручну — за runbook (`config-runbook`). `install-one-command: N/A`.
 
 ## Ручні кроки
 
 | Пункт CONFIG | Чому не дані (секрет / інтеграція / Studio / інше) | Хто виконує | Підтвердження |
 |---|---|---|---|
-| AC-030 шаблони листів покупцю | шаблони — `data/*.xml` модуля `td_mebli_notify` (A-11, хвиля 2), не конфіг-пакет | A-11 (модуль), Тімлід перевіряє в A-14 | установка `td_mebli_notify` + шаблони в базі |
-| AC-004 зв'язок «тип зустрічі Замір → нагадування за 1 день» | у CE `calendar.event.type` має лише `name`, `color`; нагадування за замовчуванням для зустрічі заміру ставить код (`td_mebli_measure`) | A-11 | тур A-16 «запис на замір» |
-| AC-019 розмітка етапів (`td_milestone`) рядків умов оплати | поле `td_*` — не в даних конфіг-пакета (CFG-td-isolation) | A-11 (`td_mebli_sale`: розмітка за порядком рядків) або B-04 | AC-019 на демо A-15 |
+| AC-030 шаблони листів покупцю | шаблони постачає модуль `td_mebli_notify` (`data/mail_template_data.xml`, 6 записів); конфіг-пакет їх не дублює | A-11 (модуль); тексти — B-04 | read-back: 6 xml-id `td_mebli_notify.mail_template_td_*` є (`install-log.md`) |
+| AC-107 типові причини премій і штрафів (`td.mebli.accrual.reason`) | модель `td.*` — не в даних конфіг-пакета (CFG-td-isolation); типовий набір — шаблон A-13 `td/17_td.mebli.accrual.reason.csv`, імпортує крок міграції `td_mebli_migration` (`step_td_17`, послідовність 24 з 28 — `td_mebli_migration/data/td_mebli_migration_step_data.xml`) | B-04 / B-06 (імпорт шаблону) | тест-імпорт A-13 (`package/master-data/README.md`) |
 | Вихідна пошта для нагадувань | сервер SMTP з паролем — секрет | B-04 (база клієнта), пароль зі змінних оточення | тестовий лист |
 
-Ручних пунктів: 4 (у даних `manual: true` — 1: `td_config.mail_templates_customer`).
+Ручних пунктів: 3 (у даних `manual: true` — 1: `td_config.mail_templates_customer`). Спроба 3: пункт «AC-019 розмітка `td_milestone`» закрито — розмітку дає запис модуля `td_mebli_sale.payment_term_td_furniture` (CHECKS №22, A-11). Пункт спроби 1 «AC-004 зв'язок типу зустрічі з нагадуванням» закрито модулем `td_mebli_measure`.
 
 ## Зміни версії
 
-Перший запуск (`build`), попереднього тега `package/vX.Y` немає.
+Перший запуск (`build`), попереднього тега `package/vX.Y` немає. Спроба 2 (`fix`, після A-11 @ `4e0fdda`, правок A-14 немає — `CHECKS.md` відсутній):
+
+| Що | Спроба 1 | Спроба 2 |
+|---|---|---|
+| VP треку «код» (VP-06…VP-16), VP-01, `contract_mode` | `ir.config_parameter` `td_mebli.<vp>` + `a11_target` | поля `res.company.td_*` (`td_mebli_base`), `a11_target` прибрано; VP-09 → `td_cutting_mode` |
+| VP-02 | `implied_ids` `base.group_user` напряму (kind `group`) | галочки `res.config.settings` `group_td_feature_*` (API G0), kind `settings` |
+| `edition` | `ir.config_parameter` `td_mebli.edition` (код не читає) | лише профіль `edition_profiles`; read-back — `web_enterprise` |
+| `contract_mode = unset` | параметра немає | поле `td_contract_mode` порожнє |
+| AC-004 | `td_config.alarm_mail_1day` | прибрано (дубль `td_mebli_measure.alarm_mail_measure_1day`) |
+| Модулі | 7 `td_*` і 6 мостів відсутні | усі 18 `td_*` CE і 6 мостів є в `package/addons`; профілі A / light / B встановлено |
+
+Спроба 3 (`fix`, повернення з A-14, `package/CHECKS.md` цикл 1; модулі A-11 @ `4e96a56`):
+
+| Правка CHECKS / гейт | Спроба 2 | Спроба 3 (закрито: файл / пункт) |
+|---|---|---|
+| №23 SPEC §11.3 для light | не перевірялось; light із default отримував BAS, кіоск і VP-14/15 | `manifest.yaml` `preflight` PF-01…PF-09 + `when` `td_mebli_bas`; `applies_if` VP-14/15 (`vp-map.yaml`, `60_td_params.yaml`), кіоск (`80_settings.yaml`); розділ «Обмеження між параметрами» вище |
+| №26 застарілий текст | AC-107 — «відкрите питання»; light у логу з VP-05 = `true`, VP-09 = `both` | «Ручні кроки» (AC-107 — шаблон A-13 `td/17` + крок міграції 22; спроба 4 — 24, CHECKS №33), «Відкриті питання»; `install-log.md` light за §11.3 |
+| config-review 1 (№22, A-11) | власний запис `td_config.payment_term_stages` без `td_milestone` | прибрано; `td_config.payment_term_furniture_active` + `td_config.default_payment_term` на запис модуля `td_mebli_sale.payment_term_td_furniture` |
+| config-review 4 (№24, A-11) | VP-16: схема `true` ↔ модуль `False` | модуль `true`; `vp-map.yaml` VP-16 `default: true` |
+
+Спроба 4 (`fix`, повернення з A-14 спроби 2, `package/CHECKS.md` №33, №34; модулі A-11 спроби 4):
+
+| Правка CHECKS | Спроба 3 | Спроба 4 |
+|---|---|---|
+| №33 (config C-N1) | «Ручні кроки»: `step_td_17` — послідовність 22 | послідовність 24 з 28 кроків (звірено з `td_mebli_migration_step_data.xml` і `master-data/README.md`) |
+| №34 (config C-N2) | `td_config.default_payment_term` з `applies_if {VP-05: true}`: повтор з VP-05 = `false` → `skipped`, `ir.default` лишався на архівній умові | `applies_if` прибрано; `json_value` = `{{VP-05:payment_default}}` (`true` → умова модуля, `false` → `false`); перевірено 2 проходами true→false→false (`install-log.md`) |
+
+Спроба 5 (`fix`, повернення з A-16, `package/demo/defects.md` D-10 — «немає виключень атрибутів, AC-011»):
+
+| Правка | Спроба 4 | Спроба 5 |
+|---|---|---|
+| D-10 (AC-011) | виключення `product.template.attribute.exclusion` — «майстер-дані (A-13 / B-04)»; у демо-каталозі їх не було | **рішення: це дані виробу, не конфіг** — запис посилається на `product.template.attribute.value` конкретного виробу (без стабільного xmlid), а конфіг-пакет ставиться до A-13 і демо-шару, коли виробів ще немає. Конфіг-пакет без змін (`td_config.settings_variants` = варіанти, VP-02 — feature-група конфігуратора). Демо-каталог: виключення «ЛДСП Антрацит — лише кромка 2 мм» для «Шафа-купе 2-дверна» і «Кухонний модуль нижній 600» — `td_mebli_demo/hooks.py` `EXCLUSIONS` (A-11 спроба 7, тест `test_d10_exclusions_of_the_configurator`); шаблон майстер-даних виключень — A-13 (`master-data/README.md` №7, відкрите питання) |
+| Перевірка | — | база `test-mebli-a117t-demo` (профіль `answers.yaml`): прохід 1 created 8 / updated 6 / unchanged 13, прохід 2 (compare) unchanged 27 / diff 0, read-back 23 VP — 0 failed; після демо-шару read-back — OK; `product.template.attribute.exclusion` = 2 |
 
 ## Відкриті питання
 
-- Скілів `odoo19-mvp-build:config-spec`, `odoo19-mvp-build:config-review`, `boost:odoo19-lint`, `boost:source-check` у сесії немає: зміст CONFIG.md складено напряму з SPEC/ALLOCATION, `config-review` і `lint` — не виконано (звіт A-12).
-- Модулі `td_mebli_base`, `td_mebli_maint`, `td_mebli_attendance`, `td_mebli_bas`, `td_mebli_migration`, `td_mebli_multico`, `td_mebli_notify` і мости EE відсутні в `package/addons` гілки кроку — установка профілю неповна (дефект для A-11).
-- Ключі VP треку «код»: модулі зрізу читають власні ключі (`td_mebli_install.payment_control`, `td_mebli_sale.contract_mode` зі значеннями `work`/`sale`), а схема A-09 — `contract_mode: contract|sale|unset`; ТР (`tr/td_mebli_base.md`) переносить їх у поля компанії. A-11 обирає: читати `td_mebli.<vp>` або поле компанії (тоді A-12 змінює якір).
-- AC-004: як прив'язати нагадування за 1 день до зустрічі «Замір» у CE (тип зустрічі не має нагадувань) — механізм A-11.
-- AC-011: атрибути й виключення «Шафа-купе» — майстер-дані (A-13 / B-04), не конфіг.
-- Профіль light (AI-A10-05): розрив залежностей `td_mebli_install` → `td_mebli_shop`, `td_mebli_dashboard` → усі A — рішення A-11 / Архітектора.
-- Профіль `ee` не перевірено: доступу до Odoo 19 EE немає.
+- Скілів `odoo19-mvp-build:config-spec`, `odoo19-mvp-build:config-review`, `boost:odoo19-lint`, `boost:source-check` у сесії немає: зміст CONFIG.md складено напряму з SPEC/ALLOCATION; `config-review` і `lint` — замінники A-14 (`tests/reports/A-14.md`) і самоперевірка спроби 3 (звіт A-12-3).
+- `applies_if` VP-14, VP-15 (`{VP-01: [A, B]}`, SPEC §11.3) є у `vp-map.yaml`, але не в схемі `package/templates/answers.yaml` (A-09) — схему варто доповнити (`tests/open-questions.md`); `preflight` — розширення формату `config-package-format.md` (observation).
+- AC-011: атрибути й виключення виробів — дані виробу (A-13 / B-04; демо — `td_mebli_demo`), не конфіг (спроба 5, D-10). Шаблон CSV виключень для A-13 — відкрите питання (`tests/open-questions.md`).
+- Профіль light (AI-A10-05): розрив залежностей `td_mebli_install` → `td_mebli_shop`, `td_mebli_dashboard` → усі A — рішення A-11 / Архітектора; light = A без `td_mebli_bas` (спроби 2–3: встановлено й перевірено; спроба 3 — за SPEC §11.3).
+- Профіль `ee` не перевірено: доступу до Odoo 19 EE немає; мости встановлювались лише статично (маніфести, порядок).
 - План рахунків: `account` при установці на компанію без країни ставить `generic_coa`; пакет перемикає на `ua_psbo` (`try_loading`) на чистій базі без проводок. На базі з проводками перемикання неможливе — B-04 ставить країну UA до установки `account`.
+- Кілька юрос (VP-03 `multi` / `multi_install_fop`): пункти `td_param` пишуться в `base.main_company`; інші компанії створює B-04 — значення VP для них (default модуля або ті самі відповіді) — B-04 runbook.
 
 ## Рішення AI з ризиком (власник — вето; записи 28, 37, 48)
 
 | ID | Рішення | Альтернатива | Ризик | Перевірка |
 |---|---|---|---|---|
-| AI-A12-01 | VP треку «код» пишуться в `ir.config_parameter` ключами `td_mebli.<vp>` (контракт скіла), цільове поле компанії — у `vp-map.yaml` `a11_target` | писати відразу в поля `res.company.td_*` (AI-A08-04) | полів ще немає (`td_mebli_base` відсутній); подвійне зберігання, якщо A-11 обере поле | A-11 рішення ключа; A-14 track-convergence |
+| AI-A12-01 (спроба 2) | VP треку «код», VP-01, `contract_mode` — `kind: td_param` з якорем поле `res.company.td_*` (`td_mebli_base`), запис у `base.main_company`; ключі `ir.config_parameter` спроби 1 не пишуться | писати ключі `td_mebli.<vp>` і покладатися на `post_init_hook` | компанії, створені після конфігу (B-04, кілька юрос), отримують default модуля, а не відповідь анкети | read-back A / light / B; B-04 runbook |
 | AI-A12-02 | План рахунків `ua_psbo` і країна UA — пункти даних (`kind: chart`, record компанії) після установки модулів | ставити країну до установки `account` (порушує порядок «модулі → дані») | на базі з проводками `try_loading` не перемкне план | B-04 runbook: країна до установки |
 | AI-A12-03 | Послуга «Монтаж» і проєкт «Монтажі» — у конфіг-пакеті (ALLOCATION відносить AC-043 до A-12), без ціни | шаблон майстер-даних A-13 | дубль із шаблоном A-13 | A-13 README «Не дублювати конфіг» |
-| AI-A12-04 | VP-03, VP-04 — `kind: module` (read-back за станом модуля); у `config-kinds-odoo19.md` такого виду немає | лише `manifest when:` без read-back | розширення формату без рішення Архітектора | observation, A-14 config-review |
+| AI-A12-04 | VP-03, VP-04, `edition` — `kind: module` (read-back за станом модуля); у `config-kinds-odoo19.md` такого виду немає | лише `manifest when:` без read-back | розширення формату без рішення Архітектора | observation, A-14 config-review |
 | AI-A12-05 | VP-17 — `ir.default` поля `mrp.bom.consumption` (нові специфікації) | поле на кожній специфікації (A-11) | специфікації, створені кодом з явним `consumption`, ігнорують замовчування | A-11 (AI-A08-27), тур A-16 |
+| AI-A12-06 (спроба 2) | VP-02 — галочки `res.config.settings` `group_td_feature_*` (API G0), не прямий запис `implied_ids` | kind `group` спроби 1 | `execute()` знімає групу, якщо галочку зняли, — повторне застосування з іншим VP-02 прибирає функції B у всіх користувачів | read-back B (10 груп) / A, light (0 груп) |
+| AI-A12-07 (спроба 2) | Пункт `td_config.alarm_mail_1day` прибрано: нагадування за 1 день постачає `td_mebli_measure` | лишити обидва | у базі спроби 1 лишається зайвий запис нагадування (лише тестові бази, видалені) | read-back AC-004 |

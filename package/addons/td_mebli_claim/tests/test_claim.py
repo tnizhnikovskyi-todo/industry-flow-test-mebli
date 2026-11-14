@@ -198,3 +198,31 @@ class TestClaimVisit(ClaimCommon):
         claim = self._claim(self._confirmed(), product_id=self.cabinet.id)
         with self.assertRaises(UserError):
             claim.action_td_plan_visit()
+
+
+@tagged('post_install', '-at_install')
+class TestServiceRole(ClaimCommon):
+    """D-08 (tr/security.md §1, ROLE-10 «Service»): the group of the service gives the claims (standard repair orders),
+    not Manufacturing or Sales: the user of the service registers the claim and starts the remake of the part."""
+
+    def test_d08_service_user_registers_the_claim_and_starts_the_remake(self):
+        from odoo.exceptions import AccessError
+        service = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Service', 'login': 'td_d08_service', 'email': 'td_d08_service@example.com',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id, self.env.ref('td_mebli_claim.group_service').id])]})
+        self.assertTrue(service.has_group('stock.group_stock_user'))
+        self.assertFalse(service.has_group('mrp.group_mrp_user'))
+        self.assertFalse(service.has_group('sales_team.group_sale_salesman'))
+        order = self._confirmed()
+        part = order.order_line.td_bom_id.td_part_ids[:1]
+        claim = self.env['repair.order'].with_user(service).create({
+            'partner_id': self.partner.id, 'td_claim_order_id': order.id, 'td_part_id': part.id})
+        claim.action_td_remake()
+        production = claim.sudo().td_remake_production_id
+        self.assertEqual(production.origin, claim.name)
+        self.assertEqual(production.user_id, service)
+        self.assertEqual(production.state, 'confirmed')
+        # the form of the claim as the service user is served and the menu of the repairs is his
+        self.env['repair.order'].with_user(service).get_views([(False, 'form'), (False, 'list')])
+        with self.assertRaises(AccessError):
+            self.env['mrp.production'].with_user(service).check_access('create')

@@ -7,6 +7,10 @@ class TdMebliSaleCommon(TdMebliCommon):
     def setUpClass(cls):
         super().setUpClass()
         env = cls.env
+        # review A-14 (config 4): the tests do not depend on the answers of the config package — VP-16 «Installation in
+        # the order price» is set explicitly (the default of the field is the default of the schema, true); the tests
+        # of the installation in the price set it to True themselves
+        env.company.td_install_in_price = False
         # price extras on the choice values
         cls.val_b.default_extra_price = 600.0
         cls.val_e2.default_extra_price = 350.0

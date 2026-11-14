@@ -21,3 +21,5 @@ access_td_mebli_pay_mark_sale,td.mebli.pay.mark sale,model_td_mebli_pay_mark,sal
 access_td_mebli_pay_mark_crew,td.mebli.pay.mark crew,model_td_mebli_pay_mark,project.group_project_user,1,0,0,0
 access_td_mebli_pay_mark_finance,td.mebli.pay.mark finance,model_td_mebli_pay_mark,td_mebli_base.group_finance,1,1,1,0
 access_td_mebli_accrual_account_manager,td.mebli.accrual accounting manager,model_td_mebli_accrual,account.group_account_manager,1,1,1,1
+access_td_mebli_accrual_reason_account_manager,td.mebli.accrual.reason accounting manager,model_td_mebli_accrual_reason,account.group_account_manager,1,1,1,1
+access_td_mebli_accrual_wizard_account_manager,td.mebli.accrual.wizard accounting manager,model_td_mebli_accrual_wizard,account.group_account_manager,1,1,1,1

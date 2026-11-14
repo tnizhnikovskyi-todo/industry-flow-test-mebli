@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
     <!-- Position 2 (F-51): letters to the customer, standard mail templates. The measurement reminder is the standard
          calendar alarm (td_mebli_measure). -->
     <record id="mail_template_td_new_date" model="mail.template">

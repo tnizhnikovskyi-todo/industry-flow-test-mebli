@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
-    <!-- Import order of the CSV templates of A-13: package/master-data/README.md «Import order» (the templates are not copied here) -->
+    <!-- Import order of the CSV templates of A-13, version 1.1: package/master-data/README.md «Порядок імпорту» (the templates are
+         not copied here; 28 steps, light 25). Steps 1-15 are the standard files 01-15, steps 16-28 the files td/ in the order of
+         their numbers (td/03b, td/04b: the component roles of the configurator, td_mebli_mrp);
+         td/19b-21b (td_bas_code) are the last ones: td_mebli_bas is not in every profile (light is without it). -->
     <record id="step_01" model="td.mebli.migration.step">
         <field name="sequence">1</field>
-        <field name="name">Product categories and warranty</field>
+        <field name="name">Product categories</field>
         <field name="template">01_product.category.csv</field>
         <field name="model_name">product.category</field>
         <field name="box">A</field>
@@ -14,7 +17,7 @@
         <field name="template">02_res.partner.csv</field>
         <field name="model_name">res.partner</field>
         <field name="box">A</field>
-        <field name="note">BAS code — td_mebli_bas</field>
+        <field name="note">BAS code — step 26 (td/19b)</field>
     </record>
     <record id="step_03" model="td.mebli.migration.step">
         <field name="sequence">3</field>
@@ -115,39 +118,129 @@
         <field name="model_name">product.pricelist</field>
         <field name="box">A</field>
     </record>
-    <record id="step_16" model="td.mebli.migration.step">
+    <record id="step_td_01b" model="td.mebli.migration.step">
         <field name="sequence">16</field>
+        <field name="name">Warranty of product categories</field>
+        <field name="template">td/01b_product.category.csv</field>
+        <field name="model_name">product.category</field>
+        <field name="depends_on">01</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_base</field>
+        <field name="note">second pass of the same ids</field>
+    </record>
+    <record id="step_td_03b" model="td.mebli.migration.step">
+        <field name="sequence">17</field>
+        <field name="name">Component roles of the attributes</field>
+        <field name="template">td/03b_product.attribute.csv</field>
+        <field name="model_name">product.attribute</field>
+        <field name="depends_on">03</field>
+        <field name="box">B</field>
+        <field name="module_name">td_mebli_mrp</field>
+        <field name="note">second pass of the same ids</field>
+    </record>
+    <record id="step_td_04b" model="td.mebli.migration.step">
+        <field name="sequence">18</field>
+        <field name="name">Boards and edge thickness of the attribute values</field>
+        <field name="template">td/04b_product.attribute.value.csv</field>
+        <field name="model_name">product.attribute.value</field>
+        <field name="depends_on">04, 05</field>
+        <field name="box">B</field>
+        <field name="module_name">td_mebli_mrp</field>
+        <field name="note">second pass of the same ids</field>
+    </record>
+    <record id="step_16" model="td.mebli.migration.step">
+        <field name="sequence">19</field>
         <field name="name">Material fields of the package</field>
         <field name="template">td/05b_product.product.csv</field>
         <field name="model_name">product.product</field>
         <field name="depends_on">05</field>
         <field name="box">A</field>
+        <field name="module_name">td_mebli_mrp</field>
         <field name="note">second pass of the same ids</field>
     </record>
     <record id="step_17" model="td.mebli.migration.step">
-        <field name="sequence">17</field>
+        <field name="sequence">20</field>
         <field name="name">Product fields of the package</field>
         <field name="template">td/06b_product.template.csv</field>
         <field name="model_name">product.template</field>
         <field name="depends_on">06</field>
         <field name="box">A</field>
+        <field name="module_name">td_mebli_mrp</field>
         <field name="note">second pass of the same ids</field>
     </record>
     <record id="step_18" model="td.mebli.migration.step">
-        <field name="sequence">18</field>
+        <field name="sequence">21</field>
         <field name="name">Operation fields of the package</field>
         <field name="template">td/12b_mrp.routing.workcenter.csv</field>
         <field name="model_name">mrp.routing.workcenter</field>
         <field name="depends_on">12</field>
         <field name="box">A</field>
+        <field name="module_name">td_mebli_shop</field>
+        <field name="note">second pass of the same ids</field>
+    </record>
+    <record id="step_td_14b" model="td.mebli.migration.step">
+        <field name="sequence">22</field>
+        <field name="name">Work centers of the equipment</field>
+        <field name="template">td/14b_maintenance.equipment.csv</field>
+        <field name="model_name">maintenance.equipment</field>
+        <field name="depends_on">14, 09</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_maint</field>
         <field name="note">second pass of the same ids</field>
     </record>
     <record id="step_19" model="td.mebli.migration.step">
-        <field name="sequence">19</field>
+        <field name="sequence">23</field>
         <field name="name">Part rules</field>
         <field name="template">td/16_td.mebli.part.rule.csv</field>
         <field name="model_name">td.mebli.part.rule</field>
         <field name="depends_on">06</field>
         <field name="box">A</field>
+        <field name="module_name">td_mebli_mrp</field>
+    </record>
+    <record id="step_td_17" model="td.mebli.migration.step">
+        <field name="sequence">24</field>
+        <field name="name">Reasons of bonuses and penalties</field>
+        <field name="template">td/17_td.mebli.accrual.reason.csv</field>
+        <field name="model_name">td.mebli.accrual.reason</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_install</field>
+    </record>
+    <record id="step_td_18" model="td.mebli.migration.step">
+        <field name="sequence">25</field>
+        <field name="name">Mapping templates of the part files</field>
+        <field name="template">td/18_td.mebli.import.template.csv</field>
+        <field name="model_name">td.mebli.import.template</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_mrp</field>
+    </record>
+    <record id="step_td_19b" model="td.mebli.migration.step">
+        <field name="sequence">26</field>
+        <field name="name">BAS codes of the partners</field>
+        <field name="template">td/19b_res.partner.csv</field>
+        <field name="model_name">res.partner</field>
+        <field name="depends_on">02</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_bas</field>
+        <field name="note">td_mebli_bas only (VP-04 = true); not imported in the light profile</field>
+    </record>
+    <record id="step_td_20b" model="td.mebli.migration.step">
+        <field name="sequence">27</field>
+        <field name="name">BAS codes of the materials</field>
+        <field name="template">td/20b_product.product.csv</field>
+        <field name="model_name">product.product</field>
+        <field name="depends_on">05</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_bas</field>
+        <field name="note">td_mebli_bas only (VP-04 = true); not imported in the light profile</field>
+    </record>
+    <record id="step_td_21b" model="td.mebli.migration.step">
+        <field name="sequence">28</field>
+        <field name="name">BAS codes of the employees</field>
+        <field name="template">td/21b_hr.employee.csv</field>
+        <field name="model_name">hr.employee</field>
+        <field name="depends_on">13</field>
+        <field name="box">A</field>
+        <field name="module_name">td_mebli_bas</field>
+        <field name="note">td_mebli_bas only (VP-04 = true); not imported in the light profile</field>
     </record>
 </odoo>

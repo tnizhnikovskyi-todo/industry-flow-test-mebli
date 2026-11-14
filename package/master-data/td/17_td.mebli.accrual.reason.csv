@@ -1,0 +1,4 @@
+id,name,kind,default_amount
+td_md.td_mebli_accrual_reason_late,Запізнення на об'єкт,penalty,
+td_md.td_mebli_accrual_reason_claim,Обґрунтована скарга покупця,penalty,
+td_md.td_mebli_accrual_reason_clean,Монтаж без зауважень,bonus,

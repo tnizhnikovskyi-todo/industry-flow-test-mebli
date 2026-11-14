@@ -44,8 +44,10 @@ class RepairOrder(models.Model):
             return NotImplemented
         now = fields.Datetime.now()
         ids = []
+        # sudo: cron: all the companies, each with its own overdue limit
         for company in self.env['res.company'].sudo().search([]):
             limit = now - relativedelta(days=company.td_claim_overdue_days + 1)
+            # sudo: cron: overdue claims of every company, whoever runs it
             ids += self.sudo().search([('company_id', '=', company.id), ('state', 'not in', ('done', 'cancel')),
                                        ('create_date', '<=', limit)]).ids
         positive = (operator == '=') == value
@@ -57,11 +59,13 @@ class RepairOrder(models.Model):
         self.ensure_one()
         if self.product_id:
             return self.product_id.categ_id
+        # sudo: read only: the product categories of the order lines (the service has no sales rights)
         lines = self.td_claim_order_id.sudo().order_line.filtered(lambda line: line.product_id.categ_id.td_warranty_months)
         return lines[:1].product_id.categ_id
 
     def _td_warranty_start(self):
         self.ensure_one()
+        # sudo: read only: the dates of the order for the warranty (the service has no sales rights)
         order = self.td_claim_order_id.sudo()
         final = order.td_act_ids.filtered(lambda act: act.kind == 'final' and act.state == 'signed')[:1]
         start = final.signed_on or order.effective_date
@@ -110,15 +114,20 @@ class RepairOrder(models.Model):
         """Remake in production: a manufacturing order of the part of the claim (a one-part bill of materials of the
         product «Remake part») or, without a part, of the claimed product; the origin is the number of the claim."""
         self.ensure_one()
+        # D-08 (AC-080, tr/security.md §1): the service (group «Service», Inventory user) has no Manufacturing rights;
+        # who may change the claim may start its remake — the right is checked on the claim, the manufacturing order
+        # is made for him with sudo (responsible = the user of the service)
+        self.check_access('write')
         if self.td_part_id:
             production = self._td_remake_part()
         elif self.product_id:
-            bom = self.env['mrp.bom']._bom_find(self.product_id)[self.product_id]
+            bom = self.env['mrp.bom'].sudo()._bom_find(self.product_id)[self.product_id]
             if not bom:
                 raise UserError(self.env._("The product of the claim has no bill of materials: it is bought, not made. "
                                            "Order it again in Purchase."))
-            production = self.env['mrp.production'].create({
-                'product_id': self.product_id.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name})
+            production = self.env['mrp.production'].sudo().create({
+                'product_id': self.product_id.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name,
+                'user_id': self.env.user.id})
         else:
             raise UserError(self.env._("Choose a part or a product to remake"))
         production.action_confirm()
@@ -128,9 +137,11 @@ class RepairOrder(models.Model):
 
     def _td_remake_part(self):
         """A bill of materials of one part (its board and edge, the operations of the order BoM for one part)."""
+        # sudo: read only: the part of the order BoM (the service has no manufacturing rights)
         part = self.td_part_id.sudo()
         source = part.bom_id
         product = self.env.ref('td_mebli_claim.product_remake_part').product_variant_id
+        # sudo: the BoM of the remake part is created by the system for the service user
         bom = self.env['mrp.bom'].sudo().create({
             'product_tmpl_id': product.product_tmpl_id.id, 'product_qty': 1.0, 'type': 'normal',
             'code': self.name, 'company_id': (source.company_id or self.company_id).id,
@@ -140,15 +151,17 @@ class RepairOrder(models.Model):
             'bom_line_ids': bom._td_prepare_component_lines(self.env['mrp.bom.line'], {'fittings': []}),
             'operation_ids': bom._td_prepare_operations(source),
         })
-        return self.env['mrp.production'].create({
+        # sudo: the manufacturing order of the remake is made for the service user (rights checked on the claim)
+        return self.env['mrp.production'].sudo().create({
             'product_id': product.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name,
-            'company_id': (bom.company_id or self.company_id).id})
+            'company_id': (bom.company_id or self.company_id).id, 'user_id': self.env.user.id})
 
     # ------------------------------------------------------------------ AC-132: service visit
     def action_td_plan_visit(self):
         """«Plan a visit»: a task in the installation project of the order (the project of its installation visit),
         linked to the claim, at the delivery address of the order; it shows in the calendar and the day plan."""
         self.ensure_one()
+        # sudo: read only: the order of the claim (the service has no sales rights)
         order = self.td_claim_order_id.sudo()
         if not order:
             raise UserError(self.env._("Choose the claimed order first: the visit goes to its address."))
@@ -156,6 +169,7 @@ class RepairOrder(models.Model):
         if not visit:
             raise UserError(self.env._("The order %s has no installation visit: the installation project is not known.",
                                        order.name))
+        # sudo: the visit of the claim goes to the installation project, the service user is not a project user
         task = self.env['project.task'].sudo().create({
             'name': self.env._("Claim %(claim)s: %(order)s", claim=self.name, order=order.name),
             'project_id': visit.project_id.id, 'sale_line_id': visit.sale_line_id.id,

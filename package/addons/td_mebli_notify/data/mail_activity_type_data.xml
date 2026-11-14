@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
     <!-- Position 1 (F-50): standard activity type of the sales order — the forecast date passed the promised one -->
     <record id="mail_activity_type_td_forecast_shift" model="mail.activity.type">
         <field name="name">Forecast Date Shift</field>

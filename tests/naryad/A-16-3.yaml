@@ -1,0 +1,32 @@
+# ТЕСТОВИЙ наряд A-16 (спроба 3) — повтор FAIL спроби 2 (AC-N.01, AC-N.06) і димовий T-01 на стенді A-15 спроба 5 (код A-11-8).
+# Скіл кроку A-16 — скіл організації, у сесії недоступний. Рішення AI (власник доручив «адмініструй і отримай результат», вето за ним):
+# замінник — прогін сценаріїв package/SPEC.md §10 «Тестовий сценарій» (тури T-01…T-13) у браузері (Playwright + Chromium, uk_UA)
+# від імені ролей стенда; EE-сценарії — SKIP «EE не перевірено».
+step: A-16
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - "скіл організації кроку A-16 — недоступний у сесії; замінник: прогін SPEC §10 T-01…T-13 (Playwright), рішення AI"
+model: opus
+effort: medium
+inputs:
+  - {name: "ТР: тестовий сценарій §10, AC §4", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "демо-стенд (README, plan.md, defects.md)", from: A-15, path: package/demo/, sha: HEAD}
+  - {name: "модулі", from: A-11, path: package/addons/, sha: HEAD}
+  - {name: "конфіг-пакет", from: A-12, path: package/config/, sha: HEAD}
+  - {name: "звіт A-15 спроба 5 (стенд з нового коду)", from: A-15, path: tests/reports/A-15-5.md, sha: HEAD}
+  - {name: "сценарії й дефекти спроби 1", from: A-16, path: package/demo/scenarios.md, sha: HEAD}
+where: "package/demo/scenarios.md, package/demo/defects.md"
+done: "AC-N.01 і AC-N.06 повторено, димовий T-01; результат у package/demo/scenarios.md (розділ «Спроба 3»); нові дефекти — D-18…"
+check: {mode: both, how: "Кожен AC туру: крок, очікуване (AC), факт; скріншот лише при FAIL (scratchpad); стенд скинуто зі знімка після прогону", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 240, lease_factor: 1.5, cost_limit_usd: 25, context_budget_tokens: 200000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів; лише синтетика td_mebli_demo"
+odoo_connections: []
+params: {mode: повтор, instance: demo-mebli-pkg-a, edition: ce, profile: package/demo/answers.yaml, port: 8079}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 3
+returned_from: {step: A-11, attempt: 8, reason: "D-16, D-17 закрито в A-11-8; стенд — A-15 спроба 5"}
+git: {base: 4cfad1c, head: null, prev_tag: null}
+date: 2026-11-14

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 09:44+0000\n"
-"PO-Revision-Date: 2026-11-13 09:44+0000\n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -344,6 +344,16 @@ msgid "Cost"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_cost_line_ids
+msgid "Cost of the Lines"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Cost of the Order"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
 msgid "Create"
 msgstr ""
@@ -442,6 +452,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name
@@ -479,6 +490,11 @@ msgid "Furniture Milestone"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:account.payment.term,name:td_mebli_sale.payment_term_td_furniture
+msgid "Furniture to Order"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:mail.template,name:td_mebli_sale.mail_template_td_change_sign
 msgid "Furniture: change of the order for signature"
 msgstr ""
@@ -509,6 +525,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id
@@ -590,6 +607,7 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__margin
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin"
@@ -599,6 +617,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin_percent
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin_percent
 msgid "Margin (%)"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Margin of the Order"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Margin of the Order, %"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -718,8 +746,18 @@ msgid "Payment"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_schedule_html
+msgid "Payment Schedule"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model,name:td_mebli_sale.model_account_payment_term_line
 msgid "Payment Terms Line"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_has_milestones
+msgid "Payment by Milestones"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -849,6 +887,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Quantity"
 msgstr ""
 
@@ -946,6 +985,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "Sale Contract"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_sale_report
+msgid "Sales Analysis Report"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -1301,6 +1345,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Total"
 msgstr ""

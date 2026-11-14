@@ -4,7 +4,10 @@
         <field name="name">sale.order.line.td.cost.list</field>
         <field name="model">sale.order.line</field>
         <field name="arch" type="xml">
-            <list create="0" edit="0" delete="0" default_order="id" decoration-danger="margin_percent &lt; 0.15">
+            <!-- review A-14 L-3: the margin fields have the margin groups (MARGIN_GROUPS); the attributes of the list
+                 itself must not depend on them (Access Rights Inconsistency) — the decoration is on the field node,
+                 which is removed together with its decoration for a user without the groups -->
+            <list create="0" edit="0" delete="0" default_order="id">
                 <field name="order_id" string="Order"/>
                 <field name="product_id"/>
                 <field name="td_width" optional="hide"/>
@@ -15,7 +18,7 @@
                 <field name="td_planned_material_cost" string="Materials" sum="Total"/>
                 <field name="td_planned_operation_cost" string="Work" sum="Total"/>
                 <field name="margin" string="Margin" widget="monetary" sum="Total"/>
-                <field name="margin_percent" string="Margin, %" widget="percentage"/>
+                <field name="margin_percent" string="Margin, %" widget="percentage" decoration-danger="margin_percent &lt; 0.15"/>
                 <field name="currency_id" column_invisible="True"/>
             </list>
         </field>
@@ -86,6 +89,9 @@
         <field name="domain">[('td_is_parametric', '=', True), ('state', '!=', 'cancel')]</field>
         <field name="search_view_id" ref="sale_order_line_td_cost_search"/>
         <field name="context">{'search_default_confirmed': 1, 'search_default_last30': 1}</field>
+        <!-- review A-14 L-3: the action is for the same groups as its menu and the margin fields (MARGIN_GROUPS) -->
+        <field name="group_ids" eval="[(6, 0, [ref('td_mebli_base.group_margin_view'), ref('td_mebli_base.group_finance'),
+                                               ref('sales_team.group_sale_manager')])]"/>
         <field name="view_ids" eval="[(5, 0, 0),
             (0, 0, {'view_mode': 'pivot', 'view_id': ref('sale_order_line_td_cost_pivot')}),
             (0, 0, {'view_mode': 'list', 'view_id': ref('sale_order_line_td_cost_list')}),
@@ -121,13 +127,16 @@
         <field name="name">sale.order.td.low.margin.list</field>
         <field name="model">sale.order</field>
         <field name="arch" type="xml">
-            <list create="0" edit="0" delete="0" default_order="margin_percent asc" decoration-danger="margin_percent &lt; 0.15">
+            <!-- review A-14 L-3: no list attribute depends on the restricted margin fields (see
+                 sale_order_line_td_cost_list): the list has no default order by the margin, the user sorts it by the
+                 column «Margin, %»; the kanban of the phone keeps the lowest margin first -->
+            <list create="0" edit="0" delete="0">
                 <field name="name"/>
                 <field name="date_order"/>
                 <field name="partner_id"/>
                 <field name="amount_untaxed" string="Revenue" sum="Total"/>
                 <field name="margin" string="Margin" sum="Total"/>
-                <field name="margin_percent" string="Margin, %" widget="percentage"/>
+                <field name="margin_percent" string="Margin, %" widget="percentage" decoration-danger="margin_percent &lt; 0.15"/>
                 <field name="currency_id" column_invisible="True"/>
             </list>
         </field>

@@ -21,6 +21,7 @@ class StockLot(models.Model):
 
     def _compute_td_reserved(self):
         """What of the lot is already reserved by manufacturing orders (a business offcut promised to a cutting job)."""
+        # sudo: read only: the reserved area of the lot over all the move lines
         lines = self.env['stock.move.line'].sudo().search([
             ('lot_id', 'in', self.ids), ('state', 'not in', ('draft', 'done', 'cancel')), ('quantity', '>', 0)])
         for lot in self:

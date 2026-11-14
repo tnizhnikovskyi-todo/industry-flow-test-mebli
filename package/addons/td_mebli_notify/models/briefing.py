@@ -18,6 +18,7 @@ class TdMebliDashboard(models.AbstractModel):
         application), but only of the companies of the reader: every search is limited to ``self.env.companies`` (the
         cron calls it as each owner with his allowed companies)."""
         companies = self.env.companies
+        # sudo: read only — the director is not a user of every application; every search is limited to self.env.companies
         env = self.sudo().env
         now = fields.Datetime.now()
         in_companies = [('company_id', 'in', companies.ids)]
@@ -80,6 +81,7 @@ class ResPartner(models.Model):
         personal notification (Inbox or e-mail by his notification preference, the mail queue), not a message in the
         chatter of a record: nobody else reads it."""
         group = self.env.ref('td_mebli_dashboard.group_td_mebli_director', raise_if_not_found=False)
+        # sudo: read only — the members of the group «Director» get the briefing, the cron user may not read the group
         users = group.sudo().all_user_ids.filtered(lambda u: u.active and not u.share) if group else self.env['res.users']
         users = users.filtered(lambda u: u.id != self.env.ref('base.user_admin').id) or users
         template = self.env.ref('td_mebli_notify.mail_template_td_briefing')

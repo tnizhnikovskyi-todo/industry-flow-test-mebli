@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- review A-14 (config 1, convergence 2): the standard payment terms of the package with the furniture milestones
+         (SPEC AC-019 example «50 % prepayment / 40 % before installation / 10 % after the act»), so the control of the
+         payment before the installation (AC-020) sums 90 % and not the whole order. The config package (A-12) refers
+         to this record by its xmlid; the client changes the percents on B-04 (noupdate: an update keeps them). -->
+    <record id="payment_term_td_furniture" model="account.payment.term">
+        <field name="name">Furniture to Order</field>
+        <field name="company_id" eval="False"/>
+        <field name="line_ids" eval="[(5, 0, 0),
+            (0, 0, {'value': 'percent', 'value_amount': 50.0, 'nb_days': 0, 'td_milestone': 'order'}),
+            (0, 0, {'value': 'percent', 'value_amount': 40.0, 'nb_days': 0, 'td_milestone': 'install'}),
+            (0, 0, {'value': 'percent', 'value_amount': 10.0, 'nb_days': 0, 'td_milestone': 'act'})]"/>
+    </record>
+</odoo>

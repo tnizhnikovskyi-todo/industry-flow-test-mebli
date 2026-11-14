@@ -1,13 +1,13 @@
-import time
+import hmac
 from datetime import timedelta
 
 from odoo import fields, models
 from odoo.exceptions import UserError
 
-# AC-071: wrong PIN — a short delay on every failure; 5 failures in a row lock the worker for 15 minutes. The counter is
-# kept on the employee and written in its own transaction (the transaction of the failed attempt is rolled back by the
-# error), so it survives a restart and is shared by all the server workers (AI-A08-12, R-11).
-PIN_DELAY_SECONDS = 1.0
+# AC-071: 5 wrong PINs in a row lock the worker for 15 minutes. The counter is kept on the employee and written in its
+# own transaction (the transaction of the failed attempt is rolled back by the error), so it survives a restart and is
+# shared by all the server workers (AI-A08-12, R-11). No sleep in the worker (A-14 security 7): the lock limits guessing.
+# The PIN typed on the tablet is not kept: it is erased from the wizard line in the same own transaction (A-14 security 1).
 PIN_MAX_FAILURES = 5
 PIN_LOCK_MINUTES = 15
 
@@ -38,31 +38,44 @@ class TdMebliKiosk(models.TransientModel):
     parent_bom_id = fields.Many2one(related='workorder_id.production_id.bom_id', string='Specification')
     scrap_reason = fields.Char(string='Scrap Reason')
 
-    def _td_pin_failure(self, employee):
-        """+1 wrong PIN of the worker, in a transaction of its own (committed even though the attempt fails)."""
+    def _td_pin_attempt_end(self, failed_employee=None):
+        """Erase the typed PIN from the wizard line and, for a wrong PIN, +1 failure of the worker — in a transaction of
+        its own, so both are committed even though a failed attempt rolls the request back."""
         lock_until = fields.Datetime.now() + timedelta(minutes=PIN_LOCK_MINUTES)
         with self.env.registry.cursor() as cr:
-            cr.execute("""
-                UPDATE hr_employee
-                   SET td_pin_fail_count = CASE WHEN COALESCE(td_pin_fail_count, 0) + 1 >= %(max)s THEN 0
-                                                ELSE COALESCE(td_pin_fail_count, 0) + 1 END,
-                       td_pin_locked_until = CASE WHEN COALESCE(td_pin_fail_count, 0) + 1 >= %(max)s THEN %(until)s
-                                                  ELSE td_pin_locked_until END
-                 WHERE id = %(id)s
-            """, {'max': PIN_MAX_FAILURES, 'until': lock_until, 'id': employee.id})
-        employee.invalidate_recordset(['td_pin_fail_count', 'td_pin_locked_until'])
+            cr.execute("UPDATE td_mebli_kiosk SET pin = NULL WHERE id IN %s", [tuple(self.ids) or (0,)])
+            erased = cr.rowcount
+            if failed_employee:
+                cr.execute("""
+                    UPDATE hr_employee
+                       SET td_pin_fail_count = CASE WHEN COALESCE(td_pin_fail_count, 0) + 1 >= %(max)s THEN 0
+                                                    ELSE COALESCE(td_pin_fail_count, 0) + 1 END,
+                           td_pin_locked_until = CASE WHEN COALESCE(td_pin_fail_count, 0) + 1 >= %(max)s THEN %(until)s
+                                                      ELSE td_pin_locked_until END
+                     WHERE id = %(id)s
+                """, {'max': PIN_MAX_FAILURES, 'until': lock_until, 'id': failed_employee.id})
+        if failed_employee:
+            failed_employee.invalidate_recordset(['td_pin_fail_count', 'td_pin_locked_until'])
+        if not erased and self.ids:
+            # the line is not committed yet (created in this same transaction by a script): erase it here
+            self.env.cr.execute("UPDATE td_mebli_kiosk SET pin = NULL WHERE id IN %s", [tuple(self.ids)])
+        self.invalidate_recordset(['pin'])
 
     def _check_pin(self):
-        employee = self.employee_id.sudo()  # the PIN is an HR field; the tablet user only compares it
+        # sudo: the PIN is an HR field; the tablet user only compares it and never reads it back
+        employee = self.employee_id.sudo()
+        typed = self.pin or ''
         locked = employee.td_pin_locked_until
         if locked and locked > fields.Datetime.now():
+            self._td_pin_attempt_end()
             raise UserError(self.env._("The worker is locked until %s",
                                        fields.Datetime.context_timestamp(self, locked).strftime('%H:%M')))
         # one message for every failure: the tablet does not tell whether the worker has a PIN at all
-        if employee.user_id or not employee.pin or (self.pin or '') != employee.pin:
-            self._td_pin_failure(employee)
-            time.sleep(PIN_DELAY_SECONDS)
+        # constant-time comparison: the time of the answer does not tell how many digits are right
+        if employee.user_id or not employee.pin or not hmac.compare_digest(typed.encode(), employee.pin.encode()):
+            self._td_pin_attempt_end(failed_employee=employee)
             raise UserError(self.env._("Wrong PIN"))
+        self._td_pin_attempt_end()
         if employee.td_pin_fail_count or locked:
             employee.write({'td_pin_fail_count': 0, 'td_pin_locked_until': False})
 
@@ -115,6 +128,7 @@ class TdMebliKiosk(models.TransientModel):
             if not self.photo:
                 raise UserError(self.env._("Take a photo of the check."))
             # the check is created by the tablet after the PIN: the users of manufacturing cannot create it themselves
+            # sudo: the tablet user may not create checks; the check is created only after the PIN of the worker
             self.env['td.mebli.quality.check'].sudo().create({
                 'workorder_id': workorder.id, 'name': workorder.td_quality_point or self.env._("Check"),
                 'result': self.result, 'photo': self.photo, 'note': self.note, 'employee_id': self.employee_id.id})
@@ -127,6 +141,7 @@ class TdMebliKiosk(models.TransientModel):
             open_pauses._close()
             workorder.button_finish()
         # the worker confirmed with the PIN: the tablet (sudo) writes him on the new time lines
+        # sudo: td_employee_id of a time line is protected from users; the tablet writes the worker confirmed by the PIN
         (workorder.time_ids - before).sudo().write({'td_employee_id': self.employee_id.id})
         return {'type': 'ir.actions.act_window_close'}
 
@@ -143,11 +158,13 @@ class TdMebliKiosk(models.TransientModel):
         origin = f"{workorder.production_id.name} / {workorder.name}"
         production = self.scrap_part_id._td_make_production(
             self.scrap_part_id.qty, origin, self.env._("Scrap: %s", self.scrap_reason))
+        # sudo: the tablet user may not create checks; the scrap line is created only after the PIN of the worker
         check = self.env['td.mebli.quality.check'].sudo().create({
             'workorder_id': workorder.id, 'kind': 'scrap', 'result': 'fail',
             'name': self.env._("Scrap: %s", self.scrap_part_id.name), 'note': self.scrap_reason,
             'part_id': self.scrap_part_id.id, 'repeat_production_id': production.id,
             'employee_id': self.employee_id.id})
+        # sudo: the tablet user only reads the manufacturing order; the scrap note is posted on its behalf
         workorder.production_id.sudo().message_post(body=self.env._(
             "Scrap of %(part)s by %(who)s: %(reason)s. Repeat part: %(production)s.",
             part=self.scrap_part_id.name, who=self.employee_id.name, reason=self.scrap_reason,

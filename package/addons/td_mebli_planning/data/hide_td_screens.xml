@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="td_mebli_install.td_mebli_install_calendar_menu" model="ir.ui.menu">
-        <field name="group_ids" eval="[Command.set([ref('td_mebli_planning.group_td_old_screens')])]"/>
+        <!-- A-14 pr-review m7: link (not set) — with both bridges (box C: Field Service + Planning) the menu keeps the
+             group of the other bridge, so the members of either group still see the old screen -->
+        <field name="group_ids" eval="[Command.link(ref('td_mebli_planning.group_td_old_screens'))]"/>
     </record>
 </odoo>

@@ -59,8 +59,25 @@
                 <field name="td_kit_line_ids" invisible="1"/>
             </div>
             <xpath expr="//header" position="inside">
+                <!-- D-11 (AC-091): the warehouse builds the packing list of a confirmed order -->
+                <button name="action_td_form_kit" type="object" string="Build the Packing List"
+                        groups="stock.group_stock_user" invisible="state != 'sale' or td_kit_line_ids"/>
                 <button name="action_td_scan_labels" type="object" string="Scan Labels"
                         groups="td_mebli_base.group_feature_label_scan" invisible="not td_kit_line_ids"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_picking_form_td_mebli_shop" model="ir.ui.view">
+        <field name="name">stock.picking.form.td_mebli_shop</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <!-- D-11 (AC-091): the packing list from the delivery of the order (the storekeeper works in Inventory) -->
+                <field name="sale_id" invisible="1"/>
+                <button name="action_td_form_kit" type="object" string="Packing List" groups="stock.group_stock_user"
+                        invisible="not sale_id or picking_type_code != 'outgoing' or state in ('done', 'cancel')"/>
             </xpath>
         </field>
     </record>

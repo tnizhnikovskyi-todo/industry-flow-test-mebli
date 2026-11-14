@@ -1,0 +1,2 @@
+id,name,company_id/id,header_signature,mapping_json
+td_md.td_mebli_import_template_pro100,Демо-файл деталей (PRO100 салону),base.main_company,деталь|довжина|ширина|товщина|кількість|матеріал,"{""name"": 0, ""length_mm"": 1, ""width_mm"": 2, ""thickness"": 3, ""qty"": 4, ""material"": 5}"

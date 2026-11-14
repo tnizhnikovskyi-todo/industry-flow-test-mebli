@@ -13,6 +13,7 @@ class TdMebliCuttingJob(models.Model):
         """AC-056: an order of the job has no measurement sheet — the check against the measurement is skipped."""
         for job in self:
             orders = job.production_ids._td_sale_orders()
+            # sudo: read only: the measurement of the sale orders of the job (no sales rights)
             job.td_measure_missing = not orders or any(not order.sudo().td_measure_ids for order in orders)
 
     def _td_warn_no_measure(self):

@@ -40,6 +40,7 @@ class TdMebliDashboard(models.AbstractModel):
     @api.model
     def _drill(self, name, model, records, *views):
         """Drill-down of a card: exactly the records the card counted (the totals of the report equal the card)."""
+        # sudo: read only: the id of a view (ir.ui.view is admin only)
         view_list = [[self.env.ref(xmlid).sudo().id if xmlid else False, kind] for kind, xmlid in views]
         if not any(kind == 'form' for kind, _x in views):
             view_list.append([False, 'form'])
@@ -301,6 +302,7 @@ class TdMebliDashboard(models.AbstractModel):
             raise AccessError(self.env._("The factory dashboard is available to the factory director only."))
         # the companies the director works in now (validated against the user's companies before sudo)
         company_ids = self.env.companies.ids
+        # sudo: read only: the cards count over modules the director has no rights on, in his companies only
         env = self.sudo().with_company(self.env.company).with_context(td_dash_company_ids=company_ids).env
         company = env.company
         today, since = self._period()

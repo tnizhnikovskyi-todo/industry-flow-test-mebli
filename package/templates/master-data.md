@@ -191,8 +191,9 @@
 Приклади рядків (вигадані):
 | id | bom_id/id | product_id/id | product_qty |
 |---|---|---|---|
-| td_md.mrp_bom_line_wardrobe_dsp | td_md.mrp_bom_wardrobe_01 | td_md.product_product_dsp_18_w | 6.5 |
 | td_md.mrp_bom_line_wardrobe_hdf | td_md.mrp_bom_wardrobe_01 | td_md.product_product_hdf_3_w | 2.4 |
+| td_md.mrp_bom_line_wardrobe_facade | td_md.mrp_bom_wardrobe_01 | td_md.product_product_facade_paint | 2.2 |
+Плиту й кромку корпусу параметричного виробу (з правилами деталей) у шаблон не вносити: їх дає специфікація замовлення з деталей (AC-013, CHECKS.md №28).
 Залежності: файли з NN нижче за 11 (колонки `/id`); стандартні xmlid: —.
 Порядок імпорту: 11.
 

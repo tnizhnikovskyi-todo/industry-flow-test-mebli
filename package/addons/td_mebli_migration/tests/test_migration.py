@@ -1,5 +1,6 @@
 import csv
 import os
+import re
 import tempfile
 
 from odoo.exceptions import AccessError, UserError, ValidationError
@@ -17,26 +18,68 @@ class TestMigrationConverters(AccountTestInvoicingCommon):
         with open(path, 'w', encoding='utf-8', newline='') as handle:
             csv.writer(handle, delimiter=delimiter).writerows(rows)
 
+    # headers of the A-13 templates (package/master-data v1.1), not their rows
+    HEADERS = {
+        '02_res.partner.csv': ['id', 'name', 'is_company', 'supplier_rank', 'customer_rank', 'vat', 'company_registry',
+                               'phone', 'email'],
+        '05_product.product.csv': ['id', 'name', 'default_code', 'type', 'is_storable', 'categ_id/id', 'uom_id/id',
+                                   'sale_ok', 'purchase_ok', 'route_ids/id'],
+        '13_hr.employee.csv': ['id', 'name', 'job_title', 'pin'],
+        'td/19b_res.partner.csv': ['id', 'td_bas_code'],
+        'td/20b_product.product.csv': ['id', 'td_bas_code'],
+        'td/21b_hr.employee.csv': ['id', 'td_bas_code'],
+    }
+
+    def _read(self, path):
+        with open(path, encoding='utf-8') as handle:
+            return list(csv.reader(handle))
+
     def test_ac_089_bas_converter_keeps_the_bas_code(self):
+        """Return A-13-2: the code of BAS goes into td/19b-21b; the standard templates keep their header (light)."""
         with tempfile.TemporaryDirectory() as tmp:
             source, templates, out = (os.path.join(tmp, name) for name in ('src', 'tpl', 'out'))
-            for folder in (source, templates, out):
-                os.mkdir(folder)
-            # the header of the A-13 template (package/master-data/02_res.partner.csv), not its rows
-            self._write(os.path.join(templates, '02_res.partner.csv'),
-                        [['id', 'name', 'is_company', 'supplier_rank', 'customer_rank', 'vat', 'company_registry']])
+            for folder in (source, os.path.join(templates, 'td'), out):
+                os.makedirs(folder)
+            for name, header in self.HEADERS.items():
+                self._write(os.path.join(templates, name), [header])
             self._write(os.path.join(source, 'partners.csv'),
                         [['Код', 'Наименование', 'ИНН', 'ЕДРПОУ'], ['00-001', 'Демо-Постачальник', '', '1'],
                          ['00-002', '=HYPERLINK("x")', '', '']], delimiter=';')
-            mapping = {'02_res.partner.csv': convert_bas.DRAFT_MAPPING['02_res.partner.csv']}
-            columns, rows, problems = convert_core.convert_rows(
-                convert_core.read_export(os.path.join(source, 'partners.csv')), mapping['02_res.partner.csv']['columns'],
-                convert_core.template_header(os.path.join(templates, '02_res.partner.csv')))
-            self.assertEqual(columns[-1], 'td_bas_code', "the external code of BAS is kept")
-            self.assertEqual(rows[0][0], 'td_md.res_partner_00_001')
-            self.assertEqual(rows[0][-1], '00-001')
-            self.assertEqual(rows[1][1], '\'=HYPERLINK("x")', "a formula is written as text")
-            self.assertFalse(problems)
+            self._write(os.path.join(source, 'products.csv'),
+                        [['Код', 'Наименование', 'Артикул'], ['N-01', 'Board 18', 'B18']], delimiter=';')
+            self._write(os.path.join(source, 'employees.csv'),
+                        [['Табельный номер', 'Сотрудник', 'Должность'], ['T-7', 'Cutter', 'Operator']], delimiter=';')
+            code = convert_bas.main(['--source', source, '--templates', templates, '--out', out])
+            self.assertEqual(code, 0)
+            self.assertEqual(set(convert_bas.DRAFT_MAPPING), set(self.HEADERS))
+            for name, header in self.HEADERS.items():
+                rows = self._read(os.path.join(out, name))
+                self.assertEqual(rows[0], header, f"{name}: the converter writes the header of the template as it is")
+            partners = self._read(os.path.join(out, '02_res.partner.csv'))
+            self.assertEqual(partners[1][0], 'td_md.res_partner_00_001')
+            self.assertEqual(partners[2][1], '\'=HYPERLINK("x")', "a formula is written as text")
+            self.assertEqual(self._read(os.path.join(out, 'td', '19b_res.partner.csv'))[1:],
+                             [['td_md.res_partner_00_001', '00-001'], ['td_md.res_partner_00_002', '00-002']],
+                             "the external code of BAS is kept, on the same ids as the partners")
+            self.assertEqual(self._read(os.path.join(out, 'td', '20b_product.product.csv'))[1],
+                             ['td_md.product_product_n_01', 'N-01'])
+            self.assertEqual(self._read(os.path.join(out, 'td', '21b_hr.employee.csv'))[1],
+                             ['td_md.hr_employee_t_7', 'T-7'])
+
+    def test_ac_089_converter_adds_no_column_to_a_template(self):
+        """A column of the mapping that the template has not is not written (it is reported)."""
+        columns, rows, problems = convert_core.convert_rows(
+            [{'Код': '00-001', 'Наименование': 'Demo'}],
+            {'id': {'xmlid': 'res_partner', 'from': 'Код'}, 'name': 'Наименование', 'td_bas_code': 'Код'},
+            self.HEADERS['02_res.partner.csv'])
+        self.assertEqual(columns, self.HEADERS['02_res.partner.csv'])
+        self.assertEqual(len(rows[0]), len(columns))
+        self.assertEqual(len(problems), 1)
+        self.assertIn('td_bas_code', problems[0])
+        for target, spec in convert_bas.DRAFT_MAPPING.items():
+            if not target.startswith('td/'):
+                self.assertFalse([c for c in spec['columns'] if c.startswith('td_')],
+                                 f"{target}: no field td_* in a standard template")
 
     def test_ac_089_missing_columns_are_reported(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -124,10 +167,85 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         self.assertEqual((check.state, check.explained_by), ('explained', self.env.user))
         with self.assertRaises(UserError):
             check.action_td_compute()  # closed
+        # A-14 security 6 / pr-review m3: the finance does not reset the signed explanation, not even by RPC, and does
+        # not change the lines of a closed reconciliation
+        with self.assertRaises(AccessError):
+            check.with_user(clerk).action_td_reset()
+        with self.assertRaises(AccessError):
+            check.with_user(clerk).write({'explained_by': clerk.id})
+        with self.assertRaises(UserError):
+            prepayment.with_user(clerk).write({'value_source': 300.0})
+        with self.assertRaises(UserError):
+            prepayment.with_user(clerk).unlink()
+        self.assertEqual((check.state, check.explained_by, prepayment.value_source),
+                         ('explained', self.env.user, 500.0))
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Sales Manager', 'login': 'td_mig_manager',
+            'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_manager').id])]})
+        check.with_user(manager).action_td_reset()
+        self.assertEqual((check.state, check.explained_by.id), ('draft', False))
+        prepayment.with_user(clerk).write({'value_source': 300.0})  # open again
+
+    def test_ac_090_finance_does_not_bypass_the_signature_by_rpc(self):
+        """CHECKS.md No. 29 (security S-N1): the finance computes and writes the explanation of an open reconciliation,
+        but by RPC does not set the status, does not change a signed explanation and does not create an «explained»
+        reconciliation with somebody's signature."""
+        clerk = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Finance 2', 'login': 'td_mig_fin2',
+            'group_ids': [(6, 0, [self.env.ref('td_mebli_base.group_finance').id])]})
+        check = self._check(500.0, 2, 38.0).with_user(clerk)
+        check.action_td_compute()  # the finance computes: the status follows the difference
+        self.assertEqual(check.state, 'diff')
+        check.explanation = 'Cash payment booked after the date'
+        with self.assertRaises(AccessError):
+            check.write({'state': 'explained'})
+        with self.assertRaises(AccessError):
+            check.write({'state': 'draft'})
+        check.with_user(self.env.user).action_td_sign_explanation()
+        with self.assertRaises(AccessError):
+            check.write({'explanation': 'Another reason'})
+        with self.assertRaises(AccessError):
+            check.write({'state': 'draft'})  # not «Reset» around the manager: the old signature would stay valid
+        self.assertEqual((check.state, check.explanation), ('explained', 'Cash payment booked after the date'))
+        Check = self.env['td.mebli.migration.check'].with_user(clerk)
+        with self.assertRaises(AccessError):
+            Check.create({'name': 'Forged', 'state': 'explained', 'explanation': 'x', 'explained_by': self.env.user.id})
+        with self.assertRaises(AccessError):
+            Check.create({'name': 'Forged 2', 'state': 'reconciled'})
+        self.assertTrue(Check.create({'name': 'Draft'}))
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Sales Manager 2', 'login': 'td_mig_manager2',
+            'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_manager').id])]})
+        check.with_user(manager).write({'explanation': 'Corrected by the manager'})
+        self.assertEqual(check.explanation, 'Corrected by the manager')
+
+    def test_ac_090_duplicate_is_a_new_draft(self):
+        """CHECKS.md No. 37 (security N3-3): «Duplicate» of a computed or signed reconciliation by the finance is a new
+        draft without the status, the explanation and the signature of the original (no AccessError)."""
+        clerk = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Finance 3', 'login': 'td_mig_fin3',
+            'group_ids': [(6, 0, [self.env.ref('td_mebli_base.group_finance').id])]})
+        check = self._check(500.0, 2, 38.0).with_user(clerk)
+        check.action_td_compute()
+        self.assertEqual(check.state, 'diff')
+        diff_copy = check.copy()
+        self.assertEqual((diff_copy.state, len(diff_copy.line_ids)), ('draft', len(check.line_ids)))
+        self.assertEqual(diff_copy.line_ids.mapped('value_odoo'), [0.0] * len(check.line_ids))
+        self.assertFalse(diff_copy.line_ids.cause_order_ids)
+        check.explanation = 'Cash payment booked after the date'
+        check.with_user(self.env.user).action_td_sign_explanation()
+        signed_copy = check.copy()
+        self.assertEqual((signed_copy.state, signed_copy.explanation, signed_copy.explained_by.id,
+                          signed_copy.explained_on), ('draft', False, False, False))
+        self.assertEqual(check.state, 'explained')
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Sales Manager 3', 'login': 'td_mig_manager3',
+            'group_ids': [(6, 0, [self.env.ref('sales_team.group_sale_manager').id])]})
+        self.assertEqual(check.with_user(manager).copy().state, 'draft')
 
     def test_ac_089_import_steps_follow_the_templates_of_a13(self):
         steps = self.env['td.mebli.migration.step'].search([])
-        self.assertEqual(steps.mapped('sequence'), list(range(1, 20)))
+        self.assertEqual(steps.mapped('sequence'), list(range(1, 29)))
         self.assertEqual(steps[0].template, '01_product.category.csv')
         action = steps[0].action_td_import()
         self.assertEqual((action['tag'], action['params']['model']), ('import', 'product.category'))
@@ -135,6 +253,49 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
         for step in missing:
             with self.assertRaises(UserError):
                 step.action_td_import()
+
+    def test_ac_089_import_order_is_the_order_of_the_readme(self):
+        """Return A-13-2: steps 1-15 = standard files 01-15, then the files td/ by their number (README v1.1 «Порядок
+        імпорту»: td/NN after its standard file, td/19b-21b last). Checked against the README when the package is there."""
+        templates = self.env['td.mebli.migration.step'].search([]).mapped('template')
+        standard, td = templates[:15], templates[15:]
+        self.assertEqual(standard, sorted(standard))
+        self.assertTrue(all(not name.startswith('td/') for name in standard))
+        self.assertEqual(td, sorted(td))
+        self.assertTrue(all(name.startswith('td/') for name in td))
+        self.assertEqual(td[-3:], ['td/19b_res.partner.csv', 'td/20b_product.product.csv', 'td/21b_hr.employee.csv'])
+        readme = os.path.join(os.path.dirname(__file__), '..', '..', '..', 'master-data', 'README.md')
+        if not os.path.exists(readme):
+            self.skipTest('package/master-data is not next to the addons')
+        with open(readme, encoding='utf-8') as handle:
+            files = re.findall(r'^\| (?:td )?\d\d[a-z]? \| `([^`]+\.csv)` \|', handle.read(), re.M)
+        self.assertEqual(len(files), 28)
+        self.assertEqual(set(templates), set(files), "every template of the README has its step and back")
+        folder = os.path.dirname(readme)
+        for name in templates:
+            self.assertTrue(os.path.exists(os.path.join(folder, name)), name)
+        for target, spec in convert_bas.DRAFT_MAPPING.items():
+            header = convert_core.template_header(os.path.join(folder, target))
+            self.assertLessEqual(set(spec['columns']), set(header), f"{target}: the mapping fits the template")
+
+    def test_ac_089_bas_steps_need_td_mebli_bas(self):
+        """td/19b-21b are imported only with td_mebli_bas (VP-04); in the light profile the steps are not available."""
+        bas = self.env['ir.module.module'].search([('name', '=', 'td_mebli_bas')]).state == 'installed'
+        steps = self.env['td.mebli.migration.step'].search([('template', 'like', 'td/%b_%')])
+        bas_steps = steps.filtered(lambda s: s.module_name == 'td_mebli_bas')
+        self.assertEqual(bas_steps.mapped('sequence'), [26, 27, 28])
+        self.assertEqual(set(bas_steps.mapped('model_installed')), {bas})
+        if not bas:
+            with self.assertRaises(UserError):
+                bas_steps[0].action_td_import()
+        self.assertTrue(self.env.ref('td_mebli_migration.step_td_01b').model_installed)
+        # Return A-14 (CHECKS №7, A-13-3): the component roles of the configurator go after td/01b and before td/05b
+        roles = self.env.ref('td_mebli_migration.step_td_03b') | self.env.ref('td_mebli_migration.step_td_04b')
+        self.assertEqual(roles.mapped('sequence'), [17, 18])
+        self.assertEqual(set(roles.mapped('module_name')), {'td_mebli_mrp'})
+        self.assertEqual(set(roles.mapped('model_installed')), {True})
+        self.assertEqual(self.env.ref('td_mebli_migration.step_16').sequence, 19)
+        self.assertEqual(self.env.ref('td_mebli_migration.step_01').template, '01_product.category.csv')
 
 
 @tagged('post_install', '-at_install')

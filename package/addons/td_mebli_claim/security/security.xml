@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- D-08 (tr/security.md §1, ROLE-10 «Service»): the claims of the customers are standard repair orders — the rights
+         of Inventory users on repair.order (addons/repair/security/ir.model.access.csv). The xmlid stays in the module of
+         the claims, as the measurer in td_mebli_measure (the move to td_mebli_base — later, with a migration). -->
+    <record id="group_service" model="res.groups">
+        <field name="name">Service</field>
+        <field name="sequence">55</field>
+        <field name="privilege_id" ref="td_mebli_base.res_groups_privilege_mebli"/>
+        <field name="implied_ids" eval="[Command.link(ref('stock.group_stock_user'))]"/>
+        <field name="comment">ROLE-10 (service): the claims of the customers as repair orders and the remake of a part.</field>
+    </record>
+</odoo>
