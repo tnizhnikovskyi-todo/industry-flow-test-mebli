@@ -3,6 +3,8 @@ import { registry } from "@web/core/registry";
 registry.category("web_tour.tours").add("td_support_tour", {
     url: "/odoo/action-base.action_res_users",
     steps: () => [
+        // wait until the web client is ready (the list of users is shown), then open the form from the systray
+        { trigger: ".o_list_view .o_data_row" },
         { trigger: ".o_main_navbar .td_support_systray button", run: "click" },
         { trigger: ".td_support_dialog .td_support_subject", run: "edit Tour: cannot print the order" },
         { trigger: ".td_support_dialog .td_support_description", run: "edit The print button does nothing." },
