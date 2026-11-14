@@ -10,6 +10,7 @@
 - A-11-8: профіль A — 332 тести, 0 failed (з турами); демо — 12, 0 failed.
 - A-11-7: A — 330/0, light — 314/0, B — 335/0.
 - A-15-5: стенд з гілки `16a74c6` — OK. A-16-3: FAIL 0.
+- Остаточний код `239b051` (≡ `21afe46` ≡ `16a74c6` за `package/addons`, `config`, `master-data`), чисті бази `test-pkg-mebli-r5-*`, тести всіх td_mebli_* профілю з турами (2026-11-14): light — 316 тестів, 0 failed / 0 error, skipped 1; B — 337, 0 / 0, skipped 1. Застереження A-14-4 «light/B лише на коді A-11-7» закрито (`tests/reports/A-14-4.md` «Застереження»).
 
 ## Редакції
 `editions: both` (OWNER-INTAKE).
