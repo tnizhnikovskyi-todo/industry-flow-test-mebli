@@ -6,7 +6,7 @@
                    'shows the articles of the current screen and lets an editor add one. Editors write, every internal '
                    'user reads; an article can be limited to groups. Articles shipped by a package are not '
                    'overwritten by an update. Written from scratch (not the Enterprise Knowledge app, not OCA).',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.1.0',
     'category': 'Productivity',
     'license': 'LGPL-3',
     'author': 'ToDo',

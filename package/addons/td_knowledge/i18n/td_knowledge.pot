@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 21:43+0000\n"
-"PO-Revision-Date: 2026-11-14 21:43+0000\n"
+"POT-Creation-Date: 2026-11-14 22:01+0000\n"
+"PO-Revision-Date: 2026-11-14 22:01+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -263,11 +263,6 @@ msgid "Parent Path"
 msgstr ""
 
 #. module: td_knowledge
-#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__rating_ids
-msgid "Ratings"
-msgstr ""
-
-#. module: td_knowledge
 #: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__group_ids
 msgid "Readers"
 msgstr ""
@@ -296,6 +291,18 @@ msgid "Search in the articles..."
 msgstr ""
 
 #. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__text_search
+msgid ""
+"Search in the title and the content with word forms: «монтажу» finds "
+"«монтаж»."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__search_terms
+msgid "Search index"
+msgstr ""
+
+#. module: td_knowledge
 #: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__parent_id
 #: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
 msgid "Section"
@@ -317,6 +324,18 @@ msgstr ""
 msgid ""
 "Shipped by a ToDo module. An update of the package does not overwrite "
 "changes."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,help:td_knowledge.field_td_knowledge_article__search_terms
+msgid ""
+"Stems of the words of the title and the content (word forms in the search)."
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__text_search
+#: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
+msgid "Text"
 msgstr ""
 
 #. module: td_knowledge
@@ -389,4 +408,9 @@ msgstr ""
 #. module: td_knowledge
 #: model_terms:ir.ui.view,arch_db:td_knowledge.td_knowledge_article_view_search
 msgid "Written here"
+msgstr ""
+
+#. module: td_knowledge
+#: model:ir.model.fields,field_description:td_knowledge.field_td_knowledge_article__rating_ids
+msgid "Ratings"
 msgstr ""

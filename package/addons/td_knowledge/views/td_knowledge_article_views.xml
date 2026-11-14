@@ -61,7 +61,8 @@
         <field name="model">td.knowledge.article</field>
         <field name="arch" type="xml">
             <search>
-                <field name="name" filter_domain="['|', ('name', 'ilike', self), ('body', 'ilike', self)]"/>
+                <field name="text_search" string="Text"/>
+                <field name="name"/>
                 <field name="parent_id"/>
                 <field name="model_ids"/>
                 <filter name="package" string="From the package" domain="[('is_package', '=', True)]"/>

@@ -1,6 +1,9 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.orm.domains import Domain
 from odoo.tools import html2plaintext
+
+from . import stemmer
 
 SEARCH_LIMIT = 50
 SNIPPET_CHARS = 160
@@ -28,8 +31,34 @@ class TdKnowledgeArticle(models.Model):
     group_ids = fields.Many2many('res.groups', string='Readers',
                                  help='Empty: every internal user reads the article. Otherwise only these groups '
                                       '(the editors always see it).')
+    search_terms = fields.Text('Search index', compute='_compute_search_terms', store=True,
+                               help='Stems of the words of the title and the content (word forms in the search).')
+    text_search = fields.Char('Text', compute='_compute_text_search', search='_search_text_search',
+                              help='Search in the title and the content with word forms: «монтажу» finds «монтаж».')
     is_package = fields.Boolean('From the package', readonly=True,
                                 help='Shipped by a ToDo module. An update of the package does not overwrite changes.')
+
+    @api.depends('name', 'body')
+    def _compute_search_terms(self):
+        for article in self:
+            terms = stemmer.stems(f'{article.name or ""} {html2plaintext(article.body or "")}')
+            article.search_terms = f' {" ".join(sorted(terms))} ' if terms else False
+
+    def _compute_text_search(self):
+        self.text_search = False
+
+    def _search_text_search(self, operator, value):
+        if operator not in ('ilike', 'like', '=') or not isinstance(value, str):
+            return NotImplemented
+        domains = []
+        for word in stemmer.words(value):
+            domains.append(Domain.OR([
+                [('name', 'ilike', word)],
+                [('body', 'ilike', word)],
+                # the stem of the search word starts a stem of the article
+                [('search_terms', 'ilike', f' {stemmer.stem(word)}')],
+            ]))
+        return Domain.AND(domains) if domains else Domain.TRUE
 
     @api.constrains('parent_id')
     def _check_parent_id(self):
@@ -47,7 +76,7 @@ class TdKnowledgeArticle(models.Model):
         matches = None
         query = (query or '').strip()
         if query:
-            matches = self.search(['|', ('name', 'ilike', query), ('body', 'ilike', query)], limit=SEARCH_LIMIT)
+            matches = self.search([('text_search', 'ilike', query)], limit=SEARCH_LIMIT)
             keep = set()
             for article in matches:
                 keep.update(int(i) for i in article.parent_path.split('/') if i)
