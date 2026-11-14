@@ -19,6 +19,7 @@
         <field name="code">action = model.td_action_update_prices_by_rate()</field>
         <field name="group_ids" eval="[(6, 0, [ref('td_mebli_base.group_finance')])]"/>
     </record>
+    <!-- D-07 (A-11-7): the menu — the finance only (as the action); the function «nbu» is checked by ir.ui.menu (models/ir_ui_menu.py) -->
     <menuitem id="menu_td_update_prices_by_rate" name="Update Prices at the Rate" parent="sale.sale_order_menu"
-              action="action_td_update_prices_by_rate" sequence="90" groups="td_mebli_base.group_feature_nbu"/>
+              action="action_td_update_prices_by_rate" sequence="90" groups="-td_mebli_base.group_feature_nbu,td_mebli_base.group_finance"/>
 </odoo>

@@ -59,16 +59,19 @@ class SaleOrder(models.Model):
         # sudo: read only: a parameter of the company (VP-06)
         return company.sudo().td_payment_control or 'warn'
 
+    # not stored: the invoices are read each time; the dependencies only refresh the form when the terms change (AC-019)
+    @api.depends('payment_term_id', 'amount_total', 'state')
     def _compute_td_pay(self):
         for order in self:
             control = order._td_payment_control()
             # sudo: read only — the crew and the salesperson see the figures, the invoices stay with Accounting
-            due = order.sudo()._td_due_before_install() if order.state == 'sale' else 0.0
+            # AC-019 (D-05, A-11-7): «Due before installation» is shown from the quotation on; it is missing only once confirmed
+            due = order.sudo()._td_due_before_install() if order.state != 'cancel' else 0.0
             # sudo: read only — the crew and the salesperson see the figures, the invoices stay with Accounting
             paid = order.sudo()._td_paid_amount() if order.id else 0.0
             order.td_pay_before_install = due
             order.td_pay_received = paid
-            order.td_pay_missing = max(0.0, due - paid) if due - paid >= ROUNDING else 0.0
+            order.td_pay_missing = max(0.0, due - paid) if order.state == 'sale' and due - paid >= ROUNDING else 0.0
             order.td_pay_ok = not order.td_pay_missing
             order.td_pay_control = control
 

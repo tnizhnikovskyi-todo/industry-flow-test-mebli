@@ -151,8 +151,26 @@ class TestNbuRates(TransactionCase):
             self.env['sale.order'].with_user(salesman).td_action_update_prices_by_rate()
 
     def test_ac_037_menu_behind_the_feature_group(self):
+        """D-07 (A-11-7): the menu is seen only by the finance and only with the function «nbu»; a salesperson, a
+        measurer (no sales rights at all) do not see it."""
         menu = self.env.ref('td_mebli_ua.menu_td_update_prices_by_rate')
-        self.assertEqual(menu.group_ids, self.env.ref('td_mebli_base.group_feature_nbu'))
+        self.assertEqual(menu.group_ids, self.env.ref('td_mebli_base.group_finance'))
+        Menu = self.env['ir.ui.menu']
+        nbu = self.env.ref('td_mebli_base.group_feature_nbu')
+        user_group = self.env.ref('base.group_user')
+
+        def make(login, groups):
+            return self.env['res.users'].with_context(no_reset_password=True).create({
+                'name': login, 'login': login, 'group_ids': [(6, 0, [self.env.ref(g).id for g in groups])]})
+        finance = make('td_ua_menu_finance', ['sales_team.group_sale_salesman', 'td_mebli_base.group_finance'])
+        salesman = make('td_ua_menu_salesman', ['sales_team.group_sale_salesman'])
+        employee = make('td_ua_menu_employee', ['base.group_user'])
+        for with_feature in (True, False):
+            user_group.implied_ids = [(4 if with_feature else 3, nbu.id)]
+            self.env.registry.clear_cache()
+            for user, expected in ((finance, with_feature), (salesman, False), (employee, False)):
+                self.assertEqual(menu.id in Menu.with_user(user)._visible_menu_ids(), expected,
+                                 (user.login, with_feature))
 
     def test_ac_038_nbu_down_keeps_rates_and_warns_finance(self):
         """AC-038: the NBU service fails → the rates are not changed, an error in the log, the finance user gets the

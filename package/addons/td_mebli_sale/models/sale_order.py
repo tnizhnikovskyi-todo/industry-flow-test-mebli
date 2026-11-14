@@ -27,11 +27,19 @@ class SaleOrder(models.Model):
     # AC-018: the standard margin of sale_margin — the same groups as the planned cost
     margin = fields.Monetary(groups=MARGIN_GROUPS)
     margin_percent = fields.Float(groups=MARGIN_GROUPS)
+    # AC-017 (D-12, A-11-7): the tab «Cost» of the order — the planned cost of every line before the launch
+    td_cost_line_ids = fields.One2many('sale.order.line', string='Cost of the Lines', compute='_compute_td_cost_line_ids',
+                                       groups=MARGIN_GROUPS)
     td_image = fields.Image(string='Product Image', compute='_compute_td_image', max_width=256, max_height=256)
     # position 6: the visual of the designer goes into the standard quotation PDF (sale.report_saleorder_document)
     td_design_image = fields.Image(string='Design Visual', max_width=1600, max_height=1600, copy=False,
                                    help="The visual of the project from the designer: printed in the quotation under the "
                                         "order details.")
+
+    @api.depends('order_line')
+    def _compute_td_cost_line_ids(self):
+        for order in self:
+            order.td_cost_line_ids = order.order_line.filtered(lambda line: not line.display_type)
 
     @api.model
     def _read_group_td_stage(self, values, domain):
@@ -41,30 +49,40 @@ class SaleOrder(models.Model):
     @api.depends('state', 'stock_reference_ids.production_ids.state')
     def _compute_td_stage(self):
         for order in self:
-            # sudo: the stage is shown to a salesperson who has no right to read every manufacturing order
-            states = order.sudo().mrp_production_ids.mapped('state')
-            if order.state in ('draft', 'cancel'):
-                order.td_stage = 'quote'
-            elif order.state == 'sent':
-                order.td_stage = 'sent'
-            elif states and all(state == 'done' for state in states):
-                order.td_stage = 'done'
-            elif any(state in ('progress', 'to_close', 'done') for state in states):
-                order.td_stage = 'progress'
-            else:
-                order.td_stage = 'confirmed'
+            order.td_stage = order._td_stage_value()
+
+    def _td_stage_value(self):
+        """The stage derived from the documents (extended by td_mebli_install after «Made»)."""
+        self.ensure_one()
+        # sudo: the stage is shown to a salesperson who has no right to read every manufacturing order
+        states = self.sudo().mrp_production_ids.mapped('state')
+        if self.state in ('draft', 'cancel'):
+            return 'quote'
+        if self.state == 'sent':
+            return 'sent'
+        if states and all(state == 'done' for state in states):
+            return 'done'
+        if any(state in ('progress', 'to_close', 'done') for state in states):
+            return 'progress'
+        return 'confirmed'
 
     def _inverse_td_stage(self):
         """Dragging a card on the board: only «Waiting for launch» -> «In production» is allowed and it really starts the
         work (the first work order of each manufacturing order); any other move is refused, the stage is derived from the work.
 
         Only a manufacturing user may start the work, with his own rights (no sudo): a salesperson gets an error and the
-        button «Start» stays in the manufacturing order."""
+        button «Start» stays in the manufacturing order.
+
+        D-02 (A-11-7): a value equal to the derived stage is not a move (a new order saved from the form, a form that
+        sends the stage back unchanged): nothing is done and nothing is refused."""
+        moved = self.filtered(lambda order: order.td_stage != order._td_stage_value())
+        if not moved:
+            return
         # AC-064: the text of SPEC
         message = self.env._("The stage is computed from the documents; only the production manager launches production")
         if not (self.env.su or self.env.user.has_group('mrp.group_mrp_user')):
             raise UserError(message)
-        for order in self:
+        for order in moved:
             if order.td_stage != 'progress':
                 raise UserError(self.env._("The stage follows the production: only moving a waiting order to «In production» is possible."))
             productions = order.mrp_production_ids.filtered(lambda p: p.state == 'confirmed')

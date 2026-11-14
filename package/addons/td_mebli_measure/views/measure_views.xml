@@ -18,8 +18,12 @@
                     <group>
                         <group>
                             <field name="td_can_link" invisible="1"/>
-                            <field name="lead_id" readonly="not td_can_link" options="{'no_open': not td_can_link}"/>
-                            <field name="order_id" readonly="not td_can_link" options="{'no_open': not td_can_link}"/>
+                            <!-- D-03: Odoo 19 evaluates «options» once, without the record (web/views/fields/field.js:
+                                 evaluateExpr(value)) — only literals there; the link is switched by two copies of the field -->
+                            <field name="lead_id" invisible="not td_can_link"/>
+                            <field name="lead_id" invisible="td_can_link" readonly="1" options="{'no_open': True}"/>
+                            <field name="order_id" invisible="not td_can_link"/>
+                            <field name="order_id" invisible="td_can_link" readonly="1" options="{'no_open': True}"/>
                             <field name="customer"/>
                             <field name="td_address"/>
                             <field name="td_phone" widget="phone"/>
@@ -175,8 +179,9 @@
         </field>
     </record>
 
+    <!-- D-15 (A-11-7): after «Orders» (sequence 30), the start screen of «Sales» stays the standard quotations -->
     <menuitem id="td_mebli_measure_menu" name="Measurement Sheets" parent="sale.sale_order_menu"
-              action="td_mebli_measure_action" sequence="3" groups="sales_team.group_sale_salesman"/>
+              action="td_mebli_measure_action" sequence="30" groups="sales_team.group_sale_salesman"/>
 
     <!-- AC-006: the measurer has no Sales menu; his own app «Measurements»: his sheets and his visits -->
     <record id="td_mebli_measure_my_action" model="ir.actions.act_window">

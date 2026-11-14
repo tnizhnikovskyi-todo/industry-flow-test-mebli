@@ -30,6 +30,8 @@ msgstr "Курс валюти"
 #: model:ir.model.fields,field_description:td_mebli_ua.field_res_currency__display_name
 #: model:ir.model.fields,field_description:td_mebli_ua.field_res_currency_rate__display_name
 #: model:ir.model.fields,field_description:td_mebli_ua.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_ua.field_ir_ui_menu__display_name
+#: model:ir.model.fields,field_description:td_mebli_ua.field_sale_order_line__display_name
 msgid "Display Name"
 msgstr "Назва"
 
@@ -37,6 +39,8 @@ msgstr "Назва"
 #: model:ir.model.fields,field_description:td_mebli_ua.field_res_currency__id
 #: model:ir.model.fields,field_description:td_mebli_ua.field_res_currency_rate__id
 #: model:ir.model.fields,field_description:td_mebli_ua.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_ua.field_ir_ui_menu__id
+#: model:ir.model.fields,field_description:td_mebli_ua.field_sale_order_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -116,6 +120,7 @@ msgstr "Оновити ціни за курсом"
 #. module: td_mebli_ua
 #. odoo-python
 #: code:addons/td_mebli_ua/models/sale_order.py:0
+#: code:addons/td_mebli_ua/tests/test_ua.py:0
 msgid "Lines with a manual price or discount kept: %(count)s."
 msgstr "Рядків з ручною ціною чи знижкою збережено: %(count)s."
 
@@ -124,3 +129,13 @@ msgstr "Рядків з ручною ціною чи знижкою збереж
 #: code:addons/td_mebli_ua/models/currency.py:0
 msgid "Only the administrator loads the NBU rates by hand."
 msgstr "Курси НБУ вручну завантажує лише адміністратор."
+
+#. module: td_mebli_ua
+#: model:ir.model,name:td_mebli_ua.model_ir_ui_menu
+msgid "Menu"
+msgstr "Меню"
+
+#. module: td_mebli_ua
+#: model:ir.model,name:td_mebli_ua.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Рядок замовлення"

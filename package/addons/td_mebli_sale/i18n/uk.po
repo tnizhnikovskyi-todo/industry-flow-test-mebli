@@ -466,6 +466,7 @@ msgstr "Візуалізація проєкту"
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -533,6 +534,7 @@ msgstr "Висота, мм"
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__id
 msgid "ID"
 msgstr "ID"
 
@@ -613,6 +615,7 @@ msgstr "Виробничі замовлення %s"
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__margin
 msgid "Margin"
 msgstr "Маржа"
 
@@ -870,6 +873,7 @@ msgstr "К-сть"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Quantity"
 msgstr "Кількість"
 
@@ -1367,6 +1371,7 @@ msgstr "До запуску, год"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Total"
 msgstr "Разом"
 
@@ -1456,3 +1461,38 @@ msgstr "— Продавець"
 #: model:account.payment.term,name:td_mebli_sale.payment_term_td_furniture
 msgid "Furniture to Order"
 msgstr "Меблі на замовлення"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_cost_line_ids
+msgid "Cost of the Lines"
+msgstr "Собівартість рядків"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Margin of the Order"
+msgstr "Маржа замовлення"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Margin of the Order, %"
+msgstr "Маржа замовлення, %"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_schedule_html
+msgid "Payment Schedule"
+msgstr "Графік оплат"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_has_milestones
+msgid "Payment by Milestones"
+msgstr "Оплата етапами"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Звіт аналізу продажів"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Cost of the Order"
+msgstr "Собівартість"
