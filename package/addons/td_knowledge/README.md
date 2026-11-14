@@ -34,7 +34,7 @@
 | Групи користувача з успадкованими — `res.users.all_group_ids` (для правила читачів) | `odoo/addons/base/models/res_users.py:258` |
 | `ir.model._get(name)` / `_get_id(name)` — запис/ідентифікатор моделі без прав користувача (кеш) | `odoo/addons/base/models/ir_model.py:320`, `:328` |
 | `html2plaintext` — фрагмент тексту статті | `odoo/tools/mail.py:541` |
-| У `eval` XML-даних є `obj` (= `env[модель поля].browse`) — прив'язка стартових статей до моделі за технічною назвою | `odoo/tools/convert.py:55` |
+| Атрибут `search=` поля в XML-даних дає `Command.set` для many2many (прив'язка стартових статей до моделі за технічною назвою; немає моделі — порожньо) | `odoo/tools/convert.py:400-416` |
 | Поточний екран: `action.currentController` (`props.resModel`), подія `ACTION_MANAGER:UI-UPDATED` | `addons/web/static/src/webclient/actions/action_service.js:1876`, `:1044` |
 | Поточний застосунок — `menu.getCurrentApp()` | `addons/web/static/src/webclient/menus/menu_service.js:74` |
 | `orm.silent` — запит без індикатора завантаження (лічильник на значку) | `addons/web/static/src/core/orm_service.js:107` |

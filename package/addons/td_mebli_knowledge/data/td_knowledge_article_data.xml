@@ -20,7 +20,7 @@
         <field name="sequence">10</field>
         <field name="parent_id" ref="article_mebli_section"/>
         <field name="is_package" eval="True"/>
-        <field name="model_ids" eval="[(6, 0, obj().env['ir.model'].search([('model', '=', 'sale.order')]).ids)]"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'sale.order')]"/>
         <field name="body" type="html">
 <div>
 <p>Замовлення — стандартна пропозиція/замовлення на продаж Odoo; пакет додає до неї меблеві дані.</p>
@@ -41,7 +41,7 @@
         <field name="sequence">20</field>
         <field name="parent_id" ref="article_mebli_section"/>
         <field name="is_package" eval="True"/>
-        <field name="model_ids" eval="[(6, 0, obj().env['ir.model'].search([('model', '=', 'td.mebli.measure')]).ids)]"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'td.mebli.measure')]"/>
         <field name="body" type="html">
 <div>
 <p>Заявка й виїзд — стандартна угода CRM і зустріч у календарі. Аркуш заміру зберігає те, чого в стандарті немає: ніші, техніку клієнта та її розміри.</p>
@@ -61,7 +61,7 @@
         <field name="sequence">30</field>
         <field name="parent_id" ref="article_mebli_section"/>
         <field name="is_package" eval="True"/>
-        <field name="model_ids" eval="[(6, 0, obj().env['ir.model'].search([('model', '=', 'td.mebli.cutting.job')]).ids)]"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'td.mebli.cutting.job')]"/>
         <field name="body" type="html">
 <div>
 <p>Завдання розкрою збирає деталі зі специфікацій виробничих замовлень.</p>
@@ -81,7 +81,7 @@
         <field name="sequence">40</field>
         <field name="parent_id" ref="article_mebli_section"/>
         <field name="is_package" eval="True"/>
-        <field name="model_ids" eval="[(6, 0, obj().env['ir.model'].search([('model', '=', 'td.mebli.install.act')]).ids)]"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'td.mebli.install.act')]"/>
         <field name="body" type="html">
 <div>
 <p>Виїзд бригади — стандартна задача проєкту замовлення в календарі монтажу; акт монтажу — документ пакета.</p>
@@ -100,7 +100,7 @@
         <field name="sequence">50</field>
         <field name="parent_id" ref="article_mebli_section"/>
         <field name="is_package" eval="True"/>
-        <field name="model_ids" eval="[(6, 0, obj().env['ir.model'].search([('model', '=', 'repair.order')]).ids)]"/>
+        <field name="model_ids" model="ir.model" search="[('model', '=', 'repair.order')]"/>
         <field name="body" type="html">
 <div>
 <p>Рекламація — стандартне замовлення на ремонт Odoo, пов'язане із замовленням меблів і його деталлю.</p>
