@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="td_knowledge.Reader">
-        <div class="td_knowledge o_action h-100 d-flex">
+        <div class="td_knowledge o_action h-100 d-flex flex-row flex-nowrap overflow-hidden">
             <aside t-if="state.showTree or !ui.isSmall" class="td_knowledge_tree border-end bg-view d-flex flex-column">
                 <div class="p-3 pb-2">
                     <div class="input-group">
