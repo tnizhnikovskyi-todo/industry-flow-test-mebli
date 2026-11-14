@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-13 09:12+0000\n"
-"PO-Revision-Date: 2026-11-13 09:12+0000\n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -442,6 +442,11 @@ msgid "Light"
 msgstr ""
 
 #. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_users__td_margin_auto
+msgid "Margin Visibility by the Company Parameter"
+msgstr ""
+
+#. module: td_mebli_base
 #: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
 msgid "Minimal Offcut"
 msgstr ""
@@ -768,9 +773,4 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_base.field_res_config_settings__group_td_feature_kiosk
 #: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
 msgid "Workshop Kiosk"
-msgstr ""
-
-#. module: td_mebli_base
-#: model:ir.model.fields,field_description:td_mebli_base.field_res_users__td_margin_auto
-msgid "Margin Visibility by the Company Parameter"
 msgstr ""

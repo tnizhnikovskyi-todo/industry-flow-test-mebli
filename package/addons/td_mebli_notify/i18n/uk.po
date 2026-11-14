@@ -231,13 +231,7 @@ msgid "Contact"
 msgstr "Контакт"
 
 #. module: td_mebli_notify
-#: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__display_name
-#: model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__display_name
-#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__display_name
-#: model:ir.model.fields,field_description:td_mebli_notify.field_purchase_order_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_notify.field_res_partner__display_name
-#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__display_name
-#: model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__display_name
+#: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__display_name model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_notify.field_project_task__display_name model:ir.model.fields,field_description:td_mebli_notify.field_purchase_order_line__display_name model:ir.model.fields,field_description:td_mebli_notify.field_res_partner__display_name model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -289,8 +283,7 @@ msgid "Furniture: installation tomorrow"
 msgstr "Меблі: монтаж завтра"
 
 #. module: td_mebli_notify
-#: model:ir.actions.server,name:td_mebli_notify.ir_cron_td_morning_briefing_ir_actions_server
-#: model:mail.template,name:td_mebli_notify.mail_template_td_briefing
+#: model:ir.actions.server,name:td_mebli_notify.ir_cron_td_morning_briefing_ir_actions_server model:mail.template,name:td_mebli_notify.mail_template_td_briefing
 msgid "Furniture: morning briefing of the owner"
 msgstr "Меблі: ранковий брифінг власника"
 
@@ -315,13 +308,7 @@ msgid "Handled Forecast Shift, days"
 msgstr "Опрацьований зсув прогнозу, дн."
 
 #. module: td_mebli_notify
-#: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__id
-#: model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__id
-#: model:ir.model.fields,field_description:td_mebli_notify.field_project_task__id
-#: model:ir.model.fields,field_description:td_mebli_notify.field_purchase_order_line__id
-#: model:ir.model.fields,field_description:td_mebli_notify.field_res_partner__id
-#: model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__id
-#: model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__id
+#: model:ir.model.fields,field_description:td_mebli_notify.field_mail_thread__id model:ir.model.fields,field_description:td_mebli_notify.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_notify.field_project_task__id model:ir.model.fields,field_description:td_mebli_notify.field_purchase_order_line__id model:ir.model.fields,field_description:td_mebli_notify.field_res_partner__id model:ir.model.fields,field_description:td_mebli_notify.field_sale_order__id model:ir.model.fields,field_description:td_mebli_notify.field_td_mebli_dashboard__id
 msgid "ID"
 msgstr "ID"
 
@@ -337,12 +324,8 @@ msgstr "Монтаж {{ object.sale_order_id.name }}: завтра"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_install_date
-msgid ""
-"Installation of {{ object.sale_order_id.name }}: {{ "
-"format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz "
-"or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
-msgstr ""
-"Монтаж {{ object.sale_order_id.name }}: {{ format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
+msgid "Installation of {{ object.sale_order_id.name }}: {{ format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
+msgstr "Монтаж {{ object.sale_order_id.name }}: {{ format_datetime(object.date_deadline, tz=object.sale_order_id.partner_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy') }}"
 
 #. module: td_mebli_notify
 #. odoo-python
@@ -362,20 +345,13 @@ msgstr "Замовлення на виробництво"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_measure_booking
-msgid ""
-"Measurement: {{ format_datetime(object.start, tz=object.user_id.tz or "
-"'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
-msgstr ""
-"Замір: {{ format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
+msgid "Measurement: {{ format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
+msgstr "Замір: {{ format_datetime(object.start, tz=object.user_id.tz or 'Europe/Kyiv', dt_format='dd.MM.yyyy HH:mm') }}"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_briefing
-msgid ""
-"Morning briefing {{ format_date(ctx.get('td_today') or "
-"datetime.date.today()) }}"
-msgstr ""
-"Ранковий брифінг {{ format_date(ctx.get('td_today') or "
-"datetime.date.today()) }}"
+msgid "Morning briefing {{ format_date(ctx.get('td_today') or datetime.date.today()) }}"
+msgstr "Ранковий брифінг {{ format_date(ctx.get('td_today') or datetime.date.today()) }}"
 
 #. module: td_mebli_notify
 #: model:mail.template,subject:td_mebli_notify.mail_template_td_new_date
@@ -405,8 +381,7 @@ msgstr "Нагадайте покупцю про оплату перед мон�
 
 #. module: td_mebli_notify
 #. odoo-python
-#: code:addons/td_mebli_notify/models/reminder.py:0
-#: code:addons/td_mebli_notify/tests/test_g1_notify.py:0
+#: code:addons/td_mebli_notify/models/reminder.py:0 code:addons/td_mebli_notify/tests/test_g1_notify.py:0
 msgid "Reminder not sent: no email"
 msgstr "Нагадування не надіслано: немає email"
 
@@ -422,9 +397,7 @@ msgstr "Щоденне нагадування за день до виїзду"
 
 #. module: td_mebli_notify
 #: model:mail.template,description:td_mebli_notify.mail_template_td_payment_reminder
-msgid ""
-"Sent by the daily reminder when the visit is close and the payment is "
-"missing"
+msgid "Sent by the daily reminder when the visit is close and the payment is missing"
 msgstr "Щоденне нагадування, коли виїзд близько, а доплати немає"
 
 #. module: td_mebli_notify
@@ -444,11 +417,8 @@ msgstr "Надсилає менеджер, коли дата замовленн�
 
 #. module: td_mebli_notify
 #: model:mail.template,description:td_mebli_notify.mail_template_td_briefing
-msgid ""
-"Sent every morning to each owner (group of the dashboard) personally, "
-"figures of his companies"
-msgstr ""
-"Щоранку кожному власнику (група дашборда) особисто, цифри його компаній"
+msgid "Sent every morning to each owner (group of the dashboard) personally, figures of his companies"
+msgstr "Щоранку кожному власнику (група дашборда) особисто, цифри його компаній"
 
 #. module: td_mebli_notify
 #: model:ir.model,name:td_mebli_notify.model_project_task
@@ -462,21 +432,13 @@ msgstr "Повідомити клієнта про нову дату"
 
 #. module: td_mebli_notify
 #: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_payment_reminded_for
-msgid ""
-"The date of the visit for which the payment before the installation was "
-"reminded (once per visit date)."
-msgstr ""
-"Дата виїзду, для якої нагадано про доплату перед монтажем (один раз на дату "
-"виїзду)."
+msgid "The date of the visit for which the payment before the installation was reminded (once per visit date)."
+msgstr "Дата виїзду, для якої нагадано про доплату перед монтажем (один раз на дату виїзду)."
 
 #. module: td_mebli_notify
 #: model:ir.model.fields,help:td_mebli_notify.field_project_task__td_install_reminded_for
-msgid ""
-"The date of the visit the customer was reminded of (once per visit date; a "
-"moved visit is reminded again)."
-msgstr ""
-"Дата виїзду, про яку нагадано клієнту (один раз на дату виїзду; перенесений "
-"виїзд — нове нагадування)."
+msgid "The date of the visit the customer was reminded of (once per visit date; a moved visit is reminded again)."
+msgstr "Дата виїзду, про яку нагадано клієнту (один раз на дату виїзду; перенесений виїзд — нове нагадування)."
 
 #. module: td_mebli_notify
 #. odoo-python
@@ -486,12 +448,8 @@ msgstr "Прогнозна дата повернулась у межі обіц�
 
 #. module: td_mebli_notify
 #: model:ir.model.fields,help:td_mebli_notify.field_sale_order__td_forecast_shift_done
-msgid ""
-"The shift of the forecast (days) for which the salesperson already got the "
-"activity; reset when the forecast comes back within the promised date."
-msgstr ""
-"Зсув прогнозу (дні), для якого продавець уже отримав дію; скидається, коли "
-"прогноз повертається в обіцяну дату."
+msgid "The shift of the forecast (days) for which the salesperson already got the activity; reset when the forecast comes back within the promised date."
+msgstr "Зсув прогнозу (дні), для якого продавець уже отримав дію; скидається, коли прогноз повертається в обіцяну дату."
 
 #. module: td_mebli_notify
 #: model:ir.model.fields,help:td_mebli_notify.field_project_task__display_name

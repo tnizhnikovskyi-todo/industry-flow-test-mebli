@@ -7,7 +7,7 @@
                    'shared tablet user records the time and this module adds the worker who confirmed with the PIN of '
                    'the standard employee. Quality steps (Quality is Enterprise only) and the packing list by places '
                    'are new.',
-    'version': '19.0.1.1.2',
+    'version': '19.0.1.1.3',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',

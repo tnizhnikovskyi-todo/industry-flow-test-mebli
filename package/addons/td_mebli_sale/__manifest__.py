@@ -1,7 +1,7 @@
 {
     'name': 'ToDo Mebli: configurator, price and planned cost',
     'summary': 'Furniture dimensions in the sales configurator, size-based price, order BoM and planned margin',
-    'version': '19.0.1.1.2',
+    'version': '19.0.1.1.3',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',

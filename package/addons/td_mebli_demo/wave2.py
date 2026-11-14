@@ -5,6 +5,7 @@ of seed_showcase (after the notifications are marked read, so the owner finds it
 import base64
 import io
 import json
+import os
 from datetime import datetime, time, timedelta
 
 import pytz
@@ -14,6 +15,18 @@ from odoo import fields
 TZ = pytz.timezone('Europe/Kyiv')
 # supplier history (F-63): days late of the earlier receipts; the painter keeps his dates, the stone shop is late
 HISTORY = {'fronts_9010': (0, [0, 0, -1]), 'worktop_quartz': (1, [4, 6, 5, 7]), 'profile_champagne': (2, [1, 2])}
+
+
+def _set_report_url(env, url=None):
+    """D-17: the address wkhtmltopdf reads the styles and the fonts of a report from. No fixed port: DEMO_REPORT_URL (the
+    address of the stand server, given to package/demo/up.sh or to the shot scripts) is written to report.url; without it
+    report.url is cleared and Odoo prints with web.base.url (ir.actions.report._get_report_url)."""
+    url = url if url is not None else os.environ.get('DEMO_REPORT_URL', '')
+    url = (url or '').strip().rstrip('/')
+    if url and not url.startswith(('http://', 'https://')):
+        raise ValueError("DEMO_REPORT_URL must be an http(s) address of the stand server, got %r" % url)
+    env['ir.config_parameter'].sudo().set_param('report.url', url or False)
+    return url or False
 
 
 def _utc(day, hour, minute=0):
@@ -319,9 +332,8 @@ def seed_wave2_after(env, people, ids):
     # leads the maintenance of the machines
     people['fin'].group_ids = [(4, env.ref('hr_attendance.group_hr_attendance_manager').id)]
     people['chief'].group_ids = [(4, env.ref('maintenance.group_equipment_manager').id)]
-    # the PDF of the shots: wkhtmltopdf reads the styles from the show server (README §5, «PDF»)
-    import os
-    env['ir.config_parameter'].sudo().set_param('report.url', os.environ.get('DEMO_REPORT_URL', 'http://127.0.0.1:8072'))
+    # the PDF: wkhtmltopdf reads the styles and the fonts from the server of the stand (D-17, AC-N.06)
+    _set_report_url(env)
     reminders = env['project.task']._cron_td_customer_reminders()
     env['res.partner']._cron_td_morning_briefing()
     from .dates import SUPPLIERS

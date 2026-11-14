@@ -23,19 +23,13 @@ msgstr "<span class=\"o_stat_text\">Основне замовлення</span>"
 #. module: td_mebli_multico
 #. odoo-python
 #: code:addons/td_mebli_multico/models/sale_order.py:0
-msgid ""
-"Add the installation service line to the order: it goes to the order of %s."
-msgstr ""
-"Додайте в замовлення рядок послуги монтажу: він перейде в замовлення %s."
+msgid "Add the installation service line to the order: it goes to the order of %s."
+msgstr "Додайте в замовлення рядок послуги монтажу: він перейде в замовлення %s."
 
 #. module: td_mebli_multico
 #: model:ir.model.fields,help:td_mebli_multico.field_sale_order__td_install_company_id
-msgid ""
-"Another legal entity of the group does the installation: on confirmation the"
-" installation line goes to a separate service order of that company (its own"
-" task of the installation). Empty — the seller installs."
-msgstr ""
-"Монтаж виконує інша юрособа групи: при підтвердженні рядок монтажу переходить в окреме замовлення-послугу цієї компанії (з її задачею монтажу). Порожньо — монтує продавець."
+msgid "Another legal entity of the group does the installation: on confirmation the installation line goes to a separate service order of that company (its own task of the installation). Empty — the seller installs."
+msgstr "Монтаж виконує інша юрособа групи: при підтвердженні рядок монтажу переходить в окреме замовлення-послугу цієї компанії (з її задачею монтажу). Порожньо — монтує продавець."
 
 #. module: td_mebli_multico
 #: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__display_name
@@ -54,8 +48,7 @@ msgstr "Монтаж (ФОП)"
 
 #. module: td_mebli_multico
 #. odoo-python
-#: code:addons/td_mebli_multico/models/sale_order.py:0
-#: model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_install_order_ids
+#: code:addons/td_mebli_multico/models/sale_order.py:0 model:ir.model.fields,field_description:td_mebli_multico.field_sale_order__td_install_order_ids
 msgid "Installation Orders"
 msgstr "Замовлення монтажу"
 
@@ -100,8 +93,7 @@ msgstr "Компанія монтажу має бути іншою юрособ�
 #. odoo-python
 #: code:addons/td_mebli_multico/models/sale_order.py:0
 msgid "The main order %s is cancelled: decide on this installation order."
-msgstr ""
-"Основне замовлення %s скасовано: вирішіть долю цього замовлення монтажу."
+msgstr "Основне замовлення %s скасовано: вирішіть долю цього замовлення монтажу."
 
 #. module: td_mebli_multico
 #. odoo-python
@@ -112,8 +104,5 @@ msgstr "Основне замовлення скасовано"
 #. module: td_mebli_multico
 #. odoo-python
 #: code:addons/td_mebli_multico/models/sale_order.py:0
-msgid ""
-"You do not have access to the company %s — the installation from it is "
-"arranged by a user of that company"
-msgstr ""
-"У вас немає доступу до компанії %s — монтаж від неї оформлює користувач цієї компанії"
+msgid "You do not have access to the company %s — the installation from it is arranged by a user of that company"
+msgstr "У вас немає доступу до компанії %s — монтаж від неї оформлює користувач цієї компанії"

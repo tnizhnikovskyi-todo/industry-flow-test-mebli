@@ -18,18 +18,14 @@ msgstr ""
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
-msgid ""
-"%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
+msgid "%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
 msgstr "%(product)s: %(axis)s %(value)s мм поза межами %(low)s-%(high)s мм."
 
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
-msgid ""
-"%(product)s: the %(axis)s must be a whole number of millimetres, got "
-"'%(raw)s'."
-msgstr ""
-"%(product)s: %(axis)s має бути цілим числом міліметрів, отримано '%(raw)s'."
+msgid "%(product)s: the %(axis)s must be a whole number of millimetres, got '%(raw)s'."
+msgstr "%(product)s: %(axis)s має бути цілим числом міліметрів, отримано '%(raw)s'."
 
 #. module: td_mebli_sale
 #. odoo-python
@@ -67,10 +63,7 @@ msgstr ") уклали цей договір про таке."
 msgid ""
 ") or the last purchased item arrives and is made into the product. «Delay by History» — the average delay of the\n"
 "                        supplier over the past year (days), added to the supplier date."
-msgstr ""
-") або останню закуплену позицію отримано й перетворено на виріб. «Запізнення"
-" за історією» — середнє запізнення постачальника за рік (днів), додане до "
-"дати постачальника."
+msgstr ") або останню закуплену позицію отримано й перетворено на виріб. «Запізнення за історією» — середнє запізнення постачальника за рік (днів), додане до дати постачальника."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
@@ -100,9 +93,7 @@ msgstr ". Замовник сплачує за графіком:"
 msgid ""
 ". The term is moved by the days of the\n"
 "                    late payment and of the changes asked by the Customer."
-msgstr ""
-". Строк зсувається на дні затримки оплати та змін, про які попросив "
-"Замовник."
+msgstr ". Строк зсувається на дні затримки оплати та змін, про які попросив Замовник."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
@@ -185,14 +176,12 @@ msgid "<span class=\"o_stat_text\">Sales Order</span>"
 msgstr "<span class=\"o_stat_text\">Замовлення</span>"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_kanban
 msgid "<span>Виручка:</span>"
 msgstr "<span>Виручка:</span>"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_kanban
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_kanban model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_kanban
 msgid "<span>Маржа:</span>"
 msgstr "<span>Маржа:</span>"
 
@@ -223,15 +212,11 @@ msgstr "<strong>Разом</strong>"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_is_stuck
-msgid ""
-"A confirmed order whose stage did not change for longer than «Stuck orders, "
-"days without a move» of its company (VP-10)."
-msgstr ""
-"Підтверджене замовлення, етап якого не змінювався довше за «Застряглі, днів без руху» його компанії (VP-10)."
+msgid "A confirmed order whose stage did not change for longer than «Stuck orders, days without a move» of its company (VP-10)."
+msgstr "Підтверджене замовлення, етап якого не змінювався довше за «Застряглі, днів без руху» його компанії (VP-10)."
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__kind__reorder
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__kind__reorder
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__kind__reorder model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__kind__reorder
 msgid "Additional Order"
 msgstr "Дозамовлення"
 
@@ -246,14 +231,12 @@ msgid "Amount"
 msgstr "Сума"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
 msgid "Average"
 msgstr "Середнє"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__td_supplier_delay_avg
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_users__td_supplier_delay_avg
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__td_supplier_delay_avg model:ir.model.fields,field_description:td_mebli_sale.field_res_users__td_supplier_delay_avg
 msgid "Average Delay, days"
 msgstr "Середнє запізнення, дн."
 
@@ -288,8 +271,7 @@ msgid "Cancel"
 msgstr "Скасувати"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__kind__change
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__kind__change
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__kind__change model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__kind__change
 msgid "Change"
 msgstr "Зміна"
 
@@ -316,8 +298,7 @@ msgid "Change of a Furniture Order"
 msgstr "Зміна замовлення меблів"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_change_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_change_ids model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
 msgid "Changes"
 msgstr "Зміни"
 
@@ -332,10 +313,7 @@ msgid "Close"
 msgstr "Закрити"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__company_id
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__company
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__company
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__company
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__company_id model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__company model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__company model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__company
 msgid "Company"
 msgstr "Компанія"
 
@@ -365,15 +343,23 @@ msgid "Cost"
 msgstr "Вартість"
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_cost_line_ids
+msgid "Cost of the Lines"
+msgstr "Собівартість рядків"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Cost of the Order"
+msgstr "Собівартість"
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
 msgid "Create"
 msgstr "Створити"
 
 #. module: td_mebli_sale
 #. odoo-python
-#: code:addons/td_mebli_sale/models/order_change.py:0
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
+#: code:addons/td_mebli_sale/models/order_change.py:0 model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
 msgid "Create a Change"
 msgstr "Створити зміну"
 
@@ -383,14 +369,12 @@ msgid "Create a Change of an Order"
 msgstr "Створення зміни замовлення"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_uid
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_uid
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_date
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_date
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -400,17 +384,13 @@ msgid "Currency"
 msgstr "Валюта"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__td_partner_id
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__customer
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__customer
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__customer
+#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__td_partner_id model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__customer model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__customer model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__customer
 msgid "Customer"
 msgstr "Клієнт"
 
 #. module: td_mebli_sale
 #. odoo-python
-#: code:addons/td_mebli_sale/models/sale_order_dates.py:0
-#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_sale_order_ids
+#: code:addons/td_mebli_sale/models/sale_order_dates.py:0 model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__td_sale_order_ids
 msgid "Customer Orders"
 msgstr "Замовлення клієнтів"
 
@@ -435,9 +415,7 @@ msgid "Delayed"
 msgstr "Затримано"
 
 #. module: td_mebli_sale
-#: model:ir.actions.act_window,name:td_mebli_sale.purchase_order_line_td_delayed_action
-#: model:ir.ui.menu,name:td_mebli_sale.purchase_order_line_td_delayed_menu_purchase
-#: model:ir.ui.menu,name:td_mebli_sale.purchase_order_line_td_delayed_menu_stock
+#: model:ir.actions.act_window,name:td_mebli_sale.purchase_order_line_td_delayed_action model:ir.ui.menu,name:td_mebli_sale.purchase_order_line_td_delayed_menu_purchase model:ir.ui.menu,name:td_mebli_sale.purchase_order_line_td_delayed_menu_stock
 msgid "Delayed Deliveries"
 msgstr "Затримані поставки"
 
@@ -447,26 +425,12 @@ msgid "Depth, mm"
 msgstr "Глибина, мм"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_design_image
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_saleorder_document_td_design
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_design
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_design_image model_terms:ir.ui.view,arch_db:td_mebli_sale.report_saleorder_document_td_design model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_design
 msgid "Design Visual"
 msgstr "Візуалізація проєкту"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__display_name model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -501,6 +465,11 @@ msgid "Furniture Milestone"
 msgstr "Етап оплати"
 
 #. module: td_mebli_sale
+#: model:account.payment.term,name:td_mebli_sale.payment_term_td_furniture
+msgid "Furniture to Order"
+msgstr "Меблі на замовлення"
+
+#. module: td_mebli_sale
 #: model:mail.template,name:td_mebli_sale.mail_template_td_change_sign
 msgid "Furniture: change of the order for signature"
 msgstr "Меблі: зміна замовлення на підпис"
@@ -522,19 +491,7 @@ msgid "Height, mm"
 msgstr "Висота, мм"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__id model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__id model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__id model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__id model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id
 msgid "ID"
 msgstr "ID"
 
@@ -566,20 +523,17 @@ msgid "Item that Moves the Date"
 msgstr "Позиція, що зсуває дату"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__kind
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__kind
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__kind model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__kind
 msgid "Kind"
 msgstr "Вид"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_uid
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_uid
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Останнє оновлення"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_date
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_date
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -611,23 +565,27 @@ msgid "Manufacturing orders of %s"
 msgstr "Виробничі замовлення %s"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__margin
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__margin model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin"
 msgstr "Маржа"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin_percent
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin_percent
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__margin_percent model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__margin_percent
 msgid "Margin (%)"
 msgstr "Маржа (%)"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Margin of the Order"
+msgstr "Маржа замовлення"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Margin of the Order, %"
+msgstr "Маржа замовлення, %"
+
+#. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Margin, %"
 msgstr "Маржа, %"
 
@@ -673,12 +631,7 @@ msgid "Options"
 msgstr "Опції виробу"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__order_id
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__order_id
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__order_id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__order_id model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Order"
 msgstr "Замовлення"
 
@@ -688,15 +641,12 @@ msgid "Order BoM"
 msgstr "Специфікація під замовлення"
 
 #. module: td_mebli_sale
-#: model:ir.actions.act_window,name:td_mebli_sale.action_orders_board_td_mebli
-#: model:ir.ui.menu,name:td_mebli_sale.menu_orders_board_td_mebli
+#: model:ir.actions.act_window,name:td_mebli_sale.action_orders_board_td_mebli model:ir.ui.menu,name:td_mebli_sale.menu_orders_board_td_mebli
 msgid "Order Board"
 msgstr "Дошка замовлень"
 
 #. module: td_mebli_sale
-#: model:ir.actions.act_window,name:td_mebli_sale.sale_order_line_td_cost_action
-#: model:ir.ui.menu,name:td_mebli_sale.sale_order_line_td_cost_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_pivot
+#: model:ir.actions.act_window,name:td_mebli_sale.sale_order_line_td_cost_action model:ir.ui.menu,name:td_mebli_sale.sale_order_line_td_cost_menu model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_pivot
 msgid "Order Cost"
 msgstr "Собівартість замовлень"
 
@@ -711,8 +661,7 @@ msgid "Order Ready by Item"
 msgstr "Готовність за позицією"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_stage
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_stage model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
 msgid "Order Stage"
 msgstr "Етап замовлення"
 
@@ -742,9 +691,19 @@ msgid "Payment"
 msgstr "Платіж"
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_schedule_html
+msgid "Payment Schedule"
+msgstr "Графік оплат"
+
+#. module: td_mebli_sale
 #: model:ir.model,name:td_mebli_sale.model_account_payment_term_line
 msgid "Payment Terms Line"
 msgstr "Рядок терміну оплати"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_has_milestones
+msgid "Payment by Milestones"
+msgstr "Оплата етапами"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_planned_material_cost
@@ -792,9 +751,7 @@ msgid "Printed contract of the order"
 msgstr "Друкований договір замовлення"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_mobile
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_search model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_mobile
 msgid "Product"
 msgstr "Виріб"
 
@@ -804,8 +761,7 @@ msgid "Product Image"
 msgstr "Зображення виробу"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_production_count
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_production_count model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Production"
 msgstr "Виробництво"
 
@@ -830,14 +786,12 @@ msgid "Promised Before"
 msgstr "Обіцяна до"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli_dates
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli_dates
 msgid "Promised Date"
 msgstr "Обіцяна дата"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Purchase"
 msgstr "Закупівля"
 
@@ -872,8 +826,7 @@ msgid "Qty"
 msgstr "К-сть"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Quantity"
 msgstr "Кількість"
 
@@ -884,76 +837,40 @@ msgstr "Пропозиція"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_delay_reason
-msgid ""
-"Read only (AC-066): «Customer» when the last fixed change of the order was "
-"asked by the customer, «Cutting at the Distributor» when the parts cut by "
-"the distributor come back last, «Supplier» when a purchased item arrives too"
-" late for the promised date, «Company» when the workshop is late."
-msgstr ""
-"Лише читання (AC-066): «Клієнт» — останню зафіксовану зміну замовлення попросив клієнт, «Порізка в дистриб'ютора» — деталі з порізки в дистриб'ютора повертаються останніми, «Постачальник» — закуплена позиція надходить пізніше за обіцяну дату, «Компанія» — запізнюється цех."
+msgid "Read only (AC-066): «Customer» when the last fixed change of the order was asked by the customer, «Cutting at the Distributor» when the parts cut by the distributor come back last, «Supplier» when a purchased item arrives too late for the promised date, «Company» when the workshop is late."
+msgstr "Лише читання (AC-066): «Клієнт» — останню зафіксовану зміну замовлення попросив клієнт, «Порізка в дистриб'ютора» — деталі з порізки в дистриб'ютора повертаються останніми, «Постачальник» — закуплена позиція надходить пізніше за обіцяну дату, «Компанія» — запізнюється цех."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_date_ready
-msgid ""
-"Read only. The expected delivery date of the line (Purchase), plus the "
-"average delay of this supplier in the history of receipts, plus the "
-"manufacturing lead time of the bill of materials that consumes it: when the "
-"sales order can be ready if only this item is waited for. Empty when the "
-"item is received or the purchase is cancelled."
-msgstr ""
-"Лише читання. Очікувана дата поставки рядка (модуль Закупівлі) плюс час "
-"виготовлення за специфікацією, що споживає позицію: коли замовлення може "
-"бути готове, якщо чекати лише на цю позицію. Порожньо, якщо позицію отримано"
-" або закупівлю скасовано."
+msgid "Read only. The expected delivery date of the line (Purchase), plus the average delay of this supplier in the history of receipts, plus the manufacturing lead time of the bill of materials that consumes it: when the sales order can be ready if only this item is waited for. Empty when the item is received or the purchase is cancelled."
+msgstr "Лише читання. Очікувана дата поставки рядка (модуль Закупівлі) плюс час виготовлення за специфікацією, що споживає позицію: коли замовлення може бути готове, якщо чекати лише на цю позицію. Порожньо, якщо позицію отримано або закупівлю скасовано."
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,help:td_mebli_sale.field_res_partner__td_supplier_delay_avg
-#: model:ir.model.fields,help:td_mebli_sale.field_res_users__td_supplier_delay_avg
-msgid ""
-"Read only: received purchase lines of the past year, the receipt date "
-"against the expected arrival; early deliveries count as on time. Added to "
-"the supplier date in the forecast date of the order."
-msgstr ""
-"Лише читання: прийняті рядки закупівель за рік, дата приймання проти "
-"очікуваної; дострокові вважаються вчасними. Додається до дати постачальника "
-"в прогнозній даті замовлення."
+#: model:ir.model.fields,help:td_mebli_sale.field_res_partner__td_supplier_delay_avg model:ir.model.fields,help:td_mebli_sale.field_res_users__td_supplier_delay_avg
+msgid "Read only: received purchase lines of the past year, the receipt date against the expected arrival; early deliveries count as on time. Added to the supplier date in the forecast date of the order."
+msgstr "Лише читання: прийняті рядки закупівель за рік, дата приймання проти очікуваної; дострокові вважаються вчасними. Додається до дати постачальника в прогнозній даті замовлення."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_supplier_delay
-msgid ""
-"Read only: the average delay of the supplier over the past year (received "
-"purchase lines: the receipt date against the expected arrival), rounded to "
-"days; early deliveries count as on time."
-msgstr ""
-"Лише читання: середнє запізнення постачальника за рік (прийняті рядки "
-"закупівель: дата приймання проти очікуваної), округлене до днів; дострокові "
-"вважаються вчасними."
+msgid "Read only: the average delay of the supplier over the past year (received purchase lines: the receipt date against the expected arrival), rounded to days; early deliveries count as on time."
+msgstr "Лише читання: середнє запізнення постачальника за рік (прийняті рядки закупівель: дата приймання проти очікуваної), округлене до днів; дострокові вважаються вчасними."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_late_days
-msgid ""
-"Read only: the expected arrival (supplier date + the average delay of the "
-"supplier) minus the date the item is needed."
-msgstr ""
-"Лише читання: очікуване надходження (дата постачальника + середнє запізнення постачальника) мінус дата, коли позиція потрібна."
+msgid "Read only: the expected arrival (supplier date + the average delay of the supplier) minus the date the item is needed."
+msgstr "Лише читання: очікуване надходження (дата постачальника + середнє запізнення постачальника) мінус дата, коли позиція потрібна."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid ""
 "Read only: the supplier date is kept in the purchase order. The forecast date\n"
 "                        of the order is the later of the two: the workshop is ready ("
-msgstr ""
-"Лише читання: дату постачальника веде замовлення на купівлю. Прогнозна дата "
-"замовлення — пізніша з двох: готовність цеху ("
+msgstr "Лише читання: дату постачальника веде замовлення на купівлю. Прогнозна дата замовлення — пізніша з двох: готовність цеху ("
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_need_date
-msgid ""
-"Read only: when the manufacturing order that consumes the item plans to "
-"start (the date of its component move), else the promised date of the sales "
-"order."
-msgstr ""
-"Лише читання: коли планує стартувати виробниче замовлення, що споживає позицію (дата руху компонента), інакше обіцяна дата замовлення клієнта."
+msgid "Read only: when the manufacturing order that consumes the item plans to start (the date of its component move), else the promised date of the sales order."
+msgstr "Лише читання: коли планує стартувати виробниче замовлення, що споживає позицію (дата руху компонента), інакше обіцяна дата замовлення клієнта."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_shop_date
@@ -961,14 +878,12 @@ msgid "Ready by Workshop"
 msgstr "Готовність цеху"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__reason
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__reason
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__reason model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__reason
 msgid "Reason"
 msgstr "Причина"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__td_supplier_delay_lines
-#: model:ir.model.fields,field_description:td_mebli_sale.field_res_users__td_supplier_delay_lines
+#: model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__td_supplier_delay_lines model:ir.model.fields,field_description:td_mebli_sale.field_res_users__td_supplier_delay_lines
 msgid "Receipts in the Statistics"
 msgstr "Приймань у статистиці"
 
@@ -978,8 +893,7 @@ msgid "Received"
 msgstr "Отримано"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
 msgid "Revenue"
 msgstr "Виручка"
 
@@ -989,28 +903,29 @@ msgid "Sale Contract"
 msgstr "Договір купівлі-продажу"
 
 #. module: td_mebli_sale
-#: model:ir.model,name:td_mebli_sale.model_sale_order
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_order_id
+#: model:ir.model,name:td_mebli_sale.model_sale_report
+msgid "Sales Analysis Report"
+msgstr "Звіт аналізу продажів"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_sale_order model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_order_id
 msgid "Sales Order"
 msgstr "Замовлення на продаж"
 
 #. module: td_mebli_sale
-#: model:ir.model,name:td_mebli_sale.model_sale_order_line
-#: model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_line_id
+#: model:ir.model,name:td_mebli_sale.model_sale_order_line model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__td_sale_line_id
 msgid "Sales Order Line"
 msgstr "Рядок замовлення"
 
 #. module: td_mebli_sale
 #. odoo-python
-#: code:addons/td_mebli_sale/models/order_change.py:0
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
+#: code:addons/td_mebli_sale/models/order_change.py:0 model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
 msgid "Send the Change for Signature"
 msgstr "Надіслати зміну на підпис"
 
 #. module: td_mebli_sale
 #: model:mail.template,description:td_mebli_sale.mail_template_td_change_sign
-msgid ""
-"Sent by the salesperson: the customer signs the fixed change in the portal"
+msgid "Sent by the salesperson: the customer signs the fixed change in the portal"
 msgstr "Надсилає менеджер: покупець підписує зафіксовану зміну на порталі"
 
 #. module: td_mebli_sale
@@ -1032,8 +947,7 @@ msgstr "Надіслано клієнту"
 #. odoo-python
 #: code:addons/td_mebli_sale/models/payment_term.py:0
 msgid "Set the contract mode in the company settings (Sales → Settings)"
-msgstr ""
-"Задайте режим договору в налаштуваннях компанії (Продажі → Налаштування)"
+msgstr "Задайте режим договору в налаштуваннях компанії (Продажі → Налаштування)"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
@@ -1041,14 +955,12 @@ msgid "Share"
 msgstr "Частка"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_reason
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_reason model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
 msgid "Shift Reason"
 msgstr "Причина зсуву"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_days
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__shift_days
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_delay_days model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__shift_days
 msgid "Shift, days"
 msgstr "Зсув, дн."
 
@@ -1120,8 +1032,7 @@ msgid "Stage Changed"
 msgstr "Етап змінено"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__state
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__state model_terms:ir.ui.view,arch_db:td_mebli_sale.view_production_tree_td_mebli_sale
 msgid "Status"
 msgstr "Стан"
 
@@ -1131,23 +1042,17 @@ msgid "Stock Rule"
 msgstr "Складське правило"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_is_stuck
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_is_stuck model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
 msgid "Stuck"
 msgstr "Застряглі"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__supplier
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__supplier
-#: model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__supplier
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+#: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_delay_reason__supplier model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change__reason__supplier model:ir.model.fields.selection,name:td_mebli_sale.selection__td_mebli_order_change_wizard__reason__supplier model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier"
 msgstr "Постачальник"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.purchase_order_line_td_delayed_list model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "Supplier Date"
 msgstr "Дата постачання"
 
@@ -1162,28 +1067,19 @@ msgid ""
 "The Contractor makes the furniture to the individual measurements of the Customer according to the\n"
 "                    specification below and the approved measurement sheet, delivers and installs it; the Customer accepts the\n"
 "                    work and pays for it (Civil Code of Ukraine, chapter 61)."
-msgstr ""
-"Виконавець виготовляє меблі за індивідуальними розмірами Замовника згідно зі"
-" специфікацією нижче й погодженим замір-листом, доставляє й монтує їх; "
-"Замовник приймає роботу й оплачує її (Цивільний кодекс України, глава 61)."
+msgstr "Виконавець виготовляє меблі за індивідуальними розмірами Замовника згідно зі специфікацією нижче й погодженим замір-листом, доставляє й монтує їх; Замовник приймає роботу й оплачує її (Цивільний кодекс України, глава 61)."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid ""
 "The Seller transfers to the Buyer the furniture listed in the specification below, and the\n"
 "                    Buyer accepts and pays for it (Civil Code of Ukraine, chapter 54)."
-msgstr ""
-"Продавець передає Покупцеві меблі за специфікацією нижче, а Покупець приймає"
-" й оплачує їх (Цивільний кодекс України, глава 54)."
+msgstr "Продавець передає Покупцеві меблі за специфікацією нижче, а Покупець приймає й оплачує їх (Цивільний кодекс України, глава 54)."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
-msgid ""
-"The crew goes to the installation after the payments «Prepayment» and "
-"«Before installation» are received."
-msgstr ""
-"Бригада виїжджає на монтаж після отримання платежів «Передоплата» і «Перед "
-"монтажем»."
+msgid "The crew goes to the installation after the payments «Prepayment» and «Before installation» are received."
+msgstr "Бригада виїжджає на монтаж після отримання платежів «Передоплата» і «Перед монтажем»."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
@@ -1196,15 +1092,8 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_account_payment_term_line__td_milestone
-msgid ""
-"The event of the order this line is paid by. The lines «Prepayment» and "
-"«Before installation» have to be paid before the installation (the visit of "
-"the crew); «After the act» is paid after the signed act. Payment terms "
-"without milestones: the whole amount is due before the installation."
-msgstr ""
-"Подія замовлення, за якою сплачується рядок. Рядки «Передоплата» й «Перед "
-"монтажем» мають бути сплачені до монтажу (виїзду бригади); «Після акта» — "
-"після підписаного акта. Умови оплати без етапів: уся сума — до монтажу."
+msgid "The event of the order this line is paid by. The lines «Prepayment» and «Before installation» have to be paid before the installation (the visit of the crew); «After the act» is paid after the signed act. Payment terms without milestones: the whole amount is due before the installation."
+msgstr "Подія замовлення, за якою сплачується рядок. Рядки «Передоплата» й «Перед монтажем» мають бути сплачені до монтажу (виїзду бригади); «Після акта» — після підписаного акта. Умови оплати без етапів: уся сума — до монтажу."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
@@ -1221,19 +1110,12 @@ msgstr "Меблі готові до доставки й монтажу до"
 msgid ""
 "The installation is accepted by the act of the installation signed by the Customer. The defects found are\n"
 "                    written in the act and fixed by the Contractor in the agreed term."
-msgstr ""
-"Монтаж приймається актом монтажу, підписаним Замовником. Виявлені недоліки "
-"записуються в акт і усуваються Виконавцем у погоджений строк."
+msgstr "Монтаж приймається актом монтажу, підписаним Замовником. Виявлені недоліки записуються в акт і усуваються Виконавцем у погоджений строк."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_forecast_date
-msgid ""
-"The later of the two: the workshop is ready, the last purchased item arrives"
-" and is made into the product (manufacturing lead time of the bill of "
-"materials)."
-msgstr ""
-"Пізніша з двох: готовність цеху; надходження останньої закупівлі плюс час "
-"виготовлення за специфікацією."
+msgid "The later of the two: the workshop is ready, the last purchased item arrives and is made into the product (manufacturing lead time of the bill of materials)."
+msgstr "Пізніша з двох: готовність цеху; надходження останньої закупівлі плюс час виготовлення за специфікацією."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
@@ -1253,11 +1135,8 @@ msgstr "Ціна договору —"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_purchase_order_line__td_sale_order_ids
-msgid ""
-"The sales orders this purchased item is for (standard links of the "
-"purchase)."
-msgstr ""
-"Замовлення клієнтів, для яких закуплено позицію (стандартні посилання закупівлі)."
+msgid "The sales orders this purchased item is for (standard links of the purchase)."
+msgstr "Замовлення клієнтів, для яких закуплено позицію (стандартні посилання закупівлі)."
 
 #. module: td_mebli_sale
 #. odoo-python
@@ -1273,30 +1152,20 @@ msgstr "Специфікацію відправлено в розкрій (ве�
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/order_change.py:0
-msgid ""
-"The specification has been sent to cutting (version %s) — changes only by an"
-" additional order"
-msgstr ""
-"Специфікацію відправлено в розкрій (версія %s) — зміна лише дозамовленням"
+msgid "The specification has been sent to cutting (version %s) — changes only by an additional order"
+msgstr "Специфікацію відправлено в розкрій (версія %s) — зміна лише дозамовленням"
 
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order.py:0
-msgid ""
-"The stage follows the production: only moving a waiting order to «In "
-"production» is possible."
-msgstr ""
-"Етап залежить від виробництва: можна лише перенести замовлення, що чекає, у "
-"«У виробництві»."
+msgid "The stage follows the production: only moving a waiting order to «In production» is possible."
+msgstr "Етап залежить від виробництва: можна лише перенести замовлення, що чекає, у «У виробництві»."
 
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order.py:0
-msgid ""
-"The stage is computed from the documents; only the production manager "
-"launches production"
-msgstr ""
-"Етап рахується з документів; запуск виробництва — лише начальник виробництва"
+msgid "The stage is computed from the documents; only the production manager launches production"
+msgstr "Етап рахується з документів; запуск виробництва — лише начальник виробництва"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
@@ -1305,11 +1174,8 @@ msgstr "Строк виготовлення рахується від дня п�
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.res_config_settings_view_form_td_mebli_sale
-msgid ""
-"The text of the contract printed from the order (a template to be checked by"
-" a lawyer)."
-msgstr ""
-"Текст договору, що друкується із замовлення (шаблон до перевірки юристом)."
+msgid "The text of the contract printed from the order (a template to be checked by a lawyer)."
+msgstr "Текст договору, що друкується із замовлення (шаблон до перевірки юристом)."
 
 #. module: td_mebli_sale
 #: model:ir.model.constraint,message:td_mebli_sale.constraint_td_mebli_order_change_version_unique
@@ -1321,27 +1187,19 @@ msgstr "Версія зміни унікальна в межах замовле�
 msgid ""
 "The visual is printed in the quotation (Print › Quotation / Order) under the\n"
 "                        order details."
-msgstr ""
-"Візуалізація друкується в пропозиції (Друк › Пропозиція / Замовлення) під "
-"реквізитами замовлення."
+msgstr "Візуалізація друкується в пропозиції (Друк › Пропозиція / Замовлення) під реквізитами замовлення."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_design_image
-msgid ""
-"The visual of the project from the designer: printed in the quotation under "
-"the order details."
-msgstr ""
-"Візуалізація проєкту від дизайнера: друкується в пропозиції під реквізитами "
-"замовлення."
+msgid "The visual of the project from the designer: printed in the quotation under the order details."
+msgstr "Візуалізація проєкту від дизайнера: друкується в пропозиції під реквізитами замовлення."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid ""
 "The warranty on the furniture is 24 months from the day of the act, under the rules of use handed to the\n"
 "                    Customer."
-msgstr ""
-"Гарантія на меблі — 24 місяці від дня акта за умови дотримання правил "
-"експлуатації, переданих Замовникові."
+msgstr "Гарантія на меблі — 24 місяці від дня акта за умови дотримання правил експлуатації, переданих Замовникові."
 
 #. module: td_mebli_sale
 #. odoo-python
@@ -1356,8 +1214,7 @@ msgid "This order has nothing to start: it is not waiting for launch."
 msgstr "У цього замовлення немає що запускати: воно не чекає запуску."
 
 #. module: td_mebli_sale
-#: model:ir.actions.act_window,name:td_mebli_sale.action_orders_launch_td_mebli
-#: model:ir.ui.menu,name:td_mebli_sale.menu_orders_launch_td_mebli
+#: model:ir.actions.act_window,name:td_mebli_sale.action_orders_launch_td_mebli model:ir.ui.menu,name:td_mebli_sale.menu_orders_launch_td_mebli
 msgid "Time from Order to Launch"
 msgstr "Час від замовлення до запуску"
 
@@ -1367,11 +1224,7 @@ msgid "To Launch, h"
 msgstr "До запуску, год"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_line_td_cost_list model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_td_low_margin_list model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_list_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 msgid "Total"
 msgstr "Разом"
 
@@ -1381,8 +1234,7 @@ msgid "Type to find a product..."
 msgstr "Введіть назву виробу..."
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__version
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__version model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "Version"
 msgstr "Версія"
 
@@ -1392,8 +1244,7 @@ msgid "Waiting for launch"
 msgstr "Очікує запуску"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__note
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__note
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__note model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__note
 msgid "What Changes"
 msgstr "Що змінюється"
 
@@ -1456,43 +1307,3 @@ msgstr "— Покупець"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "— the Seller"
 msgstr "— Продавець"
-
-#. module: td_mebli_sale
-#: model:account.payment.term,name:td_mebli_sale.payment_term_td_furniture
-msgid "Furniture to Order"
-msgstr "Меблі на замовлення"
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_cost_line_ids
-msgid "Cost of the Lines"
-msgstr "Собівартість рядків"
-
-#. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
-msgid "Margin of the Order"
-msgstr "Маржа замовлення"
-
-#. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
-msgid "Margin of the Order, %"
-msgstr "Маржа замовлення, %"
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_schedule_html
-msgid "Payment Schedule"
-msgstr "Графік оплат"
-
-#. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_pay_has_milestones
-msgid "Payment by Milestones"
-msgstr "Оплата етапами"
-
-#. module: td_mebli_sale
-#: model:ir.model,name:td_mebli_sale.model_sale_report
-msgid "Sales Analysis Report"
-msgstr "Звіт аналізу продажів"
-
-#. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
-msgid "Cost of the Order"
-msgstr "Собівартість"

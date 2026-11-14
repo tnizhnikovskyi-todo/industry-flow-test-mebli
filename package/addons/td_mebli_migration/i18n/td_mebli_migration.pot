@@ -1,0 +1,722 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_migration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_step__box__a
+msgid "A"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__depends_on
+msgid "After Steps"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_07
+msgid "Attribute lines of products"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_04
+msgid "Attribute values"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_step__box__b
+msgid "B"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_02
+msgid "BAS code — step 26 (td/19b)"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_21b
+msgid "BAS codes of the employees"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_20b
+msgid "BAS codes of the materials"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_19b
+msgid "BAS codes of the partners"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_10
+msgid "Bills of materials"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_04b
+msgid "Boards and edge thickness of the attribute values"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_05
+msgid "Boards, edges, fittings"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__box
+msgid "Box"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__company_id
+msgid "Company"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+msgid "Compare with Odoo"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_03b
+msgid "Component roles of the attributes"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__create_uid
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__create_uid
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__create_date
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__create_date
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__date
+msgid "Date of the Data"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Date of the data:"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__diff
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__diff
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Difference"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+msgid ""
+"Difference with the source: stage 3 of the launch plan is not done until the difference is zero\n"
+"                        or a manager signs the explanation."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__display_name
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__draft
+msgid "Draft"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_13
+msgid "Employees, PIN"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_14
+msgid "Equipment"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__explained
+msgid "Explained"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__explanation
+msgid "Explanation"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+msgid "Explanation of the Difference"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Explanation:"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_step__template
+msgid ""
+"File of package/master-data (the CSV templates of the package, step A-13)."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__has_diff
+msgid "Has a Difference"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__id
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__id
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_error
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_sms_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_step_view_list
+msgid "Import"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_step_view_list
+msgid "Import Order"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.actions.act_window,name:td_mebli_migration.td_mebli_migration_step_action
+#: model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_step_menu
+msgid "Import Order of the Templates"
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_step.py:0
+msgid "Import: %s"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__write_uid
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__write_uid
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__write_date
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__write_date
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__line_ids
+msgid "Lines"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_11
+msgid "Lines of the bills of materials"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_18
+msgid "Mapping templates of the part files"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_16
+msgid "Material fields of the package"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__metric
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Metric"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_menu
+msgid "Migration"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model,name:td_mebli_migration.model_td_mebli_migration_step
+msgid "Migration Import Step"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.actions.act_window,name:td_mebli_migration.td_mebli_migration_check_action
+#: model:ir.actions.report,name:td_mebli_migration.td_mebli_migration_check_report
+#: model:ir.model,name:td_mebli_migration.model_td_mebli_migration_check
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_list
+msgid "Migration Reconciliation"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model,name:td_mebli_migration.model_td_mebli_migration_check_line
+msgid "Migration Reconciliation Line"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Migration Reconciliation:"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__model_name
+msgid "Model"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__model_installed
+msgid "Model Installed"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__module_name
+msgid "Module"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_step__module_name
+msgid ""
+"Module of the package that adds the fields td_* of the template (files td/ "
+"of A-13); the step is available only when it is installed (e.g. td_mebli_bas"
+" is not in the light profile)."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__sequence
+msgid "No."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__note
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__note
+msgid "Note"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__value_odoo
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Odoo"
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager changes the explanation of a closed reconciliation."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager changes the status of a reconciliation."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager resets a reconciliation."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager signs the explanation of a difference."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a reconciliation with a difference is explained."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check_line__metric__open_orders
+msgid "Open Orders"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_18
+msgid "Operation fields of the package"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_12
+msgid "Operations"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Order / Product"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__order_ref
+msgid "Order in the Source"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check_line__cause_order_ids
+msgid ""
+"Orders behind a difference: open orders with a prepayment (or the order of "
+"the line)."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_19
+msgid "Part rules"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_02
+msgid "Partners (suppliers, customers)"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check_line__order_ref
+msgid ""
+"Prepayment of one order: its number in Odoo, the customer reference or the "
+"source document. Empty — all open orders."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check_line__metric__prepayment
+msgid "Prepayments of Open Orders"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_15
+msgid "Price lists"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__product_id
+msgid "Product"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_03
+msgid "Product attributes"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_01
+msgid "Product categories"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_17
+msgid "Product fields of the package"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_06
+msgid "Products and modules"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_17
+msgid "Reasons of bonuses and penalties"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__reconciled
+msgid "Reconciled"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__name
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__check_id
+#: model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_check_menu
+msgid "Reconciliation"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__cause_order_ids
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Records to Check"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+msgid "Reset to Draft"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+msgid "Sign the Explanation"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__explained_by
+msgid "Signed by"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__explained_on
+msgid "Signed on"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__value_source
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "Source"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__state
+msgid "Status"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__name
+msgid "Step"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check_line__metric__stock
+msgid "Stock of a Product"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_08
+msgid "Supplier prices"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__template
+msgid "Template (A-13)"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.actions.act_window,help:td_mebli_migration.td_mebli_migration_step_action
+msgid ""
+"The CSV templates of the package (step A-13) are imported in this order with"
+" the standard import."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__date
+msgid ""
+"The date of the stock and of the payments in the source (one date, box A)."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_step.py:0
+msgid "The model %s is not installed: install its module first."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_step.py:0
+msgid ""
+"The module %s is not installed: this template is not imported in this "
+"database."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "The reconciliation %s is closed."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "The reconciliation is closed: reset it first."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "The stock line needs a product."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_01b
+msgid "Warranty of product categories"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__explanation
+msgid ""
+"Why the difference is accepted; signed by a manager (button «Sign the "
+"Explanation»)."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_09
+msgid "Work centers"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_14b
+msgid "Work centers of the equipment"
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Write the explanation of the difference first."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
+msgid "e.g. Start of the system"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_16
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_17
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_18
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_01b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_03b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_04b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_14b
+msgid "second pass of the same ids"
+msgstr ""
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_19b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_20b
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_21b
+msgid "td_mebli_bas only (VP-04 = true); not imported in the light profile"
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "«Explained» only with an explanation signed by a manager."
+msgstr ""
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "«Reconciled» only with a zero difference."
+msgstr ""
+
+#. module: td_mebli_migration
+#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+msgid "— Status:"
+msgstr ""

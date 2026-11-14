@@ -8,7 +8,7 @@
                    'of edge, m2 of board or per operation) for done work orders, shared by the time lines of the tablet, the crew percent from a signed final act, bonuses and '
                    'penalties with a reason. Payroll is Enterprise only and has no Ukrainian localisation: the accruals '
                    'are handed over to the accounting system of the customer.',
-    'version': '19.0.1.1.4',
+    'version': '19.0.1.1.5',
     'category': 'Services/Project',
     'license': 'LGPL-3',
     'author': 'ToDo',

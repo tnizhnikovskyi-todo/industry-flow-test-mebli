@@ -5,6 +5,7 @@
 #   --profile — за замовчуванням package/demo/answers.yaml (ключ edition у файлі має дорівнювати <edition>);
 #   --tag — тег пакета (HEAD репо має збігатися: перевіряють clean_db.sh/install.sh C-00; A-18: git checkout <тег> -- package/demo/);
 #   --no-demo — без демо-шару td_mebli_demo (лише модулі + конфіг + шаблони A-13).
+# Адреса сервера стенда для PDF — змінна DEMO_REPORT_URL (D-17; напр. http://127.0.0.1:8079), без неї report.url порожній (web.base.url).
 # Паролі демо-ролей — змінна DEMO_USERS_PASSWORD (В-4); не задано — локальний тестовий дефолт «demo-local» (WARN; лише localhost).
 # Коди: 0 готово; 2 запуск/захист; 10 чиста база; 20 модулі; 30 конфіг (preflight, apply, read-back); 40 майстер-дані;
 #       50 демо-дані/ролі/smoke; 60 знімок; 70 EE недоступна. Лог — package/demo/.logs/up-<instance>.log (не в git).
@@ -60,6 +61,9 @@ step 40 "майстер-дані A-13" $T/import.sh "$INST" --dir package/master
 ALL="$MODS"
 if (( DEMO )) && [[ ",$MODS," == *",td_mebli_bas,"* ]]; then
   step 50 "модуль демо-даних td_mebli_demo" $T/install.sh "$INST" td_mebli_demo --lang uk_UA
+  # D-17: адреса сервера стенда для PDF (report.url); без змінної report.url порожній — Odoo друкує з web.base.url
+  if [[ -n "${DEMO_REPORT_URL:-}" ]]; then echo "OK report.url = $DEMO_REPORT_URL (DEMO_REPORT_URL)"; export DEMO_REPORT_URL
+  else echo "WARN DEMO_REPORT_URL не задано: report.url порожній, PDF — з web.base.url (задайте адресу сервера стенда, напр. http://127.0.0.1:8079)"; fi
   step 50 "демо-документи (seed)" python3 -I $T/apply.py shell --db "$INST" --script $D/data/seed_demo.py
   if [[ -z "${DEMO_USERS_PASSWORD:-}" ]]; then
     # дефолт лише для локального тесту (стенд на localhost); для хостингу B-01 пароль задає Тімлід через змінну (В-4)

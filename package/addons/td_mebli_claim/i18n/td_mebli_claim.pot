@@ -1,0 +1,302 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_claim
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid ""
+": the repair\n"
+"                        is paid by the customer."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid ""
+": the service decides\n"
+"                    «Under Warranty» by hand (the term of the product category is empty until the conclusion of the lawyer)."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "<i class=\"fa fa-money me-2\" title=\"Paid repair\"/>"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "<i class=\"fa fa-question-circle me-2\" title=\"Warranty\"/>"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_after_warranty
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+msgid "After Warranty"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "After warranty"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Choose a part or a product to remake"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Choose the claimed order first: the visit goes to its address."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__td_claim_id
+msgid "Claim"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Claim %(claim)s: %(order)s"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_claim_order_id
+msgid "Claimed Order"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.actions.act_window,name:td_mebli_claim.td_mebli_claim_action
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__td_claim_count
+#: model:ir.ui.menu,name:td_mebli_claim.td_mebli_claim_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_order_form_td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+msgid "Claims"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__td_claim_ids
+msgid "Claims of the Order"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+msgid "Claims on Orders"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_warranty_end
+msgid ""
+"Date of the final installation act of the claimed order (the delivery when "
+"there is no installation) plus the warranty term of the product category."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_days_open
+msgid "Days Open"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__display_name
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+msgid "Factory Pays"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__id
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__id
+#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+msgid "On Warranty"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "On warranty"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_overdue
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+msgid "Overdue"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_part_id
+msgid "Part"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_photo
+msgid "Photo"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "Plan a Visit"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:res.groups,comment:td_mebli_claim.group_service
+msgid ""
+"ROLE-10 (service): the claims of the customers as repair orders and the "
+"remake of a part."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+msgid "Reason"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_remake_production_id
+msgid "Remake"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:product.template,name:td_mebli_claim.product_remake_part
+msgid "Remake Part"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "Remake in Production"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Remake started: %s"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model,name:td_mebli_claim.model_repair_order
+msgid "Repair Order"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model,name:td_mebli_claim.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:res.groups,name:td_mebli_claim.group_service
+msgid "Service"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_visit_task_id
+msgid "Service Visit"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Service visit planned: %s"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model,name:td_mebli_claim.model_project_task
+msgid "Task"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_claim_order_id
+msgid ""
+"The furniture order the customer complains about (the standard «Sale Order» "
+"of a repair is the order the repair was sold from, a different thing)."
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid ""
+"The order %s has no installation visit: the installation project is not "
+"known."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid ""
+"The parts and the work go to the quotation of the repair\n"
+"                    (button «Create Quotation»), then the standard invoice."
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid ""
+"The product of the claim has no bill of materials: it is bought, not made. "
+"Order it again in Purchase."
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
+msgid "The warranty ended on"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,help:td_mebli_claim.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"            #tags Set tags on the task\n"
+"            @user Assign the task to a user\n"
+"            ! Set the task a medium priority\n"
+"            !! Set the task a high priority\n"
+"            !!! Set the task a urgent priority\n"
+"\n"
+"            Make sure to use the right format and order e.g. Improve the configuration screen #feature #v16 @Mitchell !"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_warranty_note
+msgid "Warranty"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_warranty_unset
+msgid "Warranty Term Not Set"
+msgstr ""
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Warranty term is not set"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_warranty_end
+msgid "Warranty until"
+msgstr ""
+
+#. module: td_mebli_claim
+#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
+msgid "days"
+msgstr ""

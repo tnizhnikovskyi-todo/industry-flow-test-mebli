@@ -6,7 +6,7 @@
                    'reads it: consumed components at their cost and the real hours of the work orders at the hourly '
                    'cost of the work center. Nothing is entered here. Idea of REUSE-01 (td_sale_cost), written anew for '
                    'Community without the 3D-print articles.',
-    'version': '19.0.1.1.1',
+    'version': '19.0.1.1.2',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',

@@ -1,0 +1,208 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_cost
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Actual"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_fact
+msgid "Actual Cost"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_margin_fact
+msgid "Actual Margin"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_margin_fact_pct
+msgid "Actual Margin, %"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_material
+msgid "Actual Materials"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_status
+msgid "Actual Status"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_work
+msgid "Actual Work"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model,name:td_mebli_cost.model_res_company
+msgid "Companies"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model,name:td_mebli_cost.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.actions.act_window,help:td_mebli_cost.sale_order_td_cost_fact_action
+msgid ""
+"Confirmed orders with manufacturing: the planned cost of the quotation "
+"against the consumed materials, the real hours, the cutting and the accruals"
+" of the finished orders."
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_deviation_pct
+msgid "Cost Deviation, %"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__td_cost_piecework
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__td_cost_piecework
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.res_config_settings_view_form_td_mebli_cost
+msgid "Cost: Piecework instead of Hours"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.actions.act_window,name:td_mebli_cost.sale_order_td_cost_fact_action
+#: model:ir.ui.menu,name:td_mebli_cost.sale_order_td_cost_fact_menu
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
+msgid "Cost: Plan vs Actual"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_crew
+msgid "Crew Percent"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_cutting
+msgid "Cutting"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__display_name
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__id
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_company__id
+#: model:ir.model.fields,field_description:td_mebli_cost.field_res_config_settings__id
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model,name:td_mebli_cost.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: td_mebli_cost
+#. odoo-python
+#: code:addons/td_mebli_cost/models/sale_order.py:0
+msgid "No actual yet"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_mrp_production__td_overconsumed
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_overconsumption
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
+msgid "Overconsumption"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,help:td_mebli_cost.field_res_company__td_cost_piecework
+#: model:ir.model.fields,help:td_mebli_cost.field_res_config_settings__td_cost_piecework
+msgid ""
+"Parameter of the report «Cost: plan vs actual» (AC-114): the actual work is "
+"the piecework accruals instead of the hours at the hourly cost of the work "
+"center (no double count when the hourly cost has no wages). The crew percent"
+" is always added."
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_piece
+msgid "Piecework"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_labour
+msgid "Piecework and Crew"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.view_order_form_td_mebli_cost
+msgid "Plan vs Actual"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_plan
+msgid "Planned Cost"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Planned Margin"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_margin_plan_pct
+msgid "Planned Margin, %"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,field_description:td_mebli_cost.field_sale_order__td_cost_has_fact
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_search
+msgid "Production Finished"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model.fields,help:td_mebli_cost.field_sale_order__td_cost_cutting
+msgid ""
+"Purchases of the cutting service from the distributor for the manufacturing "
+"orders of the order (a job of several orders is shared by its orders)."
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Revenue"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model:ir.model,name:td_mebli_cost.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.res_config_settings_view_form_td_mebli_cost
+msgid ""
+"The actual work of the report «Cost: plan vs actual» is the piecework, not "
+"the hours at the hourly cost."
+msgstr ""
+
+#. module: td_mebli_cost
+#: model_terms:ir.ui.view,arch_db:td_mebli_cost.sale_order_td_cost_fact_list
+msgid "Total"
+msgstr ""
