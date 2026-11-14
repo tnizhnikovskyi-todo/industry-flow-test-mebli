@@ -1,0 +1,31 @@
+# ТЕСТОВИЙ наряд A-16 (спроба 1) — тури-сценарії на демо-стенді пакета «меблі» після A-15 спроба 3 (стенд ce demo-mebli-pkg-a).
+# Скіл кроку A-16 — скіл організації, у сесії недоступний. Рішення AI (власник доручив «адмініструй і отримай результат», вето за ним):
+# замінник — прогін сценаріїв package/SPEC.md §10 «Тестовий сценарій» (тури T-01…T-13) у браузері (Playwright + Chromium, uk_UA)
+# від імені ролей стенда; EE-сценарії — SKIP «EE не перевірено».
+step: A-16
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - "скіл організації кроку A-16 — недоступний у сесії; замінник: прогін SPEC §10 T-01…T-13 (Playwright), рішення AI"
+model: opus
+effort: medium
+inputs:
+  - {name: "ТР: тестовий сценарій §10, AC §4", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "демо-стенд (README, plan.md, defects.md)", from: A-15, path: package/demo/, sha: HEAD}
+  - {name: "модулі", from: A-11, path: package/addons/, sha: HEAD}
+  - {name: "конфіг-пакет", from: A-12, path: package/config/, sha: HEAD}
+  - {name: "звіт A-15 спроба 3 (тур конфігуратора FAIL на повному профілі)", from: A-15, path: tests/reports/A-15-3.md, sha: HEAD}
+where: "package/demo/scenarios.md, package/demo/defects.md"
+done: "package/demo/scenarios.md — таблиця сценаріїв T-01…T-13 (ID, роль, кроки, AC, статус PASS/FAIL/SKIP, маршрут дефекту); дефекти — package/demo/defects.md (D-02…); діагностика туру td_mebli_sale test_configurator_dimensions на повному профілі"
+check: {mode: both, how: "Кожен AC туру: крок, очікуване (AC), факт; скріншот лише при FAIL (scratchpad); стенд скинуто зі знімка після прогону", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 240, lease_factor: 1.5, cost_limit_usd: 25, context_budget_tokens: 200000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів; лише синтетика td_mebli_demo"
+odoo_connections: []
+params: {mode: перший, instance: demo-mebli-pkg-a, edition: ce, profile: package/demo/answers.yaml, port: 8079}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 1
+returned_from: null
+git: {base: c4cf89d, head: null, prev_tag: null}
+date: 2026-11-14
