@@ -42,3 +42,33 @@ observations: [observations/2026-11-14-core-modules-no-skill.md]
 | `11-video.mp4` | 24 с: вхід → пошук → застосунок → головний екран → звернення → помилка → надсилання |
 
 Бази (`test-core-full`) у git не кладено.
+
+## Доповнення 2026-11-14: база знань (`td_knowledge`, `td_mebli_knowledge`)
+
+Запит власника в чаті: «у Community бракує бази знань, яку наповнюють по всій системі». Рішення власника на питання AI:
+вікі + довідка на екранах; редактори пишуть, усі читають; стартові статті пакета.
+
+```yaml
+run: {step: core-modules, scope: package/addons/{td_knowledge,td_mebli_knowledge}, attempt: 2, started: 2026-11-14T21:20Z, finished: 2026-11-14T21:50Z}
+result: done
+checks:
+  - {id: install, status: PASS, msg: "install.sh test-core-full td_knowledge,td_mebli_knowledge (+45 модулів), uk_UA"}
+  - {id: tests-td_knowledge, status: PASS, msg: "12 тестів: права читача/редактора, групи читачів, пошук у тексті, довідка екрана за моделлю й застосунком, без циклів, санітизація, тур (значок → стаття → пошук → «Редагувати»), переклад"}
+  - {id: tests-td_mebli_knowledge, status: PASS, msg: "кожен встановлений екран меблів має статтю"}
+  - {id: check_data_model, status: PASS, msg: "td_knowledge PASS; td_mebli_knowledge — хибний FAIL «не знайдено .py» (модуль лише з даними) — observations"}
+  - {id: lint, status: PASS, msg: "ruff: All checks passed"}
+  - {id: ee, status: SKIP, msg: "Enterprise недоступна; модуль не змінює шаблонів, лише значок systray"}
+memo: |
+  Написано з нуля (не Knowledge з Enterprise, не OCA document_page). Стартові статті меблів — основа за описами модулів
+  пакета з місцями «Допишіть: …»; зміст варто переглянути власнику/BA. Статті з noupdate — оновлення не затирає правок.
+  Невпевнений: повнотекстовий пошук — простий ilike (без морфології); для великих баз — питання до власника.
+```
+
+| Файл (`tests/reports/core-modules/`) | Що на ньому |
+|---|---|
+| `k1-home-with-app.png` | головний екран із застосунком «База знань» |
+| `k2-reader.png`, `k3-search.png` | читалка: розділи, стаття; пошук «обрізки» у тексті |
+| `k4-help-on-orders.png` | значок «Довідка» з числом на екрані замовлень і вікно статей екрана |
+| `k5-new-article-form.png` | «Додати статтю до цього екрана» — форма з уже прив'язаним екраном |
+| `k6-phone-article.png`, `k7-phone-tree.png` | телефон 390×844: стаття, розділи |
+| `k8-video.mp4` | 20 с: пошук застосунку → база знань → стаття → пошук → довідка на замовленнях → стаття |
