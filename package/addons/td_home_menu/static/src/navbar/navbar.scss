@@ -1,0 +1,15 @@
+.o_main_navbar {
+    .td_home_menu_toggle > .dropdown-toggle::after {
+        display: none;
+    }
+
+    .td_home_menu_toggle_mobile {
+        color: var(--NavBar-entry-color, #{$o-navbar-entry-color});
+        background: transparent;
+
+        &:hover,
+        &:focus {
+            background: var(--NavBar-entry-backgroundColor--hover, #{$o-navbar-entry-bg--hover});
+        }
+    }
+}

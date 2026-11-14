@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_td_support_request_user,td.support.request user,model_td_support_request,base.group_user,1,0,1,0
+access_td_support_request_admin,td.support.request admin,model_td_support_request,group_td_support_admin,1,1,1,1

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-inherit="web.ErrorDialog" t-inherit-mode="extension">
+        <!-- web/static/src/core/dialog/dialog.scss hides «button.o-default-button:not(:only-child)»: keep «Close» visible -->
+        <xpath expr="//t[@t-set-slot='footer']/button" position="attributes">
+            <attribute name="class" remove="o-default-button" separator=" "/>
+        </xpath>
+        <xpath expr="//t[@t-set-slot='footer']/button" position="after">
+            <button t-if="tdCanSendToSupport" class="btn btn-secondary td_support_error_button" t-on-click="onTdSendToSupport">
+                <i class="fa fa-life-ring me-1"/>Send to ToDo Support
+            </button>
+        </xpath>
+    </t>
+</templates>
