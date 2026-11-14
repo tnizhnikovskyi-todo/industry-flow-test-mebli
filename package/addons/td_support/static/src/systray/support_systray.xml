@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_support.Systray">
+        <div class="o_nav_entry td_support_systray">
+            <button class="btn btn-link px-2 text-reset" title="ToDo Support" aria-label="ToDo Support" t-on-click="open">
+                <i class="fa fa-life-ring fa-lg"/>
+            </button>
+        </div>
+    </t>
+</templates>

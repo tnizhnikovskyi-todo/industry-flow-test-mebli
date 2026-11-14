@@ -1,0 +1,519 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 20:51+0000\n"
+"PO-Revision-Date: 2026-11-14 20:51+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid ""
+"Additional channel: the request as JSON signed with HMAC-SHA256 (header "
+"X-ToDo-Signature)."
+msgstr ""
+"Додатковий канал: звернення у форматі JSON з підписом HMAC-SHA256 (заголовок"
+" X-ToDo-Signature)."
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Attach a file"
+msgstr "Вкласти файл"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__attachment_ids
+msgid "Attachments"
+msgstr "Вкладення"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Attachments and screenshots"
+msgstr "Вкладення та скриншоти"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Cancel"
+msgstr "Скасувати"
+
+#. module: td_support
+#: model:ir.model,name:td_support.model_res_config_settings
+msgid "Config Settings"
+msgstr "Налаштування конфігурації"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__consent
+msgid "Consent to send"
+msgstr "Згода на надсилання"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__contact
+msgid "Contact for the answer"
+msgstr "Контакт для відповіді"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__create_uid
+msgid "Created by"
+msgstr "Створив"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__create_date
+msgid "Created on"
+msgstr "Створено"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__db_uuid
+msgid "Database identifier"
+msgstr "Ідентифікатор бази"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_form
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_list
+msgid "Date"
+msgstr "Дата"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__description
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_form
+msgid "Description"
+msgstr "Опис"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__display_name
+msgid "Display Name"
+msgstr "Відображувана назва"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__mail_id
+msgid "Email"
+msgstr "Лист"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Email or phone"
+msgstr "Ел. пошта або телефон"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.js:0
+msgid "Error"
+msgstr "Помилка"
+
+#. module: td_support
+#: model:ir.model.fields.selection,name:td_support.selection__td_support_request__kind__error
+msgid "Error report"
+msgstr "Звіт про помилку"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_search
+msgid "Error reports"
+msgstr "Звіти про помилки"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Files"
+msgstr "Файли"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "History of the requests to the ToDo support."
+msgstr "Історія звернень у підтримку ToDo."
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid ""
+"I agree to send this request and the technical data above to the ToDo "
+"support"
+msgstr ""
+"Я згоден(-на) надіслати це звернення й технічні дані вище в підтримку ToDo"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_res_config_settings__id
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__id
+msgid "ID"
+msgstr "ID"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__write_uid
+msgid "Last Updated by"
+msgstr "Востаннє оновив"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__write_date
+msgid "Last Updated on"
+msgstr "Востаннє оновлено"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__user_login
+msgid "Login"
+msgstr "Логін"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_search
+msgid "My requests"
+msgstr "Мої звернення"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "No more than %(count)s files can be attached."
+msgstr "Можна вкласти не більше %(count)s файлів."
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.js:0
+msgid "No more than %s files can be attached."
+msgstr "Можна вкласти не більше %s файлів."
+
+#. module: td_support
+#: model_terms:ir.actions.act_window,help:td_support.action_td_support_request
+msgid "No requests yet"
+msgstr "Звернень ще немає"
+
+#. module: td_support
+#: model:ir.model.fields.selection,name:td_support.selection__td_support_request__state__failed
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_search
+msgid "Not sent"
+msgstr "Не надіслано"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__name
+msgid "Number"
+msgstr "Номер"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__odoo_version
+msgid "Odoo version"
+msgstr "Версія Odoo"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "Only internal users can write to the ToDo support."
+msgstr "Писати в підтримку ToDo можуть лише внутрішні користувачі."
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "Open requests"
+msgstr "Відкрити звернення"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__page_url
+msgid "Page"
+msgstr "Сторінка"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "Please confirm that the request and the technical data can be sent."
+msgstr "Підтвердьте згоду на надсилання звернення й технічних даних."
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "Please fill in the subject."
+msgstr "Заповніть тему."
+
+#. module: td_support
+#: model:ir.model.fields.selection,name:td_support.selection__td_support_request__state__sent
+msgid "Queued for sending"
+msgstr "У черзі на надсилання"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__failure_reason
+msgid "Reason of the failure"
+msgstr "Причина збою"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Remove"
+msgstr "Вилучити"
+
+#. module: td_support
+#: model:ir.model.fields.selection,name:td_support.selection__td_support_request__kind__manual
+msgid "Request"
+msgstr "Звернення"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.js:0
+msgid "Request %s is saved but not sent: %s"
+msgstr "Звернення %s збережено, але не надіслано: %s"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.js:0
+msgid "Request %s is sent to the ToDo support."
+msgstr "Звернення %s надіслано в підтримку ToDo."
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "Requests"
+msgstr "Звернення"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "Requests and error reports are sent here by the outgoing mail server."
+msgstr ""
+"Сюди вихідний поштовий сервер надсилає звернення та звіти про помилки."
+
+#. module: td_support
+#: model:ir.actions.act_window,name:td_support.action_td_support_request
+msgid "Requests to the ToDo support"
+msgstr "Звернення в підтримку ToDo"
+
+#. module: td_support
+#: model:res.groups,comment:td_support.group_td_support_admin
+msgid "Sees all the requests to the ToDo support of every user."
+msgstr "Бачить усі звернення в підтримку ToDo всіх користувачів."
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "Send"
+msgstr "Надіслати"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/error_dialog/error_dialog.xml:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.js:0
+msgid "Send to ToDo Support"
+msgstr "Надіслати в підтримку ToDo"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_res_config_settings__td_support_webhook_enabled
+msgid "Send to the webhook"
+msgstr "Надсилати на вебхук"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__email_to
+msgid "Sent to"
+msgstr "Надіслано на"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__state
+msgid "Status"
+msgstr "Стан"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__subject
+msgid "Subject"
+msgstr "Тема"
+
+#. module: td_support
+#: model:res.groups,name:td_support.group_td_support_admin
+msgid "Support Administrator"
+msgstr "Адміністратор підтримки"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_res_config_settings__td_support_email
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "Support address"
+msgstr "Адреса підтримки"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__trace
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_form
+msgid "Technical details"
+msgstr "Технічні подробиці"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid ""
+"Technical details of the error (passwords, tokens and cookies are removed "
+"before sending)"
+msgstr ""
+"Технічні подробиці помилки (паролі, токени й cookie вилучаються перед "
+"надсиланням)"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid ""
+"The address of the ToDo support is not set (system parameter %(param)s)."
+msgstr "Адресу підтримки ToDo не задано (системний параметр %(param)s)."
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "The attachments are too large: no more than %(mb)s MB together."
+msgstr "Вкладення завеликі: разом не більше %(mb)s МБ."
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "The file %(name)s could not be read."
+msgstr "Не вдалося прочитати файл %(name)s."
+
+#. module: td_support
+#: model:ir.model.fields,help:td_support.field_td_support_request__consent
+msgid ""
+"The user agreed to send the request and the technical data shown in the form"
+" to the ToDo support."
+msgstr ""
+"Користувач погодився надіслати звернення й технічні дані, показані у формі, "
+"в підтримку ToDo."
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid "This request has already been sent. The ToDo support has received it."
+msgstr "Це звернення вже надіслано. Підтримка ToDo його отримала."
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "To"
+msgstr "Кому"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.js:0
+#: code:addons/td_support/static/src/systray/support_systray.xml:0
+#: model:ir.ui.menu,name:td_support.menu_td_support_request
+#: model:res.groups.privilege,name:td_support.res_groups_privilege_td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "ToDo Support"
+msgstr "Підтримка ToDo"
+
+#. module: td_support
+#. odoo-javascript
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__td_modules
+msgid "ToDo modules"
+msgstr "Модулі ToDo"
+
+#. module: td_support
+#: model:ir.model,name:td_support.model_td_support_request
+msgid "ToDo support request"
+msgstr "Звернення в підтримку ToDo"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+msgid ""
+"Too many requests: no more than %(limit)s per hour. Please try again later."
+msgstr "Забагато звернень: не більше %(limit)s на годину. Спробуйте пізніше."
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__trace_hash
+msgid "Trace Hash"
+msgstr "Відбиток трасування"
+
+#. module: td_support
+#. odoo-python
+#: code:addons/td_support/models/td_support_request.py:0
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__kind
+msgid "Type"
+msgstr "Тип"
+
+#. module: td_support
+#: model_terms:ir.actions.act_window,help:td_support.action_td_support_request
+msgid "Use the «ToDo Support» icon in the top bar to write to the support."
+msgstr ""
+"Щоб написати в підтримку, натисніть значок «Підтримка ToDo» у верхній "
+"панелі."
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__user_id
+#: model_terms:ir.ui.view,arch_db:td_support.td_support_request_view_search
+msgid "User"
+msgstr "Користувач"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_td_support_request__webhook_status
+msgid "Webhook"
+msgstr "Вебхук"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_res_config_settings__td_support_webhook_url
+msgid "Webhook URL"
+msgstr "Адреса вебхука"
+
+#. module: td_support
+#: model:ir.model.fields,field_description:td_support.field_res_config_settings__td_support_webhook_secret
+msgid "Webhook secret"
+msgstr "Секрет вебхука"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "What did you do, what did you expect, what happened instead?"
+msgstr "Що ви робили, що очікували і що сталося натомість?"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "What happened?"
+msgstr "Що сталося?"
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "What will be sent"
+msgstr "Що буде надіслано"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "https://..."
+msgstr "https://..."
+
+#. module: td_support
+#. odoo-javascript
+#: code:addons/td_support/static/src/support_dialog/support_dialog.xml:0
+msgid "or paste a screenshot with Ctrl+V"
+msgstr "або вставте скриншот клавішами Ctrl+V"
+
+#. module: td_support
+#: model_terms:ir.ui.view,arch_db:td_support.res_config_settings_view_form
+msgid "support@example.com"
+msgstr "support@example.com"

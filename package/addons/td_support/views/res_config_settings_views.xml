@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.td_support</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='integration']" position="after">
+                <block title="ToDo Support" name="td_support_setting_container" groups="base.group_system">
+                    <setting string="Support address" help="Requests and error reports are sent here by the outgoing mail server.">
+                        <field name="td_support_email" placeholder="support@example.com"/>
+                    </setting>
+                    <setting help="Additional channel: the request as JSON signed with HMAC-SHA256 (header X-ToDo-Signature).">
+                        <field name="td_support_webhook_enabled"/>
+                        <div class="mt-2" invisible="not td_support_webhook_enabled">
+                            <field name="td_support_webhook_url" placeholder="https://..."/>
+                            <field name="td_support_webhook_secret" password="True"/>
+                        </div>
+                    </setting>
+                    <setting string="Requests" help="History of the requests to the ToDo support.">
+                        <button name="%(td_support.action_td_support_request)d" type="action" string="Open requests"
+                                class="btn-link" icon="oi-arrow-right"/>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

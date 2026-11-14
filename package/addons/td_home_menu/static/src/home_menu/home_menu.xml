@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="td_home_menu.HomeMenu">
+        <div class="td_home_menu o_action h-100 overflow-auto" t-on-keydown="onKeydown">
+            <div class="td_home_menu_container mx-auto px-3 py-4">
+                <div class="td_home_menu_search input-group mb-4">
+                    <span class="input-group-text bg-white border-end-0"><i class="fa fa-search" aria-hidden="true"/></span>
+                    <input t-ref="input" type="text" class="form-control border-start-0 td_home_menu_input"
+                           placeholder="Search applications..." aria-label="Search applications"
+                           t-att-value="state.query" t-on-input="onInput"/>
+                </div>
+                <div t-ref="grid" class="td_home_menu_grid" role="listbox">
+                    <t t-foreach="apps" t-as="app" t-key="app.id">
+                        <a class="td_home_menu_app" role="option" t-att-href="'/odoo/' + (app.actionPath || 'action-' + app.actionID)"
+                           t-att-data-menu-xmlid="app.xmlid"
+                           t-att-class="{ 'td_focused': app_index === state.focused }"
+                           t-att-aria-selected="app_index === state.focused ? 'true' : 'false'"
+                           t-on-click.prevent="() => this.openApp(app)">
+                            <img t-if="app.webIconData" class="td_home_menu_icon" t-att-src="app.webIconData" alt=""/>
+                            <div t-else="" class="td_home_menu_icon d-flex align-items-center justify-content-center" t-att-style="iconStyle(app)">
+                                <i t-att-class="iconClass(app)" aria-hidden="true"/>
+                            </div>
+                            <span class="td_home_menu_caption" t-esc="app.name"/>
+                        </a>
+                    </t>
+                </div>
+                <div t-if="!apps.length" class="td_home_menu_empty text-center text-muted py-5">
+                    No applications match your search.
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

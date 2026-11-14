@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="td_support_request_view_list" model="ir.ui.view">
+        <field name="name">td.support.request.list</field>
+        <field name="model">td.support.request</field>
+        <field name="arch" type="xml">
+            <list create="false" decoration-danger="state == 'failed'">
+                <field name="name"/>
+                <field name="create_date" string="Date"/>
+                <field name="subject"/>
+                <field name="kind"/>
+                <field name="user_id"/>
+                <field name="state" widget="badge" decoration-success="state == 'sent'" decoration-danger="state == 'failed'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="td_support_request_view_form" model="ir.ui.view">
+        <field name="name">td.support.request.form</field>
+        <field name="model">td.support.request</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name"/></h1>
+                        <h3><field name="subject"/></h3>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="kind"/>
+                            <field name="user_id"/>
+                            <field name="create_date" string="Date"/>
+                            <field name="contact"/>
+                            <field name="consent"/>
+                        </group>
+                        <group>
+                            <field name="email_to"/>
+                            <field name="mail_id" groups="base.group_system"/>
+                            <field name="webhook_status" groups="base.group_system"/>
+                            <field name="failure_reason" invisible="not failure_reason"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description" name="description">
+                            <field name="description" nolabel="1"/>
+                            <field name="attachment_ids" widget="many2many_binary" nolabel="1"/>
+                        </page>
+                        <page string="Technical details" name="technical">
+                            <group>
+                                <field name="page_url"/>
+                                <field name="user_login"/>
+                                <field name="odoo_version"/>
+                                <field name="db_uuid"/>
+                                <field name="td_modules"/>
+                            </group>
+                            <field name="trace" nolabel="1" class="font-monospace"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="td_support_request_view_search" model="ir.ui.view">
+        <field name="name">td.support.request.search</field>
+        <field name="model">td.support.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="subject"/>
+                <field name="user_id"/>
+                <filter name="my" string="My requests" domain="[('user_id', '=', uid)]"/>
+                <filter name="errors" string="Error reports" domain="[('kind', '=', 'error')]"/>
+                <filter name="failed" string="Not sent" domain="[('state', '=', 'failed')]"/>
+                <group>
+                    <filter name="group_user" string="User" context="{'group_by': 'user_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_td_support_request" model="ir.actions.act_window">
+        <field name="name">Requests to the ToDo support</field>
+        <field name="res_model">td.support.request</field>
+        <field name="path">todo-support</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No requests yet</p>
+            <p>Use the «ToDo Support» icon in the top bar to write to the support.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_td_support_request" name="ToDo Support" parent="base.menu_administration"
+              action="action_td_support_request" groups="group_td_support_admin" sequence="90"/>
+</odoo>
