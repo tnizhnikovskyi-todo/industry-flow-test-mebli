@@ -198,7 +198,9 @@ class TdMebliPriceImport(models.TransientModel):
         if errors:
             body += ' ' + self.env._("Not written, errors: %s.", '; '.join(
                 errors.mapped(lambda l: '%s — %s' % (l.code or l.name, l.error))))
-        self.partner_id.message_post(body=body)
+        # sudo (D-06): the buyer may not write the partner (mail posts need it); the note of the import goes to the
+        # chatter of the supplier with the buyer as its author
+        self.partner_id.sudo().message_post(body=body, author_id=self.env.user.partner_id.id)
         action = self.env['ir.actions.act_window']._for_xml_id('product.product_supplierinfo_type_action')
         action.update(domain=[('partner_id', '=', self.partner_id.id)], context={'search_default_partner_id': self.partner_id.id})
         return action

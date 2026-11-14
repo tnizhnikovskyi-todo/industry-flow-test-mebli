@@ -26,7 +26,7 @@
     <template id="report_part_labels_grid">
         <!-- a table of 3 columns, not a flex row: wkhtmltopdf (old WebKit) does not wrap flex rows and cut the third
              label of a row at the edge of the page -->
-        <div class="page td_report_labels">
+        <div class="page td_mebli_report td_report_labels">
             <table style="width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 2mm;">
                 <tr t-foreach="range(0, len(rows), 3)" t-as="start" style="page-break-inside: avoid;">
                     <td t-foreach="range(start, start + 3)" t-as="index" style="width: 33.33%; vertical-align: top; padding: 0;">
@@ -97,7 +97,7 @@
         <t t-call="web.external_layout">
             <t t-set="order" t-value="doc.sale_id"/>
             <t t-set="doc" t-value="doc.with_context(lang=doc.partner_id.lang)"/>
-            <div class="page td_report_handover">
+            <div class="page td_mebli_report td_report_handover">
                 <h2>Acceptance and Transfer Act <span t-field="doc.name"/></h2>
                 <p class="text-muted td_lawyer_mark">Template to be checked by a lawyer (No. 17)</p>
                 <div class="row mb-3">

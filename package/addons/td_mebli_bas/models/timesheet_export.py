@@ -10,6 +10,7 @@ class TdMebliTimesheetExport(models.TransientModel):
     @api.model
     def _td_personnel_code(self, employee):
         """The external code of BAS first; without it the Badge ID (the personnel code of the slice)."""
+        # sudo: read only — the BAS code of the employee (HR data) for the user of the time sheet
         return employee.sudo().td_bas_code or super()._td_personnel_code(employee)
 
     def action_td_send_bas(self):

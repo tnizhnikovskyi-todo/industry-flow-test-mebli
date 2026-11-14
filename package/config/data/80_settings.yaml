@@ -24,6 +24,7 @@
   kind: settings
   model: res.config.settings
   values: {attendance_kiosk_use_pin: true}
+  applies_if: {VP-01: [A, B]}            # SPEC §11.4: кіоск за PIN у всіх коробках, крім light (preflight PF-07, CHECKS №23)
   ac: [AC-077]
   source: "addons/hr_attendance/models/res_config_settings.py:20 (attendance_kiosk_use_pin related company_id)"
   manual: false

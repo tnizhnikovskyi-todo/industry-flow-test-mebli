@@ -10,10 +10,10 @@ msgstr ""
 "PO-Revision-Date: 2026-11-13 09:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: uk\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
 #. module: td_mebli_migration
@@ -53,13 +53,33 @@ msgstr "B"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_02
-msgid "BAS code — td_mebli_bas"
-msgstr "код BAS — td_mebli_bas"
+msgid "BAS code — step 26 (td/19b)"
+msgstr "код BAS — крок 26 (td/19b)"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_21b
+msgid "BAS codes of the employees"
+msgstr "Коди BAS працівників"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_20b
+msgid "BAS codes of the materials"
+msgstr "Коди BAS матеріалів"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_19b
+msgid "BAS codes of the partners"
+msgstr "Коди BAS контрагентів"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_10
 msgid "Bills of materials"
 msgstr "Специфікації"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_04b
+msgid "Boards and edge thickness of the attribute values"
+msgstr "Плити й товщина кромки значень атрибутів"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_05
@@ -82,16 +102,17 @@ msgid "Compare with Odoo"
 msgstr "Порівняти з Odoo"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__create_uid
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__create_uid
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__create_uid
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_03b
+msgid "Component roles of the attributes"
+msgstr "Ролі атрибутів у специфікації"
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__create_uid model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__create_uid model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__create_date
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__create_date
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__create_date
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__create_date model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__create_date model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -106,9 +127,7 @@ msgid "Date of the data:"
 msgstr "Дата даних:"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__diff
-#: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__diff
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__diff model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__diff model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
 msgid "Difference"
 msgstr "Різниця"
 
@@ -120,9 +139,7 @@ msgid ""
 msgstr "Розбіжність із джерелом: етап 3 плану запуску не виконано, доки різниця не нульова або керівник не підписав пояснення."
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__display_name
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__display_name
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__display_name model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__display_name model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__display_name
 msgid "Display Name"
 msgstr "Назва"
 
@@ -163,8 +180,7 @@ msgstr "Пояснення:"
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_step__template
-msgid ""
-"File of package/master-data (the CSV templates of the package, step A-13)."
+msgid "File of package/master-data (the CSV templates of the package, step A-13)."
 msgstr "Файл package/master-data (CSV-шаблони пакета, крок A-13)."
 
 #. module: td_mebli_migration
@@ -188,9 +204,7 @@ msgid "Has a Difference"
 msgstr "Є розбіжність"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__id
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__id
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__id
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__id model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__id model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__id
 msgid "ID"
 msgstr "ID"
 
@@ -200,8 +214,7 @@ msgid "If checked, new messages require your attention."
 msgstr "Якщо позначено, нові повідомлення потребують вашої уваги."
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_error
-#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_sms_error
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_error model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Якщо позначено, деякі повідомлення мають помилку доставки."
 
@@ -216,8 +229,7 @@ msgid "Import Order"
 msgstr "Порядок імпорту"
 
 #. module: td_mebli_migration
-#: model:ir.actions.act_window,name:td_mebli_migration.td_mebli_migration_step_action
-#: model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_step_menu
+#: model:ir.actions.act_window,name:td_mebli_migration.td_mebli_migration_step_action model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_step_menu
 msgid "Import Order of the Templates"
 msgstr "Порядок імпорту шаблонів"
 
@@ -233,16 +245,12 @@ msgid "Is Follower"
 msgstr "Підписник"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__write_uid
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__write_uid
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__write_uid
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__write_uid model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__write_uid model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__write_uid
 msgid "Last Updated by"
 msgstr "Оновив"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__write_date
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__write_date
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__write_date
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__write_date model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__write_date model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -255,6 +263,11 @@ msgstr "Рядки"
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_11
 msgid "Lines of the bills of materials"
 msgstr "Рядки специфікацій"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_18
+msgid "Mapping templates of the part files"
+msgstr "Шаблони мапінгу файлів деталей"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_16
@@ -272,8 +285,7 @@ msgid "Messages"
 msgstr "Повідомлення"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__metric
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__metric model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
 msgid "Metric"
 msgstr "Показник"
 
@@ -288,11 +300,7 @@ msgid "Migration Import Step"
 msgstr "Крок імпорту міграції"
 
 #. module: td_mebli_migration
-#: model:ir.actions.act_window,name:td_mebli_migration.td_mebli_migration_check_action
-#: model:ir.actions.report,name:td_mebli_migration.td_mebli_migration_check_report
-#: model:ir.model,name:td_mebli_migration.model_td_mebli_migration_check
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_list
+#: model:ir.actions.act_window,name:td_mebli_migration.td_mebli_migration_check_action model:ir.actions.report,name:td_mebli_migration.td_mebli_migration_check_report model:ir.model,name:td_mebli_migration.model_td_mebli_migration_check model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_form model_terms:ir.ui.view,arch_db:td_mebli_migration.td_mebli_migration_check_view_list
 msgid "Migration Reconciliation"
 msgstr "Звірка міграції"
 
@@ -317,13 +325,22 @@ msgid "Model Installed"
 msgstr "Модель встановлено"
 
 #. module: td_mebli_migration
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__module_name
+msgid "Module"
+msgstr "Модуль"
+
+#. module: td_mebli_migration
+#: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_step__module_name
+msgid "Module of the package that adds the fields td_* of the template (files td/ of A-13); the step is available only when it is installed (e.g. td_mebli_bas is not in the light profile)."
+msgstr "Модуль пакета, що додає поля td_* шаблону (файли td/ A-13); крок доступний лише коли його встановлено (напр. td_mebli_bas немає в профілі light)."
+
+#. module: td_mebli_migration
 #: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__sequence
 msgid "No."
 msgstr "№"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__note
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__note
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__note model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__note
 msgid "Note"
 msgstr "Примітка"
 
@@ -348,10 +365,27 @@ msgid "Number of messages with delivery error"
 msgstr "Кількість повідомлень з помилкою доставки"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__value_odoo
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__value_odoo model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
 msgid "Odoo"
 msgstr "Odoo"
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager changes the explanation of a closed reconciliation."
+msgstr "Змінити пояснення закритої звірки може лише керівник."
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager changes the status of a reconciliation."
+msgstr "Змінити статус звірки може лише керівник."
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "Only a manager resets a reconciliation."
+msgstr "Скинути звірку може лише керівник."
 
 #. module: td_mebli_migration
 #. odoo-python
@@ -392,9 +426,7 @@ msgstr "Замовлення в джерелі"
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check_line__cause_order_ids
-msgid ""
-"Orders behind a difference: open orders with a prepayment (or the order of "
-"the line)."
+msgid "Orders behind a difference: open orders with a prepayment (or the order of the line)."
 msgstr "Замовлення за розбіжністю: відкриті замовлення з передоплатою (або замовлення рядка)."
 
 #. module: td_mebli_migration
@@ -409,9 +441,7 @@ msgstr "Контрагенти (постачальники, клієнти)"
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check_line__order_ref
-msgid ""
-"Prepayment of one order: its number in Odoo, the customer reference or the "
-"source document. Empty — all open orders."
+msgid "Prepayment of one order: its number in Odoo, the customer reference or the source document. Empty — all open orders."
 msgstr "Передоплата одного замовлення: його номер в Odoo, посилання клієнта або документ-джерело. Порожньо — усі відкриті замовлення."
 
 #. module: td_mebli_migration
@@ -436,8 +466,8 @@ msgstr "Атрибути товарів"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_01
-msgid "Product categories and warranty"
-msgstr "Категорії товарів і гарантія"
+msgid "Product categories"
+msgstr "Категорії товарів"
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_17
@@ -455,20 +485,22 @@ msgid "Ratings"
 msgstr "Оцінки"
 
 #. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_17
+msgid "Reasons of bonuses and penalties"
+msgstr "Причини премій і штрафів"
+
+#. module: td_mebli_migration
 #: model:ir.model.fields.selection,name:td_mebli_migration.selection__td_mebli_migration_check__state__reconciled
 msgid "Reconciled"
 msgstr "Звірено"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__name
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__check_id
-#: model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_check_menu
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__name model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__check_id model:ir.ui.menu,name:td_mebli_migration.td_mebli_migration_check_menu
 msgid "Reconciliation"
 msgstr "Звірка"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__cause_order_ids
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__cause_order_ids model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
 msgid "Records to Check"
 msgstr "Записи-причини"
 
@@ -503,8 +535,7 @@ msgid "Signed on"
 msgstr "Підписано"
 
 #. module: td_mebli_migration
-#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__value_source
-#: model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
+#: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check_line__value_source model_terms:ir.ui.view,arch_db:td_mebli_migration.report_migration_check
 msgid "Source"
 msgstr "Джерело"
 
@@ -535,15 +566,12 @@ msgstr "Шаблон (A-13)"
 
 #. module: td_mebli_migration
 #: model_terms:ir.actions.act_window,help:td_mebli_migration.td_mebli_migration_step_action
-msgid ""
-"The CSV templates of the package (step A-13) are imported in this order with"
-" the standard import."
+msgid "The CSV templates of the package (step A-13) are imported in this order with the standard import."
 msgstr "CSV-шаблони пакета (крок A-13) імпортуються в цьому порядку стандартним імпортом."
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__date
-msgid ""
-"The date of the stock and of the payments in the source (one date, box A)."
+msgid "The date of the stock and of the payments in the source (one date, box A)."
 msgstr "Дата залишків і оплат у джерелі (одна дата, коробка A)."
 
 #. module: td_mebli_migration
@@ -554,6 +582,12 @@ msgstr "Модель %s не встановлено: спершу встанов
 
 #. module: td_mebli_migration
 #. odoo-python
+#: code:addons/td_mebli_migration/models/migration_step.py:0
+msgid "The module %s is not installed: this template is not imported in this database."
+msgstr "Модуль %s не встановлено: цей шаблон у цю базу не імпортується."
+
+#. module: td_mebli_migration
+#. odoo-python
 #: code:addons/td_mebli_migration/models/migration_check.py:0
 msgid "The reconciliation %s is closed."
 msgstr "Звірку %s закрито."
@@ -561,8 +595,19 @@ msgstr "Звірку %s закрито."
 #. module: td_mebli_migration
 #. odoo-python
 #: code:addons/td_mebli_migration/models/migration_check.py:0
+msgid "The reconciliation is closed: reset it first."
+msgstr "Звірку закрито: спершу скиньте її."
+
+#. module: td_mebli_migration
+#. odoo-python
+#: code:addons/td_mebli_migration/models/migration_check.py:0
 msgid "The stock line needs a product."
 msgstr "Рядок залишку потребує товару."
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_01b
+msgid "Warranty of product categories"
+msgstr "Гарантія категорій товарів"
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_check__website_message_ids
@@ -576,15 +621,18 @@ msgstr "Історія спілкування на сайті"
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_check__explanation
-msgid ""
-"Why the difference is accepted; signed by a manager (button «Sign the "
-"Explanation»)."
+msgid "Why the difference is accepted; signed by a manager (button «Sign the Explanation»)."
 msgstr "Чому розбіжність прийнято; підписує керівник (кнопка «Підписати пояснення»)."
 
 #. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_09
 msgid "Work centers"
 msgstr "Дільниці"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_14b
+msgid "Work centers of the equipment"
+msgstr "Дільниці обладнання"
 
 #. module: td_mebli_migration
 #. odoo-python
@@ -598,11 +646,14 @@ msgid "e.g. Start of the system"
 msgstr "напр. Старт системи"
 
 #. module: td_mebli_migration
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_16
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_17
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_18
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_16 model:td.mebli.migration.step,note:td_mebli_migration.step_17 model:td.mebli.migration.step,note:td_mebli_migration.step_18 model:td.mebli.migration.step,note:td_mebli_migration.step_td_01b model:td.mebli.migration.step,note:td_mebli_migration.step_td_03b model:td.mebli.migration.step,note:td_mebli_migration.step_td_04b model:td.mebli.migration.step,note:td_mebli_migration.step_td_14b
 msgid "second pass of the same ids"
 msgstr "другий прохід тих самих id"
+
+#. module: td_mebli_migration
+#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_19b model:td.mebli.migration.step,note:td_mebli_migration.step_td_20b model:td.mebli.migration.step,note:td_mebli_migration.step_td_21b
+msgid "td_mebli_bas only (VP-04 = true); not imported in the light profile"
+msgstr "лише з td_mebli_bas (VP-04 = true); у профілі light не імпортується"
 
 #. module: td_mebli_migration
 #. odoo-python

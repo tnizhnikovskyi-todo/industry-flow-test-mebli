@@ -1,0 +1,32 @@
+# Спроба 4: повтор гейтів на коді після A-11-6…8 (перед A-17).
+# ТЕСТОВИЙ наряд A-14 — автоперевірки пакета «меблі» (gates-aggregator) після A-11 (спроби 1–2), A-12-2, A-13-2.
+# Склала сесія (записи 48, 51 flow/decisions.md; рішення AI — власник має вето).
+# Скіли-гейти організації (odoo19-mvp-build:pr-review, security-review, config-review, track-convergence; boost:odoo19-lint) і CI C-03 у сесії недоступні:
+# рішення AI — замінники, позначені «замінник» у CHECKS.md, вердикт не APPROVE (observations/2026-11-13-a14-gates-substitutes.md).
+step: A-14
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - flow-package-build:gates-aggregator@0.3.1
+model: opus
+effort: high
+inputs:
+  - {name: "модулі td_mebli_*", from: A-11, path: package/addons/, sha: HEAD}
+  - {name: "конфіг-пакет", from: A-12, path: package/config/, sha: HEAD}
+  - {name: "шаблони майстер-даних", from: A-13, path: package/master-data/, sha: HEAD}
+  - {name: "ТР і ALLOCATION", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "ALLOCATION.md", from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+where: "package/CHECKS.md"
+done: "CHECKS.md з вердиктом кожного гейта для ce і ee, SHA гейтів, коди повернення A-11/A-12/A-13; замінники позначені"
+check: {mode: both, how: "Автоперевірка gates-aggregator; Тімлід — CHECKS.md", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 30, context_budget_tokens: 120000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []   # лише локальні бази test-pkg-mebli*
+params: {mode: перевірка}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 4
+returned_from: {step: A-17, attempt: 1, reason: "package/ (21afe46) змінено після гейтів 1925fb8: A-11-6…8 — повтор гейтів перед прийманням"}
+git: {base: 21afe46, head: null, prev_tag: null}
+date: 2026-11-13

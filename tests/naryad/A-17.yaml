@@ -1,0 +1,36 @@
+# ТЕСТОВИЙ наряд A-17 (AI-частина: чернетка приймання першої версії пакета). Рішення й підпис — Власник продукту (гейт, не AI).
+# Шаблону package/templates/ACCEPTANCE.md у репо немає (В-6 скіла): template — референс скіла, where — лише файл результату.
+step: A-17
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - flow-package-evolution:product-decision-drafter@0.3.1
+model: opus
+effort: medium
+inputs:
+  - {name: "CHECKS.md (APPROVE (CE); EE не перевірено)", from: A-14, path: package/CHECKS.md, sha: HEAD}
+  - {name: "ТР: AC §4, тури §10", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "стан AC, рішення AI з ризиком, ризики SPEC ↔ код", from: A-11, path: package/addons/AC-COVERAGE.md, sha: HEAD}
+  - {name: "демо-стенд (README з SHA, answers.yaml, profiles/)", from: A-15, path: package/demo/README.md, sha: HEAD}
+  - {name: "сценарії A-16 (спроби 1–3)", from: A-16, path: package/demo/scenarios.md, sha: HEAD}
+  - {name: "дефекти D-01…D-17", from: A-16, path: package/demo/defects.md, sha: HEAD}
+  - {name: "звіти A-15 спроби 1–5", from: A-15, path: tests/reports/, sha: HEAD}
+  - {name: "звіт A-16 спроба 3", from: A-16, path: tests/reports/A-16-3.md, sha: HEAD}
+  - {name: "відкриті питання тесту", from: C-02, path: tests/open-questions.md, sha: HEAD}
+  - {name: "журнал рішень", from: C-02, path: flow/decisions.md, sha: HEAD}
+  - {name: "рішення AI (вето власника)", from: A-20, path: docs/industries/mebli/research/AI-DECISIONS.md, sha: HEAD}
+where: "package/ACCEPTANCE.md"
+template: .claude/skills/product-decision-drafter/references/acceptance.md
+done: "package/ACCEPTANCE.md — чернетка AI: версія і SHA, таблиця всіх AC SPEC §4 зі статусом і підставою, профілі, варіанти, рекомендація AI (не рішення), допущення, відкриті питання; блок «Висновок і підпис» порожній з маркером"
+check: {mode: both, how: "PD-01…PD-06, PD-08, ED-edition (скіл) + flow-autocheck checks/A-17.yaml", audit_every_n: 1}
+limits: {max_attempts: 2, timeout_min: 45, lease_factor: 1.5, cost_limit_usd: 5, context_budget_tokens: 60000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []
+params: {mode: перша}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 1
+returned_from: null
+git: {base: 16a74c6, head: null, prev_tag: null}
+date: 2026-11-14

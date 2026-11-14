@@ -1,0 +1,38 @@
+# Спроба 4: повернення з A-14-2 (CHECKS.md, цикл 2).
+# Спроба 2 (запис 51 flow/decisions.md): повтор після A-11.
+# ТЕСТОВИЙ наряд A-12 — конфіг-пакет пакета «меблі» (config-as-code, режим build) після A-10.
+# Склала сесія (рішення AI, flow/decisions.md записи 28, 37, 48; власник — вето).
+# Заміна odoo-mcp: у тесті odoo-mcp заборонено (odoo_connections: []), тестова база пакета — локальний Odoo 19.0 CE
+# (/home/user/odoo19, база з префіксом test-, odoo-bin shell; observations/2026-11-13-a12-a13-local-odoo-instead-of-mcp.md).
+step: A-12
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - flow-package-build:config-as-code@0.3.1
+model: sonnet
+effort: medium
+inputs:
+  - {name: "ALLOCATION.md (рядки стандарт/конфіг, VP → трек, модулі за профілями, формат конфіг-пакета)", from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: "ТР пакета (SPEC §4 AC треків стандарт/конфіг, §11 VP)", from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: "технічний дизайн (модулі, граф залежностей, коробки)", from: A-08, path: package/tr/, sha: HEAD}
+  - {name: "схема answers.yaml і приклад", from: A-09, path: package/templates/, sha: HEAD}
+  - {name: "анкета параметрів", from: A-09, path: package/questionnaire.md, sha: HEAD}
+  - {name: "OWNER-INTAKE.md (editions, legal_ambiguous)", from: A-02b, path: docs/industries/mebli/OWNER-INTAKE.md, sha: HEAD}
+  - {name: "REUSE.md (готове)", from: A-03c, path: docs/industries/mebli/research/REUSE.md, sha: HEAD}
+  - {name: "DATA_POLICY (allow-list баз)", from: C-05, path: package/DATA_POLICY.md, sha: HEAD}
+  - {name: "модулі td_mebli_* зрізу (для установки в тестову базу)", from: A-11, path: package/addons/, sha: HEAD}
+where: "package/config/"
+template: "config-as-code/references/config-package-format.md (format: 2), config-md-additions.md, install-log-template.md; flow-package-build/references/editions-and-bridges.md"
+done: "package/config/ (CONFIG.md, manifest.yaml, vp-map.yaml, data/, install-log.md) за format: 2; застосовано в чисту тестову базу CE з ідемпотентністю (2-й прохід без змін) і read-back VP; EE — «не перевірено»; config-review як самоперевірка"
+check: {mode: both, how: "flow-autocheck checks/A-12.yaml; таблиця «Автоперевірка» config-as-code (CFG-*); Тімлід — лог установки й ідемпотентності, трасування AC, порядок модулів", audit_every_n: 10}
+limits: {max_attempts: 3, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 10, context_budget_tokens: 60000}
+client_data: none
+data_rule: "package/DATA_POLICY.md — без даних клієнтів"
+odoo_connections: []   # odoo-mcp у тесті заборонено; замість нього — локальна тестова база test-mebli-a12cfg (створити й видалити в межах кроку)
+params: {mode: fix}
+repo: {url: origin, base_branch: main, branch: flow/A-12-2-test}
+attempt: 4
+returned_from: {step: A-14, attempt: 2, reason: "package/CHECKS.md спроба 2, правки №28–34"}
+git: {base: 21b4a9f, head: null, prev_tag: null}
+date: 2026-11-13

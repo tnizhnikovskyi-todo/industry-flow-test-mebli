@@ -35,6 +35,7 @@ class MrpBom(models.Model):
     def _td_mark_sent_to_cutting(self):
         """Called by the cutting (system): the next version of every specification is sent; returns {bom: version}."""
         versions = {}
+        # sudo: called by the cutting (system): the version of the sent specification is written whoever sends
         for bom in self.sudo():
             bom.td_cut_version += 1
             versions[bom.id] = bom.td_cut_version
@@ -185,19 +186,46 @@ class MrpBom(models.Model):
         uom_m2 = self.env.ref('uom.product_uom_square_meter')
         uom_m = self.env.ref('uom.product_uom_meter')
         lines = []
-        for product, qty in self._td_part_quantities().items():
+        part_quantities = self._td_part_quantities()
+        for product, qty in part_quantities.items():
             lines.append((0, 0, {
                 'product_id': product.id, 'product_qty': qty,
                 'product_uom_id': (uom_m if product.td_material_kind == 'edge' else uom_m2).id,
             }))
         for fitting in picked['fittings']:
             lines.append((0, 0, {'product_id': fitting.id, 'product_qty': 1.0, 'product_uom_id': fitting.uom_id.id}))
+        # AC-013: board and edge banding come from the parts. A static template line of the same role (a board that a
+        # board attribute value stands for, or its edge banding) is not copied when the parts give that kind:
+        # otherwise the order counts it twice and an oak or graphite order would also need the white board of the
+        # template (CHECKS.md No. 28). Other boards of the template (e.g. a back panel without a part rule) stay.
+        role_products = self._td_role_products(part_quantities)
         for line in template_lines:
+            if line.product_id in role_products:
+                continue
             lines.append((0, 0, {
                 'product_id': line.product_id.id, 'product_qty': line.product_qty,
                 'product_uom_id': line.product_uom_id.id,
             }))
         return lines
+
+    def _td_role_products(self, part_quantities):
+        """Board and edge banding products whose template lines the parts replace: the products of the parts and,
+        for every kind (board, edge) the parts give, the boards the board attribute values of the product stand for
+        and the edge banding matching them."""
+        self.ensure_one()
+        products = self.env['product.product'].union(*part_quantities) if part_quantities else self.env['product.product']
+        kinds = set(products.mapped('td_material_kind'))
+        values = self.product_tmpl_id.attribute_line_ids.filtered(
+            lambda line: line.attribute_id.td_component_role in ('body_board', 'facade_board')).value_ids
+        boards = values.td_component_product_id.filtered(lambda p: p.td_material_kind == 'board') | products.filtered(
+            lambda p: p.td_material_kind == 'board')
+        result = products
+        if 'board' in kinds:
+            result |= boards
+        if 'edge' in kinds:
+            result |= self.env['product.product'].search([
+                ('td_material_kind', '=', 'edge'), ('td_matches_board_id', 'in', boards.ids)])
+        return result
 
     def _td_recompute_component_lines(self):
         """AC-045: after an import the board and edge banding lines are the quantities the parts need (marked «From

@@ -54,8 +54,10 @@ class ResCompany(models.Model):
     td_crew_pct = fields.Float(
         string='Crew Percent', default=0.0, digits=(5, 2),
         help="Default percent of the order amount for the crew of a new act (data of the client, not a VP).")
+    # VP-16: SPEC §11 leaves the default to A-09 («ТР не задає; технічний — A-09»); the schema answers.yaml (A-09) says
+    # `true` (default_from: ai) — review A-14 config 4: the default of the field is the default of the schema
     td_install_in_price = fields.Boolean(
-        string='Installation in the Order Price', default=False,
+        string='Installation in the Order Price', default=True,
         help="VP-16: the installation is a service line with a zero price included in the price of the furniture.")
     td_act_checklist = fields.Text(
         string='Act Checklist', translate=True,
@@ -98,5 +100,6 @@ class ResCompany(models.Model):
         if not salesman or not margin:
             return
         # review A-11: per user (res.users._td_sync_margin_group) — a grant of the administrator is not taken back
+        # sudo: read only — the members of the groups are read to sync the margin group of the company's salesmen
         users = (salesman | margin).sudo().all_user_ids.filtered(lambda u: not u.share and u.company_id in self)
         users._td_sync_margin_group()

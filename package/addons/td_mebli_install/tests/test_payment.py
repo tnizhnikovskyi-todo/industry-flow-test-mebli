@@ -12,6 +12,9 @@ class TestPaymentControl(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
+        # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
+        cls.env.company.td_install_in_price = False
         env = cls.env
         cls.term = env['account.payment.term'].create({'name': '50/40/10', 'line_ids': [
             (0, 0, {'value': 'percent', 'value_amount': 50.0, 'nb_days': 0, 'td_milestone': 'order'}),

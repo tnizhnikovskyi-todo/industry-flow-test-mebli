@@ -60,6 +60,7 @@ class TdMebliWorkorderBackdate(models.TransientModel):
         vals['description'] = self.reason
         line = self.env['mrp.workcenter.productivity'].create(vals)
         if self.employee_id:
+            # sudo: the worker of a time line is protected; the sheet writes the one chosen by the master
             line.sudo().td_employee_id = self.employee_id
         workorder.button_finish()
         workorder.with_context(bypass_duration_calculation=True).write({

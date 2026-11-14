@@ -186,6 +186,58 @@ class TestG2Cutting(TdMebliCuttingCommon):
         self.assertEqual(job.state, 'sent')
         self.assertFalse(job.sheet_ids)
 
+    def test_ac_131_lot_of_the_board_and_the_company_and_the_number_of_pieces(self):
+        """A-14 pr-review m8: the lot is looked up by the board and the company of the job; a part placed more times than
+        the job has pieces is an error, nothing is written."""
+        job = self._job(self._make_production())
+        job.action_send()
+        other_company = self.env['res.company'].create({'name': 'TD Other Company'})
+        Lot = self.env['stock.lot']
+        Lot.create({'name': 'TD-LOT-1', 'product_id': self.board_a.id, 'company_id': other_company.id})
+        Lot.create({'name': 'TD-LOT-1', 'product_id': self.facade.id, 'company_id': self.env.company.id})
+        data = self._result_csv(job).replace(b'\n1;A;2800;2070;;part;', b'\n1;A;2800;2070;TD-LOT-1;part;', 1)
+        with self.assertRaisesRegex(UserError, 'TD-LOT-1'):  # neither the lot of the other company nor of the facade
+            self._import(job, data)
+        self.assertFalse(job.sheet_ids)
+        own = Lot.create({'name': 'TD-LOT-1', 'product_id': self.board_a.id, 'company_id': self.env.company.id})
+        code, part = job._td_part_codes(job.production_ids)[0]
+        extra = ''.join(f'1;A;2800;2070;;part;{code};0;0;10;10;0\n' for _index in range(part.qty))
+        with self.assertRaisesRegex(UserError, rf'{code}\D+{part.qty + 1}\D+{part.qty}\D'):
+            self._import(job, self._result_csv(job, extra=extra))
+        self.assertFalse(job.sheet_ids)
+        self._import(job, data)
+        self.assertEqual(job.sheet_ids.filtered(lambda sheet: sheet.product_id == self.board_a).lot_id, own)
+
+    # AC-036 (A-14 security 3) ---------------------------------------------
+    def test_ac_036_sheets_placements_offcuts_of_another_company_are_not_visible(self):
+        job = self._job(self._make_production())
+        job.action_send()
+        self._import(job, self._result_csv(job))
+        self.assertEqual(job.sheet_ids.company_id, job.company_id)
+        self.assertEqual(job.sheet_ids.placement_ids.company_id, job.company_id)
+        self.assertEqual(job.sheet_ids.offcut_ids.company_id, job.company_id)
+        other_company = self.env['res.company'].create({'name': 'TD Other Company'})
+        groups = [self.env.ref('mrp.group_mrp_user').id, self.env.ref('stock.group_stock_user').id]
+        stranger = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Technologist of the other company', 'login': 'td_tech_other', 'company_id': other_company.id,
+            'company_ids': [(6, 0, other_company.ids)], 'group_ids': [(6, 0, groups)]})
+        for model, records in (('td.mebli.cutting.sheet', job.sheet_ids),
+                               ('td.mebli.cutting.placement', job.sheet_ids.placement_ids),
+                               ('td.mebli.cutting.offcut', job.sheet_ids.offcut_ids)):
+            self.assertTrue(records)
+            self.assertFalse(self.env[model].with_user(stranger).search([('id', 'in', records.ids)]), model)
+            self.assertEqual(self.env[model].with_user(self.tech).search([('id', 'in', records.ids)]), records, model)
+
+    # A-14 security 4: no formulas in the cutting file ----------------------
+    def test_cutting_file_cells_are_csv_safe(self):
+        production = self._make_production()
+        production.bom_id.td_part_ids[0].name = '=1+2 part'
+        job = self._job(production)
+        job.action_send()
+        content = base64.b64decode(job.export_attachment_id.datas).decode()
+        self.assertIn(";'=1+2 part", content)
+        self.assertNotIn(';=1+2 part', content)
+
     # AC-026 (VP-09) -----------------------------------------------------
     def test_ac_026_distributor_mode_is_visible_on_the_job(self):
         job = self._job(self._make_production())

@@ -1,0 +1,22 @@
+# alt-2 — «B» (ce): мультикомпанія з ФОП-монтажниками (td_mebli_multico), усі функції VP-02 (з ai_mapping);
+# покриває VP-03 multi_install_fop, VP-06 block, VP-14 time, VP-15 stage, VP-16 false, VP-17 strict, contract_mode contract, верхні межі int.
+edition: ce
+contract_mode: contract
+VP-01: B
+VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, ai_mapping, analog, shop_board]
+VP-03: multi_install_fop
+VP-04: true
+VP-05: true
+VP-06: block
+VP-07: 7
+VP-08: false
+VP-09: both
+VP-10: 30
+VP-11: 50
+VP-12: 1000
+VP-13: 60
+VP-14: time
+VP-15: stage
+VP-16: false
+VP-17: strict
+VP-18: true

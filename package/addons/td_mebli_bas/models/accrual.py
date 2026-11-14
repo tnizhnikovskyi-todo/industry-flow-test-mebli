@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError
 
 from .account_move import bas_locked_error
@@ -18,10 +18,12 @@ class TdMebliAccrual(models.Model):
             raise bas_locked_error(self.env)
         return super().write(vals)
 
-    def unlink(self):
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_sent_to_bas(self):
+        """AC-041: an accrual sent to BAS is not deleted in Odoo (review A-14 L-1: a check of `ondelete`, not a raise in
+        `unlink`, so the uninstallation of the module and the cascades are not blocked)."""
         if not self.env.su and any(a.bas_state == 'sent' for a in self):
             raise bas_locked_error(self.env)
-        return super().unlink()
 
     def action_td_send_bas(self):
         """«Send to BAS» (AC-109): the confirmed accruals not sent yet, one batch per company."""

@@ -16,8 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_over_history
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_over_history model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Above History"
 msgstr "Понад історію"
 
@@ -39,12 +38,8 @@ msgstr "Середня попередня ціна"
 
 #. module: td_mebli_purchase
 #: model:ir.model.fields,help:td_mebli_purchase.field_purchase_order_line__td_history_price
-msgid ""
-"Average unit price of the confirmed purchases of this product during the 180"
-" days before this order."
-msgstr ""
-"Середня ціна одиниці в підтверджених закупівлях цього товару за 180 днів до "
-"цього замовлення."
+msgid "Average unit price of the confirmed purchases of this product during the 180 days before this order."
+msgstr "Середня ціна одиниці в підтверджених закупівлях цього товару за 180 днів до цього замовлення."
 
 #. module: td_mebli_purchase
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
@@ -73,14 +68,12 @@ msgid "Confirmed"
 msgstr "Підтверджено"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_uid
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_uid
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_uid model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_date
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_date
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__create_date model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -90,9 +83,7 @@ msgid "Current Price"
 msgstr "Поточна ціна"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__display_name
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__display_name
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__display_name
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__display_name model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__display_name model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -112,15 +103,12 @@ msgid "Has Delay"
 msgstr "Є строк"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_history_note
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_form_td_mebli_purchase
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__td_history_note model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_form_td_mebli_purchase
 msgid "History"
 msgstr "Історія"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__id
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__id
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__id
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_purchase_order_line__id model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__id model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__id
 msgid "ID"
 msgstr "ID"
 
@@ -131,22 +119,17 @@ msgstr "Імпорт прайсу"
 
 #. module: td_mebli_purchase
 #. odoo-python
-#: code:addons/td_mebli_purchase/wizard/price_import.py:0
-#: model:ir.actions.act_window,name:td_mebli_purchase.td_mebli_price_import_action
-#: model:ir.model,name:td_mebli_purchase.model_td_mebli_price_import
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
+#: code:addons/td_mebli_purchase/wizard/price_import.py:0 model:ir.actions.act_window,name:td_mebli_purchase.td_mebli_price_import_action model:ir.model,name:td_mebli_purchase.model_td_mebli_price_import model_terms:ir.ui.view,arch_db:td_mebli_purchase.td_mebli_price_import_form
 msgid "Import of a Supplier Price List"
 msgstr "Імпорт прайсу постачальника"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_uid
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_uid
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_uid model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_uid
 msgid "Last Updated by"
 msgstr "Останнє оновлення"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_date
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_date
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import__write_date model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -249,8 +232,7 @@ msgid "Problem"
 msgstr "Проблема"
 
 #. module: td_mebli_purchase
-#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__product_id
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+#: model:ir.model.fields,field_description:td_mebli_purchase.field_td_mebli_price_import_line__product_id model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Product"
 msgstr "Товар"
 
@@ -295,8 +277,7 @@ msgid "Supplier"
 msgstr "Постачальник"
 
 #. module: td_mebli_purchase
-#: model:ir.actions.act_window,name:td_mebli_purchase.purchase_order_line_td_price_action
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
+#: model:ir.actions.act_window,name:td_mebli_purchase.purchase_order_line_td_price_action model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
 msgid "Supplier Prices against History"
 msgstr "Ціни постачальників проти історії"
 
@@ -318,11 +299,7 @@ msgid ""
 "The price list of the supplier (Excel .xlsx or CSV): the columns are recognized by their\n"
 "                    titles (code, product, price, minimal quantity, lead time). The prices go into the standard vendor\n"
 "                    pricelist of the products (Purchase › Products › Vendor Pricelists); nothing else is kept."
-msgstr ""
-"Прайс постачальника (Excel .xlsx або CSV): колонки розпізнаються за "
-"заголовками (код, товар, ціна, мінімальна кількість, строк). Ціни "
-"записуються в стандартні ціни постачальника товарів (Закупівлі › Товари › "
-"Ціни постачальників); іншого нічого не зберігається."
+msgstr "Прайс постачальника (Excel .xlsx або CSV): колонки розпізнаються за заголовками (код, товар, ціна, мінімальна кількість, строк). Ціни записуються в стандартні ціни постачальника товарів (Закупівлі › Товари › Ціни постачальників); іншого нічого не зберігається."
 
 #. module: td_mebli_purchase
 #: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
@@ -330,8 +307,7 @@ msgid "Total"
 msgstr "Разом"
 
 #. module: td_mebli_purchase
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list
-#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
+#: model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_list model_terms:ir.ui.view,arch_db:td_mebli_purchase.purchase_order_line_td_price_search
 msgid "Vendor"
 msgstr "Постачальник"
 

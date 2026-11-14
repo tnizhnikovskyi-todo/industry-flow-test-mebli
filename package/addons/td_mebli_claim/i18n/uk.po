@@ -30,7 +30,9 @@ msgstr ""
 msgid ""
 ": the service decides\n"
 "                    «Under Warranty» by hand (the term of the product category is empty until the conclusion of the lawyer)."
-msgstr ": рішення «На гарантії» сервіс\n                    ставить вручну (строк категорії товару порожній до висновку юриста)."
+msgstr ""
+": рішення «На гарантії» сервіс\n"
+"                    ставить вручну (строк категорії товару порожній до висновку юриста)."
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
@@ -43,8 +45,7 @@ msgid "<i class=\"fa fa-question-circle me-2\" title=\"Warranty\"/>"
 msgstr "<i class=\"fa fa-question-circle me-2\" title=\"Гарантія\"/>"
 
 #. module: td_mebli_claim
-#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_after_warranty
-#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_after_warranty model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
 msgid "After Warranty"
 msgstr "Після гарантії"
 
@@ -83,11 +84,7 @@ msgid "Claimed Order"
 msgstr "Замовлення, на яке скарга"
 
 #. module: td_mebli_claim
-#: model:ir.actions.act_window,name:td_mebli_claim.td_mebli_claim_action
-#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__td_claim_count
-#: model:ir.ui.menu,name:td_mebli_claim.td_mebli_claim_menu
-#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_order_form_td_mebli_claim
-#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
+#: model:ir.actions.act_window,name:td_mebli_claim.td_mebli_claim_action model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__td_claim_count model:ir.ui.menu,name:td_mebli_claim.td_mebli_claim_menu model_terms:ir.ui.view,arch_db:td_mebli_claim.view_order_form_td_mebli_claim model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
 msgid "Claims"
 msgstr "Рекламації"
 
@@ -103,12 +100,8 @@ msgstr "Рекламації на замовлення"
 
 #. module: td_mebli_claim
 #: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_warranty_end
-msgid ""
-"Date of the final installation act of the claimed order (the delivery when "
-"there is no installation) plus the warranty term of the product category."
-msgstr ""
-"Дата поставки замовлення (стандартна дата поставки) плюс строк гарантії "
-"пакета (місяців, параметр пакета)."
+msgid "Date of the final installation act of the claimed order (the delivery when there is no installation) plus the warranty term of the product category."
+msgstr "Дата поставки замовлення (стандартна дата поставки) плюс строк гарантії пакета (місяців, параметр пакета)."
 
 #. module: td_mebli_claim
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_days_open
@@ -116,9 +109,7 @@ msgid "Days Open"
 msgstr "Днів відкрито"
 
 #. module: td_mebli_claim
-#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__display_name
-#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__display_name
-#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__display_name model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__display_name model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -128,9 +119,7 @@ msgid "Factory Pays"
 msgstr "За рахунок фабрики"
 
 #. module: td_mebli_claim
-#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__id
-#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__id
-#: model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_claim.field_project_task__id model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__id model:ir.model.fields,field_description:td_mebli_claim.field_sale_order__id
 msgid "ID"
 msgstr "ID"
 
@@ -146,9 +135,7 @@ msgid "On warranty"
 msgstr "На гарантії"
 
 #. module: td_mebli_claim
-#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_overdue
-#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
-#: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
+#: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_overdue model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_search_td_mebli
 msgid "Overdue"
 msgstr "Прострочено"
 
@@ -166,6 +153,11 @@ msgstr "Фото"
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli
 msgid "Plan a Visit"
 msgstr "Запланувати виїзд"
+
+#. module: td_mebli_claim
+#: model:res.groups,comment:td_mebli_claim.group_service
+msgid "ROLE-10 (service): the claims of the customers as repair orders and the remake of a part."
+msgstr "ROLE-10 (сервіс): рекламації клієнтів як замовлення на ремонт і повторне виготовлення деталі."
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_list_td_mebli
@@ -204,6 +196,11 @@ msgid "Sales Order"
 msgstr "Замовлення на продаж"
 
 #. module: td_mebli_claim
+#: model:res.groups,name:td_mebli_claim.group_service
+msgid "Service"
+msgstr "Сервіс"
+
+#. module: td_mebli_claim
 #: model:ir.model.fields,field_description:td_mebli_claim.field_repair_order__td_visit_task_id
 msgid "Service Visit"
 msgstr "Сервісний виїзд"
@@ -221,19 +218,13 @@ msgstr "Завдання"
 
 #. module: td_mebli_claim
 #: model:ir.model.fields,help:td_mebli_claim.field_repair_order__td_claim_order_id
-msgid ""
-"The furniture order the customer complains about (the standard «Sale Order» "
-"of a repair is the order the repair was sold from, a different thing)."
-msgstr ""
-"Замовлення меблів, на яке скаржиться клієнт (стандартне «Замовлення на "
-"продаж» ремонту — це замовлення, з якого продано ремонт, інше)."
+msgid "The furniture order the customer complains about (the standard «Sale Order» of a repair is the order the repair was sold from, a different thing)."
+msgstr "Замовлення меблів, на яке скаржиться клієнт (стандартне «Замовлення на продаж» ремонту — це замовлення, з якого продано ремонт, інше)."
 
 #. module: td_mebli_claim
 #. odoo-python
 #: code:addons/td_mebli_claim/models/repair.py:0
-msgid ""
-"The order %s has no installation visit: the installation project is not "
-"known."
+msgid "The order %s has no installation visit: the installation project is not known."
 msgstr "Замовлення %s не має виїзду на монтаж: проєкт монтажів невідомий."
 
 #. module: td_mebli_claim
@@ -248,12 +239,8 @@ msgstr ""
 #. module: td_mebli_claim
 #. odoo-python
 #: code:addons/td_mebli_claim/models/repair.py:0
-msgid ""
-"The product of the claim has no bill of materials: it is bought, not made. "
-"Order it again in Purchase."
-msgstr ""
-"Товар рекламації не має специфікації: його купують, а не виготовляють. "
-"Замовте повторно в Закупівлях."
+msgid "The product of the claim has no bill of materials: it is bought, not made. Order it again in Purchase."
+msgstr "Товар рекламації не має специфікації: його купують, а не виготовляють. Замовте повторно в Закупівлях."
 
 #. module: td_mebli_claim
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_order_form_td_mebli

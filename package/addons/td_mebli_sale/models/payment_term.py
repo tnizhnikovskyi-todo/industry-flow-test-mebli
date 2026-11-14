@@ -1,4 +1,7 @@
+from markupsafe import Markup
+
 from odoo import api, fields, models
+from odoo.tools import format_amount
 from odoo.exceptions import UserError
 
 
@@ -20,6 +23,26 @@ class AccountPaymentTermLine(models.Model):
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    # AC-019 (D-05, A-11-7): the amounts of the milestones are seen in the form of the order, not only in the contract
+    td_pay_has_milestones = fields.Boolean(string='Payment by Milestones', compute='_compute_td_pay_schedule')
+    td_pay_schedule_html = fields.Html(string='Payment Schedule', compute='_compute_td_pay_schedule', sanitize=False)
+
+    @api.depends('payment_term_id.line_ids.td_milestone', 'payment_term_id.line_ids.value',
+                 'payment_term_id.line_ids.value_amount', 'amount_total', 'currency_id')
+    def _compute_td_pay_schedule(self):
+        for order in self:
+            has = bool(order.payment_term_id.line_ids.filtered('td_milestone'))
+            order.td_pay_has_milestones = has
+            if not has:
+                order.td_pay_schedule_html = False
+                continue
+            rows = ''.join(
+                Markup('<tr><td>%s</td><td class="text-end">%s</td><td class="text-end">%s</td></tr>') % (
+                    row['milestone'], f"{row['percent']:g} %" if row['percent'] else '',
+                    format_amount(order.env, row['amount'], order.currency_id or order.company_id.currency_id))
+                for row in order._td_payment_schedule())
+            order.td_pay_schedule_html = Markup('<table class="table table-sm mb-0 td_pay_schedule"><tbody>%s</tbody></table>') % Markup(rows)
 
     def _td_contract_mode(self):
         """Printed contract: «contract» (contract work, made to the measurements of the customer) or «sale» (sale

@@ -109,3 +109,26 @@ class TestPriceImport(TransactionCase):
         wizard.action_import()
         self.assertEqual(new.price, 850.0)
         self.assertEqual(env['product.supplierinfo'].search_count([('partner_id', '=', vendor.id)]), 3)
+
+    def test_d06_buyer_imports_the_price_list(self):
+        """D-06 (AC-087, tr/security.md §1): the buyer (Purchase: User, no Purchase manager / Product manager) imports
+        the price list of the supplier: the vendor pricelist lines are created and the earlier price is closed."""
+        env = self.env
+        buyer = env['res.users'].create({
+            'name': 'Buyer', 'login': 'td_d06_buyer', 'email': 'td_d06_buyer@example.com',
+            'group_ids': [(6, 0, [env.ref('base.group_user').id, env.ref('purchase.group_purchase_user').id])]})
+        self.assertFalse(buyer.has_group('purchase.group_purchase_manager'))
+        self.assertFalse(buyer.has_group('product.group_product_manager'))
+        vendor = env['res.partner'].create({'name': 'Fittings vendor'})
+        hinge = env['product.product'].create({'name': 'Hinge Z', 'default_code': 'HZ-1', 'type': 'consu'})
+        env['product.supplierinfo'].create({'partner_id': vendor.id, 'product_tmpl_id': hinge.product_tmpl_id.id,
+                                            'price': 50.0, 'date_start': '2026-01-01'})
+        text = 'Артикул;Найменування;Ціна\nHZ-1;Hinge Z;55,00'
+        wizard = env['td.mebli.price.import'].with_user(buyer).create({
+            'partner_id': vendor.id, 'filename': 'prices.csv', 'file': base64.b64encode(text.encode())})
+        wizard.action_recognize()
+        self.assertEqual(wizard.line_ids.mapped('status'), ['update'])
+        wizard.action_import()
+        infos = env['product.supplierinfo'].search([('partner_id', '=', vendor.id)], order='id')
+        self.assertEqual(infos.mapped('price'), [50.0, 55.0])
+        self.assertTrue(infos[0].date_end, "the earlier price is closed as history")

@@ -62,13 +62,18 @@ class TdMebliInstallAct(models.Model):
         tasks.sale_order_id._td_check_payment(self.env._("Start the installation"))
         acts = super().create(vals_list)
         for act in acts.filtered(lambda a: not a.crew_line_ids and a.task_id.user_ids):
+            # sudo: the crew of the visit is copied to the act; the crew lines are not created by the crew itself
             act.sudo().crew_line_ids = [(0, 0, {'user_id': user.id}) for user in act.task_id.user_ids]
         for act, vals in zip(acts, vals_list):  # an act created signed (import, data): the amount of the moment
             if vals.get('state') == 'signed' and 'crew_amount_signed' not in vals:
+                # sudo: a signed act is read only for the crew; the system writes the amount of the moment
                 act.sudo().crew_amount_signed = act._td_crew_amount_now()  # a signed act is read only for the crew
         return acts
 
     def write(self, vals):
+        # AC-098 (SPEC text): a signed act is read only for everybody; the system (su) still writes its technical fields
+        if not self.env.su and any(act.state == 'signed' for act in self):
+            raise UserError(self.env._("A signed act cannot be changed"))
         self._td_fix_crew_amount(vals)
         return super().write(vals)
 
@@ -85,6 +90,7 @@ class TdMebliInstallAct(models.Model):
             return 1.0 if self.kind == 'final' else 0.0
         if self.kind == 'stage':
             return max(0.0, min(100.0, self.stage_pct)) / 100.0
+        # sudo: read only: the stage acts of the order, also the ones of other visits the crew does not see
         stages = self.sudo().search([('order_id', '=', self.order_id.id), ('kind', '=', 'stage'),
                                      ('state', '=', 'signed'), ('id', '!=', self._origin.id or 0)]) if self.order_id else []
         return max(0.0, 100.0 - sum(act.stage_pct for act in stages)) / 100.0
@@ -120,6 +126,7 @@ class TdMebliInstallAct(models.Model):
     @api.constrains('kind', 'order_id')
     def _check_one_final_act(self):
         for act in self.filtered(lambda a: a.kind == 'final' and a.order_id):
+            # sudo: read only: one final act per order, also among the acts the user does not see
             if self.sudo().search_count([('kind', '=', 'final'), ('order_id', '=', act.order_id.id), ('id', '!=', act.id)]):
                 raise ValidationError(self.env._("The order %s already has a final act: one final act per order, the "
                                                  "other visits get stage acts.", act.order_id.name))
@@ -135,14 +142,17 @@ class TdMebliInstallAct(models.Model):
             act.check_access('read')
             if not act.photo_consent:
                 raise UserError(self.env._("No consent of the customer to publish the photos"))
+            # sudo: a signed act is read only; the photo consent is checked above, the system marks the archive
             act.sudo().photo_archive = True
             act.message_post(body=self.env._("The photos are in the photo archive."))
         return True
 
     def action_sign(self):
         for act in self:
-            if not act.signature:
-                raise UserError(self.env._("The customer signs the act with a finger on the screen first."))
+            if act.state == 'signed':  # AC-098, SPEC text
+                raise UserError(self.env._("A signed act cannot be changed"))
+            if not act.signature:  # AC-098, SPEC text
+                raise UserError(self.env._("There is no signature of the customer"))
             act.order_id._td_check_payment(self.env._("Sign the act"))
             act.write({'state': 'signed', 'signed_on': fields.Datetime.now()})
             if act.kind == 'final':

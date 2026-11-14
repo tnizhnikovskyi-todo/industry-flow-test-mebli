@@ -17,6 +17,8 @@ class TestG1Notify(TdMebliSaleCommon):
         env = cls.env
         env['res.lang']._activate_lang('uk_UA')
         env['ir.module.module']._load_module_terms(['td_mebli_notify'], ['uk_UA'], overwrite=True)
+        # review A-14 (config 4): VP-16 explicitly — the reminders of the payment need a priced installation line
+        env.company.td_install_in_price = False
         cls.project = env['project.project'].create({'name': 'Монтажі', 'allow_billable': True})
         cls.service = env['product.product'].create({'name': 'Монтаж', 'type': 'service', 'list_price': 100,
                                                      'service_tracking': 'task_global_project',
@@ -109,7 +111,8 @@ class TestG1Notify(TdMebliSaleCommon):
             self.assertIn(key, data)
         self.assertIn(order.name, [row['name'] for row in data['stuck']])
         self.assertFalse(data['nothing'])
-        template = self.env.ref('td_mebli_notify.mail_template_td_briefing')
+        # review A-14 (AC-N.01): the English text is checked in English explicitly — the database may be in uk_UA
+        template = self.env.ref('td_mebli_notify.mail_template_td_briefing').with_context(lang='en_US')
         body = template._render_field('body_html', self.env.user.partner_id.ids,
                                       add_context={'briefing': data})[self.env.user.partner_id.id]
         self.assertIn(order.name, body)
@@ -122,7 +125,8 @@ class TestG1Notify(TdMebliSaleCommon):
                  'due_after_act': '0', 'due_after_act_count': 0, 'due_before': '0', 'due_before_count': 0}
         template = self.env.ref('td_mebli_notify.mail_template_td_briefing')
         partner = self.env.user.partner_id
-        body = template._render_field('body_html', partner.ids, add_context={'briefing': empty})[partner.id]
+        body = template.with_context(lang='en_US')._render_field('body_html', partner.ids,
+                                                                 add_context={'briefing': empty})[partner.id]
         self.assertIn('No deviations', body)
         for section in ('Orders at risk', 'Overdue claims', 'Money to receive', 'Stuck orders', 'Downtime'):
             self.assertNotIn(section, body)
@@ -133,7 +137,7 @@ class TestG1Notify(TdMebliSaleCommon):
         # the real data of an empty database gives «nothing»
         with patch.object(type(self.env['td.mebli.dashboard']), '_td_briefing_data', lambda self: empty):
             owner = self.env['res.users'].with_context(no_reset_password=True).create({
-                'name': 'Власник', 'login': 'td_g1_owner', 'email': 'owner@example.com',
+                'name': 'Власник', 'login': 'td_g1_owner', 'email': 'owner@example.com', 'lang': 'en_US',
                 'group_ids': [(6, 0, [self.env.ref('td_mebli_dashboard.group_td_mebli_director').id,
                                       self.env.ref('base.group_user').id])]})
             self.env['res.partner']._td_send_briefing(template, owner)

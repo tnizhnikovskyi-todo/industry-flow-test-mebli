@@ -1,0 +1,585 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* td_mebli_dashboard
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 19.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-11-14 02:27+0000\n"
+"PO-Revision-Date: 2026-11-14 02:27+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "%s d."
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "%s orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Before installation without payment: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Behind"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Below %(pct)s%%: %(count)s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Claims"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Claims per 100 orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Claims: %(claims)s for %(installed)s installed"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Closed on average in %s days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Company"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Customer"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting at the distributor"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting jobs"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting jobs: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Cutting waste"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Date shift by reason"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Days of shift of the promised dates"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Done"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__td_dash_due
+msgid "Due"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:res.groups,name:td_mebli_dashboard.group_td_mebli_director
+msgid "Factory Director (dashboard)"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Factory on one screen"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Failed quality checks and defects of the shop, %s days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "For %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Hours behind"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Hours done"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_td_mebli_dashboard__id
+msgid "ID"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "In the warehouse on average %s days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "In work"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "In work now"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Installed orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Installed: %(all)s, on the promised date: %(ok)s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Last %(days)s days · %(date)s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.actions.client,name:td_mebli_dashboard.action_dashboard
+#: model:ir.ui.menu,name:td_mebli_dashboard.menu_dashboard_root
+msgid "Manager Dashboard"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.model,name:td_mebli_dashboard.model_td_mebli_dashboard
+msgid "Manager Dashboard of the Furniture Factory"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Manufacturing orders: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Margin %(margin)s of revenue %(revenue)s, %(count)s orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin of the orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Margin, %"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Margin, weighted"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid ""
+"Margin: one weighted figure (margin ÷ revenue) on the dashboard and in the "
+"reports."
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Measurement to contract"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Measurements"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Measurements of %s days that became confirmed orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Measurements: %(all)s, contracts: %(ok)s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "No change of the stage for more than %s days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "No data"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Now at risk: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Open queue: %s weeks of work"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid ""
+"Open work started or planned to start in 7 days ÷ weekly hours of the "
+"section calendar"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Operations behind the plan"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Operations done in the shift"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Order Date"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
+msgid "Orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Orders at risk"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Orders on time"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Orders with a shifted date"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Orders: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Over capacity: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Overdue: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Overpay against the average of 180 days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.model.fields,field_description:td_mebli_dashboard.field_sale_order__td_dash_paid
+msgid "Paid"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_due_list
+msgid "Payments due"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Payments due after installation"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Prices above history"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Production finished, the delivery is not done"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
+msgid "Promised Date"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Purchase lines: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Quality nonconformities"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Ready, not shipped"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Revenue"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.model,name:td_mebli_dashboard.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Saved by business offcuts: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Scraps: %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "Section"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Section load, 7 days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:res.groups,comment:td_mebli_dashboard.group_td_mebli_director
+msgid ""
+"Sees the one-screen dashboard of the factory: revenue, margin, cost. Granted"
+" to the owner and the finance manager."
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/shop_board.py:0
+msgid "Shop Floor"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.actions.client,name:td_mebli_dashboard.action_shop_board
+msgid "Shop Floor Board"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model:ir.ui.menu,name:td_mebli_dashboard.menu_shop_board
+msgid "Shop Floor Board (TV)"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Signed final act, the customer has not paid in full"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Stuck orders"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Supplier"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Supplier prices above history"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Target: from %s%%"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Target: up to %s"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Target: up to %s%%"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "The factory dashboard is available to the factory director only."
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/shop_board.py:0
+msgid "The shop floor board is available to the users of Manufacturing."
+msgstr ""
+
+#. module: td_mebli_dashboard
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_due_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_dashboard.sale_order_td_dash_margin_list
+msgid "Total"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Total margin ÷ total revenue of the report, %s days"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-python
+#: code:addons/td_mebli_dashboard/models/dashboard.py:0
+msgid "Without a work center"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "d."
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "h"
+msgstr ""
+
+#. module: td_mebli_dashboard
+#. odoo-javascript
+#: code:addons/td_mebli_dashboard/static/src/shop_board.xml:0
+msgid "planned end has passed"
+msgstr ""

@@ -25,7 +25,7 @@ class TestCompanyParams(TransactionCase):
             'td_payment_control': 'warn', 'td_pay_reminder_days': 2, 'td_margin_to_salesman': False,
             'td_cutting_mode': 'both', 'td_stuck_days': 5, 'td_price_threshold_pct': 5.0, 'td_min_offcut_mm': 300,
             'td_claim_overdue_days': 14, 'td_crew_split': 'equal', 'td_crew_base': 'final', 'td_crew_pct': 0.0,
-            'td_install_in_price': False, 'td_legal_checked': False, 'td_box_profile': 'A',
+            'td_install_in_price': True, 'td_legal_checked': False, 'td_box_profile': 'A',
         }
         self.assertEqual({name: company[name] for name in expected}, expected)
         self.assertEqual(sorted(dict(company._fields['td_contract_mode'].selection)), ['contract', 'sale'])
@@ -144,6 +144,22 @@ class TestCompanyParams(TransactionCase):
         param.set_param('td_mebli.contract_mode', 'unset')   # the answer of the config package wins over the slice
         post_init_hook(self.env)
         self.assertFalse(self.company.td_contract_mode)
+
+    def test_m5_hook_value_outside_the_range_is_skipped(self):
+        """Review A-14 m5: an answer of the config package outside the range of SPEC §11.1 (VP-07 = 10, VP-11 = 0) does
+        not break the installation: it is skipped with a warning, the valid answers are written, the default stays."""
+        param = self.env['ir.config_parameter'].sudo()
+        for key in ('td_mebli_sale.contract_mode', 'td_mebli_install.payment_control', 'td_mebli_claim.warranty_months'):
+            param.search([('key', '=', key)]).unlink()
+        self.company.write({'td_pay_reminder_days': 2, 'td_price_threshold_pct': 5.0, 'td_stuck_days': 5})
+        param.set_param('td_mebli.vp_07', '10')
+        param.set_param('td_mebli.vp_11', '0')
+        param.set_param('td_mebli.vp_10', '9')
+        with self.assertLogs('odoo.addons.td_mebli_base.hooks', level='WARNING') as logs:
+            post_init_hook(self.env)
+        self.assertEqual(len([line for line in logs.output if 'outside the allowed range' in line]), 2)
+        self.assertEqual((self.company.td_pay_reminder_days, self.company.td_price_threshold_pct,
+                          self.company.td_stuck_days), (2, 5.0, 9))
 
     def test_ac_n04_hook_without_parameters_keeps_the_defaults(self):
         """No parameters of the slice: the mode stays unset (AC-034), the warranty stays empty (AC-111)."""

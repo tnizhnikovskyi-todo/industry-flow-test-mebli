@@ -1,0 +1,11 @@
+; Конфіг Odoo 19 для скриптів tools/odoo (тестове середовище «меблі», C-00). Копію з підстановками робить env.local.sh
+; у $ODOO_CONF (типово /home/user/odoo19/odoo-tools.conf). Головний /home/user/odoo19/odoo.conf не чіпати.
+; db_host порожній = локальний unix-сокет PostgreSQL 16 (непродовий сервер; guard_db: ODOO_ALLOWED_HOSTS=localhost,127.0.0.1).
+[options]
+addons_path = @ADDONS_PATH@
+data_dir = @DATA_DIR@
+db_host = False
+db_port = False
+list_db = False
+http_interface = 127.0.0.1
+without_demo = True

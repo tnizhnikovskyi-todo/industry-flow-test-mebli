@@ -1,29 +1,25 @@
-# VP-xx -> параметр конфіг-пакета (A-12). Джерела: SPEC §11, ALLOCATION «Точки варіативності», схема package/templates/answers.yaml.
+# VP-xx -> параметр конфіг-пакета (A-12, спроба 3, режим fix; спроба 2 — поля res.company.td_*). Джерела: SPEC §11, ALLOCATION «Точки варіативності», схема package/templates/answers.yaml,
+# API td_mebli_base (package/addons/AC-COVERAGE.md «G0 — API для груп»).
 # Формат якоря: <model>:<селектор>:<поле> (config-package-format.md). transform: identity | {значення VP: значення в Odoo} | {expr: ...}
 # (expr — вираз над відповідями `a`, коли значення залежить від кількох VP).
-# Трек «код» (поле td_* на res.company — A-11, td_mebli_base): kind td_param, ключ td_mebli.vp_xx в ir.config_parameter —
-# контракт за замовчуванням config-as-code до рішення A-11 (WARN). a11_target — цільове поле компанії з ALLOCATION/ТР (AI-A08-04);
-# A-11 читає той самий ключ або переносить його в поле (рішення AI-A12-01, звіт A-12).
-# applies_if — зі схеми: невиконана умова = параметр не застосовується (read-back: ключа/запису немає).
+# Трек «код»: kind td_param з якорем — поле res.company.td_* модуля td_mebli_base (AI-A08-04; рішення AI-A12-01 спроби 2 замість ключів
+# ir.config_parameter td_mebli.<vp> спроби 1). Запис — у компанію base.main_company (чиста база має одну компанію; у B-04 — кожна юрособа).
+# applies_if — зі схеми: невиконана умова = параметр не пишеться (поле лишається з default модуля; read-back = default).
+# Значення-список у applies_if = «одне з» (спроба 3: VP-14, VP-15 — {VP-01: [A, B]} за SPEC §11.3; у схемі A-09 цього applies_if немає —
+# розбіжність записано у звіт A-12-3 і tests/open-questions.md). Обмеження між параметрами — manifest.yaml `preflight` (PF-01…PF-09).
 VP-01:
   track: config
   kind: td_param               # + профіль модулів manifest (when: VP-01) і feature-групи VP-02
-  anchor: "ir.config_parameter:[key=td_mebli.vp_01]:value"
-  a11_target: res.company.td_box_profile
-  transform: identity
+  anchor: "res.company:xml_id=base.main_company:td_box_profile"
+  transform: identity          # light | A | B (selection поля: light/A/B/C; C не пишеться — це B + edition ee)
   ac: [AC-N.07, AC-089, AC-121]
-  note: "реалізує модуль td_* (A-11): поле td_box_profile — td_mebli_base"
+  note: "реалізує модуль td_* (A-11): поле td_box_profile — td_mebli_base (інформаційне; функції вмикають feature-групи VP-02)"
 VP-02:
   track: config
-  kind: group                  # res.config.settings -> td_mebli_base.group_feature_<значення> (implied_group); групи створює A-11
-  anchor: "res.groups:xml_id=base.group_user:implied_ids"
-  groups: {configurator: td_mebli_base.group_feature_configurator, offcut: td_mebli_base.group_feature_offcut,
-           cutting_batch: td_mebli_base.group_feature_cutting_batch, kiosk: td_mebli_base.group_feature_kiosk,
-           quality: td_mebli_base.group_feature_quality, label_scan: td_mebli_base.group_feature_label_scan,
-           change_sign: td_mebli_base.group_feature_change_sign, nbu: td_mebli_base.group_feature_nbu,
-           ai_mapping: td_mebli_base.group_feature_ai_mapping, analog: td_mebli_base.group_feature_analog,
-           shop_board: td_mebli_base.group_feature_shop_board}
-  transform: {expr: "sorted(a['VP-02']) if a['VP-01'] == 'B' else []"}
+  kind: settings               # API td_mebli_base: галочки res.config.settings group_td_feature_<значення> (implied_group -> base.group_user)
+  anchor: "res.config.settings:default_get:group_td_feature_<значення>"   # read-back: default_get + res.groups base.group_user implied_ids
+  fields: {configurator: group_td_feature_configurator, offcut: group_td_feature_offcut, cutting_batch: group_td_feature_cutting_batch, kiosk: group_td_feature_kiosk, quality: group_td_feature_quality, label_scan: group_td_feature_label_scan, change_sign: group_td_feature_change_sign, nbu: group_td_feature_nbu, ai_mapping: group_td_feature_ai_mapping, analog: group_td_feature_analog, shop_board: group_td_feature_shop_board}
+  transform: {expr: "{f: (f in a['VP-02']) for f in TD_FEATURES} if a['VP-01'] == 'B' else {}"}   # TD_FEATURES — td_mebli_base.models.res_config_settings
   applies_if: {VP-01: B}
   requires_module: td_mebli_base
   ac: [AC-011, AC-012, AC-037, AC-038, AC-050, AC-057, AC-058, AC-059, AC-060, AC-062, AC-071, AC-072, AC-073, AC-074, AC-075, AC-079, AC-088, AC-120, AC-121]
@@ -42,101 +38,95 @@ VP-04:
   ac: [AC-021, AC-039, AC-040, AC-041, AC-042, AC-078, AC-109]
 VP-05:
   track: config
-  kind: record
-  anchor: "account.payment.term:xml_id=td_config.payment_term_stages:active"
+  kind: record                 # спроба 3 (config-review №1): умову оплати дає модуль (td_mebli_sale, noupdate, з td_milestone order/install/act);
+                               # конфіг лише вмикає/архівує її і ставить default умови оплати покупців компанії (ir.default, 20_sale_project.yaml)
+  anchor: "account.payment.term:xml_id=td_mebli_sale.payment_term_td_furniture:active"
   transform: {"true": true, "false": false}
+  requires_module: td_mebli_sale
   ac: [AC-019, AC-020, AC-031, AC-042, AC-065]
 VP-06:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_06]:value"
-  a11_target: res.company.td_payment_control
+  anchor: "res.company:xml_id=base.main_company:td_payment_control"
   transform: identity
   applies_if: {VP-05: true}
   ac: [AC-020, AC-021]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-07:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_07]:value"
-  a11_target: res.company.td_pay_reminder_days
+  anchor: "res.company:xml_id=base.main_company:td_pay_reminder_days"
   transform: identity
   applies_if: {VP-05: true}
   ac: [AC-031]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-08:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_08]:value"
-  a11_target: res.company.td_margin_to_salesman
+  anchor: "res.company:xml_id=base.main_company:td_margin_to_salesman"
   transform: identity
   ac: [AC-017, AC-018]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-09:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_09]:value"
-  a11_target: "меню власного розкрою td_mebli_cutting (механізм — A-11)"
+  anchor: "res.company:xml_id=base.main_company:td_cutting_mode"
   transform: identity
   ac: [AC-026, AC-027, AC-028, AC-053, AC-054, AC-055, AC-056, AC-131]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-10:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_10]:value"
-  a11_target: res.company.td_stuck_days
+  anchor: "res.company:xml_id=base.main_company:td_stuck_days"
   transform: identity
   ac: [AC-067, AC-124]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-11:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_11]:value"
-  a11_target: res.company.td_price_threshold_pct
+  anchor: "res.company:xml_id=base.main_company:td_price_threshold_pct"
   transform: identity
   ac: [AC-085, AC-086]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-12:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_12]:value"
-  a11_target: res.company.td_min_offcut_mm
+  anchor: "res.company:xml_id=base.main_company:td_min_offcut_mm"
   transform: identity
   applies_if: {VP-01: B}
   ac: [AC-059, AC-060]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-13:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_13]:value"
-  a11_target: res.company.td_claim_overdue_days
+  anchor: "res.company:xml_id=base.main_company:td_claim_overdue_days"
   transform: identity
   ac: [AC-110, AC-124]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-14:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_14]:value"
-  a11_target: res.company.td_crew_split
+  anchor: "res.company:xml_id=base.main_company:td_crew_split"
   transform: identity
+  applies_if: {VP-01: [A, B]}   # SPEC §11.3: у light не застосовуються (preflight PF-06)
   ac: [AC-104]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-15:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_15]:value"
-  a11_target: res.company.td_crew_base
+  anchor: "res.company:xml_id=base.main_company:td_crew_base"
   transform: identity
+  applies_if: {VP-01: [A, B]}   # SPEC §11.3: у light не застосовуються (preflight PF-06)
   ac: [AC-103, AC-104]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base"
 VP-16:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.vp_16]:value"
-  a11_target: res.company.td_install_in_price
+  anchor: "res.company:xml_id=base.main_company:td_install_in_price"
   transform: identity
+  default: true                # спроба 3: default схеми A-09 = default поля модуля (td_mebli_base, A-11 спроба 3, CHECKS №24) = true
   ac: [AC-043]
-  note: "реалізує модуль td_* (A-11)"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base; конфіг пише значення анкети (за замовчуванням true = default модуля, запис не змінює поле)"
 VP-17:
   track: config
   kind: record                 # ir.default поля mrp.bom.consumption (споживання нових специфікацій)
@@ -151,17 +141,16 @@ VP-18:
   ac: [AC-N.03]
 edition:
   track: config
-  kind: td_param               # профіль модулів — manifest edition_profiles; значення — для коду й звіту
-  anchor: "ir.config_parameter:[key=td_mebli.edition]:value"
-  transform: identity
+  kind: module                 # профіль модулів manifest edition_profiles (ce / ee); поля чи параметра в коді немає — не пишеться
+  anchor: "ir.module.module:[name=web_enterprise]:state"
+  transform: {ce: absent, ee: installed}   # absent — модуля немає в списку CE-бази або uninstalled
   default: ce
   ac: [AC-113, AC-126, AC-127, AC-128, AC-129, AC-130]
 contract_mode:
   track: code
   kind: td_param
-  anchor: "ir.config_parameter:[key=td_mebli.contract_mode]:value"
-  a11_target: res.company.td_contract_mode
-  transform: {contract: contract, sale: sale, unset: ""}   # unset -> параметра немає (поле порожнє, друк договору блокується — AC-034)
+  anchor: "res.company:xml_id=base.main_company:td_contract_mode"
+  transform: {contract: contract, sale: sale, unset: false}   # unset -> поле порожнє (без default), друк договору блокується — AC-034
   default: unset
   ac: [AC-033, AC-034, AC-101]
-  note: "реалізує модуль td_* (A-11); перелік значень — зі схеми A-09 (рішення власника №17), не вигадано"
+  note: "реалізує модуль td_* (A-11): поле компанії td_mebli_base (selection contract/sale); перелік значень — зі схеми A-09 (рішення власника №17), не вигадано"

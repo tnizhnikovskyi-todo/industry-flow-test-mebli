@@ -18,10 +18,10 @@ class TdMebliMigrationCheck(models.Model):
                        help="The date of the stock and of the payments in the source (one date, box A).")
     state = fields.Selection([('draft', 'Draft'), ('diff', 'Difference'), ('reconciled', 'Reconciled'),
                               ('explained', 'Explained')], string='Status', default='draft', required=True,
-                             readonly=True, tracking=True)
+                             readonly=True, tracking=True, copy=False)  # CHECKS.md No. 37: «Duplicate» is a new draft
     line_ids = fields.One2many('td.mebli.migration.check.line', 'check_id', string='Lines', copy=True)
     has_diff = fields.Boolean(string='Has a Difference', compute='_compute_has_diff')
-    explanation = fields.Text(string='Explanation', tracking=True,
+    explanation = fields.Text(string='Explanation', tracking=True, copy=False,
                               help="Why the difference is accepted; signed by a manager (button «Sign the Explanation»).")
     explained_by = fields.Many2one('res.users', string='Signed by', readonly=True, copy=False)
     explained_on = fields.Datetime(string='Signed on', readonly=True, copy=False)
@@ -52,6 +52,7 @@ class TdMebliMigrationCheck(models.Model):
     def _td_prepayment(self, order):
         """Paid on the posted invoices of the order (standard: amount_total − amount_residual; refunds negative)."""
         paid = 0.0
+        # sudo: read only: the posted invoices of the order for the reconciliation of the finance
         for move in order.sudo().invoice_ids.filtered(lambda m: m.state == 'posted'):
             amount = move.amount_total - move.amount_residual
             paid += -amount if move.move_type == 'out_refund' else amount
@@ -83,8 +84,34 @@ class TdMebliMigrationCheck(models.Model):
                 line.write({'value_odoo': value,
                             'cause_order_ids': [(6, 0, causes.ids if not float_is_zero(value - line.value_source,
                                                                                        precision_digits=2) else [])]})
-            check.state = 'diff' if check.has_diff else 'reconciled'
+            # sudo: the status follows the computed difference only; the finance computes, but does not write the status
+            # itself (CHECKS.md No. 29: «Explained» and the status are guarded in write)
+            check.sudo().state = 'diff' if check.has_diff else 'reconciled'
         return True
+
+    def _td_check_manager(self, message):
+        if not (self.env.su or self.env.user.has_group('sales_team.group_sale_manager')):
+            raise AccessError(message)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        # CHECKS.md No. 29: a reconciliation is created as a draft; «Explained» with a signature only by a manager
+        for vals in vals_list:
+            if vals.get('state', 'draft') != 'draft' or vals.get('explained_by') or vals.get('explained_on'):
+                self._td_check_manager(self.env._("Only a manager signs the explanation of a difference."))
+        return super().create(vals_list)
+
+    def write(self, vals):
+        # the signature of the explanation is written by «Sign the Explanation» / «Reset» only (a manager), not by RPC
+        if {'explained_by', 'explained_on'} & set(vals):
+            self._td_check_manager(self.env._("Only a manager signs the explanation of a difference."))
+        # CHECKS.md No. 29: the status is set by «Compute» (the difference), «Sign the Explanation» and «Reset» only; the
+        # finance writes the explanation of an open reconciliation, not of a signed or reconciled one
+        if 'state' in vals:
+            self._td_check_manager(self.env._("Only a manager changes the status of a reconciliation."))
+        if 'explanation' in vals and any(check.state in ('reconciled', 'explained') for check in self):
+            self._td_check_manager(self.env._("Only a manager changes the explanation of a closed reconciliation."))
+        return super().write(vals)
 
     def action_td_sign_explanation(self):
         """«Sign the Explanation» (AC-090): a manager accepts the difference with a written reason."""
@@ -99,6 +126,8 @@ class TdMebliMigrationCheck(models.Model):
         return True
 
     def action_td_reset(self):
+        # A-14 security 6: the signed explanation (AC-090) is reset by a manager only, checked on the server
+        self._td_check_manager(self.env._("Only a manager resets a reconciliation."))
         self.write({'state': 'draft', 'explained_by': False, 'explained_on': False})
         return True
 
@@ -117,12 +146,32 @@ class TdMebliMigrationCheckLine(models.Model):
                                  "document. Empty — all open orders.")
     product_id = fields.Many2one('product.product', string='Product')
     value_source = fields.Float(string='Source', digits=(16, 2))
-    value_odoo = fields.Float(string='Odoo', digits=(16, 2), readonly=True)
+    # CHECKS.md No. 37: a duplicated reconciliation is computed again («Compute»), the values of Odoo are not copied
+    value_odoo = fields.Float(string='Odoo', digits=(16, 2), readonly=True, copy=False)
     diff = fields.Float(string='Difference', digits=(16, 2), compute='_compute_diff', store=True)
-    cause_order_ids = fields.Many2many('sale.order', string='Records to Check', readonly=True,
+    cause_order_ids = fields.Many2many('sale.order', string='Records to Check', readonly=True, copy=False,
                                        help="Orders behind a difference: open orders with a prepayment (or the order "
                                             "of the line).")
     note = fields.Char(string='Note')
+
+    def _td_check_open(self):
+        # A-14 pr-review m3: a closed reconciliation (reconciled / explained) is not changed line by line — «Reset» first
+        if not self.env.su and any(line.check_id.state in ('reconciled', 'explained') for line in self):
+            raise UserError(self.env._("The reconciliation is closed: reset it first."))
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        lines = super().create(vals_list)
+        lines._td_check_open()
+        return lines
+
+    def write(self, vals):
+        self._td_check_open()
+        return super().write(vals)
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_closed(self):
+        self._td_check_open()
 
     @api.depends('value_source', 'value_odoo')
     def _compute_diff(self):

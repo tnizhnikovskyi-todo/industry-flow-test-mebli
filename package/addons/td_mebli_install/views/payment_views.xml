@@ -8,13 +8,27 @@
         <field name="arch" type="xml">
             <xpath expr="//sheet" position="before">
                 <field name="td_pay_ok" invisible="1"/>
-                <field name="td_stage" invisible="1"/>
+                <!-- D-02: readonly — the stage is never sent back by the form (computed, the inverse is for the board only) -->
+                <field name="td_stage" invisible="1" readonly="1"/>
                 <div class="alert alert-warning mb-0 td_pay_alert" role="alert"
                      invisible="td_pay_ok or state != 'sale' or td_stage in ('closed', 'progress', 'confirmed')">
                     <i class="fa fa-money me-2" title="Payment before installation"/>
                     <strong>Payment before installation not received: <field name="td_pay_missing" class="oe_inline"/></strong>
                     <span> Received <field name="td_pay_received" class="oe_inline"/> of <field name="td_pay_before_install" class="oe_inline"/> due before the visit of the crew.</span>
                 </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- AC-019 (D-05, A-11-7): «Due before installation» and «Received» under the milestones of the payment terms, without the banner -->
+    <record id="view_order_form_td_mebli_pay_amounts" model="ir.ui.view">
+        <field name="name">sale.order.form.td.mebli.pay.amounts</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="td_mebli_sale.view_order_form_td_mebli"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='td_pay_schedule_html']" position="after">
+                <field name="td_pay_before_install" invisible="not td_pay_has_milestones" readonly="1"/>
+                <field name="td_pay_received" invisible="not td_pay_has_milestones" readonly="1"/>
             </xpath>
         </field>
     </record>

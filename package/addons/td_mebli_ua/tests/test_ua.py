@@ -82,6 +82,67 @@ class TestNbuRates(TransactionCase):
         self.assertRegex(body, r'4(&nbsp;|[\s\xa0,])000', "the old total is in the chatter")
         self.assertRegex(body, r'5(&nbsp;|[\s\xa0,])000', "the new total is in the chatter")
 
+    def _eur_quotation_setup(self):
+        env = self.env
+        env['res.currency.rate'].create({'currency_id': self.eur.id, 'company_id': self.company.id, 'rate': 1 / 40.0,
+                                         'name': fields.Date.today() - timedelta(days=3)})
+        eur_list = env['product.pricelist'].create({
+            'name': 'Fittings EUR', 'currency_id': self.eur.id, 'company_id': self.company.id,
+            'item_ids': [(0, 0, {'applied_on': '3_global', 'compute_price': 'fixed', 'fixed_price': 10.0})]})
+        uah_list = env['product.pricelist'].create({
+            'name': 'Retail UAH', 'currency_id': self.uah.id, 'company_id': self.company.id,
+            'item_ids': [(0, 0, {'applied_on': '3_global', 'base': 'pricelist', 'base_pricelist_id': eur_list.id,
+                                 'compute_price': 'formula'})]})
+        hinge = env['product.product'].create({'name': 'Hinge', 'list_price': 1.0, 'taxes_id': [(5, 0, 0)]})
+        partner = env['res.partner'].create({'name': 'Customer UA'})
+        return env['sale.order'].with_company(self.company).create({
+            'partner_id': partner.id, 'pricelist_id': uah_list.id, 'company_id': self.company.id,
+            'date_order': fields.Datetime.now() - timedelta(days=2),
+            'order_line': [(0, 0, {'product_id': hinge.id, 'product_uom_qty': 10}),
+                           (0, 0, {'product_id': hinge.id, 'product_uom_qty': 10}),
+                           (0, 0, {'product_id': hinge.id, 'product_uom_qty': 10})]})
+
+    def test_ac_037_manual_price_discount_and_date_kept(self):
+        """Review A-14 M1: the rate update recomputes only the lines priced by the price list; the unit price and the
+        discount typed by the salesperson stay, the date of the quotation is not changed."""
+        quotation = self._eur_quotation_setup()
+        auto, manual_price, manual_discount = quotation.order_line
+        self.assertAlmostEqual(auto.price_unit, 400.0)
+        manual_price.price_unit = 350.0
+        manual_discount.discount = 10.0
+        date_order = quotation.date_order
+        self.env['res.currency'].td_update_nbu_rates({'EUR': 50.0})
+        result = self.env['sale.order'].with_user(self.finance).with_company(self.company) \
+            .td_action_update_prices_by_rate()
+        self.assertAlmostEqual(auto.price_unit, 500.0, msg="the line of the price list gets today's rate")
+        self.assertAlmostEqual(manual_price.price_unit, 350.0, msg="the manual price stays")
+        self.assertAlmostEqual((manual_discount.price_unit, manual_discount.discount), (400.0, 10.0),
+                               msg="the manual discount stays, its line is not recomputed")
+        self.assertEqual(quotation.date_order, date_order, "the date of the quotation is not changed")
+        kept = self.env['sale.order'].with_user(self.finance).env._("Lines with a manual price or discount kept: %(count)s.", count=2)
+        self.assertIn(kept, result['params']['message'])
+        self.assertIn(kept, quotation.message_ids[0].body)
+
+    def test_ac_037_other_company_not_touched(self):
+        """The quotations of a company not selected by the finance user stay as they are."""
+        quotation = self._eur_quotation_setup()
+        other = self.env['res.company'].create({'name': 'Second UA', 'currency_id': self.uah.id})
+        self.finance.company_ids = [(4, other.id)]
+        self.env['res.currency'].td_update_nbu_rates({'EUR': 50.0})
+        self.env['sale.order'].with_user(self.finance).with_company(other).td_action_update_prices_by_rate()
+        self.assertAlmostEqual(quotation.order_line[0].price_unit, 400.0)
+
+    def test_security_5_public_rate_writer_only_for_the_administrator(self):
+        """Review A-14 security 5: an accounting manager cannot write rates marked «NBU» through the public method."""
+        manager = self.env['res.users'].with_context(no_reset_password=True).create({
+            'name': 'Accountant UA', 'login': 'td_ua_accountant', 'company_id': self.company.id,
+            'company_ids': [(6, 0, [self.company.id])],
+            'group_ids': [(6, 0, [self.env.ref('account.group_account_manager').id,
+                                  self.env.ref('td_mebli_base.group_finance').id])]})
+        with self.assertRaises(AccessError):
+            self.env['res.currency'].with_user(manager).td_update_nbu_rates({'EUR': 1.0})
+        self.assertFalse(self._rate())
+
     def test_ac_037_update_prices_needs_finance(self):
         salesman = self.env['res.users'].with_context(no_reset_password=True).create({
             'name': 'Salesman UA', 'login': 'td_ua_salesman',
@@ -90,8 +151,26 @@ class TestNbuRates(TransactionCase):
             self.env['sale.order'].with_user(salesman).td_action_update_prices_by_rate()
 
     def test_ac_037_menu_behind_the_feature_group(self):
+        """D-07 (A-11-7): the menu is seen only by the finance and only with the function «nbu»; a salesperson, a
+        measurer (no sales rights at all) do not see it."""
         menu = self.env.ref('td_mebli_ua.menu_td_update_prices_by_rate')
-        self.assertEqual(menu.group_ids, self.env.ref('td_mebli_base.group_feature_nbu'))
+        self.assertEqual(menu.group_ids, self.env.ref('td_mebli_base.group_finance'))
+        Menu = self.env['ir.ui.menu']
+        nbu = self.env.ref('td_mebli_base.group_feature_nbu')
+        user_group = self.env.ref('base.group_user')
+
+        def make(login, groups):
+            return self.env['res.users'].with_context(no_reset_password=True).create({
+                'name': login, 'login': login, 'group_ids': [(6, 0, [self.env.ref(g).id for g in groups])]})
+        finance = make('td_ua_menu_finance', ['sales_team.group_sale_salesman', 'td_mebli_base.group_finance'])
+        salesman = make('td_ua_menu_salesman', ['sales_team.group_sale_salesman'])
+        employee = make('td_ua_menu_employee', ['base.group_user'])
+        for with_feature in (True, False):
+            user_group.implied_ids = [(4 if with_feature else 3, nbu.id)]
+            self.env.registry.clear_cache()
+            for user, expected in ((finance, with_feature), (salesman, False), (employee, False)):
+                self.assertEqual(menu.id in Menu.with_user(user)._visible_menu_ids(), expected,
+                                 (user.login, with_feature))
 
     def test_ac_038_nbu_down_keeps_rates_and_warns_finance(self):
         """AC-038: the NBU service fails → the rates are not changed, an error in the log, the finance user gets the

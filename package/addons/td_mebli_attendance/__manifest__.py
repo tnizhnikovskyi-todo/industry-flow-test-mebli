@@ -6,7 +6,7 @@
                    'the standard Attendances of Odoo 19 Community (hr_attendance, kiosk mode with PIN). This module only '
                    'adds the export of the time sheet (employee, personnel code, days, hours, total) into a CSV file for '
                    'the payroll in BAS (AC-078); the module td_mebli_bas puts the file into an exchange batch.',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Human Resources/Attendances',
     'license': 'LGPL-3',
     'author': 'ToDo',

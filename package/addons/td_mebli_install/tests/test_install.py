@@ -11,6 +11,13 @@ PHOTO = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgG
 @tagged('post_install', '-at_install')
 class TestInstall(TransactionCase):
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
+        # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
+        cls.env.company.td_install_in_price = False
+
     def test_signed_final_act_gives_the_crew_percent(self):
         env = self.env
         partner = env['res.partner'].create({'name': 'Customer'})
@@ -52,6 +59,13 @@ class TestInstall(TransactionCase):
 class TestPiecework(TdMebliSaleCommon):
     """Decision AI-08: the piecework is the piece rate of the operation, not the hours times the hourly cost."""
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
+        # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
+        cls.env.company.td_install_in_price = False
+
     def test_piece_rate_of_the_operation_shared_by_time(self):
         env = self.env
         first = env['hr.employee'].create({'name': 'First', 'pin': '1111', 'hourly_cost': 999.0})
@@ -91,6 +105,9 @@ class TestInstallAccess(TdMebliSaleCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        # VP-16 is set explicitly: the tests count the installation line with its price (the package default is
+        # `true`, A-14 config 4 — the result must not depend on the answers of the config package)
+        cls.env.company.td_install_in_price = False
         env = cls.env
 
         def user(login, groups):
@@ -130,8 +147,9 @@ class TestInstallAccess(TdMebliSaleCommon):
         self.assertEqual(self.act.state, 'signed')
         amount = self.act.crew_amount
         for user in (self.fitter, self.manager):
-            with self.assertRaises(AccessError):
-                self.act.with_user(user).write({'crew_pct': 10.0})
+            with self.assertRaises(UserError) as error:  # AC-098: SPEC text, not the generic access error
+                self.act.with_user(user).with_context(lang='en_US').write({'crew_pct': 10.0})
+            self.assertEqual(str(error.exception), "A signed act cannot be changed")
         self.order.order_line.price_unit = 20000.0  # the order changes later: the signed act keeps its amount
         self.env.flush_all()
         self.assertAlmostEqual(self.act.crew_amount, amount)

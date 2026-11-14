@@ -1,8 +1,11 @@
 id,name,default_code,type,is_storable,categ_id/id,uom_id/id,sale_ok,purchase_ok,route_ids/id
 td_md.product_product_dsp_18_w,Плита ДСП 18 мм біла,DSP-18-W,consu,True,td_md.product_category_boards,uom.product_uom_square_meter,False,True,
 td_md.product_product_dsp_18_oak,Плита ДСП 18 мм дуб світлий,DSP-18-OAK,consu,True,td_md.product_category_boards,uom.product_uom_square_meter,False,True,
+td_md.product_product_dsp_18_gr,Плита ДСП 18 мм графіт,DSP-18-GR,consu,True,td_md.product_category_boards,uom.product_uom_square_meter,False,True,
 td_md.product_product_hdf_3_w,Плита ДВП 3 мм біла,HDF-3-W,consu,True,td_md.product_category_boards,uom.product_uom_square_meter,False,True,
 td_md.product_product_edge_pvc_2_w,Кромка ПВХ 2 мм біла,EDGE-PVC-2-W,consu,True,td_md.product_category_edge,uom.product_uom_meter,False,True,
+td_md.product_product_edge_pvc_2_oak,Кромка ПВХ 2 мм дуб світлий,EDGE-PVC-2-OAK,consu,True,td_md.product_category_edge,uom.product_uom_meter,False,True,
+td_md.product_product_edge_pvc_2_gr,Кромка ПВХ 2 мм графіт,EDGE-PVC-2-GR,consu,True,td_md.product_category_edge,uom.product_uom_meter,False,True,
 td_md.product_product_hinge_110,Петля накладна 110°,HINGE-110,consu,True,td_md.product_category_fittings,uom.product_uom_unit,False,True,
 td_md.product_product_slide_450,Напрямна кулькова 450 мм,SLIDE-450,consu,True,td_md.product_category_fittings,uom.product_uom_unit,False,True,
-td_md.product_product_facade_paint,Фасад МДФ фарбований (під замовлення),FACADE-PAINT,consu,True,td_md.product_category_custom,uom.product_uom_square_meter,False,True,"stock.route_warehouse0_mto,purchase_stock.route_warehouse0_buy"
+td_md.product_product_facade_paint,Фасад МДФ фарбований (під замовлення),FACADE-PAINT,consu,True,td_md.product_category_custom,uom.product_uom_square_meter,False,True,stock.route_warehouse0_mto

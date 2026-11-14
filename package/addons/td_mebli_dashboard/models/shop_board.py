@@ -23,6 +23,7 @@ class TdMebliDashboard(models.AbstractModel):
         _ = self.env._
         companies = self.env.companies
         in_companies = [('company_id', 'in', companies.ids)]
+        # sudo: read only: the board counts over modules the master has no rights on, in his companies only
         env = self.sudo().with_company(self.env.company).env
         # the board hangs in the shop: the time zone of the company working calendar
         tz = pytz.timezone(self.env.company.resource_calendar_id.tz or self.env.context.get('tz') or 'Europe/Kyiv')

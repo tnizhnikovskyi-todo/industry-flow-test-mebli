@@ -7,7 +7,7 @@
                    'both td_mebli_install and planning are installed; on Community it is never installed. NOT VERIFIED on '
                    'Enterprise: the fields and methods of the Enterprise models are assumptions until the access to '
                    'Odoo 19 Enterprise (ВП-4); the tests of this module run only there.',
-    'version': '19.0.1.1.0',
+    'version': '19.0.1.1.1',
     'category': 'Hidden',
     'license': 'LGPL-3',
     'author': 'ToDo',

@@ -75,6 +75,35 @@
                 <field name="td_launch_date" invisible="not td_launch_date" readonly="1"/>
                 <field name="td_hours_to_launch" invisible="state != 'sale' or not td_launch_date" readonly="1"/>
             </xpath>
+            <!-- AC-019 (D-05): the amounts of the milestones under the payment terms, in a quotation too -->
+            <xpath expr="//group[@name='order_details']/field[@name='payment_term_id']" position="after">
+                <field name="td_pay_has_milestones" invisible="1"/>
+                <field name="td_pay_schedule_html" invisible="not td_pay_has_milestones" readonly="1"/>
+            </xpath>
+            <!-- AC-017 (D-12): the tab «Cost» — planned materials and operations of every line, margin of the order -->
+            <xpath expr="//notebook/page[@name='order_lines']" position="after">
+                <page string="Cost of the Order" name="td_cost_plan" groups="td_mebli_base.group_margin_view,td_mebli_base.group_finance,sales_team.group_sale_manager">
+                    <field name="td_cost_line_ids" readonly="1" nolabel="1">
+                        <list>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="product_id"/>
+                            <field name="product_uom_qty" string="Quantity"/>
+                            <field name="td_planned_material_cost" sum="Total"/>
+                            <field name="td_planned_operation_cost" sum="Total"/>
+                            <field name="purchase_price" widget="monetary"/>
+                            <field name="price_subtotal" sum="Total"/>
+                            <field name="margin" widget="monetary" sum="Total"/>
+                            <field name="margin_percent" widget="percentage"/>
+                        </list>
+                    </field>
+                    <group name="td_cost_total">
+                        <group>
+                            <field name="margin" string="Margin of the Order"/>
+                            <field name="margin_percent" string="Margin of the Order, %" widget="percentage"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
             <xpath expr="//field[@name='order_line']/list/field[@name='qty_delivered']" position="attributes">
                 <attribute name="optional">hide</attribute>
             </xpath>
