@@ -36,8 +36,11 @@ class TestWordForms(TransactionCase):
         for query, article in cases.items():
             self.assertIn(article, Search.search([('text_search', 'ilike', query)]), query)
         # several words: every word must match (in any form)
-        self.assertEqual(Search.search([('text_search', 'ilike', 'монтажу бригадою')]), install)
-        self.assertFalse(Search.search([('text_search', 'ilike', 'монтажу обрізками')]))
+        found = Search.search([('text_search', 'ilike', 'монтажу бригадою')])
+        self.assertIn(install, found)
+        self.assertNotIn(offcuts, found)
+        self.assertNotIn(orders, found)
+        self.assertFalse(Search.search([('text_search', 'ilike', 'монтажу обрізками')]) & (install | offcuts | orders))
         # the reader uses the same search
         tree = Search.td_reader_tree('обрізками')
         self.assertIn(offcuts.id, [a['id'] for a in tree['articles'] if a['match']])

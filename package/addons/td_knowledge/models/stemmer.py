@@ -19,7 +19,7 @@ _ENDINGS = sorted({
     # verbs, present tense (the infinitive -ати/-ити is not cut: it collides with nouns, оплати → опл)
     'ують', 'ють', 'уть', 'ує', 'ює',
     # Russian
-    'ы', 'ов', 'ые', 'ой', 'ами',
+    'ы', 'ов', 'ые', 'ой',
     # single letters
     'а', 'я', 'о', 'е', 'є', 'у', 'ю', 'і', 'и', 'ї', 'ь', 'й',
 }, key=len, reverse=True)
