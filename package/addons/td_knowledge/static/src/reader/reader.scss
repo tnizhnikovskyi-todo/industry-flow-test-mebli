@@ -1,0 +1,27 @@
+.td_knowledge {
+    .td_knowledge_tree {
+        width: 300px;
+        flex-shrink: 0;
+    }
+    .td_knowledge_node {
+        &:hover { background-color: $gray-200; }
+        &.active { background-color: $gray-300; }
+    }
+    .td_knowledge_article {
+        max-width: 860px;
+    }
+    .td_knowledge_body {
+        font-size: 1.02rem;
+        line-height: 1.6;
+        img { max-width: 100%; height: auto; }
+    }
+}
+@include media-breakpoint-down(md) {
+    .td_knowledge .td_knowledge_tree {
+        width: 100%;
+    }
+}
+.td_knowledge_icon_input {
+    max-width: 3.5rem;
+    font-size: 1.8rem;
+}
