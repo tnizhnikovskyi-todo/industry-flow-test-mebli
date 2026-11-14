@@ -3,7 +3,7 @@
     'summary': 'Showcase data for the furniture package: catalog, work centers, stock. Not for customers.',
     'description': 'Demo data of the furniture package (fictional brands). Installed only on show databases; '
                    'customers get the master data templates (A-13) instead.',
-    'version': '19.0.1.1.1',
+    'version': '19.0.1.1.2',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',

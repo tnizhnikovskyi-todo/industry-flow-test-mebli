@@ -146,11 +146,18 @@
 | №33 (config C-N1) | «Ручні кроки»: `step_td_17` — послідовність 22 | послідовність 24 з 28 кроків (звірено з `td_mebli_migration_step_data.xml` і `master-data/README.md`) |
 | №34 (config C-N2) | `td_config.default_payment_term` з `applies_if {VP-05: true}`: повтор з VP-05 = `false` → `skipped`, `ir.default` лишався на архівній умові | `applies_if` прибрано; `json_value` = `{{VP-05:payment_default}}` (`true` → умова модуля, `false` → `false`); перевірено 2 проходами true→false→false (`install-log.md`) |
 
+Спроба 5 (`fix`, повернення з A-16, `package/demo/defects.md` D-10 — «немає виключень атрибутів, AC-011»):
+
+| Правка | Спроба 4 | Спроба 5 |
+|---|---|---|
+| D-10 (AC-011) | виключення `product.template.attribute.exclusion` — «майстер-дані (A-13 / B-04)»; у демо-каталозі їх не було | **рішення: це дані виробу, не конфіг** — запис посилається на `product.template.attribute.value` конкретного виробу (без стабільного xmlid), а конфіг-пакет ставиться до A-13 і демо-шару, коли виробів ще немає. Конфіг-пакет без змін (`td_config.settings_variants` = варіанти, VP-02 — feature-група конфігуратора). Демо-каталог: виключення «ЛДСП Антрацит — лише кромка 2 мм» для «Шафа-купе 2-дверна» і «Кухонний модуль нижній 600» — `td_mebli_demo/hooks.py` `EXCLUSIONS` (A-11 спроба 7, тест `test_d10_exclusions_of_the_configurator`); шаблон майстер-даних виключень — A-13 (`master-data/README.md` №7, відкрите питання) |
+| Перевірка | — | база `test-mebli-a117t-demo` (профіль `answers.yaml`): прохід 1 created 8 / updated 6 / unchanged 13, прохід 2 (compare) unchanged 27 / diff 0, read-back 23 VP — 0 failed; після демо-шару read-back — OK; `product.template.attribute.exclusion` = 2 |
+
 ## Відкриті питання
 
 - Скілів `odoo19-mvp-build:config-spec`, `odoo19-mvp-build:config-review`, `boost:odoo19-lint`, `boost:source-check` у сесії немає: зміст CONFIG.md складено напряму з SPEC/ALLOCATION; `config-review` і `lint` — замінники A-14 (`tests/reports/A-14.md`) і самоперевірка спроби 3 (звіт A-12-3).
 - `applies_if` VP-14, VP-15 (`{VP-01: [A, B]}`, SPEC §11.3) є у `vp-map.yaml`, але не в схемі `package/templates/answers.yaml` (A-09) — схему варто доповнити (`tests/open-questions.md`); `preflight` — розширення формату `config-package-format.md` (observation).
-- AC-011: атрибути й виключення «Шафа-купе» — майстер-дані (A-13 / B-04), не конфіг.
+- AC-011: атрибути й виключення виробів — дані виробу (A-13 / B-04; демо — `td_mebli_demo`), не конфіг (спроба 5, D-10). Шаблон CSV виключень для A-13 — відкрите питання (`tests/open-questions.md`).
 - Профіль light (AI-A10-05): розрив залежностей `td_mebli_install` → `td_mebli_shop`, `td_mebli_dashboard` → усі A — рішення A-11 / Архітектора; light = A без `td_mebli_bas` (спроби 2–3: встановлено й перевірено; спроба 3 — за SPEC §11.3).
 - Профіль `ee` не перевірено: доступу до Odoo 19 EE немає; мости встановлювались лише статично (маніфести, порядок).
 - План рахунків: `account` при установці на компанію без країни ставить `generic_coa`; пакет перемикає на `ua_psbo` (`try_loading`) на чистій базі без проводок. На базі з проводками перемикання неможливе — B-04 ставить країну UA до установки `account`.

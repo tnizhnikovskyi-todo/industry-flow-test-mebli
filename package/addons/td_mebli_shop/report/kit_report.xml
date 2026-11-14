@@ -19,7 +19,7 @@
             <t t-set="address">
                 <div t-field="doc.partner_shipping_id" t-options='{"widget": "contact", "fields": ["address", "name", "phone"], "no_marker": True}'/>
             </t>
-            <div class="page td_report_kit">
+            <div class="page td_mebli_report td_report_kit">
                 <h2>Packing List <span t-field="doc.name"/></h2>
                 <div class="row mb-3">
                     <div class="col-4"><strong>Places:</strong> <span t-field="doc.td_kit_places"/></div>

@@ -46,11 +46,13 @@ USERS = [
      ['sales_team.group_sale_manager', 'mrp.group_mrp_manager', 'account.group_account_user', 'stock.group_stock_user',
       'purchase.group_purchase_manager', 'project.group_project_manager', 'td_mebli_dashboard.group_td_mebli_director']),
     # full scope (A-21, wave 1): measurer, installers, the shared tablet of the shop (no picture: initials avatar)
-    ('measure', 'Тетяна Олійник', 'Замірник', None,
-     ['sales_team.group_sale_salesman_all_leads', 'td_mebli_measure.group_td_mebli_measurer']),
+    # D-08 (package/demo/plan.md §2, tr/security.md §1): the measurer has only the group of the measurer (AC-006: no
+    # Sales, no amounts of the orders); the crew leader of installation and service — project user and «Service»
+    # (claims as repair orders, ROLE-10); the installer — project user only
+    ('measure', 'Тетяна Олійник', 'Замірник', None, ['td_mebli_measure.group_td_mebli_measurer']),
     ('fitter', 'Микола Демченко', 'Бригадир монтажників', None,
-     ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
-    ('fitter2', 'Іван Кушнір', 'Монтажник', None, ['project.group_project_user', 'sales_team.group_sale_salesman_all_leads']),
+     ['project.group_project_user', 'td_mebli_claim.group_service']),
+    ('fitter2', 'Іван Кушнір', 'Монтажник', None, ['project.group_project_user']),
     ('tablet', 'Планшет цеху', 'Планшет дільниць', None, ['mrp.group_mrp_user']),
 ]
 
@@ -172,7 +174,10 @@ def _bulk_orders(rnd):
         body = rnd.choice(['sonoma', 'white', 'anthr'])
         facade = 'anthr' if body == 'anthr' else 'mdf'
         advance = rnd.choice([0, 30, 50]) if advance is None else advance
-        rows.append((kind, qty, dims, body, facade, rnd.choice(['04', '2']), rnd.choice(['std', 'std', 'premium']),
+        edge = rnd.choice(['04', '2'])
+        if body == 'anthr' and kind != 'prod_dresser':
+            edge = '2'  # D-10 (AC-011): the exclusion of the demo catalog — anthracite body only with the 2 mm edge
+        rows.append((kind, qty, dims, body, facade, edge, rnd.choice(['std', 'std', 'premium']),
                      stage, days, rnd.randrange(len(CUSTOMERS)), rnd.choice(['salon', 'salon2', 'salon3']), discount, advance))
     for _ in range(49):
         one('done', rnd.randint(31, 58), discount=rnd.choice([0, 0, 0, 5, 8, 10]))

@@ -769,3 +769,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_base.res_config_settings_view_form_td_mebli_base
 msgid "Workshop Kiosk"
 msgstr ""
+
+#. module: td_mebli_base
+#: model:ir.model.fields,field_description:td_mebli_base.field_res_users__td_margin_auto
+msgid "Margin Visibility by the Company Parameter"
+msgstr ""

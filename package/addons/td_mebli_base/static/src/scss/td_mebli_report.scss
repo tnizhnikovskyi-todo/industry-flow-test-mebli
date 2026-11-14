@@ -33,3 +33,14 @@
         font-family: 'TdMebli Roboto', sans-serif;
     }
 }
+
+// D-14: the header, the footer and the address block of web.external_layout are outside the page (wkhtmltopdf prints
+// the header and the footer as separate pages), so the class of the page does not reach them and the layout font of
+// the company (Lato, no Cyrillic) fell back to DejaVuSerif. web.minimal_layout writes the xmlid of the report action on
+// <body data-report-id> of the body, the header and the footer: every report of the package (td_mebli_*) gets the
+// package font on the whole sheet; the standard reports keep the layout font of the company.
+body[data-report-id^="td_mebli_"] {
+    &, h1, h2, h3, h4, h5, h6, table, th, td, p, span, div, strong, b, em, li, address {
+        font-family: 'TdMebli Roboto', sans-serif;
+    }
+}

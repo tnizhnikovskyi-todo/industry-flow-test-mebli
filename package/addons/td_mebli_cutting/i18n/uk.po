@@ -1137,3 +1137,14 @@ msgstr "Деталь %(code)s розміщено %(placed)s раз(и), у за�
 #: code:addons/td_mebli_cutting/wizard/result_import.py:0
 msgid "Sheet %(sheet)s: lot %(lot)s of this board is not found in the company of the job."
 msgstr "Аркуш %(sheet)s: партію %(lot)s цієї плити не знайдено в компанії завдання."
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "New"
+msgstr "Новий"
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__rating_ids
+msgid "Ratings"
+msgstr "Оцінки"

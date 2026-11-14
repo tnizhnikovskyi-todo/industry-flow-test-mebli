@@ -36,9 +36,13 @@ class SaleOrder(models.Model):
         for order in orders:
             current = by_order.get(order.id)
             late = order.td_delay_days > 0 and order.delivery_status != 'full'
+            # D-13 (AC-N.01): the texts of the activity are in the language of the salesperson who reads it, not of
+            # whoever moved the date (the cron runs as the system user, en_US)
+            lang = (order.user_id or self.env.user).lang or self.env.lang
+            lang_env = self.with_context(lang=lang).env
             if late:
-                summary = self.env._("Forecast later than promised by %s days", order.td_delay_days)
-                note = self.env._("Forecast date %(forecast)s, promised %(promised)s. %(reason)s",
+                summary = lang_env._("Forecast later than promised by %s days", order.td_delay_days)
+                note = lang_env._("Forecast date %(forecast)s, promised %(promised)s. %(reason)s",
                                   forecast=fields.Date.to_string(order.td_forecast_date),
                                   promised=fields.Date.to_string(fields.Date.context_today(order, order.commitment_date)),
                                   reason=order.td_late_item or '')
@@ -59,8 +63,8 @@ class SaleOrder(models.Model):
             else:
                 if current:
                     # sudo: the activity of the salesperson is closed also when a purchase or production user moved the date
-                    order.sudo().activity_feedback([ACTIVITY], feedback=self.env._("The forecast date is back within "
-                                                                                   "the promised date."))
+                    order.sudo().activity_feedback([ACTIVITY], feedback=lang_env._("The forecast date is back within "
+                                                                                  "the promised date."))
                 if order.td_forecast_shift_done:
                     # sudo: a technical counter of the order, written by whoever moved the date (purchase, manufacturing)
                     order.sudo().td_forecast_shift_done = 0

@@ -37,7 +37,8 @@ class TdMebliCuttingJob(models.Model):
     _inherit = ['mail.thread']
     _order = 'id desc'
 
-    name = fields.Char(string='Reference', required=True, copy=False, readonly=True, default='New')
+    name = fields.Char(string='Reference', required=True, copy=False, readonly=True,
+                       default=lambda self: self.env._('New'))  # D-13: «Новий» in uk_UA until the number is given
     state = fields.Selection(
         [('draft', 'Draft'), ('sent', 'Sent to cutting'), ('result', 'Result received'),
          ('done', 'Done'), ('cancel', 'Cancelled')],
@@ -108,8 +109,8 @@ class TdMebliCuttingJob(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('name', 'New') == 'New':
-                vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.cutting.job') or 'New'
+            if vals.get('name', 'New') in ('New', self.env._('New')):
+                vals['name'] = self.env['ir.sequence'].next_by_code('td.mebli.cutting.job') or self.env._('New')
             if not vals.get('company_id') and vals.get('production_ids'):
                 # the company of the manufacturing orders (AC-036: the job is seen in that company only)
                 ids = []

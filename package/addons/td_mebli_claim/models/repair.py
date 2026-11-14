@@ -114,15 +114,20 @@ class RepairOrder(models.Model):
         """Remake in production: a manufacturing order of the part of the claim (a one-part bill of materials of the
         product «Remake part») or, without a part, of the claimed product; the origin is the number of the claim."""
         self.ensure_one()
+        # D-08 (AC-080, tr/security.md §1): the service (group «Service», Inventory user) has no Manufacturing rights;
+        # who may change the claim may start its remake — the right is checked on the claim, the manufacturing order
+        # is made for him with sudo (responsible = the user of the service)
+        self.check_access('write')
         if self.td_part_id:
             production = self._td_remake_part()
         elif self.product_id:
-            bom = self.env['mrp.bom']._bom_find(self.product_id)[self.product_id]
+            bom = self.env['mrp.bom'].sudo()._bom_find(self.product_id)[self.product_id]
             if not bom:
                 raise UserError(self.env._("The product of the claim has no bill of materials: it is bought, not made. "
                                            "Order it again in Purchase."))
-            production = self.env['mrp.production'].create({
-                'product_id': self.product_id.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name})
+            production = self.env['mrp.production'].sudo().create({
+                'product_id': self.product_id.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name,
+                'user_id': self.env.user.id})
         else:
             raise UserError(self.env._("Choose a part or a product to remake"))
         production.action_confirm()
@@ -146,9 +151,10 @@ class RepairOrder(models.Model):
             'bom_line_ids': bom._td_prepare_component_lines(self.env['mrp.bom.line'], {'fittings': []}),
             'operation_ids': bom._td_prepare_operations(source),
         })
-        return self.env['mrp.production'].create({
+        # sudo: the manufacturing order of the remake is made for the service user (rights checked on the claim)
+        return self.env['mrp.production'].sudo().create({
             'product_id': product.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name,
-            'company_id': (bom.company_id or self.company_id).id})
+            'company_id': (bom.company_id or self.company_id).id, 'user_id': self.env.user.id})
 
     # ------------------------------------------------------------------ AC-132: service visit
     def action_td_plan_visit(self):

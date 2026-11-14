@@ -527,6 +527,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_shop.field_sale_order__td_kit_line_ids
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_kit_document
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.td_mebli_kit_line_view_list
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.view_picking_form_td_mebli_shop
 msgid "Packing List"
 msgstr ""
 
@@ -1031,4 +1032,21 @@ msgstr ""
 #. module: td_mebli_shop
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
 msgid "mm"
+msgstr ""
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.view_order_form_td_mebli_shop
+msgid "Build the Packing List"
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "The order %s has no bill of materials of a product yet: the packing list is built from the bills of materials of the order lines."
+msgstr ""
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "The transfer %s has no sales order: there is nothing to pack."
 msgstr ""

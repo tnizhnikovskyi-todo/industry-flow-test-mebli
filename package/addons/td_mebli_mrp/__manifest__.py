@@ -1,7 +1,7 @@
 {
     'name': 'ToDo Mebli: parametric product and order BoM',
     'summary': 'Parametric furniture, part rules and a bill of materials generated per sales order',
-    'version': '19.0.1.1.2',
+    'version': '19.0.1.1.3',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',

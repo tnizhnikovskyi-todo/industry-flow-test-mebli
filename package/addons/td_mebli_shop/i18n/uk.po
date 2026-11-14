@@ -1055,3 +1055,20 @@ msgstr "напр. відключення світла, зроблено за п�
 #: model_terms:ir.ui.view,arch_db:td_mebli_shop.report_part_labels_grid
 msgid "mm"
 msgstr "мм"
+
+#. module: td_mebli_shop
+#: model_terms:ir.ui.view,arch_db:td_mebli_shop.view_order_form_td_mebli_shop
+msgid "Build the Packing List"
+msgstr "Сформувати комплектувальний лист"
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "The order %s has no bill of materials of a product yet: the packing list is built from the bills of materials of the order lines."
+msgstr "Замовлення %s ще не має специфікації виробу: комплектувальний лист формується зі специфікацій рядків замовлення."
+
+#. module: td_mebli_shop
+#. odoo-python
+#: code:addons/td_mebli_shop/models/kit.py:0
+msgid "The transfer %s has no sales order: there is nothing to pack."
+msgstr "Переміщення %s не має замовлення на продаж: комплектувати нічого."

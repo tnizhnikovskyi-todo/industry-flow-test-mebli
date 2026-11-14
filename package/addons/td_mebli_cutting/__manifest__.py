@@ -1,7 +1,7 @@
 {
     'name': 'ToDo Mebli: cutting jobs and business offcuts',
     'summary': 'Hand parts over to cutting, receive the cutting map, reserve sheets by lot and keep offcuts as stock',
-    'version': '19.0.1.1.1',
+    'version': '19.0.1.1.2',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',

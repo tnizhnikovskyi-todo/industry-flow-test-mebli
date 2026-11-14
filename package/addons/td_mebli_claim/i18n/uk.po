@@ -309,3 +309,13 @@ msgstr "Гарантія до"
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
 msgid "days"
 msgstr "дн."
+
+#. module: td_mebli_claim
+#: model:res.groups,name:td_mebli_claim.group_service
+msgid "Service"
+msgstr "Сервіс"
+
+#. module: td_mebli_claim
+#: model:res.groups,comment:td_mebli_claim.group_service
+msgid "ROLE-10 (service): the claims of the customers as repair orders and the remake of a part."
+msgstr "ROLE-10 (сервіс): рекламації клієнтів як замовлення на ремонт і повторне виготовлення деталі."

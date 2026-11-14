@@ -249,3 +249,9 @@ VP-02: A, light — галочок 0, груп `td_mebli_base.group_feature_*` �
 ## Редакція ee
 
 не перевірено: EE недоступна (доступу до Odoo 19 Enterprise немає). Профіль `ee` = `ce` + 6 `std-ee` (`mrp_workorder`, `quality_control`, `industry_fsm`, `planning`, `helpdesk`, `sign`) + 6 мостів `td_mebli_*` (`auto_install: True`, є в `package/addons` @ `4e0fdda`); перевірено лише статично: `ee ⊇ ce`, порядок залежностей (порушень 0), `std-ee`/мости відсутні в `ce`. Маніфестів EE-модулів у CE-вихідниках немає — ліцензія залежностей мостів «не перевірена» (WARN); ліцензія самих мостів (LGPL-3 при залежності від EE) — `tests/open-questions.md`. Установку, дані й read-back на EE-базі виконати, коли буде доступ (C-00 / ВП-4).
+
+## Спроба 5 (A-12-5, D-10, 2026-11-14) — редакція ce
+- Конфіг-пакет без змін (D-10: виключення атрибутів — дані виробу, `CONFIG.md` «Зміни версії», спроба 5).
+- База `test-mebli-a117t-demo` (профіль `package/demo/answers.yaml`, 43 модулі, через кроки `package/demo/up.sh` з копією для бази групи T): прохід 1 — created 8 / updated 6 / unchanged 13 / manual 1 / errors 0; прохід 2 (compare) — unchanged 27 / diff 0 / missing 0; read-back — 23 VP, 0 failed; після демо-шару read-back — OK. Повтор підйому з остаточним кодом A-11-7 — той самий результат (`tests/reports/A-12-5.md`).
+- Профіль A (`profiles/answers.alt-5.yaml`, база `test-mebli-a117t-a5`, без демо): прохід, повтор і read-back — OK.
+- `product.template.attribute.exclusion` після демо-шару — 2 (шафа-купе, кухонний модуль: «ЛДСП Антрацит» ✕ «ПВХ 0,4 мм»).

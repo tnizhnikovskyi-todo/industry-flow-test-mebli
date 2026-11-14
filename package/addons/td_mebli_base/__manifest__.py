@@ -6,7 +6,7 @@
                    'the margin», the feature groups of box B (VP-02) as visibility flags of menus and buttons, the '
                    'font of the package reports with the full Cyrillic set. The post-init hook moves the system '
                    'parameters of the slice into the fields of the company.',
-    'version': '19.0.1.1.1',
+    'version': '19.0.1.1.2',
     'category': 'Manufacturing/Manufacturing',
     'license': 'LGPL-3',
     'author': 'ToDo',

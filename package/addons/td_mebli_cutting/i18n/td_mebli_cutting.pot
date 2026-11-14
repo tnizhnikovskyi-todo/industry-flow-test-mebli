@@ -1096,3 +1096,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:td_mebli_cutting.stock_lot_td_offcut_kanban
 msgid "мм"
 msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Part %(code)s is placed %(placed)s times, the job has %(qty)s pieces"
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/wizard/result_import.py:0
+msgid "Sheet %(sheet)s: lot %(lot)s of this board is not found in the company of the job."
+msgstr ""
+
+#. module: td_mebli_cutting
+#. odoo-python
+#: code:addons/td_mebli_cutting/models/cutting_job.py:0
+msgid "New"
+msgstr ""
+
+#. module: td_mebli_cutting
+#: model:ir.model.fields,field_description:td_mebli_cutting.field_td_mebli_cutting_job__rating_ids
+msgid "Ratings"
+msgstr ""

@@ -29,8 +29,9 @@ class TdMebliCuttingJob(models.Model):
                                   index='btree_not_null',
                                   help='The purchase of the cutting service from the distributor (Purchase).')
     distributor_id = fields.Many2one(related='purchase_id.partner_id', string='Distributor')
+    # compute_sudo: the technologist reads the date of the purchase line without the rights of Purchase (D-06)
     return_date = fields.Date(
-        string='Parts Expected Back', compute='_compute_return_date',
+        string='Parts Expected Back', compute='_compute_return_date', compute_sudo=True,
         help="Read only: the expected date of the cutting service line in the distributor purchase order. Empty once the "
              "parts are back (result received).")
 
@@ -55,13 +56,19 @@ class TdMebliCuttingJob(models.Model):
     def action_send_distributor(self):
         """Order the cutting from the distributor: a standard purchase order of the cutting service, then the file."""
         self._check_state('draft')
+        # D-06 (AC-026, tr/security.md §1): the technologist has no rights of Purchase; who may change the job may order
+        # its cutting — the right is checked on the job, then the purchase of the service is made with sudo for him
+        # (the buyer of the order is the technologist, the chatter shows him as the author)
+        self.check_access('write')
         product = self._td_cutting_service()
         seller = product.seller_ids[:1]
         for job in self:
             if not job.part_count:
                 raise UserError(self.env._("%s has no parts to cut.", job.name))
-            purchase = self.env['purchase.order'].create({
+            purchase = self.env['purchase.order'].sudo().create({
                 'partner_id': seller.partner_id.id,
+                'user_id': self.env.user.id,
+                'company_id': job.company_id.id or self.env.company.id,
                 'origin': job.name,
                 'order_line': [(0, 0, {
                     'product_id': product.id, 'product_qty': 1.0,
@@ -72,7 +79,7 @@ class TdMebliCuttingJob(models.Model):
             job.purchase_id = purchase
             job.action_send()
             purchase.message_post(body=Markup('%s') % self.env._("The cutting file of %s is attached.", job.name),
-                                  attachment_ids=job.export_attachment_id.copy({'res_model': 'purchase.order',
+                                  attachment_ids=job.export_attachment_id.sudo().copy({'res_model': 'purchase.order',
                                                                                 'res_id': purchase.id}).ids)
         return True
 

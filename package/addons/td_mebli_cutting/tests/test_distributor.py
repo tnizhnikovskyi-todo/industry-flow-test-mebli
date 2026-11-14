@@ -88,3 +88,31 @@ class TestCuttingAtDistributor(TdMebliSaleCommon):
         _order, job = self._job(40)
         with self.assertRaises(UserError):
             job.action_send_distributor()
+
+    def test_d06_technologist_sends_to_distributor_without_purchase_rights(self):
+        """D-06 (AC-026, tr/security.md §1): the technologist (Manufacturing + Inventory users, no Purchase) sends the job
+        to the distributor; the purchase is made for him and he reads the expected return of the parts. A user who may
+        not change the job (Inventory only) may not send it."""
+        from odoo.exceptions import AccessError
+        group = lambda xmlid: self.env.ref(xmlid).id  # noqa: E731
+        tech = self.env['res.users'].create({
+            'name': 'Technologist', 'login': 'td_d06_tech', 'email': 'td_d06_tech@example.com',
+            'group_ids': [(6, 0, [group('base.group_user'), group('mrp.group_mrp_user'), group('stock.group_stock_user')])]})
+        self.assertFalse(tech.has_group('purchase.group_purchase_user'), "the technologist has no Purchase rights")
+        store = self.env['res.users'].create({
+            'name': 'Storekeeper', 'login': 'td_d06_store',
+            'group_ids': [(6, 0, [group('base.group_user'), group('stock.group_stock_user')])]})
+        _order, job = self._job(40)
+        with self.assertRaises(AccessError):
+            job.with_user(store).action_send_distributor()
+        job.with_user(tech).action_send_distributor()
+        job.invalidate_recordset()
+        self.assertEqual(job.state, 'sent')
+        self.assertEqual(job.purchase_id.state, 'purchase')
+        self.assertEqual(job.purchase_id.user_id, tech, "the purchase of the service is made for the technologist")
+        self.assertEqual(job.purchase_id.message_ids.filtered('attachment_ids')[:1].author_id, tech.partner_id)
+        # the form of the job as the technologist: the purchase link, the distributor and the return date are readable
+        as_tech = job.with_user(tech)
+        as_tech.invalidate_recordset()
+        data = as_tech.web_read({'purchase_id': {}, 'distributor_id': {}, 'return_date': {}})[0]
+        self.assertTrue(data['purchase_id'] and data['distributor_id'] and data['return_date'])

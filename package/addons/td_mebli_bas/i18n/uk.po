@@ -832,3 +832,8 @@ msgstr "Немає коду BAS"
 #: code:addons/td_mebli_bas/models/bas_channel.py:0
 msgid "Row %(row)s (payment %(ref)s): %(error)s"
 msgstr "Рядок %(row)s (платіж %(ref)s): %(error)s"
+
+#. module: td_mebli_bas
+#: model:ir.model.fields,field_description:td_mebli_bas.field_td_mebli_bas_batch__activity_calendar_event_id
+msgid "Next Activity Calendar Event"
+msgstr "Подія календаря наступної дії"
