@@ -398,7 +398,14 @@
      "sc": "SC-07",
      "step": 1,
      "url": "/odoo/action-td_mebli_measure.td_mebli_measure_my_calendar_action",
-     "actions": []
+     "actions": [
+      {
+       "click": ".o_calendar_button_next, button[aria-label='Next'], .o_calendar_header button:has(.oi-arrow-right)"
+      },
+      {
+       "wait": 1500
+      }
+     ]
     },
     {
      "sc": "SC-07",
