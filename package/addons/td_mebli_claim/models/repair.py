@@ -1,7 +1,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, UserError
 
 
 class RepairOrder(models.Model):
@@ -155,6 +155,30 @@ class RepairOrder(models.Model):
         return self.env['mrp.production'].sudo().create({
             'product_id': product.id, 'product_qty': 1.0, 'bom_id': bom.id, 'origin': self.name,
             'company_id': (bom.company_id or self.company_id).id, 'user_id': self.env.user.id})
+
+    # ------------------------------------------------------------------ AC-112: paid repair after the warranty
+    def action_create_sale_order(self):
+        """«Create Quotation» of the paid repair (AC-112, D-21). The sales users go the standard way. The service (group
+        «Service», Inventory user, no Sales rights, tr/security.md §1) creates the quotation of the claim it may change:
+        the right is checked on the claim, the quotation is made by the system; the salesperson is the one of the claimed
+        order (the quotation is in his «My Quotations»), the author of the quotation and of the note is the service user."""
+        if self.env.su or self.env['sale.order'].has_access('create'):
+            return super().action_create_sale_order()
+        if not self.env.user.has_group('td_mebli_claim.group_service'):
+            raise AccessError(self.env._("Only the service or a salesperson creates the quotation of a repair."))
+        self.check_access('write')
+        # sudo: the quotation of the paid repair is made by the system for the service user (rights checked on the
+        # claim above); sudo keeps the user: he stays the author (create_uid) of the quotation and of its lines
+        orders = self.sudo()._create_sale_order()
+        for repair, order in zip(self, orders):
+            salesperson = repair.td_claim_order_id.sudo().user_id
+            if salesperson:
+                order.user_id = salesperson
+            repair.message_post(body=self.env._(
+                "Quotation of the paid repair created: %(order)s (salesperson %(user)s)",
+                order=order.name, user=order.user_id.name))
+        # the service has no Sales rights: the form of the claim is reloaded instead of opening the quotation
+        return True
 
     # ------------------------------------------------------------------ AC-132: service visit
     def action_td_plan_visit(self):

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 02:27+0000\n"
-"PO-Revision-Date: 2026-11-14 02:27+0000\n"
+"POT-Creation-Date: 2026-11-15 16:15+0000\n"
+"PO-Revision-Date: 2026-11-15 16:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1000,6 +1000,13 @@ msgid "Quantity and sizes: for one piece."
 msgstr ""
 
 #. module: td_mebli_mrp
+#: model:res.groups,comment:td_mebli_mrp.group_technologist
+msgid ""
+"ROLE-01: the part rules of the products and the import templates of the "
+"specifications (CAD files)."
+msgstr ""
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,help:td_mebli_mrp.field_mrp_workcenter__td_capacity_hours
 msgid ""
 "Read only: hours per week of the working calendar of the section times the "
@@ -1128,6 +1135,11 @@ msgstr ""
 #. module: td_mebli_mrp
 #: model:ir.model,name:td_mebli_mrp.model_stock_move
 msgid "Stock Move"
+msgstr ""
+
+#. module: td_mebli_mrp
+#: model:res.groups,name:td_mebli_mrp.group_technologist
+msgid "Technologist"
 msgstr ""
 
 #. module: td_mebli_mrp

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- D-20 (tr/security.md §1–2, ROLE-01): the technologist keeps the part rules and the import templates.
+         The xmlid stays in the module of the part rules, as the measurer (td_mebli_measure) and the service
+         (td_mebli_claim): td_mebli_base does not depend on Manufacturing (the move to td_mebli_base — later, with a migration). -->
+    <record id="group_technologist" model="res.groups">
+        <field name="name">Technologist</field>
+        <field name="sequence">20</field>
+        <field name="privilege_id" ref="td_mebli_base.res_groups_privilege_mebli"/>
+        <field name="implied_ids" eval="[Command.link(ref('mrp.group_mrp_user')), Command.link(ref('stock.group_stock_user'))]"/>
+        <field name="comment">ROLE-01: the part rules of the products and the import templates of the specifications (CAD files).</field>
+    </record>
+
+    <!-- «Manufacturing → Configuration» is for the Manufacturing administrator in the standard: the technologist sees it too,
+         with the items of his group (part rules, import templates) and the read-only items of the Manufacturing user -->
+    <record id="mrp.menu_mrp_configuration" model="ir.ui.menu">
+        <field name="group_ids" eval="[Command.link(ref('group_technologist'))]"/>
+    </record>
+</odoo>
