@@ -1,7 +1,7 @@
 {
  "base": "http://127.0.0.1:8079",
  "db": "demo-mebli-pkg-a",
- "sha": "6b8162068035656e9461a2f9a1bb7de2e91b95f9",
+ "sha": "15dbd6f7504fe49f174af6874f6ed99865365ea8",
  "out": "package/docs/user-guide/img",
  "password_env": "DEMO_USERS_PASSWORD",
  "locale": "uk-UA",
@@ -157,6 +157,12 @@
      "step": 7,
      "url": "/odoo/action-td_mebli_mrp.td_mebli_part_rule_action",
      "actions": []
+    },
+    {
+     "sc": "SC-02",
+     "step": 8,
+     "url": "/odoo/action-td_mebli_mrp.td_mebli_import_template_action",
+     "actions": []
     }
    ]
   },
@@ -188,7 +194,7 @@
      "url": "/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action",
      "actions": [
       {
-       "click": ".o_group_name:has-text('Розкрій (15)')"
+       "click": ".o_group_name:has-text('Розкрій (')"
       },
       {
        "wait": 1000
@@ -392,7 +398,14 @@
      "sc": "SC-07",
      "step": 1,
      "url": "/odoo/action-td_mebli_measure.td_mebli_measure_my_calendar_action",
-     "actions": []
+     "actions": [
+      {
+       "click": ".o_calendar_button_next, button[aria-label='Next'], .o_calendar_header button:has(.oi-arrow-right)"
+      },
+      {
+       "wait": 1500
+      }
+     ]
     },
     {
      "sc": "SC-07",
@@ -460,7 +473,7 @@
   },
   {
    "role": "bryhadyr",
-   "login": "store@demo-fabryka.example",
+   "login": "fitter@demo-fabryka.example",
    "shots": [
     {
      "sc": "SC-08",
@@ -471,7 +484,7 @@
     {
      "sc": "SC-08",
      "step": 7,
-     "url": "/odoo/action-td_mebli_claim.td_mebli_claim_action/5",
+     "url": "/odoo/action-td_mebli_claim.td_mebli_claim_action/4",
      "actions": []
     }
    ]
@@ -553,5 +566,5 @@
    ]
   }
  ],
- "note": "SC-08-2: перед зйомкою виїзд S00009 (project.task 22) перенесено на сьогодні 07:00 UTC (admin, XML-RPC); після зйомки стенд скинуто зі знімка"
+ "note": "A-16b-2: стенд A-15-full-2 (15dbd6f); SC-08-2 — перед зйомкою виїзд S00009 (project.task 22) на сьогодні (admin, XML-RPC), після — скидання зі знімка; сервер — з каталогом доставки delivery-fix3 (tests/reports/A-15-full-2.md)"
 }
