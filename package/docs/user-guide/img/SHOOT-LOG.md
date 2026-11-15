@@ -50,7 +50,6 @@
 | package/docs/user-guide/img/kerivnyk/SC-06-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/kerivnyk/SC-06-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/kerivnyk/SC-06-6.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/zamirnyk/SC-07-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/zamirnyk/SC-07-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/zamirnyk/SC-07-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
@@ -71,3 +70,4 @@
 | package/docs/user-guide/img/admin/ADM-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/admin/ADM-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/admin/ADM-9.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/zamirnyk/SC-07-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
