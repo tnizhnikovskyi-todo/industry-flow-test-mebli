@@ -72,9 +72,9 @@
 | 26 | `base_import` | стандарт (залежність `td_mebli_migration`) | AC-089 | CE |
 | 27 | `td_home_menu` | готове ToDo (`origin: todo-ready`, `source: vendored`; власний код ToDo, §27), залежність `web` | — (обов'язкова складова збірки) | **лише CE** (на EE свій головний екран) |
 | 28 | `td_support` | готове ToDo (`origin: todo-ready`, §27), залежності `base_setup`, `mail` | — (обов'язкова складова збірки) | CE і EE |
-| 29 | `td_knowledge` | готове ToDo (`origin: todo-ready`, §27а), залежність `mail`; версія власна `19.0.1.1.0` | — (обов'язкова складова збірки) | CE і EE |
+| 29 | `td_knowledge` | готове ToDo (`origin: todo-ready`, §27а), залежність `mail`; версія власна | — (обов'язкова складова збірки) | CE і EE |
 | 30–47 | `td_mebli_base`, `_mrp`, `_sale`, `_measure`, `_cutting`, `_purchase`, `_ua`, `_shop`, `_install`, `_claim`, `_cost`, `_maint`, `_attendance`, `_bas` (VP-04), `_migration`, `_multico` (B, VP-03), `_dashboard`, `_notify` | код (A-11), `origin: td` | див. `manifest.yaml` | CE |
-| 48 | `td_mebli_knowledge` | код (A-11, `origin: td`; галузевий зміст бази знань, §27а), залежності `td_knowledge`, `td_mebli_base`; у маніфесті `auto_install`, тут — явно; `19.0.1.1.0` (A-11-fix) | — | CE і EE |
+| 48 | `td_mebli_knowledge` | код (A-11, `origin: td`; галузевий зміст бази знань, §27а), залежності `td_knowledge`, `td_mebli_base`, `td_mebli_measure`, `td_mebli_cutting`, `td_mebli_install`, `td_mebli_claim` (A-11-fix2); у маніфесті `auto_install`, тут — явно | — | CE і EE |
 | 49–54 | `mrp_workorder`, `quality_control`, `industry_fsm`, `planning`, `helpdesk`, `sign` | стандарт EE (`origin: std-ee`) | AC-126…AC-130 | EE |
 | 55–60 | мости `td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign` (`auto_install`) | код (A-11) | AC-126…AC-130 | EE |
 

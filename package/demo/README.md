@@ -1,6 +1,8 @@
-# Демо-стенд пакета «меблі» (A-15, спроба 5)
+# Демо-стенд пакета «меблі» (A-15-full-2, контур коду 2)
 
-Скіл `flow-package-build:demo-base-builder` 0.3.1, режим «стенд пакета». Скрипти — тонкі обгортки C-00 (`tools/odoo/`, README там).
+Скіл `flow-package-build:demo-base-builder` 0.4.0 (A-15-full; спроби 1–5 — 0.3.1), режим «стенд пакета», старт 1 — повний перепідйом. Скрипти — тонкі обгортки C-00 (`tools/odoo/`, README там).
+**Статус (A-15-full-2, 2026-11-15): стенд ce перепіднято з нуля з кодом A-11-fix3** (D-18 дільниці демо = дільниці шаблонів A-13, 4 без дублів; D-19 «Календар монтажів» менеджера; D-20 група «Технолог», tech у ній; D-21 пропозиція ремонту сервісом) на SHA `15dbd6f` (гейти A-14-6 `ba0aff3` — APPROVE (CE); EE не перевірено): 47 модулів профілю + `td_mebli_demo`, 142 installed, smoke (з перевірками D-18, D-20) OK, знімок `demo-mebli-pkg-a-snap`. Тури — A-16-5.
+A-15-full: стенд ce перепіднято з нуля з модулями §27/§27а (`td_home_menu`, `td_support` 19.0.1.0.1, `td_knowledge` 19.0.1.1.1, `td_mebli_knowledge` 19.0.1.1.1) на SHA `6b81620` (гейти A-14-5 `795f6b1` — APPROVE (CE); EE не перевірено): 47 модулів профілю + `td_mebli_demo`, 142 installed, smoke і скидання OK, знімок `demo-mebli-pkg-a-snap`. Тури — A-16-4.
 Статус (спроба 5, 2026-11-14): стенд ce **перебудовано з коду A-11-8** (D-16 переклади, D-17 `report.url`; дерево гілки після `4cfad1c`, не закомічено). Спроба 4: стенд ce **перебудовано з коду A-11-7 / A-12-5** (`d2ec5df`, дефекти A-16 D-02…D-15). Спроба 3: стенд ce **піднято повністю** — модулі + конфіг A-12 + шаблони A-13 + демо-шар `td_mebli_demo` (D-01 закрито в A-11-6),
 smoke і скидання OK. ee — не перевірено (EE недоступна).
 
@@ -13,10 +15,7 @@ smoke і скидання OK. ee — не перевірено (EE недост�
 Адреса хостингу для B-01 — відкрите питання Тімліду (В-4). Паролів тут немає.
 
 ## Ревізія package/ (commit SHA)
-`SHA: 1925fb8afc25618d715ac1bfeefef64c8389d8dc` — ревізія `package/` (A-11-5) за CHECKS.md; спроба 3 зібрана на гілці `flow/A-12-2-test` @ `c2da122`
-+ виправлення A-11-6 (`package/addons/td_mebli_demo/` 19.0.1.1.1, D-01; SHA коміту — у PR сесії). Спроба 2 — @ `b794c20`
-(після неї змінено лише `tools/odoo/`, `tests/`, `flow/`). Мітка в `package/CHECKS.md` — `a5a10635…`; вердикт APPROVE (e887f26) охоплює
-A-11-5 (№35–37), `git diff --stat 1925fb8..b794c20 -- package/` = лише `package/CHECKS.md`. **Рішення сесії (2026-11-13): `1925fb8` — нащадок SHA `CHECKS.md` з тим самим вердиктом, допустимо.** Після A-11-6 (D-01) змінено ще `package/addons/td_mebli_demo/` — SHA спроби 3 — нижче в «Журнал установки».
+`SHA: 15dbd6f7504fe49f174af6874f6ed99865365ea8` — ревізія стенда A-15-full-2 (гілка `flow/A-14-6-test` → `flow/A-15-full-2-test`). Нащадок SHA `package/CHECKS.md` `ba0aff368db22e55bb3af73f8d07d09ffdc31b5e` (A-14-6, `APPROVE (CE); EE не перевірено`): `git diff --stat ba0aff3..15dbd6f -- package/` = `package/CHECKS.md` і `package/demo/data/verify_demo.py` (smoke: дільниці без дублів, технолог). Попередня ревізія A-15-full — `6b81620`; спроби 1–5 — у «Журнал установки».
 
 ## Команда підйому з нуля
 ```
@@ -37,15 +36,16 @@ package/demo/up.sh <instance> ce --tag <тег пакета>    # A-18: спер
 ## Редакції стенда
 | редакція | SHA | статус | команда |
 |---|---|---|---|
-| ce | гілка @ `d2ec5df5d4375ab1b26a99065b11c3e2216cb2fa` (A-11-7, A-12-5; спроба 3 — 1925fb8 + A-11-6) | піднято (повний, з демо-шаром), спроба 4; спроба 5 — + A-11-8 | `up.sh <i> ce` |
-| ee | 1925fb8afc25618d715ac1bfeefef64c8389d8dc | не перевірено (EE недоступна; `up.sh <i> ee` → код 70) | `up.sh <i> ee --profile package/demo/profiles/answers.alt-4.yaml` |
-Мости `td_mebli_*` EE (shopfloor, quality, fsm, planning, helpdesk, sign) — лише на ee; на ce `uninstalled`. Ядро `td_*` — без EE-залежностей.
+| ce | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | піднято (A-15-full-2, повний, з демо-шаром, код A-11-fix3) | `DEMO_REPORT_URL=http://127.0.0.1:8079 up.sh <i> ce` |
+| ee | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | не перевірено (EE недоступна; `up.sh <i> ee` → код 70) | `up.sh <i> ee --profile package/demo/profiles/answers.alt-4.yaml` |
+Мости `td_mebli_*` EE (shopfloor, quality, fsm, planning, helpdesk, sign) — лише на ee; на ce `uninstalled`. Ядро `td_*` — без EE-залежностей. `td_home_menu` (головний екран) — лише ce: на ee свій головний екран (у профілі `ee` його немає).
 
 ## Режим використання стенда
 Відкрите питання: режим обирає Тімлід (окремі інстанси чи один стенд із журналом бронювання). Скрипти параметризовані `<instance>`, тож
 підтримують обидва: окремий інстанс на споживача (A-16, кожне демо B-01, D-03, тест A-18). Тест оновлення A-18 — база піднімається
 скриптами `package/demo/` з попереднього тегу: `git checkout <тег> -- package/demo/` → `up.sh <instance> ce --tag <тег>`; скрипти не
 посилаються на файли поза `package/` і `tools/odoo/`.
+**Запуск стенда власником (A-17), локально:** `DEMO_REPORT_URL=http://127.0.0.1:8079 package/demo/up.sh demo-mebli-pkg-a ce` (або, якщо стенд уже піднято, `package/demo/reset.sh demo-mebli-pkg-a ce`) → `tools/odoo/serve.sh demo-mebli-pkg-a 8079` → http://127.0.0.1:8079, логіни — «Демо-ролі й логіни». Бекапу бази в git немає (R-22, `package/demo/.gitignore`); Docker — `docker/README.md`. Де тримати демо-сервер — рішення власника (START-HERE §4).
 
 ## Демо-ролі й логіни
 Ролі й групи — `plan.md` §2 (логіни `<роль>@demo-fabryka.example`: salon, salon2, salon3, tech, chief, store, fin, owner, measure, fitter,
@@ -62,16 +62,17 @@ up.sh завжди перезаписує паролі демо-ролей зн�
   домені `.example` (`demo-fabryka.example`, `mail.example`, `client-demo.example`) — **прийнято рішенням сесії 2026-11-13**; ЄДРПОУ/IBAN не
   вносяться. Люди й клієнти в `td_mebli_demo` мають вигадані ПІБ — синтетику демо лишено як є (рішення сесії 2026-11-13).
 - `package/demo/data/` — лише скрипти (seed, паролі, smoke); синтетики в CSV тут немає (не дублюємо модуль).
+- Модулі §27/§27а (A-15-full): база знань — 8 статей (2 з `td_knowledge`, 6 з `td_mebli_knowledge`; 5 прив'язано до екранів замовлення, заміру, розкрою, акта монтажу, рекламації); `td_support` — адресу підтримки не задано (ручний крок CONFIG.md), звернення на стенді зберігаються зі станом «Не надіслано», назовні нічого не йде; `td_home_menu` — головний екран після входу.
 
 ## Файл answers.yaml і профілі
 | профіль | VP, що змінені (від `answers.yaml`) | сценарії | результат установки |
 |---|---|---|---|
-| `answers.yaml` (B-демо, ce) | від example: VP-01 B, VP-02 без change_sign (9 функцій демо-шару), contract_mode contract — = `td_mebli_demo/data/settings_data.xml` | UC-01…UC-08 | спроба 3: OK (0) — 43 модулі, конфіг 8/…, read-back 23/23 до й після демо-шару, A-13 28/28, демо-шар (124 SO, 110 MO, 49 PO, 123 задачі), smoke OK, знімок |
-| `alt-5` (A, ce) | — (= `answers.example.yaml` + `edition: ce`, `contract_mode: unset`) | UC-01…UC-08 без функцій B | спроба 3: OK (0), `--no-demo` (демо-шар вмикає коробку B); спроба 2 — те саме як базовий |
-| `alt-1` (light, ce) | VP-01 light, VP-04 false, VP-05 false, VP-08 true, VP-09 distributor, VP-10 1, VP-11 1, VP-13 1, VP-17 flexible, VP-18 false, contract_mode sale | UC-01, UC-02 (порізка в дистриб'ютора) | модулі 42 (136, без `td_mebli_bas`) OK; конфіг 8/13/1 (skipped 7 за PF-03…PF-08), повтор unchanged 22, read-back 23/23 PASS; A-13 25/25 (91 рядок, без td/19b–21b); демо-шар не ставиться; smoke OK |
-| `alt-2` (B, ce) | VP-01 B, VP-02 + ai_mapping, VP-03 multi_install_fop, VP-06 block, VP-07 7, VP-10 30, VP-11 50, VP-12 1000, VP-13 60, VP-14 time, VP-15 stage, VP-16 false, VP-17 strict, contract_mode contract | UC-05, UC-08 (ФОП-бригади) | модулі 44 (138, `td_mebli_multico` installed) OK; конфіг 8/15/4, повтор unchanged 27, read-back 23/23 PASS; A-13 28/28; `--no-demo`; smoke OK |
-| `alt-3` (B, ce) | VP-01 B, VP-02 [configurator, kiosk, quality], VP-03 multi, VP-07 1, VP-12 100 | UC-03 | модулі 43 (137, `td_mebli_multico` uninstalled) OK; конфіг 8/7/12, повтор unchanged 27, read-back 23/23 PASS; A-13 28/28; `--no-demo`; smoke OK |
-| `alt-4` (C = B + ee) | VP-01 B, edition ee | мости EE | не перевірено: `up.sh … ee` → код 70 (WARN ee-unavailable), до установки |
+| `answers.yaml` (B-демо, ce) | від example: VP-01 B, VP-02 без change_sign (9 функцій демо-шару), contract_mode contract — = `td_mebli_demo/data/settings_data.xml` | UC-01…UC-08 | A-15-full: OK (0) — 47 модулів + `td_mebli_demo`, 142 installed (§27/§27а є), read-back 23/23 до й після демо-шару, A-13 28/28, smoke, знімок; спроба 3: OK (0) — 43 модулі, конфіг 8/…, read-back 23/23 до й після демо-шару, A-13 28/28, демо-шар (124 SO, 110 MO, 49 PO, 123 задачі), smoke OK, знімок |
+| `alt-5` (A, ce) | — (= `answers.example.yaml` + `edition: ce`, `contract_mode: unset`) | UC-01…UC-08 без функцій B | A-15-full: OK (0), 141 installed, `--no-demo`; спроба 3: OK (0), `--no-demo` (демо-шар вмикає коробку B); спроба 2 — те саме як базовий |
+| `alt-1` (light, ce) | VP-01 light, VP-04 false, VP-05 false, VP-08 true, VP-09 distributor, VP-10 1, VP-11 1, VP-13 1, VP-17 flexible, VP-18 false, contract_mode sale | UC-01, UC-02 (порізка в дистриб'ютора) | A-15-full: OK (0), 140 installed (без `td_mebli_bas`; §27/§27а є); модулі 42 (136, без `td_mebli_bas`) OK; конфіг 8/13/1 (skipped 7 за PF-03…PF-08), повтор unchanged 22, read-back 23/23 PASS; A-13 25/25 (91 рядок, без td/19b–21b); демо-шар не ставиться; smoke OK |
+| `alt-2` (B, ce) | VP-01 B, VP-02 + ai_mapping, VP-03 multi_install_fop, VP-06 block, VP-07 7, VP-10 30, VP-11 50, VP-12 1000, VP-13 60, VP-14 time, VP-15 stage, VP-16 false, VP-17 strict, contract_mode contract | UC-05, UC-08 (ФОП-бригади) | A-15-full: OK (0), 142 installed (`td_mebli_multico`), `--no-demo`; модулі 44 (138, `td_mebli_multico` installed) OK; конфіг 8/15/4, повтор unchanged 27, read-back 23/23 PASS; A-13 28/28; `--no-demo`; smoke OK |
+| `alt-3` (B, ce) | VP-01 B, VP-02 [configurator, kiosk, quality], VP-03 multi, VP-07 1, VP-12 100 | UC-03 | A-15-full: OK (0), 141 installed, `--no-demo`; модулі 43 (137, `td_mebli_multico` uninstalled) OK; конфіг 8/7/12, повтор unchanged 27, read-back 23/23 PASS; A-13 28/28; `--no-demo`; smoke OK |
+| `alt-4` (C = B + ee) | VP-01 B, edition ee | мости EE | A-15-full: код 70 (EE недоступна); не перевірено: `up.sh … ee` → код 70 (WARN ee-unavailable), до установки |
 
 Покриття значень (кожне допустиме значення enum/bool/multi схеми A-09 — хоча б в одному файлі; int — у межах min/max схеми):
 | VP-xx | значення | де покрито | профіль встановлено |
@@ -100,7 +101,7 @@ up.sh завжди перезаписує паролі демо-ролей зн�
 **light без демо-шару прийнято рішенням сесії 2026-11-13**.
 
 ## Журнал установки
-Спроба 2 — рядки 1–7, спроба 3 — рядки 8–10, спроба 4 — рядки 11–12, спроба 5 — рядки 13–14. Дата 2026-11-13, Odoo 19.0 CE @ `40e9be2b`, PostgreSQL 16 (локально), `package/` @ `1925fb8`, гілка @ `b794c20`; конфіг формат 2 (`apply.py config`).
+Спроба 2 — рядки 1–7, спроба 3 — рядки 8–10, спроба 4 — рядки 11–12, спроба 5 — рядки 13–14, A-15-full — рядки 15–21. Дата 2026-11-13, Odoo 19.0 CE @ `40e9be2b`, PostgreSQL 16 (локально), `package/` @ `1925fb8`, гілка @ `b794c20`; конфіг формат 2 (`apply.py config`).
 | крок | що встановлено | команда | результат (код) | тривалість |
 |---|---|---|---|---|
 | 1 | A: модулі + конфіг + A-13 + демо-шар | `up.sh demo-mebli-pkg-a ce` | FAIL на «демо-документи (seed)» (50) — D-01; кроки 0–4 і установка `td_mebli_demo` — OK | 213 с |
@@ -119,4 +120,19 @@ up.sh завжди перезаписує паролі демо-ролей зн�
 | 14 | спроба 5: скидання | `restore.sh` перед і після A-16 спроба 3 | OK (0): 124 SO | 2 с |
 Спроба 3 — 2026-11-13, гілка @ `c2da122` + A-11-6. Профілі alt-1…alt-4 у спробі 3 не перепіднімались (їх файли не змінено; результати спроби 2).
 Спроба 4 — 2026-11-14, гілка @ `d2ec5df`; профілі alt-1…alt-5 не перепіднімались (регрес профілів A/light/B — `tests/reports/A-11-7.md`). D-17 (A-16-2: `report.url` = 127.0.0.1:8072 хардкодом) виправлено в A-11-8 — див. «PDF (D-17)» вище.
-Стенд `demo-mebli-pkg-a` (+ `-snap`) лишено піднятим (сервер зупинено) для A-16; інші бази видалено.
+| 15 | A-15-full: повний стенд (B-демо) з модулями §27/§27а, SHA `6b81620` | `DEMO_REPORT_URL=http://127.0.0.1:8079 up.sh demo-mebli-pkg-a ce` | OK (0): preflight 47 модулів, установка + переклади, конфіг apply / compare / read-back, A-13 28/28, `td_mebli_demo`, seed (SO 124, MO 110, PO 49), паролі (дефолт `demo-local`), smoke, read-back після демо-шару, знімок; 142 installed; `td_home_menu` 19.0.1.0.0, `td_support` 19.0.1.0.1, `td_knowledge` 19.0.1.1.1, `td_mebli_knowledge` 19.0.1.1.1; статей бази знань 8 (5 прив'язано до екранів); `report.url` = 127.0.0.1:8079 | 813 с |
+| 16 | A-15-full: скидання | змінено `td_mebli_demo.partner_salon.name`, видалено чернетку SO → `reset.sh demo-mebli-pkg-a ce` | OK (0): назва й 124 SO повернулись | 3 с |
+| 17 | A-15-full: alt-1 light | `up.sh demo-mebli-pkg-a-p1 ce --profile …alt-1.yaml` | OK (0), 140 installed, демо-шар пропущено (light) | 279 с |
+| 18 | A-15-full: alt-2 B | `up.sh demo-mebli-pkg-a-p2 ce --profile …alt-2.yaml --no-demo` | OK (0), 142 installed | 289 с |
+| 19 | A-15-full: alt-3 B multi | `up.sh demo-mebli-pkg-a-p3 ce --profile …alt-3.yaml --no-demo` | OK (0), 141 installed | 286 с |
+| 20 | A-15-full: alt-5 A | `up.sh demo-mebli-pkg-a-p5 ce --profile …alt-5.yaml --no-demo` | OK (0), 141 installed | 274 с |
+| 21 | A-15-full: alt-4 ee | `up.sh demo-mebli-pkg-a-p4 ee --profile …alt-4.yaml` | 70 — EE недоступна, «не перевірено» | 0 с |
+A-15-full — 2026-11-15, Odoo 19.0 CE, PostgreSQL 16, гілка `flow/A-15-full-test` @ `6b81620`; профільні бази `-p1…-p5` після перевірки видалено.
+Стенд `demo-mebli-pkg-a` (+ `-snap`, A-15-full) лишено піднятим для A-16-4; профільні бази видалено.
+| 22 | A-15-full-2: повний стенд (B-демо) з кодом A-11-fix3, SHA `15dbd6f` | `DEMO_REPORT_URL=http://127.0.0.1:8079 up.sh demo-mebli-pkg-a ce` | OK (0): preflight 47, установка + переклади, конфіг apply / compare / read-back, A-13 28/28, `td_mebli_demo` (дільниці A-13 перейнято: 4 активні — Розкрій CUT, Крайкування EDG, Присадка DRL, Складання ASM; xmlid `td_md.*` і `td_mebli_demo.wc_*` на тих самих записах), seed (SO 124, MO 110, PO 49, задачі 123), паролі (дефолт `demo-local`), smoke (tech у групі «Технолог», дільниці без дублів), read-back після демо-шару, знімок; 142 installed; install 1.1.6, mrp 1.1.5, claim 1.1.4, demo 1.1.4; `report.url` = 127.0.0.1:8079 | 777 с |
+A-15-full-2 — 2026-11-15, гілка `flow/A-15-full-2-test` @ `15dbd6f`; профілі alt-1…5 не перепіднімались (файли профілів і конфіг не змінено; регрес профілів A/light/B — C-03 A-14-6). Доставка модулів — окремий каталог `/home/user/odoo19/delivery-fix3` (конфіг `odoo-tools-fix3.conf`): сервер стенда запускати з тим самим `ODOO_DELIVERY_DIR`/`ODOO_ADDONS_PATH`/`ODOO_CONF`, інакше Odoo візьме старий код зі спільного `/home/user/odoo19/delivery`.
+
+## Виправлення стенда/демо-даних
+A-15-full-2 (повернення A-16b → A-11-fix3 → A-14-6): D-18 — демо-шар `td_mebli_demo` бере дільниці шаблонів A-13 (`pre_init_hook`, AI-28), на стенді 4 дільниці замість 8;
+перевірки в `data/verify_demo.py` (дільниці без дублів, tech у групі «Технолог»). Знімки інструкцій A-16b `SC-03-2.png`, `SC-03-4.png` з дублем — перезняти (A-16b refresh).
+A-15-full: немає (старт 1, повний перепідйом після A-14-5).

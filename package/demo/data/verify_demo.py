@@ -25,6 +25,13 @@ ROLES = {'salon': 'sales_team.group_sale_salesman', 'tech': 'mrp.group_mrp_user'
 for login, grp in ROLES.items():
     u = E['res.users'].with_context(active_test=False).search([('login', '=', login + '@demo-fabryka.example')])
     need('user ' + login, bool(u and u.active and u.has_group(grp)), bool(u and u.active and u.has_group(grp)))
+# D-20: технолог — у групі «Технолог» (td_mebli_mrp.group_technologist, A-11-fix3)
+tech = E['res.users'].search([('login', '=', 'tech@demo-fabryka.example')])
+need('tech technologist', bool(tech and tech.has_group('td_mebli_mrp.group_technologist')),
+     bool(tech and tech.has_group('td_mebli_mrp.group_technologist')))
+# D-18: дільниці шаблонів A-13 і демо-шару — без дублів назв (демо переймає td_md.mrp_workcenter_*)
+wc_names = E['mrp.workcenter'].search([]).mapped('name')
+need('workcenters', wc_names, len(wc_names) == len(set(wc_names)))
 # e-mail демо-шару — лише зарезервовані домени (.example, RFC 2606/6761)
 mails = [m for m in E['res.partner'].with_context(active_test=False).search([('email', '!=', False)]).mapped('email')
          if not (m.endswith('.example') or m.endswith('@example.com'))]

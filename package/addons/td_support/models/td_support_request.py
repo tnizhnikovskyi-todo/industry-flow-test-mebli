@@ -8,7 +8,7 @@ import re
 from datetime import timedelta
 
 import requests
-from markupsafe import Markup, escape
+from markupsafe import Markup
 
 import odoo
 from odoo import _, api, fields, models
@@ -192,7 +192,8 @@ class TdSupportRequest(models.Model):
         request = self.create({
             'subject': subject,
             'description': sanitize_text(payload.get('description'), limit),
-            'contact': sanitize_text(payload.get('contact'), 200).strip(),
+            # one line: the contact becomes the Reply-To header of the email (a line break would break the email)
+            'contact': ' '.join(sanitize_text(payload.get('contact'), 200).split()),
             'consent': True,
             'kind': kind,
             'user_id': user.id,

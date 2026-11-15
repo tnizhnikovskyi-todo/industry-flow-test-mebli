@@ -214,4 +214,28 @@
         <field name="global" eval="True"/>
         <field name="domain_force">[('act_id.company_id', 'in', company_ids + [False])]</field>
     </record>
+
+    <!-- D-19 (AC-044, UC-01 step 11): the salesperson plans the visits of his orders in the «Installation Calendar»;
+         reading stays the standard (project.task_visibility_rule); the fields — date and crew (project.task write) -->
+    <record id="td_mebli_install_task_rule_salesperson_write" model="ir.rule">
+        <field name="name">Visit: the salesperson plans the visits of his orders</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">[('sale_order_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
+
+    <record id="td_mebli_install_task_rule_salesperson_all_write" model="ir.rule">
+        <field name="name">Visit: «all documents» salespeople plan the visits of all orders</field>
+        <field name="model_id" ref="project.model_project_task"/>
+        <field name="domain_force">[('sale_order_id', '!=', False)]</field>
+        <field name="groups" eval="[(4, ref('sales_team.group_sale_salesman_all_leads'))]"/>
+        <field name="perm_read" eval="False"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="False"/>
+        <field name="perm_unlink" eval="False"/>
+    </record>
 </odoo>
