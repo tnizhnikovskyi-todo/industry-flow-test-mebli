@@ -102,6 +102,9 @@
      "url": "/odoo/action-mrp.mrp_bom_form_action/47",
      "actions": [
       {
+       "click": "a.nav-link:has-text('Деталі')"
+      },
+      {
        "click": "button:has-text('Імпорт деталей')"
       }
      ]
@@ -402,12 +405,18 @@
     {
      "sc": "SC-08",
      "step": 3,
-     "url": "/odoo/action-td_mebli_install.td_mebli_install_act_action",
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_calendar_action/22",
      "actions": []
     },
     {
      "sc": "SC-08",
      "step": 4,
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_act_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-08",
+     "step": 5,
      "url": "/odoo/action-td_mebli_install.td_mebli_install_act_action",
      "actions": [
       {
@@ -417,7 +426,7 @@
     },
     {
      "sc": "SC-08",
-     "step": 7,
+     "step": 8,
      "url": "/odoo/action-td_mebli_install.td_mebli_accrual_my_action",
      "actions": []
     }
@@ -429,13 +438,13 @@
    "shots": [
     {
      "sc": "SC-08",
-     "step": 5,
+     "step": 6,
      "url": "/odoo/action-td_mebli_claim.td_mebli_claim_action",
      "actions": []
     },
     {
      "sc": "SC-08",
-     "step": 6,
+     "step": 7,
      "url": "/odoo/action-td_mebli_claim.td_mebli_claim_action/5",
      "actions": []
     }

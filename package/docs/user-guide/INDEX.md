@@ -304,7 +304,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Продажі → Налаштування → Міграція → Порядок імпорту шаблонів | меню `td_mebli_migration.td_mebli_migration_step_menu` | td_mebli_migration | finansyst.md § Довідник ролі: меню, кнопки, друк; admin.md § Майстер-дані й імпорт | описано |
 | Виробництво → Налаштування → Шаблони імпорту | меню `td_mebli_mrp.td_mebli_import_template_menu` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Виробництво → Налаштування → Правила деталей | меню `td_mebli_mrp.td_mebli_part_rule_menu` | td_mebli_mrp | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
-| Виробництво → Звітність → Завантаження дільниць | меню `td_mebli_mrp.td_mebli_workcenter_load_menu` | td_mebli_mrp | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
+| Виробництво → Звітність → Завантаження дільниць | меню `td_mebli_mrp.td_mebli_workcenter_load_menu` | td_mebli_mrp | nachalnyk-vyrobnytstva.md § SC-03; kerivnyk.md § SC-06 | описано |
 | Купівля → Звітність → Ціни проти історії | меню `td_mebli_purchase.purchase_order_line_td_price_menu` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Купівля → Товари → Імпорт прайсу | меню `td_mebli_purchase.td_mebli_price_import_menu` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Продажі → Замовлення → Дошка замовлень | меню `td_mebli_sale.menu_orders_board_td_mebli` | td_mebli_sale | menedzher.md § SC-01; nachalnyk-vyrobnytstva.md § SC-03 | описано |
@@ -339,7 +339,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Мій календар | дія вікна `td_mebli_measure.td_mebli_measure_my_calendar_action` | td_mebli_measure | zamirnyk.md § SC-07; zamirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Звірка міграції | дія вікна `td_mebli_migration.td_mebli_migration_check_action` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Порядок імпорту шаблонів | дія вікна `td_mebli_migration.td_mebli_migration_step_action` | td_mebli_migration | finansyst.md § Довідник ролі: меню, кнопки, друк; admin.md § Майстер-дані й імпорт | описано |
-| Завантаження дільниць | дія вікна `td_mebli_mrp.mrp_workorder_td_load_action` | td_mebli_mrp | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
+| Завантаження дільниць | дія вікна `td_mebli_mrp.mrp_workorder_td_load_action` | td_mebli_mrp | nachalnyk-vyrobnytstva.md § SC-03; kerivnyk.md § SC-06 | описано |
 | Шаблони імпорту | дія вікна `td_mebli_mrp.td_mebli_import_template_action` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Правила деталей | дія вікна `td_mebli_mrp.td_mebli_part_rule_action` | td_mebli_mrp | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
 | Імпорт деталей | дія вікна `td_mebli_mrp.td_mebli_spec_import_action` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -359,7 +359,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Денний план бригади | звіт / друкована форма (res.users) `td_mebli_install.action_report_day_plan_user` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
 | Акт монтажу | звіт / друкована форма (td.mebli.install.act) `td_mebli_install.action_report_install_act` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
 | Звірка міграції | звіт / друкована форма (td.mebli.migration.check) `td_mebli_migration.td_mebli_migration_check_report` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Договір | звіт / друкована форма (sale.order) `td_mebli_sale.action_report_contract` | td_mebli_sale | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
+| Договір | звіт / друкована форма (sale.order) `td_mebli_sale.action_report_contract` | td_mebli_sale | menedzher.md § SC-01; kerivnyk.md § SC-06 | описано |
 | Акт приймання-передачі | звіт / друкована форма (stock.picking) `td_mebli_shop.action_report_handover_act` | td_mebli_shop | menedzher.md § Довідник ролі: меню, кнопки, друк; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Комплектувальний лист | звіт / друкована форма (sale.order) `td_mebli_shop.action_report_kit` | td_mebli_shop | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Етикетки деталей (QR) | звіт / друкована форма (mrp.production) `td_mebli_shop.action_report_mo_part_labels` | td_mebli_shop | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -520,7 +520,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Кнопка «Сформувати комплектувальний лист» | кнопка форми `sale.order` | td_mebli_shop | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Кнопка «Сформувати файл» | кнопка форми `td.mebli.timesheet.export` | td_mebli_attendance | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Кнопка «У фотоархів» | кнопка форми `td.mebli.install.act` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Якість» | кнопка форми `mrp.workorder` | td_mebli_shop | kerivnyk.md § SC-06 | описано |
+| Кнопка «Якість» | кнопка форми `mrp.workorder` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
 | Налаштування «AI-підказка колонок» | поле налаштувань `group_td_feature_ai_mapping` | td_mebli_base | tekhnolog.md § SC-02; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Аналоги» | поле налаштувань `group_td_feature_analog` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «Підпис зміни замовлення» | поле налаштувань `group_td_feature_change_sign` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
@@ -625,4 +625,5 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 ## Відкриті дефекти UI
 | ID | Сценарій | Що не так | Маршрут |
 |---|---|---|---|
-| — | — | дефектів UI під час зйомки не знайдено (`package/demo/defects.md` не змінено) | — |
+| D-18 | SC-03 | дві групи дільниць з однаковими назвами (шаблони A-13 + демо-шар `td_mebli_demo`): «Розкрій», «Присадка» двічі в «Планшет цеху» й «Завантаження дільниць»; кроки не блокує — сценарій «готово» | A-15 (демо-шар), за потреби A-13 |
+Дефектів UI модулів `td_*` (крок не виконується, підпис `td_*` англійською) під час зйомки не знайдено.
