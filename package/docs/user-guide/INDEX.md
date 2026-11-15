@@ -149,7 +149,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | AC-041 | Документ у BAS не змінюється в Odoo | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS; модуль: done |
 | AC-042 | Оплати з BAS закривають етапи | A | finansyst.md § SC-05 | описано; тур A-16-4: SKIP — імпорт оплати з пакета BAS → Odoo потребує файла контракту обміну від BAS (формат — відкри; модуль: done |
 | AC-043 | Задача монтажу із замовлення | A | menedzher.md § SC-01 | описано; окремого кроку туру A-16 немає; модуль: done |
-| AC-044 | Задачі монтажу немає до підтвердження | A | menedzher.md § SC-01 | описано; окремого кроку туру A-16 немає |
+| AC-044 | Задачі монтажу немає до підтвердження | A | menedzher.md § SC-01 | описано; дефект D-19 (меню й права менеджера), виправлення в контурі коду; окремого кроку туру A-16 немає |
 | AC-045 | Імпорт специфікації CSV / Excel | A | tekhnolog.md § SC-02 | описано; тур A-16-4: PASS; модуль: done |
 | AC-046 | Немає обов'язкових колонок | A | tekhnolog.md § SC-02 | описано; тур A-16-4: PASS; модуль: done |
 | AC-047 | Невідомий матеріал | A | tekhnolog.md § SC-02 | описано; тур A-16-4: PASS; модуль: done |
@@ -217,7 +217,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | AC-109 | Передача нарахувань у BAS | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS; модуль: done |
 | AC-110 | Реєстрація рекламації | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS; модуль: done |
 | AC-111 | Гарантія за строком категорії | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS; модуль: done |
-| AC-112 | Платний ремонт після гарантії | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS; модуль: done |
+| AC-112 | Платний ремонт після гарантії | A | bryhadyr.md § SC-08 | описано; дефект D-21 (пропозиція ремонту під роллю «Сервіс»), виправлення в контурі коду; тур A-16-4: PASS; модуль: done |
 | AC-113 | Міст Helpdesk | C | admin.md § Редакції | описано; EE не перевірено (мости не встановлено); модуль: ee-bridge-code |
 | AC-114 | План і факт собівартості замовлення | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS; модуль: done |
 | AC-115 | Собівартість лише для дозволених груп | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS; модуль: done |
@@ -307,8 +307,8 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Продажі → Налаштування → Міграція → Звірка | меню `td_mebli_migration.td_mebli_migration_check_menu` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Продажі → Налаштування → Міграція | меню `td_mebli_migration.td_mebli_migration_menu` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Продажі → Налаштування → Міграція → Порядок імпорту шаблонів | меню `td_mebli_migration.td_mebli_migration_step_menu` | td_mebli_migration | finansyst.md § Довідник ролі: меню, кнопки, друк; admin.md § Майстер-дані й імпорт | описано |
-| Виробництво → Налаштування → Шаблони імпорту | меню `td_mebli_mrp.td_mebli_import_template_menu` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Виробництво → Налаштування → Правила деталей | меню `td_mebli_mrp.td_mebli_part_rule_menu` | td_mebli_mrp | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
+| Виробництво → Налаштування → Шаблони імпорту | меню `td_mebli_mrp.td_mebli_import_template_menu` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано; дефект D-20 (права технолога), виправлення в контурі коду |
+| Виробництво → Налаштування → Правила деталей | меню `td_mebli_mrp.td_mebli_part_rule_menu` | td_mebli_mrp | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано; дефект D-20 (права технолога), виправлення в контурі коду |
 | Виробництво → Звітність → Завантаження дільниць | меню `td_mebli_mrp.td_mebli_workcenter_load_menu` | td_mebli_mrp | nachalnyk-vyrobnytstva.md § SC-03; kerivnyk.md § SC-06 | описано |
 | Купівля → Звітність → Ціни проти історії | меню `td_mebli_purchase.purchase_order_line_td_price_menu` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Купівля → Товари → Імпорт прайсу | меню `td_mebli_purchase.td_mebli_price_import_menu` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -345,8 +345,8 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Звірка міграції | дія вікна `td_mebli_migration.td_mebli_migration_check_action` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Порядок імпорту шаблонів | дія вікна `td_mebli_migration.td_mebli_migration_step_action` | td_mebli_migration | finansyst.md § Довідник ролі: меню, кнопки, друк; admin.md § Майстер-дані й імпорт | описано |
 | Завантаження дільниць | дія вікна `td_mebli_mrp.mrp_workorder_td_load_action` | td_mebli_mrp | nachalnyk-vyrobnytstva.md § SC-03; kerivnyk.md § SC-06 | описано |
-| Шаблони імпорту | дія вікна `td_mebli_mrp.td_mebli_import_template_action` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Правила деталей | дія вікна `td_mebli_mrp.td_mebli_part_rule_action` | td_mebli_mrp | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
+| Шаблони імпорту | дія вікна `td_mebli_mrp.td_mebli_import_template_action` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано; дефект D-20 (права технолога), виправлення в контурі коду |
+| Правила деталей | дія вікна `td_mebli_mrp.td_mebli_part_rule_action` | td_mebli_mrp | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано; дефект D-20 (права технолога), виправлення в контурі коду |
 | Імпорт деталей | дія вікна `td_mebli_mrp.td_mebli_spec_import_action` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Ціни постачальників проти історії | дія вікна `td_mebli_purchase.purchase_order_line_td_price_action` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Імпорт прайсу постачальника | дія вікна `td_mebli_purchase.td_mebli_price_import_action` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -427,7 +427,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Форма «Лист розкрою» | форма `td.mebli.cutting.sheet` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Перевірка проєкту за заміром перед розкроєм» | форма `td.mebli.measure.warning` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Підбір ділового обрізка під деталь» | форма `td.mebli.offcut.pick` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Форма «Скасування підтверджених нарахувань» | форма `td.mebli.accrual.cancel` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
+| Форма «Скасування підтверджених нарахувань» | форма `td.mebli.accrual.cancel` | td_mebli_install | finansyst.md § SC-05 | описано |
 | Форма «Нарахувати за період» | форма `td.mebli.accrual.wizard` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Акт монтажу» | форма `td.mebli.install.act` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Ручна позначка оплати» | форма `td.mebli.pay.mark` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -549,7 +549,8 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Смарт-кнопка «Замовлення на продаж» на специфікації | смарт-кнопка / значок / поле `mrp.bom: action_td_open_sale_order` | td_mebli_sale | menedzher.md § SC-01 | описано |
 | Значки рядка замовлення «Сформувати специфікацію», «Специфікація» | смарт-кнопка / значок / поле `sale.order.line: action_td_generate_bom, action_td_open_bom` | td_mebli_sale | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
 | Значок «Відкрити замовлення клієнта» в «Затримані поставки» | смарт-кнопка / значок / поле `purchase.order.line: action_td_open_sale_orders` | td_mebli_sale | komirnyk.md § SC-04 | описано |
-| Смарт-кнопка «Середнє запізнення, дн.» на контакті-постачальнику (відкриває стандартний звіт «Вчасна доставка» з фільтром за контактом) і колонка в «Затримані поставки» | смарт-кнопка / значок / поле `res.partner: purchase_stock.action_purchase_vendor_delay_report; purchase.order.line td_supplier_delay` | td_mebli_sale | komirnyk.md § SC-04; admin.md § Поля пакета на стандартних формах | описано |
+| Смарт-кнопка «Середнє запізнення, дн.» на контакті-постачальнику (відкриває стандартний звіт «Вчасна доставка» з фільтром за контактом) і колонка в «Затримані поставки» | смарт-кнопка / значок / поле `res.partner: purchase_stock.action_purchase_vendor_delay_report; purchase.order.line td_supplier_delay` | td_mebli_sale | komirnyk.md § SC-04; admin.md § Розклади й автоматичні дії | описано |
+| Значок «Зроблено заднім числом (паперовий наряд)» у рядку робочого замовлення | значок списку `mrp.workorder: action_td_done_backdated` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
 | Налаштування «AI-підказка колонок» | поле налаштувань `group_td_feature_ai_mapping` | td_mebli_base | tekhnolog.md § SC-02; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Аналоги» | поле налаштувань `group_td_feature_analog` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «Підпис зміни замовлення» | поле налаштувань `group_td_feature_change_sign` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
@@ -567,7 +568,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Налаштування «Прострочка рекламації, днів» | поле налаштувань `td_claim_overdue_days` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Режим договору» | поле налаштувань `td_contract_mode` | td_mebli_base | menedzher.md § SC-01; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Собівартість: відрядна замість годин» | поле налаштувань `td_cost_piecework` | td_mebli_cost | admin.md § Довідник налаштувань модулів | описано |
-| Налаштування «База % бригаді» | поле налаштувань `td_crew_base` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
+| Налаштування «База % бригаді» | поле налаштувань `td_crew_base` | td_mebli_base | bryhadyr.md § SC-08; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «% бригаді» | поле налаштувань `td_crew_pct` | td_mebli_base | finansyst.md § SC-05; bryhadyr.md § SC-08 | описано |
 | Налаштування «Поділ % бригаді» | поле налаштувань `td_crew_split` | td_mebli_base | bryhadyr.md § SC-08; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Розкрій плит» | поле налаштувань `td_cutting_mode` | td_mebli_base | tekhnolog.md § SC-02; admin.md § Довідник налаштувань модулів | описано |
@@ -577,7 +578,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Налаштування «Мінімальний обрізок, мм» | поле налаштувань `td_min_offcut_mm` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Нагадування про доплату, днів до виїзду» | поле налаштувань `td_pay_reminder_days` | td_mebli_base | menedzher.md § SC-01; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Контроль доплати перед виїздом» | поле налаштувань `td_payment_control` | td_mebli_base | bryhadyr.md § SC-08; admin.md § Довідник налаштувань модулів | описано |
-| Налаштування «Поріг ціни вище історії, %» | поле налаштувань `td_price_threshold_pct` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
+| Налаштування «Поріг ціни вище історії, %» | поле налаштувань `td_price_threshold_pct` | td_mebli_base | komirnyk.md § SC-04; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Застряглі, днів» | поле налаштувань `td_stuck_days` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Адреса підтримки» | поле налаштувань `td_support_email` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Перший запуск | описано |
 | Налаштування «Надсилати на вебхук» | поле налаштувань `td_support_webhook_enabled` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Резервні копії | описано |
@@ -653,7 +654,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Вікно підтримки (td_support): адреса, вебхук, звернення | admin.md § Звернення в підтримку (td_support) | описано; адреса підтримки — рішення власника (не задано) |
 | База знань (td_knowledge, td_mebli_knowledge) | admin.md § База знань (td_knowledge) | описано |
 | Налаштування модулів і поля пакета на стандартних формах | admin.md § Довідник налаштувань модулів; § Поля пакета на стандартних формах | описано |
-| Типові помилки | admin.md § Типові помилки | описано |
+| Типові помилки: довідник усіх повідомлень пакета дослівно (140 текстів із 153 місць коду; перевірка `reference/check_messages.py` — 0 пропущених) + симптоми налаштувань і стандарту Odoo | reference/messages.md; admin.md § Типові помилки; «Типові помилки» посібників ролей | описано |
 
 ## Відкриті дефекти UI
 | ID | Сценарій | Що не так | Маршрут |

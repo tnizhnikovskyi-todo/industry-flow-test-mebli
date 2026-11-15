@@ -53,8 +53,6 @@
 | package/docs/user-guide/img/bryhadyr/SC-08-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-5.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-8.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-6.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-7.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/admin/ADM-1.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | admin | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/admin/ADM-10.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | admin | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/admin/ADM-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | admin | http://127.0.0.1:8079 |
@@ -70,3 +68,5 @@
 | package/docs/user-guide/img/menedzher/SC-01-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/bryhadyr/SC-08-6.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/bryhadyr/SC-08-7.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
