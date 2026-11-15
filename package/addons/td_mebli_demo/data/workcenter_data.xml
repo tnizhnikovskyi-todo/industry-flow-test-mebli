@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
+    <!-- D-18: when the templates A-13 are imported first (package/demo/up.sh), the pre-init hook points these xmlids to
+         their work centers (hooks.py TEMPLATE_WORKCENTERS): the records below update them, no second work center -->
     <record id="wc_cut" model="mrp.workcenter">
         <field name="name">Розкрій</field>
         <field name="code">CUT</field>

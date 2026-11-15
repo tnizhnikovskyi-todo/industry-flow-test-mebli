@@ -99,5 +99,5 @@
     </record>
 
     <menuitem id="td_mebli_import_template_menu" name="Import Templates" parent="mrp.menu_mrp_configuration"
-              action="td_mebli_import_template_action" sequence="60" groups="mrp.group_mrp_user"/>
+              action="td_mebli_import_template_action" sequence="60" groups="mrp.group_mrp_user,td_mebli_mrp.group_technologist"/>
 </odoo>
