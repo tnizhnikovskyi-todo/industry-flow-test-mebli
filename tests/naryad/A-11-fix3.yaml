@@ -1,0 +1,32 @@
+# ТЕСТОВИЙ наряд A-11 (контур коду 2, fix3): дефекти A-16b D-18…D-21 (package/demo/defects.md) і i18n «Cancel Confirmed Accruals»;
+# далі в контурі A-14-6 -> A-15-full-2 -> A-16-5. Рішення AI — рядки AI-25…AI-28 (docs/industries/mebli/research/AI-DECISIONS.md)
+step: A-11
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["odoo19-mvp-build:code-dev"]
+model: opus
+effort: high
+params: {mode: fix, defects: [D-18, D-19, D-20, D-21], i18n: ["Cancel Confirmed Accruals"]}
+inputs:
+  - {name: defects.md, from: A-16b, path: package/demo/defects.md, sha: HEAD}
+  - {name: security.md, from: A-08, path: package/tr/security.md, sha: HEAD}
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+where:
+  - package/addons/td_mebli_install/
+  - package/addons/td_mebli_mrp/
+  - package/addons/td_mebli_claim/
+  - package/addons/td_mebli_demo/
+  - docs/industries/mebli/research/AI-DECISIONS.md
+template: "немає — форма за SKILL.md"
+done: "D-19: менеджер (група продавця) бачить «Календар монтажів» і змінює дату/бригаду виїздів своїх замовлень; D-20: група «Технолог» з RWCD на правила деталей і шаблони, меню «Виробництво → Налаштування»; демо tech у групі; D-21: сервіс створює пропозицію з рекламації, store кнопки не бачить; D-18: демо без дублів дільниць після up.sh; i18n uk; тести під non-su ролями; версії +патч; uk.po; тести td_* на чистій базі профілю A — 0 failed"
+check: {mode: both, how: "where-only + run_tests профілю A (0 failed) + test_i18n_po", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 30, context_budget_tokens: 200000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-16b-test, branch: flow/A-11-fix3-test}
+attempt: 1
+returned_from: A-16b
+git: {base: ae1763e, head: null, prev_tag: null}
+date: 2026-11-15

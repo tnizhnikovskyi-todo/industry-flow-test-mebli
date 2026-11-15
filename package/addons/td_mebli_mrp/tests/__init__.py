@@ -5,3 +5,4 @@ from . import test_spec_import
 from . import test_parts_view
 from . import test_wave2
 from . import test_g2_spec
+from . import test_d20_technologist

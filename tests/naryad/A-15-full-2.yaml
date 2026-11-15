@@ -1,0 +1,25 @@
+# ТЕСТОВИЙ наряд A-15 (0.4.0), full-2: ПОВНИЙ перепідйом demo-mebli-pkg-a після A-14-6 (код A-11-fix3: D-18…D-21); DEMO_REPORT_URL=http://127.0.0.1:8079; smoke з перевіркою дільниць без дублів; далі A-16-5
+step: A-15
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:demo-base-builder@0.4.0"]
+model: sonnet
+effort: medium
+params: {}
+inputs:
+  - {name: CHECKS.md, from: A-14, path: package/CHECKS.md, sha: HEAD}
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+where: package/demo/, package/templates/demo-README.md, docs/industries/mebli/research/AI-DECISIONS.md
+template: "немає — форма за SKILL.md"
+done: "стенд піднято up.sh з нуля (SHA у README), smoke, знімок; дільниць без дублів (D-18); D-18 у defects.md — закрито; попередній done: повний цикл demo-base-builder: скрипти підйому/скидання й профілі CE/EE з новим переліком модулів (td_home_menu, td_support, td_knowledge, td_<галузь>_knowledge); стенд піднято up.sh; мітки SHA в README, scenarios.md оновлено; zip бази видалено за R-22 (git rm, .gitignore), package/demo/docker/README.md: крок Restore замінено на up.sh, у memo команди підйому стенда для власника; тури й сценарії A-16 буде перезапущено наступним нарядом; рядок у AI-DECISIONS"
+check: {mode: both, how: "flow-autocheck: checks/A-15.yaml + скрипти скіла", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 90, lease_factor: 1.5, cost_limit_usd: 15, context_budget_tokens: 60000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-14-6-test, branch: flow/A-15-full-2-test}
+attempt: 2
+returned_from: A-14
+git: {base: 5bd4c57, head: null, prev_tag: null}
+date: 2026-11-15

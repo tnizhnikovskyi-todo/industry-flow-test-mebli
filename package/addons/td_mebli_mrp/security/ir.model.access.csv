@@ -8,3 +8,6 @@ access_td_mebli_spec_import_mrp,td.mebli.spec.import workshop,model_td_mebli_spe
 access_td_mebli_spec_import_column_mrp,td.mebli.spec.import.column workshop,model_td_mebli_spec_import_column,mrp.group_mrp_user,1,1,1,1
 access_td_mebli_spec_import_material_mrp,td.mebli.spec.import.material workshop,model_td_mebli_spec_import_material,mrp.group_mrp_user,1,1,1,1
 access_td_mebli_import_template_mrp,td.mebli.import.template technologist,model_td_mebli_import_template,mrp.group_mrp_user,1,1,1,1
+access_td_mebli_part_rule_technologist,td.mebli.part.rule technologist,model_td_mebli_part_rule,group_technologist,1,1,1,1
+access_td_mebli_part_technologist,td.mebli.part technologist,model_td_mebli_part,group_technologist,1,1,1,1
+access_td_mebli_import_template_technologist,td.mebli.import.template technologist (D-20),model_td_mebli_import_template,group_technologist,1,1,1,1
