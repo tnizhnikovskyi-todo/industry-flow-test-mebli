@@ -1,0 +1,521 @@
+{
+ "base": "http://127.0.0.1:8079",
+ "db": "demo-mebli-pkg-a",
+ "sha": "6b8162068035656e9461a2f9a1bb7de2e91b95f9",
+ "out": "package/docs/user-guide/img",
+ "password_env": "DEMO_USERS_PASSWORD",
+ "locale": "uk-UA",
+ "tz": "Europe/Kyiv",
+ "roles": [
+  {
+   "role": "menedzher",
+   "login": "salon@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-01",
+     "step": 1,
+     "url": "/odoo",
+     "actions": []
+    },
+    {
+     "sc": "SC-01",
+     "step": 2,
+     "url": "/odoo/action-crm.crm_lead_action_pipeline/10",
+     "actions": []
+    },
+    {
+     "sc": "SC-01",
+     "step": 3,
+     "url": "/odoo/action-crm.crm_lead_action_pipeline/10",
+     "actions": [
+      {
+       "click": "button:has-text('Записати на замір')"
+      }
+     ]
+    },
+    {
+     "sc": "SC-01",
+     "step": 4,
+     "url": "/odoo/action-sale.action_orders/23",
+     "actions": []
+    },
+    {
+     "sc": "SC-01",
+     "step": 5,
+     "url": "/odoo/action-sale.action_orders/123",
+     "actions": []
+    },
+    {
+     "sc": "SC-01",
+     "step": 6,
+     "url": "/odoo/action-td_mebli_sale.action_orders_board_td_mebli",
+     "actions": []
+    },
+    {
+     "sc": "SC-01",
+     "step": 7,
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_calendar_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-01",
+     "step": 8,
+     "url": "/odoo/action-td_mebli_measure.td_mebli_measure_calendar_action",
+     "actions": []
+    },
+    {
+     "sc": "KB",
+     "step": 1,
+     "url": "/odoo/action-sale.action_orders/123",
+     "actions": [
+      {
+       "click": ".td_knowledge_systray button",
+       "wait": 800
+      }
+     ]
+    },
+    {
+     "sc": "SUP",
+     "step": 1,
+     "url": "/odoo/action-sale.action_orders/123",
+     "actions": [
+      {
+       "click": ".td_support_systray button"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "role": "tekhnolog",
+   "login": "tech@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-02",
+     "step": 1,
+     "url": "/odoo/action-mrp.mrp_production_action/14",
+     "actions": []
+    },
+    {
+     "sc": "SC-02",
+     "step": 2,
+     "url": "/odoo/action-mrp.mrp_bom_form_action/47",
+     "actions": [
+      {
+       "click": "button:has-text('Імпорт деталей')"
+      }
+     ]
+    },
+    {
+     "sc": "SC-02",
+     "step": 3,
+     "url": "/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-02",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_cutting.td_mebli_cutting_job_action/27",
+     "actions": []
+    },
+    {
+     "sc": "SC-02",
+     "step": 5,
+     "url": "/odoo/action-td_mebli_cutting.td_mebli_cutting_sheet_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-02",
+     "step": 6,
+     "url": "/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-02",
+     "step": 7,
+     "url": "/odoo/action-td_mebli_mrp.td_mebli_part_rule_action",
+     "actions": []
+    }
+   ]
+  },
+  {
+   "role": "nachalnyk-vyrobnytstva",
+   "login": "chief@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-03",
+     "step": 1,
+     "url": "/odoo/action-td_mebli_sale.action_orders_board_td_mebli",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 2,
+     "url": "/odoo/action-td_mebli_mrp.mrp_workorder_td_load_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 3,
+     "url": "/odoo/action-mrp.mrp_production_action/14",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 5,
+     "url": "/odoo/action-maintenance.hr_equipment_request_action/5",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 6,
+     "url": "/odoo/action-td_mebli_shop.td_mebli_quality_check_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 7,
+     "url": "/odoo/action-td_mebli_dashboard.action_shop_board",
+     "actions": []
+    },
+    {
+     "sc": "SC-03",
+     "step": 8,
+     "url": "/odoo/action-td_mebli_install.td_mebli_accrual_action",
+     "actions": []
+    }
+   ]
+  },
+  {
+   "role": "komirnyk",
+   "login": "store@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-04",
+     "step": 1,
+     "url": "/odoo/action-mrp.mrp_production_action/109",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 2,
+     "url": "/odoo/action-td_mebli_sale.purchase_order_line_td_delayed_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 3,
+     "url": "/odoo/action-td_mebli_purchase.td_mebli_price_import_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_purchase.purchase_order_line_td_price_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 5,
+     "url": "/odoo/action-td_mebli_cutting.stock_lot_td_offcut_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 6,
+     "url": "/odoo/action-sale.action_orders/102",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 7,
+     "url": "/odoo/action-td_mebli_shop.td_mebli_kit_line_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-04",
+     "step": 8,
+     "url": "/odoo/action-stock.action_picking_tree_all",
+     "actions": [
+      {
+       "fill": [
+        ".o_searchview_input",
+        "WH/OUT/00095"
+       ]
+      },
+      {
+       "press": "Enter"
+      },
+      {
+       "click": ".o_data_row .o_data_cell"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "role": "finansyst",
+   "login": "fin@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-05",
+     "step": 1,
+     "url": "/odoo/action-td_mebli_bas.td_mebli_bas_channel_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 2,
+     "url": "/odoo/action-td_mebli_bas.td_mebli_bas_batch_action/2",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 3,
+     "url": "/odoo/action-td_mebli_bas.td_mebli_bas_log_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_cost.sale_order_td_cost_fact_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 5,
+     "url": "/odoo/action-td_mebli_install.td_mebli_accrual_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 6,
+     "url": "/odoo/action-td_mebli_attendance.td_mebli_timesheet_export_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 7,
+     "url": "/odoo/action-td_mebli_migration.td_mebli_migration_check_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-05",
+     "step": 8,
+     "url": "/odoo/action-td_mebli_sale.sale_order_line_td_cost_action",
+     "actions": []
+    }
+   ]
+  },
+  {
+   "role": "kerivnyk",
+   "login": "owner@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-06",
+     "step": 1,
+     "url": "/odoo",
+     "actions": []
+    },
+    {
+     "sc": "SC-06",
+     "step": 2,
+     "url": "/odoo/action-td_mebli_dashboard.action_dashboard",
+     "actions": []
+    },
+    {
+     "sc": "SC-06",
+     "step": 3,
+     "url": "/odoo/action-td_mebli_sale.action_orders_board_td_mebli",
+     "actions": []
+    },
+    {
+     "sc": "SC-06",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_cost.sale_order_td_cost_fact_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-06",
+     "step": 5,
+     "url": "/odoo/action-td_mebli_sale.action_orders_launch_td_mebli",
+     "actions": []
+    },
+    {
+     "sc": "SC-06",
+     "step": 6,
+     "url": "/odoo/discuss",
+     "actions": []
+    }
+   ]
+  },
+  {
+   "role": "zamirnyk",
+   "login": "measure@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-07",
+     "step": 1,
+     "url": "/odoo/action-td_mebli_measure.td_mebli_measure_my_calendar_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-07",
+     "step": 2,
+     "url": "/odoo/action-td_mebli_measure.td_mebli_measure_my_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-07",
+     "step": 3,
+     "url": "/odoo/action-td_mebli_measure.td_mebli_measure_my_action",
+     "actions": [
+      {
+       "click": ".o_data_row .o_data_cell"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "role": "bryhadyr",
+   "login": "fitter@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-08",
+     "step": 1,
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_calendar_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-08",
+     "step": 2,
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_day_server_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-08",
+     "step": 3,
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_act_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-08",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_act_action",
+     "actions": [
+      {
+       "click": ".o_data_row .o_data_cell"
+      }
+     ]
+    },
+    {
+     "sc": "SC-08",
+     "step": 7,
+     "url": "/odoo/action-td_mebli_install.td_mebli_accrual_my_action",
+     "actions": []
+    }
+   ]
+  },
+  {
+   "role": "bryhadyr",
+   "login": "store@demo-fabryka.example",
+   "shots": [
+    {
+     "sc": "SC-08",
+     "step": 5,
+     "url": "/odoo/action-td_mebli_claim.td_mebli_claim_action",
+     "actions": []
+    },
+    {
+     "sc": "SC-08",
+     "step": 6,
+     "url": "/odoo/action-td_mebli_claim.td_mebli_claim_action/5",
+     "actions": []
+    }
+   ]
+  },
+  {
+   "role": "admin",
+   "login": "admin",
+   "shots": [
+    {
+     "sc": "ADM",
+     "step": 1,
+     "url": "/odoo/settings#td_mebli_base",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 10,
+     "url": "/odoo/settings",
+     "actions": [
+      {
+       "fill": [
+        ".o_searchview_input",
+        "Підтримка ToDo"
+       ]
+      },
+      {
+       "wait": 800
+      }
+     ]
+    },
+    {
+     "sc": "ADM",
+     "step": 2,
+     "url": "/odoo/action-td_support.action_td_support_request",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 3,
+     "url": "/odoo/action-td_knowledge.action_td_knowledge_article",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 4,
+     "url": "/odoo/action-td_mebli_migration.td_mebli_migration_step_action",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 5,
+     "url": "/odoo/action-td_mebli_mrp.td_mebli_import_template_action",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 6,
+     "url": "/odoo/action-td_mebli_install.td_mebli_accrual_reason_action",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 7,
+     "url": "/odoo/action-base.action_res_users",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 8,
+     "url": "/odoo/action-td_knowledge.action_td_knowledge_reader",
+     "actions": []
+    },
+    {
+     "sc": "ADM",
+     "step": 9,
+     "url": "/odoo/action-td_mebli_shop.td_mebli_kiosk_action",
+     "actions": []
+    }
+   ]
+  }
+ ]
+}
