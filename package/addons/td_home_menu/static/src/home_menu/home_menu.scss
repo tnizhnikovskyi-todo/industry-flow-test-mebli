@@ -13,7 +13,8 @@ $td-home-tile: 88px;
 }
 
 .td_home_menu {
-    @include td-home-background;
+    // the background is on <body> (body.td_home_menu_mode below): one surface under the navbar and the tiles
+    background: transparent;
 
     .td_home_menu_container {
         width: 100%;
@@ -92,10 +93,9 @@ $td-home-tile: 88px;
     }
 }
 
+// <body> is the .o_web_client element itself
 body.td_home_menu_mode {
-    .o_web_client {
-        @include td-home-background;
-    }
+    @include td-home-background;
 
     // the navbar shows only the systray: no menu of the application, no brand, no button of the home screen
     .o_main_navbar {
