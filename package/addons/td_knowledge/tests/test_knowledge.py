@@ -82,6 +82,14 @@ class TestKnowledge(TransactionCase):
         with self.assertRaises(AccessError):
             self.Article.with_user(self.user).td_reader_article(self.secret.id)
 
+    def test_07b_article_in_restricted_section(self):
+        # an article open to everybody inside a section limited to administrators: the reader opens it, the section
+        # is not shown in the path (A-14-5, A-11-fix2)
+        inner = self.Article.create({'name': 'Open article', 'parent_id': self.secret.id, 'body': '<p>open</p>'})
+        data = self.Article.with_user(self.user).td_reader_article(inner.id)
+        self.assertEqual(data['path'], [])
+        self.assertEqual(data['name'], 'Open article')
+
     def test_08_no_cycle(self):
         with self.assertRaises(UserError):  # ValidationError of the constraint or the recursion check of the ORM
             self.section.parent_id = self.article

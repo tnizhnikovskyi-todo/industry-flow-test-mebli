@@ -40,7 +40,7 @@ edition_profiles:
       - {name: base_import, origin: std-ce, source: standard, ac: [AC-089]}   # залежність td_mebli_migration
       - {name: td_home_menu, origin: todo-ready, source: vendored, ac: []}   # §27 обов'язкова складова збірки, лише CE (на EE свій головний екран); власний код ToDo, версія власна 19.0.1.0.0; depends web (AI-A12-08)
       - {name: td_support, origin: todo-ready, source: vendored, ac: []}   # §27 обов'язкова складова (ce+ee); depends base_setup, mail; адреса td_support.email — ручний крок, не вигадується (AI-A12-08)
-      - {name: td_knowledge, origin: todo-ready, source: vendored, ac: []}   # §27а база знань (ce+ee); depends mail; версія власна 19.0.1.1.0 (AI-A12-08)
+      - {name: td_knowledge, origin: todo-ready, source: vendored, ac: []}   # §27а база знань (ce+ee); depends mail; версія власна (AI-A12-08)
       - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # поля VP res.company.td_*, feature-групи VP-02
       - {name: td_mebli_mrp, origin: td, source: code, ac: [AC-011, AC-116]}
       - {name: td_mebli_sale, origin: td, source: code, ac: [AC-019, AC-024]}
@@ -59,7 +59,7 @@ edition_profiles:
       - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
       - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}
-      - {name: td_mebli_knowledge, origin: td, source: code, ac: []}   # §27а галузевий зміст бази знань (ce+ee); depends td_knowledge, td_mebli_base; у маніфесті auto_install — тут явно (AI-A12-08); 19.0.1.1.0 (A-11-fix)
+      - {name: td_mebli_knowledge, origin: td, source: code, ac: []}   # §27а галузевий зміст бази знань (ce+ee); depends td_knowledge, td_mebli_base, _measure, _cutting, _install, _claim (A-11-fix2); у маніфесті auto_install — тут явно (AI-A12-08)
   ee:                     # ee ⊇ ce + std-ee + мости auto_install; не перевірено — доступу до Odoo 19 EE немає
     modules:
       - {name: base_setup, origin: std-ce, source: standard, ac: [AC-N.07]}   # залежність td_mebli_base
@@ -89,7 +89,7 @@ edition_profiles:
       - {name: maintenance, origin: std-ce, source: standard, ac: [AC-076]}   # залежність td_mebli_maint
       - {name: base_import, origin: std-ce, source: standard, ac: [AC-089]}   # залежність td_mebli_migration
       - {name: td_support, origin: todo-ready, source: vendored, ac: []}   # §27 обов'язкова складова (ce+ee); depends base_setup, mail; адреса td_support.email — ручний крок, не вигадується (AI-A12-08)
-      - {name: td_knowledge, origin: todo-ready, source: vendored, ac: []}   # §27а база знань (ce+ee); depends mail; версія власна 19.0.1.1.0 (AI-A12-08)
+      - {name: td_knowledge, origin: todo-ready, source: vendored, ac: []}   # §27а база знань (ce+ee); depends mail; версія власна (AI-A12-08)
       - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # поля VP res.company.td_*, feature-групи VP-02
       - {name: td_mebli_mrp, origin: td, source: code, ac: [AC-011, AC-116]}
       - {name: td_mebli_sale, origin: td, source: code, ac: [AC-019, AC-024]}
@@ -108,7 +108,7 @@ edition_profiles:
       - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
       - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}
-      - {name: td_mebli_knowledge, origin: td, source: code, ac: []}   # §27а галузевий зміст бази знань (ce+ee); depends td_knowledge, td_mebli_base; у маніфесті auto_install — тут явно (AI-A12-08); 19.0.1.1.0 (A-11-fix)
+      - {name: td_mebli_knowledge, origin: td, source: code, ac: []}   # §27а галузевий зміст бази знань (ce+ee); depends td_knowledge, td_mebli_base, _measure, _cutting, _install, _claim (A-11-fix2); у маніфесті auto_install — тут явно (AI-A12-08)
       - {name: mrp_workorder, origin: std-ee, source: standard, ac: [AC-126]}   # EE; не перевірено (доступу до EE немає)
       - {name: quality_control, origin: std-ee, source: standard, ac: [AC-127]}   # EE; не перевірено (доступу до EE немає)
       - {name: industry_fsm, origin: std-ee, source: standard, ac: [AC-128]}   # EE; не перевірено (доступу до EE немає)

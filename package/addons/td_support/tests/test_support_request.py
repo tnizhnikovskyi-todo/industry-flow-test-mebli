@@ -166,3 +166,12 @@ class TestSupportRequest(TransactionCase):
         self.assertEqual(ctx['db_uuid'], self.uuid)
         self.assertEqual(ctx['email_to'], 'support@example.com')
         self.assertIn('td_support', ctx['td_modules'])
+
+    def test_13_contact_is_one_line(self):
+        # the contact becomes the Reply-To header: a line break must not reach the email (A-14-5, A-11-fix2)
+        result = self.Request.with_user(self.user).td_submit(self._payload(
+            subject='Header check', contact='user@example.com\r\nBcc: other@example.com'))
+        request = self.Request.browse(result['id'])
+        self.assertNotIn('\n', request.contact)
+        self.assertNotIn('\r', request.mail_id.reply_to)
+        self.assertEqual(request.contact, 'user@example.com Bcc: other@example.com')
