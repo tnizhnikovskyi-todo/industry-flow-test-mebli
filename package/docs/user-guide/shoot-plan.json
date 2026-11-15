@@ -37,30 +37,49 @@
      "sc": "SC-01",
      "step": 4,
      "url": "/odoo/action-sale.action_orders/23",
-     "actions": []
+     "actions": [
+      {
+       "click": "div[name=\"order_line\"] .o_field_x2many_list_row_add a:not(.ml16)"
+      },
+      {
+       "fill": [
+        "div[name=\"order_line\"] .o_data_row div[name=\"product_template_id\"] input",
+        "Шафа-купе 2"
+       ]
+      },
+      {
+       "wait": 1200
+      },
+      {
+       "click": "ul.ui-autocomplete a:has-text('Шафа-купе 2-дверна')"
+      },
+      {
+       "wait": 2500
+      }
+     ]
     },
     {
      "sc": "SC-01",
      "step": 5,
-     "url": "/odoo/action-sale.action_orders/123",
+     "url": "/odoo/action-sale.action_orders/23",
      "actions": []
     },
     {
      "sc": "SC-01",
      "step": 6,
-     "url": "/odoo/action-td_mebli_sale.action_orders_board_td_mebli",
+     "url": "/odoo/action-sale.action_orders/123",
      "actions": []
     },
     {
      "sc": "SC-01",
      "step": 7,
-     "url": "/odoo/action-td_mebli_install.td_mebli_install_calendar_action",
+     "url": "/odoo/action-td_mebli_sale.action_orders_board_td_mebli",
      "actions": []
     },
     {
      "sc": "SC-01",
      "step": 8,
-     "url": "/odoo/action-td_mebli_measure.td_mebli_measure_calendar_action",
+     "url": "/odoo/action-td_mebli_install.td_mebli_install_calendar_action",
      "actions": []
     },
     {
@@ -167,7 +186,14 @@
      "sc": "SC-03",
      "step": 4,
      "url": "/odoo/action-td_mebli_shop.mrp_workorder_td_tablet_action",
-     "actions": []
+     "actions": [
+      {
+       "click": ".o_group_name:has-text('Розкрій (15)')"
+      },
+      {
+       "wait": 1000
+      }
+     ]
     },
     {
      "sc": "SC-03",
@@ -526,5 +552,6 @@
     }
    ]
   }
- ]
+ ],
+ "note": "SC-08-2: перед зйомкою виїзд S00009 (project.task 22) перенесено на сьогодні 07:00 UTC (admin, XML-RPC); після зйомки стенд скинуто зі знімка"
 }

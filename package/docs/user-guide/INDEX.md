@@ -263,7 +263,12 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | §8 нефункціональні | мова, швидкодія, оновлення, резервні копії, кирилиця в PDF | admin.md § Перший запуск, § Оновлення версії, § Резервні копії, § Друковані форми | описано; швидкодія й резервні копії на стенді не вимірювались |
 | §9 безпека й дані | права, правила записів, дані в зверненнях | admin.md § Користувачі й ролі, § Звернення в підтримку (td_support) | готово |
 | §11.1 KPI керівника | картки дашборда | kerivnyk.md § SC-06 | готово |
-| §11.2 друковані документи | договір, акти, етикетки, наряд, комплектувальний лист, план бригади, відомість, звірка | admin.md § Друковані форми; посібники ролей | готово |
+| §10 інтеграції й формати | CSV/Excel специфікації; БАЗИС і PRO100 після зразка; CSV розкрою; обмін BAS; етикетки PDF; підпис порталу; сторонні опції | admin.md § Інтеграції й формати | готово для «у коробці»; БАЗИС/PRO100 — після зразка файлів; опції й «пізніше» — поза пакетом |
+| §11.2 друковані документи (наявні) | пропозиція, договір, рахунки, наряд, етикетки QR, комплектувальний лист, акт монтажу, акт приймання-передачі, денний план бригади, відомість нарахувань | admin.md § Друковані форми; посібники ролей | готово |
+| §11.2 «Додаткова угода на зміну» | друкована угода на зміну замовлення | admin.md § Друковані форми | не розроблено; замінено версіями зміни й підписом порталом (AI-20, питання власнику) |
+| §11.2 «Гарантійний документ» | друкований гарантійний документ | admin.md § Друковані форми | не розроблено (умовно, NR-01; юрист); замінено гарантією категорії й полями рекламації (AI-20) |
+| §11.2 «Акт рекламації» | друкований акт рекламації з підписами | admin.md § Друковані форми | не розроблено; рекламація без друкованого акта (AI-20) |
+| §11.2 «Замовлення порізки / список деталей» (PDF) | PDF замовлення порізки | admin.md § Друковані форми; tekhnolog.md § SC-02 | PDF не розроблено; є CSV файл розкрою + стандартна закупівля порізки (AI-20) |
 | обов'язкові складові збірки §27/§27а | головний екран, підтримка ToDo, база знань | admin.md § Головний екран (td_home_menu), § Звернення в підтримку (td_support), § База знань (td_knowledge) | готово (тури T-14…T-16 PASS) |
 
 ## Покриття: розроблене
@@ -279,7 +284,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Виставлення рахунків → Обмін з BAS → Канали | меню `td_mebli_bas.td_mebli_bas_channel_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Виставлення рахунків → Обмін з BAS → Журнал | меню `td_mebli_bas.td_mebli_bas_log_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Виставлення рахунків → Обмін з BAS | меню `td_mebli_bas.td_mebli_bas_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Ремонти → Рекламації | меню `td_mebli_claim.td_mebli_claim_menu` | td_mebli_claim | nachalnyk-vyrobnytstva.md § SC-03; kerivnyk.md § SC-06 | описано |
+| Ремонти → Рекламації | меню `td_mebli_claim.td_mebli_claim_menu` | td_mebli_claim | nachalnyk-vyrobnytstva.md § SC-03; finansyst.md § SC-05 | описано |
 | Продажі → Звітність → Собівартість: план і факт | меню `td_mebli_cost.sale_order_td_cost_fact_menu` | td_mebli_cost | finansyst.md § SC-05; kerivnyk.md § SC-06 | описано |
 | Виробництво → Розкрій → Завдання розкрою | меню `td_mebli_cutting.td_mebli_cutting_job_menu` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Виробництво → Розкрій | меню `td_mebli_cutting.td_mebli_cutting_menu` | td_mebli_cutting | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
@@ -322,7 +327,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Пакети обміну | дія вікна `td_mebli_bas.td_mebli_bas_batch_action` | td_mebli_bas | finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Канали обміну | дія вікна `td_mebli_bas.td_mebli_bas_channel_action` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Журнал обміну | дія вікна `td_mebli_bas.td_mebli_bas_log_action` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Рекламації | дія вікна `td_mebli_claim.td_mebli_claim_action` | td_mebli_claim | nachalnyk-vyrobnytstva.md § SC-03; kerivnyk.md § SC-06 | описано |
+| Рекламації | дія вікна `td_mebli_claim.td_mebli_claim_action` | td_mebli_claim | nachalnyk-vyrobnytstva.md § SC-03; finansyst.md § SC-05 | описано |
 | Собівартість: план і факт | дія вікна `td_mebli_cost.sale_order_td_cost_fact_action` | td_mebli_cost | finansyst.md § SC-05; kerivnyk.md § SC-06 | описано |
 | Ділові обрізки | дія вікна `td_mebli_cutting.stock_lot_td_offcut_action` | td_mebli_cutting | tekhnolog.md § SC-02; komirnyk.md § SC-04 | описано |
 | Завдання розкрою | дія вікна `td_mebli_cutting.td_mebli_cutting_job_action` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -394,7 +399,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Функція меблів: табло цеху | група доступу `td_mebli_base.group_feature_shop_board` | td_mebli_base | admin.md § Користувачі й ролі | описано |
 | Фінансист | група доступу `td_mebli_base.group_finance` | td_mebli_base | nachalnyk-vyrobnytstva.md § SC-03; finansyst.md § SC-05 | описано |
 | Меблі: Бачить маржу | група доступу `td_mebli_base.group_margin_view` | td_mebli_base | admin.md § Параметри; admin.md § Користувачі й ролі | описано |
-| Сервіс | група доступу `td_mebli_claim.group_service` | td_mebli_claim | bryhadyr.md § SC-08; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
+| Сервіс | група доступу `td_mebli_claim.group_service` | td_mebli_claim | finansyst.md § SC-05; bryhadyr.md § SC-08 | описано |
 | Керівник фабрики (дашборд) | група доступу `td_mebli_dashboard.group_td_mebli_director` | td_mebli_dashboard | kerivnyk.md § SC-06; admin.md § Користувачі й ролі | описано |
 | Замірник | група доступу `td_mebli_measure.group_td_mebli_measurer` | td_mebli_measure | zamirnyk.md § SC-07; admin.md § Користувачі й ролі | описано |
 | Адміністратор підтримки | група доступу `td_support.group_td_support_admin` | td_support | admin.md § Користувачі й ролі; admin.md § Звернення в підтримку (td_support) | описано |
@@ -402,7 +407,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Меблі: дата монтажу | шаблон листа `td_mebli_notify.mail_template_td_install_date` | td_mebli_notify | menedzher.md § Довідник ролі: меню, кнопки, друк; admin.md § Пошта | описано |
 | Меблі: монтаж завтра | шаблон листа `td_mebli_notify.mail_template_td_install_reminder` | td_mebli_notify | menedzher.md § Довідник ролі: меню, кнопки, друк; admin.md § Пошта | описано |
 | Меблі: запис на замір | шаблон листа `td_mebli_notify.mail_template_td_measure_booking` | td_mebli_notify | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Меблі: нова дата замовлення | шаблон листа `td_mebli_notify.mail_template_td_new_date` | td_mebli_notify | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
+| Меблі: нова дата замовлення | шаблон листа `td_mebli_notify.mail_template_td_new_date` | td_mebli_notify | menedzher.md § Довідник ролі: меню, кнопки, друк; admin.md § Пошта | описано |
 | Меблі: доплата перед монтажем | шаблон листа `td_mebli_notify.mail_template_td_payment_reminder` | td_mebli_notify | menedzher.md § Довідник ролі: меню, кнопки, друк; admin.md § Пошта | описано |
 | Меблі: зміна замовлення на підпис | шаблон листа `td_mebli_sale.mail_template_td_change_sign` | td_mebli_sale | menedzher.md § Довідник ролі: меню, кнопки, друк; admin.md § Пошта | описано |
 | База знань | клієнтська дія `td_knowledge.action_td_knowledge_reader` | td_knowledge | menedzher.md § Довідка й підтримка; admin.md § База знань (td_knowledge) | описано |
@@ -460,67 +465,80 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Форма «Термін оплати» — поля пакета | розширення форми `account.payment.term` | td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Технічне обслуговування» — поля пакета | розширення форми `maintenance.equipment` | td_mebli_maint | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Товар» — поля пакета | розширення форми `product.template` | td_mebli_mrp | admin.md § Поля пакета на стандартних формах | описано |
-| Кнопка «Імпорт деталей» | кнопка форми `mrp.bom` | td_mebli_mrp | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Імпортувати» | кнопка форми `td.mebli.bas.batch` | td_mebli_bas | tekhnolog.md § SC-02; finansyst.md § SC-05 | описано |
-| Кнопка «Імпортувати» | кнопка форми `td.mebli.cutting.result.import` | td_mebli_cutting | tekhnolog.md § SC-02; finansyst.md § SC-05 | описано |
-| Кнопка «Імпортувати» | кнопка форми `td.mebli.migration.step` | td_mebli_migration | tekhnolog.md § SC-02; finansyst.md § SC-05 | описано |
-| Кнопка «Імпортувати» | кнопка форми `td.mebli.spec.import` | td_mebli_mrp | tekhnolog.md § SC-02; finansyst.md § SC-05 | описано |
-| Кнопка «Імпортувати результат» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Імпортувати результат ще раз» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Брак» | кнопка форми `mrp.workorder` | td_mebli_shop | tekhnolog.md § SC-02 | описано |
-| Кнопка «Взяти аналог» | кнопка форми `mrp.production` | td_mebli_mrp | komirnyk.md § SC-04; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Взято» | кнопка форми `mrp.workorder` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Все одно відправити» | кнопка форми `td.mebli.measure.warning` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Відкрити звернення» | кнопка форми `res.config.settings` | td_support | admin.md § Звернення в підтримку (td_support) | описано |
-| Кнопка «Деталі» | кнопка форми `mrp.workorder` | td_mebli_shop | tekhnolog.md § SC-02; nachalnyk-vyrobnytstva.md § SC-03 | описано |
-| Кнопка «Дільниця знову працює» | кнопка форми `maintenance.request` | td_mebli_maint | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Дільниця стоїть» | кнопка форми `maintenance.request` | td_mebli_maint | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Запакувати» | кнопка форми `td.mebli.kit.scan` | td_mebli_shop | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Записати» | кнопка форми `td.mebli.measure.booking` | td_mebli_measure | menedzher.md § SC-01; komirnyk.md § SC-04 | описано |
-| Кнопка «Записати на замір» | кнопка форми `crm.lead` | td_mebli_measure | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Записати ціни» | кнопка форми `td.mebli.price.import` | td_mebli_purchase | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Запланувати виїзд» | кнопка форми `repair.order` | td_mebli_claim | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Зарезервувати під завдання» | кнопка форми `td.mebli.offcut.pick` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Зафіксувати зміну» | кнопка форми `sale.order` | td_mebli_sale | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Звірити з проєктом» | кнопка форми `td.mebli.measure` | td_mebli_measure | zamirnyk.md § SC-07; zamirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Зроблено» | кнопка форми `mrp.workorder` | td_mebli_shop | tekhnolog.md § SC-02; nachalnyk-vyrobnytstva.md § SC-03 | описано |
-| Кнопка «Комплектувальний лист» | кнопка форми `stock.picking` | td_mebli_shop | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Надіслати зміну на підпис» | кнопка форми `sale.order` | td_mebli_sale | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Нарахувати» | кнопка форми `td.mebli.accrual, td.mebli.accrual.wizard` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Оновити вікна» | кнопка форми `td.mebli.measure.booking` | td_mebli_measure | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Оплату підтверджено вручну» | кнопка форми `sale.order` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Отримати результат (імітація)» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Пауза» | кнопка форми `mrp.workorder` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Передати в BAS» | кнопка форми `sale.order, td.mebli.accrual, td.mebli.bas.channel, td.mebli.timesheet.export` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Передати дистриб'ютору» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Передати на розкрій» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Повернути в чернетку» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | finansyst.md § SC-05; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Повернути в чернетку» | кнопка форми `td.mebli.migration.check` | td_mebli_migration | finansyst.md § SC-05; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Повторити» | кнопка форми `td.mebli.bas.batch` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Повторне виготовлення» | кнопка форми `repair.order` | td_mebli_claim | nachalnyk-vyrobnytstva.md § SC-03; bryhadyr.md § SC-08 | описано |
-| Кнопка «Повідомити клієнта про нову дату» | кнопка форми `sale.order` | td_mebli_notify | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Порівняти з Odoo» | кнопка форми `td.mebli.migration.check` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Почати монтаж» | кнопка форми `project.task` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Підписати акт» | кнопка форми `td.mebli.install.act` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Підписати пояснення» | кнопка форми `td.mebli.migration.check` | td_mebli_migration | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Підтвердити» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
-| Кнопка «Підтвердити» | кнопка форми `td.mebli.accrual` | td_mebli_install | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
-| Кнопка «Підтвердити» | кнопка форми `td.mebli.kiosk, td.mebli.workorder.backdate` | td_mebli_shop | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
-| Кнопка «Підтвердити оплату» | кнопка форми `td.mebli.pay.mark` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Підібрати обрізок» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Розпізнати колонки» | кнопка форми `td.mebli.spec.import` | td_mebli_mrp | tekhnolog.md § SC-02; komirnyk.md § SC-04 | описано |
-| Кнопка «Розпізнати колонки» | кнопка форми `td.mebli.price.import` | td_mebli_purchase | tekhnolog.md § SC-02; komirnyk.md § SC-04 | описано |
-| Кнопка «Сканувати етикетки» | кнопка форми `sale.order` | td_mebli_shop | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Скасувати» | кнопка форми `td.mebli.cutting.job` | td_mebli_cutting | finansyst.md § SC-05; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Скасувати нарахування» | кнопка форми `td.mebli.accrual.cancel` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Скасувати підтверджені» | кнопка форми `td.mebli.accrual` | td_mebli_install | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Створити» | кнопка форми `td.mebli.order.change.wizard` | td_mebli_sale | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
-| Кнопка «Створити дозамовлення» | кнопка форми `td.mebli.kit.line` | td_mebli_shop | komirnyk.md § SC-04 | описано |
-| Кнопка «Створити зміну» | кнопка форми `sale.order` | td_mebli_sale | menedzher.md § SC-01; menedzher.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Сформувати комплектувальний лист» | кнопка форми `sale.order` | td_mebli_shop | komirnyk.md § SC-04; komirnyk.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Сформувати файл» | кнопка форми `td.mebli.timesheet.export` | td_mebli_attendance | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «У фотоархів» | кнопка форми `td.mebli.install.act` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
-| Кнопка «Якість» | кнопка форми `mrp.workorder` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
+| Кнопка «Імпорт деталей» | кнопка форми/списку `mrp.bom: action_td_import_parts` | td_mebli_mrp | tekhnolog.md § SC-02 | описано |
+| Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.bas.batch: action_td_import` | td_mebli_bas | finansyst.md § SC-05 | описано |
+| Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.cutting.result.import: action_import` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.migration.step: action_td_import` | td_mebli_migration | admin.md § Майстер-дані й імпорт | описано |
+| Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.spec.import: action_import` | td_mebli_mrp | tekhnolog.md § SC-02 | описано |
+| Кнопка «Імпортувати результат» | кнопка форми/списку `td.mebli.cutting.job: action_td_import_result` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Імпортувати результат ще раз» | кнопка форми/списку `td.mebli.cutting.job: action_td_import_result` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Брак» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Взяти аналог» | кнопка форми/списку `mrp.production: action_td_use_analog` | td_mebli_mrp | komirnyk.md § SC-04 | описано |
+| Кнопка «Взято» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Все одно відправити» | кнопка форми/списку `td.mebli.measure.warning: action_confirm` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Відкрити звернення» | кнопка форми/списку `res.config.settings: 228` | td_support | admin.md § Звернення в підтримку (td_support) | описано |
+| Кнопка «Деталі» | кнопка форми/списку `mrp.workorder: action_td_parts` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Дільниця знову працює» | кнопка форми/списку `maintenance.request: action_td_stop_downtime` | td_mebli_maint | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Дільниця стоїть» | кнопка форми/списку `maintenance.request: action_td_start_downtime` | td_mebli_maint | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Запакувати» | кнопка форми/списку `td.mebli.kit.scan: action_scan` | td_mebli_shop | komirnyk.md § SC-04 | описано |
+| Кнопка «Записати» | кнопка форми/списку `td.mebli.measure.booking: action_book` | td_mebli_measure | menedzher.md § SC-01 | описано |
+| Кнопка «Записати на замір» | кнопка форми/списку `crm.lead: action_td_book_measure` | td_mebli_measure | menedzher.md § SC-01 | описано |
+| Кнопка «Записати ціни» | кнопка форми/списку `td.mebli.price.import: action_import` | td_mebli_purchase | komirnyk.md § SC-04 | описано |
+| Кнопка «Запланувати виїзд» | кнопка форми/списку `repair.order: action_td_plan_visit` | td_mebli_claim | bryhadyr.md § SC-08 | описано |
+| Кнопка «Зарезервувати під завдання» | кнопка форми/списку `td.mebli.offcut.pick: action_reserve` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Зафіксувати зміну» | кнопка форми/списку `sale.order: action_td_fix_change` | td_mebli_sale | menedzher.md § SC-01 | описано |
+| Кнопка «Звірити з проєктом» | кнопка форми/списку `td.mebli.measure: action_check` | td_mebli_measure | zamirnyk.md § SC-07 | описано |
+| Кнопка «Зроблено» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Комплектувальний лист» | кнопка форми/списку `stock.picking: action_td_form_kit` | td_mebli_shop | komirnyk.md § SC-04 | описано |
+| Кнопка «Надіслати зміну на підпис» | кнопка форми/списку `sale.order: action_td_send_sign` | td_mebli_sale | menedzher.md § SC-01 | описано |
+| Кнопка «Нарахувати» | кнопка форми/списку `td.mebli.accrual: action_td_accrue_wizard` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Нарахувати» | кнопка форми/списку `td.mebli.accrual.wizard: action_accrue` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Оновити вікна» | кнопка форми/списку `td.mebli.measure.booking: action_refresh` | td_mebli_measure | menedzher.md § SC-01 | описано |
+| Кнопка «Оплату підтверджено вручну» | кнопка форми/списку `sale.order: action_td_pay_mark` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Отримати результат (імітація)» | кнопка форми/списку `td.mebli.cutting.job: action_simulate` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Пауза» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Передати в BAS» | кнопка форми/списку `sale.order: action_td_send_bas` | td_mebli_bas | finansyst.md § SC-05 | описано |
+| Кнопка «Передати в BAS» | кнопка форми/списку `td.mebli.accrual: action_td_send_bas` | td_mebli_bas | finansyst.md § SC-05 | описано |
+| Кнопка «Передати в BAS» | кнопка форми/списку `td.mebli.bas.channel: action_td_exchange` | td_mebli_bas | finansyst.md § SC-05 | описано |
+| Кнопка «Передати в BAS» | кнопка форми/списку `td.mebli.timesheet.export: action_td_send_bas` | td_mebli_bas | finansyst.md § SC-05 | описано |
+| Кнопка «Передати дистриб'ютору» | кнопка форми/списку `td.mebli.cutting.job: action_send_distributor` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Передати на розкрій» | кнопка форми/списку `td.mebli.cutting.job: action_send` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Повернути в чернетку» | кнопка форми/списку `td.mebli.cutting.job: action_draft` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Повернути в чернетку» | кнопка форми/списку `td.mebli.migration.check: action_td_reset` | td_mebli_migration | finansyst.md § SC-05 | описано |
+| Кнопка «Повторити» | кнопка форми/списку `td.mebli.bas.batch: action_td_retry` | td_mebli_bas | finansyst.md § SC-05 | описано |
+| Кнопка «Повторне виготовлення» | кнопка форми/списку `repair.order: action_td_remake` | td_mebli_claim | bryhadyr.md § SC-08 | описано |
+| Кнопка «Повідомити клієнта про нову дату» | кнопка форми/списку `sale.order: action_td_notify_new_date` | td_mebli_notify | menedzher.md § SC-01 | описано |
+| Кнопка «Порівняти з Odoo» | кнопка форми/списку `td.mebli.migration.check: action_td_compute` | td_mebli_migration | finansyst.md § SC-05 | описано |
+| Кнопка «Почати монтаж» | кнопка форми/списку `project.task: action_td_start_install` | td_mebli_install | bryhadyr.md § SC-08 | описано |
+| Кнопка «Підписати акт» | кнопка форми/списку `td.mebli.install.act: action_sign` | td_mebli_install | bryhadyr.md § SC-08 | описано |
+| Кнопка «Підписати пояснення» | кнопка форми/списку `td.mebli.migration.check: action_td_sign_explanation` | td_mebli_migration | finansyst.md § SC-05 | описано |
+| Кнопка «Підтвердити» | кнопка форми/списку `td.mebli.accrual: action_td_confirm` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Підтвердити» | кнопка форми/списку `td.mebli.cutting.job: action_done` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Підтвердити» | кнопка форми/списку `td.mebli.kiosk: action_confirm` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Підтвердити» | кнопка форми/списку `td.mebli.workorder.backdate: action_confirm` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Кнопка «Підтвердити оплату» | кнопка форми/списку `td.mebli.pay.mark: action_td_save` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Підібрати обрізок» | кнопка форми/списку `td.mebli.cutting.job: action_td_pick_offcut` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Розпізнати колонки» | кнопка форми/списку `td.mebli.price.import: action_recognize` | td_mebli_purchase | komirnyk.md § SC-04 | описано |
+| Кнопка «Розпізнати колонки» | кнопка форми/списку `td.mebli.spec.import: action_recognize` | td_mebli_mrp | tekhnolog.md § SC-02 | описано |
+| Кнопка «Сканувати етикетки» | кнопка форми/списку `sale.order: action_td_scan_labels` | td_mebli_shop | komirnyk.md § SC-04 | описано |
+| Кнопка «Скасувати» | кнопка форми/списку `td.mebli.cutting.job: action_cancel` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Кнопка «Скасувати нарахування» | кнопка форми/списку `td.mebli.accrual.cancel: action_cancel` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Скасувати підтверджені» | кнопка форми/списку `td.mebli.accrual: action_td_cancel_wizard` | td_mebli_install | finansyst.md § SC-05 | описано |
+| Кнопка «Створити» | кнопка форми/списку `td.mebli.order.change.wizard: action_create` | td_mebli_sale | menedzher.md § SC-01 | описано |
+| Кнопка «Створити дозамовлення» | кнопка форми/списку `td.mebli.kit.line: action_td_reorder` | td_mebli_shop | komirnyk.md § SC-04 | описано |
+| Кнопка «Створити зміну» | кнопка форми/списку `sale.order: action_td_open_change` | td_mebli_sale | menedzher.md § SC-01 | описано |
+| Кнопка «Сформувати комплектувальний лист» | кнопка форми/списку `sale.order: action_td_form_kit` | td_mebli_shop | komirnyk.md § SC-04 | описано |
+| Кнопка «Сформувати файл» | кнопка форми/списку `td.mebli.timesheet.export: action_build` | td_mebli_attendance | finansyst.md § SC-05 | описано |
+| Кнопка «У фотоархів» | кнопка форми/списку `td.mebli.install.act: action_td_photo_archive` | td_mebli_install | bryhadyr.md § SC-08 | описано |
+| Кнопка «Якість» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
+| Тип дії «Зсув прогнозної дати» | тип дії `mail.activity.type td_mebli_notify.mail_activity_type_td_forecast_shift` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
+| Умова оплати «Меблі на замовлення» | дані модуля `account.payment.term td_mebli_sale.payment_term_td_furniture` | td_mebli_sale | admin.md § Параметри; admin.md § Поля пакета на стандартних формах | описано |
+| Нагадування календаря «Лист — за 1 день» | дані модуля `calendar.alarm td_mebli_measure.alarm_mail_measure_1day` | td_mebli_measure | admin.md § Пошта | описано |
+| Тип зустрічі «Замір» | дані модуля `calendar.event.type td_mebli_measure.event_type_measure` | td_mebli_measure | admin.md § Пошта | описано |
+| Товар «Повторна деталь» (рекламація, брак) | дані модуля `product.template td_mebli_claim.product_remake_part, td_mebli_shop.product_td_repeat_part` | td_mebli_claim, td_mebli_shop | nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк; admin.md § Довідник налаштувань модулів | описано |
+| Кроки імпорту шаблонів (28: категорії … коди BAS працівників) | дані модуля `td.mebli.migration.step step_01…step_td_21b` | td_mebli_migration | admin.md § Майстер-дані й імпорт | описано |
+| Статті «Як користуватися базою знань», «Як додати статтю до екрана» | дані модуля `td.knowledge.article td_knowledge.article_*` | td_knowledge | admin.md § База знань (td_knowledge) | описано |
+| Поле «Етап оплати» в рядках умови оплати | поле форми `account.payment.term.line td_milestone` | td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
 | Налаштування «AI-підказка колонок» | поле налаштувань `group_td_feature_ai_mapping` | td_mebli_base | tekhnolog.md § SC-02; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Аналоги» | поле налаштувань `group_td_feature_analog` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «Підпис зміни замовлення» | поле налаштувань `group_td_feature_change_sign` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
@@ -541,7 +559,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Налаштування «База % бригаді» | поле налаштувань `td_crew_base` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «% бригаді» | поле налаштувань `td_crew_pct` | td_mebli_base | finansyst.md § SC-05; bryhadyr.md § SC-08 | описано |
 | Налаштування «Поділ % бригаді» | поле налаштувань `td_crew_split` | td_mebli_base | bryhadyr.md § SC-08; admin.md § Довідник налаштувань модулів | описано |
-| Налаштування «Розкрій плит» | поле налаштувань `td_cutting_mode` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
+| Налаштування «Розкрій плит» | поле налаштувань `td_cutting_mode` | td_mebli_base | tekhnolog.md § SC-02; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Монтаж у вартості замовлення» | поле налаштувань `td_install_in_price` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «Тексти перевірено юристом» | поле налаштувань `td_legal_checked` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «Менеджер бачить маржу» | поле налаштувань `td_margin_to_salesman` | td_mebli_base | menedzher.md § SC-01; admin.md § Довідник налаштувань модулів | описано |

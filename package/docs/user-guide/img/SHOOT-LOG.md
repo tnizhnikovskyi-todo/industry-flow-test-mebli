@@ -5,7 +5,6 @@
 | package/docs/user-guide/img/menedzher/SC-01-1.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-3.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-5.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-6.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-7.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
@@ -21,7 +20,6 @@
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-1.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-3.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-5.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-6.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-7.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
@@ -52,7 +50,6 @@
 | package/docs/user-guide/img/zamirnyk/SC-07-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/zamirnyk/SC-07-3.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-1.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-5.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-8.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
@@ -70,3 +67,6 @@
 | package/docs/user-guide/img/admin/ADM-9.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | admin | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/tekhnolog/SC-02-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/bryhadyr/SC-08-3.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/menedzher/SC-01-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-4.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/bryhadyr/SC-08-2.png | 6b8162068035656e9461a2f9a1bb7de2e91b95f9 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
