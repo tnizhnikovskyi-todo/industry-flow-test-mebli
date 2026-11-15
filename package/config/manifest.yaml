@@ -1,4 +1,4 @@
-# Конфіг-пакет пакета mebli (A-12, config-as-code (версія 0.3.1), спроба 3, режим fix — модулі A-11 @ 4e96a56; спроба 2 — @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
+# Конфіг-пакет пакета mebli (A-12-fix, config-as-code 0.4.0: + §27/§27а td_home_menu (лише ce), td_support, td_knowledge, td_mebli_knowledge; раніше — A-12, config-as-code (версія 0.3.1), спроба 3, режим fix — модулі A-11 @ 4e96a56; спроба 2 — @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
 # Порядок модулів = порядок установки (топологічний за depends; перевірено скриптом за __manifest__.py Odoo 19.0 CE @40e9be2b і package/addons @4e0fdda: порушень 0).
 # when: — умова за answers.yaml (профіль коробки VP-01 / VP-03 / VP-04); без when — у всіх профілях light / A / B.
 # Профіль light = A без td_mebli_bas (VP-04=false) — AI-A10-05; профіль B = A + td_mebli_multico (VP-03=multi_install_fop) + feature-групи VP-02.
@@ -38,6 +38,9 @@ edition_profiles:
       - {name: hr_hourly_cost, origin: std-ce, source: standard, ac: [AC-061]}   # залежність td_mebli_shop
       - {name: maintenance, origin: std-ce, source: standard, ac: [AC-076]}   # залежність td_mebli_maint
       - {name: base_import, origin: std-ce, source: standard, ac: [AC-089]}   # залежність td_mebli_migration
+      - {name: td_home_menu, origin: todo-ready, source: vendored, ac: []}   # §27 обов'язкова складова збірки, лише CE (на EE свій головний екран); власний код ToDo, версія власна 19.0.1.0.0; depends web (AI-A12-08)
+      - {name: td_support, origin: todo-ready, source: vendored, ac: []}   # §27 обов'язкова складова (ce+ee); depends base_setup, mail; адреса td_support.email — ручний крок, не вигадується (AI-A12-08)
+      - {name: td_knowledge, origin: todo-ready, source: vendored, ac: []}   # §27а база знань (ce+ee); depends mail; версія власна 19.0.1.1.0 (AI-A12-08)
       - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # поля VP res.company.td_*, feature-групи VP-02
       - {name: td_mebli_mrp, origin: td, source: code, ac: [AC-011, AC-116]}
       - {name: td_mebli_sale, origin: td, source: code, ac: [AC-019, AC-024]}
@@ -56,6 +59,7 @@ edition_profiles:
       - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
       - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}
+      - {name: td_mebli_knowledge, origin: td, source: code, ac: []}   # §27а галузевий зміст бази знань (ce+ee); depends td_knowledge, td_mebli_base; у маніфесті auto_install — тут явно (AI-A12-08); 19.0.1.1.0 (A-11-fix)
   ee:                     # ee ⊇ ce + std-ee + мости auto_install; не перевірено — доступу до Odoo 19 EE немає
     modules:
       - {name: base_setup, origin: std-ce, source: standard, ac: [AC-N.07]}   # залежність td_mebli_base
@@ -84,6 +88,8 @@ edition_profiles:
       - {name: hr_hourly_cost, origin: std-ce, source: standard, ac: [AC-061]}   # залежність td_mebli_shop
       - {name: maintenance, origin: std-ce, source: standard, ac: [AC-076]}   # залежність td_mebli_maint
       - {name: base_import, origin: std-ce, source: standard, ac: [AC-089]}   # залежність td_mebli_migration
+      - {name: td_support, origin: todo-ready, source: vendored, ac: []}   # §27 обов'язкова складова (ce+ee); depends base_setup, mail; адреса td_support.email — ручний крок, не вигадується (AI-A12-08)
+      - {name: td_knowledge, origin: todo-ready, source: vendored, ac: []}   # §27а база знань (ce+ee); depends mail; версія власна 19.0.1.1.0 (AI-A12-08)
       - {name: td_mebli_base, origin: td, source: code, ac: [AC-N.07, AC-006]}   # поля VP res.company.td_*, feature-групи VP-02
       - {name: td_mebli_mrp, origin: td, source: code, ac: [AC-011, AC-116]}
       - {name: td_mebli_sale, origin: td, source: code, ac: [AC-019, AC-024]}
@@ -102,6 +108,7 @@ edition_profiles:
       - {name: td_mebli_multico, origin: td, source: code, ac: [AC-035], when: "VP-01 == 'B' and VP-03 == 'multi_install_fop'"}
       - {name: td_mebli_dashboard, origin: td, source: code, ac: [AC-079, AC-121]}
       - {name: td_mebli_notify, origin: td, source: code, ac: [AC-029, AC-030]}
+      - {name: td_mebli_knowledge, origin: td, source: code, ac: []}   # §27а галузевий зміст бази знань (ce+ee); depends td_knowledge, td_mebli_base; у маніфесті auto_install — тут явно (AI-A12-08); 19.0.1.1.0 (A-11-fix)
       - {name: mrp_workorder, origin: std-ee, source: standard, ac: [AC-126]}   # EE; не перевірено (доступу до EE немає)
       - {name: quality_control, origin: std-ee, source: standard, ac: [AC-127]}   # EE; не перевірено (доступу до EE немає)
       - {name: industry_fsm, origin: std-ee, source: standard, ac: [AC-128]}   # EE; не перевірено (доступу до EE немає)
