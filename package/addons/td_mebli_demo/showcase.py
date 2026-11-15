@@ -33,8 +33,10 @@ USERS = [
     ('salon', 'Олена Мартинюк', 'Менеджер салону', 'avatar_salon', ['sales_team.group_sale_salesman']),
     ('salon2', 'Роман Лисенко', 'Менеджер салону', 'avatar_salon2', ['sales_team.group_sale_salesman']),
     ('salon3', 'Світлана Прокопенко', 'Менеджер салону', 'avatar_salon3', ['sales_team.group_sale_salesman']),
+    # D-20 (tr/security.md §1–2, ROLE-01): the technologist keeps the part rules and the import templates
     ('tech', 'Андрій Ковальчук', 'Технолог-конструктор', 'avatar_tech',
-     ['mrp.group_mrp_user', 'sales_team.group_sale_salesman_all_leads', 'stock.group_stock_user']),
+     ['td_mebli_mrp.group_technologist', 'mrp.group_mrp_user', 'sales_team.group_sale_salesman_all_leads',
+      'stock.group_stock_user']),
     ('chief', 'Ігор Савчук', 'Начальник виробництва', 'avatar_chief',
      ['mrp.group_mrp_manager', 'sales_team.group_sale_salesman_all_leads', 'stock.group_stock_user']),
     ('store', 'Марія Гнатюк', 'Комірник', 'avatar_store',

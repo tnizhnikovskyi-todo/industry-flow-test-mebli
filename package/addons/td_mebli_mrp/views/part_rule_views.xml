@@ -46,5 +46,5 @@
     </record>
 
     <menuitem id="td_mebli_part_rule_menu" name="Part Rules" parent="mrp.menu_mrp_configuration"
-              action="td_mebli_part_rule_action" sequence="90" groups="mrp.group_mrp_manager"/>
+              action="td_mebli_part_rule_action" sequence="90" groups="mrp.group_mrp_manager,td_mebli_mrp.group_technologist"/>
 </odoo>
