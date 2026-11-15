@@ -10,9 +10,8 @@ services:
     volumes:
       - mebli-db:/var/lib/postgresql/data
   odoo:
-    # Збірка закріплена: бекап mebli-demo-odoo19.zip знято на 19.0 від 10.11.2026.
+    # Збірка закріплена (19.0 від 12.11.2026; бекапу бази в git немає — R-22, стенд піднімає package/demo/up.sh).
     # Старіший образ ламає подання (напр. "hr.employee"."version_revision" field is undefined).
-    # Оновили бекап на новішій збірці — оновіть і тег.
     image: odoo:19.0-20261112
     depends_on: [db]
     ports:

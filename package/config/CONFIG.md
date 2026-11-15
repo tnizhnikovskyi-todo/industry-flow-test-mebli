@@ -1,6 +1,6 @@
 # CONFIG — конфіг-пакет пакета mebli (A-12)
 
-Скіл: `flow-package-build:config-as-code (версія 0.3.1)`, спроба 1 — режим `build` @ `351d4a8` (escalated: бракувало модулів A-11); спроба 2 — режим `fix` @ `4e0fdda` (повтор після A-11: модулі `td_mebli_*` є в `package/addons`, VP треку «код» — поля `res.company.td_*` модуля `td_mebli_base`, API G0 `package/addons/AC-COVERAGE.md`); **спроба 3 — режим `fix` @ `4e96a56`** (повернення з A-14: `package/CHECKS.md` №23, №26 і config-review 1; модулі A-11 спроби 3); **спроба 4 — режим `fix` @ `21b4a9f`** (повернення з A-14 спроби 2: `package/CHECKS.md` №33, №34). Входи: `package/ALLOCATION.md`, `package/SPEC.md` (§4, §11), `package/tr/00-architecture.md`, `package/templates/answers.yaml` і `answers.example.yaml`, `package/addons/` @ `4e0fdda`. Формат — `config-as-code/references/config-package-format.md` (`format: 2`), редакції — `flow-package-build/references/editions-and-bridges.md`.
+Скіл: `flow-package-build:config-as-code (версія 0.3.1)`, спроба 1 — режим `build` @ `351d4a8` (escalated: бракувало модулів A-11); спроба 2 — режим `fix` @ `4e0fdda` (повтор після A-11: модулі `td_mebli_*` є в `package/addons`, VP треку «код» — поля `res.company.td_*` модуля `td_mebli_base`, API G0 `package/addons/AC-COVERAGE.md`); **спроба 3 — режим `fix` @ `4e96a56`** (повернення з A-14: `package/CHECKS.md` №23, №26 і config-review 1; модулі A-11 спроби 3); **спроба 4 — режим `fix` @ `21b4a9f`** (повернення з A-14 спроби 2: `package/CHECKS.md` №33, №34); **A-12-fix — режим `fix` @ `1bed853`, `config-as-code` 0.4.0** (контур коду 1: обов'язкові складові §27/§27а у «Модулі до установки», AI-A12-08). Входи: `package/ALLOCATION.md`, `package/SPEC.md` (§4, §11), `package/tr/00-architecture.md`, `package/templates/answers.yaml` і `answers.example.yaml`, `package/addons/` @ `4e0fdda`. Формат — `config-as-code/references/config-package-format.md` (`format: 2`), редакції — `flow-package-build/references/editions-and-bridges.md`.
 
 Зміст по AC складено напряму з SPEC/ALLOCATION: скіла `odoo19-mvp-build:config-spec` у сесії немає (див. «Відкриті питання»). Пункт без AC з ALLOCATION сюди не потрапляє. Кожне поле й запис звірено з вихідниками Odoo 19.0 CE @ `40e9be2b` і з чистою тестовою базою (`fields_get`, `ir.model.data`).
 
@@ -70,11 +70,15 @@
 | 24 | `hr_hourly_cost` | стандарт (залежність `td_mebli_shop`) | AC-061 | CE |
 | 25 | `maintenance` | стандарт (залежність `td_mebli_maint`) | AC-076 | CE |
 | 26 | `base_import` | стандарт (залежність `td_mebli_migration`) | AC-089 | CE |
-| 27–44 | `td_mebli_base`, `_mrp`, `_sale`, `_measure`, `_cutting`, `_purchase`, `_ua`, `_shop`, `_install`, `_claim`, `_cost`, `_maint`, `_attendance`, `_bas` (VP-04), `_migration`, `_multico` (B, VP-03), `_dashboard`, `_notify` | код (A-11), `origin: td` | див. `manifest.yaml` | CE |
-| 45–50 | `mrp_workorder`, `quality_control`, `industry_fsm`, `planning`, `helpdesk`, `sign` | стандарт EE (`origin: std-ee`) | AC-126…AC-130 | EE |
-| 51–56 | мости `td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign` (`auto_install`) | код (A-11) | AC-126…AC-130 | EE |
+| 27 | `td_home_menu` | готове ToDo (`origin: todo-ready`, `source: vendored`; власний код ToDo, §27), залежність `web` | — (обов'язкова складова збірки) | **лише CE** (на EE свій головний екран) |
+| 28 | `td_support` | готове ToDo (`origin: todo-ready`, §27), залежності `base_setup`, `mail` | — (обов'язкова складова збірки) | CE і EE |
+| 29 | `td_knowledge` | готове ToDo (`origin: todo-ready`, §27а), залежність `mail`; версія власна | — (обов'язкова складова збірки) | CE і EE |
+| 30–47 | `td_mebli_base`, `_mrp`, `_sale`, `_measure`, `_cutting`, `_purchase`, `_ua`, `_shop`, `_install`, `_claim`, `_cost`, `_maint`, `_attendance`, `_bas` (VP-04), `_migration`, `_multico` (B, VP-03), `_dashboard`, `_notify` | код (A-11), `origin: td` | див. `manifest.yaml` | CE |
+| 48 | `td_mebli_knowledge` | код (A-11, `origin: td`; галузевий зміст бази знань, §27а), залежності `td_knowledge`, `td_mebli_base`, `td_mebli_measure`, `td_mebli_cutting`, `td_mebli_install`, `td_mebli_claim` (A-11-fix2); у маніфесті `auto_install`, тут — явно | — | CE і EE |
+| 49–54 | `mrp_workorder`, `quality_control`, `industry_fsm`, `planning`, `helpdesk`, `sign` | стандарт EE (`origin: std-ee`) | AC-126…AC-130 | EE |
+| 55–60 | мости `td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign` (`auto_install`) | код (A-11) | AC-126…AC-130 | EE |
 
-Модулів «готове» (вендорених) немає. Ліцензії залежностей ядра: AGPL — 0 (перевірено за маніфестами Odoo 19 CE і `package/addons`); модулі `td_*` — LGPL-3 (маніфести `package/addons` @ `4e0fdda`); мости EE залежать від модулів EE, яких немає в CE-вихідниках — «ліцензія залежності не перевірена» (WARN), ліцензія самих мостів — відкрите питання (`tests/open-questions.md`).
+Модулі «готове» — лише спільні модулі ToDo §27/§27а (`td_home_menu`, `td_support`, `td_knowledge`): власний код ToDo, не вендоринг — LICENSE і коміт джерела не вимагаються, досить `license` (LGPL-3) у маніфесті й README (`CFG-vendored` — PASS за винятком скіла). Профіль `ce` — 48 модулів, `ee` — 59 (`ee` ⊇ `ce` крім `td_home_menu`). Ліцензії залежностей ядра: AGPL — 0 (перевірено за маніфестами Odoo 19 CE і `package/addons`); модулі `td_*` — LGPL-3 (маніфести `package/addons` @ `4e0fdda`); мости EE залежать від модулів EE, яких немає в CE-вихідниках — «ліцензія залежності не перевірена» (WARN), ліцензія самих мостів — відкрите питання (`tests/open-questions.md`).
 
 ## Параметри установки (VP-xx)
 
@@ -113,9 +117,10 @@
 |---|---|---|---|
 | AC-030 шаблони листів покупцю | шаблони постачає модуль `td_mebli_notify` (`data/mail_template_data.xml`, 6 записів); конфіг-пакет їх не дублює | A-11 (модуль); тексти — B-04 | read-back: 6 xml-id `td_mebli_notify.mail_template_td_*` є (`install-log.md`) |
 | AC-107 типові причини премій і штрафів (`td.mebli.accrual.reason`) | модель `td.*` — не в даних конфіг-пакета (CFG-td-isolation); типовий набір — шаблон A-13 `td/17_td.mebli.accrual.reason.csv`, імпортує крок міграції `td_mebli_migration` (`step_td_17`, послідовність 24 з 28 — `td_mebli_migration/data/td_mebli_migration_step_data.xml`) | B-04 / B-06 (імпорт шаблону) | тест-імпорт A-13 (`package/master-data/README.md`) |
+| `td_support`: адреса підтримки `td_support.email` (і за потреби вебхук) | адресу й канал не вирішено (`START-HERE.md` §4 — питання власника); значення не вигадується, VP у схемі `answers.yaml` (A-09) немає; без адреси звернення зберігається зі станом «Не надіслано» (README модуля) | B-04 / власник (після рішення про адресу); надалі — VP у схемі A-09 | Налаштування → «Підтримка ToDo»: адреса задана; тестове звернення надіслано |
 | Вихідна пошта для нагадувань | сервер SMTP з паролем — секрет | B-04 (база клієнта), пароль зі змінних оточення | тестовий лист |
 
-Ручних пунктів: 3 (у даних `manual: true` — 1: `td_config.mail_templates_customer`). Спроба 3: пункт «AC-019 розмітка `td_milestone`» закрито — розмітку дає запис модуля `td_mebli_sale.payment_term_td_furniture` (CHECKS №22, A-11). Пункт спроби 1 «AC-004 зв'язок типу зустрічі з нагадуванням» закрито модулем `td_mebli_measure`.
+Ручних пунктів: 4 (A-12-fix: + адреса `td_support`; у даних `manual: true` — 1: `td_config.mail_templates_customer`). Спроба 3: пункт «AC-019 розмітка `td_milestone`» закрито — розмітку дає запис модуля `td_mebli_sale.payment_term_td_furniture` (CHECKS №22, A-11). Пункт спроби 1 «AC-004 зв'язок типу зустрічі з нагадуванням» закрито модулем `td_mebli_measure`.
 
 ## Зміни версії
 
@@ -153,6 +158,15 @@
 | D-10 (AC-011) | виключення `product.template.attribute.exclusion` — «майстер-дані (A-13 / B-04)»; у демо-каталозі їх не було | **рішення: це дані виробу, не конфіг** — запис посилається на `product.template.attribute.value` конкретного виробу (без стабільного xmlid), а конфіг-пакет ставиться до A-13 і демо-шару, коли виробів ще немає. Конфіг-пакет без змін (`td_config.settings_variants` = варіанти, VP-02 — feature-група конфігуратора). Демо-каталог: виключення «ЛДСП Антрацит — лише кромка 2 мм» для «Шафа-купе 2-дверна» і «Кухонний модуль нижній 600» — `td_mebli_demo/hooks.py` `EXCLUSIONS` (A-11 спроба 7, тест `test_d10_exclusions_of_the_configurator`); шаблон майстер-даних виключень — A-13 (`master-data/README.md` №7, відкрите питання) |
 | Перевірка | — | база `test-mebli-a117t-demo` (профіль `answers.yaml`): прохід 1 created 8 / updated 6 / unchanged 13, прохід 2 (compare) unchanged 27 / diff 0, read-back 23 VP — 0 failed; після демо-шару read-back — OK; `product.template.attribute.exclusion` = 2 |
 
+A-12-fix (`fix`, контур коду 1, `config-as-code` 0.4.0; рядків A-12 у `CHECKS.md` немає — правка за Кроком 2 скіла, обов'язкові складові §27/§27а):
+
+| Що | До | A-12-fix (закрито: файл / пункт) |
+|---|---|---|
+| §27 `td_home_menu` | не в «Модулі до установки» | `manifest.yaml` `edition_profiles.ce` (у `ee` не вноситься); таблиця вище №27 |
+| §27 `td_support` | не в переліку | `ce` і `ee`; адреса — «Ручні кроки» |
+| §27а `td_knowledge`, `td_mebli_knowledge` | не в переліку | `ce` і `ee`; `td_mebli_knowledge` після `td_mebli_base` |
+| Перевірка | — | чиста база `test-mebli-a12fix-a` (профіль A): див. `install-log.md` «A-12-fix» |
+
 ## Відкриті питання
 
 - Скілів `odoo19-mvp-build:config-spec`, `odoo19-mvp-build:config-review`, `boost:odoo19-lint`, `boost:source-check` у сесії немає: зміст CONFIG.md складено напряму з SPEC/ALLOCATION; `config-review` і `lint` — замінники A-14 (`tests/reports/A-14.md`) і самоперевірка спроби 3 (звіт A-12-3).
@@ -174,3 +188,4 @@
 | AI-A12-05 | VP-17 — `ir.default` поля `mrp.bom.consumption` (нові специфікації) | поле на кожній специфікації (A-11) | специфікації, створені кодом з явним `consumption`, ігнорують замовчування | A-11 (AI-A08-27), тур A-16 |
 | AI-A12-06 (спроба 2) | VP-02 — галочки `res.config.settings` `group_td_feature_*` (API G0), не прямий запис `implied_ids` | kind `group` спроби 1 | `execute()` знімає групу, якщо галочку зняли, — повторне застосування з іншим VP-02 прибирає функції B у всіх користувачів | read-back B (10 груп) / A, light (0 груп) |
 | AI-A12-07 (спроба 2) | Пункт `td_config.alarm_mail_1day` прибрано: нагадування за 1 день постачає `td_mebli_measure` | лишити обидва | у базі спроби 1 лишається зайвий запис нагадування (лише тестові бази, видалені) | read-back AC-004 |
+| AI-A12-08 (A-12-fix) | Обов'язкові складові §27/§27а внесено в «Модулі до установки» за замовчуванням скіла без рядків ALLOCATION/REUSE: `td_home_menu` — лише `ce`, `td_support`, `td_knowledge` — `ce`+`ee` (`origin: todo-ready`, перед `td_mebli_base`), `td_mebli_knowledge` — `ce`+`ee` явно (не покладаючись на `auto_install`), після `td_mebli_notify`; `ac: []` (AC у ALLOCATION немає); адреса `td_support.email` — ручний крок, не VP | додати рядки в ALLOCATION/REUSE і VP адреси в схему (A-09/A-10) до A-12 | AC-трасування цих модулів порожнє (`CFG-ac-trace` вважає їх обов'язковими складовими, не AC_cfg); звернення в підтримку на базі клієнта не надсилаються, доки адресу не задано | read-back модулів на чистій базі A; A-16 сценарії §27; рішення власника про адресу (START-HERE §4) |

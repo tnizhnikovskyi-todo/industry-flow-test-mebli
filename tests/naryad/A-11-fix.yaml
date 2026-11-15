@@ -20,5 +20,5 @@ odoo_connections: []
 repo: {url: origin, base_branch: flow/v040-start, branch: flow/A-11-fix-test}
 attempt: 1
 returned_from: null
-git: {base: HEAD, head: null, prev_tag: null}
+git: {base: c9200b9, head: null, prev_tag: null}
 date: 2026-11-14
