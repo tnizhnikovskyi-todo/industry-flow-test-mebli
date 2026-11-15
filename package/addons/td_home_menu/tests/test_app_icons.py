@@ -42,11 +42,12 @@ class TestAppIcons(TransactionCase):
             with self.subTest(menu=xmlids[menu.id]):
                 check_app_icon(self, menu, xmlids[menu.id])
 
-    def test_caption_breaks_between_words(self):
-        """A-11-fix4: «Обслуговувань / я» — no break inside a word."""
+    def test_caption_one_line_with_ellipsis(self):
+        """A-11-fix4 (owner): one-line caption with «…» and the full name in the title (instead of the line breaks)."""
         with open(file_path('td_home_menu/static/src/home_menu/home_menu.scss'), encoding='utf-8') as scss_file:
             scss = scss_file.read()
         self.assertNotIn('anywhere', scss)
-        self.assertIn('overflow-wrap: normal', scss)
-        self.assertIn('word-break: normal', scss)
-        self.assertIn('hyphens: auto', scss)
+        self.assertIn('text-overflow: ellipsis', scss)
+        self.assertIn('white-space: nowrap', scss)
+        with open(file_path('td_home_menu/static/src/home_menu/home_menu.xml'), encoding='utf-8') as xml_file:
+            self.assertIn('t-att-title="app.name"', xml_file.read())
