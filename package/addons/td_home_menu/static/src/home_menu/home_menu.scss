@@ -14,7 +14,7 @@
 
     .td_home_menu_grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(124px, 1fr));
         gap: 20px 12px;
     }
 
@@ -50,7 +50,21 @@
         font-size: 0.95rem;
         text-align: center;
         line-height: 1.2;
-        overflow-wrap: anywhere;
+        max-width: 100%;
+        // a caption breaks only between words (A-11-fix4: «Обслуговувань / я»); a long word gets a smaller font
+        // (captionClass in home_menu.js), a hyphen only by the dictionary of <html lang>
+        overflow-wrap: normal;
+        word-break: normal;
+        hyphens: auto;
+    }
+
+    .td_home_menu_caption_long {
+        font-size: 0.85rem;
+        letter-spacing: -0.01em;
+    }
+
+    .td_home_menu_caption_xlong {
+        font-size: 0.75rem;
     }
 }
 
@@ -69,6 +83,14 @@
 
         .td_home_menu_caption {
             font-size: 0.85rem;
+        }
+
+        .td_home_menu_caption_long {
+            font-size: 0.72rem;
+        }
+
+        .td_home_menu_caption_xlong {
+            font-size: 0.64rem;
         }
     }
 }

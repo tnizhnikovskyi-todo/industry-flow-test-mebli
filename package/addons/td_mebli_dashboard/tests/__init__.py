@@ -2,3 +2,4 @@ from . import test_dashboard
 from . import test_shop_board
 from . import test_g3
 from . import test_multicompany
+from . import test_app_icon

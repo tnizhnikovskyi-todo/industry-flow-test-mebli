@@ -195,7 +195,7 @@
         <field name="res_model">calendar.event</field>
         <field name="view_mode">calendar,list,form</field>
     </record>
-    <menuitem id="td_mebli_measure_root_menu" name="Measurements" web_icon="crm,static/description/icon.png"
+    <menuitem id="td_mebli_measure_root_menu" name="Measurements" web_icon="td_mebli_measure,static/description/icon.png"
               groups="group_td_mebli_measurer" sequence="8"/>
     <menuitem id="td_mebli_measure_my_menu" name="My Measurements" parent="td_mebli_measure_root_menu"
               action="td_mebli_measure_my_action" sequence="1"/>

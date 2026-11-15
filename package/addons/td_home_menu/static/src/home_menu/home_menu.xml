@@ -20,7 +20,7 @@
                             <div t-else="" class="td_home_menu_icon d-flex align-items-center justify-content-center" t-att-style="iconStyle(app)">
                                 <i t-att-class="iconClass(app)" aria-hidden="true"/>
                             </div>
-                            <span class="td_home_menu_caption" t-esc="app.name"/>
+                            <span t-att-class="captionClass(app)" t-esc="app.name"/>
                         </a>
                     </t>
                 </div>

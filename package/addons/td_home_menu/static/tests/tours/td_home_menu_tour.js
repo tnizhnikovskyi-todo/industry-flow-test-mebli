@@ -5,6 +5,8 @@ registry.category("web_tour.tours").add("td_home_menu_tour", {
     steps: () => [
         // after the login (no action in the URL) the home screen opens
         { trigger: ".td_home_menu .td_home_menu_app" },
+        // the language of the page for the line breaks of the captions (A-11-fix4)
+        { trigger: "html[lang]:not([lang=''])" },
         { trigger: ".td_home_menu_app[data-menu-xmlid='base.menu_administration']" },
         // search an application by name, then open it with the keyboard
         {

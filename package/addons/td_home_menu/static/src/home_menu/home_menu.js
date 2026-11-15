@@ -1,8 +1,13 @@
 import { Component, onMounted, useRef, useState } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
+import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { fuzzyLookup } from "@web/core/utils/search";
+
+// letters of the longest word from which the caption font is reduced (home_menu.scss)
+export const LONG_WORD = 12;
+export const LONG_WORD_XL = 16;
 
 /**
  * ToDo home screen (Community only): tiles of the root menus with their web_icon, search by name, keyboard.
@@ -20,6 +25,11 @@ export class TdHomeMenu extends Component {
         this.state = useState({ query: "", focused: 0 });
         this.inputRef = useRef("input");
         this.gridRef = useRef("grid");
+        // hyphens: auto and the line breaks of the captions follow the language of the page: the backend layout
+        // (web.layout) leaves <html lang> empty, so the language of the user is set once (A-11-fix4)
+        if (!document.documentElement.getAttribute("lang") && user.lang) {
+            document.documentElement.setAttribute("lang", user.lang);
+        }
         onMounted(() => {
             // no on-screen keyboard on a phone until the user taps the search
             if (!this.ui.isSmall) {
@@ -32,6 +42,15 @@ export class TdHomeMenu extends Component {
         const apps = this.menuService.getApps().filter((app) => app.actionID);
         const query = this.state.query.trim();
         return query ? fuzzyLookup(query, apps, (app) => app.name) : apps;
+    }
+
+    /** A long one-word name («Обслуговування») gets a smaller font so that it fits the tile without a break. */
+    captionClass(app) {
+        const longest = Math.max(0, ...(app.name || "").split(/\s+/).map((word) => word.length));
+        if (longest >= LONG_WORD_XL) {
+            return "td_home_menu_caption td_home_menu_caption_long td_home_menu_caption_xlong";
+        }
+        return longest >= LONG_WORD ? "td_home_menu_caption td_home_menu_caption_long" : "td_home_menu_caption";
     }
 
     iconStyle(app) {
