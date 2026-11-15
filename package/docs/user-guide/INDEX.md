@@ -58,7 +58,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | F-19 | Заповнювати замір-лист у картці замовлення: ніші, комунікації, техніка… | A | AC-005, AC-006, AC-007 | zamirnyk.md § SC-07 | описано; тур A-16-4: PASS |
 | F-20 | Звіряти проєкт із заміром до погодження: чи вміщається техніка в ніші | A | AC-008, AC-009, AC-010 | zamirnyk.md § SC-07 | описано; тур A-16-4: PASS |
 | F-21 | Рахувати собівартість і маржу замовлення до запуску | A | AC-017, AC-018 | menedzher.md § SC-01 | описано; тур A-16-4: PASS |
-| F-22 | Вести графік оплат замовлення і нагадувати про доплату до монтажу | A | AC-019, AC-020, AC-021 | finansyst.md § SC-05; menedzher.md § SC-01 | описано; тур A-16-4: PASS |
+| F-22 | Вести графік оплат замовлення і нагадувати про доплату до монтажу | A | AC-019, AC-020, AC-021 | bryhadyr.md § SC-08 (крок 3); finansyst.md § SC-05; menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-23 | Показувати обіцяну й прогнозну дату з урахуванням цеху, порізки й замо… | A | AC-022, AC-023 | menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-24 | Ставити ціну виробу з розмірів у рядку замовлення | A | AC-015, AC-016 | menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-25 | Обирати юрособу-продавця й юрособу-виконавця монтажу (ТОВ + ФОП) | A, B | AC-035, AC-036 | admin.md § Користувачі й ролі; menedzher.md § SC-01 | описано |
@@ -74,7 +74,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | F-35 | Імпортувати прайси постачальників і сигналити «ціна вища за історію» | A | AC-085, AC-086 | komirnyk.md § SC-04 | описано; тур A-16-4: PASS |
 | F-36 | Вести замовні позиції (фарбовані фасади, стільниця, скло) з датою пост… | A | AC-024 | menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-37 | Збирати замовлення за комплектувальним листом по місцях і не відвантаж… | A | AC-091, AC-092, AC-093 | komirnyk.md § SC-04 | описано; тур A-16-4: PASS |
-| F-38 | Вести графік бригад і виїздів (інтервал, бригада) | A, C | AC-095, AC-103, AC-128 | admin.md § Редакції; bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
+| F-38 | Вести графік бригад і виїздів (інтервал, бригада) | A, C | AC-095, AC-103, AC-128 | admin.md § Редакції; bryhadyr.md § SC-08; menedzher.md § SC-01 (крок 8) | описано; тур A-16-4: PASS |
 | F-39 | Підписувати з клієнтом акт монтажу з фото, недоліками й чек-листом за … | A, C | AC-097, AC-098, AC-099, AC-130 | admin.md § Редакції; bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
 | F-40 | Позначати фото з акта у фотоархів об'єктів для реклами | A | AC-100 | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
 | F-41 | Нараховувати відрядну за операціями й відсоток бригаді з підписаного а… | A | AC-104, AC-105, AC-106, AC-109, AC-134 | bryhadyr.md § SC-08; finansyst.md § SC-05 | описано; тур A-16-4: PASS |
@@ -125,7 +125,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | AC-017 | Собівартість і маржа до запуску | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS; модуль: done |
 | AC-018 | Видимість маржі менеджеру — параметр | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS; модуль: done |
 | AC-019 | Графік оплат етапами | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS; модуль: done |
-| AC-020 | Контроль доплати перед виїздом | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS; модуль: done |
+| AC-020 | Контроль доплати перед виїздом | A | bryhadyr.md § SC-08 (крок 3) | описано; тур A-16-4: PASS; модуль: done |
 | AC-021 | Ручна позначка оплати з причиною | A | finansyst.md § SC-05 | описано; окремого кроку туру A-16 немає; модуль: done |
 | AC-022 | Прогнозна дата й банер зсуву | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS; модуль: done |
 | AC-023 | Прогноз без МО і без обіцяної дати | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS; модуль: done |
@@ -200,7 +200,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | AC-092 | Неповний комплект не відвантажується | A | komirnyk.md § SC-04 | описано; тур A-16-4: PASS; модуль: done |
 | AC-093 | Дозамовлення відсутньої деталі | A | komirnyk.md § SC-04 | описано; тур A-16-4: PASS; модуль: done |
 | AC-094 | Друк комплектувального листа | A | komirnyk.md § SC-04 | описано; окремого кроку туру A-16 немає; модуль: done |
-| AC-095 | Графік бригад | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
+| AC-095 | Графік бригад | A | menedzher.md § SC-01 (крок 8) | описано; тур A-16-4: PASS |
 | AC-096 | Денний план бригади | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS; модуль: done |
 | AC-097 | Акт монтажу з підписом | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS; модуль: done |
 | AC-098 | Підпис без підпису / зміна підписаного | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS; модуль: done |
@@ -373,14 +373,14 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Меблі: обмін з BAS | серверна дія `td_mebli_bas.ir_cron_td_bas_exchange_ir_actions_server` | td_mebli_bas | finansyst.md § SC-05; admin.md § Обмін з обліковою системою | описано |
 | Створити завдання розкрою | серверна дія `td_mebli_cutting.action_td_create_cutting_job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Мій день | серверна дія `td_mebli_install.td_mebli_install_day_server_action` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
-| Меблі: нагадування покупцям | серверна дія `td_mebli_notify.ir_cron_td_customer_reminders_ir_actions_server` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
+| Меблі: нагадування покупцям | серверна дія `td_mebli_notify.ir_cron_td_customer_reminders_ir_actions_server` | td_mebli_notify | admin.md § Розклади й автоматичні дії; admin.md § Резервні копії | описано |
 | Меблі: дії на зсув прогнозної дати | серверна дія `td_mebli_notify.ir_cron_td_forecast_activity_ir_actions_server` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
 | Меблі: ранковий брифінг власника | серверна дія `td_mebli_notify.ir_cron_td_morning_briefing_ir_actions_server` | td_mebli_notify | kerivnyk.md § SC-06; kerivnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Меблі: прогнозні дати замовлень | серверна дія `td_mebli_sale.ir_cron_td_recompute_forecast_ir_actions_server` | td_mebli_sale | nachalnyk-vyrobnytstva.md § SC-03; admin.md § Розклади й автоматичні дії | описано |
 | Оновити ціни за курсом | серверна дія `td_mebli_ua.action_td_update_prices_by_rate` | td_mebli_ua | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Курси НБУ | серверна дія `td_mebli_ua.ir_cron_td_nbu_rates_ir_actions_server` | td_mebli_ua | finansyst.md § SC-05; admin.md § Локалізація UA | описано |
 | Меблі: обмін з BAS | розклад `td_mebli_bas.ir_cron_td_bas_exchange` | td_mebli_bas | finansyst.md § SC-05; admin.md § Обмін з обліковою системою | описано |
-| Меблі: нагадування покупцям | розклад `td_mebli_notify.ir_cron_td_customer_reminders` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
+| Меблі: нагадування покупцям | розклад `td_mebli_notify.ir_cron_td_customer_reminders` | td_mebli_notify | admin.md § Розклади й автоматичні дії; admin.md § Резервні копії | описано |
 | Меблі: дії на зсув прогнозної дати | розклад `td_mebli_notify.ir_cron_td_forecast_activity` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
 | Меблі: ранковий брифінг власника | розклад `td_mebli_notify.ir_cron_td_morning_briefing` | td_mebli_notify | kerivnyk.md § SC-06; kerivnyk.md § Довідник ролі: меню, кнопки, друк | описано |
 | Меблі: прогнозні дати замовлень | розклад `td_mebli_sale.ir_cron_td_recompute_forecast` | td_mebli_sale | nachalnyk-vyrobnytstva.md § SC-03; admin.md § Розклади й автоматичні дії | описано |
@@ -532,7 +532,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Кнопка «У фотоархів» | кнопка форми/списку `td.mebli.install.act: action_td_photo_archive` | td_mebli_install | bryhadyr.md § SC-08 | описано |
 | Кнопка «Якість» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
 | Тип дії «Зсув прогнозної дати» | тип дії `mail.activity.type td_mebli_notify.mail_activity_type_td_forecast_shift` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
-| Умова оплати «Меблі на замовлення» | дані модуля `account.payment.term td_mebli_sale.payment_term_td_furniture` | td_mebli_sale | admin.md § Параметри; admin.md § Поля пакета на стандартних формах | описано |
+| Умова оплати «Меблі на замовлення» | дані модуля `account.payment.term td_mebli_sale.payment_term_td_furniture` | td_mebli_sale | admin.md § Перший запуск; admin.md § Параметри | описано |
 | Нагадування календаря «Лист — за 1 день» | дані модуля `calendar.alarm td_mebli_measure.alarm_mail_measure_1day` | td_mebli_measure | admin.md § Пошта | описано |
 | Тип зустрічі «Замір» | дані модуля `calendar.event.type td_mebli_measure.event_type_measure` | td_mebli_measure | admin.md § Пошта | описано |
 | Товар «Повторна деталь» (рекламація, брак) | дані модуля `product.template td_mebli_claim.product_remake_part, td_mebli_shop.product_td_repeat_part` | td_mebli_claim, td_mebli_shop | nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк; admin.md § Довідник налаштувань модулів | описано |
@@ -544,12 +544,12 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Смарт-кнопка «Рекламації» на замовленні | смарт-кнопка / значок / поле `sale.order: action_td_view_claims` | td_mebli_claim | bryhadyr.md § SC-08 | описано |
 | Смарт-кнопка «Не запаковано» на замовленні | смарт-кнопка / значок / поле `sale.order: action_td_view_kit` | td_mebli_shop | menedzher.md § SC-01 | описано |
 | Смарт-кнопка «Акти» на задачі-виїзді | смарт-кнопка / значок / поле `project.task: action_td_view_acts` | td_mebli_install | menedzher.md § SC-01 | описано |
-| Смарт-кнопка «Порізка» на виробничому замовленні | смарт-кнопка / значок / поле `mrp.production: action_td_view_cutting_jobs` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
+| Смарт-кнопка «Розкрій» на виробничому замовленні | смарт-кнопка / значок / поле `mrp.production: action_td_view_cutting_jobs` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
 | Смарт-кнопка «Обслуговування» на робочому центрі | смарт-кнопка / значок / поле `mrp.workcenter: action_td_view_requests` | td_mebli_maint | nachalnyk-vyrobnytstva.md § SC-03 | описано |
 | Смарт-кнопка «Замовлення на продаж» на специфікації | смарт-кнопка / значок / поле `mrp.bom: action_td_open_sale_order` | td_mebli_sale | menedzher.md § SC-01 | описано |
 | Значки рядка замовлення «Сформувати специфікацію», «Специфікація» | смарт-кнопка / значок / поле `sale.order.line: action_td_generate_bom, action_td_open_bom` | td_mebli_sale | menedzher.md § SC-01; tekhnolog.md § SC-02 | описано |
 | Значок «Відкрити замовлення клієнта» в «Затримані поставки» | смарт-кнопка / значок / поле `purchase.order.line: action_td_open_sale_orders` | td_mebli_sale | komirnyk.md § SC-04 | описано |
-| Поле «Середнє запізнення, дн.» (контакт-постачальник, затримані поставки) | смарт-кнопка / значок / поле `res.partner td_supplier_delay_avg; purchase.order.line td_supplier_delay` | td_mebli_sale | komirnyk.md § SC-04; admin.md § Поля пакета на стандартних формах | описано |
+| Смарт-кнопка «Середнє запізнення, дн.» на контакті-постачальнику (відкриває стандартний звіт «Вчасна доставка» з фільтром за контактом) і колонка в «Затримані поставки» | смарт-кнопка / значок / поле `res.partner: purchase_stock.action_purchase_vendor_delay_report; purchase.order.line td_supplier_delay` | td_mebli_sale | komirnyk.md § SC-04; admin.md § Поля пакета на стандартних формах | описано |
 | Налаштування «AI-підказка колонок» | поле налаштувань `group_td_feature_ai_mapping` | td_mebli_base | tekhnolog.md § SC-02; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Аналоги» | поле налаштувань `group_td_feature_analog` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
 | Налаштування «Підпис зміни замовлення» | поле налаштувань `group_td_feature_change_sign` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
@@ -576,11 +576,11 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Налаштування «Менеджер бачить маржу» | поле налаштувань `td_margin_to_salesman` | td_mebli_base | menedzher.md § SC-01; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Мінімальний обрізок, мм» | поле налаштувань `td_min_offcut_mm` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Нагадування про доплату, днів до виїзду» | поле налаштувань `td_pay_reminder_days` | td_mebli_base | menedzher.md § SC-01; admin.md § Довідник налаштувань модулів | описано |
-| Налаштування «Контроль доплати перед виїздом» | поле налаштувань `td_payment_control` | td_mebli_base | admin.md § Довідник налаштувань модулів; admin.md § Параметри | описано |
+| Налаштування «Контроль доплати перед виїздом» | поле налаштувань `td_payment_control` | td_mebli_base | bryhadyr.md § SC-08; admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Поріг ціни вище історії, %» | поле налаштувань `td_price_threshold_pct` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Застряглі, днів» | поле налаштувань `td_stuck_days` | td_mebli_base | admin.md § Довідник налаштувань модулів | описано |
 | Налаштування «Адреса підтримки» | поле налаштувань `td_support_email` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Перший запуск | описано |
-| Налаштування «Надсилати на вебхук» | поле налаштувань `td_support_webhook_enabled` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Звернення в підтримку (td_support) | описано |
+| Налаштування «Надсилати на вебхук» | поле налаштувань `td_support_webhook_enabled` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Резервні копії | описано |
 | Налаштування «Секрет вебхука» | поле налаштувань `td_support_webhook_secret` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Безпека | описано |
 | Налаштування «Адреса вебхука» | поле налаштувань `td_support_webhook_url` | td_support | admin.md § Довідник налаштувань модулів; admin.md § Звернення в підтримку (td_support) | описано |
 | Адреса підтримки (`td_support.email`) | параметр спільного модуля `td_support.email` | td_support | admin.md § Перший запуск; admin.md § Звернення в підтримку (td_support) | описано |
@@ -636,7 +636,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | `elearning.pass_score` | admin.md § Параметри | описано |
 | Профілі A / light / B / C; перехід A → B → C | admin.md § Профілі; § Перший запуск (крок 7) | описано; на стенді — B |
 | Редакції CE / EE, мости EE | admin.md § Редакції | CE — описано й перевірено; EE не перевірено (EE недоступна) |
-| Встановлення бази клієнта: сервер, addons_path, `odoo-bin -i … --load-language=uk_UA`, конфіг-пакет з answers.yaml, read-back | admin.md § Перший запуск | описано; виконується ранбуком B-04 (на базі клієнта не перевірялось) |
+| Встановлення бази клієнта: сервер, addons_path, `odoo-bin -i … --load-language=uk_UA`; конфіг-пакет з answers.yaml застосовує ToDo за ранбуком B-04 (`apply.py` — лише test-/demo-/emu-), адміністратор перевіряє результат за переліком | admin.md § Перший запуск | описано з межею: застосування конфіг-пакета — ToDo (AI-24); на базі клієнта не перевірялось |
 | Користувачі: створення, запрошення, паролі, компанії, часовий пояс; групи й права; правила записів | admin.md § Користувачі й ролі | описано |
 | Компанії й мультикомпанія (VP-03 `multi` / `multi_install_fop`): друга юрособа, налаштування на компанію, план рахунків, канал BAS на компанію, монтаж від ФОП | admin.md § Компанії й мультикомпанія | описано; на стенді одна компанія (VP-03 = single), `td_mebli_multico` не встановлено |
 | Безпека: паролі, 2FA, `list_db = False`, майстер-пароль, доступ адміністратора, секрети (ключ API BAS, секрет вебхука, SMTP) | admin.md § Безпека | описано |
@@ -648,7 +648,7 @@ SHA стенда: 6b8162068035656e9461a2f9a1bb7de2e91b95f9
 | Розклади й нумерація (у т. ч. «Курси НБУ» — вимкнено за замовчуванням) | admin.md § Розклади й автоматичні дії | описано |
 | Друковані форми і документи BOX §11.2 без звіту | admin.md § Друковані форми | описано; 4 документи не розроблено (AI-20) |
 | Оновлення версії: `odoo-bin -u … --stop-after-init`, зупинка сервісу, відкат, мінорні оновлення Odoo 19 | admin.md § Оновлення версії | описано; оновлення з тегу — крок A-18 |
-| Резервні копії: `pg_dump`/`pg_restore`, filestore, перевірка, розклад | admin.md § Резервні копії | описано; розклад — рішення AI-23 (вето власника/Тімліда) |
+| Резервні копії: `pg_dump`/`pg_restore`, filestore, перевірка, знешкодження пробної копії (`odoo-bin neutralize` + ручні кроки BAS/підтримка/НБУ), розклад | admin.md § Резервні копії | описано; розклад — рішення AI-23 (вето власника/Тімліда) |
 | Головний екран (td_home_menu) | admin.md § Головний екран (td_home_menu) | описано |
 | Вікно підтримки (td_support): адреса, вебхук, звернення | admin.md § Звернення в підтримку (td_support) | описано; адреса підтримки — рішення власника (не задано) |
 | База знань (td_knowledge, td_mebli_knowledge) | admin.md § База знань (td_knowledge) | описано |
