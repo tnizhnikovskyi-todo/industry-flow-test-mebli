@@ -1,7 +1,17 @@
 # Специфікація перевірок кроку; синтаксис JSON (валідний YAML 1.2). Контракт — ../checks.md
 {
  "step": "A-17",
+ "extra_allowed": ["tests/reports/", "docs/industries/*/research/AI-DECISIONS.md", "package/demo/defects.md"],
  "checks": [
+  {
+   "id": "user-guide-exists",
+   "prim": "exists",
+   "args": {
+    "paths": [
+     "package/docs/user-guide/INDEX.md"
+    ]
+   }
+  },
   {
    "id": "sha-eq",
    "prim": "sha_eq",
@@ -9,7 +19,8 @@
     "refs": [
      "head:package/ACCEPTANCE.md",
      "head:package/demo/scenarios.md",
-     "head:package/demo/README.md"
+     "head:package/demo/README.md",
+     "head:package/docs/user-guide/INDEX.md"
     ]
    }
   },
@@ -29,7 +40,15 @@
     "to": "extract:head:package/ACCEPTANCE.md",
     "allow": [
      "package/CHECKS.md",
+     "package/templates/CHECKS.md",
+     "package/ACCEPTANCE.md",
      "package/demo/**",
+     "package/templates/demo-README.md",
+     "package/docs/user-guide/**",
+     "package/demo/defects.md",
+     "docs/industries/*/research/AI-DECISIONS.md",
+     "flow/**",
+     "tests/**",
      "observations/"
     ]
    }
@@ -163,7 +182,7 @@
    "prim": "signature_by_ai",
    "args": {
     "file": "package/ACCEPTANCE.md",
-    "heading": "(?i)підпис|рішення|затверд"
+    "heading": "(?i)^(Висновок|Рішення) і підпис"
    }
   },
   {
@@ -172,6 +191,14 @@
    "args": {
     "text": "Вибіркова перевірка стенда; підпис «прийнято»",
     "who": "Власник продукту (рішення №36)"
+   }
+  },
+  {
+   "id": "owner-tests-stand",
+   "prim": "manual",
+   "args": {
+    "text": "Власник тестує стенд за інструкціями A-16b (INDEX.md): проходить сценарії своєї ролі, дефекти й зауваження фіксує в package/demo/defects.md; стенд локальний (`package/demo/up.sh`); рішення про сервер відкрите; запис «власник тестував: дата, SHA» у ACCEPTANCE.md",
+    "who": "Власник продукту"
    }
   }
  ]

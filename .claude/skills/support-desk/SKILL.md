@@ -2,7 +2,7 @@
 name: support-desk
 description: >
   Запускай на кроках B-09 (hypercare після go-live) і B-10 (супровід за SLA) флоу галузевого пакета.
-  Режими: «intake» — читає нові листи мітки Gmail клієнта та файли incidents/, заводить INC-NNN у hypercare.md / support-log.md (серйозність, тип з 8, AC, маршрут за triage-routes.md), готує чернетки; «hypercare-close» — 14 днів без критичних, граничний строк, факти для пілота;
+  Режими: «intake» — читає нові листи мітки Gmail клієнта та файли incidents/, заводить INC-NNN (і з td_support: тег «[ToDo-support]») у hypercare.md / support-log.md (серйозність, тип з 8, AC, маршрут за triage-routes.md), готує чернетки; «hypercare-close» — 14 днів без критичних, граничний строк, факти для пілота;
   «sla-month» — місячний звіт SLA. Тригери — "розбери звернення клієнта", "тріаж звернень", "звіт SLA за місяць", "отчёт по SLA".
   НЕ використовуй для питань «як зробити» за наявності бота в SOW (client-help-bot, B-07; передачі — params.handoff), для проєктів поза флоу пакета (hypercare-tracker), change-request
   і рішень «у продукт» (D-02), виправлення конфігу/коду (B-04/B-05/B-13) і поставки в прод (B-12).
@@ -41,6 +41,7 @@ description: >
 | B-07 `client-help-bot` | бот веде мітку допомоги й питання «як зробити» (розділ бота в SOW); тут ці треди не беремо. Передачі бота (`HB-NNN`) приймає `intake` за `params.handoff: help-log.md#HB-NNN`: заводить INC за переказом з `help-log.md`, без повторного читання мітки допомоги. Мітки різні; до рішення PM спільна мітка = `escalated` (одне питання не отримує двох чернеток) |
 | `odoo19-implementation:hypercare-tracker` | не викликається: інша таблиця тріажу, нова вимога там -> `tr-change-request` |
 | D-02 `flow-package-evolution:backlog-triage` | власник рішення «у продукт / у кастом / відхилено» і колонки «рішення D-02 і версія пакета»; тут лише рядок у «Запити в D-02» зі статусом «передано в беклог (D-02)» (B-09) / «передано в D-02» (B-10) |
+| A-17c `support-kb-builder`, A-16b `user-guide-builder` | Власники `package/support/` і `package/docs/user-guide/`; тут лише читаються як джерело діагностики й посилань на розділи інструкцій. Прогалини KB — у memo, правки KB тут не вносяться |
 | B-04 `runbook-executor`, B-05 `code-dev`/`pr-review`, B-06 `client-data-migrator`, B-07 `user-training-builder` | одержувачі маршруту; тут нічого не виправляється, у бази клієнта не ходимо |
 | B-12 (людина) | пише «застосування в прод» і запис у `delivery-log.md` за ID; тут лише читаємо для звірки |
 | D-05 `product-decision-drafter` | бере «Факти для рішення по пілоту»; рішення тут не пишемо |
@@ -70,7 +71,8 @@ description: >
 | AC | `docs/industries/<галузь>/ТР.md` (grep рядків AC), `clients/<к>/ТР-доробок.md` |
 | Реєстри | `hypercare.md`, `support-log.md` (обидва — для дедуплікації) |
 | Записи B-12 | `clients/<к>/delivery-log.md` (за ID) |
-| Консультації | `clients/<к>/training.md` |
+| Консультації | `clients/<к>/training.md`; інструкції пакета `package/docs/user-guide/` (A-16b) — читати на тезі пакета клієнта (`git show package/vX.Y:<шлях>`, X.Y з `config-log.md` / `clients/REGISTRY.md`), не на HEAD; розбіжність з HEAD — у memo |
+| Діагностика пакета (читати на тезі пакета клієнта `git show package/vX.Y:<шлях>`, X.Y з `config-log.md` / `clients/REGISTRY.md`; розбіжність з HEAD — у memo) | `package/support/AI-INSTRUCTIONS.md` і `kb/KB-NNN-*.md` (A-17c: архітектура `td_*`, обмеження й ризики, сценарії `DG-NN` «симптом -> перевірка -> виправлення -> маршрут»); внутрішні, клієнту не передаються; лише читання |
 | Правила | `flow-client-delivery/references/triage-routes.md` (спільна таблиця «тип -> маршрут»), `flow-core/references/pii-patterns.md`, `flow-core/references/id-patterns.md` (коди кроків, теги `package/vX.Y`), `references/severity-scale.md`, `references/sla-contract-extraction.md`, `references/gmail-intake.md`, `references/draft-replies.md` |
 | Шаблони | `package/templates/hypercare.md` / `support-log.md` на тегу пакета; немає -> `references/hypercare-template.md` / `support-log-template.md` + memo «шаблон не в пакеті» |
 | Політика даних | `package/DATA_POLICY.md`: «Знеособлення», «Ідентифікатор клієнта в репозиторії», «Матеріали минулих проєктів і звернення клієнтів: підстава обробки й режим читання» |
@@ -113,8 +115,10 @@ description: >
      консультація; ознаки — у `triage-routes.md`. Нова вимога — функції немає в ТР/AC і лист каже «хочемо, щоб…»,
      а не «не працює»; помилка стандартного Odoo = баг конфіг; недоступність, швидкодія, бекап, доступи,
      пошта/інтеграції = платформа-інфраструктура;
+   - **звернення з `td_support`** (§27: тема починається `[ToDo-support][<uuid бази>]`) — за `references/gmail-intake.md` розділ «Звернення з td_support»: клієнт за uuid бази (збіг з `config-log.md`/реєстром клієнта; невідомий uuid -> не вгадувати, `escalated_to: Підтримка`), тип за трасуванням (модуль `td_*` -> баг код / дефект пакета; стандартний модуль Odoo -> баг конфіг; без трасування, питання «як» -> консультація/навчання; платформа -> платформа-інфраструктура), версія й модулі з листа — у примітку; маршрут усе одно лише за `triage-routes.md`; Питання «як зробити» перед ескалацією звір зі статтею `td_knowledge`/`td_<галузь>_knowledge` (§27а) і KB пакета; є стаття — відповідай посиланням на неї, немає — передай BA і запропонуй додати статтю.
    - AC (grep по ТР галузі / ТР-доробок): обов'язково для баг конфіг і баг код; не знайдено -> тип не міняти,
      статус «потрібен AC — Підтримка», check FAIL для рядка; для платформа-інфраструктура і консультація AC не вимагати;
+   - діагностика: знайти в `package/support/kb` сценарій `DG-NN` за симптомом — перевірка (лише читання) і запропонований маршрут беруться звідти, але **кінцевий маршрут — за `triage-routes.md`**; суперечність -> `triage-routes.md` і memo. Сценарію немає — не вигадувати, memo «прогалина KB» — маршрут за flow-map: прогалина в інструкціях -> A-17c (оновлення KB); дефект поведінки модуля — за `triage-routes.md` (A-19/D-02). У чернетку клієнту й у `incidents/` внутрішні коди KB-/DG-/AI- не потрапляють;
    - версія пакета з `config-log.md` — у примітку; баг конфіг — з посиланням на рядок `config-log.md`; якщо баг
      виправлений у новішій версії — «виправлено у версії X.Y, B-11».
 10. Маршрут — **лише** з `triage-routes.md` за типом (для дефекту пакета — ще й за серйозністю):
@@ -169,12 +173,12 @@ description: >
 Шлях до скрипта — від теки скіла (`<тека скіла>/scripts/…`), cwd — корінь репо, аргумент-файл репо-відносний, `--base` = `git.base` наряду:
 `python3 <тека скіла>/scripts/check_support.py clients/<к>/<файл>.md --base <git.base> [--mode intake|hypercare-close|sla-month]
 [--routes <шлях до flow-client-delivery/references/triage-routes.md>] [--tr <ТР.md>] [--delivery-log <delivery-log.md>]
-[--other <hypercare.md|support-log.md>] [--period РРРР-ММ]` -> JSON `[{id, status, msg}]` у `checks`.
+[--other <hypercare.md|support-log.md>] [--period РРРР-ММ] [--drafts <файл|тека чернеток>] [--incidents <тека incidents/>]` -> JSON `[{id, status, msg}]` у `checks`.
 Перелік: `SD-columns`, `SD-enums` (регістр статусів не важливий), `SD-route`, `SD-route-table` (маршрут за типом і
 серйозністю з `triage-routes.md`; без `--routes` — SKIP), `SD-ac`, `SD-close`, `SD-pkg-defect`, `SD-d02` (нова вимога,
 дефект пакета не середньої серйозності), `SD-protected` (змінені чужі колонки; у нових рядках людські колонки порожні),
 `SD-dup`, `SD-sla`, `SD-sla-source`, `SD-report`, `SD-14days` (дата завершення ≥ start+14 і ≤ граничного строку),
-`SD-pii` (шаблони з `pii-patterns.md`), `SD-pii-name` (MANUAL: можливе ПІБ). Що скрипт не може перевірити — SKIP, не PASS;
+`SD-kbcodes` (у чернетках клієнту й `incidents/` немає KB-NNN, DG-NN, AI-NN; без `--drafts`/`--incidents` — SKIP), `SD-pii` (шаблони з `pii-patterns.md`), `SD-pii-name` (MANUAL: можливе ПІБ). Що скрипт не може перевірити — SKIP, не PASS;
 MANUAL іде в чек-лист Підтримки. Тести скрипта: `python3 -I <тека скіла>/scripts/test_check_support.py`. FAIL, який скіл виправляє сам
 (формат, маршрут), — виправити й повторити до `maxAttempts`; FAIL, що потребує людини (немає часу реакції, AC), здачу не
 блокує — іде в memo і чек-лист Підтримки.
@@ -208,6 +212,7 @@ MANUAL іде в чек-лист Підтримки. Тести скрипта: 
 - Решта — `references/open-questions.md`.
 
 ## Чого НЕ робити
+- Не цитувати клієнту й не записувати в `incidents/` вміст `package/support/` (KB-/DG-/AI-коди, ризики); не правити KB.
 - Не записувати нову вимогу як баг, а запит на розвиток — як баг; не вигадувати тип поза переліком із 8.
 - Не маршрутизувати не за таблицею; не вимагати AC для платформа-інфраструктура й консультації.
 - Не ставити «закрито» без підтвердження клієнта, «застосовано в прод» без запису B-12; не писати в чужі колонки.

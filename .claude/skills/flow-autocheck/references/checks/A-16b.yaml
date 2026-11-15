@@ -1,0 +1,97 @@
+# Специфікація перевірок кроку; синтаксис JSON (валідний YAML 1.2). Контракт — ../checks.md
+{
+ "step": "A-16b",
+ "extra_allowed": ["package/demo/defects.md", "docs/industries/*/research/AI-DECISIONS.md", "tests/reports/"],
+ "checks": [
+  {
+   "id": "index-exists",
+   "prim": "exists",
+   "args": {
+    "paths": [
+     "package/docs/user-guide/INDEX.md",
+     "package/docs/user-guide/admin.md"
+    ]
+   }
+  },
+  {
+   "id": "scope-guides",
+   "prim": "git_diff_allowed",
+   "args": {
+    "from": "base",
+    "to": "head",
+    "allow": [
+     "package/docs/user-guide/",
+     "package/demo/defects.md",
+     "docs/industries/<галузь>/research/AI-DECISIONS.md",
+     "tests/reports/",
+     "observations/"
+    ]
+   }
+  },
+  {
+   "id": "index-headings",
+   "prim": "headings",
+   "args": {
+    "ref": "head:package/docs/user-guide/INDEX.md",
+    "headings": [
+     "re:покриття",
+     "re:ролі",
+     "re:розроблене",
+     "re:налаштування"
+    ]
+   }
+  },
+  {
+   "id": "script-check-guides",
+   "prim": "manual",
+   "args": {
+    "text": "python3 -I <корінь плагіна flow-package-build>/skills/user-guide-builder/scripts/check_guides.py --dir package/docs/user-guide --stand-sha <значення мітки `SHA:` з package/demo/README.md; SHA_STAND — лише назва змінної> --spec <шлях із рядка «Джерело сценаріїв:» INDEX.md; SPEC без SC-NN -> package/demo/scenarios.md або --id-pattern>: UG-cover (кожен сценарій SPEC має розділ), UG-cover-dev (меню, дії, звіти td_* мають розділ), UG-cover-admin (ключі answers.yaml і VP-NN є в admin.md; §26а), UG-img (кожне зображення існує й на нього є посилання, сиріт немає), UG-sha (SHA в INDEX = SHA_STAND). Свіжість окремо: `git diff --quiet <SHA_CHECKS з package/CHECKS.md>..HEAD -- package/addons package/config package/master-data ':!package/addons/td_*_elearning/*' ':!package/config/manifest.yaml' ':!package/config/CONFIG.md'` (код 0; формула та сама після A-17b), UG-lang (без англійських підписів у тексті кроків). --stand-sha підставляє runner зі stand README (не git.head кроку); UG-sha, UG-cover-dev (без --addons) і UG-cover-admin (без --answers) = SKIPPED означає «не готово» (FAIL кроку), а не PASS; додатково звірку виконує примітив demo-sha. Скрипт autocheck.py його не запускає: має виконати runner (не виконано → ERROR, не PASS), JSON вставляється у checks[] (FAIL скрипта = FAIL кроку). Точний CLI — `--help` скрипта.",
+    "cmd": [
+     "python3",
+     "-I",
+     "<корінь плагіна flow-package-build>/skills/user-guide-builder/scripts/check_guides.py",
+     "--dir",
+     "package/docs/user-guide",
+     "--spec",
+     "<шлях із рядка «Джерело сценаріїв:» INDEX.md>",
+     "--stand-sha",
+     "<значення мітки `SHA:` з package/demo/README.md; SHA_STAND — лише назва змінної>",
+     "--addons",
+     "package/addons",
+     "--answers",
+     "package/templates/answers.yaml",
+     "--config",
+     "package/config/CONFIG.md"
+    ],
+    "who": "runner"
+   }
+  },
+  {
+   "id": "no-pii",
+   "prim": "pii_strict",
+   "args": {
+    "paths": [
+     "package/docs/user-guide/"
+    ]
+   }
+  },
+  {
+   "id": "demo-sha",
+   "prim": "sha_eq",
+   "args": {
+    "refs": [
+     "head:package/docs/user-guide/INDEX.md",
+     "head:package/demo/README.md"
+    ]
+   }
+  },
+  {
+   "id": "review-checklist",
+   "prim": "manual",
+   "args": {
+    "text": "Рецензія за review-checklists/user-guide.md: скриншоти з поточного SHA, кроки відтворюються на стенді, ролі = ролі стенда, дефект UI знайдено під час зйомки -> повернення A-14 (не правка модуля в цьому кроці)",
+    "who": "Контент-менеджер / власник"
+   }
+  }
+ ]
+}

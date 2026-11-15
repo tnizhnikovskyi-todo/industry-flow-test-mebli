@@ -1,0 +1,158 @@
+{
+  "skill_name": "elearning-builder",
+  "evals": [
+    {
+      "id": "happy-courses",
+      "prompt": "Наряд A-17b, меблі (td_mebli_elearning). A-17 затверджено. INDEX A-16b: ролі komirnyk, master, admin (SC-01..03). package/templates/answers.yaml: elearning.mode: \"on\", pass_score не задано (за замовчуванням 80). Збери модуль. Вхідні файли — у `files`.",
+      "expected_output": "Модуль із 3 курсами (по одному на роль), уроки з source: на розділи SC-NN із текстом кроків і зображенням, тест ≥5 питань на курс з однією правильною відповіддю, pass_score=80 і реальний механізм порога (README «Механізм порога:»), «Доступ:» з файл:рядок, depends website_slides, tests/ (курси за xml-id, test_access); перевірка Кроку 1 із файл:рядок або «не перевірено».",
+      "assertions": [
+        "Курсів 3 = ролей з таблиці «Ролі» INDEX; кожен курс має маркер role:",
+        "Кожен урок має source: <роль>.md#SC-NN на існуючий розділ і непорожній текст; якщо розділ має знімки — зображення (EL-content)",
+        "У кожному курсі ≥5 питань; у кожного питання рівно одна правильна відповідь",
+        "Параметр pass_score = 80; README має «Механізм порога: штатний|survey|код» із файл:рядок 19.0 (EL-score), не «параметр без механізму»",
+        "README має «Доступ:» із файл:рядок, у tests/ є test_*access* (EL-access)",
+        "depends містить website_slides; сертифікацію не додано без підтвердження website_slides_survey",
+        "Скрипт на fixtures/elearning-ok з --answers: EL-courses, EL-quiz, EL-source, EL-content, EL-lang, EL-pass, EL-mode, EL-score, EL-access, EL-deps, EL-tests = PASS",
+        "Імена моделей/полів website_slides подано як «перевірити у вихідниках 19.0, файл:рядок», не як факт",
+        "Обов'язкові гейти до A-18 названо: odoo19-lint, CI C-03 на SHA, security-review data-модуля"
+      ],
+      "files": [
+        "evals/fixtures/elearning-ok/user-guide/",
+        "evals/fixtures/elearning-ok/addons/",
+        "evals/fixtures/elearning-ok/answers.yaml"
+      ]
+    },
+    {
+      "id": "bad-module-fails",
+      "prompt": "Перевір модуль скриптом: python3 -I scripts/check_elearning.py --module evals/fixtures/elearning-bad/addons/td_mebli_elearning --guide evals/fixtures/elearning-bad/user-guide --answers evals/fixtures/elearning-bad/answers.yaml. Що не так і що виправити?",
+      "expected_output": "EL-quiz FAIL (два правильних, курс з 3 питаннями), EL-source FAIL (SC-99 не існує), EL-lang FAIL (англійська назва курсу), EL-pass FAIL (70 != 80), EL-mode FAIL (on без лапок), EL-score FAIL (параметр без механізму), EL-access FAIL, EL-deps FAIL (немає website_slides). Код 1.",
+      "assertions": [
+        "EL-quiz = FAIL: питання з двома правильними й курс із 3 питаннями",
+        "EL-source = FAIL: розділу SC-99 немає в komirnyk.md",
+        "EL-lang = FAIL: «Course: Master»",
+        "EL-pass = FAIL: pass_score=70 не збігається з 80",
+        "EL-deps = FAIL: немає website_slides",
+        "EL-mode = FAIL: `mode: on` без лапок (YAML 1.1 булеве)",
+        "EL-score = FAIL: у README немає механізму порога («параметр без механізму» = не готово)",
+        "EL-access = FAIL: немає «Доступ:» і тесту доступу",
+        "Агент виправляє джерело (XML), а не послаблює скрипт; done не заявляє"
+      ],
+      "files": [
+        "evals/fixtures/elearning-bad/user-guide/",
+        "evals/fixtures/elearning-bad/addons/",
+        "evals/fixtures/elearning-bad/answers.yaml"
+      ]
+    },
+    {
+      "id": "certification-unverified",
+      "prompt": "Наряд A-17b. Власник просить «видавати сертифікат після тесту». Вихідники Odoo 19.0 недоступні в сесії (немає мережі до GitHub). Що робити?",
+      "expected_output": "Сертифікація не робиться; у research/AI-DECISIONS.md рядок «перевірити у вихідниках 19.0: website_slides_survey / сертифікація» з ризиком; решта модуля збирається; EL-cert = «не перевірено»; поля website_slides не подано як факт.",
+      "assertions": [
+        "Сертифікацію (survey-записи, залежність website_slides_survey) не додано",
+        "AI-DECISIONS отримує рядок з ризиком і формулюванням «перевірити у вихідниках 19.0»",
+        "Рішення не очікує людину: решта кроку виконується (AI за замовчуванням, власник — вето)",
+        "Імена моделей/полів помічено як чернетку без підтвердження; EL-schema = MANUAL/не перевірено",
+        "У memo — що перевірити, коли будуть вихідники"
+      ]
+    },
+    {
+      "id": "elearning-off-and-params",
+      "prompt": "Наряд A-17b. package/templates/answers.yaml: elearning.mode: \"off\", elearning.pass_score: 90. Що робити?",
+      "expected_output": "При off крок A-17b не запускається і модуль не збирається (dispatch-rules §4в); якщо наряд запущено вручну — модуль не збирати, waiting_human; рядок в AI-DECISIONS/memo. Для режиму on з pass_score 90 — параметр 90 у data/params.xml і check_elearning --answers дає EL-pass = PASS.",
+      "assertions": [
+        "При elearning.mode \"off\" модуль не збирається, файли модуля не створюються; результат waiting_human/пропуск, а не done з модулем",
+        "Параметра mode в модулі немає; ключі elearning.* живуть у package/templates/answers.yaml і додаються цим кроком (запис у «Зміни анкети» R-08)",
+        "Для mode \"on\", pass_score 90: ir.config_parameter *.pass_score = 90; EL-pass і EL-mode = PASS з --answers",
+        "Значення on/off у лапках (YAML 1.1); без лапок EL-mode = FAIL",
+        "Файли questionnaire.md і A-09 не змінюються"
+      ]
+    },
+    {
+      "id": "guide-changed-sync",
+      "prompt": "Наряд A-17b повтор. Після A-16b refresh розділ SC-02 у master.md перейменовано на SC-04, додано роль 'director' (director.md). Оновити модуль.",
+      "expected_output": "Додано курс director (role: director) з уроками й тестом ≥5; source: master.md#SC-04 замість SC-02; EL-courses і EL-source PASS; інші курси не змінено.",
+      "assertions": [
+        "Курсів стало на один більше; EL-courses = PASS",
+        "source: у уроці Майстра вказує на SC-04",
+        "Тексти уроків збігаються з оновленими розділами (не переписано вручну)",
+        "git diff --stat: змінено лише data/ та tests/ (кількість курсів) модуля",
+        "Тест модуля оновлено на нову кількість ролей"
+      ]
+    },
+    {
+      "id": "install-skipped-not-ready",
+      "prompt": "Наряд A-17b. Усі EL-* скрипта PASS, але чистої бази CE для установки немає й run_tests.sh не існує. Чи можна заявити done?",
+      "expected_output": "Ні: EL-install = SKIPPED = не готово; result waiting_human або escalated з поясненням (C-00 скрипти/база); done не заявляється.",
+      "assertions": [
+        "Скіл не заявляє done без установки на чистій CE",
+        "EL-install позначено SKIPPED/не виконано, а не PASS",
+        "Передкрок C-00 (tools/odoo) згадано як блокер, який AI знімає сам, якщо може; інакше waiting_human із конкретною вимогою",
+        "Модуль у гілці все одно залишається (робота не втрачається)"
+      ]
+    },
+    {
+      "id": "empty-lesson-no-content",
+      "prompt": "Перевір модуль: python3 -I scripts/check_elearning.py --module evals/fixtures/elearning-empty/addons/td_mebli_elearning --guide evals/fixtures/elearning-empty/user-guide --answers evals/fixtures/elearning-empty/answers.yaml. Усе інше схоже на ok. Що не так?",
+      "expected_output": "EL-content FAIL: lesson_master_1 порожній (немає тексту), lesson_komirnyk_1 без зображення, хоча SC-01 має знімок. Агент переносить текст кроків і зображення з A-16b, а не послаблює скрипт.",
+      "assertions": [
+        "EL-content = FAIL з lesson_master_1 (порожній урок) і lesson_komirnyk_1 (немає зображення)",
+        "Агент бере текст і знімки з розділів A-16b, текст не переписує",
+        "Решта EL-* = PASS; код повернення 1; done не заявляється"
+      ],
+      "files": [
+        "evals/fixtures/elearning-empty/user-guide/",
+        "evals/fixtures/elearning-empty/addons/",
+        "evals/fixtures/elearning-empty/answers.yaml"
+      ]
+    },
+    {
+      "id": "pass-score-without-mechanism",
+      "prompt": "Наряд A-17b. У вихідниках 19.0 штатного порога проходження тесту website_slides немає, website_slides_survey не підтверджено. Власник хоче «тест з порогом 80». Як реалізувати і що перевірити?",
+      "expected_output": "Механізм «код»: мінімальний код у модулі рахує відсоток і порівнює з td_<галузь>_elearning.pass_score + тест застосування; README «Механізм порога: код»; рядок AI-DECISIONS і memo власнику; EL-score перевірено; варіант «лише параметр» відхилено.",
+      "assertions": [
+        "Обрано гілку 3 дерева рішень (код + тест), а не «параметр для звіту»",
+        "README має «Механізм порога: код»; тести перевіряють застосування pass_score",
+        "У AI-DECISIONS рядок з ризиком, у memo позначка власнику",
+        "Сертифікацію не додано (website_slides_survey не підтверджено)",
+        "Варіант «параметр без механізму» названо «не готово» (EL-score FAIL)"
+      ]
+    },
+    {
+      "id": "courses-not-public",
+      "prompt": "Наряд A-17b. Модуль зібрано, EL-* PASS. Рецензент питає: чи не побачить анонімний відвідувач сайту курс «Адміністратор» з внутрішніми інструкціями? Що перевірити?",
+      "expected_output": "EL-access: у README «Доступ:» з файл:рядок 19.0, тест test_*access* під публічним користувачем; обов'язкові гейти до A-18: odoo19-lint, CI C-03 на SHA, security-review data-модуля. Недоведений доступ = не готово.",
+      "assertions": [
+        "Названо перевірку EL-access (README «Доступ:» з файл:рядок 19.0 + тест доступу)",
+        "Названо обов'язкові гейти до A-18: odoo19-lint, CI C-03 зелений на SHA, security-review",
+        "Не стверджується як факт поведінка website_slides без файл:рядок 19.0",
+        "Недоведений доступ = не готово, рядок AI-DECISIONS з ризиком"
+      ]
+    },
+    {
+      "id": "blocked-scenario-skipped",
+      "prompt": "Наряд A-17b. У master.md розділ SC-02 має «Статус: заблоковано дефектом D-03». Решта розділів готові. Що робити з курсом Майстра?",
+      "expected_output": "Урок для SC-02 не створюється; EL-blocked = WARN зі списком; курс Майстра збирається з готових розділів; у memo — повернення A-14 і повтор A-16b/A-17b після виправлення.",
+      "assertions": [
+        "Урок для заблокованого SC-02 не створюється; скрипт дає EL-blocked = WARN, а не FAIL",
+        "Курс ролі лишається (роль є в INDEX), якщо є готові розділи",
+        "У memo — заблокований сценарій і маршрут A-14",
+        "Текст заблокованого розділу не вигадується"
+      ]
+    },
+    {
+      "id": "admin-without-sc",
+      "prompt": "Наряд A-17b, меблі. INDEX A-16b: ролі komirnyk, master, admin; у admin.md розділи «Параметри», «Профілі» без SC-NN (усі SC належать бізнес-ролям). Збери курс «Адміністратор». Вхідні файли — у `files`.",
+      "expected_output": "Курс «Адміністратор» має уроки за розділами admin.md із маркером `source: admin.md#<заголовок>` (наприклад #Параметри) і тест; EL-source = PASS; EL-lang пропускає адмін-уроки; waiting_human не ставиться.",
+      "assertions": [
+        "Курс admin має ≥1 урок із source: admin.md#<існуючий заголовок>, а не лише тест",
+        "EL-source PASS на evals/fixtures/elearning-admin-nosc",
+        "Агент не вигадує SC-NN у admin.md і не ставить waiting_human"
+      ],
+      "files": [
+        "evals/fixtures/elearning-admin-nosc/user-guide/",
+        "evals/fixtures/elearning-admin-nosc/addons/",
+        "evals/fixtures/elearning-admin-nosc/answers.yaml"
+      ]
+    }
+  ]
+}

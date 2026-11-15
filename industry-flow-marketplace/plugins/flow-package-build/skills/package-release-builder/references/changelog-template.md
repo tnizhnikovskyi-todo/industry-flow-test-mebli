@@ -11,6 +11,7 @@
 ### Склад пакета
 | Модуль | version | Тип (td_* / вендорений) | Джерело/коміт | Ліцензія |
 |---|---|---|---|---|
+<!-- td_<галузь>_demo — примітка «лише демо-стенд, клієнтам не ставиться»; td_home_menu/td_support/td_knowledge — власна версія -->
 
 ### Шаблони документів клієнта
 `package/templates/migration-plan.md`, `training.md` — <що змінилось / без змін>
@@ -30,6 +31,11 @@
 
 ### Команда установки
 `<одна команда скрипта C-00>`
+
+### Передача клієнту        <- release і odoo-upgrade (0.4.0)
+- Модулі до установки (A-17b), лише при `elearning.mode: "on"`: `website_slides`, `td_<галузь>_elearning` (порядок установки; ці два рядки вносить у `config/{manifest.yaml,CONFIG.md}` сам A-17b за versioning.md п. 13 — тут дубль для передачі клієнту; R-05a звіряє CHANGELOG із CONFIG)
+- Входить: `addons/` (td_* вкл. `td_<галузь>_elearning`, якщо `elearning.mode: "on"`), `docs/user-guide/`, `config/`, `master-data/`, `templates/`
+- Виключено: `support/` (внутрішній KB A-17c), `research/`, `metrics/`, `demo/release-defects.md`
 
 ### Сумісність з Odoo        <- лише odoo-upgrade
 ### Виправлено (hotfix)       <- лише patch: дефект узагальнено, версії клієнтів ідентифікаторами

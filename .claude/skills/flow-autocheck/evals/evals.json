@@ -19,16 +19,27 @@
     },
     {
       "id": "a18-diff-version",
-      "prompt": "Режим result, крок A-18, scope package/demo-1, кандидат у тег package/v1.2. Фікстуру будує evals/fixtures/a18-diff-version/make_repo.sh <тека>. Між SHA ACCEPTANCE і кандидатом змінено package/demo/README.md та package/CHANGELOG.md (обидва в переліку 7 дозволених файлів з done) і package/templates/answers.yaml (поза переліком). ACCEPTANCE.md каже 1.2, а td_x має версію 19.0.1.1 у __manifest__.py.",
-      "expected_output": "Вердикт FAIL. diff-allowed-7 FAIL, у msg лише package/templates/answers.yaml (README і CHANGELOG не FAIL), route_on_fail «контур A-14». version-eq FAIL з чотирма значеннями (тег 1.2, CHANGELOG, ACCEPTANCE 1.2, td_x 1.1); можливий додатковий FAIL kit-vs-changelog. odoo19-lint та установка в чисту базу — MANUAL. Тег не поставлено.",
+      "prompt": "Режим result, крок A-18, scope package/demo-1, кандидат у тег package/v1.2. Фікстуру будує evals/fixtures/a18-diff-version/make_repo.sh <тека>. Між SHA ACCEPTANCE і кандидатом змінено package/demo/README.md та package/CHANGELOG.md (обидва у дозволеному переліку versioning.md (done)) і package/questionnaire.md (поза переліком). ACCEPTANCE.md каже 1.2, а td_x має версію 19.0.1.1 у __manifest__.py.",
+      "expected_output": "Вердикт FAIL. diff-allowed-7 FAIL, у msg лише package/questionnaire.md (README і CHANGELOG не FAIL), route_on_fail «контур A-14». version-eq FAIL з чотирма значеннями (тег 1.2, CHANGELOG, ACCEPTANCE 1.2, td_x 1.1); можливий додатковий FAIL kit-vs-changelog. odoo19-lint та установка в чисту базу — MANUAL. Тег не поставлено.",
       "assertions": [
-        "diff-allowed-7 має статус FAIL і називає лише package/templates/answers.yaml як зайвий файл",
-        "package/demo/README.md і package/CHANGELOG.md не названо порушенням",
+        "diff-allowed-7 має статус FAIL і називає лише package/questionnaire.md як зайвий файл",
+        "package/demo/README.md, package/demo/up.sh і package/CHANGELOG.md не названо порушенням (package/demo/** дозволено, свіжість стенда перевіряє sha_eq/R-18)",
         "route_on_fail для diff-allowed-7 — контур A-14 і позначений як пропозиція",
         "version-eq має статус FAIL, msg містить усі чотири значення версії (тег, CHANGELOG, ACCEPTANCE, td_x)",
         "Версію з __manifest__.py прочитано через git show і ast.literal_eval, код маніфесту не виконувався й не імпортувався",
+        "template-headings (якщо запущено) не дає FAIL за заголовками з приміткою «<- лише odoo-upgrade» / «<- лише patch» у режимі release",
         "odoo19-lint, установка в чисту базу і тест оновлення — рядки MANUAL, не запущені",
         "Тег package/v1.2 не створено, нічого не закомічено, у Odoo нічого не записано"
+      ]
+    },
+    {
+      "id": "a14-allocation-shared",
+      "prompt": "Режим result, крок A-14, scope package/demo-1. Фікстуру будує evals/fixtures/a14-allocation-shared/make_repo.sh <тека>. У package/addons є файл AC-COVERAGE.md і теки td_home_menu, td_support, td_knowledge, td_x_demo, td_x_elearning, td_x_knowledge без рядків в ALLOCATION; package/config має CONFIG.md, manifest.yaml, vp-map.yaml, install-log.md.",
+      "expected_output": "allocation-coverage PASS: файл AC-COVERAGE.md не рахується текою, спільні (§27/§27а), demo- та elearning-модулі не вимагають рядка в ALLOCATION, файли config звіряються з CHECKS.md за назвою без розширення.",
+      "assertions": [
+        "allocation-coverage має статус PASS",
+        "AC-COVERAGE.md не названо текою без ALLOCATION",
+        "td_home_menu, td_support, td_knowledge, td_x_demo, td_x_elearning не названо в FAIL"
       ]
     },
     {
@@ -165,6 +176,45 @@
         "Є input-intake зі статусом FAIL",
         "input:briefing.md PASS",
         "Задачу в чергу не ставлено, репо не змінено"
+      ]
+    },
+    {
+      "id": "a21-consistency-e3",
+      "prompt": "autocheck result для A-21: REJECTED містить REJ-002 із td_mebli_optimizer, а в package/addons є така тека; PLAN.md каже 11 показників, concept/screens.md — 12; коробка у BOX — A, у PLAN — B.",
+      "expected_output": "FAIL rejected-vs-code, FAIL kpi-count, FAIL box-eq, plan-modules-exist за наявності зайвого модуля; вердикт FAIL з route_on_fail A-21.",
+      "assertions": [
+        "rejected-vs-code = FAIL з REJ-ID",
+        "kpi-count = FAIL з обома числами",
+        "box-eq = FAIL",
+        "Вердикт FAIL"
+      ]
+    },
+    {
+      "id": "no-db-binaries",
+      "prompt": "autocheck result для будь-якого кроку: diff base..head додає package/demo/backup.dump і db.zip.",
+      "expected_output": "Загальна перевірка no-db-binaries = FAIL з переліком файлів.",
+      "assertions": [
+        "no-db-binaries = FAIL",
+        "Файли названо без вмісту"
+      ]
+    },
+    {
+      "id": "a16b-spec",
+      "prompt": "autocheck result для A-16b: package/docs/user-guide/INDEX.md і admin.md існують, UG-sha у звіті check_guides.py = FAIL.",
+      "expected_output": "index-exists PASS; script-check-guides — рядок manual (runner), FAIL скрипта = FAIL кроку; вердикт FAIL.",
+      "assertions": [
+        "Використано специфікацію A-16b.yaml, а не spec-missing",
+        "FAIL скрипта check_guides.py стає FAIL кроку"
+      ]
+    },
+    {
+      "id": "check-facts-dates",
+      "prompt": "Запусти scripts/check_facts.py research/facts.yaml concept у теці check_facts-dates: дата стоїть після числа («1 200 компаній станом на 2026-08 <!--fact:…-->»), дата факта записана як 15.08.2026 при 2026-08-15 у facts.",
+      "expected_output": "Значення-дати не вважаються числовими фактами: PASS, код 0; та сама дата в іншому записі (ДД.ММ.РРРР ↔ РРРР-ММ-ДД) приймається; «1200.50 грн» датою не є.",
+      "assertions": [
+        "Код 0, FACT-mismatch PASS",
+        "«-08» з дати 2026-08 не береться за число",
+        "15.08.2026 = 2026-08-15 для дат-фактів"
       ]
     }
   ]

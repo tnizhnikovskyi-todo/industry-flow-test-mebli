@@ -1,0 +1,5 @@
+
+# бекапи баз не комітимо (0.4.0, no_db_binaries)
+*.zip
+*.dump
+*.sql.gz

@@ -1,6 +1,7 @@
 # Специфікація перевірок кроку; синтаксис JSON (валідний YAML 1.2). Контракт — ../checks.md
 {
  "step": "A-18",
+ "extra_allowed": ["package/demo/release-defects.md", "tests/reports/", "docs/industries/*/research/AI-DECISIONS.md"],
  "checks": [
   {
    "id": "tag-descendant",
@@ -21,17 +22,37 @@
    "args": {
     "from": "extract:head:package/ACCEPTANCE.md",
     "to": "head",
-    "compare_done": true,
     "allow": [
-     "package/demo/README.md",
-     "package/demo/scenarios.md",
+     "package/demo/**",
+     "package/templates/demo-README.md",
      "package/ACCEPTANCE.md",
      "package/CHANGELOG.md",
      "package/templates/migration-plan.md",
      "package/templates/training.md",
      "package/templates/CHANGELOG.md",
-     "observations/"
+     "observations/",
+     "package/docs/user-guide/**",
+     "package/addons/td_*_elearning/**",
+     "package/templates/answers.yaml",
+     "package/config/manifest.yaml",
+     "package/config/CONFIG.md",
+     "package/support/**",
+     "docs/industries/*/research/AI-DECISIONS.md",
+     "package/demo/defects.md",
+     "package/CHECKS.md",
+     "package/metrics/key-models.yaml",
+     "package/demo/release-defects.md",
+     "flow/**",
+     "tests/**"
     ]
+   }
+  },
+  {
+   "id": "answers-elearning-only",
+   "prim": "manual",
+   "args": {
+    "text": "package/templates/answers.yaml змінено лише блоком `elearning:` (змінено лише блок elearning:); інші ключі — без змін відносно ACCEPTANCE",
+    "who": "runner"
    }
   },
   {
@@ -50,7 +71,7 @@
       "name": "CHANGELOG",
       "kind": "regex",
       "ref": "head:package/CHANGELOG.md",
-      "pattern": "(?im)^#+\\s*v?(\\d+\\.\\d+)\\b",
+      "pattern": "(?im)^#+\\s*(?:Версія\\s+)?(?:package/)?v?(\\d+\\.\\d+)\\b",
       "pick": "max"
      },
      {
@@ -146,6 +167,12 @@
    }
   },
   {
+   "id": "no-db-binaries-tree",
+   "prim": "no_db_binaries",
+   "route_on_fail": "A-15",
+   "args": {"tree": "package/"}
+  },
+  {
    "id": "odoo19-lint",
    "prim": "manual",
    "args": {
@@ -167,6 +194,14 @@
    "args": {
     "text": "Тест оновлення з попереднього тегу (CI C-03)",
     "who": "CI"
+   }
+  },
+  {
+   "id": "support-excluded",
+   "prim": "manual",
+   "args": {
+    "text": "package/support/ у репо пакета, але виключено з клієнтської передачі (перелік у release-нотатці); у релізі є package/docs/user-guide; модуль td_<галузь>_elearning — лише при elearning.mode: on (при off модуля в релізі немає, у release-нотатці рядок «вимкнено параметром»)",
+    "who": "runner"
    }
   }
  ]

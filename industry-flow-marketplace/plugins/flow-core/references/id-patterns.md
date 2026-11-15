@@ -4,7 +4,7 @@
 
 | Що | Regex (Python, `re`) | Де шукається |
 |---|---|---|
-| Мітка SHA | `(?i)\b(SHA\|commit)\b[:\s]*([0-9a-f]{7,40})` | `ACCEPTANCE.md`, `CHECKS.md`, README стенда (A-15), `scenarios.md` |
+| Мітка SHA | `(?i)\b(SHA\|commit)(?:\s+(?:стенда\|модулів\|пакета))?\b[:\s]*([0-9a-f]{7,40})` | `ACCEPTANCE.md`, `CHECKS.md`, README стенда (A-15), `scenarios.md` |
 | Тег версії | `^package/v\d+\.\d+(-odoo\d+)?$` | `git tag --list 'package/v*'` (суфікс `-odoo<N>` лише для тега переходу на нову мажорну Odoo, рішення q19; звичайний випуск -- без суфікса) |
 | Патч-тег | `^package/v\d+\.\d+\.\d+$` | hotfix A-19/A-18 |
 | Гілка переходу (q19) | `^upgrade/v\d+\.\d+-odoo\d+$` | `git branch -r --list 'origin/upgrade/*'` (гілка переходу `upgrade/vX.Y-odoo<N>`, рішення q19; тег переходу -- `package/vX.Y-odoo<N>`) |
@@ -17,6 +17,9 @@
 | Урок | `\bLSN-\d{3}\b` | `flow/lessons/LSN-xxx.md`, `flow/lessons/INDEX.md` (C-08R) |
 | Рядок edition-claims | `\bEC-\d{3}\b` | `research/edition-claims.md` (К-12) |
 | Модуль ToDo у збірку | `\bREUSE-\d{2}\b` | `research/REUSE.md` (A-03c) |
+| Сторінка бази знань підтримки | `\bKB-\d{3}\b` | `package/support/kb/KB-NNN-*.md`, `package/support/INDEX.md` (A-17c; унікальні в межах `package/support/`; `check_kb.py` KB-ids) |
+| Крок із літерою (0.4.0) | `\b[A-D]-\d{2}[a-d]\b` | A-16b, A-17b, A-17c — той самий «Код кроку»; вихідні теки: `package/docs/user-guide/`, `package/addons/td_<галузь>_elearning/`, `package/support/` |
+| Мітка перевірки скриптів 0.4.0 | `\b(?:UG\|EL\|KB)-[a-z]+\b` | `UG-cover`, `UG-img`, `UG-sha`, `UG-lang`, `UG-cover-dev`, `UG-cover-admin` (`check_guides.py`); `EL-courses`, `EL-quiz`, `EL-source`, `EL-lang` (`check_elearning.py`); `KB-module`, `KB-ids`, `KB-route`, `KB-privacy` (`check_kb.py`) | Повний перелік ID — у таблиці «Автоперевірка» SKILL.md відповідного скіла.
 | Питання бота | `HB-\d{3,}` | `help-log.md` (client-help-bot); передача в support-desk: `params.handoff` |
 
 Джерела SHA для перевірок:

@@ -9,7 +9,8 @@
     "paths": [
      "docs/industries/<галузь>/demand/results.md"
     ]
-   }
+   },
+   "when": "in:A-23"
   },
   {
    "id": "recommendation-heading",
@@ -19,7 +20,8 @@
     "headings": [
      "re:рекомендація ai для a-07"
     ]
-   }
+   },
+   "when": "in:A-23"
   },
   {
    "id": "no-money",
@@ -28,11 +30,34 @@
     "paths": [
      "docs/industries/<галузь>/demand/results.md"
     ]
+   },
+   "when": "in:A-23"
+  },
+  {
+   "id": "skip-decisions-exists",
+   "prim": "exists",
+   "when": "not_in:A-23",
+   "args": {
+    "paths": [
+     "docs/industries/<галузь>/research/AI-DECISIONS.md"
+    ]
+   }
+  },
+  {
+   "id": "skip-recommendation-heading",
+   "prim": "headings",
+   "when": "not_in:A-23",
+   "args": {
+    "ref": "head:docs/industries/<галузь>/research/AI-DECISIONS.md",
+    "headings": [
+     "re:рекомендація ai для a-07"
+    ]
    }
   },
   {
    "id": "rejected-register",
    "prim": "manual",
+   "when": "in:A-23",
    "args": {
     "text": "python3 -I <корінь плагіна flow-core>/skills/flow-autocheck/scripts/check_rejected.py docs/industries/<галузь>/demand/results.md: REJ-exists, REJ-fields, REJ-count без FAIL. Відкинуті варіанти — розділ «## Не робимо» (або «## Відкинуто») у demand/results.md. Скрипт autocheck.py його не запускає: має виконати runner (виконує runner за flow-step-runner, Крок 9 (ж); не виконано → ERROR, не PASS), JSON вставляється у checks[] (FAIL скрипта = FAIL кроку, MANUAL і SKIP лишаються такими).",
     "cmd": [
@@ -47,6 +72,7 @@
   {
    "id": "recommendation-basis",
    "prim": "manual",
+   "when": "in:A-23",
    "args": {
     "text": "«Рекомендація AI для A-07» (будуємо / ні / змінити концепцію) спирається на сигнали й пороги A-23 (thresholds.md), без business-case, окупності й грошового розрахунку (0.3.0; business-case.md не пишеться)",
     "who": "runner"
@@ -56,7 +82,7 @@
    "id": "signature",
    "prim": "manual",
    "args": {
-    "text": "рішення «будуємо / ні / змінити концепцію» — кнопка людини (Власник продукту; вето за рекомендацією AI); AI його не ставить і не вписує",
+    "text": "рішення «будуємо / ні / змінити концепцію» — рішення ухвалює власник продукту (кнопка або повідомлення; вето за рекомендацією AI); AI його не вигадує, рядок вносить від імені власника з позначкою (E6)",
     "who": "Власник продукту"
    }
   }
