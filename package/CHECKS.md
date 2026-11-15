@@ -1,58 +1,62 @@
-# CHECKS.md — автоперевірки пакета «меблі» (A-14, спроба 5, цикл 2, 2026-11-15)
+# CHECKS.md — автоперевірки пакета «меблі» (A-14, спроба 6, 2026-11-15)
 
-Гейти виконано **замінниками** (скіли організації `odoo19-mvp-build:*`, `boost:odoo19-lint`, CI C-03 у сесії недоступні; рішення власника — запис 52 `flow/decisions.md`, варіант (а); записи 48, 51; `observations/2026-11-13-a14-gates-substitutes.md`). Режим `перевірка` (`params.mode`), версія флоу 2. Причина — контур коду 1 (TEST-START §(д) 12b): після гейтів `21afe46` у `package/` з'явились модулі §27/§27а `td_home_menu`, `td_support`, `td_knowledge`, `td_mebli_knowledge` (A-11-fix: версія `td_mebli_knowledge`), A-12-fix — «Модулі до установки». Обсяг: `git diff 21afe46..13bb66d -- package/addons package/config package/master-data` (72 файли, +4859/−1). Цикл 1 (`13bb66d`) — правки F-38…F-40 → A-11; виправлено в цій гілці (A-11-fix2, `795f6b1`, `tests/reports/A-11-fix2.md`); цикл 2 — гейти на `795f6b1` (обсяг циклу 2: `git diff 13bb66d..795f6b1 -- package/`, 12 файлів, +40/−20; вердикти pr/security/lint — за повним обсягом `21afe46..795f6b1`). Повні звіти гейтів — `tests/reports/A-14-5.md`.
+Гейти виконано **замінниками** (скіли організації `odoo19-mvp-build:*`, `boost:odoo19-lint`, CI C-03 у сесії недоступні; рішення власника — запис 52 `flow/decisions.md`, варіант (а); `observations/2026-11-13-a14-gates-substitutes.md`). Режим `перевірка`. Причина — контур коду 2: A-16b (аудит прав ролей) повернув D-18…D-21 (`package/demo/defects.md`), виправлено в A-11-fix3 (`ba0aff3`, `tests/reports/A-11-fix3.md`). Обсяг: `git diff ae1763e..ba0aff3 -- package/` — 33 файли модулів `td_mebli_install`, `td_mebli_mrp`, `td_mebli_claim`, `td_mebli_demo` (+ AI-DECISIONS AI-25…AI-28). `package/config`, `package/master-data` не змінювались. Попередня спроба (5, `795f6b1`, APPROVE (CE)) — `tests/reports/A-14-5.md`; повні звіти гейтів спроби 6 — `tests/reports/A-14-6.md`.
 
 ## Ревізія package/ (commit SHA)
-`SHA: 795f6b11d984e7048e0aec1cdd04125d4a559f2a`
+`SHA: ba0aff368db22e55bb3af73f8d07d09ffdc31b5e`
 
 ## Прогін C-03
-`SHA прогону: 795f6b1` · статус: `success` (замінник: локальний прогін, не CI — `.github/workflows/ci.yml` немає; рядок C-03 для Архітектора — MANUAL, AI-A14-01). `tools/odoo/` на чистих базах, Odoo 19.0 CE, uk_UA: `clean_db.sh` → `install.sh <модулі apply.py plan> --addons-src package/addons --lang uk_UA` → `run_tests.sh` (td_mebli_* — одним прогоном з турами; `td_knowledge`+`td_mebli_knowledge`, `td_support`, `td_home_menu` — окремо).
+`SHA прогону: ba0aff3` · статус: `success` (замінник: локальний прогін, не CI — `.github/workflows/ci.yml` немає; рядок C-03 для Архітектора — MANUAL, AI-A14-01). `tools/odoo/` на чистих базах, Odoo 19.0 CE, uk_UA: `clean_db.sh` → `install.sh <модулі apply.py plan> --addons-src package/addons --lang uk_UA` → `run_tests.sh` (td_mebli_* — одним прогоном з турами; `td_knowledge`+`td_mebli_knowledge`, `td_support`, `td_home_menu` — окремо). Демо-шар: база B + `td_mebli_demo`, `/td_mebli_demo` (A-11-fix3).
 
 | профіль | база | td_mebli_* | td_knowledge (+mebli) | td_support | td_home_menu |
 |---|---|---|---|---|---|
-| A (`answers.example.yaml`, 47 модулів) | test-pkg-mebli-a145-c2-A | 333 / 0 (skipped 1) | 17 / 0 | 15 / 0 | 4 / 0 |
-| light (`profiles/answers.alt-1.yaml`) | test-pkg-mebli-a145-c2-light | 317 / 0 (skipped 1) | 17 / 0 | 15 / 0 | 4 / 0 |
-| B (`profiles/answers.alt-2.yaml`) | test-pkg-mebli-a145-c2-B | 338 / 0 (skipped 1) | 17 / 0 | 15 / 0 | 4 / 0 |
+| A (`answers.example.yaml`, 47 модулів) | test-mebli-fix3-a146-c1-A | 347 / 0 (skipped 1) | 17 / 0 | 15 / 0 | 4 / 0 |
+| light (`profiles/answers.alt-1.yaml`) | test-mebli-fix3-a146-c1-light | 331 / 0 (skipped 1) | 17 / 0 | 15 / 0 | 4 / 0 |
+| B (`profiles/answers.alt-2.yaml`) | test-mebli-fix3-a146-c1-B | 352 / 0 (skipped 1) | 17 / 0 | 15 / 0 | 4 / 0 |
+| B + `td_mebli_demo` | test-mebli-fix3-b | /td_mebli_demo 16 / 0 | — | — | — |
 
-Формат клітинки — тестів / failed+error. Цикл 1 (`13bb66d`): `failure` — 1 тест `td_mebli_knowledge` у кожному профілі (F-38). Бази видалено.
+Формат клітинки — тестів / failed+error. Нові тести A-11-fix3: +14 у td_mebli_* (D-19 6, i18n 1, D-20 4, D-21 3), +4 у td_mebli_demo (D-18). Бази видалено.
 
 ## Редакції
 `editions: both` (OWNER-INTAKE).
 | edition | SHA | C-03 (SHA прогону, статус) | вердикт | примітка |
 |---|---|---|---|---|
-| ce | 795f6b11d984e7048e0aec1cdd04125d4a559f2a | 795f6b1 success (локально) | APPROVE (замінники) | цикл 1: F-38…F-40 → A-11, закрито в A-11-fix2 |
-| ee | 795f6b11d984e7048e0aec1cdd04125d4a559f2a | не запущено | WARN: EE не перевірено | EE недоступна (ВП-4); нові модулі EE-частини не мають, `depends` без EE/AGPL |
+| ce | ba0aff368db22e55bb3af73f8d07d09ffdc31b5e | ba0aff3 success (локально) | APPROVE (замінники) | правок немає |
+| ee | ba0aff368db22e55bb3af73f8d07d09ffdc31b5e | не запущено | WARN: EE не перевірено | EE недоступна (ВП-4); змінені модулі EE-частини не мають, `depends` без EE/AGPL |
 
 ## Гейти
 | гейт | команда або скіл | вердикт ce | вердикт ee | примітка |
 |---|---|---|---|---|
-| pr-review | замінник `odoo19-mvp-build:pr-review` (diff 21afe46..795f6b1) | APPROVE (замінник) | WARN: EE не перевірено | цикл 1 — правки F-38, F-39; цикл 2 — закрито, нових знахідок 0 |
-| security-review | замінник `odoo19-mvp-build:security-review` (статично) | APPROVE (замінник) | WARN: EE не перевірено | публічних маршрутів немає; права/правила записів `td.support.request`, `td.knowledge.article` — за README; F-40 закрито; info N5-1 (без `company_id`) |
-| config-review | замінник `odoo19-mvp-build:config-review` | APPROVE (замінник) | WARN: EE не перевірено | A-12-fix: порядок модулів — порушень 0; `td_home_menu` лише `ce`; A-11-fix2 — лише коментарі залежностей |
-| odoo19-lint | замінник `boost:odoo19-lint` | APPROVE (замінник) | WARN: EE не перевірено | pylint-odoo усіх `td_*` 9.73/10, E/F 0; ruff 175 → 186 (+11 стиль, усі в тестах і `stemmer.py`; F401 прибрано); uk.po — тести `test_i18n_po` PASS |
-| track-convergence | замінник `odoo19-mvp-build:track-convergence` | APPROVE (замінник) | WARN: EE не перевірено | база A `test-pkg-mebli-a145-c2-cv`: модулі 47 + конфіг (8/4/14) + майстер-дані 28/28 (97 записів) + compare diff 0 + read-back 23/23 + smoke OK; статей бази знань 8 |
+| pr-review | замінник `odoo19-mvp-build:pr-review` (diff ae1763e..ba0aff3) | APPROVE (замінник) | WARN: EE не перевірено | D-18…D-21 закрито за SPEC з рішеннями AI-25…AI-28; знахідок 0; info N6-1…N6-3 |
+| security-review | замінник `odoo19-mvp-build:security-review` (статично) | APPROVE (замінник) | WARN: EE не перевірено | нові права: запис `project.task` менеджером — ACL + `ir.rule` (свої замовлення) + перелік полів у `write`; `sudo` у D-21 — після `check_access('write')` на рекламацію, з коментарем; група технолога — RWCD лише `td.mebli.*` моделей SPEC §2; публічних маршрутів немає |
+| config-review | замінник `odoo19-mvp-build:config-review` | APPROVE (замінник) | WARN: EE не перевірено | `package/config` не змінено; «Модулі до установки» ті самі (версії модулів — патч) |
+| odoo19-lint | замінник `boost:odoo19-lint` | APPROVE (замінник) | WARN: EE не перевірено | pylint-odoo (odoolint, E, F) 4 змінених модулів — нових знахідок 0 (E0401 — середовище lint без Odoo; E0203 `payment.py:115` — давнє, не з diff); ruff нових/змінених py — 0; uk.po — `test_i18n_po` PASS |
+| track-convergence | замінник `odoo19-mvp-build:track-convergence` | APPROVE (замінник) | WARN: EE не перевірено | база A `test-mebli-fix3-a146-c1-cv`: модулі 47 + конфіг (8/4/14) + майстер-дані 28/28 (97 записів) + compare diff 0 + read-back 23/23 + smoke OK; статей бази знань 8 |
 
 ## Покриття ALLOCATION
-- `package/addons/`: усі 29 модулів у обсязі pr-review/lint (`td_mebli_*` 25 + §27/§27а `td_home_menu`, `td_support`, `td_knowledge`, `td_mebli_knowledge` — ALLOCATION їх не вимагає); C-03 — усі встановлені `td_*` профілів A/light/B (мости EE — не перевірено).
-- `package/config/`: CONFIG.md, manifest.yaml, vp-map.yaml, install-log.md, data/ (7 файлів) — config-review і track-convergence.
-- `package/master-data/`: 28 CSV за README — track-convergence (тест-імпорт 28/28).
+- `package/addons/`: обсяг diff — 4 модулі (`td_mebli_install`, `_mrp`, `_claim`, `_demo`); C-03 — усі встановлені `td_*` профілів A/light/B (мости EE — не перевірено).
+- `package/config/`, `package/master-data/`: без змін; track-convergence на налаштованій базі A.
 - Покриття 100 % (CE).
 
 ## Правки
-Цикли 1–4 (671b39c, 935b591, a5a1063, 21afe46): №1–37 закрито.
+Цикли спроб 1–5: №1–40 закрито (F-38…F-40 — `795f6b1`). У спробі 6 нових правок немає.
 
-| № | джерело | файл:рядок | опис | серйозність | код | статус |
-|---|---|---|---|---|---|---|
-| F-38 | C-03, pr-review | td_mebli_knowledge/__manifest__.py:12; data/td_knowledge_article_data.xml:44,64,84,103 | Прив'язка статей до екранів (`model_ids` search за `ir.model`) залежить від порядку установки: `depends` лише `td_knowledge`, `td_mebli_base` — модулі екранів (`td_mebli_measure`, `_cutting`, `_install`, `_claim`) ставляться пізніше, search порожній, а `noupdate` не виправить. На A/light/B без статті лишаються різні екрани | major | A-11 | закрито (795f6b1) |
-| F-39 | pr-review | td_knowledge/models/td_knowledge_article.py:109-112 | `_td_ancestors` читає назви розділів без перевірки доступу: відкрита стаття в розділі, обмеженому групами, — AccessError у читача й «Довідці» | minor | A-11 | закрито (795f6b1) |
-| F-40 | security-review, lint | td_support/models/td_support_request.py:11,197 | контакт іде в заголовок `Reply-To` без прибирання переносів рядка (лист падає при побудові); невикористаний імпорт `escape` | minor | A-11 | закрито (795f6b1) |
+Закрито до гейтів (A-11-fix3, `ba0aff3`; джерело — A-16b, `package/demo/defects.md`):
+| № | файл | опис | серйозність | статус |
+|---|---|---|---|---|
+| D-19 | td_mebli_install: views/act_views.xml, security/*, models/act.py | менеджер салону відкриває «Календар монтажів» (Продажі) і змінює дату/бригаду виїздів своїх замовлень | середній | закрито (ba0aff3) |
+| D-20 | td_mebli_mrp: security/td_mebli_mrp_groups.xml, ir.model.access.csv, меню | група «Технолог»: RWCD правила деталей, деталі, шаблони імпорту; меню «Виробництво → Налаштування» | середній | закрито (ba0aff3) |
+| D-21 | td_mebli_claim: models/repair.py, views/repair_views.xml | сервіс створює пропозицію платного ремонту; store кнопки не бачить | високий | закрито (ba0aff3) |
+| D-18 | td_mebli_demo: hooks.py, data/workcenter_data.xml | демо-шар переймає дільниці A-13 — без дублів (перевірка стенда — A-15-full-2) | низький | закрито (ba0aff3) |
 
 Info — не правки, без коду повернення:
-- **N5-1.** `td.support.request` і `td.knowledge.article` без `company_id`: при кількох юрособах (VP-03 multi) звернення й статті спільні для бази. Свідомо за README модулів; розділення — рішення власника.
-- **N5-2.** `td_reader_tree` читає всі доступні статті (`search([])`, pylint no-search-all) — для бази знань пакета прийнятно.
+- **N5-1, N5-2** — як у спробі 5 (без `company_id` у `td.support.request`, `td.knowledge.article`; `td_reader_tree` `search([])`).
+- **N6-1.** Користувач з `project.group_project_user` і групою продавця отримує ще й запис виїздів своїх замовлень у проєктах «лише підписникам» (правила груп поєднуються через «або») — свідомо (AI-25).
+- **N6-2.** Технолог бачить у «Налаштуванні» виробництва ще «Робочі центри» й «Операції» (лише читання, якщо ввімкнено маршрути); `mrp.group_mrp_user` зберігає RWCD на шаблони імпорту (SPEC §2: майстер «—») — AI-26.
+- **N6-3.** xmlid `td_mebli_mrp.group_technologist` ≠ `td_mebli_base.group_technologist` у `tr/security.md` §1 — оновити SPEC (A-08), AI-26.
 
 ## Зведений вердикт
-`APPROVE (CE); EE не перевірено` — цикл 2 на `795f6b1`, замінники за рішенням власника (запис 52 `flow/decisions.md`, варіант (а)).
-- Цикли: 1 — правки → A-11 (F-38 major, F-39, F-40 minor); 2 — APPROVE, відкритих правок 0.
-- C-03 — success: локальний прогін на `795f6b1` (A 369, light 353, B 374 тестів; 0 failed).
+`APPROVE (CE); EE не перевірено` — спроба 6 на `ba0aff3`, замінники за рішенням власника (запис 52 `flow/decisions.md`, варіант (а)).
+- Правок немає; дефекти A-16b D-18…D-21 закрито в A-11-fix3.
+- C-03 — success: локальний прогін на `ba0aff3` (A 383, light 367, B 388 тестів; 0 failed) + `/td_mebli_demo` 16 / 0.
 - EE — `WARN: EE не перевірено` (ВП-4). Рішення «випускаємо з неперевіреною EE» — людина на A-17/A-18.
