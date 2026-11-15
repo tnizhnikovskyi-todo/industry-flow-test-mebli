@@ -8,7 +8,7 @@
                    '«Send to ToDo Support» with the traceback, the URL, the version of Odoo, the td_* modules, the login '
                    'and the uuid of the database, shown to the user before sending. Passwords, tokens and cookies are '
                    'removed, sizes are limited, repeated sending is limited.',
-    'version': '19.0.1.0.0',
+    'version': '19.0.1.0.1',
     'category': 'Hidden/Tools',
     'license': 'LGPL-3',
     'author': 'ToDo',

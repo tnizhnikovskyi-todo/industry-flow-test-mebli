@@ -5,6 +5,14 @@
         <field name="model">repair.order</field>
         <field name="inherit_id" ref="repair.view_repair_order_form"/>
         <field name="arch" type="xml">
+            <!-- D-21 (AC-112): the quotation of a repair — the service and the sales; the other Inventory users do not see
+                 the button (the server refuses them too); the quotation itself opens for the sales users only -->
+            <xpath expr="//button[@name='action_create_sale_order']" position="attributes">
+                <attribute name="groups">td_mebli_claim.group_service,sales_team.group_sale_salesman</attribute>
+            </xpath>
+            <xpath expr="//button[@name='action_view_sale_order']" position="attributes">
+                <attribute name="groups">sales_team.group_sale_salesman</attribute>
+            </xpath>
             <xpath expr="//header" position="inside">
                 <button name="action_td_remake" type="object" string="Remake in Production"
                         invisible="td_remake_production_id or state in ('done', 'cancel')"/>

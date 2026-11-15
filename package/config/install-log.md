@@ -255,3 +255,23 @@ VP-02: A, light — галочок 0, груп `td_mebli_base.group_feature_*` �
 - База `test-mebli-a117t-demo` (профіль `package/demo/answers.yaml`, 43 модулі, через кроки `package/demo/up.sh` з копією для бази групи T): прохід 1 — created 8 / updated 6 / unchanged 13 / manual 1 / errors 0; прохід 2 (compare) — unchanged 27 / diff 0 / missing 0; read-back — 23 VP, 0 failed; після демо-шару read-back — OK. Повтор підйому з остаточним кодом A-11-7 — той самий результат (`tests/reports/A-12-5.md`).
 - Профіль A (`profiles/answers.alt-5.yaml`, база `test-mebli-a117t-a5`, без демо): прохід, повтор і read-back — OK.
 - `product.template.attribute.exclusion` після демо-шару — 2 (шафа-купе, кухонний модуль: «ЛДСП Антрацит» ✕ «ПВХ 0,4 мм»).
+
+## A-12-fix (контур коду 1, `config-as-code` 0.4.0, 2026-11-15) — редакція ce
+- Зміна: «Модулі до установки» + обов'язкові складові §27/§27а — `ce`: `td_home_menu`, `td_support`, `td_knowledge` (перед `td_mebli_base`), `td_mebli_knowledge` (після `td_mebli_notify`); `ee`: те саме без `td_home_menu` (AI-A12-08). Порядок перевірено скриптом за `__manifest__.py` (Odoo 19.0 CE + `package/addons` @ `1bed853`): `ce` 48 модулів, `ee` 59 — порушень 0; `ee` ⊇ `ce` крім `td_home_menu`.
+- База: `test-mebli-a12fix-a` — чиста (нова, `clean_db.sh`), Odoo 19.0 CE, uk_UA, профіль A (`package/templates/answers.example.yaml`), `web_enterprise` немає; після кроку видалено (`dropdb`, filestore).
+- Не odoo-mcp (у тесті заборонено): `tools/odoo/` (C-00).
+
+| № | Крок | Виклик | Результат |
+|---|---|---|---|
+| 1 | модулі профілю | `apply.py plan --config package/config --answers package/templates/answers.example.yaml` | 47 модулів (A: без `td_mebli_multico`), preflight OK |
+| 2 | чиста база | `clean_db.sh test-mebli-a12fix-a` | ok, 30 с |
+| 3 | установка | `install.sh <db> <47> --addons-src package/addons --lang uk_UA` | ok, 93 с; installed 141; ERROR 0 |
+| 4 | переклади | `install.sh <db> <47> --update --lang uk_UA --i18n-overwrite` | ok, 83 с |
+| 5 | прохід 1 (apply) | `apply.py config --db <db> --config package/config --answers …` | created 8, updated 4, unchanged 14, manual 1, skipped 2, errors 0 |
+| 6 | прохід 2 (compare, без записів) | `… --mode compare` | unchanged 26, diff 0, missing 0 |
+| 7 | повторне apply (ідемпотентність) | `… --mode apply` | created 0, updated 0, unchanged 26 |
+| 8 | read-back VP | `… --mode readback` | 23 перевірено, failed 0 |
+| 9 | модулі §27/§27а | `ir_module_module` | `td_home_menu` 19.0.1.0.0, `td_support` 19.0.1.0.0, `td_knowledge` 19.0.1.1.0, `td_mebli_knowledge` 19.0.1.1.0 — installed; статей бази знань 8; `td_support.email` не задано (ручний крок) |
+
+## A-12-fix — редакція ee
+Не перевірено: EE недоступна (немає `ODOO_EE_ADDONS_PATH`). Профіль `ee` — лише статично (порядок, `ee` ⊇ `ce` крім `td_home_menu`).

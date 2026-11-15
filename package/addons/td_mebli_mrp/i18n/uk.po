@@ -1145,3 +1145,17 @@ msgstr "мм."
 #: model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_bom_form_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_mrp.mrp_workorder_td_parts_form
 msgid "x"
 msgstr "×"
+
+#. module: td_mebli_mrp
+#: model:res.groups,name:td_mebli_mrp.group_technologist
+msgid "Technologist"
+msgstr "Технолог"
+
+#. module: td_mebli_mrp
+#: model:res.groups,comment:td_mebli_mrp.group_technologist
+msgid ""
+"ROLE-01: the part rules of the products and the import templates of the "
+"specifications (CAD files)."
+msgstr ""
+"ROLE-01: правила деталей виробів і шаблони імпорту специфікацій (файли "
+"CAD)."

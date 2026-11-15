@@ -1,1 +1,6 @@
 .logs/
+# R-22 / п. 10а demo-base-builder: бінарники баз у git не кладемо — стенд піднімається up.sh
+*.zip
+*.dump
+*.sql.gz
+*.backup

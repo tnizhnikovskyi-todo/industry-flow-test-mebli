@@ -296,3 +296,15 @@ msgstr "Гарантія до"
 #: model_terms:ir.ui.view,arch_db:td_mebli_claim.view_repair_kanban_td_mebli
 msgid "days"
 msgstr "дн."
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Only the service or a salesperson creates the quotation of a repair."
+msgstr "Пропозицію ремонту створює лише сервіс або менеджер продажу."
+
+#. module: td_mebli_claim
+#. odoo-python
+#: code:addons/td_mebli_claim/models/repair.py:0
+msgid "Quotation of the paid repair created: %(order)s (salesperson %(user)s)"
+msgstr "Створено пропозицію платного ремонту: %(order)s (менеджер %(user)s)"

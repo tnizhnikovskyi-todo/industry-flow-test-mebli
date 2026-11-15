@@ -115,7 +115,8 @@ class TdKnowledgeArticle(models.Model):
     def _td_ancestors(self):
         self.ensure_one()
         ids = [int(i) for i in self.parent_path.split('/') if i][:-1]
-        return self.browse(ids).exists()
+        # a section limited to other groups is skipped: its title must not be read (AccessError) or shown
+        return self.browse(ids).exists()._filtered_access('read')
 
     # ------------------------------------------------------------------
     # Help for the current screen (systray)
