@@ -10,6 +10,44 @@ FITTINGS = {'fit_hinge': 20, 'fit_slide': 3, 'fit_guide': 20, 'fit_legs': 50}  #
 OFFCUTS = {'board_sonoma': [(1200, 700), (900, 450)]}
 
 
+# D-18: the work centers of the demo layer and the master data templates A-13 (package/master-data/09_mrp.workcenter.csv,
+# imported before the demo layer by package/demo/up.sh): demo xmlid -> (A-13 xmlid, names, codes of A-13 and of the demo)
+TEMPLATE_WORKCENTERS = {
+    'wc_cut': ('td_md.mrp_workcenter_cutting', ('Розкрій',), ('CUT',)),
+    'wc_edge': ('td_md.mrp_workcenter_edging', ('Кромкування', 'Крайкування'), ('EDGE', 'EDG')),
+    'wc_drill': ('td_md.mrp_workcenter_drilling', ('Присадка',), ('DRILL', 'DRL')),
+    'wc_asm': ('td_md.mrp_workcenter_assembly', ('Збирання', 'Складання'), ('ASSY', 'ASM')),
+}
+
+
+def pre_init_hook(env):
+    _adopt_template_workcenters(env)
+
+
+def _adopt_template_workcenters(env):
+    """D-18: the demo layer takes the work centers of the templates A-13 when they are already there (by the xmlid of
+    the template, else by the code or the name) instead of creating a second «Розкрій», «Присадка», ...: the demo
+    xmlid points to the work center of the template, data/workcenter_data.xml then sets the demo name, code and cost
+    on it (install mode). No template — the demo creates its own work centers, as before."""
+    Workcenter = env['mrp.workcenter'].with_context(active_test=False)
+    taken = Workcenter
+    for name, (template_xmlid, names, codes) in TEMPLATE_WORKCENTERS.items():
+        if env.ref(f'td_mebli_demo.{name}', raise_if_not_found=False):
+            continue
+        center = env.ref(template_xmlid, raise_if_not_found=False)
+        if not center or center._name != 'mrp.workcenter':
+            center = Workcenter.search([('id', 'not in', taken.ids), '|', ('code', 'in', codes), ('name', 'in', names)],
+                                       order='id', limit=1)
+        if not center:
+            continue
+        taken |= center
+        env['ir.model.data'].create({'module': 'td_mebli_demo', 'name': name, 'model': 'mrp.workcenter',
+                                     'res_id': center.id, 'noupdate': True})
+        if not center.active:
+            center.active = True
+        _logger.info('td_mebli_demo: work center %s of the templates is used as %s', center.display_name, name)
+
+
 def _set_company_currency(env):
     """UAH as the company currency, only while there are no journal entries."""
     uah = env.ref('base.UAH')

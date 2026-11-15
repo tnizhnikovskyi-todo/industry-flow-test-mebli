@@ -1,5 +1,5 @@
 from odoo import api, fields, models
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 
 
 class TdMebliInstallAct(models.Model):
@@ -187,6 +187,21 @@ class ProjectTask(models.Model):
 
     td_act_ids = fields.One2many('td.mebli.install.act', 'task_id', string='Installation Acts')
     td_act_count = fields.Integer(string='Acts', compute='_compute_td_act_count')
+
+    # D-19 (AC-044, UC-01 step 11): the salesperson without the Project rights plans the visits of his orders in the
+    # «Installation Calendar» — the date of the visit and the crew only (record rules: the visits of his orders)
+    TD_SALESPERSON_VISIT_FIELDS = frozenset({'date_deadline', 'user_ids'})
+
+    def write(self, vals):
+        if not self.env.su and not self.env.user.has_group('project.group_project_user') \
+                and self.env.user.has_group('sales_team.group_sale_salesman'):
+            denied = set(vals) - self.TD_SALESPERSON_VISIT_FIELDS
+            if denied:
+                raise AccessError(self.env._(
+                    "The salesperson changes only the date and the crew of a visit (not: %s).",
+                    ", ".join(sorted(self._fields[name].get_description(self.env)['string'] if name in self._fields
+                                     else name for name in denied))))
+        return super().write(vals)
 
     @api.depends('td_act_ids')
     def _compute_td_act_count(self):
