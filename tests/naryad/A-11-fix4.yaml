@@ -17,6 +17,7 @@ where:
   - package/addons/td_knowledge/
   - package/addons/td_mebli_dashboard/
   - package/addons/td_mebli_measure/
+  - package/addons/td_mebli_notify/          # тест AC-030/031 залежав від години запуску (22–24 UTC) — freeze_time
   - docs/industries/mebli/research/AI-DECISIONS.md
 template: "немає — форма за SKILL.md"
 done: "власні icon.svg 50×50 + icon.png у стилі icon.svg Odoo 19 (без плашки, палітра), web_icon усіх кореневих меню td_* — на власний модуль; підписи головного екрана переносяться лише між словами, <html lang> = мова користувача, довгі однослівні назви вміщаються (1440 і 390); тести (web_icon, файли іконок, scss, тур html[lang]); версії +патч; тести td_* на чистій базі профілю A — 0 failed"
