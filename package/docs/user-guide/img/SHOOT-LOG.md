@@ -2,7 +2,7 @@
 
 | Файл | SHA | Дата | Демо-роль | Стенд |
 |---|---|---|---|---|
-| package/docs/user-guide/img/menedzher/SC-01-1.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/menedzher/SC-01-1.png | b1385cdc8b2932312a9df5f23a03821bc6959054 | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/menedzher/SC-01-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
@@ -40,7 +40,7 @@
 | package/docs/user-guide/img/finansyst/SC-05-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/finansyst/SC-05-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/finansyst/SC-05-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-1.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/kerivnyk/SC-06-1.png | b1385cdc8b2932312a9df5f23a03821bc6959054 | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/kerivnyk/SC-06-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/kerivnyk/SC-06-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/kerivnyk/SC-06-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
@@ -98,5 +98,5 @@
 | package/docs/user-guide/img/setup/SET-33.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/setup/SET-34.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/setup/SET-35.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-36.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | admin | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/setup/SET-36.png | b1385cdc8b2932312a9df5f23a03821bc6959054 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/setup/SET-37.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
