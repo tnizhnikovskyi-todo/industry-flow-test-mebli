@@ -2,101 +2,107 @@
 
 | Файл | SHA | Дата | Демо-роль | Стенд |
 |---|---|---|---|---|
-| package/docs/user-guide/img/menedzher/SC-01-1.png | b1385cdc8b2932312a9df5f23a03821bc6959054 | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-6.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SC-01-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/KB-1.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/menedzher/SUP-1.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-6.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/tekhnolog/SC-02-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-6.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | chief@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-6.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/komirnyk/SC-04-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | store@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/finansyst/SC-05-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/finansyst/SC-05-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/finansyst/SC-05-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/finansyst/SC-05-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fin@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-1.png | b1385cdc8b2932312a9df5f23a03821bc6959054 | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/kerivnyk/SC-06-6.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | owner@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/zamirnyk/SC-07-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/zamirnyk/SC-07-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-4.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-6.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/bryhadyr/SC-08-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | fitter@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-10.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-2.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-3.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-4.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-5.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-6.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-7.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-8.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/admin/ADM-9.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/zamirnyk/SC-07-1.png | 15dbd6f7504fe49f174af6874f6ed99865365ea8 | 2026-11-15 | measure@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-01.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-02.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-03.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-04.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-05.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-06.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-07.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-08.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-09.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-10.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-11.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-12.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-13.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-15.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-16.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-20.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-21.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-22.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-23.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-24.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-25.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-26.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-27.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-28.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-29.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-30.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-31.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-32.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-33.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-34.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-35.png | 63ca32947a1ec656e1484c728a4abb3504daf12c | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-36.png | b1385cdc8b2932312a9df5f23a03821bc6959054 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
-| package/docs/user-guide/img/setup/SET-37.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/menedzher/SC-01-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/KB-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SUP-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/tekhnolog/SC-02-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/nachalnyk-vyrobnytstva/SC-03-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | chief@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/komirnyk/SC-04-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | store@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/finansyst/SC-05-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fin@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/finansyst/SC-05-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fin@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/finansyst/SC-05-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fin@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/finansyst/SC-05-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fin@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/kerivnyk/SC-06-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/kerivnyk/SC-06-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/kerivnyk/SC-06-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/kerivnyk/SC-06-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/kerivnyk/SC-06-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/kerivnyk/SC-06-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | owner@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/zamirnyk/SC-07-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | measure@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/zamirnyk/SC-07-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | measure@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/bryhadyr/SC-08-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | fitter@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-10.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-2.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-3.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-4.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-6.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-7.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-8.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/admin/ADM-9.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/zamirnyk/SC-07-1.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | measure@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-01.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-02.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-03.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-04.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-05.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-06.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-07.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-08.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-09.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-10.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-11.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-12.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-13.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-15.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-16.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-20.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-21.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-22.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-23.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-24.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-25.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-26.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-27.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-28.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-29.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-30.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-31.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-32.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-33.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-34.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-35.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-36.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/setup/SET-37.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (копія знімка `demo-mebli-pkg-shoot`, порт 8099) |
+| package/docs/user-guide/img/menedzher/SC-01-9.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
+| package/docs/user-guide/img/menedzher/SC-01-10.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
+| package/docs/user-guide/img/menedzher/SC-01-11.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
+| package/docs/user-guide/img/menedzher/SC-01-13.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
+| package/docs/user-guide/img/menedzher/SC-01-12.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | admin | http://127.0.0.1:8089 (тур A-16-9 T-17) |
+| package/docs/user-guide/img/zamirnyk/SC-07-5.png | 75c749792f5488783cfc5a2a07b9cb5a1b2106cc | 2026-11-16 | measure@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
