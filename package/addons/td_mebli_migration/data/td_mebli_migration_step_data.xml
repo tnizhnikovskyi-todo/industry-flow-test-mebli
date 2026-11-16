@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
-    <!-- Import order of the CSV templates of A-13, version 1.1: package/master-data/README.md «Порядок імпорту» (the templates are
-         not copied here; 28 steps, light 25). Steps 1-15 are the standard files 01-15, steps 16-28 the files td/ in the order of
-         their numbers (td/03b, td/04b: the component roles of the configurator, td_mebli_mrp);
-         td/19b-21b (td_bas_code) are the last ones: td_mebli_bas is not in every profile (light is without it). -->
+    <!-- Import order of the CSV templates of A-13, version 1.2: package/master-data/README.md «Порядок імпорту» (the templates are
+         not copied here; 25 steps in every profile). Steps 1-15 are the standard files 01-15, steps 16-25 the files td/ in the
+         order of their numbers (td/03b, td/04b: the component roles of the configurator, td_mebli_mrp). The former steps 26-28
+         are excluded from the package by the decision of the owner 2026-11-16 (AI-37, A-11-fix6; migration 19.0.1.1.7 removes them). -->
     <record id="step_01" model="td.mebli.migration.step">
         <field name="sequence">1</field>
         <field name="name">Product categories</field>
@@ -17,7 +17,6 @@
         <field name="template">02_res.partner.csv</field>
         <field name="model_name">res.partner</field>
         <field name="box">A</field>
-        <field name="note">BAS code — step 26 (td/19b)</field>
     </record>
     <record id="step_03" model="td.mebli.migration.step">
         <field name="sequence">3</field>
@@ -212,35 +211,5 @@
         <field name="model_name">td.mebli.import.template</field>
         <field name="box">A</field>
         <field name="module_name">td_mebli_mrp</field>
-    </record>
-    <record id="step_td_19b" model="td.mebli.migration.step">
-        <field name="sequence">26</field>
-        <field name="name">BAS codes of the partners</field>
-        <field name="template">td/19b_res.partner.csv</field>
-        <field name="model_name">res.partner</field>
-        <field name="depends_on">02</field>
-        <field name="box">A</field>
-        <field name="module_name">td_mebli_bas</field>
-        <field name="note">td_mebli_bas only (VP-04 = true); not imported in the light profile</field>
-    </record>
-    <record id="step_td_20b" model="td.mebli.migration.step">
-        <field name="sequence">27</field>
-        <field name="name">BAS codes of the materials</field>
-        <field name="template">td/20b_product.product.csv</field>
-        <field name="model_name">product.product</field>
-        <field name="depends_on">05</field>
-        <field name="box">A</field>
-        <field name="module_name">td_mebli_bas</field>
-        <field name="note">td_mebli_bas only (VP-04 = true); not imported in the light profile</field>
-    </record>
-    <record id="step_td_21b" model="td.mebli.migration.step">
-        <field name="sequence">28</field>
-        <field name="name">BAS codes of the employees</field>
-        <field name="template">td/21b_hr.employee.csv</field>
-        <field name="model_name">hr.employee</field>
-        <field name="depends_on">13</field>
-        <field name="box">A</field>
-        <field name="module_name">td_mebli_bas</field>
-        <field name="note">td_mebli_bas only (VP-04 = true); not imported in the light profile</field>
     </record>
 </odoo>

@@ -7,9 +7,8 @@
                    'res.currency.rate. Online loading is off by default (system parameter td_mebli_ua.nbu_online); on '
                    'show databases the rates are loaded from a fixed table and marked as an imitation. A failed loading '
                    'leaves the rates as they are and gives the finance users an activity. The button «Update Prices '
-                   'at the Rate» (feature group «nbu») recomputes only the quotations. The exchange with BAS/BAF is the '
-                   'module td_mebli_bas.',
-    'version': '19.0.1.1.3',
+                   'at the Rate» (feature group «nbu») recomputes only the quotations.',
+    'version': '19.0.1.1.4',
     'category': 'Accounting/Localizations',
     'license': 'LGPL-3',
     'author': 'ToDo',

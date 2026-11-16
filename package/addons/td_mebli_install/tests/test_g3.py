@@ -104,7 +104,7 @@ class TestPaymentG3(G3InstallCommon):
         self.assertIn(self.fin.name, body)
         order.tasks_ids.action_td_start_install()  # the block lets the crew go
         self.assertEqual(len(order.tasks_ids.td_act_ids), 1)
-        mark.cancelled = True  # the payment came by the exchange (AC-042): the mark no longer counts
+        mark.cancelled = True  # the payment is registered in Odoo: the finance cancels the mark
         order.invalidate_recordset()
         self.assertFalse(order.td_pay_ok)
         # review A-11: the amount is fixed after the creation; any change of the mark goes to the chatter
@@ -116,18 +116,6 @@ class TestPaymentG3(G3InstallCommon):
         self.assertIn('Manual payment mark changed', body)
         self.assertIn('Bank statement of today', body)
         self.assertIn('Bank statement of yesterday', body)
-
-    def test_ac_042_cancel_marks_on_bas_payment(self):
-        order = self._order()
-        self.env['td.mebli.pay.mark'].create({'order_id': order.id, 'amount': 9000.0, 'reason': 'Bank statement'})
-        order.invalidate_recordset()
-        self.assertTrue(order.td_pay_ok)
-        cancelled = order._td_cancel_pay_marks()  # called by the BAS hook of td_mebli_bas (AC-042)
-        self.assertEqual(len(cancelled), 1)
-        self.assertTrue(all(mark.cancelled for mark in order.td_pay_mark_ids))
-        order.invalidate_recordset()
-        self.assertFalse(order.td_pay_ok)
-        self.assertFalse(order._td_cancel_pay_marks())  # idempotent: nothing left to cancel
 
     def test_ac_021_reason_required_error_of_spec(self):
         order = self._order()

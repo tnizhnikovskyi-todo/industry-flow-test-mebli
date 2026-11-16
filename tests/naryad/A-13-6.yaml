@@ -1,0 +1,27 @@
+# ТЕСТОВИЙ наряд A-13 (шаблони майстер-даних), спроба 6: рішення власника 2026-11-16 «BAS прибираємо взагалі» — шаблони td/19b–21b
+# видалено з пакета (A-11-fix6, package/deferred/); README — без «відкладено». Рядок 55 flow/decisions.md.
+step: A-13
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:master-data-template-builder"]
+model: opus
+effort: medium
+params: {mode: fix, defects: ["рішення власника 2026-11-16: шаблони кодів обліку виключено з пакета"]}
+inputs:
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: config, from: A-12, path: package/config/, sha: HEAD}
+where:
+  - package/master-data/
+template: "немає — форма за SKILL.md"
+done: "README без «відкладено»/deferred; 25 шаблонів = 25 кроків td_mebli_migration; тест-імпорт у налаштовану базу A — 0 помилок (A-14-9)"
+check: {mode: both, how: "grep README + test_ac_089 + import.sh (A-14-9)", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 10, context_budget_tokens: 100000}
+client_data: none
+data_rule: "лише вигадані дані"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-12-7-test, branch: flow/A-13-6-test}
+attempt: 6
+returned_from: null
+git: {base: 12f0c5c, head: null, prev_tag: null}
+date: 2026-11-16

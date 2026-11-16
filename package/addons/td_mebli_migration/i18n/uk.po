@@ -52,26 +52,6 @@ msgid "B"
 msgstr "B"
 
 #. module: td_mebli_migration
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_02
-msgid "BAS code — step 26 (td/19b)"
-msgstr "код BAS — крок 26 (td/19b)"
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_21b
-msgid "BAS codes of the employees"
-msgstr "Коди BAS працівників"
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_20b
-msgid "BAS codes of the materials"
-msgstr "Коди BAS матеріалів"
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_19b
-msgid "BAS codes of the partners"
-msgstr "Коди BAS контрагентів"
-
-#. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_10
 msgid "Bills of materials"
 msgstr "Специфікації"
@@ -331,8 +311,12 @@ msgstr "Модуль"
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_step__module_name
-msgid "Module of the package that adds the fields td_* of the template (files td/ of A-13); the step is available only when it is installed (e.g. td_mebli_bas is not in the light profile)."
-msgstr "Модуль пакета, що додає поля td_* шаблону (файли td/ A-13); крок доступний лише коли його встановлено (напр. td_mebli_bas немає в профілі light)."
+msgid ""
+"Module of the package that adds the fields td_* of the template (files "
+"td/ of A-13); the step is available only when it is installed."
+msgstr ""
+"Модуль пакета, що додає поля td_* шаблону (файли td/ A-13); крок "
+"доступний лише коли його встановлено."
 
 #. module: td_mebli_migration
 #: model:ir.model.fields,field_description:td_mebli_migration.field_td_mebli_migration_step__sequence
@@ -649,11 +633,6 @@ msgstr "напр. Старт системи"
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_16 model:td.mebli.migration.step,note:td_mebli_migration.step_17 model:td.mebli.migration.step,note:td_mebli_migration.step_18 model:td.mebli.migration.step,note:td_mebli_migration.step_td_01b model:td.mebli.migration.step,note:td_mebli_migration.step_td_03b model:td.mebli.migration.step,note:td_mebli_migration.step_td_04b model:td.mebli.migration.step,note:td_mebli_migration.step_td_14b
 msgid "second pass of the same ids"
 msgstr "другий прохід тих самих id"
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_19b model:td.mebli.migration.step,note:td_mebli_migration.step_td_20b model:td.mebli.migration.step,note:td_mebli_migration.step_td_21b
-msgid "td_mebli_bas only (VP-04 = true); not imported in the light profile"
-msgstr "лише з td_mebli_bas (VP-04 = true); у профілі light не імпортується"
 
 #. module: td_mebli_migration
 #. odoo-python

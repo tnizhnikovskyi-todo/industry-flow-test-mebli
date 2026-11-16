@@ -300,24 +300,6 @@
    "shots": [
     {
      "sc": "SC-05",
-     "step": 1,
-     "url": "/odoo/action-td_mebli_bas.td_mebli_bas_channel_action",
-     "actions": []
-    },
-    {
-     "sc": "SC-05",
-     "step": 2,
-     "url": "/odoo/action-td_mebli_bas.td_mebli_bas_batch_action/2",
-     "actions": []
-    },
-    {
-     "sc": "SC-05",
-     "step": 3,
-     "url": "/odoo/action-td_mebli_bas.td_mebli_bas_log_action",
-     "actions": []
-    },
-    {
-     "sc": "SC-05",
      "step": 4,
      "url": "/odoo/action-td_mebli_cost.sale_order_td_cost_fact_action",
      "actions": []
@@ -326,12 +308,6 @@
      "sc": "SC-05",
      "step": 5,
      "url": "/odoo/action-td_mebli_install.td_mebli_accrual_action",
-     "actions": []
-    },
-    {
-     "sc": "SC-05",
-     "step": 6,
-     "url": "/odoo/action-td_mebli_attendance.td_mebli_timesheet_export_action",
      "actions": []
     },
     {
