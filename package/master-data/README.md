@@ -1,4 +1,4 @@
-# Шаблони майстер-даних пакета mebli (версія 1.5, A-13 спроба 6 — шаблони кодів обліку `td/19b`–`21b` виключено рішенням власника 2026-11-16, з пакета видалено; версія 1.4 — спроба 5; версія 1.3 — спроба 4, повтор за `package/CHECKS.md` №28; версія 1.2 — спроба 3, №7, №27)
+# Шаблони майстер-даних пакета mebli (версія 1.6, A-13 спроба 7 — `td/16` з усіма коефіцієнтами формули деталі (зауваження власника A-17 №5); версія 1.5 — A-13 спроба 6 — шаблони кодів обліку `td/19b`–`21b` виключено рішенням власника 2026-11-16, з пакета видалено; версія 1.4 — спроба 5; версія 1.3 — спроба 4, повтор за `package/CHECKS.md` №28; версія 1.2 — спроба 3, №7, №27)
 
 База коду: SHA `4e96a56` (гілка `flow/A-12-2-test`; спроба 2 — `4e0fdda`, спроба 1 — `351d4a8`) | ТР: `package/SPEC.md`, `package/tr/migration.md` §1 @`4e0fdda` | ALLOCATION: `package/ALLOCATION.md`@`4e0fdda` | CONFIG: `package/config/CONFIG.md` (A-12 спроба 2, та сама гілка, не закомічено на момент A-13) | модулі: `package/addons/`@`4e0fdda` | BOX: `docs/industries/mebli/research/BOX.md` §3–4@`4e0fdda`
 
@@ -28,7 +28,7 @@
 | `td/04b_product.attribute.value.csv` | `product.attribute.value` (поля `td_component_product_id`, `td_edge_thickness`) | 6 | №7, AC-011; декор → плита корпусу, кромка → товщина, мм (CHECKS №7) |
 | `td/06b_product.template.csv` | `product.template` (поля `td_*`) | 2 | №7; параметричний виріб, розміри й межі |
 | `td/12b_mrp.routing.workcenter.csv` | `mrp.routing.workcenter` (поля `td_*`) | 3 | №9; база норми, норма, розцінка (порожньо), контрольна точка |
-| `td/16_td.mebli.part.rule.csv` | `td.mebli.part.rule` | 2 | №8; правила деталей виробу |
+| `td/16_td.mebli.part.rule.csv` | `td.mebli.part.rule` | 3 | №8; правила деталей виробу: розмір деталі = `a·Ш + b·В + c·Г + const` — довжина `len_w`, `len_h`, `len_d`, `len_const`, ширина `wid_w`, `wid_h`, `wid_d`, `wid_const` (усі 8 коефіцієнтів, A-17 №5; приклад `wid_w = 0.5` — полотно дверей-купе на пів ширини шафи). Умовних деталей, кількості від розміру, округлень у формулі немає — беклог REQ-002 |
 | `td/01b_product.category.csv` | `product.category` (поле `td_warranty_months`) | 1 | №3, AC-111; строк гарантії категорії — **порожньо** до висновку юриста (№17), заповнює клієнт |
 | `td/14b_maintenance.equipment.csv` | `maintenance.equipment` (поле `td_workcenter_id`) | 2 | №11, AC-076; верстат ↔ дільниця |
 | `td/17_td.mebli.accrual.reason.csv` | `td.mebli.accrual.reason` | 3 | №14, AC-107; причини премій і штрафів (суми порожні) |
@@ -64,7 +64,7 @@
 | td 05b | `td/05b_product.product.csv` | `product.product` (`td_*`) | 05 (другий прохід тих самих `id`) | 8 | td_mebli_mrp |
 | td 06b | `td/06b_product.template.csv` | `product.template` (`td_*`) | 06 | 2 | td_mebli_mrp |
 | td 12b | `td/12b_mrp.routing.workcenter.csv` | `mrp.routing.workcenter` (`td_*`) | 12 | 3 | td_mebli_mrp, td_mebli_shop |
-| td 16 | `td/16_td.mebli.part.rule.csv` | `td.mebli.part.rule` | 06 | 2 | td_mebli_mrp |
+| td 16 | `td/16_td.mebli.part.rule.csv` | `td.mebli.part.rule` | 06 | 3 | td_mebli_mrp |
 | td 01b | `td/01b_product.category.csv` | `product.category` (`td_warranty_months`) | 01 (другий прохід тих самих `id`) | 1 | td_mebli_base |
 | td 14b | `td/14b_maintenance.equipment.csv` | `maintenance.equipment` (`td_workcenter_id`) | 14, 09 | 2 | td_mebli_maint |
 | td 17 | `td/17_td.mebli.accrual.reason.csv` | `td.mebli.accrual.reason` | — | 3 | td_mebli_install |
@@ -189,3 +189,4 @@
 | 1.3 | A-13 спроба 4 (повтор за CHECKS.md №28; AC-013) | `11`: прибрано статичні рядки плити DSP-18-W і кромки EDGE-PVC-2-W шаблону «Шафа-купе» (7 → 5 рядків); узгодження кроків `td_mebli_migration` — 28 кроків (R3-M-01 закрито); тест-імпорт A (28 кроків) + SO → MO трьох декорів |
 | 1.4 | A-13 спроба 5 (рішення власника 2026-11-16, `flow/decisions.md` рядок 53; AI-37) | `td/19b_res.partner.csv`, `td/20b_product.product.csv`, `td/21b_hr.employee.csv` (поле кодів обліку) — перенесено поза збірку; порядок імпорту — 25 кроків у всіх профілях |
 | 1.5 | A-13 спроба 6 (рішення власника 2026-11-16 «BAS прибираємо взагалі»; AI-42) | шаблони `td/19b`–`21b` виключено рішенням власника 2026-11-16 — видалено з пакета (лише історія git); порядок імпорту — 25 кроків, файлів шаблонів не змінено |
+| 1.6 | A-13 спроба 7 (зауваження власника A-17 №5; рішення власника 2026-11-16, `flow/decisions.md` рядок 58) | `td/16`: додано колонки `len_d`, `wid_w`, `wid_h` (тепер усі коефіцієнти формули `td.mebli.part.rule`) і приклад «Полотно дверей-купе» (`wid_w = 0.5`, `len_h = 1`, без кромки) — 3 рядки; порядок імпорту не змінено (25 кроків); тест-імпорт — A-14-10 |
