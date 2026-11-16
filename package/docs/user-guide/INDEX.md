@@ -1,10 +1,10 @@
 # Інструкції користувача: меблеве виробництво, пакет 0.4
-SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
+SHA стенда: b1385cdc8b2932312a9df5f23a03821bc6959054
 Джерело сценаріїв: package/SPEC.md
-Дозволені латинські назви: BAS, BAF, PIN, CAD, DXF, ToDo, QR, CUT, TDS, ПДВ, Odoo, Excel, CSV
-Дата зйомки: 2026-11-16 (A-16b-4: 34 кадри `img/setup/SET-*.png` для `setup.md` на стенді A-15-full-3 `dd1c949` під адміністратором (`admin`) і технологом (`tech@demo-fabryka.example`), 1440×900; A-16b-3: перезнято кадри головного екрана `menedzher/SC-01-1.png`, `kerivnyk/SC-06-1.png` на стенді A-15-full-3 `dd1c949`, сервер з каталогом доставки `delivery-fix4`; решта 67 кадрів — A-16b-2 на стенді `15dbd6f`: diff коду `15dbd6f..dd1c949` змінює в інтерфейсі лише головний екран і іконки кореневих меню, яких на цих кадрах немає — навбар застосунків, форми й списки ті самі, AI-32). Адреса стенда: локальний (`http://127.0.0.1:8079`, база `demo-mebli-pkg-a`, Odoo 19.0 CE, мова `uk_UA`, профіль B-демо). Засіб зйомки: Playwright, headless Chromium, 1440×900, часовий пояс `Europe/Kyiv`; журнал — `img/SHOOT-LOG.md`.
-Свіжість: SHA гейтів `package/CHECKS.md` = `1778db7` (A-14-7); `git diff --quiet 1778db7..HEAD -- package/addons package/config package/master-data …` = 0 (код пакета = коду гейтів).
-Модулі на стенді (21 `td_*`, без `td_mebli_demo`): `td_home_menu` 19.0.1.0.1, `td_knowledge` 19.0.1.1.2, `td_mebli_attendance` 19.0.1.1.1, `td_mebli_bas` 19.0.1.1.3, `td_mebli_base` 19.0.1.1.3, `td_mebli_claim` 19.0.1.1.4, `td_mebli_cost` 19.0.1.1.2, `td_mebli_cutting` 19.0.1.1.3, `td_mebli_dashboard` 19.0.1.1.3, `td_mebli_install` 19.0.1.1.6, `td_mebli_knowledge` 19.0.1.1.1, `td_mebli_maint` 19.0.1.1.2, `td_mebli_measure` 19.0.1.1.4, `td_mebli_migration` 19.0.1.1.6, `td_mebli_mrp` 19.0.1.1.5, `td_mebli_notify` 19.0.1.1.4, `td_mebli_purchase` 19.0.1.1.3, `td_mebli_sale` 19.0.1.1.3, `td_mebli_shop` 19.0.1.1.3, `td_mebli_ua` 19.0.1.1.3, `td_support` 19.0.1.0.1. Не встановлено: мости EE (`td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign`) — EE не перевірено; `td_mebli_multico` — профіль VP-03 = `single`.
+Дозволені латинські назви: PIN, CAD, DXF, ToDo, QR, CUT, TDS, ПДВ, Odoo, Excel, CSV
+Дата зйомки: 2026-11-16 (A-16b-6: на стенді A-15-full-5 `b1385cd` (окремий каталог доставки середовища тесту) перезнято кадри головного екрана `menedzher/SC-01-1`, `kerivnyk/SC-06-1` (нова іконка «Керівник», рішення власника 2026-11-16, `flow/decisions.md` рядок 56) і `setup/SET-36` — під технологом («Виключити для», рядок 57); код інших екранів на кадрах не змінювався (diff `63ca329..b1385cd` у UI — іконка «Керівник» і права технолога). A-16b-5: на стенді A-15-full-4 `63ca329` (окремий каталог доставки) перезнято кадри, де було видно BAS (`menedzher/SC-01-6`, `KB-1`, `SUP-1`, `komirnyk/SC-04-6`, `admin/ADM-4`, `setup/SET-04`, `SET-10`, `SET-15`), і кадри технолога після D-23 (`setup/SET-20`…`SET-26`, `SET-30`…`SET-32`, `SET-35`; `SET-36` — під адміністратором); видалено кадри BAS `finansyst/SC-05-1/2/3/6`, `setup/SET-14` — обмін з BAS виключено рішенням власника 2026-11-16, `flow/decisions.md` рядок 55. Решта кадрів — попередніх спроб (журнал `img/SHOOT-LOG.md`): на них UI не змінювався. Попередня історія: A-16b-4: 34 кадри `img/setup/SET-*.png` для `setup.md` на стенді A-15-full-3 `dd1c949` під адміністратором (`admin`) і технологом (`tech@demo-fabryka.example`), 1440×900; A-16b-3: перезнято кадри головного екрана `menedzher/SC-01-1.png`, `kerivnyk/SC-06-1.png` на стенді A-15-full-3 `dd1c949`, сервер з каталогом доставки `delivery-fix4`; решта 67 кадрів — A-16b-2 на стенді `15dbd6f`: diff коду `15dbd6f..dd1c949` змінює в інтерфейсі лише головний екран і іконки кореневих меню, яких на цих кадрах немає — навбар застосунків, форми й списки ті самі, AI-32). Адреса стенда: локальний (`http://127.0.0.1:8079`, база `demo-mebli-pkg-a`, Odoo 19.0 CE, мова `uk_UA`, профіль B-демо). Засіб зйомки: Playwright, headless Chromium, 1440×900, часовий пояс `Europe/Kyiv`; журнал — `img/SHOOT-LOG.md`.
+Свіжість: SHA гейтів `package/CHECKS.md` = `09fc902` (A-14-9); `git diff --quiet 09fc902..HEAD -- package/addons package/config package/master-data …` = 0 (код пакета = коду гейтів).
+Модулі на стенді (19 `td_*`, без `td_mebli_demo`; модулів обміну з обліковою системою в пакеті немає — виключено рішенням власника 2026-11-16): `td_home_menu` 19.0.1.0.1, `td_knowledge` 19.0.1.1.2, `td_mebli_base` 19.0.1.1.4, `td_mebli_claim` 19.0.1.1.4, `td_mebli_cost` 19.0.1.1.2, `td_mebli_cutting` 19.0.1.1.4, `td_mebli_dashboard` 19.0.1.1.4, `td_mebli_install` 19.0.1.1.8, `td_mebli_knowledge` 19.0.1.1.1, `td_mebli_maint` 19.0.1.1.2, `td_mebli_measure` 19.0.1.1.4, `td_mebli_migration` 19.0.1.1.8, `td_mebli_mrp` 19.0.1.1.7, `td_mebli_notify` 19.0.1.1.4, `td_mebli_purchase` 19.0.1.1.3, `td_mebli_sale` 19.0.1.1.5, `td_mebli_shop` 19.0.1.1.3, `td_mebli_ua` 19.0.1.1.4, `td_support` 19.0.1.0.1.
 
 ## Ролі
 | Роль | Посібник | Картка |
@@ -30,7 +30,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | SC-02 Від файлу програми проєктування до розкрою й порізки | tekhnolog.md | готово |
 | SC-03 Зміна з простоєм, якістю й рекламацією | nachalnyk-vyrobnytstva.md | готово |
 | SC-04 Резерв, закупівля, обрізки, повний комплект | komirnyk.md | готово |
-| SC-05 Курс, обмін з BAS, собівартість, нарахування | finansyst.md | готово |
+| SC-05 Курс, собівартість, нарахування | finansyst.md | готово (обмін з BAS — **виключено рішенням власника 2026-11-16**) |
 | SC-06 Від дашборда до рішення | kerivnyk.md | готово |
 | SC-07 Замір без помилки на монтажі | zamirnyk.md | готово |
 | SC-08 Монтаж, акт, рекламація | bryhadyr.md | готово |
@@ -78,13 +78,13 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | F-38 | Вести графік бригад і виїздів (інтервал, бригада) | A, C | AC-095, AC-103, AC-128 | admin.md § Редакції; bryhadyr.md § SC-08; menedzher.md § SC-01 (крок 8) | описано; тур A-16-4: PASS |
 | F-39 | Підписувати з клієнтом акт монтажу з фото, недоліками й чек-листом за … | A, C | AC-097, AC-098, AC-099, AC-130 | admin.md § Редакції; bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
 | F-40 | Позначати фото з акта у фотоархів об'єктів для реклами | A | AC-100 | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
-| F-41 | Нараховувати відрядну за операціями й відсоток бригаді з підписаного а… | A | AC-104, AC-105, AC-106, AC-109, AC-134 | bryhadyr.md § SC-08; finansyst.md § SC-05 | описано; тур A-16-4: PASS |
+| F-41 | Нараховувати відрядну за операціями й відсоток бригаді з підписаного а… | A | AC-104, AC-105, AC-106, AC-109, AC-134 | bryhadyr.md § SC-08; finansyst.md § SC-05 | описано; тур A-16-4: PASS (передача нарахувань у BAS, AC-109 — **виключено рішенням власника 2026-11-16**) |
 | F-42 | Нараховувати премії й штрафи з причиною | A | AC-107, AC-108 | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS |
 | F-43 | Надсилати клієнту версію специфікації на погодження підписом | A, C | AC-117, AC-129 | admin.md § Редакції; menedzher.md § SC-01 | описано |
 | F-44 | Оформлювати зміну замовлення: нова версія специфікації, ціна, дата й п… | A, B | AC-118, AC-119, AC-120 | menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-45 | Показувати керівнику на одному екрані зсуви дат, рекламації, маржу пла… | A | AC-121, AC-122, AC-123 | kerivnyk.md § SC-06 | описано; тур A-16-4: PASS |
-| F-46 | Переносити довідники, залишки, відкриті й закриті замовлення з BAS/BAF… | A, B | AC-089, AC-090 | finansyst.md § SC-05 | описано |
-| F-47 | Обмінюватися з BAS/BAF клієнта документами продажу, закупівлі й оплата… | A | AC-039, AC-040, AC-041, AC-042 | finansyst.md § SC-05 | описано; тур A-16-4: PASS |
+| F-46 | Переносити довідники, залишки, відкриті й закриті замовлення з BAS/BAF… | A, B | AC-089, AC-090 | finansyst.md § SC-05 | описано (міграція й звірка; конвертор вивантажень BAS/BAF — **виключено рішенням власника 2026-11-16**) |
+| F-47 | Обмінюватися з BAS/BAF клієнта документами продажу, закупівлі й оплата… | A | AC-039, AC-040, AC-041, AC-042 | finansyst.md § SC-05 | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, тур A-16-4 PASS) |
 | F-48 | Приймати заявку в CRM і записувати покупця на замір у календар замірни… | A | AC-001 | menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-49 | Друкувати договір (режим «підряд» або «купівля-продаж») з графіком опл… | A | AC-033, AC-034, AC-094, AC-102 | bryhadyr.md § SC-08; komirnyk.md § SC-04; menedzher.md § SC-01 | описано; тур A-16-4: PASS |
 | F-50 | Сповіщати менеджера, коли прогнозна дата замовлення зсунулась за обіця… | A | AC-029 | menedzher.md § SC-01 | описано |
@@ -98,7 +98,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | F-58 | Формувати денний план бригади (екран і PDF): адреси, вироби, комплект,… | A | AC-096 | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS |
 | F-59 | Імпортувати прайс постачальника з файлу Excel за шаблоном колонок | A | AC-087 | komirnyk.md § SC-04 | описано; тур A-16-4: PASS |
 | F-60 | Планувати обслуговування верстатів дільниць і враховувати його в заван… | A | AC-076 | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS |
-| F-61 | Вести табель цеху через кіоск відвідувань за PIN і вивантажувати його … | A | AC-077, AC-078 | finansyst.md § SC-05; nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS |
+| F-61 | Вести табель цеху через кіоск відвідувань за PIN і вивантажувати його … | A | AC-077, AC-078 | finansyst.md § SC-05; nachalnyk-vyrobnytstva.md § SC-03 | кіоск відвідувань (AC-077) — описано; вивантаження табеля в BAS (AC-078) — **виключено рішенням власника 2026-11-16** |
 | F-62 | Перевіряти проєкт за заміром перед розкроєм за правилами (габарити про… | A | AC-055, AC-056 | tekhnolog.md § SC-02 | описано; тур A-16-4: PASS |
 | F-63 | Враховувати надійність постачальника (запізнення за історією закупівел… | A | AC-025 | menedzher.md § SC-01 | описано |
 | F-64 | Надсилати власнику ранковий брифінг за шаблоном: зсуви, доплати, рекла… | A | AC-124, AC-125 | kerivnyk.md § SC-06 | описано |
@@ -127,7 +127,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | AC-018 | Видимість маржі менеджеру — параметр | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-019 | Графік оплат етапами | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-020 | Контроль доплати перед виїздом | A | bryhadyr.md § SC-08 (крок 3) | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
-| AC-021 | Ручна позначка оплати з причиною | A | finansyst.md § SC-05 | описано; окремого кроку туру A-16 немає; модуль: done |
+| AC-021 | Ручна позначка оплати з причиною | A | finansyst.md § SC-05 | описано (позначка знімається вручну «Скасовано»; автоскасування обміном з BAS — **виключено рішенням власника 2026-11-16**); окремого кроку туру A-16 немає; модуль: done |
 | AC-022 | Прогнозна дата й банер зсуву | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-023 | Прогноз без МО і без обіцяної дати | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-024 | Замовна позиція зсуває прогноз | A | menedzher.md § SC-01 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
@@ -145,10 +145,10 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | AC-036 | Доступ за юрособами | A | admin.md § Користувачі й ролі | описано; тур A-16-4 (і A-16-5): SKIP — VP-03 = single на стенді (td_mebli_multico uninstalled, одна компанія): мультикомпанійне п; модуль: done |
 | AC-037 | Курс НБУ і перерахунок цін | B | finansyst.md § SC-05 | описано; тур A-16-4 (і A-16-5): SKIP — курс НБУ — зовнішній сервіс; у тесті без мережі не викликався (правило «нічого назовні»);; модуль: done |
 | AC-038 | НБУ недоступний | B | finansyst.md § SC-05 | описано; тур A-16-4 (і A-16-5): SKIP — завдання курсу НБУ: сервіс НБУ — зовнішній, у тесті без мережі не викликався (правило «ніч; модуль: done |
-| AC-039 | Обмін документами з BAS | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
-| AC-040 | Помилка обміну | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
-| AC-041 | Документ у BAS не змінюється в Odoo | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
-| AC-042 | Оплати з BAS закривають етапи | A | finansyst.md § SC-05 | описано; тур A-16-4 (і A-16-5): SKIP — імпорт оплати з пакета BAS → Odoo потребує файла контракту обміну від BAS (формат — відкри; модуль: done |
+| AC-039 | Обмін документами з BAS | A | — | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, модуль done) |
+| AC-040 | Помилка обміну | A | — | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, модуль done) |
+| AC-041 | Документ у BAS не змінюється в Odoo | A | — | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, модуль done) |
+| AC-042 | Оплати з BAS закривають етапи | A | — | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, модуль done) |
 | AC-043 | Задача монтажу із замовлення | A | menedzher.md § SC-01 | описано; окремого кроку туру A-16 немає; модуль: done |
 | AC-044 | Задачі монтажу немає до підтвердження | A | menedzher.md § SC-01 | описано; тур A-16-5: PASS (дефект D-19 закрито A-11-fix3) |
 | AC-045 | Імпорт специфікації CSV / Excel | A | tekhnolog.md § SC-02 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
@@ -184,7 +184,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | AC-075 | «Зроблено» без перевірки | B | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-076 | Обслуговування верстатів дільниць | A | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-077 | Прихід на зміну в кіоску відвідувань | A | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS, A-16-5: PASS |
-| AC-078 | Табель для BAS | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
+| AC-078 | Табель для BAS | A | — | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, модуль done) |
 | AC-079 | Табло цеху на ТВ | B | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-080 | Повторне виготовлення з рекламації | A | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-081 | Рекламація без деталі | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
@@ -195,7 +195,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | AC-086 | Немає історії цін | A | komirnyk.md § SC-04 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-087 | Імпорт прайсу постачальника з Excel | A | komirnyk.md § SC-04 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-088 | Аналог матеріалу | B | komirnyk.md § SC-04 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
-| AC-089 | Повна міграція з BAS/BAF і БАЗИС | B | finansyst.md § SC-05 | описано; окремого кроку туру A-16 немає; модуль: done |
+| AC-089 | Повна міграція з BAS/BAF і БАЗИС | B | finansyst.md § SC-05 | описано (конвертор БАЗИС, кроки імпорту, звірка); частина BAS/BAF (конвертор, коди BAS) — **виключено рішенням власника 2026-11-16**; модуль: done |
 | AC-090 | Розбіжність звірки міграції | A | finansyst.md § SC-05 | описано; тур A-16-4 (і A-16-5): SKIP — звірка міграції потребує даних джерела (B-06); модуль: done |
 | AC-091 | Комплектувальний лист по місцях | A | komirnyk.md § SC-04 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-092 | Неповний комплект не відвантажується | A | komirnyk.md § SC-04 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
@@ -215,7 +215,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | AC-106 | Працівник бачить лише своє; підтверджене не змінюється | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-107 | Премія або штраф з причиною | A | nachalnyk-vyrobnytstva.md § SC-03 | описано; окремого кроку туру A-16 немає; модуль: done |
 | AC-108 | Премія без причини | A | nachalnyk-vyrobnytstva.md § SC-03 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
-| AC-109 | Передача нарахувань у BAS | A | finansyst.md § SC-05 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
+| AC-109 | Передача нарахувань у BAS | A | — | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: описано, модуль done) |
 | AC-110 | Реєстрація рекламації | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-111 | Гарантія за строком категорії | A | bryhadyr.md § SC-08 | описано; тур A-16-4: PASS, A-16-5: PASS; модуль: done |
 | AC-112 | Платний ремонт після гарантії | A | bryhadyr.md § SC-08 | описано; тур A-16-5: PASS (дефект D-21 закрито A-11-fix3); модуль: done |
@@ -252,19 +252,19 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 ### (а4) Склад коробок і поставки (`docs/industries/mebli/research/BOX.md`)
 | Пункт BOX | Що входить | Розділ інструкції | Статус |
 |---|---|---|---|
-| §1 коробка A «CE-старт» | тверде ядро: заміри, ціна з розмірів, замовлення, специфікація, розкрій і порізка, дошка, цех, склад і комплект, монтаж і акт, рекламації, собівартість, нарахування, дашборд, обмін з BAS | admin.md § Профілі; посібники ролей SC-01…SC-08 | готово (стенд — B, функції A — підмножина) |
+| §1 коробка A «CE-старт» | тверде ядро: заміри, ціна з розмірів, замовлення, специфікація, розкрій і порізка, дошка, цех, склад і комплект, монтаж і акт, рекламації, собівартість, нарахування, дашборд (обмін з BAS — **виключено рішенням власника 2026-11-16**) | admin.md § Профілі; посібники ролей SC-01…SC-08 | готово (стенд — B, функції A — підмножина) |
 | §1 коробка B «CE-повний» | A + конфігуратор, обрізки, пакети розкрою, кіоск цеху, якість, сканування етикеток, підпис зміни, курс НБУ, AI-підказка колонок, аналоги, табло цеху, кілька юросіб | admin.md § Параметри (VP-02, VP-03); позначки «(коробка B)» у посібниках ролей | готово; кілька юросіб (`td_mebli_multico`) не встановлено на стенді |
 | §1 коробка C «EE» | B + мости Shop Floor, Quality, Field Service, Planning, Helpdesk, Sign | admin.md § Редакції | EE не перевірено |
-| §1а легкий тариф «ФОП-цех» | профіль light: без BAS, без графіка оплат, лише порізка в дистриб'ютора | admin.md § Профілі | описано; профіль light на стенді не піднімався (A-15 alt-1 — preflight) |
+| §1а легкий тариф «ФОП-цех» | профіль light: модулі як A (обмін з BAS — **виключено рішенням власника 2026-11-16**), без графіка оплат, лише порізка в дистриб'ютора | admin.md § Профілі | описано; профіль light на стенді не піднімався (A-15 alt-1 — preflight) |
 | §2 план запуску | етапи запуску клієнта (кроки B) | admin.md § Перший запуск | описано (виконує команда впровадження) |
 | §3 довідники й майстер-дані | шаблони довідників | admin.md § Майстер-дані й імпорт | готово |
 | §4 дані на старті (міграція) | перенесення даних і звірка першого місяця | admin.md § Майстер-дані й імпорт; finansyst.md § SC-05 | готово |
-| §6 обмін з BAS/BAF | контракт обміну, канал, пакети, журнал | admin.md § Обмін з обліковою системою; finansyst.md § SC-05 | готово; формат оплат з BAS — відкрите питання ВП-1 |
+| §6 обмін з BAS/BAF | контракт обміну, канал, пакети, журнал | admin.md § Обмін з обліковою системою (автоматичного обміну немає) | **виключено рішенням власника 2026-11-16** (у пакеті немає; було: готово) |
 | §7 ролі доступу | ролі й групи | admin.md § Користувачі й ролі | готово |
 | §8 нефункціональні | мова, швидкодія, оновлення, резервні копії, кирилиця в PDF | admin.md § Перший запуск, § Оновлення версії, § Резервні копії, § Друковані форми | описано; швидкодія й резервні копії на стенді не вимірювались |
 | §9 безпека й дані | права, правила записів, дані в зверненнях | admin.md § Користувачі й ролі, § Звернення в підтримку (td_support) | готово |
 | §11.1 KPI керівника | картки дашборда | kerivnyk.md § SC-06 | готово |
-| §10 інтеграції й формати | CSV/Excel специфікації; БАЗИС і PRO100 після зразка; CSV розкрою; обмін BAS; етикетки PDF; підпис порталу; сторонні опції | admin.md § Інтеграції й формати | готово для «у коробці»; БАЗИС/PRO100 — після зразка файлів; опції й «пізніше» — поза пакетом |
+| §10 інтеграції й формати | CSV/Excel специфікації; БАЗИС і PRO100 після зразка; CSV розкрою; обмін BAS (**виключено рішенням власника 2026-11-16**); етикетки PDF; підпис порталу; сторонні опції | admin.md § Інтеграції й формати | готово для «у коробці»; БАЗИС/PRO100 — після зразка файлів; опції й «пізніше» — поза пакетом |
 | §11.2 друковані документи (наявні) | пропозиція, договір, рахунки, наряд, етикетки QR, комплектувальний лист, акт монтажу, акт приймання-передачі, денний план бригади, відомість нарахувань | admin.md § Друковані форми; посібники ролей | готово |
 | §11.2 «Додаткова угода на зміну» | друкована угода на зміну замовлення | admin.md § Друковані форми | не розроблено; замінено версіями зміни й підписом порталом (AI-20, питання власнику) |
 | §11.2 «Гарантійний документ» | друкований гарантійний документ | admin.md § Друковані форми | не розроблено (умовно, NR-01; юрист); замінено гарантією категорії й полями рекламації (AI-20) |
@@ -280,11 +280,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | База знань → Усі статті | меню `td_knowledge.menu_td_knowledge_all` | td_knowledge | menedzher.md § Довідка й підтримка; admin.md § База знань (td_knowledge) | описано |
 | База знань → Статті | меню `td_knowledge.menu_td_knowledge_reader` | td_knowledge | menedzher.md § Довідка й підтримка; tekhnolog.md § Довідка й підтримка | описано |
 | База знань | меню `td_knowledge.menu_td_knowledge_root` | td_knowledge | menedzher.md § Довідка й підтримка; admin.md § База знань (td_knowledge) | описано |
-| Відвідування → Управління → Табель для BAS (імітація) | меню `td_mebli_attendance.td_mebli_timesheet_export_menu` | td_mebli_attendance | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Виставлення рахунків → Обмін з BAS → Пакети | меню `td_mebli_bas.td_mebli_bas_batch_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Виставлення рахунків → Обмін з BAS → Канали | меню `td_mebli_bas.td_mebli_bas_channel_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Виставлення рахунків → Обмін з BAS → Журнал | меню `td_mebli_bas.td_mebli_bas_log_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Виставлення рахунків → Обмін з BAS | меню `td_mebli_bas.td_mebli_bas_menu` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Ремонти → Рекламації | меню `td_mebli_claim.td_mebli_claim_menu` | td_mebli_claim | menedzher.md § SC-01; nachalnyk-vyrobnytstva.md § SC-03 | описано |
 | Продажі → Звітність → Собівартість: план і факт | меню `td_mebli_cost.sale_order_td_cost_fact_menu` | td_mebli_cost | finansyst.md § SC-05; kerivnyk.md § SC-06 | описано |
 | Виробництво → Розкрій → Завдання розкрою | меню `td_mebli_cutting.td_mebli_cutting_job_menu` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -325,10 +320,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Продажі → Замовлення → Оновити ціни за курсом | меню `td_mebli_ua.menu_td_update_prices_by_rate` | td_mebli_ua | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Налаштування → Підтримка ToDo | меню `td_support.menu_td_support_request` | td_support | menedzher.md § Довідка й підтримка; tekhnolog.md § Довідка й підтримка | описано |
 | Усі статті | дія вікна `td_knowledge.action_td_knowledge_article` | td_knowledge | menedzher.md § Довідка й підтримка; admin.md § База знань (td_knowledge) | описано |
-| Табель для BAS (імітація) | дія вікна `td_mebli_attendance.td_mebli_timesheet_export_action` | td_mebli_attendance | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Пакети обміну | дія вікна `td_mebli_bas.td_mebli_bas_batch_action` | td_mebli_bas | finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Канали обміну | дія вікна `td_mebli_bas.td_mebli_bas_channel_action` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Журнал обміну | дія вікна `td_mebli_bas.td_mebli_bas_log_action` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Рекламації | дія вікна `td_mebli_claim.td_mebli_claim_action` | td_mebli_claim | menedzher.md § SC-01; nachalnyk-vyrobnytstva.md § SC-03 | описано |
 | Собівартість: план і факт | дія вікна `td_mebli_cost.sale_order_td_cost_fact_action` | td_mebli_cost | finansyst.md § SC-05; kerivnyk.md § SC-06 | описано |
 | Ділові обрізки | дія вікна `td_mebli_cutting.stock_lot_td_offcut_action` | td_mebli_cutting | tekhnolog.md § SC-02; komirnyk.md § SC-04 | описано |
@@ -372,7 +363,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Етикетки деталей (QR) | звіт / друкована форма (mrp.production) `td_mebli_shop.action_report_mo_part_labels` | td_mebli_shop | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Етикетки деталей (QR) | звіт / друкована форма (sale.order) `td_mebli_shop.action_report_part_labels` | td_mebli_shop | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Наряд на замовлення | звіт / друкована форма (mrp.production) `td_mebli_shop.action_report_workorder_sheet` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Меблі: обмін з BAS | серверна дія `td_mebli_bas.ir_cron_td_bas_exchange_ir_actions_server` | td_mebli_bas | finansyst.md § SC-05; admin.md § Обмін з обліковою системою | описано |
 | Створити завдання розкрою | серверна дія `td_mebli_cutting.action_td_create_cutting_job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Мій день | серверна дія `td_mebli_install.td_mebli_install_day_server_action` | td_mebli_install | bryhadyr.md § SC-08; bryhadyr.md § Довідник ролі: меню, кнопки, друк | описано |
 | Меблі: нагадування покупцям | серверна дія `td_mebli_notify.ir_cron_td_customer_reminders_ir_actions_server` | td_mebli_notify | admin.md § Розклади й автоматичні дії; admin.md § Резервні копії | описано |
@@ -381,7 +371,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Меблі: прогнозні дати замовлень | серверна дія `td_mebli_sale.ir_cron_td_recompute_forecast_ir_actions_server` | td_mebli_sale | nachalnyk-vyrobnytstva.md § SC-03; admin.md § Розклади й автоматичні дії | описано |
 | Оновити ціни за курсом | серверна дія `td_mebli_ua.action_td_update_prices_by_rate` | td_mebli_ua | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Курси НБУ | серверна дія `td_mebli_ua.ir_cron_td_nbu_rates_ir_actions_server` | td_mebli_ua | finansyst.md § SC-05; admin.md § Локалізація UA | описано |
-| Меблі: обмін з BAS | розклад `td_mebli_bas.ir_cron_td_bas_exchange` | td_mebli_bas | finansyst.md § SC-05; admin.md § Обмін з обліковою системою | описано |
 | Меблі: нагадування покупцям | розклад `td_mebli_notify.ir_cron_td_customer_reminders` | td_mebli_notify | admin.md § Розклади й автоматичні дії; admin.md § Резервні копії | описано |
 | Меблі: дії на зсув прогнозної дати | розклад `td_mebli_notify.ir_cron_td_forecast_activity` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
 | Меблі: ранковий брифінг власника | розклад `td_mebli_notify.ir_cron_td_morning_briefing` | td_mebli_notify | kerivnyk.md § SC-06; kerivnyk.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -416,15 +405,11 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | База знань | клієнтська дія `td_knowledge.action_td_knowledge_reader` | td_knowledge | menedzher.md § Довідка й підтримка; admin.md § База знань (td_knowledge) | описано |
 | Керівник | клієнтська дія `td_mebli_dashboard.action_dashboard` | td_mebli_dashboard | menedzher.md § SC-01; finansyst.md § SC-05 | описано |
 | Табло цеху | клієнтська дія `td_mebli_dashboard.action_shop_board` | td_mebli_dashboard | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
-| Нумерація `BAS/%(year)s/` | нумерація `td_mebli_bas.seq_td_mebli_bas_batch` | td_mebli_bas | admin.md § Розклади й автоматичні дії | описано |
 | Нумерація `CUT/` | нумерація `td_mebli_cutting.seq_td_mebli_cutting_job` | td_mebli_cutting | admin.md § Розклади й автоматичні дії | описано |
 | Нумерація `АКТ-` | нумерація `td_mebli_install.seq_td_mebli_install_act` | td_mebli_install | admin.md § Розклади й автоматичні дії | описано |
 | Нумерація `ЗМ/%(year)s/` | нумерація `td_mebli_measure.seq_td_mebli_measure` | td_mebli_measure | admin.md § Розклади й автоматичні дії | описано |
 | Нумерація `TDS/` | нумерація `td_support.seq_td_support_request` | td_support | admin.md § Розклади й автоматичні дії | описано |
 | Форма «Стаття бази знань» | форма `td.knowledge.article` | td_knowledge | menedzher.md § Довідка й підтримка; admin.md § База знань (td_knowledge) | описано |
-| Форма «Вивантаження табеля в BAS (імітація)» | форма `td.mebli.timesheet.export` | td_mebli_attendance | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Форма «Пакет обміну з BAS» | форма `td.mebli.bas.batch` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
-| Форма «Канал обміну з BAS» | форма `td.mebli.bas.channel` | td_mebli_bas | finansyst.md § SC-05; finansyst.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Завдання розкрою» | форма `td.mebli.cutting.job` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Імпорт результату програми розкрою» | форма `td.mebli.cutting.result.import` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Лист розкрою» | форма `td.mebli.cutting.sheet` | td_mebli_cutting | tekhnolog.md § SC-02; tekhnolog.md § Довідник ролі: меню, кнопки, друк | описано |
@@ -448,28 +433,24 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Форма «Робоче завдання, зроблене заднім числом» | форма `td.mebli.workorder.backdate` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03; nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк | описано |
 | Форма «Звернення в підтримку ToDo» | форма `td.support.request` | td_support | admin.md § Звернення в підтримку (td_support) | описано |
 | Форма «Атрибут товару» — поля пакета | розширення форми `product.attribute` | td_mebli_mrp | admin.md § Поля пакета на стандартних формах | описано |
-| Форма «Варіант товару» — поля пакета | розширення форми `product.product` | td_mebli_bas | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Використання робочого центру» — поля пакета | розширення форми `mrp.routing.workcenter` | td_mebli_mrp, td_mebli_shop | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Завдання» — поля пакета | розширення форми `project.task` | td_mebli_claim, td_mebli_install | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Замовлення на виробництво» — поля пакета | розширення форми `mrp.production` | td_mebli_cutting, td_mebli_measure, td_mebli_mrp, td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Замовлення на купівлю» — поля пакета | розширення форми `purchase.order` | td_mebli_purchase | admin.md § Поля пакета на стандартних формах | описано |
-| Форма «Замовлення на продаж» — поля пакета | розширення форми `sale.order` | td_mebli_bas, td_mebli_claim, td_mebli_cost, td_mebli_cutting, td_mebli_install, td_mebli_measure, td_mebli_notify, td_mebli_sale, td_mebli_shop | admin.md § Поля пакета на стандартних формах | описано |
+| Форма «Замовлення на продаж» — поля пакета | розширення форми `sale.order` | td_mebli_claim, td_mebli_cost, td_mebli_cutting, td_mebli_install, td_mebli_measure, td_mebli_notify, td_mebli_sale, td_mebli_shop | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Замовлення на ремонт» — поля пакета | розширення форми `repair.order` | td_mebli_claim | admin.md § Поля пакета на стандартних формах | описано |
-| Форма «Запис у журналі» — поля пакета | розширення форми `account.move` | td_mebli_bas | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Запит на технічне обслуговування» — поля пакета | розширення форми `maintenance.request` | td_mebli_maint | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Категорія товару» — поля пакета | розширення форми `product.category` | td_mebli_base | admin.md § Поля пакета на стандартних формах | описано |
-| Форма «Контакт» — поля пакета | розширення форми `res.partner` | td_mebli_bas, td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
+| Форма «Контакт» — поля пакета | розширення форми `res.partner` | td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Лід» — поля пакета | розширення форми `crm.lead` | td_mebli_measure | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Партія/Серійний номер» — поля пакета | розширення форми `stock.lot` | td_mebli_cutting | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Переміщення» — поля пакета | розширення форми `stock.picking` | td_mebli_shop | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Робочий центр» — поля пакета | розширення форми `mrp.workcenter` | td_mebli_maint, td_mebli_mrp | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Специфікація» — поля пакета | розширення форми `mrp.bom` | td_mebli_mrp, td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
-| Форма «Співробітник» — поля пакета | розширення форми `hr.employee` | td_mebli_bas | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Термін оплати» — поля пакета | розширення форми `account.payment.term` | td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Технічне обслуговування» — поля пакета | розширення форми `maintenance.equipment` | td_mebli_maint | admin.md § Поля пакета на стандартних формах | описано |
 | Форма «Товар» — поля пакета | розширення форми `product.template` | td_mebli_mrp | admin.md § Поля пакета на стандартних формах | описано |
 | Кнопка «Імпорт деталей» | кнопка форми/списку `mrp.bom: action_td_import_parts` | td_mebli_mrp | tekhnolog.md § SC-02 | описано |
-| Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.bas.batch: action_td_import` | td_mebli_bas | finansyst.md § SC-05 | описано |
 | Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.cutting.result.import: action_import` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
 | Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.migration.step: action_td_import` | td_mebli_migration | admin.md § Майстер-дані й імпорт | описано |
 | Кнопка «Імпортувати» | кнопка форми/списку `td.mebli.spec.import: action_import` | td_mebli_mrp | tekhnolog.md § SC-02 | описано |
@@ -500,15 +481,10 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Кнопка «Оплату підтверджено вручну» | кнопка форми/списку `sale.order: action_td_pay_mark` | td_mebli_install | finansyst.md § SC-05 | описано |
 | Кнопка «Отримати результат (імітація)» | кнопка форми/списку `td.mebli.cutting.job: action_simulate` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
 | Кнопка «Пауза» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
-| Кнопка «Передати в BAS» | кнопка форми/списку `sale.order: action_td_send_bas` | td_mebli_bas | finansyst.md § SC-05 | описано |
-| Кнопка «Передати в BAS» | кнопка форми/списку `td.mebli.accrual: action_td_send_bas` | td_mebli_bas | finansyst.md § SC-05 | описано |
-| Кнопка «Передати в BAS» | кнопка форми/списку `td.mebli.bas.channel: action_td_exchange` | td_mebli_bas | finansyst.md § SC-05 | описано |
-| Кнопка «Передати в BAS» | кнопка форми/списку `td.mebli.timesheet.export: action_td_send_bas` | td_mebli_bas | finansyst.md § SC-05 | описано |
 | Кнопка «Передати дистриб'ютору» | кнопка форми/списку `td.mebli.cutting.job: action_send_distributor` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
 | Кнопка «Передати на розкрій» | кнопка форми/списку `td.mebli.cutting.job: action_send` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
 | Кнопка «Повернути в чернетку» | кнопка форми/списку `td.mebli.cutting.job: action_draft` | td_mebli_cutting | tekhnolog.md § SC-02 | описано |
 | Кнопка «Повернути в чернетку» | кнопка форми/списку `td.mebli.migration.check: action_td_reset` | td_mebli_migration | finansyst.md § SC-05 | описано |
-| Кнопка «Повторити» | кнопка форми/списку `td.mebli.bas.batch: action_td_retry` | td_mebli_bas | finansyst.md § SC-05 | описано |
 | Кнопка «Повторне виготовлення» | кнопка форми/списку `repair.order: action_td_remake` | td_mebli_claim | bryhadyr.md § SC-08 | описано |
 | Кнопка «Повідомити клієнта про нову дату» | кнопка форми/списку `sale.order: action_td_notify_new_date` | td_mebli_notify | menedzher.md § SC-01 | описано |
 | Кнопка «Порівняти з Odoo» | кнопка форми/списку `td.mebli.migration.check: action_td_compute` | td_mebli_migration | finansyst.md § SC-05 | описано |
@@ -531,7 +507,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Кнопка «Створити дозамовлення» | кнопка форми/списку `td.mebli.kit.line: action_td_reorder` | td_mebli_shop | komirnyk.md § SC-04 | описано |
 | Кнопка «Створити зміну» | кнопка форми/списку `sale.order: action_td_open_change` | td_mebli_sale | menedzher.md § SC-01 | описано |
 | Кнопка «Сформувати комплектувальний лист» | кнопка форми/списку `sale.order: action_td_form_kit` | td_mebli_shop | komirnyk.md § SC-04 | описано |
-| Кнопка «Сформувати файл» | кнопка форми/списку `td.mebli.timesheet.export: action_build` | td_mebli_attendance | finansyst.md § SC-05 | описано |
 | Кнопка «У фотоархів» | кнопка форми/списку `td.mebli.install.act: action_td_photo_archive` | td_mebli_install | bryhadyr.md § SC-08 | описано |
 | Кнопка «Якість» | кнопка форми/списку `mrp.workorder: action_td_kiosk` | td_mebli_shop | nachalnyk-vyrobnytstva.md § SC-03 | описано |
 | Тип дії «Зсув прогнозної дати» | тип дії `mail.activity.type td_mebli_notify.mail_activity_type_td_forecast_shift` | td_mebli_notify | admin.md § Розклади й автоматичні дії | описано |
@@ -539,7 +514,7 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Нагадування календаря «Лист — за 1 день» | дані модуля `calendar.alarm td_mebli_measure.alarm_mail_measure_1day` | td_mebli_measure | admin.md § Пошта | описано |
 | Тип зустрічі «Замір» | дані модуля `calendar.event.type td_mebli_measure.event_type_measure` | td_mebli_measure | admin.md § Пошта | описано |
 | Товар «Повторна деталь» (рекламація, брак) | дані модуля `product.template td_mebli_claim.product_remake_part, td_mebli_shop.product_td_repeat_part` | td_mebli_claim, td_mebli_shop | nachalnyk-vyrobnytstva.md § Довідник ролі: меню, кнопки, друк; admin.md § Довідник налаштувань модулів | описано |
-| Кроки імпорту шаблонів (28: категорії … коди BAS працівників) | дані модуля `td.mebli.migration.step step_01…step_td_21b` | td_mebli_migration | admin.md § Майстер-дані й імпорт | описано |
+| Кроки імпорту шаблонів (25: категорії … шаблони імпорту деталей) | дані модуля `td.mebli.migration.step step_01…step_td_18` | td_mebli_migration | admin.md § Майстер-дані й імпорт | описано |
 | Статті «Як користуватися базою знань», «Як додати статтю до екрана» | дані модуля `td.knowledge.article td_knowledge.article_*` | td_knowledge | admin.md § База знань (td_knowledge) | описано |
 | Поле «Етап оплати» в рядках умови оплати | поле форми `account.payment.term.line td_milestone` | td_mebli_sale | admin.md § Поля пакета на стандартних формах | описано |
 | Смарт-кнопка «Виробництво» на замовленні | смарт-кнопка / значок / поле `sale.order: action_td_view_production` | td_mebli_sale | menedzher.md § SC-01 | описано |
@@ -594,7 +569,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Значок «Довідка» (статті до екрана) і кнопка «Додати статтю до цього екрана» (редактор) | елемент навбару `td_knowledge.Systray` | td_knowledge | admin.md § База знань (td_knowledge) | описано |
 | Головний екран застосунків (плитки на білих картках, пошук, гаряча клавіша `h`; навбар — лише значки праворуч; підпис в один рядок з «…») | клієнтська дія `td_home_menu (клієнтська дія)` | td_home_menu | menedzher.md § SC-01; kerivnyk.md § SC-06 | описано |
 | Правила доступу записів (2) | правила запису `ir.rule td_knowledge` | td_knowledge | admin.md § Користувачі й ролі | описано |
-| Правила доступу записів (3) | правила запису `ir.rule td_mebli_bas` | td_mebli_bas | admin.md § Користувачі й ролі | описано |
 | Правила доступу записів (4) | правила запису `ir.rule td_mebli_cutting` | td_mebli_cutting | admin.md § Користувачі й ролі | описано |
 | Правила доступу записів (21) | правила запису `ir.rule td_mebli_install` | td_mebli_install | admin.md § Користувачі й ролі | описано |
 | Правила доступу записів (12) | правила запису `ir.rule td_mebli_measure` | td_mebli_measure | admin.md § Користувачі й ролі | описано |
@@ -619,7 +593,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | `VP-01` | admin.md § Параметри | описано |
 | `VP-02` | admin.md § Параметри; § Локалізація UA | описано |
 | `VP-03` | admin.md § Параметри; § Компанії й мультикомпанія | описано |
-| `VP-04` | admin.md § Параметри | описано |
 | `VP-05` | admin.md § Параметри | описано |
 | `VP-06` | admin.md § Параметри | описано |
 | `VP-07` | admin.md § Параметри | описано |
@@ -642,42 +615,37 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Редакції CE / EE, мости EE | admin.md § Редакції | CE — описано й перевірено; EE не перевірено (EE недоступна) |
 | Встановлення бази клієнта: сервер, addons_path, `odoo-bin -i … --load-language=uk_UA`; конфіг-пакет з answers.yaml застосовує ToDo за ранбуком B-04 (`apply.py` — лише test-/demo-/emu-), адміністратор перевіряє результат за переліком | admin.md § Перший запуск | описано з межею: застосування конфіг-пакета — ToDo (AI-24); на базі клієнта не перевірялось |
 | Користувачі: створення, запрошення, паролі, компанії, часовий пояс; групи й права; правила записів | admin.md § Користувачі й ролі | описано |
-| Компанії й мультикомпанія (VP-03 `multi` / `multi_install_fop`): друга юрособа, налаштування на компанію, план рахунків, канал BAS на компанію, монтаж від ФОП | admin.md § Компанії й мультикомпанія | описано; на стенді одна компанія (VP-03 = single), `td_mebli_multico` не встановлено |
-| Безпека: паролі, 2FA, `list_db = False`, майстер-пароль, доступ адміністратора, секрети (ключ API BAS, секрет вебхука, SMTP) | admin.md § Безпека | описано |
+| Компанії й мультикомпанія (VP-03 `multi` / `multi_install_fop`): друга юрособа, налаштування на компанію, план рахунків, монтаж від ФОП | admin.md § Компанії й мультикомпанія | описано; на стенді одна компанія (VP-03 = single), `td_mebli_multico` не встановлено |
+| Безпека: паролі, 2FA, `list_db = False`, майстер-пароль, доступ адміністратора, секрети (секрет вебхука, SMTP) | admin.md § Безпека | описано |
 | Локалізація UA: `uk_UA`, `l10n_ua`, курси НБУ (`td_mebli_ua`, параметр `td_mebli_ua.nbu_online`, розклад «Курси НБУ») | admin.md § Локалізація UA | описано; онлайн-курси на стенді не перевірено (без мережі, імітація) |
-| Майстер-дані й імпорт; міграція з BAS/BAF і БАЗИС | admin.md § Майстер-дані й імпорт | описано; конвертори — каркас до зразків клієнта (ВП-1, ВП-3) |
-| Обмін з BAS/BAF: канал, передача файлу, відповідь BAS, коди BAS | admin.md § Обмін з обліковою системою | описано; транспорт HTTP і формат оплат — після контракту (ВП-1) |
+| Майстер-дані й імпорт; міграція (БАЗИС; конвертор BAS/BAF — виключено рішенням власника 2026-11-16) | admin.md § Майстер-дані й імпорт | описано; конвертор — каркас до зразків клієнта (ВП-3) |
+| Обмін з обліковою системою | admin.md § Обмін з обліковою системою | описано: автоматичного обміну немає (обмін з BAS/BAF — **виключено рішенням власника 2026-11-16**); бази старої версії з обміном — примітка admin.md § Оновлення версії |
 | Інтеграції й формати (BOX §10) | admin.md § Інтеграції й формати | описано |
 | Пошта: SMTP, `web.base.url`, відправник і домен, відповіді покупців, отримувачі брифінгу, шаблони листів | admin.md § Пошта | описано; SMTP на стенді не налаштовано (секрет, B-04) |
 | Розклади й нумерація (у т. ч. «Курси НБУ» — вимкнено за замовчуванням) | admin.md § Розклади й автоматичні дії | описано |
 | Друковані форми і документи BOX §11.2 без звіту | admin.md § Друковані форми | описано; 4 документи не розроблено (AI-20) |
 | Оновлення версії: `odoo-bin -u … --stop-after-init`, зупинка сервісу, відкат, мінорні оновлення Odoo 19 | admin.md § Оновлення версії | описано; оновлення з тегу — крок A-18 |
-| Резервні копії: `pg_dump`/`pg_restore`, filestore, перевірка, знешкодження пробної копії (`odoo-bin neutralize` + ручні кроки BAS/підтримка/НБУ), розклад | admin.md § Резервні копії | описано; розклад — рішення AI-23 (вето власника/Тімліда) |
+| Резервні копії: `pg_dump`/`pg_restore`, filestore, перевірка, знешкодження пробної копії (`odoo-bin neutralize` + ручні кроки підтримка/НБУ), розклад | admin.md § Резервні копії | описано; розклад — рішення AI-23 (вето власника/Тімліда) |
 | Головний екран (td_home_menu) | admin.md § Головний екран (td_home_menu) | описано |
 | Вікно підтримки (td_support): адреса, вебхук, звернення | admin.md § Звернення в підтримку (td_support) | описано; адреса підтримки — рішення власника (не задано) |
 | База знань (td_knowledge, td_mebli_knowledge) | admin.md § База знань (td_knowledge) | описано |
 | Налаштування модулів і поля пакета на стандартних формах | admin.md § Довідник налаштувань модулів; § Поля пакета на стандартних формах | описано |
-| Налаштування довідників і товарів: кожен довідник `td_*` і кожне поле `td_*` на стандартних формах — хто, де, кроки, обов'язкові поля й наслідки, типова помилка, кадр | setup.md; таблиця (г) нижче | описано; 34 кадри під адміністратором / технологом (`img/setup/`) |
-| Типові помилки: довідник усіх повідомлень пакета дослівно (140 текстів із 153 місць коду; перевірка `reference/check_messages.py` — 0 пропущених) + симптоми налаштувань і стандарту Odoo | reference/messages.md; admin.md § Типові помилки; «Типові помилки» посібників ролей | описано |
+| Налаштування довідників і товарів: кожен довідник `td_*` і кожне поле `td_*` на стандартних формах — хто, де, кроки, обов'язкові поля й наслідки, типова помилка, кадр | setup.md; таблиця (г) нижче | описано; 33 кадри під адміністратором / технологом (`img/setup/`; SET-14 «Канал обміну з BAS» видалено — виключено рішенням власника 2026-11-16) |
+| Типові помилки: довідник усіх повідомлень пакета дослівно (133 тексти зі 146 місць коду; перевірка `reference/check_messages.py` — 0 пропущених) + симптоми налаштувань і стандарту Odoo | reference/messages.md; admin.md § Типові помилки; «Типові помилки» посібників ролей | описано |
 
 ## Покриття: налаштування довідників (г)
-Перелік зібрано скриптом з коду (`reference/check_setup.py --list`: класи Python модулів `td_*`, крім `td_mebli_demo` і `td_*_elearning`): кожне поле, яке `td_*` додає до стандартної моделі (у т. ч. `res.config.settings`, `res.company`), і кожна власна постійна модель `td_*`. Підпис — переклад `uk.po` модуля. Вид: «налаштування» — вводить адміністратор/технолог; «налаштування модуля» — «Налаштування» → «Меблі»; «службове» — рахує чи ставить система на формі довідника; «довідник» — модель-довідник `td_*`; «документ» — поле чи модель робочого документа (вводять ролі в роботі). Перевірка: `python3 -I package/docs/user-guide/reference/check_setup.py --addons package/addons --index package/docs/user-guide/INDEX.md --setup package/docs/user-guide/setup.md` — пропусків 0.
+Перелік зібрано скриптом з коду (`reference/check_setup.py --list`: класи Python модулів `td_*`, крім `td_mebli_demo` і `td_*_elearning`): кожне поле, яке `td_*` додає до стандартної моделі (у т. ч. `res.config.settings`, `res.company`), і кожна власна постійна модель `td_*` і (з A-16b-5) кожен системний параметр `ir.config_parameter` `td_*`, який читає код. Підпис — переклад `uk.po` модуля. Вид: «налаштування» — вводить адміністратор/технолог; «налаштування модуля» — «Налаштування» → «Меблі»; «службове» — рахує чи ставить система на формі довідника; «довідник» — модель-довідник `td_*`; «документ» — поле чи модель робочого документа (вводять ролі в роботі). Перевірка: `python3 -I package/docs/user-guide/reference/check_setup.py --addons package/addons --index package/docs/user-guide/INDEX.md --setup package/docs/user-guide/setup.md` — пропусків 0.
 
 | Форма (модель) | Поле / довідник (UI) | Технічна назва | Модуль | Вид | Розділ |
 |---|---|---|---|---|---|
-| Запис у журналі `account.move` | Пакет BAS | `td_bas_batch_id` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
-| Запис у журналі `account.move` | Немає коду BAS | `td_bas_missing_code` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
-| Запис у журналі `account.move` | Обмін з BAS | `td_bas_state` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
-| Платіж `account.payment` | Посилання BAS | `td_bas_ref` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
 | Термін оплати (рядок) `account.payment.term.line` | Етап оплати | `td_milestone` | td_mebli_sale | налаштування | setup.md § Терміни оплати з етапами |
 | Нагода `crm.lead` | Заміри | `td_measure_count` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
 | Нагода `crm.lead` | Замір-листи | `td_measure_ids` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
 | Заявка (EE) `helpdesk.ticket` | Деталь | `td_part_id` | td_mebli_helpdesk | документ | setup.md § Поля пакета на робочих документах |
 | Заявка (EE) `helpdesk.ticket` | Рекламація | `td_repair_id` | td_mebli_helpdesk | документ | setup.md § Поля пакета на робочих документах |
 | Заявка (EE) `helpdesk.ticket` | Замовлення меблів | `td_sale_order_id` | td_mebli_helpdesk | документ | setup.md § Поля пакета на робочих документах |
-| Співробітник `hr.employee` | Код BAS | `td_bas_code` | td_mebli_bas | налаштування | setup.md § Працівники: код BAS і PIN цеху |
-| Співробітник `hr.employee` | Невірних PIN поспіль | `td_pin_fail_count` | td_mebli_shop | службове | setup.md § Працівники: код BAS і PIN цеху |
-| Співробітник `hr.employee` | Планшет заблоковано до | `td_pin_locked_until` | td_mebli_shop | службове | setup.md § Працівники: код BAS і PIN цеху |
+| Співробітник `hr.employee` | Невірних PIN поспіль | `td_pin_fail_count` | td_mebli_shop | службове | setup.md § Працівники: PIN цеху |
+| Співробітник `hr.employee` | Планшет заблоковано до | `td_pin_locked_until` | td_mebli_shop | службове | setup.md § Працівники: PIN цеху |
 | Обладнання `maintenance.equipment` | Робочий центр | `td_workcenter_id` | td_mebli_maint | налаштування | setup.md § Обладнання |
 | Запит на обслуговування `maintenance.request` | Простій, год | `td_downtime_hours` | td_mebli_maint | документ | setup.md § Поля пакета на робочих документах |
 | Запит на обслуговування `maintenance.request` | Простій | `td_downtime_id` | td_mebli_maint | документ | setup.md § Поля пакета на робочих документах |
@@ -731,7 +699,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Значення атрибута `product.attribute.value` | Товар-компонент | `td_component_product_id` | td_mebli_mrp | налаштування | setup.md § Атрибути й значення |
 | Значення атрибута `product.attribute.value` | Товщина кромки, мм | `td_edge_thickness` | td_mebli_mrp | налаштування | setup.md § Атрибути й значення |
 | Категорія товару `product.category` | Гарантія, міс. | `td_warranty_months` | td_mebli_base | налаштування | setup.md § Категорії товарів |
-| Варіант товару `product.product` | Код BAS | `td_bas_code` | td_mebli_bas | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
 | Товар `product.template` | Аналоги | `td_analog_ids` | td_mebli_mrp | налаштування | setup.md § Аналоги матеріалів |
 | Товар `product.template` | Макс. глибина, мм | `td_depth_max` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
 | Товар `product.template` | Мін. глибина, мм | `td_depth_min` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
@@ -838,14 +805,12 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Налаштування `res.config.settings` | Секрет вебхука | `td_support_webhook_secret` | td_support | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
 | Налаштування `res.config.settings` | Адреса вебхука | `td_support_webhook_url` | td_support | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
 | Курс валюти `res.currency.rate` | Джерело | `td_source` | td_mebli_ua | службове | setup.md § Курси валют |
-| Контакт `res.partner` | Код BAS | `td_bas_code` | td_mebli_bas | налаштування | setup.md § Контрагенти й постачальники |
 | Контакт `res.partner` | Середнє запізнення, дн. | `td_supplier_delay_avg` | td_mebli_sale | службове | setup.md § Контрагенти й постачальники |
 | Контакт `res.partner` | Приймань у статистиці | `td_supplier_delay_lines` | td_mebli_sale | службове | setup.md § Контрагенти й постачальники |
 | Користувач `res.users` | «Бачить маржу» за параметром компанії | `td_margin_auto` | td_mebli_base | службове | setup.md § Налаштування «Меблі» і параметри компанії |
 | Замовлення на продаж `sale.order` | Маржа | `margin` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
 | Замовлення на продаж `sale.order` | Маржа (%) | `margin_percent` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
 | Замовлення на продаж `sale.order` | Акти монтажу | `td_act_ids` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
-| Замовлення на продаж `sale.order` | Обмін з BAS | `td_bas_state` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
 | Замовлення на продаж `sale.order` | Зміни | `td_change_ids` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
 | Замовлення на продаж `sale.order` | Зміна відкрита | `td_change_open` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
 | Замовлення на продаж `sale.order` | Рекламації | `td_claim_count` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
@@ -928,9 +893,6 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Рух товару (компонент) `stock.move` | Аналог на складі | `td_analog_id` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
 | Рух товару (компонент) `stock.move` | З деталей | `td_from_parts` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
 | `td.knowledge.article` | Статті бази знань (модель) | `td.knowledge.article` | td_knowledge | довідник | setup.md § База знань і звернення в підтримку |
-| `td.mebli.bas.batch` | Пакет BAS (модель) | `td.mebli.bas.batch` | td_mebli_bas | документ | setup.md § Документи пакета (не налаштовуються) |
-| `td.mebli.bas.log` | Журнал обміну BAS (модель) | `td.mebli.bas.log` | td_mebli_bas | документ | setup.md § Документи пакета (не налаштовуються) |
-| `td.mebli.bas.channel` | Канали обміну з BAS (модель) | `td.mebli.bas.channel` | td_mebli_bas | довідник | setup.md § Обмін з BAS: канал |
 | `td.mebli.cutting.job` | Завдання розкрою (модель) | `td.mebli.cutting.job` | td_mebli_cutting | документ | setup.md § Документи пакета (не налаштовуються) |
 | `td.mebli.cutting.sheet` | Лист розкрою (модель) | `td.mebli.cutting.sheet` | td_mebli_cutting | документ | setup.md § Документи пакета (не налаштовуються) |
 | `td.mebli.cutting.placement` | Розміщення деталі (модель) | `td.mebli.cutting.placement` | td_mebli_cutting | документ | setup.md § Документи пакета (не налаштовуються) |
@@ -954,6 +916,16 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | `td.mebli.kit.line` | Рядок комплекту (модель) | `td.mebli.kit.line` | td_mebli_shop | документ | setup.md § Документи пакета (не налаштовуються) |
 | `td.mebli.quality.check` | Перевірка якості (модель) | `td.mebli.quality.check` | td_mebli_shop | документ | setup.md § Документи пакета (не налаштовуються) |
 | `td.support.request` | Звернення в підтримку (модель) | `td.support.request` | td_support | документ | setup.md § База знань і звернення в підтримку |
+| Параметр системи `ir.config_parameter` | Постачальник моделі AI-мапінгу | `td_mebli_mrp.ai_mapping_url` | td_mebli_mrp | налаштування модуля | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Онлайн-курси НБУ | `td_mebli_ua.nbu_online` | td_mebli_ua | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Адреса підтримки | `td_support.email` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Вкладень у зверненні | `td_support.max_attachments` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Розмір вкладень, МБ | `td_support.max_attachments_mb` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Символів опису | `td_support.max_text_chars` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Звернень на годину | `td_support.rate_limit_per_hour` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Надсилати на вебхук | `td_support.webhook_enabled` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Секрет вебхука | `td_support.webhook_secret` | td_support | налаштування | setup.md § Параметри системи пакета |
+| Параметр системи `ir.config_parameter` | Адреса вебхука | `td_support.webhook_url` | td_support | налаштування | setup.md § Параметри системи пакета |
 
 ## Відкриті дефекти UI
 | ID | Сценарій | Що не так | Маршрут |

@@ -8,7 +8,7 @@
                    'Odoo and is «reconciled» only with a zero difference or with an explanation signed by a manager. '
                    'The converter scripts/convert_bazis.py is a command-line skeleton for B-06: the export format of '
                    'BAZIS is not known yet (ВП-3).',
-    'version': '19.0.1.1.7',
+    'version': '19.0.1.1.8',
     'category': 'Sales/Sales',
     'license': 'LGPL-3',
     'author': 'ToDo',
