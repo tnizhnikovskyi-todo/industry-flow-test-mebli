@@ -104,3 +104,4 @@
 | package/docs/user-guide/img/setup/SET-34.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/setup/SET-35.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
 | package/docs/user-guide/img/setup/SET-36.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | tech@demo-fabryka.example | http://127.0.0.1:8079 |
+| package/docs/user-guide/img/setup/SET-37.png | dd1c9490f637c8c33fdbf983d22ab749d2763af9 | 2026-11-16 | admin | http://127.0.0.1:8079 |
