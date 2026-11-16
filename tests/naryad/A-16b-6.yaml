@@ -1,0 +1,30 @@
+# ТЕСТОВИЙ наряд A-16b-6 (refresh): рішення власника 2026-11-16 «BAS прибираємо взагалі» (flow/decisions.md рядок 55) — з посібників прибрати «відкладено…» і розділ про видалення модулів;
+# примітка про старі бази лише в admin.md «Оновлення версії»; «Параметри системи»; нова іконка «Керівник» (рядок 56) — перезняти SC-01-1, SC-06-1; «Виключити для» технолога (рядок 57, D-24) — setup.md, SET-36, перевірка на стенді.
+step: A-16b
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:user-guide-builder@0.4.0"]
+model: opus
+effort: high
+inputs:
+  - {name: README.md, from: A-15, path: package/demo/README.md, sha: HEAD}
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: answers.yaml, from: A-09, path: package/templates/answers.yaml, sha: HEAD}
+  - {name: master-data, from: A-13, path: package/master-data, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons, sha: HEAD}
+  - {name: decision, from: owner, path: "рішення власника 2026-11-16 (flow/decisions.md рядки 55–57)", sha: null}
+where: [package/docs/user-guide/, docs/industries/mebli/research/AI-DECISIONS.md, package/demo/defects.md, observations/]   # defects.md — банер «виключено», D-24
+template: "за SKILL.md скіла + вимога власника (setup.md, таблиця (г))"
+done: "у посібниках немає «відкладено» і розділу про видалення модулів; згадки BAS лише «виключено рішенням власника» (INDEX (а)) і примітка admin.md «Оновлення версії»; «Параметри системи»; кадри головного екрана з новою іконкою; setup.md — «Виключити для» технолог, видалення — адміністратор, архів — технолог (перевірено під tech); check_guides FAIL 0 (з --stand-sha), check_messages missing 0, check_setup пропусків 0; (б)/(в)/(г) — скриптами"
+check: {mode: both, how: "check_guides.py + reference/check_messages.py + reference/check_setup.py", audit_every_n: 10}
+review: {checklists: [user-guide.md], max_rounds: 5}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 20, context_budget_tokens: 300000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-16-8-test, branch: flow/A-16b-6-test}
+attempt: 6
+returned_from: null
+git: {base: null, head: null, prev_tag: null}
+date: 2026-11-16

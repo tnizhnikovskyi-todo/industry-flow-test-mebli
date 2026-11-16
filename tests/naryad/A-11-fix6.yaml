@@ -1,0 +1,42 @@
+# ТЕСТОВИЙ наряд A-11 (контур коду, fix6): рішення власника 2026-11-16 «BAS прибираємо взагалі» (не «відкладено», а виключено з пакета;
+# передано менеджерською сесією; рядок 55 flow/decisions.md) + рішення власника 2026-11-16 про «Виключити для»
+# для технолога (рядок 57) + нова іконка «Керівник» (td_mebli_dashboard; рядок 56).
+# Далі: A-12-7 -> A-13-6 -> A-14-9 -> A-15-full-5 -> A-16-8 -> A-16b-6 -> A-17-8.
+step: A-11
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["odoo19-mvp-build:code-dev"]
+model: opus
+effort: high
+params:
+  mode: fix
+  defects:
+    - "рішення власника 2026-11-16: BAS прибрати взагалі — package/deferred/ (td_mebli_bas, td_mebli_attendance, convert_bas.py + тест, шаблони 19b–21b) видалити; залишки в збірці прибрати; оновлення старих баз не має ламатись"
+    - "рішення власника 2026-11-16 (рядок 57): технолог — «Виключити для» (product.template.attribute.exclusion read/write/create), видалення — лише адміністратор, технолог архівує (D-24)"
+    - "рішення власника 2026-11-16: нова іконка «Керівник» (td_mebli_dashboard) — не схожа на «Продажі»/«Дашборди»"
+inputs:
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: decision, from: owner, path: "рішення власника 2026-11-16 (менеджерська сесія; flow/decisions.md рядки 55–57)", sha: null}
+where:
+  - package/deferred/                       # видалено
+  - package/addons/td_mebli_base/           # міграція старих баз (AI-42)
+  - package/addons/td_mebli_install/        # хелпер AC-042 прибрано
+  - package/addons/td_mebli_migration/
+  - package/addons/td_mebli_sale/
+  - package/addons/td_mebli_mrp/            # D-24 «Виключити для» технолога
+  - package/addons/td_mebli_dashboard/      # іконка
+  - package/addons/AC-COVERAGE.md
+  - docs/industries/mebli/research/AI-DECISIONS.md
+template: "немає — форма за SKILL.md"
+done: "package/deferred/ немає; у package/addons немає функцій і посилань BAS, крім історичних журналів з банером; старі бази з td_mebli_bas/td_mebli_attendance оновлюються без помилок (модулі видаляються); технолог зберігає виключення, не видаляє; іконка нова; тести td_* на чистих базах A/light/B — 0 failed (A-14-9)"
+check: {mode: both, how: "where-only + grep збірки + оновлення старої бази (2 випадки) + run_tests (A-14-9)", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 30, context_budget_tokens: 200000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-17-7-test, branch: flow/A-11-fix6-test}
+attempt: 1
+returned_from: null
+git: {base: 2733ccc, head: null, prev_tag: null}
+date: 2026-11-16

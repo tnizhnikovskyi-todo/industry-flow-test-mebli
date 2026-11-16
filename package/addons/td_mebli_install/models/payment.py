@@ -225,18 +225,6 @@ class SaleOrderPayMark(models.Model):
         return Domain(super()._td_forecast_open_domain()) & Domain(
             'td_act_ids', 'not any', [('kind', '=', 'final'), ('state', '=', 'signed')])
 
-    def _td_cancel_pay_marks(self, amount=None):
-        """A payment of the order arrived — the manual marks that stood in for it are cancelled (kept, not deleted).
-        `amount` — the amount of the payment: only the marks of the same amount are cancelled; None — all the open marks.
-        A helper without callers in the build: its caller, the automatic exchange of AC-042, is deferred by the decision
-        of the owner 2026-11-16 (package/deferred/, AI-37)."""
-        # sudo: called by a system process: the marks are closed whoever reads them
-        marks = self.sudo().td_pay_mark_ids.filtered(
-            lambda mark: not mark.cancelled and (amount is None or not mark.currency_id.compare_amounts(mark.amount, amount)))
-        if marks:
-            marks.write({'cancelled': True})
-        return marks
-
     def action_td_pay_mark(self):
         """«Payment confirmed by hand» (finance, director): the dialog of a new mark with the reason."""
         self.ensure_one()
