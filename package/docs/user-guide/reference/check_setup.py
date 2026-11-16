@@ -10,6 +10,8 @@ r"""Покриття «налаштування довідників» (табл
       `res.config.settings`; підпис — переклад uk.po модуля (field_description), інакше `string` з коду.
   M — кожна власна постійна модель td_* (`models.Model`, не Abstract/Transient). Модель, дія якої висить у меню під
       «Налаштування» (parent з `config`/`configuration` у xmlid) — обов'язково «довідник».
+  P — кожен системний параметр `ir.config_parameter` з префіксом `td_`, який читає чи пише код td_* (`get_param('…')`,
+      `config_parameter='…'`, константи `PARAM_* = '…'`): рядок з моделлю `ir.config_parameter` і ключем у «Технічна назва».
   V — кожна стандартна модель, подання якої (`inherit_id` на подання не td_*) розширює td_*: має бути названа
       в setup.md технічною назвою в зворотних лапках.
 Звіряє з таблицею «## Покриття: налаштування довідників (г)» в INDEX.md:
@@ -125,6 +127,25 @@ def scan(addons):
     return F2, M2
 
 
+PARAM_RE = re.compile(r"""(?:get_param\(\s*|config_parameter\s*=\s*|\bPARAM_[A-Z_]+\s*=\s*)['"](td_[a-z0-9_]*\.[a-z0-9_.]+)['"]""")
+
+
+def scan_params(addons):
+    """P: ключі ir.config_parameter td_* з коду модулів (без tests/, migrations/)."""
+    P = {}
+    for mod in sorted(os.listdir(addons)):
+        mdir = os.path.join(addons, mod)
+        if not mod.startswith("td_") or SKIP_MOD.match(mod) or not os.path.isdir(mdir):
+            continue
+        for dp, dns, fs in os.walk(mdir):
+            dns[:] = [d for d in dns if d not in ("tests", "migrations", "static", "__pycache__")]
+            for f in sorted(fs):
+                if f.endswith(".py"):
+                    for key in PARAM_RE.findall(open(os.path.join(dp, f), encoding="utf-8").read()):
+                        P.setdefault(key, mod)
+    return P
+
+
 def xml_files(addons):
     for mod in sorted(os.listdir(addons)):
         mdir = os.path.join(addons, mod)
@@ -197,6 +218,7 @@ def main():
     a = ap.parse_args()
     F, M = scan(a.addons)
     V, cfg = scan_xml(a.addons)
+    P = scan_params(a.addons)
     if a.list:
         for x in sorted(F, key=lambda x: (x["model"], x["field"])):
             print(f"F\t{x['model']}\t{x['field']}\t{x['module']}\t{x['type']}\t{'comp' if x['computed'] else ''}\t{x['label']}")
@@ -204,6 +226,8 @@ def main():
             print(f"M\t{x['model']}\t{x['module']}\t{'config' if x['model'] in cfg else ''}")
         for k in sorted(V):
             print(f"V\t{k}\t{','.join(sorted(V[k]))}")
+        for k in sorted(P):
+            print(f"P\tir.config_parameter\t{k}\t{P[k]}")
         return 0
     res = []
     add = lambda i, s, m="": res.append({"id": i, "status": s, "msg": m})
@@ -218,10 +242,12 @@ def main():
     have = {(r["model"], r["tech"]) for r in rows}
     missF = [f"{x['model']}.{x['field']}" for x in F if (x["model"], x["field"]) not in have]
     missM = [x["model"] for x in M if (x["model"], x["model"]) not in have]
-    known = {(x["model"], x["field"]) for x in F} | {(x["model"], x["model"]) for x in M}
+    missP = [k for k in sorted(P) if ("ir.config_parameter", k) not in have]
+    known = {(x["model"], x["field"]) for x in F} | {(x["model"], x["model"]) for x in M} | {("ir.config_parameter", k) for k in P}
     extra = [f"{r['model']}:{r['tech']}" for r in rows if (r["model"], r["tech"]) not in known]
     add("SU-fields", "FAIL" if missF else "PASS", f"полів у коді {len(F)}, без рядка {len(missF)}" + (": " + ", ".join(missF[:15]) if missF else ""))
     add("SU-models", "FAIL" if missM else "PASS", f"моделей td_* у коді {len(M)}, без рядка {len(missM)}" + (": " + ", ".join(missM) if missM else ""))
+    add("SU-params", "FAIL" if missP else "PASS", f"системних параметрів td_* у коді {len(P)}, без рядка {len(missP)}" + (": " + ", ".join(missP) if missP else ""))
     add("SU-stale", "FAIL" if extra else "PASS", f"рядків без елемента в коді {len(extra)}" + (": " + ", ".join(extra[:10]) if extra else ""))
     badcfg = [m for m in sorted(cfg) if m.startswith("td.") and not any(r["model"] == m and r["tech"] == m and "довідник" in r["kind"] for r in rows)]
     add("SU-config", "FAIL" if badcfg else "PASS", f"моделей у меню «Налаштування» {len([m for m in cfg if m.startswith('td.')])}" + ("; не позначено «довідник»: " + ", ".join(badcfg) if badcfg else ""))
@@ -240,13 +266,13 @@ def main():
     base = os.path.dirname(a.setup)
     broken = [r for r in IMG.findall(setup) if not os.path.isfile(os.path.join(base, r))]
     add("SU-img", "FAIL" if broken or not IMG.findall(setup) else "PASS", f"кадрів у setup.md {len(IMG.findall(setup))}" + ("; немає файлу: " + ", ".join(broken[:8]) if broken else ""))
-    gaps = len(missF) + len(missM)
+    gaps = len(missF) + len(missM) + len(missP)
     if a.json:
         print(json.dumps(res, ensure_ascii=False, indent=1))
     else:
         for r in res:
             print(f"{r['status']:5} {r['id']}: {r['msg']}")
-        print(f"Підсумок: полів {len(F)}, моделей {len(M)}, форм {len(V)}; пропусків {gaps}")
+        print(f"Підсумок: полів {len(F)}, моделей {len(M)}, параметрів {len(P)}, форм {len(V)}; пропусків {gaps}")
     return 1 if any(r["status"] == "FAIL" for r in res) else 0
 
 

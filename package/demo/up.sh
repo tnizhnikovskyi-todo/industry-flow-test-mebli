@@ -53,11 +53,10 @@ step 20 "переклади uk_UA" $T/install.sh "$INST" "$MODS" --update --lang
 step 30 "конфіг A-12" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE"
 step 30 "конфіг A-12, повтор" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE" --mode compare
 step 30 "конфіг A-12, read-back" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE" --mode readback
-# 4. шаблони майстер-даних A-13 (порядок package/master-data/README.md, 25 кроків у всіх профілях; шаблони кодів BAS
-#    td/19b…21b відкладено рішенням власника 2026-11-16 — у package/deferred/master-data/, сюди не потрапляють)
+# 4. шаблони майстер-даних A-13 (порядок package/master-data/README.md, 25 кроків у всіх профілях)
 step 40 "майстер-дані A-13" $T/import.sh "$INST" --dir package/master-data
 # 5–6. демо-шар td_mebli_demo (каталог, склад, документи, демо-ролі) — коробки A/B; light — без демо-шару (не перевірявся:
-#    td_mebli_demo вмикає коробку B, data/settings_data.xml). A-15-full-4: умова була «є td_mebli_bas» (модуль відкладено).
+#    td_mebli_demo вмикає коробку B, data/settings_data.xml; AI-40).
 ALL="$MODS"
 BOX="$(sed -nE 's/^VP-01:[[:space:]]*([A-Za-z]+).*/\1/p' "$PROFILE" | head -n 1)"
 if (( DEMO )) && [[ "${BOX:-A}" != light ]]; then
