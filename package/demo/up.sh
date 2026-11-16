@@ -53,13 +53,13 @@ step 20 "переклади uk_UA" $T/install.sh "$INST" "$MODS" --update --lang
 step 30 "конфіг A-12" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE"
 step 30 "конфіг A-12, повтор" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE" --mode compare
 step 30 "конфіг A-12, read-back" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE" --mode readback
-# 4. шаблони майстер-даних A-13 (порядок package/master-data/README.md; без td_mebli_bas — без td/19b…21b)
-EXCL=""
-[[ ",$MODS," == *",td_mebli_bas,"* ]] || EXCL="td/19b_res.partner.csv,td/20b_product.product.csv,td/21b_hr.employee.csv"
-step 40 "майстер-дані A-13" $T/import.sh "$INST" --dir package/master-data ${EXCL:+--exclude "$EXCL"}
-# 5–6. демо-шар td_mebli_demo (каталог, склад, документи, демо-ролі) — потребує td_mebli_bas (залежність модуля)
+# 4. шаблони майстер-даних A-13 (порядок package/master-data/README.md, 25 кроків у всіх профілях)
+step 40 "майстер-дані A-13" $T/import.sh "$INST" --dir package/master-data
+# 5–6. демо-шар td_mebli_demo (каталог, склад, документи, демо-ролі) — коробки A/B; light — без демо-шару (не перевірявся:
+#    td_mebli_demo вмикає коробку B, data/settings_data.xml; AI-40).
 ALL="$MODS"
-if (( DEMO )) && [[ ",$MODS," == *",td_mebli_bas,"* ]]; then
+BOX="$(sed -nE 's/^VP-01:[[:space:]]*([A-Za-z]+).*/\1/p' "$PROFILE" | head -n 1)"
+if (( DEMO )) && [[ "${BOX:-A}" != light ]]; then
   step 50 "модуль демо-даних td_mebli_demo" $T/install.sh "$INST" td_mebli_demo --lang uk_UA
   # D-17: адреса сервера стенда для PDF (report.url); без змінної report.url порожній — Odoo друкує з web.base.url
   if [[ -n "${DEMO_REPORT_URL:-}" ]]; then echo "OK report.url = $DEMO_REPORT_URL (DEMO_REPORT_URL)"; export DEMO_REPORT_URL
@@ -76,7 +76,7 @@ if (( DEMO )) && [[ ",$MODS," == *",td_mebli_bas,"* ]]; then
   # демо-шар (td_mebli_demo/data/settings_data.xml) вмикає коробку B — конфіг після нього має й далі = answers.yaml
   step 50 "конфіг після демо-шару, read-back" python3 -I $T/apply.py config --db "$INST" --config package/config --answers "$PROFILE" --mode readback
 else
-  if (( DEMO )); then WHY="профіль без td_mebli_bas — td_mebli_demo від нього залежить"; else WHY="--no-demo"; fi
+  if (( DEMO )); then WHY="профіль light — демо-шар лише для коробок A/B"; else WHY="--no-demo"; fi
   echo "WARN демо-шар пропущено ($WHY): лише шаблони A-13"
   step 50 "smoke стенда" $T/smoke.sh "$INST" "$ALL"
 fi
