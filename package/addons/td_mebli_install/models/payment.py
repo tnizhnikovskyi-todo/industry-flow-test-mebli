@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
     td_pay_missing = fields.Monetary(string='Missing before Installation', compute='_compute_td_pay')
     td_pay_ok = fields.Boolean(string='Paid before Installation', compute='_compute_td_pay')
     td_pay_control = fields.Selection([('warn', 'Warn'), ('block', 'Block')], compute='_compute_td_pay')
-    # AC-021: the payment is in the bank, the exchange with BAS has not brought it yet — the finance marks it by hand
+    # AC-021: the payment is in the bank but not yet registered in Odoo — the finance marks it by hand
     td_pay_mark_ids = fields.One2many('td.mebli.pay.mark', 'order_id', string='Manual Payment Marks')
 
     def _td_paid_amount(self):
@@ -129,8 +129,8 @@ class ProjectTask(models.Model):
 class TdMebliPayMark(models.Model):
     """AC-021 (AI-15): a manual mark «Payment confirmed by hand» of the finance or the director.
 
-    The payment is in the bank, the exchange with BAS has not brought it yet: the payment control of the order counts
-    the mark as received. Cancelled (not deleted) when the payment comes by the exchange (AC-042, td_mebli_bas)."""
+    The payment is in the bank but not yet registered in Odoo: the payment control of the order counts the mark as
+    received. Cancelled (not deleted) by the finance when the payment is registered (toggle «Cancelled»)."""
     _name = 'td.mebli.pay.mark'
     _description = 'Manual Payment Mark'
     _order = 'id desc'
@@ -142,7 +142,7 @@ class TdMebliPayMark(models.Model):
     reason = fields.Char(string='Reason')
     user_id = fields.Many2one('res.users', string='Marked by', default=lambda self: self.env.user, readonly=True)
     date = fields.Datetime(string='Marked on', default=fields.Datetime.now, readonly=True)
-    cancelled = fields.Boolean(string='Cancelled', help="The payment came by the exchange: the mark no longer counts.")
+    cancelled = fields.Boolean(string='Cancelled', help="The payment is registered in Odoo: the mark no longer counts.")
 
     @api.model
     def default_get(self, fields_list):
@@ -226,11 +226,11 @@ class SaleOrderPayMark(models.Model):
             'td_act_ids', 'not any', [('kind', '=', 'final'), ('state', '=', 'signed')])
 
     def _td_cancel_pay_marks(self, amount=None):
-        """AC-042: a payment of the order arrived by the exchange with BAS — the manual marks that stood in for it are
-        cancelled (kept, not deleted). `amount` — the amount of the payment: only the marks of the same amount are
-        cancelled (tr/integrations.md §1.3 п.3); None — all the open marks. Called from the BAS hook
-        `_td_after_bas_payment` (td_mebli_bas)."""
-        # sudo: called by the BAS exchange (system): the marks are closed whoever reads them
+        """A payment of the order arrived — the manual marks that stood in for it are cancelled (kept, not deleted).
+        `amount` — the amount of the payment: only the marks of the same amount are cancelled; None — all the open marks.
+        A helper without callers in the build: its caller, the automatic exchange of AC-042, is deferred by the decision
+        of the owner 2026-11-16 (package/deferred/, AI-37)."""
+        # sudo: called by a system process: the marks are closed whoever reads them
         marks = self.sudo().td_pay_mark_ids.filtered(
             lambda mark: not mark.cancelled and (amount is None or not mark.currency_id.compare_amounts(mark.amount, amount)))
         if marks:

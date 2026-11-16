@@ -1091,8 +1091,8 @@ msgstr "Замовлення не оплачене до монтажу:"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_pay_mark__cancelled
-msgid "The payment came by the exchange: the mark no longer counts."
-msgstr "Оплата прийшла обміном: позначка більше не враховується."
+msgid "The payment is registered in Odoo: the mark no longer counts."
+msgstr "Оплату зареєстровано в Odoo: позначка більше не враховується."
 
 #. module: td_mebli_install
 #. odoo-python
