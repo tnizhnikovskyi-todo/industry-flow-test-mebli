@@ -51,26 +51,6 @@ msgid "B"
 msgstr ""
 
 #. module: td_mebli_migration
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_02
-msgid "BAS code — step 26 (td/19b)"
-msgstr ""
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_21b
-msgid "BAS codes of the employees"
-msgstr ""
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_20b
-msgid "BAS codes of the materials"
-msgstr ""
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,name:td_mebli_migration.step_td_19b
-msgid "BAS codes of the partners"
-msgstr ""
-
-#. module: td_mebli_migration
 #: model:td.mebli.migration.step,name:td_mebli_migration.step_10
 msgid "Bills of materials"
 msgstr ""
@@ -353,9 +333,8 @@ msgstr ""
 #. module: td_mebli_migration
 #: model:ir.model.fields,help:td_mebli_migration.field_td_mebli_migration_step__module_name
 msgid ""
-"Module of the package that adds the fields td_* of the template (files td/ "
-"of A-13); the step is available only when it is installed (e.g. td_mebli_bas"
-" is not in the light profile)."
+"Module of the package that adds the fields td_* of the template (files "
+"td/ of A-13); the step is available only when it is installed."
 msgstr ""
 
 #. module: td_mebli_migration
@@ -695,13 +674,6 @@ msgstr ""
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_td_04b
 #: model:td.mebli.migration.step,note:td_mebli_migration.step_td_14b
 msgid "second pass of the same ids"
-msgstr ""
-
-#. module: td_mebli_migration
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_19b
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_20b
-#: model:td.mebli.migration.step,note:td_mebli_migration.step_td_21b
-msgid "td_mebli_bas only (VP-04 = true); not imported in the light profile"
 msgstr ""
 
 #. module: td_mebli_migration

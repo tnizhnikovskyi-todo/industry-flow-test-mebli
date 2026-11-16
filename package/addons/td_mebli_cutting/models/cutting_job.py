@@ -16,9 +16,8 @@ from . import optimizer, sheet_map
 # object (only the code of this module has it; JSON-RPC can pass strings, numbers and lists, never this object)
 CUTTING_SEND = object()
 
-# A-14 security 4: a text cell of the cutting file that a spreadsheet would run as a formula is written as text. The same
-# rule as csv_safe of td_mebli_attendance (wizard/timesheet_export.py); kept here because the cutting module does not
-# depend on the attendance module (one shared helper in td_mebli_base — risk R3-Y-01 of AC-COVERAGE.md).
+# A-14 security 4: a text cell of the cutting file that a spreadsheet would run as a formula is written as text (the same
+# rule as convert_core.safe of td_mebli_migration; one shared helper in td_mebli_base — risk R3-Y-01 of AC-COVERAGE.md).
 CSV_FORMULA_START = ('=', '+', '-', '@', '\t', '\r')
 
 

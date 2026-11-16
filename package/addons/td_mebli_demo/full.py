@@ -160,22 +160,6 @@ def _archive(published):
     return {'photo_consent': True, 'photo_archive': True} if published else {}
 
 
-def _bas_exchange(env, done):
-    """The status «Exchange with BAS» of the orders is computed from their invoices (td_mebli_bas): the finished orders
-    go to BAS through the channel of the company (transport «file»); the customer of the last one has no BAS code yet —
-    its invoices get «Exchange Error» with the reason (AC-040), as the real exchange does."""
-    company = env.company
-    channel = env['td.mebli.bas.channel'].search([('company_id', '=', company.id)], limit=1) or \
-        env['td.mebli.bas.channel'].create({'name': 'BAS (обмін файлом)', 'company_id': company.id})
-    error_partner = done[-1:].partner_id.commercial_partner_id
-    for index, partner in enumerate((done - done[-1:]).partner_id.commercial_partner_id - error_partner, start=1):
-        partner.with_company(company).td_bas_code = f'К-{index:04d}'
-    for index, product in enumerate(done.order_line.product_id.filtered(lambda p: not p.td_bas_code), start=1):
-        product.with_company(company).td_bas_code = f'Н-{index:04d}'
-    invoices = done.invoice_ids.filtered(lambda m: m.state == 'posted')
-    return channel._td_export_moves(invoices, 'sales')
-
-
 def _installations(env, people, orders, crew, rnd):
     """Visits and acts: finished orders installed with a signed final act; open visits on the calendar."""
     from .showcase import _deliver, _work, _past, _note
@@ -556,8 +540,6 @@ def seed_full(env, people, partners, orders, show, rnd):
     _accruals(env, people, crew)
     _open_dates(env, orders, rnd, show | state['ready'] | state['paid_late'] | state['to_sign'] | state['waiting']
                 | state['shipped'])
-    # exchange status with BAS: computed from the invoices sent through the channel (td_bas_state is not written)
-    _bas_exchange(env, orders['done'].sorted('date_order'))
     env['res.currency'].with_context(active_test=False).search([('name', 'in', ('EUR', 'USD'))]).write({'active': True})
     env['res.currency'].td_update_nbu_rates({'EUR': 48.3, 'USD': 41.6}, imitation=True)  # imitation rates, not real ones
     _calibrate_load(env, {'CUT': 74, 'EDG': 112, 'DRL': 83, 'ASM': 91})
@@ -566,27 +548,4 @@ def seed_full(env, people, partners, orders, show, rnd):
     # wave 2 of the A box (decisions 42-47): own random sequence, the data above stays as it was
     from .wave2 import seed_wave2
     state['wave2'] = seed_wave2(env, people, orders, show, rnd)
-    _bas_codes(env, orders['done'].sorted('date_order')[-1:].partner_id.commercial_partner_id)
     return state
-
-
-def _bas_codes(env, error_partner):
-    """D-09 (AC-109, scenario T-07): the BAS codes of the demo factory (synthetic, like the rest of the demo): every
-    employee, every partner of an invoice or a vendor bill and every product sold or bought has a code, so «Send to BAS»
-    of the confirmed accruals and of the invoices goes without errors. One customer stays without a code on purpose: his
-    invoices show «Exchange Error» with the reason (AC-040, set by _bas_exchange)."""
-    company = env.company
-    Employee = env['hr.employee'].sudo().with_company(company)
-    employees = Employee.with_context(active_test=False).search([('company_id', 'in', (False, company.id))], order='id')
-    for index, employee in enumerate(employees.filtered(lambda e: not e.td_bas_code), start=1):
-        employee.td_bas_code = f'П-{index:04d}'
-    moves = env['account.move'].search([('company_id', '=', company.id), ('state', '=', 'posted'),
-                                        ('move_type', 'in', ('out_invoice', 'out_refund', 'in_invoice', 'in_refund'))])
-    partners = (moves.commercial_partner_id - error_partner).with_company(company).filtered(lambda p: not p.td_bas_code)
-    taken = len(env['res.partner'].with_company(company).search([('td_bas_code', '!=', False)]))
-    for index, partner in enumerate(partners.sorted('id'), start=taken + 1):
-        partner.td_bas_code = f'К-{index:04d}'
-    products = moves.invoice_line_ids.product_id.with_company(company).filtered(lambda p: not p.td_bas_code)
-    taken = len(env['product.product'].with_company(company).search([('td_bas_code', '!=', False)]))
-    for index, product in enumerate(products.sorted('id'), start=taken + 1):
-        product.td_bas_code = f'Н-{index:04d}'

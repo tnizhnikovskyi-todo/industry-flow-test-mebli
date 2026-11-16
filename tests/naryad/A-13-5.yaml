@@ -1,0 +1,30 @@
+# ТЕСТОВИЙ наряд A-13, спроба 5: рішення власника 2026-11-16 «Приберіть зі збірки поки все, що пов'язано з BAS» (передано
+# менеджерською сесією; flow/decisions.md рядок 53). Шаблони кодів BAS td/19b-21b — у package/deferred/master-data/.
+# Тест-імпорт — у налаштовану базу A гейтів A-14-8 (track-convergence), як спроби 3–4 (локальний Odoo 19.0 CE, odoo-mcp заборонено).
+step: A-13
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: base
+skill_ref:
+  - flow-package-build:master-data-template-builder@0.4.0
+model: opus
+effort: medium
+params: {mode: fix, defects: ["td/19b, td/20b, td/21b (td_bas_code) — відкласти; README і порядок імпорту"]}
+inputs:
+  - {name: "код A-11-fix5 (кроки імпорту td_mebli_migration)", from: A-11, path: package/addons/td_mebli_migration/, sha: HEAD}
+  - {name: "конфіг A-12-6", from: A-12, path: package/config/, sha: HEAD}
+where:
+  - package/master-data/
+  - package/deferred/master-data/
+template: "master-data-template-builder/SKILL.md"
+done: "td/19b-21b — у package/deferred/master-data/td/; README: таблиці файлів і порядку — 25 кроків у всіх профілях, версія 1.4; кроки = td_mebli_migration (25); імпорт 25/25 без помилок (A-14-8)"
+check: {mode: both, how: "test_ac_089_import_order_is_the_order_of_the_readme (25) + import.sh у налаштовану базу A (A-14-8)", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 10, context_budget_tokens: 150000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-12-6-test, branch: flow/A-13-5-test}
+attempt: 5
+returned_from: null
+git: {base: a231d0d, head: null, prev_tag: null}
+date: 2026-11-16

@@ -855,6 +855,11 @@ msgid "Product Attribute Custom Value"
 msgstr "Власне значення атрибуту товару"
 
 #. module: td_mebli_mrp
+#: model:ir.model,name:td_mebli_mrp.model_product_product
+msgid "Product Variant"
+msgstr "Варіант товару"
+
+#. module: td_mebli_mrp
 #: model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part__qty model:ir.model.fields,field_description:td_mebli_mrp.field_td_mebli_part_rule__qty model:ir.model.fields.selection,name:td_mebli_mrp.selection__td_mebli_spec_import_column__field_name__qty
 msgid "Quantity"
 msgstr "Кількість"

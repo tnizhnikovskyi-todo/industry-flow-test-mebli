@@ -1245,7 +1245,7 @@ msgstr ""
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_pay_mark__cancelled
-msgid "The payment came by the exchange: the mark no longer counts."
+msgid "The payment is registered in Odoo: the mark no longer counts."
 msgstr ""
 
 #. module: td_mebli_install
