@@ -2,7 +2,7 @@
 SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 Джерело сценаріїв: package/SPEC.md
 Дозволені латинські назви: BAS, BAF, PIN, CAD, DXF, ToDo, QR, CUT, TDS, ПДВ, Odoo, Excel, CSV
-Дата зйомки: 2026-11-16 (A-16b-3: перезнято кадри головного екрана `menedzher/SC-01-1.png`, `kerivnyk/SC-06-1.png` на стенді A-15-full-3 `dd1c949`, сервер з каталогом доставки `delivery-fix4`; решта 67 кадрів — A-16b-2 на стенді `15dbd6f`: diff коду `15dbd6f..dd1c949` змінює в інтерфейсі лише головний екран і іконки кореневих меню, яких на цих кадрах немає — навбар застосунків, форми й списки ті самі, AI-32). Адреса стенда: локальний (`http://127.0.0.1:8079`, база `demo-mebli-pkg-a`, Odoo 19.0 CE, мова `uk_UA`, профіль B-демо). Засіб зйомки: Playwright, headless Chromium, 1440×900, часовий пояс `Europe/Kyiv`; журнал — `img/SHOOT-LOG.md`.
+Дата зйомки: 2026-11-16 (A-16b-4: 33 кадри `img/setup/SET-*.png` для `setup.md` на стенді A-15-full-3 `dd1c949` під адміністратором (`admin`) і технологом (`tech@demo-fabryka.example`), 1440×900; A-16b-3: перезнято кадри головного екрана `menedzher/SC-01-1.png`, `kerivnyk/SC-06-1.png` на стенді A-15-full-3 `dd1c949`, сервер з каталогом доставки `delivery-fix4`; решта 67 кадрів — A-16b-2 на стенді `15dbd6f`: diff коду `15dbd6f..dd1c949` змінює в інтерфейсі лише головний екран і іконки кореневих меню, яких на цих кадрах немає — навбар застосунків, форми й списки ті самі, AI-32). Адреса стенда: локальний (`http://127.0.0.1:8079`, база `demo-mebli-pkg-a`, Odoo 19.0 CE, мова `uk_UA`, профіль B-демо). Засіб зйомки: Playwright, headless Chromium, 1440×900, часовий пояс `Europe/Kyiv`; журнал — `img/SHOOT-LOG.md`.
 Свіжість: SHA гейтів `package/CHECKS.md` = `1778db7` (A-14-7); `git diff --quiet 1778db7..HEAD -- package/addons package/config package/master-data …` = 0 (код пакета = коду гейтів).
 Модулі на стенді (21 `td_*`, без `td_mebli_demo`): `td_home_menu` 19.0.1.0.1, `td_knowledge` 19.0.1.1.2, `td_mebli_attendance` 19.0.1.1.1, `td_mebli_bas` 19.0.1.1.3, `td_mebli_base` 19.0.1.1.3, `td_mebli_claim` 19.0.1.1.4, `td_mebli_cost` 19.0.1.1.2, `td_mebli_cutting` 19.0.1.1.3, `td_mebli_dashboard` 19.0.1.1.3, `td_mebli_install` 19.0.1.1.6, `td_mebli_knowledge` 19.0.1.1.1, `td_mebli_maint` 19.0.1.1.2, `td_mebli_measure` 19.0.1.1.4, `td_mebli_migration` 19.0.1.1.6, `td_mebli_mrp` 19.0.1.1.5, `td_mebli_notify` 19.0.1.1.4, `td_mebli_purchase` 19.0.1.1.3, `td_mebli_sale` 19.0.1.1.3, `td_mebli_shop` 19.0.1.1.3, `td_mebli_ua` 19.0.1.1.3, `td_support` 19.0.1.0.1. Не встановлено: мости EE (`td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign`) — EE не перевірено; `td_mebli_multico` — профіль VP-03 = `single`.
 
@@ -18,9 +18,10 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Замірник | zamirnyk.md | cards/zamirnyk.md |
 | Бригадир монтажу й сервісу | bryhadyr.md | cards/bryhadyr.md |
 | Адміністратор | admin.md | — |
+| Налаштування довідників і товарів (адміністратор, технолог) | setup.md | cards/setup.md |
 
 ## Покриття: заявлене
-Три таблиці покриття (§26а): заявлене (а) — сценарії SPEC, F-xx концепції, AC SPEC, склад коробок BOX; розроблене (б); налаштування й експлуатація (в). Кожен рядок посилається на розділ, де це описано; «не перевірено» — лише з причиною.
+Чотири таблиці покриття (§26а + вимога власника A-16b-4): заявлене (а) — сценарії SPEC, F-xx концепції, AC SPEC, склад коробок BOX; розроблене (б); налаштування й експлуатація (в); налаштування довідників (г). Кожен рядок посилається на розділ, де це описано; «не перевірено» — лише з причиною.
 
 ### (а1) Сценарії SPEC
 | Сценарій SPEC | Розділ інструкції | Статус |
@@ -656,7 +657,303 @@ SHA стенда: dd1c9490f637c8c33fdbf983d22ab749d2763af9
 | Вікно підтримки (td_support): адреса, вебхук, звернення | admin.md § Звернення в підтримку (td_support) | описано; адреса підтримки — рішення власника (не задано) |
 | База знань (td_knowledge, td_mebli_knowledge) | admin.md § База знань (td_knowledge) | описано |
 | Налаштування модулів і поля пакета на стандартних формах | admin.md § Довідник налаштувань модулів; § Поля пакета на стандартних формах | описано |
+| Налаштування довідників і товарів: кожен довідник `td_*` і кожне поле `td_*` на стандартних формах — хто, де, кроки, обов'язкові поля й наслідки, типова помилка, кадр | setup.md; таблиця (г) нижче | описано; 33 кадри під адміністратором / технологом (`img/setup/`) |
 | Типові помилки: довідник усіх повідомлень пакета дослівно (140 текстів із 153 місць коду; перевірка `reference/check_messages.py` — 0 пропущених) + симптоми налаштувань і стандарту Odoo | reference/messages.md; admin.md § Типові помилки; «Типові помилки» посібників ролей | описано |
+
+## Покриття: налаштування довідників (г)
+Перелік зібрано скриптом з коду (`reference/check_setup.py --list`: класи Python модулів `td_*`, крім `td_mebli_demo` і `td_*_elearning`): кожне поле, яке `td_*` додає до стандартної моделі (у т. ч. `res.config.settings`, `res.company`), і кожна власна постійна модель `td_*`. Підпис — переклад `uk.po` модуля. Вид: «налаштування» — вводить адміністратор/технолог; «налаштування модуля» — «Налаштування» → «Меблі»; «службове» — рахує чи ставить система на формі довідника; «довідник» — модель-довідник `td_*`; «документ» — поле чи модель робочого документа (вводять ролі в роботі). Перевірка: `python3 -I package/docs/user-guide/reference/check_setup.py --addons package/addons --index package/docs/user-guide/INDEX.md --setup package/docs/user-guide/setup.md` — пропусків 0.
+
+| Форма (модель) | Поле / довідник (UI) | Технічна назва | Модуль | Вид | Розділ |
+|---|---|---|---|---|---|
+| Запис у журналі `account.move` | Пакет BAS | `td_bas_batch_id` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
+| Запис у журналі `account.move` | Немає коду BAS | `td_bas_missing_code` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
+| Запис у журналі `account.move` | Обмін з BAS | `td_bas_state` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
+| Платіж `account.payment` | Посилання BAS | `td_bas_ref` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
+| Термін оплати (рядок) `account.payment.term.line` | Етап оплати | `td_milestone` | td_mebli_sale | налаштування | setup.md § Терміни оплати з етапами |
+| Нагода `crm.lead` | Заміри | `td_measure_count` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Нагода `crm.lead` | Замір-листи | `td_measure_ids` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Заявка (EE) `helpdesk.ticket` | Деталь | `td_part_id` | td_mebli_helpdesk | документ | setup.md § Поля пакета на робочих документах |
+| Заявка (EE) `helpdesk.ticket` | Рекламація | `td_repair_id` | td_mebli_helpdesk | документ | setup.md § Поля пакета на робочих документах |
+| Заявка (EE) `helpdesk.ticket` | Замовлення меблів | `td_sale_order_id` | td_mebli_helpdesk | документ | setup.md § Поля пакета на робочих документах |
+| Співробітник `hr.employee` | Код BAS | `td_bas_code` | td_mebli_bas | налаштування | setup.md § Працівники: код BAS і PIN цеху |
+| Співробітник `hr.employee` | Невірних PIN поспіль | `td_pin_fail_count` | td_mebli_shop | службове | setup.md § Працівники: код BAS і PIN цеху |
+| Співробітник `hr.employee` | Планшет заблоковано до | `td_pin_locked_until` | td_mebli_shop | службове | setup.md § Працівники: код BAS і PIN цеху |
+| Обладнання `maintenance.equipment` | Робочий центр | `td_workcenter_id` | td_mebli_maint | налаштування | setup.md § Обладнання |
+| Запит на обслуговування `maintenance.request` | Простій, год | `td_downtime_hours` | td_mebli_maint | документ | setup.md § Поля пакета на робочих документах |
+| Запит на обслуговування `maintenance.request` | Простій | `td_downtime_id` | td_mebli_maint | документ | setup.md § Поля пакета на робочих документах |
+| Запит на обслуговування `maintenance.request` | Дільниця стоїть | `td_downtime_open` | td_mebli_maint | документ | setup.md § Поля пакета на робочих документах |
+| Запит на обслуговування `maintenance.request` | Робочий центр | `td_workcenter_id` | td_mebli_maint | документ | setup.md § Поля пакета на робочих документах |
+| Специфікація `mrp.bom` | Площа плит, м² | `td_board_area_m2` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Версія розкрою | `td_cut_version` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Глибина, мм | `td_depth` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Кромка, м | `td_edge_length_m` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Висота, мм | `td_height` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Специфікація під замовлення | `td_order_bom` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Кількість деталей | `td_part_count` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Деталі | `td_part_ids` | td_mebli_mrp | налаштування | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Рядок замовлення | `td_sale_line_id` | td_mebli_sale | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Замовлення на продаж | `td_sale_order_id` | td_mebli_sale | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Шаблонна специфікація | `td_template_bom_id` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Специфікація `mrp.bom` | Ширина, мм | `td_width` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Рядок специфікації `mrp.bom.line` | З деталей | `td_from_parts` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Виробниче замовлення `mrp.production` | Площа плит, м² | `td_board_area_m2` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Кількість завдань розкрою | `td_cutting_job_count` | td_mebli_cutting | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Завдання розкрою | `td_cutting_job_ids` | td_mebli_cutting | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Кромка, м | `td_edge_length_m` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Проєкт проти заміру | `td_measure_problems` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Перевитрата | `td_overconsumed` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Кількість деталей | `td_part_count` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Деталі | `td_part_ids` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Виробниче замовлення `mrp.production` | Клієнт | `td_partner_id` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Використання робочого центру `mrp.routing.workcenter` | Валюта | `td_currency_id` | td_mebli_mrp | службове | setup.md § Специфікація й операції |
+| Використання робочого центру `mrp.routing.workcenter` | Розцінка за одиницю бази | `td_piece_rate` | td_mebli_mrp | налаштування | setup.md § Специфікація й операції |
+| Використання робочого центру `mrp.routing.workcenter` | Крок якості | `td_quality_point` | td_mebli_shop | налаштування | setup.md § Специфікація й операції |
+| Використання робочого центру `mrp.routing.workcenter` | База часу | `td_time_basis` | td_mebli_mrp | налаштування | setup.md § Специфікація й операції |
+| Використання робочого центру `mrp.routing.workcenter` | Хвилин на одиницю бази | `td_time_rate` | td_mebli_mrp | налаштування | setup.md § Специфікація й операції |
+| Робочий центр `mrp.workcenter` | Доступно годин на тиждень | `td_capacity_hours` | td_mebli_mrp | службове | setup.md § Робочі центри |
+| Робочий центр `mrp.workcenter` | Верстати | `td_equipment_count` | td_mebli_maint | службове | setup.md § Робочі центри |
+| Робочий центр `mrp.workcenter` | Відкриті заявки | `td_request_open_count` | td_mebli_maint | службове | setup.md § Робочі центри |
+| Рядок часу дільниці `mrp.workcenter.productivity` | Працівник | `td_employee_id` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Планові години | `td_expected_hours` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Завантаження, % | `td_load_pct` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Стан у цеху | `td_load_stage` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Зона навантаження | `td_load_zone` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Кількість деталей | `td_part_count` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Деталі | `td_part_ids` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Причина паузи | `td_pause_reason` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Перевірки якості | `td_quality_ids` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Крок якості | `td_quality_point` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Якість | `td_quality_state` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Операція `mrp.workorder` | Працівники | `td_worker_names` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Зміна Planning (EE) `planning.slot` | Виїзд монтажу | `td_task_id` | td_mebli_planning | документ | setup.md § Поля пакета на робочих документах |
+| Атрибут `product.attribute` | Роль компонента | `td_component_role` | td_mebli_mrp | налаштування | setup.md § Атрибути й значення |
+| Атрибут `product.attribute` | Розмір виробу | `td_dimension` | td_mebli_mrp | налаштування | setup.md § Атрибути й значення |
+| Значення атрибута `product.attribute.value` | Товар-компонент | `td_component_product_id` | td_mebli_mrp | налаштування | setup.md § Атрибути й значення |
+| Значення атрибута `product.attribute.value` | Товщина кромки, мм | `td_edge_thickness` | td_mebli_mrp | налаштування | setup.md § Атрибути й значення |
+| Категорія товару `product.category` | Гарантія, міс. | `td_warranty_months` | td_mebli_base | налаштування | setup.md § Категорії товарів |
+| Варіант товару `product.product` | Код BAS | `td_bas_code` | td_mebli_bas | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Аналоги | `td_analog_ids` | td_mebli_mrp | налаштування | setup.md § Аналоги матеріалів |
+| Товар `product.template` | Макс. глибина, мм | `td_depth_max` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Мін. глибина, мм | `td_depth_min` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Номінальна глибина, мм | `td_depth_nominal` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Припуск кромки, мм | `td_edge_allowance_mm` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Товщина кромки, мм | `td_edge_thickness` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Макс. висота, мм | `td_height_max` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Мін. висота, мм | `td_height_min` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Номінальна висота, мм | `td_height_nominal` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Параметричний виріб | `td_is_parametric` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Підходить до плити | `td_matches_board_id` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Вид матеріалу | `td_material_kind` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад; setup.md § Послуга порізки з дистриб'ютором |
+| Товар `product.template` | Правила деталей | `td_part_rule_ids` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Довжина листа, мм | `td_sheet_length_mm` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Ширина листа, мм | `td_sheet_width_mm` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Товщина, мм | `td_thickness_mm` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Плановий відхід, % | `td_waste_pct` | td_mebli_mrp | налаштування | setup.md § Товари: плита, кромка, фурнітура, готовий фасад |
+| Товар `product.template` | Макс. ширина, мм | `td_width_max` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Мін. ширина, мм | `td_width_min` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Товар `product.template` | Номінальна ширина, мм | `td_width_nominal` | td_mebli_mrp | налаштування | setup.md § Параметричний виріб і правила деталей |
+| Завдання `project.task` | Акти | `td_act_count` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Акти монтажу | `td_act_ids` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Адреса | `td_address` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Рекламація | `td_claim_id` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Нагадування про монтаж надіслано на | `td_install_reminded_for` | td_mebli_notify | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Валюта замовлення | `td_order_currency_id` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Контроль оплати | `td_pay_control` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Бракує до монтажу | `td_pay_missing` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Доплату до монтажу отримано | `td_pay_ok` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Нагадування про доплату надіслано на | `td_payment_reminded_for` | td_mebli_notify | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Місця до завантаження | `td_places` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Зміни Planning | `td_slot_ids` | td_mebli_planning | документ | setup.md § Поля пакета на робочих документах |
+| Завдання `project.task` | Вид виїзду | `td_visit_kind` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Готовність за позицією | `td_date_ready` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Історія | `td_history_note` | td_mebli_purchase | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Середня попередня ціна | `td_history_price` | td_mebli_purchase | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Затримано | `td_is_late` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Запізнення, днів | `td_late_days` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Потрібно до | `td_need_date` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Понад історію | `td_over_history` | td_mebli_purchase | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Переплата | `td_overpay` | td_mebli_purchase | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Проти історії, % | `td_price_delta_pct` | td_mebli_purchase | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Замовлення клієнтів | `td_sale_order_ids` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення на купівлю `purchase.order.line` | Запізнення постачальника за історією, дн. | `td_supplier_delay` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Після гарантії | `td_after_warranty` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Замовлення, на яке скарга | `td_claim_order_id` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Днів відкрито | `td_days_open` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Прострочено | `td_overdue` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Деталь | `td_part_id` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Фото | `td_photo` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Повторне виготовлення | `td_remake_production_id` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Сервісний виїзд | `td_visit_task_id` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Гарантія до | `td_warranty_end` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Гарантія | `td_warranty_note` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Рекламація (ремонт) `repair.order` | Гарантійний строк не задано | `td_warranty_unset` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Компанія `res.company` | Чек-лист акта | `td_act_checklist` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Профіль коробки | `td_box_profile` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Прострочка рекламації, днів | `td_claim_overdue_days` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Режим договору | `td_contract_mode` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Собівартість: відрядна замість годин | `td_cost_piecework` | td_mebli_cost | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | База % бригаді | `td_crew_base` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | % бригаді | `td_crew_pct` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Поділ % бригаді | `td_crew_split` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Розкрій плит | `td_cutting_mode` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Монтаж у вартості замовлення | `td_install_in_price` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Тексти перевірено юристом | `td_legal_checked` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Менеджер бачить маржу | `td_margin_to_salesman` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Мінімальний обрізок, мм | `td_min_offcut_mm` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Нагадування про доплату, днів до виїзду | `td_pay_reminder_days` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Контроль доплати перед виїздом | `td_payment_control` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Поріг ціни вище історії, % | `td_price_threshold_pct` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Компанія `res.company` | Застряглі, днів | `td_stuck_days` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | AI-підказка колонок | `group_td_feature_ai_mapping` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Аналоги | `group_td_feature_analog` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Підпис зміни замовлення | `group_td_feature_change_sign` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Конфігуратор виробів | `group_td_feature_configurator` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Пакети розкрою | `group_td_feature_cutting_batch` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Кіоск цеху | `group_td_feature_kiosk` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Сканування етикеток | `group_td_feature_label_scan` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Курс НБУ | `group_td_feature_nbu` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Обрізки | `group_td_feature_offcut` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Контроль якості | `group_td_feature_quality` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Табло цеху | `group_td_feature_shop_board` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Чек-лист акта | `td_act_checklist` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Постачальник моделі AI-мапінгу | `td_ai_mapping_url` | td_mebli_mrp | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Профіль коробки | `td_box_profile` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Прострочка рекламації, днів | `td_claim_overdue_days` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Режим договору | `td_contract_mode` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Собівартість: відрядна замість годин | `td_cost_piecework` | td_mebli_cost | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | База % бригаді | `td_crew_base` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | % бригаді | `td_crew_pct` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Поділ % бригаді | `td_crew_split` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Розкрій плит | `td_cutting_mode` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Монтаж у вартості замовлення | `td_install_in_price` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Тексти перевірено юристом | `td_legal_checked` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Менеджер бачить маржу | `td_margin_to_salesman` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Мінімальний обрізок, мм | `td_min_offcut_mm` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Нагадування про доплату, днів до виїзду | `td_pay_reminder_days` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Контроль доплати перед виїздом | `td_payment_control` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Поріг ціни вище історії, % | `td_price_threshold_pct` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Застряглі, днів | `td_stuck_days` | td_mebli_base | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Адреса підтримки | `td_support_email` | td_support | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Надсилати на вебхук | `td_support_webhook_enabled` | td_support | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Секрет вебхука | `td_support_webhook_secret` | td_support | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Налаштування `res.config.settings` | Адреса вебхука | `td_support_webhook_url` | td_support | налаштування модуля | setup.md § Налаштування «Меблі» і параметри компанії |
+| Курс валюти `res.currency.rate` | Джерело | `td_source` | td_mebli_ua | службове | setup.md § Курси валют |
+| Контакт `res.partner` | Код BAS | `td_bas_code` | td_mebli_bas | налаштування | setup.md § Контрагенти й постачальники |
+| Контакт `res.partner` | Середнє запізнення, дн. | `td_supplier_delay_avg` | td_mebli_sale | службове | setup.md § Контрагенти й постачальники |
+| Контакт `res.partner` | Приймань у статистиці | `td_supplier_delay_lines` | td_mebli_sale | службове | setup.md § Контрагенти й постачальники |
+| Користувач `res.users` | «Бачить маржу» за параметром компанії | `td_margin_auto` | td_mebli_base | службове | setup.md § Налаштування «Меблі» і параметри компанії |
+| Замовлення на продаж `sale.order` | Маржа | `margin` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Маржа (%) | `margin_percent` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Акти монтажу | `td_act_ids` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Обмін з BAS | `td_bas_state` | td_mebli_bas | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Зміни | `td_change_ids` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Зміна відкрита | `td_change_open` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Рекламації | `td_claim_count` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Рекламації замовлення | `td_claim_ids` | td_mebli_claim | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | % бригаді | `td_cost_crew` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Порізка | `td_cost_cutting` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Відхилення собівартості, % | `td_cost_deviation_pct` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Фактична собівартість | `td_cost_fact` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Виробництво завершено | `td_cost_has_fact` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Відрядна й % бригаді | `td_cost_labour` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Собівартість рядків | `td_cost_line_ids` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Матеріали (факт) | `td_cost_material` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Відрядна | `td_cost_piece` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Планова собівартість | `td_cost_plan` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Стан факту | `td_cost_status` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Роботи (факт) | `td_cost_work` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | До сплати | `td_dash_due` | td_mebli_dashboard | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Сплачено | `td_dash_paid` | td_mebli_dashboard | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Зсув, дн. | `td_delay_days` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Причина зсуву | `td_delay_reason` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Візуалізація проєкту | `td_design_image` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Прогнозна дата | `td_forecast_date` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Опрацьований зсув прогнозу, дн. | `td_forecast_shift_done` | td_mebli_notify | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | До запуску, год | `td_hours_to_launch` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Зображення виробу | `td_image` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Монтаж виконує | `td_install_company_id` | td_mebli_multico | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Кількість замовлень монтажу | `td_install_order_count` | td_mebli_multico | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Замовлення монтажу | `td_install_order_ids` | td_mebli_multico | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Застряглі | `td_is_stuck` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Комплектувальний лист | `td_kit_line_ids` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Не запаковано | `td_kit_missing` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Місць | `td_kit_places` | td_mebli_shop | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Позиція, що зсуває дату | `td_late_item` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Закупівля, що зсуває дату | `td_late_line_id` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Виробництво розпочато | `td_launch_date` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Фактична маржа | `td_margin_fact` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Фактична маржа, % | `td_margin_fact_pct` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Планова маржа, % | `td_margin_plan_pct` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Заміри | `td_measure_count` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Замір-листи | `td_measure_ids` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Не вміщається | `td_measure_issue_count` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Проєкт проти заміру | `td_measure_problems` | td_mebli_measure | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Перевитрата | `td_overconsumption` | td_mebli_cost | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Основне замовлення | `td_parent_order_id` | td_mebli_multico | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Номер основного замовлення | `td_parent_order_name` | td_mebli_multico | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | До сплати до монтажу | `td_pay_before_install` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Контроль оплати | `td_pay_control` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Оплата етапами | `td_pay_has_milestones` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Ручні позначки оплати | `td_pay_mark_ids` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Бракує до монтажу | `td_pay_missing` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Доплату до монтажу отримано | `td_pay_ok` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Отримано | `td_pay_received` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Графік оплат | `td_pay_schedule_html` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Виробництво | `td_production_count` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Закуплено під замовлення | `td_purchase_line_ids` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Готовність цеху | `td_shop_date` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Етап замовлення | `td_stage` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Етап змінено | `td_stage_date` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Замовлення на продаж `sale.order` | Виїзди | `td_task_ids` | td_mebli_install | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Маржа | `margin` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Маржа (%) | `margin_percent` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Вартість | `purchase_price` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Специфікація під замовлення | `td_bom_id` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Глибина, мм | `td_depth` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Висота, мм | `td_height` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Параметричний виріб | `td_is_parametric` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Планові матеріали | `td_planned_material_cost` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Планові операції | `td_planned_operation_cost` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Розмірний коефіцієнт | `td_size_factor` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Рядок замовлення `sale.order.line` | Ширина, мм | `td_width` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Аналіз продажів `sale.report` | Маржа | `margin` | td_mebli_sale | документ | setup.md § Поля пакета на робочих документах |
+| Партія `stock.lot` | Площа, м² | `td_area_m2` | td_mebli_cutting | службове | setup.md § Ділові обрізки (партії) |
+| Партія `stock.lot` | Завдання розкрою | `td_cutting_job_id` | td_mebli_cutting | службове | setup.md § Ділові обрізки (партії) |
+| Партія `stock.lot` | Діловий обрізок | `td_is_offcut` | td_mebli_cutting | налаштування | setup.md § Ділові обрізки (партії) |
+| Партія `stock.lot` | Довжина, мм | `td_length_mm` | td_mebli_cutting | налаштування | setup.md § Ділові обрізки (партії) |
+| Партія `stock.lot` | Зарезервовано для | `td_reserved_for` | td_mebli_cutting | службове | setup.md § Ділові обрізки (партії) |
+| Партія `stock.lot` | Зарезервовано, м² | `td_reserved_m2` | td_mebli_cutting | службове | setup.md § Ділові обрізки (партії) |
+| Партія `stock.lot` | Ширина, мм | `td_width_mm` | td_mebli_cutting | налаштування | setup.md § Ділові обрізки (партії) |
+| Рух товару (компонент) `stock.move` | Аналог | `td_analog_hint` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Рух товару (компонент) `stock.move` | Аналог на складі | `td_analog_id` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| Рух товару (компонент) `stock.move` | З деталей | `td_from_parts` | td_mebli_mrp | документ | setup.md § Поля пакета на робочих документах |
+| `td.knowledge.article` | Статті бази знань (модель) | `td.knowledge.article` | td_knowledge | довідник | setup.md § База знань і звернення в підтримку |
+| `td.mebli.bas.batch` | Пакет BAS (модель) | `td.mebli.bas.batch` | td_mebli_bas | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.bas.log` | Журнал обміну BAS (модель) | `td.mebli.bas.log` | td_mebli_bas | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.bas.channel` | Канали обміну з BAS (модель) | `td.mebli.bas.channel` | td_mebli_bas | довідник | setup.md § Обмін з BAS: канал |
+| `td.mebli.cutting.job` | Завдання розкрою (модель) | `td.mebli.cutting.job` | td_mebli_cutting | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.cutting.sheet` | Лист розкрою (модель) | `td.mebli.cutting.sheet` | td_mebli_cutting | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.cutting.placement` | Розміщення деталі (модель) | `td.mebli.cutting.placement` | td_mebli_cutting | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.cutting.offcut` | Обрізки завдання розкрою (модель) | `td.mebli.cutting.offcut` | td_mebli_cutting | документ | setup.md § Ділові обрізки (партії) |
+| `td.mebli.accrual.reason` | Причини премій і штрафів (модель) | `td.mebli.accrual.reason` | td_mebli_install | довідник | setup.md § Причини премій і штрафів |
+| `td.mebli.accrual` | Нарахування (модель) | `td.mebli.accrual` | td_mebli_install | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.install.act` | Акт монтажу (модель) | `td.mebli.install.act` | td_mebli_install | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.install.act.crew` | Бригада акта (модель) | `td.mebli.install.act.crew` | td_mebli_install | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.install.defect` | Дефект акта (модель) | `td.mebli.install.defect` | td_mebli_install | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.pay.mark` | Ручна позначка оплати (модель) | `td.mebli.pay.mark` | td_mebli_install | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.measure` | Замір-лист (модель) | `td.mebli.measure` | td_mebli_measure | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.measure.niche` | Ніша заміру (модель) | `td.mebli.measure.niche` | td_mebli_measure | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.measure.appliance` | Техніка заміру (модель) | `td.mebli.measure.appliance` | td_mebli_measure | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.migration.check` | Звірка міграції (модель) | `td.mebli.migration.check` | td_mebli_migration | документ | setup.md § Міграція: порядок імпорту шаблонів і звірка |
+| `td.mebli.migration.check.line` | Рядок звірки міграції (модель) | `td.mebli.migration.check.line` | td_mebli_migration | документ | setup.md § Міграція: порядок імпорту шаблонів і звірка |
+| `td.mebli.migration.step` | Порядок імпорту шаблонів (модель) | `td.mebli.migration.step` | td_mebli_migration | довідник | setup.md § Міграція: порядок імпорту шаблонів і звірка |
+| `td.mebli.import.template` | Шаблони імпорту (модель) | `td.mebli.import.template` | td_mebli_mrp | довідник | setup.md § Шаблони імпорту деталей |
+| `td.mebli.part` | Деталі специфікації (модель) | `td.mebli.part` | td_mebli_mrp | документ | setup.md § Специфікація й операції |
+| `td.mebli.part.rule` | Правила деталей (модель) | `td.mebli.part.rule` | td_mebli_mrp | довідник | setup.md § Параметричний виріб і правила деталей |
+| `td.mebli.order.change` | Зміна замовлення (модель) | `td.mebli.order.change` | td_mebli_sale | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.kit.line` | Рядок комплекту (модель) | `td.mebli.kit.line` | td_mebli_shop | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.mebli.quality.check` | Перевірка якості (модель) | `td.mebli.quality.check` | td_mebli_shop | документ | setup.md § Документи пакета (не налаштовуються) |
+| `td.support.request` | Звернення в підтримку (модель) | `td.support.request` | td_support | документ | setup.md § База знань і звернення в підтримку |
 
 ## Відкриті дефекти UI
 | ID | Сценарій | Що не так | Маршрут |
