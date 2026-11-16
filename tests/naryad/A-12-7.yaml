@@ -1,6 +1,6 @@
 # ТЕСТОВИЙ наряд A-12 (конфіг-пакет), спроба 7: рішення власника 2026-11-16 «BAS прибираємо взагалі» — прибрати параметр VP-04 (схема,
 # vp-map, профілі, приклади) і правило PF-10 (+ PF-03, що теж читає VP-04); питання Q-04 з анкети клієнта; залишки в install-log.md.
-# Рядки 55–56 flow/decisions.md вносить головна сесія. where розширено на questionnaire.md (A-09) і банер ALLOCATION.md (A-10).
+# Рядок 55 flow/decisions.md. where розширено на questionnaire.md (A-09) і банер ALLOCATION.md (A-10).
 step: A-12
 scope: {kind: package, id: mebli}
 executor: any
