@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-14 02:27+0000\n"
-"PO-Revision-Date: 2026-11-14 02:27+0000\n"
+"POT-Creation-Date: 2026-11-16 19:46+0000\n"
+"PO-Revision-Date: 2026-11-16 19:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,8 +18,24 @@ msgstr ""
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(axis)s %(value)s mm (allowed %(low)s-%(high)s mm)"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid ""
-"%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
+"%(product)s %(w)s × %(h)s × %(d)s mm: the price is below the planned cost. "
+"The price is %(pct)s %% of the base price: the size %(w)s × %(h)s mm against"
+" the nominal %(wn)s × %(hn)s mm (the depth does not change the price)."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid ""
+"%(product)s: %(problems)s. The price and the specification follow the typed "
+"size; the quotation is not saved until the size is corrected."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -28,6 +44,18 @@ msgstr ""
 msgid ""
 "%(product)s: the %(axis)s must be a whole number of millimetres, got "
 "'%(raw)s'."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(product)s: the price is below the planned cost."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(product)s: the size is out of the limits: %(problems)s."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -145,6 +173,13 @@ msgid "<i class=\"fa fa-exclamation-triangle me-1\" title=\"Shift\"/>+"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Below the planned cost\"/>\n"
+"                    <strong>The price is below the planned cost:</strong>"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "<i class=\"fa fa-exclamation-triangle me-2\" title=\"Date at risk\"/>"
 msgstr ""
@@ -225,6 +260,11 @@ msgid "Amount"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__report_ids
+msgid "Available Forms"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
 msgid "Average"
@@ -247,6 +287,16 @@ msgid "Being Changed"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_below_cost
+msgid "Below Cost"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_margin_warning
+msgid "Below the Planned Cost"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model,name:td_mebli_sale.model_mrp_bom
 msgid "Bill of Material"
 msgstr ""
@@ -263,6 +313,7 @@ msgstr ""
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_print_wizard_view_form
 msgid "Cancel"
 msgstr ""
 
@@ -303,6 +354,12 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "Changes of the order"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/wizard/print_wizard.py:0
+msgid "Choose a form to print."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -374,12 +431,14 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_uid
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_uid
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_date
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_date
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__create_date
 msgid "Created on"
 msgstr ""
 
@@ -456,7 +515,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid ""
+"Do not get cheaper with a smaller size: %(names)s; boards, edge banding and "
+"their operations follow the size."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -472,6 +540,11 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_forecast_date
 msgid "Forecast Date"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__report_id
+msgid "Form"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -529,6 +602,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__id
 msgid "ID"
 msgstr ""
 
@@ -568,12 +642,14 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_uid
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_uid
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_date
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_date
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -662,6 +738,14 @@ msgstr ""
 
 #. module: td_mebli_sale
 #. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid ""
+"Of the cost, not depending on the size: %(fixed)s, following the size: "
+"%(sized)s."
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
 #: code:addons/td_mebli_sale/models/order_change.py:0
 msgid "Only a fixed change can be sent for signature."
 msgstr ""
@@ -736,6 +820,11 @@ msgid "Ordered"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__order_ids
+msgid "Orders"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_is_parametric
 msgid "Parametric Product"
 msgstr ""
@@ -781,6 +870,13 @@ msgid "Price"
 msgstr ""
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid ""
+"Price %(price)s, planned cost %(cost)s, margin %(margin)s (%(pct)s %%)."
+msgstr ""
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__amount_after
 msgid "Price After"
 msgstr ""
@@ -793,6 +889,19 @@ msgstr ""
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__amount_delta
 msgid "Price Change"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_print_wizard_view_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Print"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_td_mebli_print_wizard
+msgid "Print the Order"
 msgstr ""
 
 #. module: td_mebli_sale
@@ -1113,6 +1222,11 @@ msgid "Size Factor"
 msgstr ""
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_dims_range
+msgid "Size Limits, mm"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Specification"
 msgstr ""
@@ -1248,6 +1362,12 @@ msgstr ""
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "The size is out of the limits of the product"
+msgstr ""
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid "The specification can be rebuilt only in a quotation."
 msgstr ""
 
@@ -1300,7 +1420,7 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_design
 msgid ""
-"The visual is printed in the quotation (Print › Quotation / Order) under the\n"
+"The visual is printed in the quotation (button Print › Quotation / Order) under the\n"
 "                        order details."
 msgstr ""
 
@@ -1316,6 +1436,11 @@ msgstr ""
 msgid ""
 "The warranty on the furniture is 24 months from the day of the act, under the rules of use handed to the\n"
 "                    Customer."
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order_line__td_dims_range
+msgid "The width, height and depth allowed for the product."
 msgstr ""
 
 #. module: td_mebli_sale
@@ -1413,6 +1538,12 @@ msgid "h"
 msgstr ""
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "not a whole number of millimetres: %s"
+msgstr ""
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "»: the price"
 msgstr ""
@@ -1430,4 +1561,9 @@ msgstr ""
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "— the Seller"
+msgstr ""
+
+#. module: td_mebli_sale
+#: model:ir.actions.report,name:sale_pdf_quote_builder.action_report_saleorder_raw
+msgid "Quotation / Order"
 msgstr ""

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-15 16:15+0000\n"
-"PO-Revision-Date: 2026-11-15 16:15+0000\n"
+"POT-Creation-Date: 2026-11-16 19:45+0000\n"
+"PO-Revision-Date: 2026-11-16 19:45+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -209,6 +209,11 @@ msgid "Act"
 msgstr ""
 
 #. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_act_signed
+msgid "Act Signed"
+msgstr ""
+
+#. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Act of an Installation Stage"
 msgstr ""
@@ -303,6 +308,7 @@ msgstr ""
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__cancelled
 #: model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__cancel
+#: model:project.task.type,name:td_mebli_install.stage_install_cancelled
 msgid "Cancelled"
 msgstr ""
 
@@ -505,9 +511,11 @@ msgid "Discard"
 msgstr ""
 
 #. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_project__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_project_task__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_res_users__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__display_name
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__display_name
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__display_name
@@ -599,9 +607,11 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_project__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_project_task__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_res_users__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_sale_order__id
+#: model:ir.model.fields,field_description:td_mebli_install.field_sale_order_line__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__id
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__id
@@ -660,6 +670,11 @@ msgid "Installation Calendar"
 msgstr ""
 
 #. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_project__td_install_project
+msgid "Installation Project"
+msgstr ""
+
+#. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/payment.py:0
 msgid ""
@@ -668,6 +683,7 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_installed
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Installed"
 msgstr ""
@@ -979,8 +995,18 @@ msgid "Places:"
 msgstr ""
 
 #. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_planned
+msgid "Planned"
+msgstr ""
+
+#. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Product"
+msgstr ""
+
+#. module: td_mebli_install
+#: model:ir.model,name:td_mebli_install.model_project_project
+msgid "Project"
 msgstr ""
 
 #. module: td_mebli_install
@@ -1047,6 +1073,11 @@ msgstr ""
 #. module: td_mebli_install
 #: model:ir.model,name:td_mebli_install.model_sale_order
 msgid "Sales Order"
+msgstr ""
+
+#. module: td_mebli_install
+#: model:ir.model,name:td_mebli_install.model_sale_order_line
+msgid "Sales Order Line"
 msgstr ""
 
 #. module: td_mebli_install
@@ -1262,6 +1293,14 @@ msgid ""
 msgstr ""
 
 #. module: td_mebli_install
+#: model:ir.model.fields,help:td_mebli_install.field_project_project__td_install_project
+msgid ""
+"The project of the installation visits: its tasks get the stages To Plan, "
+"Planned, Installed, Act Signed, Cancelled, and the date of the visit from "
+"the delivery date of the order."
+msgstr ""
+
+#. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/act.py:0
 msgid ""
@@ -1304,6 +1343,11 @@ msgstr ""
 #. module: td_mebli_install
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__date_to
 msgid "To"
+msgstr ""
+
+#. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_to_plan
+msgid "To Plan"
 msgstr ""
 
 #. module: td_mebli_install

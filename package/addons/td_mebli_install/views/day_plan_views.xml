@@ -119,4 +119,15 @@
             </t>
         </t>
     </template>
+    <!-- A-17 №16: the flag of the project of the installation visits (its stages and the date of the visit) -->
+    <record id="project_project_form_td_install" model="ir.ui.view">
+        <field name="name">project.project.form.td.mebli.install</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <field name="privacy_visibility" position="after">
+                <field name="td_install_project"/>
+            </field>
+        </field>
+    </record>
 </odoo>

@@ -36,6 +36,25 @@ class SaleOrder(models.Model):
                                    help="The visual of the project from the designer: printed in the quotation under the "
                                         "order details.")
 
+    # A-17 №8: the quotation sells a line below its planned cost — the warning with the reason (not a block)
+    td_margin_warning = fields.Text(string='Below the Planned Cost', compute='_compute_td_margin_warning')
+
+    @api.depends('order_line.td_below_cost', 'order_line.price_subtotal', 'order_line.td_bom_id')
+    @api.depends_context('uid', 'lang')
+    def _compute_td_margin_warning(self):
+        # AC-018 / VP-08: the amounts only to those who see the margin; a salesperson gets the reason without amounts
+        with_amounts = self.env.user.has_groups(MARGIN_GROUPS)
+        for order in self:
+            lines = order.order_line.filtered('td_below_cost')
+            order.td_margin_warning = '\n'.join(line._td_below_cost_text(with_amounts) for line in lines) or False
+
+    def action_td_print(self):
+        """A-17 №9 (decision of the owner 2026-11-16): one button «Print» in the header with the list of the printed
+        forms of the order — the same reports as in ⚙ › Print for this user."""
+        wizard = self.env['td.mebli.print.wizard'].create({'order_ids': [(6, 0, self.ids)]})
+        return {'type': 'ir.actions.act_window', 'res_model': wizard._name, 'res_id': wizard.id, 'view_mode': 'form',
+                'target': 'new', 'name': self.env._("Print")}
+
     @api.depends('order_line')
     def _compute_td_cost_line_ids(self):
         for order in self:

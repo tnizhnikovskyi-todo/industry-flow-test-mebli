@@ -18,14 +18,38 @@ msgstr ""
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
-msgid "%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm."
-msgstr "%(product)s: %(axis)s %(value)s мм поза межами %(low)s-%(high)s мм."
+msgid "%(axis)s %(value)s mm (allowed %(low)s-%(high)s mm)"
+msgstr "%(axis)s %(value)s мм (допустимо %(low)s–%(high)s мм)"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(product)s %(w)s × %(h)s × %(d)s mm: the price is below the planned cost. The price is %(pct)s %% of the base price: the size %(w)s × %(h)s mm against the nominal %(wn)s × %(hn)s mm (the depth does not change the price)."
+msgstr "«%(product)s» %(w)s × %(h)s × %(d)s мм: ціна нижча за планову собівартість. Ціна — %(pct)s %% базової: розмір %(w)s × %(h)s мм проти номіналу %(wn)s × %(hn)s мм (глибина на ціну не впливає)."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(product)s: %(problems)s. The price and the specification follow the typed size; the quotation is not saved until the size is corrected."
+msgstr "«%(product)s»: %(problems)s. Ціна й специфікація рахуються з введеного розміру; пропозиція не збережеться, доки розмір не виправлено."
 
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid "%(product)s: the %(axis)s must be a whole number of millimetres, got '%(raw)s'."
 msgstr "%(product)s: %(axis)s має бути цілим числом міліметрів, отримано '%(raw)s'."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(product)s: the price is below the planned cost."
+msgstr "«%(product)s»: ціна нижча за планову собівартість."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "%(product)s: the size is out of the limits: %(problems)s."
+msgstr "«%(product)s»: розмір поза межами виробу: %(problems)s."
 
 #. module: td_mebli_sale
 #. odoo-python
@@ -156,6 +180,15 @@ msgid "<i class=\"fa fa-exclamation-triangle me-1\" title=\"Shift\"/>+"
 msgstr "<i class=\"fa fa-exclamation-triangle me-1\" title=\"Зсув\"/>+"
 
 #. module: td_mebli_sale
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Below the planned cost\"/>\n"
+"                    <strong>The price is below the planned cost:</strong>"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle me-2\" title=\"Нижче планової собівартості\"/>\n"
+"                    <strong>Ціна нижча за планову собівартість:</strong>"
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_dates
 msgid "<i class=\"fa fa-exclamation-triangle me-2\" title=\"Date at risk\"/>"
 msgstr "<i class=\"fa fa-exclamation-triangle me-2\" title=\"Дата під загрозою\"/>"
@@ -231,6 +264,11 @@ msgid "Amount"
 msgstr "Сума"
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__report_ids
+msgid "Available Forms"
+msgstr "Доступні форми"
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_launch_list_td_mebli model_terms:ir.ui.view,arch_db:td_mebli_sale.view_quotation_tree_td_mebli
 msgid "Average"
 msgstr "Середнє"
@@ -251,6 +289,16 @@ msgid "Being Changed"
 msgstr "Змінюється"
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_below_cost
+msgid "Below Cost"
+msgstr "Нижче собівартості"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_margin_warning
+msgid "Below the Planned Cost"
+msgstr "Нижче планової собівартості"
+
+#. module: td_mebli_sale
 #: model:ir.model,name:td_mebli_sale.model_mrp_bom
 msgid "Bill of Material"
 msgstr "Специфікація"
@@ -266,7 +314,7 @@ msgid "By signing, you accept the change «"
 msgstr "Підписуючи, ви погоджуєте зміну «"
 
 #. module: td_mebli_sale
-#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form
+#: model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_order_change_wizard_form model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_print_wizard_view_form
 msgid "Cancel"
 msgstr "Скасувати"
 
@@ -306,6 +354,12 @@ msgstr "Зміни"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "Changes of the order"
 msgstr "Зміни замовлення"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/wizard/print_wizard.py:0
+msgid "Choose a form to print."
+msgstr "Виберіть форму для друку."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
@@ -369,12 +423,12 @@ msgid "Create a Change of an Order"
 msgstr "Створення зміни замовлення"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_uid
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__create_uid
 msgid "Created by"
 msgstr "Створив"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_date
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__create_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__create_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__create_date
 msgid "Created on"
 msgstr "Створено"
 
@@ -430,9 +484,15 @@ msgid "Design Visual"
 msgstr "Візуалізація проєкту"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__display_name model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name
+#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__display_name model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "Do not get cheaper with a smaller size: %(names)s; boards, edge banding and their operations follow the size."
+msgstr "Не дешевшають із меншим розміром: %(names)s; плити, кромка та їх операції зменшуються з розміром."
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli_change
@@ -448,6 +508,11 @@ msgstr "Зафіксовано"
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__td_forecast_date
 msgid "Forecast Date"
 msgstr "Прогнозна дата"
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__report_id
+msgid "Form"
+msgstr "Форма"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_kanban_td_mebli
@@ -491,7 +556,7 @@ msgid "Height, mm"
 msgstr "Висота, мм"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__id model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__id model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__id model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__id model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id
+#: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__id model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__id model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__id model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__id model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__id model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__id model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__id model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__id model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__id
 msgid "ID"
 msgstr "ID"
 
@@ -528,12 +593,12 @@ msgid "Kind"
 msgstr "Вид"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_uid
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_uid model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__write_uid
 msgid "Last Updated by"
 msgstr "Останнє оновлення"
 
 #. module: td_mebli_sale
-#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_date
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__write_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__write_date model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__write_date
 msgid "Last Updated on"
 msgstr "Оновлено"
 
@@ -616,6 +681,12 @@ msgstr "Номер"
 
 #. module: td_mebli_sale
 #. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "Of the cost, not depending on the size: %(fixed)s, following the size: %(sized)s."
+msgstr "Із собівартості не залежить від розміру: %(fixed)s, залежить від розміру: %(sized)s."
+
+#. module: td_mebli_sale
+#. odoo-python
 #: code:addons/td_mebli_sale/models/order_change.py:0
 msgid "Only a fixed change can be sent for signature."
 msgstr "На підпис можна надіслати лише зафіксовану зміну."
@@ -681,6 +752,11 @@ msgid "Ordered"
 msgstr "Замовлено"
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__order_ids
+msgid "Orders"
+msgstr "Замовлення"
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_is_parametric
 msgid "Parametric Product"
 msgstr "Параметричний виріб"
@@ -726,6 +802,12 @@ msgid "Price"
 msgstr "Ціна"
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "Price %(price)s, planned cost %(cost)s, margin %(margin)s (%(pct)s %%)."
+msgstr "Ціна %(price)s, планова собівартість %(cost)s, маржа %(margin)s (%(pct)s %%)."
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__amount_after
 msgid "Price After"
 msgstr "Ціна після"
@@ -739,6 +821,17 @@ msgstr "Ціна до"
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__amount_delta
 msgid "Price Change"
 msgstr "Зміна ціни"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order.py:0 model_terms:ir.ui.view,arch_db:td_mebli_sale.td_mebli_print_wizard_view_form model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
+msgid "Print"
+msgstr "Друк"
+
+#. module: td_mebli_sale
+#: model:ir.model,name:td_mebli_sale.model_td_mebli_print_wizard
+msgid "Print the Order"
+msgstr "Друк замовлення"
 
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.res_config_settings_view_form_td_mebli_sale
@@ -1022,6 +1115,11 @@ msgid "Size Factor"
 msgstr "Розмірний коефіцієнт"
 
 #. module: td_mebli_sale
+#: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_dims_range
+msgid "Size Limits, mm"
+msgstr "Межі розміру, мм"
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_mebli
 msgid "Specification"
 msgstr "Специфікація"
@@ -1141,6 +1239,12 @@ msgstr "Замовлення клієнтів, для яких закуплен�
 #. module: td_mebli_sale
 #. odoo-python
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "The size is out of the limits of the product"
+msgstr "Розмір поза межами виробу"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid "The specification can be rebuilt only in a quotation."
 msgstr "Специфікацію можна перебудувати лише в комерційній пропозиції."
 
@@ -1185,9 +1289,9 @@ msgstr "Версія зміни унікальна в межах замовле�
 #. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_form_td_design
 msgid ""
-"The visual is printed in the quotation (Print › Quotation / Order) under the\n"
+"The visual is printed in the quotation (button Print › Quotation / Order) under the\n"
 "                        order details."
-msgstr "Візуалізація друкується в пропозиції (Друк › Пропозиція / Замовлення) під реквізитами замовлення."
+msgstr "Візуалізація друкується в пропозиції (кнопка «Друк» › «Пропозиція / Замовлення») під реквізитами замовлення."
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,help:td_mebli_sale.field_sale_order__td_design_image
@@ -1200,6 +1304,11 @@ msgid ""
 "The warranty on the furniture is 24 months from the day of the act, under the rules of use handed to the\n"
 "                    Customer."
 msgstr "Гарантія на меблі — 24 місяці від дня акта за умови дотримання правил експлуатації, переданих Замовникові."
+
+#. module: td_mebli_sale
+#: model:ir.model.fields,help:td_mebli_sale.field_sale_order_line__td_dims_range
+msgid "The width, height and depth allowed for the product."
+msgstr "Ширина, висота й глибина, допустимі для виробу."
 
 #. module: td_mebli_sale
 #. odoo-python
@@ -1289,6 +1398,12 @@ msgid "h"
 msgstr "год"
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "not a whole number of millimetres: %s"
+msgstr "не ціле число міліметрів: %s"
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "»: the price"
 msgstr "»: ціна"
@@ -1307,3 +1422,8 @@ msgstr "— Покупець"
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.report_contract_document
 msgid "— the Seller"
 msgstr "— Продавець"
+
+#. module: td_mebli_sale
+#: model:ir.actions.report,name:sale_pdf_quote_builder.action_report_saleorder_raw
+msgid "Quotation / Order"
+msgstr "Пропозиція / Замовлення"

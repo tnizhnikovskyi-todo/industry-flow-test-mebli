@@ -24,6 +24,7 @@
                             <field name="lead_id" invisible="td_can_link" readonly="1" options="{'no_open': True}"/>
                             <field name="order_id" invisible="not td_can_link"/>
                             <field name="order_id" invisible="td_can_link" readonly="1" options="{'no_open': True}"/>
+                            <field name="event_id" invisible="not event_id" options="{'no_open': True}"/>
                             <field name="customer"/>
                             <field name="td_address"/>
                             <field name="td_phone" widget="phone"/>
@@ -194,6 +195,22 @@
         <field name="name">My Calendar</field>
         <field name="res_model">calendar.event</field>
         <field name="view_mode">calendar,list,form</field>
+        <!-- A-17 №11: «Start the Measurement» is shown on the meetings of this calendar only (the measurer) -->
+        <field name="context">{'td_measure_start': True}</field>
+    </record>
+
+    <!-- A-17 №11: the measurer starts the measurement sheet from the meeting; it is filled by itself -->
+    <record id="calendar_event_form_td_measure_start" model="ir.ui.view">
+        <field name="name">calendar.event.form.td.mebli.measure.start</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button name="action_td_start_measure" type="object" string="Start the Measurement" class="btn-primary"
+                        icon="fa-arrows-alt" groups="td_mebli_measure.group_td_mebli_measurer"
+                        invisible="not id or not context.get('td_measure_start')"/>
+            </header>
+        </field>
     </record>
     <menuitem id="td_mebli_measure_root_menu" name="Measurements" web_icon="td_mebli_measure,static/description/icon.png"
               groups="group_td_mebli_measurer" sequence="8"/>

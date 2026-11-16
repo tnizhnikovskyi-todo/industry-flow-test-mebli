@@ -1,0 +1,47 @@
+# ТЕСТОВИЙ наряд A-11 (контур коду, fix7): зауваження власника на гейті A-17 («Повернути»), рішення власника 2026-11-16
+# (зауваження A-17), flow/decisions.md рядок 58 (вносить головна сесія). Джерело — 16 рядків tests/open-questions.md гілки
+# claude/eager-heisenberg-rm7c4i (128f038…0250f33). Перший коміт гілки — повернення гейта A-17: D-25…D-35 у package/demo/defects.md.
+# Далі: A-12-8 -> A-13-7 -> A-14-10 -> A-15-full-6 -> A-16-9 -> A-16b-7 -> A-17-9.
+step: A-11
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["odoo19-mvp-build:code-dev"]
+model: opus
+effort: high
+params:
+  mode: fix
+  defects:
+    - "D-34 (№15): дві смарт-кнопки «Виробництво» — нашу ховати для mrp.group_mrp_user, тест"
+    - "D-35 (№16): стадії проєкту «Монтажі» (дані модуля + прапорець проєкту), дата виїзду commitment_date → date_deadline, демо"
+    - "D-29 (№9): одна кнопка «Друк» зі списком форм у шапці пропозиції/замовлення (рішення власника)"
+    - "D-27 (№7): розмір поза межами — onchange-попередження всіх осей з межами; constrains лишити"
+    - "D-28 (№8): попередження про від'ємну маржу з поясненням; підтвердження не блокувати"
+    - "D-26 (№6): календарі учасників нагоди зі смарт-кнопки «Зустрічі»"
+    - "D-30 (№11): «Почати замір» з події календаря замірника"
+inputs:
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: remarks, from: owner, path: "tests/open-questions.md@0250f33 (гілка claude/eager-heisenberg-rm7c4i), рядки 2026-11-16 №1–16", sha: 0250f33}
+  - {name: decision, from: owner, path: "рішення власника 2026-11-16 (зауваження A-17), flow/decisions.md рядок 58", sha: null}
+where:
+  - package/demo/defects.md                 # повернення гейта A-17: D-25…D-35
+  - package/addons/td_mebli_sale/
+  - package/addons/td_mebli_measure/
+  - package/addons/td_mebli_install/
+  - package/addons/td_mebli_demo/
+  - package/addons/AC-COVERAGE.md
+  - package/SPEC.md                         # §4.19 AC-135…AC-140 (A-08, прийнято з зауважень власника)
+  - package/ALLOCATION.md                   # рядки AC-135…AC-140 (A-10)
+  - docs/industries/mebli/research/AI-DECISIONS.md
+template: "немає — форма за SKILL.md"
+done: "кожне з №6–9, 11, 15, 16 має код і тест; тести td_* на чистих базах A/light/B — 0 failed (A-14-10)"
+check: {mode: both, how: "тести модулів на dev-базі + run_tests (A-14-10)", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 240, lease_factor: 1.5, cost_limit_usd: 40, context_budget_tokens: 300000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/v040-start, branch: flow/A-11-fix7-test}
+attempt: 1
+returned_from: A-17
+git: {base: 17268db, head: null, prev_tag: null}
+date: 2026-11-16

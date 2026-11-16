@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- A-17 №9: one button «Print» with the list of the printed forms of the order (decision of the owner 2026-11-16) -->
+    <record id="td_mebli_print_wizard_view_form" model="ir.ui.view">
+        <field name="name">td.mebli.print.wizard.form</field>
+        <field name="model">td.mebli.print.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Print">
+                <field name="order_ids" invisible="1"/>
+                <field name="report_ids" invisible="1"/>
+                <group>
+                    <field name="report_id" widget="radio" required="1" options="{'no_create': True}"/>
+                </group>
+                <footer>
+                    <button name="action_print" type="object" string="Print" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
