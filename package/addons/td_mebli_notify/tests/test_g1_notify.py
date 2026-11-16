@@ -2,9 +2,14 @@ from datetime import timedelta
 from unittest.mock import patch
 
 from odoo import fields
-from odoo.tests import tagged
+from odoo.tests import freeze_time, tagged
 
 from odoo.addons.td_mebli_sale.tests.common import TdMebliSaleCommon
+
+
+# A-11-fix4: the dates of the letters are local (Europe/Kyiv); a run between 22:00 and 24:00 UTC crossed the local midnight
+# (the meeting «in 3 days» was the 4th day locally) — the tests of the dates run at a fixed midday
+MIDDAY = '2026-06-10 09:00:00'
 
 
 @tagged('post_install', '-at_install')
@@ -40,6 +45,7 @@ class TestG1Notify(TdMebliSaleCommon):
         subject = template._render_field('subject', order.ids, compute_lang=True)[order.id]
         return order.message_ids.filtered(lambda m: m.subject == subject)
 
+    @freeze_time(MIDDAY)
     def test_ac_030_letters_by_template(self):
         env = self.env
         self.partner.write({'email': 'buyer@example.com', 'street': 'вул. Вигадана, 1', 'city': 'Київ'})
@@ -70,6 +76,7 @@ class TestG1Notify(TdMebliSaleCommon):
             'td_mebli_notify.mail_template_td_payment_reminder'), env.ref('td_mebli_notify.mail_template_td_new_date'))}
         self.assertEqual(len(names), 4)
 
+    @freeze_time(MIDDAY)
     def test_ac_031_reminder_days_by_the_company(self):
         self.partner.email = 'buyer@example.com'
         self.env.company.td_pay_reminder_days = 2
@@ -86,6 +93,7 @@ class TestG1Notify(TdMebliSaleCommon):
         self.env['project.task']._cron_td_customer_reminders()
         self.assertEqual(len(self._payment_letters(far)), 1, "the parameter 5: the farther visit is reminded too")
 
+    @freeze_time(MIDDAY)
     def test_ac_031_no_email(self):
         self.partner.email = False
         self.env.company.td_pay_reminder_days = 2

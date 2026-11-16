@@ -1,0 +1,33 @@
+# ТЕСТОВИЙ наряд A-11 (контур коду, fix4): стиль головного екрана — власні іконки кореневих меню td_* у стилі Odoo 19
+# (td_knowledge, td_mebli_dashboard, td_mebli_measure), перенос підписів td_home_menu лише між словами; далі A-14-7 -> A-15-full-3 ->
+# A-16-6 -> A-16b-3 -> A-17-5. Рішення AI — AI-29…AI-31. Наповнення бази знань інструкціями відкладено (рішення власника).
+step: A-11
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["odoo19-mvp-build:code-dev"]
+model: opus
+effort: high
+params: {mode: fix, defects: ["UI: іконка td_knowledge (плашка)", "UI: іконка td_mebli_dashboard (плашка)", "UI: td_mebli_measure бере іконку crm", "UI: підписи головного екрана рвуться посеред слова"]}
+inputs:
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: README.md, from: A-15, path: package/demo/README.md, sha: HEAD}
+where:
+  - package/addons/td_home_menu/
+  - package/addons/td_knowledge/
+  - package/addons/td_mebli_dashboard/
+  - package/addons/td_mebli_measure/
+  - package/addons/td_mebli_notify/          # тест AC-030/031 залежав від години запуску (22–24 UTC) — freeze_time
+  - docs/industries/mebli/research/AI-DECISIONS.md
+template: "немає — форма за SKILL.md"
+done: "власні icon.svg 50×50 + icon.png у стилі icon.svg Odoo 19 (без плашки, палітра), web_icon усіх кореневих меню td_* — на власний модуль; підписи головного екрана переносяться лише між словами, <html lang> = мова користувача, довгі однослівні назви вміщаються (1440 і 390); тести (web_icon, файли іконок, scss, тур html[lang]); версії +патч; тести td_* на чистій базі профілю A — 0 failed"
+check: {mode: both, how: "where-only + run_tests профілю A (0 failed) + знімки головного екрана до/після", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 180, lease_factor: 1.5, cost_limit_usd: 30, context_budget_tokens: 200000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/v040-start, branch: flow/A-11-fix4-test}
+attempt: 1
+returned_from: null
+git: {base: 0fbcd1d, head: null, prev_tag: null}
+date: 2026-11-15

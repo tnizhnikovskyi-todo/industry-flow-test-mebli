@@ -5,7 +5,7 @@
         <field name="tag">td_mebli_dashboard</field>
     </record>
     <menuitem id="menu_dashboard_root" name="Manager Dashboard" action="action_dashboard" sequence="1"
-              web_icon="td_mebli_dashboard,static/description/icon.svg"
+              web_icon="td_mebli_dashboard,static/description/icon.png"
               groups="td_mebli_dashboard.group_td_mebli_director"/>
 
     <!-- Position 39 (F-65): shop floor board on a TV -->
