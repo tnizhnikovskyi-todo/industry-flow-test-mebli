@@ -36,11 +36,11 @@
 
 Значення VP: `{{VP-xx}}` — `transform` з `vp-map.yaml`; `{{VP-xx:<ім'я>}}` — `transform_<ім'я>` того самого пункту (коли одне VP дає два поля або значення залежить від кількох VP). `applies_if` — зі схеми: невиконана умова = пункт не застосовується; значення-список = «одне з» (спроба 3).
 
-**Обмеження між параметрами (SPEC §11.3, CHECKS №23).** `manifest.yaml` → `preflight` (PF-01…PF-10) перевіряється **до установки модулів** за `answers.yaml` (з default схеми): `error` — застосування зупиняється з поясненням (відповідь суперечить коробці, виправити в B-02): `edition: ee` ⇒ VP-01 = `B`; VP-01 = `light` ⇒ `edition: ce`, VP-04 = `false`, VP-05 = `false`, VP-09 = `distributor` (default схеми VP-05 = `true` — у light його треба задати явно); у **всіх** профілях VP-04 = `false` (PF-10: обмін з BAS/BAF відкладено рішенням власника 2026-11-16, A-12-6); `ignore` — значення не пишеться, у компанії лишається default модуля: VP-14, VP-15 і кіоск за PIN у light, VP-02/03/12 поза B, VP-06/07 без VP-05; `warn` — VP-12 без `offcut` у VP-02. (A-12-6: рядка `td_mebli_bas` у «Модулях до установки» більше немає — модуль у `package/deferred/`.) Перевірено: light за §11.3 — preflight OK (3 ignore); light із default схеми і `edition: ee` з VP-01 = A — STOP до установки (`install-log.md`).
+**Обмеження між параметрами (SPEC §11.3, CHECKS №23).** `manifest.yaml` → `preflight` (PF-01, PF-02, PF-04…PF-09; PF-03 і PF-10 прибрано в A-12-7 разом з VP-04, номери інших не змінено) перевіряється **до установки модулів** за `answers.yaml` (з default схеми): `error` — застосування зупиняється з поясненням (відповідь суперечить коробці, виправити в B-02): `edition: ee` ⇒ VP-01 = `B`; VP-01 = `light` ⇒ `edition: ce`, VP-05 = `false`, VP-09 = `distributor` (default схеми VP-05 = `true` — у light його треба задати явно); `ignore` — значення не пишеться, у компанії лишається default модуля: VP-14, VP-15 і кіоск за PIN у light, VP-02/03/12 поза B, VP-06/07 без VP-05; `warn` — VP-12 без `offcut` у VP-02. Перевірено: light за §11.3 — preflight OK (3 ignore); light із default схеми і `edition: ee` з VP-01 = A — STOP до установки (`install-log.md`).
 
 ## Модулі до установки
 
-Порядок — установки (топологічний за `depends`, перевірено за `__manifest__.py`: порушень 0). Профілі коробок: light = A за складом модулів (з A-12-6; до того — A без `td_mebli_bas`, AI-A10-05), різниця — параметри SPEC §11.3 (preflight); B = A + `td_mebli_multico` (VP-03 = `multi_install_fop`) + feature-групи VP-02; C = B + профіль `ee`. Повний перелік з `origin` — `manifest.yaml`.
+Порядок — установки (топологічний за `depends`, перевірено за `__manifest__.py`: порушень 0). Профілі коробок: light = A за складом модулів (з A-12-6), різниця — параметри SPEC §11.3 (preflight); B = A + `td_mebli_multico` (VP-03 = `multi_install_fop`) + feature-групи VP-02; C = B + профіль `ee`. Повний перелік з `origin` — `manifest.yaml`.
 
 | № | Технічна назва | Джерело | AC | Редакція |
 |---|---|---|---|---|
@@ -78,7 +78,7 @@
 | 47–52 | `mrp_workorder`, `quality_control`, `industry_fsm`, `planning`, `helpdesk`, `sign` | стандарт EE (`origin: std-ee`) | AC-126…AC-130 | EE |
 | 53–58 | мости `td_mebli_shopfloor`, `_quality`, `_fsm`, `_planning`, `_helpdesk`, `_sign` (`auto_install`) | код (A-11) | AC-126…AC-130 | EE |
 
-**Відкладено рішенням власника 2026-11-16 (A-12-6):** `td_mebli_bas` (обмін з BAS/BAF, був №43, `when` VP-04) і `td_mebli_attendance` («Табель для BAS», був №42) прибрано з «Модулів до установки» обох редакцій; код — `package/deferred/` (README там). Кіоск за PIN — стандарт `hr_attendance` (№23) лишається.
+**Виключено рішенням власника 2026-11-16** (A-12-6 — прибрано зі списку, A-12-7 — виключено з пакета разом з параметром VP-04): модулів обміну з обліковою системою (були №42, №43) у «Модулях до установки» обох редакцій немає. Кіоск за PIN — стандарт `hr_attendance` (№23) лишається.
 
 Модулі «готове» — лише спільні модулі ToDo §27/§27а (`td_home_menu`, `td_support`, `td_knowledge`): власний код ToDo, не вендоринг — LICENSE і коміт джерела не вимагаються, досить `license` (LGPL-3) у маніфесті й README (`CFG-vendored` — PASS за винятком скіла). Профіль `ce` — 48 модулів, `ee` — 59 (`ee` ⊇ `ce` крім `td_home_menu`). Ліцензії залежностей ядра: AGPL — 0 (перевірено за маніфестами Odoo 19 CE і `package/addons`); модулі `td_*` — LGPL-3 (маніфести `package/addons` @ `4e0fdda`); мости EE залежать від модулів EE, яких немає в CE-вихідниках — «ліцензія залежності не перевірена» (WARN), ліцензія самих мостів — відкрите питання (`tests/open-questions.md`).
 
@@ -89,8 +89,7 @@
 | VP-01 | `res.company:xml_id=base.main_company:td_box_profile` + `manifest when:` | конфіг | профіль модулів light / A / B + поле `res.company.td_box_profile` (td_mebli_base) | AC-N.07, AC-089, AC-121 |
 | VP-02 | `res.config.settings` `group_td_feature_<значення>` → `td_mebli_base.group_feature_*` у `implied_ids` `base.group_user` | конфіг | feature-групи коробки B (галочки налаштувань td_mebli_base); лише при VP-01 = `B` | AC-011, AC-012, AC-037, … AC-121 (19 AC) |
 | VP-03 | `ir.module.module:[name=td_mebli_multico]:state` | конфіг | `multi_install_fop` → модуль `td_mebli_multico`; юрособи — B-04; лише при VP-01 = `B` | AC-035, AC-036 |
-| VP-04 | `ir.module.module:[name=td_mebli_bas]:state` | конфіг | **відкладено рішенням власника 2026-11-16** (A-12-6, AI-37): лише `false` у всіх профілях (PF-10); модуля `td_mebli_bas` у збірці немає (`package/deferred/`), read-back — «модуля немає» = `uninstalled` | AC-021, AC-039…AC-042, AC-078, AC-109 (крім AC-021 — відкладено) |
-| VP-05 | `account.payment.term:xml_id=td_mebli_sale.payment_term_td_furniture:active` | конфіг | умова оплати модуля активна + default покупців компанії / архівна, default = `false` (не на архівну); light — `false` (PF-04) | AC-019, AC-020, AC-031, AC-042, AC-065 |
+| VP-05 | `account.payment.term:xml_id=td_mebli_sale.payment_term_td_furniture:active` | конфіг | умова оплати модуля активна + default покупців компанії / архівна, default = `false` (не на архівну); light — `false` (PF-04) | AC-019, AC-020, AC-031, AC-065 |
 | VP-06 | `res.company:xml_id=base.main_company:td_payment_control` | код | реалізує модуль td_* (A-11): `res.company.td_payment_control`; лише при VP-05 = `true` | AC-020, AC-021 |
 | VP-07 | `res.company:xml_id=base.main_company:td_pay_reminder_days` | код | реалізує модуль td_* (A-11): `td_pay_reminder_days`; лише при VP-05 = `true` | AC-031 |
 | VP-08 | `res.company:xml_id=base.main_company:td_margin_to_salesman` | код | реалізує модуль td_* (A-11): `td_margin_to_salesman` | AC-017, AC-018 |
@@ -141,7 +140,7 @@
 
 | Правка CHECKS / гейт | Спроба 2 | Спроба 3 (закрито: файл / пункт) |
 |---|---|---|
-| №23 SPEC §11.3 для light | не перевірялось; light із default отримував BAS, кіоск і VP-14/15 | `manifest.yaml` `preflight` PF-01…PF-09 + `when` `td_mebli_bas` (з A-12-6 модуль відкладено рішенням власника 2026-11-16, PF-10); `applies_if` VP-14/15 (`vp-map.yaml`, `60_td_params.yaml`), кіоск (`80_settings.yaml`); розділ «Обмеження між параметрами» вище |
+| №23 SPEC §11.3 для light | не перевірялось; light із default отримував обмін з обліковою системою, кіоск і VP-14/15 | `manifest.yaml` `preflight` PF-01…PF-09 (з A-12-7 без PF-03/PF-10 — VP-04 виключено рішенням власника 2026-11-16); `applies_if` VP-14/15 (`vp-map.yaml`, `60_td_params.yaml`), кіоск (`80_settings.yaml`); розділ «Обмеження між параметрами» вище |
 | №26 застарілий текст | AC-107 — «відкрите питання»; light у логу з VP-05 = `true`, VP-09 = `both` | «Ручні кроки» (AC-107 — шаблон A-13 `td/17` + крок міграції 22; спроба 4 — 24, CHECKS №33), «Відкриті питання»; `install-log.md` light за §11.3 |
 | config-review 1 (№22, A-11) | власний запис `td_config.payment_term_stages` без `td_milestone` | прибрано; `td_config.payment_term_furniture_active` + `td_config.default_payment_term` на запис модуля `td_mebli_sale.payment_term_td_furniture` |
 | config-review 4 (№24, A-11) | VP-16: схема `true` ↔ модуль `False` | модуль `true`; `vp-map.yaml` VP-16 `default: true` |
@@ -169,21 +168,21 @@ A-12-fix (`fix`, контур коду 1, `config-as-code` 0.4.0; рядків A
 | §27а `td_knowledge`, `td_mebli_knowledge` | не в переліку | `ce` і `ee`; `td_mebli_knowledge` після `td_mebli_base` |
 | Перевірка | — | чиста база `test-mebli-a12fix-a` (профіль A): див. `install-log.md` «A-12-fix» |
 
-A-12-6 (`fix`, рішення власника 2026-11-16 «Приберіть зі збірки поки все, що пов'язано з BAS», передано менеджерською сесією; `flow/decisions.md` рядок 53):
+A-12-6 і A-12-7 (`fix`, рішення власника 2026-11-16, передано менеджерською сесією; спершу — прибрати зі збірки, потім — «прибираємо взагалі»: виключено рішенням власника 2026-11-16):
 
-| Що | До | A-12-6 |
-|---|---|---|
-| `td_mebli_bas` | `ce`/`ee`, `when: VP-04 == true and VP-01 != 'light'` | прибрано (`package/deferred/`) — відкладено рішенням власника 2026-11-16 |
-| `td_mebli_attendance` | `ce`/`ee`, без `when` | прибрано (`package/deferred/`) — відкладено рішенням власника 2026-11-16 |
-| VP-04 | default `true`; профілі A/B/alt-2…5 — `true`, light — `false` | default `false`; у `answers.example.yaml`, `demo/answers.yaml`, `demo/profiles/*` — `false`; позначка «відкладено» у схемі (`deferred:`), `vp-map.yaml` і цій таблиці; PF-10 (`error` при `true`) |
-| Перевірка | — | чисті бази A / light / B — A-14-8 (`tests/reports/A-14-8.md`); apply/compare/read-back — там само |
+| Що | До | A-12-6 | A-12-7 |
+|---|---|---|---|
+| модуль обміну з обліковою системою (№43) | `ce`/`ee`, `when` за VP-04 | прибрано з «Модулів до установки» | виключено з пакета (код видалено, A-11-fix6) |
+| модуль табеля для обліку (№42) | `ce`/`ee`, без `when` | прибрано | виключено з пакета |
+| VP-04 | default `true`; профілі A/B/alt-2…5 — `true`, light — `false` | лише `false` (PF-10) | параметра немає: прибрано зі схеми `answers.yaml`, `vp-map.yaml`, `answers.example.yaml`, `demo/answers.yaml`, `demo/profiles/*`; правила PF-03 і PF-10 прибрано; `ac` VP-05 без AC-042; питання Q-04 анкети вилучено (`package/questionnaire.md` 1.1) |
+| Перевірка | — | A-14-8 | чисті бази A / light / B, apply/повтор/compare/read-back — A-14-9 (`tests/reports/A-14-9.md`); `apply.py plan` усіх 7 профілів — без невідомих ключів; відповідь зі старим `VP-04` — `unknown_keys: [VP-04]` (не застосовується) |
 
 ## Відкриті питання
 
 - Скілів `odoo19-mvp-build:config-spec`, `odoo19-mvp-build:config-review`, `boost:odoo19-lint`, `boost:source-check` у сесії немає: зміст CONFIG.md складено напряму з SPEC/ALLOCATION; `config-review` і `lint` — замінники A-14 (`tests/reports/A-14.md`) і самоперевірка спроби 3 (звіт A-12-3).
 - `applies_if` VP-14, VP-15 (`{VP-01: [A, B]}`, SPEC §11.3) є у `vp-map.yaml`, але не в схемі `package/templates/answers.yaml` (A-09) — схему варто доповнити (`tests/open-questions.md`); `preflight` — розширення формату `config-package-format.md` (observation).
 - AC-011: атрибути й виключення виробів — дані виробу (A-13 / B-04; демо — `td_mebli_demo`), не конфіг (спроба 5, D-10). Шаблон CSV виключень для A-13 — відкрите питання (`tests/open-questions.md`).
-- Профіль light (AI-A10-05): розрив залежностей `td_mebli_install` → `td_mebli_shop`, `td_mebli_dashboard` → усі A — рішення A-11 / Архітектора; light = A без `td_mebli_bas` (спроби 2–3: встановлено й перевірено; спроба 3 — за SPEC §11.3); з A-12-6 `td_mebli_bas` відкладено рішенням власника 2026-11-16 — light = A за модулями.
+- Профіль light (AI-A10-05): розрив залежностей `td_mebli_install` → `td_mebli_shop`, `td_mebli_dashboard` → усі A — рішення A-11 / Архітектора; з A-12-6 light = A за модулями (до того — A без модуля обміну з обліковою системою; виключено рішенням власника 2026-11-16).
 - Профіль `ee` не перевірено: доступу до Odoo 19 EE немає; мости встановлювались лише статично (маніфести, порядок).
 - План рахунків: `account` при установці на компанію без країни ставить `generic_coa`; пакет перемикає на `ua_psbo` (`try_loading`) на чистій базі без проводок. На базі з проводками перемикання неможливе — B-04 ставить країну UA до установки `account`.
 - Кілька юрос (VP-03 `multi` / `multi_install_fop`): пункти `td_param` пишуться в `base.main_company`; інші компанії створює B-04 — значення VP для них (default модуля або ті самі відповіді) — B-04 runbook.
@@ -195,7 +194,7 @@ A-12-6 (`fix`, рішення власника 2026-11-16 «Приберіть �
 | AI-A12-01 (спроба 2) | VP треку «код», VP-01, `contract_mode` — `kind: td_param` з якорем поле `res.company.td_*` (`td_mebli_base`), запис у `base.main_company`; ключі `ir.config_parameter` спроби 1 не пишуться | писати ключі `td_mebli.<vp>` і покладатися на `post_init_hook` | компанії, створені після конфігу (B-04, кілька юрос), отримують default модуля, а не відповідь анкети | read-back A / light / B; B-04 runbook |
 | AI-A12-02 | План рахунків `ua_psbo` і країна UA — пункти даних (`kind: chart`, record компанії) після установки модулів | ставити країну до установки `account` (порушує порядок «модулі → дані») | на базі з проводками `try_loading` не перемкне план | B-04 runbook: країна до установки |
 | AI-A12-03 | Послуга «Монтаж» і проєкт «Монтажі» — у конфіг-пакеті (ALLOCATION відносить AC-043 до A-12), без ціни | шаблон майстер-даних A-13 | дубль із шаблоном A-13 | A-13 README «Не дублювати конфіг» |
-| AI-A12-04 | VP-03, VP-04, `edition` — `kind: module` (read-back за станом модуля); у `config-kinds-odoo19.md` такого виду немає | лише `manifest when:` без read-back | розширення формату без рішення Архітектора | observation, A-14 config-review |
+| AI-A12-04 | VP-03, `edition` — `kind: module` (read-back за станом модуля); у `config-kinds-odoo19.md` такого виду немає | лише `manifest when:` без read-back | розширення формату без рішення Архітектора | observation, A-14 config-review |
 | AI-A12-05 | VP-17 — `ir.default` поля `mrp.bom.consumption` (нові специфікації) | поле на кожній специфікації (A-11) | специфікації, створені кодом з явним `consumption`, ігнорують замовчування | A-11 (AI-A08-27), тур A-16 |
 | AI-A12-06 (спроба 2) | VP-02 — галочки `res.config.settings` `group_td_feature_*` (API G0), не прямий запис `implied_ids` | kind `group` спроби 1 | `execute()` знімає групу, якщо галочку зняли, — повторне застосування з іншим VP-02 прибирає функції B у всіх користувачів | read-back B (10 груп) / A, light (0 груп) |
 | AI-A12-07 (спроба 2) | Пункт `td_config.alarm_mail_1day` прибрано: нагадування за 1 день постачає `td_mebli_measure` | лишити обидва | у базі спроби 1 лишається зайвий запис нагадування (лише тестові бази, видалені) | read-back AC-004 |

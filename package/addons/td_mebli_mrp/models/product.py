@@ -80,3 +80,20 @@ class ProductAttributeCustomValue(models.Model):
             attribute = record.custom_product_template_attribute_value_id.attribute_id
             if attribute.td_dimension:
                 record.name = f'{attribute.name}: {(record.custom_value or "").strip()}'
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    def _unlink_or_archive(self, check_access=True):
+        """D-24 (A-11-fix6, decision of the owner 2026-11-16, rights of the technologist): the technologist changes the
+        values, lines and exclusions («Exclude for») of a product, but deletes nothing — deleting stays with the
+        administrator. When such a change leaves variants without a possible combination, the standard deletes them
+        (and needs the right to delete products); for the technologist they are archived instead (`active`)."""
+        if check_access and not self.env.su and not self.has_access('unlink') \
+                and self.env.user.has_group('td_mebli_mrp.group_technologist'):
+            self.check_access('write')
+            # sudo: the variants of the products the technologist may change; only `active` is written
+            self.sudo().filtered('active').write({'active': False})
+            return
+        return super()._unlink_or_archive(check_access=check_access)
