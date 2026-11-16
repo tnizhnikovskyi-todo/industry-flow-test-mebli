@@ -1,9 +1,8 @@
 """19.0.1.1.0 (review A-11, update of a database of the slice): the form view of the order of the slice
-`td_mebli_ua.view_order_form_td_mebli_ua` has the button «Send to BAS» (`action_td_send_bas`), which moved to the new
-module td_mebli_bas. td_mebli_ua is updated after this module, so the old view is still in the database when the views
+`td_mebli_ua.view_order_form_td_mebli_ua` has the button of the exchange with the accounting system (`action_td_send_bas`), which moved to
+another module (excluded from the package by the decision of the owner 2026-11-16). td_mebli_ua is updated after this module, so the old view is still in the database when the views
 of this module are validated, and the update fails («action_td_send_bas is not a valid action»). The view is no longer
-in td_mebli_ua (19.0.1.1.0): it is deleted here, with its xmlid, before the views of this module are loaded.
-Historical: the exchange with BAS itself is deferred by the decision of the owner 2026-11-16 (package/deferred/, AI-37)."""
+in td_mebli_ua (19.0.1.1.0): it is deleted here, with its xmlid, before the views of this module are loaded."""
 
 
 def migrate(cr, version):

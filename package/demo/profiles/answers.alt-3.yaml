@@ -5,7 +5,6 @@ contract_mode: unset
 VP-01: B
 VP-02: [configurator, kiosk, quality]
 VP-03: multi
-VP-04: false   # обмін з BAS/BAF відкладено рішенням власника 2026-11-16 (PF-10)
 VP-05: true
 VP-06: warn
 VP-07: 1
