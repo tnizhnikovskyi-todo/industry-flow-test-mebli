@@ -21,3 +21,4 @@ access_td_tech_mrp_routing,mrp.routing.workcenter technologist (D-23),mrp.model_
 access_td_tech_mrp_workcenter,mrp.workcenter technologist (D-23),mrp.model_mrp_workcenter,group_technologist,1,1,1,0
 access_td_tech_mrp_wc_capacity,mrp.workcenter.capacity technologist (D-23),mrp.model_mrp_workcenter_capacity,group_technologist,1,1,1,0
 access_td_tech_resource,resource.resource technologist (D-23),resource.model_resource_resource,group_technologist,1,1,1,0
+access_td_tech_ptae,product.template.attribute.exclusion technologist (D-24),product.model_product_template_attribute_exclusion,group_technologist,1,1,1,0
