@@ -363,6 +363,12 @@ class SaleOrderLine(models.Model):
                            pct=round(line.td_size_factor * 100), wn=tmpl.td_width_nominal, hn=tmpl.td_height_nominal))
         else:
             parts.append(_("%(product)s: the price is below the planned cost.", product=name))
+        # the price of the line was changed by hand or discounted: say it, it is often the reason
+        if line.discount:
+            parts.append(_("Discount %(discount)s %%.", discount=round(line.discount, 1)))
+        if line.technical_price_unit and line.currency_id.compare_amounts(line.price_unit, line.technical_price_unit):
+            parts.append(_("The unit price was changed by hand: %(price)s instead of %(computed)s.",
+                           price=line.currency_id.round(line.price_unit), computed=line.currency_id.round(line.technical_price_unit)))
         fixed = sized = 0.0
         names = []
         if line.td_bom_id:

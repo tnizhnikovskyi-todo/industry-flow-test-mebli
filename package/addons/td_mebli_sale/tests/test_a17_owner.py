@@ -70,6 +70,7 @@ class TestA17Sale(TdMebliSaleCommon):
         manager_text = order.with_user(self.sale_manager).td_margin_warning
         self.assertIn('%', manager_text)
         self.assertIn('nominal', manager_text)
+        self.assertIn('changed by hand', manager_text, "a price typed by hand is named as a reason")
         self.assertIn('planned cost', manager_text)
         order.invalidate_recordset(['td_margin_warning'])
         salesman_text = order.with_user(self.salesman).td_margin_warning

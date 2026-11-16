@@ -490,6 +490,12 @@ msgid "Design Visual"
 msgstr "Візуалізація проєкту"
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "Discount %(discount)s %%."
+msgstr "Знижка %(discount)s %%."
+
+#. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_account_payment_term_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_bom__display_name model:ir.model.fields,field_description:td_mebli_sale.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_purchase_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_report_td_mebli_sale_report_contract__display_name model:ir.model.fields,field_description:td_mebli_sale.field_res_partner__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__display_name model:ir.model.fields,field_description:td_mebli_sale.field_sale_report__display_name model:ir.model.fields,field_description:td_mebli_sale.field_stock_rule__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change_wizard__display_name model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_print_wizard__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
@@ -1292,6 +1298,12 @@ msgstr "Строк виготовлення рахується від дня п�
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.res_config_settings_view_form_td_mebli_sale
 msgid "The text of the contract printed from the order (a template to be checked by a lawyer)."
 msgstr "Текст договору, що друкується із замовлення (шаблон до перевірки юристом)."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "The unit price was changed by hand: %(price)s instead of %(computed)s."
+msgstr "Ціну за одиницю змінено вручну: %(price)s замість %(computed)s."
 
 #. module: td_mebli_sale
 #: model:ir.model.constraint,message:td_mebli_sale.constraint_td_mebli_order_change_version_unique
