@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.misc import formatLang
 
 AXES = ('width', 'height', 'depth')
 # AC-018 (tr/security.md §4): cost and margin are seen by the sales manager, the finance and the salesperson only when the
@@ -366,7 +367,8 @@ class SaleOrderLine(models.Model):
         currency = line.currency_id
 
         def money(value):
-            return f"{currency.round(value):,.2f}".replace(',', ' ') + f" {currency.symbol or ''}"
+            # the format of the language of the user (uk_UA: «13 480,00 ₴»), as the amounts in the interface
+            return formatLang(self.env, value, currency_obj=currency)
         # the price of the line was changed by hand or discounted: say it, it is often the reason
         if line.discount:
             parts.append(_("Discount %(discount)s %%.", discount=round(line.discount, 1)))

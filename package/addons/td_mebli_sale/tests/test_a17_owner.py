@@ -71,8 +71,9 @@ class TestA17Sale(TdMebliSaleCommon):
         self.assertIn('%', manager_text)
         self.assertIn('nominal', manager_text)
         self.assertIn('changed by hand', manager_text, "a price typed by hand is named as a reason")
-        self.assertRegex(manager_text, r'changed by hand: [\d ]+\.\d\d \S+ instead of [\d ]+\.\d\d ',
+        self.assertRegex(manager_text, r'changed by hand: \S*[\d\s,.]+[.,]\d\d\s?\S* instead of',
                          "amounts are formatted, not raw floats")
+        self.assertNotRegex(manager_text, r'\d\.\d instead of', "no raw float")
         self.assertIn('planned cost', manager_text)
         order.invalidate_recordset(['td_margin_warning'])
         salesman_text = order.with_user(self.salesman).td_margin_warning
