@@ -3,7 +3,7 @@
     <!-- Import order of the CSV templates of A-13, version 1.2: package/master-data/README.md «Порядок імпорту» (the templates are
          not copied here; 25 steps in every profile). Steps 1-15 are the standard files 01-15, steps 16-25 the files td/ in the
          order of their numbers (td/03b, td/04b: the component roles of the configurator, td_mebli_mrp). The former steps 26-28
-         are deferred by the decision of the owner 2026-11-16 (AI-37; migration 19.0.1.1.7 removes them). -->
+         are excluded from the package by the decision of the owner 2026-11-16 (AI-37, A-11-fix6; migration 19.0.1.1.7 removes them). -->
     <record id="step_01" model="td.mebli.migration.step">
         <field name="sequence">1</field>
         <field name="name">Product categories</field>

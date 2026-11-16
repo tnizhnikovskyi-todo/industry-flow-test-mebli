@@ -242,15 +242,15 @@ class TestMigrationCheck(AccountTestInvoicingCommon):
             header = convert_core.template_header(os.path.join(folder, target))
             self.assertLessEqual(set(spec['columns']), set(header), f"{target}: the mapping fits the template")
 
-    def test_ac_089_no_steps_of_deferred_modules(self):
-        """A-11-fix5 (AI-37): the steps of the deferred templates td/19b-21b are gone; every step names a module of the
+    def test_ac_089_no_steps_of_excluded_modules(self):
+        """A-11-fix5/fix6 (AI-37): the steps of the excluded templates td/19b-21b are gone; every step names a module of the
         package that can be installed."""
         steps = self.env['td.mebli.migration.step'].search([])
         self.assertFalse(steps.filtered(lambda s: s.template in (
             'td/19b_res.partner.csv', 'td/20b_product.product.csv', 'td/21b_hr.employee.csv')))
         for xmlid in ('step_td_19b', 'step_td_20b', 'step_td_21b'):
             self.assertFalse(self.env.ref(f'td_mebli_migration.{xmlid}', raise_if_not_found=False))
-        self.assertFalse(self.env.ref('td_mebli_migration.step_02').note, "no note points to a deferred step")
+        self.assertFalse(self.env.ref('td_mebli_migration.step_02').note, "no note points to an excluded step")
         names = set(steps.mapped('module_name')) - {False, ''}
         known = set(self.env['ir.module.module'].search([('name', 'in', list(names))]).mapped('name'))
         self.assertEqual(names, known)

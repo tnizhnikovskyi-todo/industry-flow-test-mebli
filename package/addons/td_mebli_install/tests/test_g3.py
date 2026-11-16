@@ -117,18 +117,6 @@ class TestPaymentG3(G3InstallCommon):
         self.assertIn('Bank statement of today', body)
         self.assertIn('Bank statement of yesterday', body)
 
-    def test_ac_021_cancel_marks_helper(self):
-        order = self._order()
-        self.env['td.mebli.pay.mark'].create({'order_id': order.id, 'amount': 9000.0, 'reason': 'Bank statement'})
-        order.invalidate_recordset()
-        self.assertTrue(order.td_pay_ok)
-        cancelled = order._td_cancel_pay_marks()  # helper kept for the deferred exchange (AI-37)
-        self.assertEqual(len(cancelled), 1)
-        self.assertTrue(all(mark.cancelled for mark in order.td_pay_mark_ids))
-        order.invalidate_recordset()
-        self.assertFalse(order.td_pay_ok)
-        self.assertFalse(order._td_cancel_pay_marks())  # idempotent: nothing left to cancel
-
     def test_ac_021_reason_required_error_of_spec(self):
         order = self._order()
         Mark = self.env['td.mebli.pay.mark'].with_user(self.fin)

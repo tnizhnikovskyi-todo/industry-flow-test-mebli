@@ -6,7 +6,6 @@ contract_mode: contract
 VP-01: B
 VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, nbu, analog, shop_board]
 VP-03: single
-VP-04: false   # обмін з BAS/BAF відкладено рішенням власника 2026-11-16 (PF-10)
 VP-05: true
 VP-06: warn
 VP-07: 2
