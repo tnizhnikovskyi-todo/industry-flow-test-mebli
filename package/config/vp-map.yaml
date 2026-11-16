@@ -30,13 +30,6 @@ VP-03:
   transform: {single: uninstalled, multi: uninstalled, multi_install_fop: installed}
   applies_if: {VP-01: B}
   ac: [AC-035, AC-036]
-VP-04:                         # ВІДКЛАДЕНО рішенням власника 2026-11-16 (A-12-6, AI-37): обмін з BAS/BAF поза збіркою; модуль td_mebli_bas — у package/deferred/;
-  track: config                #   значення лише false (PF-10); read-back: модуля немає (absent) = uninstalled
-  kind: module
-  deferred: "обмін з BAS/BAF відкладено рішенням власника 2026-11-16"
-  anchor: "ir.module.module:[name=td_mebli_bas]:state"
-  transform: {"true": installed, "false": uninstalled}
-  ac: [AC-021, AC-039, AC-040, AC-041, AC-042, AC-078, AC-109]
 VP-05:
   track: config
   kind: record                 # спроба 3 (config-review №1): умову оплати дає модуль (td_mebli_sale, noupdate, з td_milestone order/install/act);
@@ -44,7 +37,7 @@ VP-05:
   anchor: "account.payment.term:xml_id=td_mebli_sale.payment_term_td_furniture:active"
   transform: {"true": true, "false": false}
   requires_module: td_mebli_sale
-  ac: [AC-019, AC-020, AC-031, AC-042, AC-065]
+  ac: [AC-019, AC-020, AC-031, AC-065]
 VP-06:
   track: code
   kind: td_param
