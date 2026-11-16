@@ -1,5 +1,5 @@
 # ТЕСТОВИЙ наряд A-13 (шаблони майстер-даних), спроба 6: рішення власника 2026-11-16 «BAS прибираємо взагалі» — шаблони td/19b–21b
-# видалено з пакета (A-11-fix6, package/deferred/); README — без «відкладено». Рядки 55–56 flow/decisions.md вносить головна сесія.
+# видалено з пакета (A-11-fix6, package/deferred/); README — без «відкладено». Рядок 55 flow/decisions.md.
 step: A-13
 scope: {kind: package, id: mebli}
 executor: any
