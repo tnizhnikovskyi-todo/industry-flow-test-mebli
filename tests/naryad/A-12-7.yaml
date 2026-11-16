@@ -1,0 +1,37 @@
+# ТЕСТОВИЙ наряд A-12 (конфіг-пакет), спроба 7: рішення власника 2026-11-16 «BAS прибираємо взагалі» — прибрати параметр VP-04 (схема,
+# vp-map, профілі, приклади) і правило PF-10 (+ PF-03, що теж читає VP-04); питання Q-04 з анкети клієнта; залишки в install-log.md.
+# Рядки 55–56 flow/decisions.md вносить головна сесія. where розширено на questionnaire.md (A-09) і банер ALLOCATION.md (A-10).
+step: A-12
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:config-as-code"]
+model: opus
+effort: high
+params: {mode: fix, defects: ["рішення власника 2026-11-16: VP-04, PF-10, Q-04 — прибрати; нумерацію інших VP/Q не змінювати"]}
+inputs:
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons/, sha: HEAD}
+  - {name: decision, from: owner, path: "рішення власника 2026-11-16 (менеджерська сесія)", sha: null}
+where:
+  - package/config/
+  - package/templates/answers.yaml
+  - package/templates/answers.example.yaml
+  - package/demo/answers.yaml
+  - package/demo/profiles/
+  - package/questionnaire.md
+  - package/ALLOCATION.md          # лише банер
+  - docs/industries/mebli/research/AI-DECISIONS.md
+  - tests/open-questions.md
+template: "config-as-code/references/config-package-format.md"
+done: "VP-04, PF-03, PF-10 у конфіг-пакеті й профілях відсутні; apply.py plan усіх профілів без невідомих ключів; Q-04 вилучено; посилань на VP-04 у машинних файлах 0"
+check: {mode: both, how: "apply.py plan 7 профілів + скрипт посилань VP-04 + A-14-9 (apply/повтор/read-back)", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 90, lease_factor: 1.5, cost_limit_usd: 15, context_budget_tokens: 150000}
+client_data: none
+data_rule: "package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-11-fix6-test, branch: flow/A-12-7-test}
+attempt: 7
+returned_from: null
+git: {base: 3c61e8b, head: null, prev_tag: null}
+date: 2026-11-16
