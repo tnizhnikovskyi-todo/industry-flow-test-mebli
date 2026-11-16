@@ -22,12 +22,13 @@ checks:
   - {id: install-helper, status: PASS, msg: "td_mebli_install 19.0.1.1.7: _td_cancel_pay_marks лишено як службовий (кличе лише відкладений AC-042), коментарі/підказка «cancelled» без обміну BAS (+ uk.po); тест перейменовано test_ac_021_cancel_marks_helper"}
   - {id: other, status: PASS, msg: "td_mebli_ua 1.1.4 (опис), td_mebli_cutting 1.1.4 (коментар), td_mebli_sale 1.1.4 (історична міграція 1.1.0 — позначка «відкладено»); AC-COVERAGE.md: банер + AC-039…042, 078, 109 — «відкладено»"}
   - {id: tests-clean, status: PASS, msg: "чисті бази (A-14-8): A — td_mebli_* 327/0 (skipped 1), td_knowledge+mebli 18/0, td_support 15/0, td_home_menu 6/0; light — 327/0, 18/0, 15/0, 6/0; B — 332/0, 18/0, 15/0, 6/0. Було (A-14-7): 349/333/354 — мінус 22 тести відкладених модулів і converter-тесту"}
+  - {id: d23-tech-rights, status: PASS, msg: "додаткове завдання (аудит setup.md, GAPS А): td_mebli_mrp 19.0.1.1.6 — рішення власника 2026-11-16 (права технолога): ACL group_technologist read/write/create без unlink на product.template/product, рядки й значення атрибутів шаблону, mrp.bom(+line), mrp.routing.workcenter, mrp.workcenter(+capacity); технічно + resource.resource (AI-39); D-23; тест test_d23_technologist_prepares_products_and_specifications — PASS (окрема база test-mebli-bas-d23, 5/0), у повному прогоні — A-14-8"}
   - {id: lint, status: PASS, msg: "ruff змінених .py: нових знахідок 0 (test_migration 18 -> 15; full.py — давні B023/I001/F841/RUF059); новий migrations/19.0.1.1.7 — 0"}
-  - {id: versions, status: PASS, msg: "+1 патч: demo 1.1.5, migration 1.1.7, install 1.1.7, ua 1.1.4, cutting 1.1.4, sale 1.1.4"}
-  - {id: where-only, status: PASS, msg: "package/addons/{td_mebli_demo,_migration,_install,_ua,_cutting,_sale}, AC-COVERAGE.md, перенесені td_mebli_bas/_attendance, package/deferred/, AI-DECISIONS (AI-37, AI-38), наряд, звіт; where наряду розширено проти A-11-fix4 на ці модулі"}
+  - {id: versions, status: PASS, msg: "+1 патч: demo 1.1.5, migration 1.1.7, install 1.1.7, ua 1.1.4, cutting 1.1.4, sale 1.1.4, mrp 1.1.6"}
+  - {id: where-only, status: PASS, msg: "package/addons/{td_mebli_demo,_migration,_install,_ua,_cutting,_sale,_mrp}, AC-COVERAGE.md, перенесені td_mebli_bas/_attendance, package/deferred/, AI-DECISIONS (AI-37…AI-39), наряд, звіт; where наряду розширено проти A-11-fix4 на ці модулі"}
 data_sources: ["repo:package/@f48d954", "/home/user/odoo19/src (Odoo 19.0 CE)", "local:test-mebli-bas-a148-{A,light,B,cv} (видалено)"]
 memo: |
-  Рішення AI (власник — вето): AI-37 (що відкладено і як: модулі цілком у package/deferred/, хелпер AC-042 лишився), AI-38 (існуючі бази:
+  Рішення AI (власник — вето): AI-39 (технічні доповнення до рішення власника 2026-11-16 про права технолога: resource.resource; «Виключити для» і видалення — адміністратор); AI-37 (що відкладено і як: модулі цілком у package/deferred/, хелпер AC-042 лишився), AI-38 (існуючі бази:
   спершу штатно видалити td_mebli_bas і td_mebli_attendance, поки код у addons_path; окремої міграції з SQL-чисткою немає — поля належать
   відкладеним модулям). Невпевнений: (1) світлий профіль тепер за модулями = A (різниця лише параметри SPEC §11.3); (2) оновлення бази, де модулі
   вже стояли, не перевірено (бази клієнтів немає) — ризик AI-38; (3) td_mebli_base: коментар групи «Фінансист» («exchange with the accounting»)

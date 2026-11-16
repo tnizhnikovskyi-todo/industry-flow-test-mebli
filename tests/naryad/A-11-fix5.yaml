@@ -20,6 +20,7 @@ where:
   - package/addons/td_mebli_ua/
   - package/addons/td_mebli_cutting/
   - package/addons/td_mebli_sale/
+  - package/addons/td_mebli_mrp/          # D-23 права технолога (аудит setup.md, AI-39)
   - package/addons/AC-COVERAGE.md
   - package/addons/td_mebli_bas/            # перенесено
   - package/addons/td_mebli_attendance/     # перенесено

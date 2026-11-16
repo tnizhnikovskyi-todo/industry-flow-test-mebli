@@ -11,3 +11,13 @@ access_td_mebli_import_template_mrp,td.mebli.import.template technologist,model_
 access_td_mebli_part_rule_technologist,td.mebli.part.rule technologist,model_td_mebli_part_rule,group_technologist,1,1,1,1
 access_td_mebli_part_technologist,td.mebli.part technologist,model_td_mebli_part,group_technologist,1,1,1,1
 access_td_mebli_import_template_technologist,td.mebli.import.template technologist (D-20),model_td_mebli_import_template,group_technologist,1,1,1,1
+access_td_tech_product_template,product.template technologist (D-23),product.model_product_template,group_technologist,1,1,1,0
+access_td_tech_product_product,product.product technologist (D-23),product.model_product_product,group_technologist,1,1,1,0
+access_td_tech_ptal,product.template.attribute.line technologist (D-23),product.model_product_template_attribute_line,group_technologist,1,1,1,0
+access_td_tech_ptav,product.template.attribute.value technologist (D-23),product.model_product_template_attribute_value,group_technologist,1,1,1,0
+access_td_tech_mrp_bom,mrp.bom technologist (D-23),mrp.model_mrp_bom,group_technologist,1,1,1,0
+access_td_tech_mrp_bom_line,mrp.bom.line technologist (D-23),mrp.model_mrp_bom_line,group_technologist,1,1,1,0
+access_td_tech_mrp_routing,mrp.routing.workcenter technologist (D-23),mrp.model_mrp_routing_workcenter,group_technologist,1,1,1,0
+access_td_tech_mrp_workcenter,mrp.workcenter technologist (D-23),mrp.model_mrp_workcenter,group_technologist,1,1,1,0
+access_td_tech_mrp_wc_capacity,mrp.workcenter.capacity technologist (D-23),mrp.model_mrp_workcenter_capacity,group_technologist,1,1,1,0
+access_td_tech_resource,resource.resource technologist (D-23),resource.model_resource_resource,group_technologist,1,1,1,0

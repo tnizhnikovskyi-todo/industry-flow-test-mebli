@@ -56,3 +56,33 @@ class TestD20Technologist(TdMebliCommon):
                                     'mapping_json': {'part': 'name'}})
         template.write({'name': 'CAD export 2'})
         template.unlink()
+
+    def test_d23_technologist_prepares_products_and_specifications(self):
+        """D-23 (A-11-fix5; decision of the owner 2026-11-16, rights of the technologist): ROLE-01 creates and changes the
+        materials and the parametric product (template, attribute lines, extra prices), the work centers, the
+        specification with its lines and operations — the standard «Manufacturing user» only reads them. Nothing of it is
+        deleted by the technologist: deleting stays with the administrator."""
+        env = self.env(user=self.tech)
+        board = env['product.product'].create({'name': 'D-23 board', 'type': 'consu', 'is_storable': True})
+        board.product_tmpl_id.write({'description_purchase': 'board 18 mm'})
+        attribute = self.env['product.attribute'].create({'name': 'D-23 decor', 'value_ids': [
+            (0, 0, {'name': 'White'}), (0, 0, {'name': 'Oak'})]})
+        product = env['product.template'].create({'name': 'D-23 wardrobe', 'type': 'consu', 'attribute_line_ids': [
+            (0, 0, {'attribute_id': attribute.id, 'value_ids': [(6, 0, attribute.value_ids.ids)]})]})
+        ptav = product.attribute_line_ids.product_template_value_ids[:1]
+        ptav.price_extra = 150.0
+        center = env['mrp.workcenter'].create({'name': 'D-23 cutting', 'code': 'D23'})
+        center.write({'time_efficiency': 90.0})
+        bom = env['mrp.bom'].create({
+            'product_tmpl_id': product.id, 'product_qty': 1.0,
+            'bom_line_ids': [(0, 0, {'product_id': board.id, 'product_qty': 2.0})],
+            'operation_ids': [(0, 0, {'name': 'Cut', 'workcenter_id': center.id, 'time_cycle_manual': 10.0})]})
+        bom.bom_line_ids.product_qty = 3.0
+        bom.operation_ids.time_cycle_manual = 12.0
+        self.assertEqual((bom.bom_line_ids.product_qty, ptav.price_extra, bom.operation_ids.time_cycle_manual),
+                         (3.0, 150.0, 12.0))
+        for record in (bom.operation_ids, bom.bom_line_ids, bom, center, product.attribute_line_ids, product, board):
+            with self.assertRaises(AccessError):
+                record.unlink()
+        with self.assertRaises(AccessError):
+            self.env(user=self.mrp_user)['mrp.bom'].create({'product_tmpl_id': product.id})
