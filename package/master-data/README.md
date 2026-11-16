@@ -28,7 +28,7 @@
 | `td/04b_product.attribute.value.csv` | `product.attribute.value` (поля `td_component_product_id`, `td_edge_thickness`) | 6 | №7, AC-011; декор → плита корпусу, кромка → товщина, мм (CHECKS №7) |
 | `td/06b_product.template.csv` | `product.template` (поля `td_*`) | 2 | №7; параметричний виріб, розміри й межі |
 | `td/12b_mrp.routing.workcenter.csv` | `mrp.routing.workcenter` (поля `td_*`) | 3 | №9; база норми, норма, розцінка (порожньо), контрольна точка |
-| `td/16_td.mebli.part.rule.csv` | `td.mebli.part.rule` | 3 | №8; правила деталей виробу: розмір деталі = `a·Ш + b·В + c·Г + const` — довжина `len_w`, `len_h`, `len_d`, `len_const`, ширина `wid_w`, `wid_h`, `wid_d`, `wid_const` (усі 8 коефіцієнтів, A-17 №5; приклад `wid_w = 0.5` — полотно дверей-купе на пів ширини шафи). Умовних деталей, кількості від розміру, округлень у формулі немає — беклог REQ-002 |
+| `td/16_td.mebli.part.rule.csv` | `td.mebli.part.rule` | 3 | №8; правила деталей виробу: розмір деталі = `a·Ш + b·В + c·Г + const` — довжина `len_w`, `len_h`, `len_d`, `len_const`, ширина `wid_w`, `wid_h`, `wid_d`, `wid_const` (усі 8 коефіцієнтів, A-17 №5; приклад `wid_w = 0.5` — полотно дверей-купе на пів ширини шафи). Умовних деталей, кількості від розміру, округлень у формулі немає — беклог `REQ-A17-owner-OQ-02` |
 | `td/01b_product.category.csv` | `product.category` (поле `td_warranty_months`) | 1 | №3, AC-111; строк гарантії категорії — **порожньо** до висновку юриста (№17), заповнює клієнт |
 | `td/14b_maintenance.equipment.csv` | `maintenance.equipment` (поле `td_workcenter_id`) | 2 | №11, AC-076; верстат ↔ дільниця |
 | `td/17_td.mebli.accrual.reason.csv` | `td.mebli.accrual.reason` | 3 | №14, AC-107; причини премій і штрафів (суми порожні) |
