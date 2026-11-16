@@ -1,0 +1,113 @@
+// Owner remark 2026-11-16 (A-17 №17): Enterprise-like look of the backend, own rules only, active with html.td_ee_look
+// (system parameter td_home_menu.ee_look). Light navbar, the icon and the name of the app on the left; calmer buttons,
+// status bar, smart buttons and form paddings.
+html.td_ee_look {
+    $td-text: #1f2937;
+    $td-muted: #6b7280;
+    $td-line: #e5e7eb;
+
+    .o_main_navbar {
+        --NavBar-entry-color: #{$td-text};
+        --NavBar-brand-color: #{$td-text};
+        --NavBar-entry-backgroundColor: transparent;
+        --NavBar-entry-backgroundColor--hover: #f3f4f6;
+        --NavBar-entry-backgroundColor--focus: #f3f4f6;
+        --NavBar-entry-backgroundColor--active: #eef2f7;
+        --NavBar-entry-color--active: #{$td-text};
+        background: #ffffff;
+        border-bottom: 1px solid $td-line;
+        color: $td-text;
+
+        // the entries are as high as the navbar: a white entry would hide its bottom line
+        .o_menu_systray,
+        .o_menu_systray .bg-inherit,
+        .o_nav_entry,
+        .dropdown-toggle {
+            background-color: transparent;
+            &:hover {
+                background-color: #f3f4f6;
+            }
+        }
+
+        .o_menu_brand {
+            font-weight: 600;
+            padding-left: 0.25rem;
+        }
+
+        .td_app_icon {
+            align-self: center;
+            width: 26px;
+            height: 26px;
+            margin-left: 0.25rem;
+            border-radius: 6px;
+        }
+
+        .o_menu_toggle,
+        .td_home_menu_toggle_mobile,
+        .o_navbar_apps_menu .dropdown-toggle {
+            color: $td-text;
+        }
+    }
+
+    // control panel and breadcrumbs: lighter, more air
+    .o_control_panel {
+        border-bottom: 1px solid $td-line;
+        .breadcrumb-item.active,
+        .o_last_breadcrumb_item {
+            font-weight: 600;
+        }
+    }
+
+    // form: grey background around a white sheet with a soft shadow
+    .o_form_view:not(.o_field_highlight) {
+        .o_form_sheet_bg {
+            background: #f6f7f9;
+        }
+        .o_form_sheet {
+            border: 1px solid $td-line;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(16, 24, 40, 0.06);
+        }
+    }
+
+    // status bar of the form: flat chevrons
+    .o_form_statusbar {
+        border-bottom: 1px solid $td-line;
+        .o_statusbar_status .o_arrow_button {
+            font-weight: 500;
+        }
+        .o_statusbar_buttons .btn-secondary {
+            background: #ffffff;
+            border-color: #d1d5db;
+            color: $td-text;
+        }
+    }
+
+    // smart buttons: rounded cards
+    .oe_button_box .oe_stat_button {
+        border-radius: 6px;
+        .o_stat_text {
+            color: $td-muted;
+        }
+        .o_stat_value {
+            color: $td-text;
+        }
+    }
+
+    // buttons
+    .btn {
+        border-radius: 6px;
+    }
+
+    // lists: lighter header and row separators
+    .o_list_renderer .o_list_table {
+        thead th {
+            color: $td-muted;
+            font-weight: 600;
+            background: #ffffff;
+        }
+        tbody tr.o_data_row > td {
+            border-color: #f0f1f3;
+        }
+    }
+}
