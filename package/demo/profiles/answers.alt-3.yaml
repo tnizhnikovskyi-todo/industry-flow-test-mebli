@@ -5,7 +5,6 @@ contract_mode: unset
 VP-01: B
 VP-02: [configurator, kiosk, quality]
 VP-03: multi
-VP-04: true
 VP-05: true
 VP-06: warn
 VP-07: 1

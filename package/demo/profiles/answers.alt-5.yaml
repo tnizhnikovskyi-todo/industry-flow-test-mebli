@@ -5,7 +5,6 @@ contract_mode: unset
 VP-01: A
 VP-02: [configurator, offcut, cutting_batch, kiosk, quality, label_scan, change_sign, nbu, analog, shop_board]
 VP-03: single
-VP-04: true
 VP-05: true
 VP-06: warn
 VP-07: 2

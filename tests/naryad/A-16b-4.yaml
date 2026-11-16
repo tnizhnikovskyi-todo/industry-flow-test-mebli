@@ -1,0 +1,28 @@
+# ТЕСТОВИЙ наряд A-16b-4 (спроба 4, вимога власника через менеджерську сесію): посібник «Налаштування довідників і товарів» package/docs/user-guide/setup.md з кадрами під роллю, що налаштовує (адміністратор / технолог); таблиця покриття (г) «налаштування довідників» в INDEX і скрипт reference/check_setup.py (перелік з коду td_*), посилання з admin.md і посібників ролей.
+step: A-16b
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:user-guide-builder@0.4.0"]
+model: opus
+effort: high
+inputs:
+  - {name: README.md, from: A-15, path: package/demo/README.md, sha: HEAD}
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: answers.yaml, from: A-09, path: package/templates/answers.yaml, sha: HEAD}
+  - {name: master-data, from: A-13, path: package/master-data, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons, sha: HEAD}
+where: [package/docs/user-guide/, docs/industries/mebli/research/AI-DECISIONS.md, package/demo/defects.md]   # defects.md — запис D-22 (як extra_allowed A-16b-3)
+template: "за SKILL.md скіла + вимога власника (setup.md, таблиця (г))"
+done: "setup.md з розділом на кожен довідник td_* і кожну стандартну форму, яку розширює td_*; кадри під адміністратором/технологом; INDEX (г) з check_setup.py — пропусків 0; check_guides.py FAIL 0; check_messages.py missing 0; незалежний аудит (кут «налаштування з нуля») без blocker/major"
+check: {mode: both, how: "check_guides.py + reference/check_messages.py + reference/check_setup.py", audit_every_n: 10}
+review: {checklists: [user-guide.md], max_rounds: 5}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 20, context_budget_tokens: 300000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-17-5-test, branch: flow/A-16b-4-test}
+attempt: 4
+returned_from: null
+git: {base: c81a85f, head: null, prev_tag: null}
+date: 2026-11-16

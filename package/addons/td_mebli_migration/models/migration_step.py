@@ -18,8 +18,7 @@ class TdMebliMigrationStep(models.Model):
     box = fields.Selection([('A', 'A'), ('B', 'B')], string='Box', default='A', required=True)
     module_name = fields.Char(string='Module',
                               help="Module of the package that adds the fields td_* of the template (files td/ of A-13); "
-                                   "the step is available only when it is installed (e.g. td_mebli_bas is not in the "
-                                   "light profile).")
+                                   "the step is available only when it is installed.")
     note = fields.Char(string='Note', translate=True)
     model_installed = fields.Boolean(string='Model Installed', compute='_compute_model_installed')
 
