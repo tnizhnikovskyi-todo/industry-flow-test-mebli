@@ -28,6 +28,7 @@
 | AC-077 | кіоск відвідувань за PIN (у всіх коробках, крім light — SPEC §11.4) | `80_settings.yaml`: `td_config.settings_attendance_pin` (`applies_if` VP-01 ∈ A, B) | settings |
 | AC-082, AC-084 | стандарт (резерв, аналіз закупівель) | лише модулі `stock`, `mrp`, `purchase` | — |
 | AC-095 | графік бригад у проєкті «Монтажі» | `td_config.project_install` (календар задач — стандарт) | record |
+| AC-140 | стадії виїздів і дата виїзду проєкту «Монтажі» (A-17 №16, AI-47) | `td_config.project_install`: `td_install_project: true` (`td_mebli_install`: стадії `stage_install_*`, дата з `commitment_date`) | record |
 | AC-116 | споживання специфікацій (VP-17) | `30_mrp_stock.yaml`: `td_config.default_bom_consumption` (`ir.default` поля `mrp.bom.consumption`) | record |
 | AC-117 | онлайн-підпис пропозиції | `80_settings.yaml`: `td_config.settings_portal_sign` (`portal_confirmation_sign`) | settings |
 | AC-N.01 | мова uk_UA | установка бази з `--load-language=uk_UA` (`manifest.yaml: install.language`); переклади `td_*` — A-11 | — |
@@ -177,6 +178,8 @@ A-12-6 і A-12-7 (`fix`, рішення власника 2026-11-16, перед�
 | VP-04 | default `true`; профілі A/B/alt-2…5 — `true`, light — `false` | лише `false` (PF-10) | параметра немає: прибрано зі схеми `answers.yaml`, `vp-map.yaml`, `answers.example.yaml`, `demo/answers.yaml`, `demo/profiles/*`; правила PF-03 і PF-10 прибрано; `ac` VP-05 без AC-042; питання Q-04 анкети вилучено (`package/questionnaire.md` 1.1) |
 | Перевірка | — | A-14-8 | чисті бази A / light / B, apply/повтор/compare/read-back — A-14-9 (`tests/reports/A-14-9.md`); `apply.py plan` усіх 7 профілів — без невідомих ключів; відповідь зі старим `VP-04` — `unknown_keys: [VP-04]` (не застосовується) |
 
+
+A-12-8 (`fix`, зауваження власника A-17 №16, рішення власника 2026-11-16, `flow/decisions.md` рядок 58): `td_config.project_install` — `values` + `td_install_project: true`, `requires_module: td_mebli_install` (модуль у всіх профілях); стадії проєкту «Запланувати / Заплановано / Змонтовано / Акт підписано / Скасовано» — дані `td_mebli_install` (noupdate), прапорець їх прив'язує; повторне застосування — `unchanged`. Перевірка apply/повтор/compare/read-back — A-14-10.
 ## Відкриті питання
 
 - Скілів `odoo19-mvp-build:config-spec`, `odoo19-mvp-build:config-review`, `boost:odoo19-lint`, `boost:source-check` у сесії немає: зміст CONFIG.md складено напряму з SPEC/ALLOCATION; `config-review` і `lint` — замінники A-14 (`tests/reports/A-14.md`) і самоперевірка спроби 3 (звіт A-12-3).
