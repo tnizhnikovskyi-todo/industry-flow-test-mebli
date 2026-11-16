@@ -47,7 +47,8 @@ class TestA17Sale(TdMebliSaleCommon):
         new = line.new({'product_id': self.cabinet.id, 'td_width': 1000, 'td_height': 700, 'td_depth': 450},
                        origin=line)
         self.assertFalse(new._onchange_td_dims_warning())
-        self.assertEqual(line.td_dims_range.count('-'), 3)
+        self.assertEqual(line.td_dims_range.count('–'), 3)
+        self.assertIn('400–1200', line.td_dims_range)
 
     def test_07_save_error_names_every_axis(self):
         with self.assertRaises(ValidationError) as error:

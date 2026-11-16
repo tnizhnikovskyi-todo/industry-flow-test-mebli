@@ -109,14 +109,15 @@ class SaleOrderLine(models.Model):
     @api.depends('product_id')
     @api.depends_context('lang')
     def _compute_td_dims_range(self):
-        """A-17 №7: the limits of the product next to the size columns: «W 800-2060 · H 2000-2700 · D 450-700»."""
+        """A-17 №7: the limits of the product next to the size columns, short: «W 800–2060 · H 2000–2700 · D 450–700»."""
         for line in self:
             tmpl = line.product_id.product_tmpl_id
             if not line.td_is_parametric:
                 line.td_dims_range = False
                 continue
+            short = {'width': self.env._("W"), 'height': self.env._("H"), 'depth': self.env._("D")}
             line.td_dims_range = ' · '.join(
-                f"{line._td_axis_label(axis)} {tmpl[f'td_{axis}_min']}-{tmpl[f'td_{axis}_max']}" for axis in AXES)
+                f"{short[axis]} {tmpl[f'td_{axis}_min']}–{tmpl[f'td_{axis}_max']}" for axis in AXES)
 
     @api.onchange('product_id', 'product_custom_attribute_value_ids', 'td_width', 'td_height', 'td_depth')
     def _onchange_td_dims_warning(self):

@@ -454,6 +454,12 @@ msgid "Cutting at the Distributor"
 msgstr "Порізка в дистриб'ютора"
 
 #. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "D"
+msgstr "Г"
+
+#. module: td_mebli_sale
 #: model_terms:ir.ui.view,arch_db:td_mebli_sale.view_order_board_search_td_mebli
 msgid "Date at Risk"
 msgstr "Дата під загрозою"
@@ -549,6 +555,12 @@ msgstr "Меблі: прогнозні дати замовлень"
 #: code:addons/td_mebli_sale/models/sale_order_line.py:0
 msgid "Generate the specification first."
 msgstr "Спершу сформуйте специфікацію."
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "H"
+msgstr "В"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields,field_description:td_mebli_sale.field_sale_order_line__td_height
@@ -1346,6 +1358,12 @@ msgstr "Введіть назву виробу..."
 #: model:ir.model.fields,field_description:td_mebli_sale.field_td_mebli_order_change__version model_terms:ir.ui.view,arch_db:td_mebli_sale.sale_order_portal_content_td_changes
 msgid "Version"
 msgstr "Версія"
+
+#. module: td_mebli_sale
+#. odoo-python
+#: code:addons/td_mebli_sale/models/sale_order_line.py:0
+msgid "W"
+msgstr "Ш"
 
 #. module: td_mebli_sale
 #: model:ir.model.fields.selection,name:td_mebli_sale.selection__sale_order__td_stage__confirmed
