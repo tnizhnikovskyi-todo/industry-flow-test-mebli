@@ -1,8 +1,7 @@
-# Конфіг-пакет пакета mebli (A-12-6: обмін з BAS/BAF відкладено рішенням власника 2026-11-16 — td_mebli_bas, td_mebli_attendance прибрано, VP-04 = false, PF-10; раніше A-12-fix, config-as-code 0.4.0: + §27/§27а td_home_menu (лише ce), td_support, td_knowledge, td_mebli_knowledge; раніше — A-12, config-as-code (версія 0.3.1), спроба 3, режим fix — модулі A-11 @ 4e96a56; спроба 2 — @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
+# Конфіг-пакет пакета mebli (A-12-7: обмін з BAS/BAF виключено рішенням власника 2026-11-16 — параметр VP-04 і правила PF-03, PF-10 прибрано, номери інших VP/PF не змінено; A-12-6 — модулі td_mebli_bas, td_mebli_attendance прибрано; раніше A-12-fix, config-as-code 0.4.0: + §27/§27а td_home_menu (лише ce), td_support, td_knowledge, td_mebli_knowledge; раніше — A-12, config-as-code (версія 0.3.1), спроба 3, режим fix — модулі A-11 @ 4e96a56; спроба 2 — @ 4e0fdda). Формат — config-as-code/references/config-package-format.md.
 # Порядок модулів = порядок установки (топологічний за depends; перевірено скриптом за __manifest__.py Odoo 19.0 CE @40e9be2b і package/addons @4e0fdda: порушень 0).
-# when: — умова за answers.yaml (профіль коробки VP-01 / VP-03 / VP-04); без when — у всіх профілях light / A / B.
+# when: — умова за answers.yaml (профіль коробки VP-01 / VP-03); без when — у всіх профілях light / A / B.
 # Профіль light = A за складом модулів (різниця — параметри SPEC §11.3, preflight); профіль B = A + td_mebli_multico (VP-03=multi_install_fop) + feature-групи VP-02.
-# A-12-6: обмін з BAS/BAF (td_mebli_bas, td_mebli_attendance) відкладено рішенням власника 2026-11-16 — модулі в package/deferred/, у списках нижче їх немає; VP-04 = false (PF-10).
 # td_mebli_demo клієнтам не ставиться (лише A-15).
 format: 2
 odoo: "19.0"
@@ -137,12 +136,6 @@ preflight:
     require: "a['edition'] == 'ce'"
     on_violation: error
     message: "Легкий тариф — лише CE (SPEC §11.3, BOX §1а): edition має бути ce."
-  - id: PF-03
-    rule: "VP-01 = light ⇒ VP-04 = false"
-    when: "a['VP-01'] == 'light'"
-    require: "a['VP-04'] is False"
-    on_violation: error
-    message: "Легкий тариф — без обміну з обліковою системою (SPEC §11.3): VP-04 має бути false (default схеми — false; обмін з BAS відкладено рішенням власника 2026-11-16, PF-10)."
   - id: PF-04
     rule: "VP-01 = light ⇒ VP-05 = false"
     when: "a['VP-01'] == 'light'"
@@ -179,12 +172,6 @@ preflight:
     require: "'offcut' in (a['VP-02'] or [])"
     on_violation: warn
     message: "VP-12 (мінімальний обрізок) без функції offcut у VP-02 нічого не змінює (SPEC §11.3, AC-059)."
-  - id: PF-10
-    rule: "VP-04 = false (обмін з BAS/BAF відкладено рішенням власника 2026-11-16)"
-    when: "True"
-    require: "a['VP-04'] is False"
-    on_violation: error
-    message: "Обмін з BAS/BAF відкладено рішенням власника 2026-11-16 (A-12-6, AI-37): модуля td_mebli_bas у збірці немає (package/deferred/). VP-04 має бути false; true — лише після окремого рішення власника."
 data_files:
   - data/15_accounting.yaml
   - data/20_sale_project.yaml

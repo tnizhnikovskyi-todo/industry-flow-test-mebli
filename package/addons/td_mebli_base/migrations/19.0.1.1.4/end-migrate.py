@@ -14,7 +14,7 @@ from odoo.modules.module import get_module_path
 _logger = logging.getLogger(__name__)
 
 EXCLUDED_MODULES = ('td_mebli_bas', 'td_mebli_attendance')
-# the tables of the own models of td_mebli_bas (td.mebli.bas.channel, .batch, .log); td_mebli_attendance had a wizard only
+# the tables of its own models (exchange channel, batch, log); td_mebli_attendance had a wizard only
 EXCLUDED_TABLES = ('td_mebli_bas_log', 'td_mebli_bas_batch', 'td_mebli_bas_channel')
 
 
