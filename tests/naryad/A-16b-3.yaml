@@ -1,0 +1,29 @@
+# ТЕСТОВИЙ наряд A-16b-3 (спроба 3, refresh): перезняти кадри головного екрана після A-11-fix4 (стенд A-15-full-3 dd1c949), SHA стенда в INDEX і SHOOT-LOG; (збірка, 0.4.0): інструкції користувача зі знімками (Playwright/Chromium за замовчуванням). Перед кроком: A-15 refresh, якщо мітка SHA у demo/README.md і scenarios.md застаріла.
+step: A-16b
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:user-guide-builder@0.4.0"]
+model: sonnet
+effort: medium
+inputs:
+  - {name: README.md, from: A-15, path: package/demo/README.md, sha: HEAD}
+  - {name: scenarios.md, from: A-16, path: package/demo/scenarios.md, sha: HEAD}
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: answers.yaml, from: A-09, path: package/templates/answers.yaml, sha: HEAD}
+  - {name: CONFIG.md, from: A-12, path: package/config/CONFIG.md, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons, sha: HEAD}
+where: [package/docs/user-guide/, docs/industries/mebli/research/AI-DECISIONS.md]
+template: "за SKILL.md скіла"
+done: "посібники ролей і адміністратора, картки, INDEX із трьома таблицями покриття (заявлене / розроблене / налаштування й експлуатація, §26а) і SHA; check_guides.py без FAIL (package/demo/defects.md і AI-DECISIONS — через extra_allowed)"
+check: {mode: both, how: "flow-autocheck: checks/A-16b.yaml + скрипти скіла", audit_every_n: 10}
+review: {checklists: [user-guide.md], max_rounds: 2}   # незалежний аудит покриття (п. 11 user-guide.md) до done
+limits: {max_attempts: 2, timeout_min: 240, lease_factor: 1.5, cost_limit_usd: 12, context_budget_tokens: 150000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-16-6-test, branch: flow/A-16b-3-test}
+attempt: 3
+returned_from: null
+git: {base: fcca4cc, head: null, prev_tag: null}
+date: 2026-11-16
