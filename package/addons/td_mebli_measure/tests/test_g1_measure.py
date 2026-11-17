@@ -41,8 +41,9 @@ class TestG1Measure(TransactionCase):
         self.assertEqual(wizard.with_context(lang='uk_UA').no_slot_text,
                          "Немає вільних вікон за обраний період — збільште кількість днів або оберіть іншого замірника")
         self.assertEqual(env['calendar.event'].search_count([]), events, "no meeting is created")
-        # free windows exist again when the period grows past the busy days
-        wizard.days = 6
+        # free windows exist again when the period grows past the busy days (9 days: past a weekend whatever the weekday
+        # of today — with 6 days the test failed on Tuesdays: the free days after the busy ones were Saturday and Sunday)
+        wizard.days = 9
         wizard._td_fill_slots()
         self.assertTrue(wizard.slot_ids)
         self.assertFalse(wizard.no_slot_text)

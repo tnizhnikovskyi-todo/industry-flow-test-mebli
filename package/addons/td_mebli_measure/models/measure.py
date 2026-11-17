@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import AccessError
 
 
 class TdMebliMeasure(models.Model):
@@ -347,6 +348,9 @@ class CalendarEvent(models.Model):
         the sheet of this meeting is opened, or created with the opportunity of the meeting and the measurer; the order
         stays empty — the salesperson chooses it (AC-006, decision of the owner 2026-11-16)."""
         self.ensure_one()
+        # the button is shown to the measurers only; the server checks it too (the method is callable by RPC)
+        if not self.env.user.has_group('td_mebli_measure.group_td_mebli_measurer'):
+            raise AccessError(self.env._("Only a measurer starts the measurement from the meeting."))
         # sudo: read only — is there a sheet of this meeting already (also one of another measurer: no double)
         sheet = self.env['td.mebli.measure'].sudo().search([('event_id', '=', self.id)], limit=1)
         if not sheet:

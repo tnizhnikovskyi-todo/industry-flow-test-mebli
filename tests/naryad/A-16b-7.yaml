@@ -1,0 +1,30 @@
+# ТЕСТОВИЙ наряд A-16b-7: зауваження власника A-17 (рішення власника 2026-11-16, flow/decisions.md рядок 58): №12–14 (D-31…D-33) — «Заплануйте монтаж», «Мій календар» замірника (роль, пароль), «Дошка замовлень»;
+# рядок «Вхід:» у шапці 8 посібників ролей (доповнення координатора); кроки й кадри під ролями для №6–9, 11, 15–17; межі параметричного виробу без коду (setup.md); INDEX; закриття D-25…D-35.
+step: A-16b
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:user-guide-builder@0.4.0"]
+model: opus
+effort: high
+inputs:
+  - {name: README.md, from: A-15, path: package/demo/README.md, sha: HEAD}
+  - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
+  - {name: answers.yaml, from: A-09, path: package/templates/answers.yaml, sha: HEAD}
+  - {name: master-data, from: A-13, path: package/master-data, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons, sha: HEAD}
+  - {name: decision, from: owner, path: "рішення власника 2026-11-16 (зауваження A-17), flow/decisions.md рядок 58", sha: null}
+where: [package/docs/user-guide/, docs/industries/mebli/research/AI-DECISIONS.md, package/demo/defects.md, observations/]   # defects.md — закриття D-25…D-35
+template: "за SKILL.md скіла + вимога власника (setup.md, таблиця (г))"
+done: "№12–14 дописано в menedzher.md / zamirnyk.md / nachalnyk-vyrobnytstva.md (+ картки); у перших 8 рядках кожного з 8 посібників ролей — рядок «Вхід: `<логін>`; пароль — змінна `DEMO_USERS_PASSWORD`» без пароля; нові кроки й кадри під ролями для №6–9, 11, 16, 17; setup.md — межі без коду (беклог REQ); check_guides FAIL 0 (з --stand-sha), check_messages missing 0, check_setup пропусків 0; незалежний аудит ≤5 кіл"
+check: {mode: both, how: "check_guides.py + reference/check_messages.py + reference/check_setup.py", audit_every_n: 10}
+review: {checklists: [user-guide.md], max_rounds: 5}
+limits: {max_attempts: 2, timeout_min: 300, lease_factor: 1.5, cost_limit_usd: 20, context_budget_tokens: 300000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-16-9-test, branch: flow/A-16b-7-test}
+attempt: 7
+returned_from: A-17
+git: {base: null, head: null, prev_tag: null}
+date: 2026-11-16
