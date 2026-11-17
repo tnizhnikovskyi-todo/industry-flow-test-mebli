@@ -106,3 +106,4 @@
 | package/docs/user-guide/img/menedzher/SC-01-13.png | 52e16a7d86a006672df3b9ed1f2d428e4dfd9b1c | 2026-11-16 | salon@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
 | package/docs/user-guide/img/menedzher/SC-01-12.png | 52e16a7d86a006672df3b9ed1f2d428e4dfd9b1c | 2026-11-16 | admin | http://127.0.0.1:8089 (тур A-16-9 T-17) |
 | package/docs/user-guide/img/zamirnyk/SC-07-5.png | 52e16a7d86a006672df3b9ed1f2d428e4dfd9b1c | 2026-11-16 | measure@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
+| package/docs/user-guide/img/zamirnyk/SC-07-6.png | 52e16a7d86a006672df3b9ed1f2d428e4dfd9b1c | 2026-11-17 | measure@demo-fabryka.example | http://127.0.0.1:8089 (тур A-16-9 T-17) |
