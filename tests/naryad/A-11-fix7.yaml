@@ -1,6 +1,6 @@
 # ТЕСТОВИЙ наряд A-11 (контур коду, fix7): зауваження власника на гейті A-17 («Повернути»), рішення власника 2026-11-16
 # (зауваження A-17), flow/decisions.md рядок 58 (вносить головна сесія). Джерело — 16 рядків tests/open-questions.md гілки
-# claude/eager-heisenberg-rm7c4i (128f038…0250f33). Перший коміт гілки — повернення гейта A-17: D-25…D-35 у package/demo/defects.md.
+# claude/eager-heisenberg-rm7c4i (2410a89…0250f33). Перший коміт гілки — повернення гейта A-17: D-25…D-35 у package/demo/defects.md.
 # Далі: A-12-8 -> A-13-7 -> A-14-10 -> A-15-full-6 -> A-16-9 -> A-16b-7 -> A-17-9.
 step: A-11
 scope: {kind: package, id: mebli}

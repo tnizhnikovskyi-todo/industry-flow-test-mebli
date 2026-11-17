@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase, tagged
 
 
@@ -71,3 +72,8 @@ class TestA17Measure(TransactionCase):
         self.assertNotIn('action_td_start_measure', arch)
         action = self.env.ref('td_mebli_measure.td_mebli_measure_my_calendar_action')
         self.assertIn('td_measure_start', action.context)
+        event = self.env['calendar.event'].create({
+            'name': 'Measurement', 'start': datetime(2026, 12, 1, 9), 'stop': datetime(2026, 12, 1, 10),
+            'opportunity_id': self.lead.id, 'partner_ids': [(6, 0, self.salesman.partner_id.ids)]})
+        with self.assertRaises(AccessError):
+            event.with_user(self.salesman).action_td_start_measure()

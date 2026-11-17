@@ -492,6 +492,12 @@ msgid "Number of messages with delivery error"
 msgstr "Кількість повідомлень з помилкою доставки"
 
 #. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "Only a measurer starts the measurement from the meeting."
+msgstr "Почати замір із зустрічі може лише замірник."
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__lead_id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__lead_id
 msgid "Opportunity"
 msgstr "Нагода"
