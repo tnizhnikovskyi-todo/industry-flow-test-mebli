@@ -56,7 +56,7 @@
                 <field name="td_depth" optional="show" readonly="not td_is_parametric" width="95px" groups="td_mebli_base.group_feature_configurator"/>
                 <field name="td_size_factor" optional="hide" readonly="1" groups="td_mebli_base.group_feature_configurator"/>
                 <!-- A-17 №7: the limits of the product next to the sizes -->
-                <field name="td_dims_range" optional="show" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_dims_range" optional="show" width="170px" groups="td_mebli_base.group_feature_configurator"/>
                 <field name="td_below_cost" column_invisible="True"/>
             </xpath>
             <!-- A-17 №8: a line sold below its planned cost is red -->

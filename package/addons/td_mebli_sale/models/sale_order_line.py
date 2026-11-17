@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.misc import formatLang
 
 AXES = ('width', 'height', 'depth')
 # AC-018 (tr/security.md §4): cost and margin are seen by the sales manager, the finance and the salesperson only when the
@@ -109,14 +110,15 @@ class SaleOrderLine(models.Model):
     @api.depends('product_id')
     @api.depends_context('lang')
     def _compute_td_dims_range(self):
-        """A-17 №7: the limits of the product next to the size columns: «W 800-2060 · H 2000-2700 · D 450-700»."""
+        """A-17 №7: the limits of the product next to the size columns, short: «W 800–2060 · H 2000–2700 · D 450–700»."""
         for line in self:
             tmpl = line.product_id.product_tmpl_id
             if not line.td_is_parametric:
                 line.td_dims_range = False
                 continue
+            short = {'width': self.env._("W"), 'height': self.env._("H"), 'depth': self.env._("D")}
             line.td_dims_range = ' · '.join(
-                f"{line._td_axis_label(axis)} {tmpl[f'td_{axis}_min']}-{tmpl[f'td_{axis}_max']}" for axis in AXES)
+                f"{short[axis]} {tmpl[f'td_{axis}_min']}–{tmpl[f'td_{axis}_max']}" for axis in AXES)
 
     @api.onchange('product_id', 'product_custom_attribute_value_ids', 'td_width', 'td_height', 'td_depth')
     def _onchange_td_dims_warning(self):
@@ -362,6 +364,17 @@ class SaleOrderLine(models.Model):
                            pct=round(line.td_size_factor * 100), wn=tmpl.td_width_nominal, hn=tmpl.td_height_nominal))
         else:
             parts.append(_("%(product)s: the price is below the planned cost.", product=name))
+        currency = line.currency_id
+
+        def money(value):
+            # the format of the language of the user (uk_UA: «13 480,00 ₴»), as the amounts in the interface
+            return formatLang(self.env, value, currency_obj=currency)
+        # the price of the line was changed by hand or discounted: say it, it is often the reason
+        if line.discount:
+            parts.append(_("Discount %(discount)s %%.", discount=round(line.discount, 1)))
+        if line.technical_price_unit and line.currency_id.compare_amounts(line.price_unit, line.technical_price_unit):
+            parts.append(_("The unit price was changed by hand: %(price)s instead of %(computed)s.",
+                           price=money(line.price_unit), computed=money(line.technical_price_unit)))
         fixed = sized = 0.0
         names = []
         if line.td_bom_id:
@@ -370,13 +383,9 @@ class SaleOrderLine(models.Model):
                 parts.append(_("Do not get cheaper with a smaller size: %(names)s; boards, edge banding and their "
                                "operations follow the size.", names=', '.join(names[:6])))
         if with_amounts:
-            currency = line.currency_id
             cost = line.purchase_price * line.product_uom_qty
             margin = line.price_subtotal - cost
             pct = (margin / line.price_subtotal * 100.0) if line.price_subtotal else 0.0
-
-            def money(value):
-                return f"{currency.round(value):,.2f}".replace(',', ' ') + f" {currency.symbol or ''}"
             amounts = _("Price %(price)s, planned cost %(cost)s, margin %(margin)s (%(pct)s %%).",
                         price=money(line.price_subtotal), cost=money(cost), margin=money(margin), pct=round(pct, 1))
             if line.td_bom_id:

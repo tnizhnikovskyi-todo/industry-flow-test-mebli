@@ -1,6 +1,6 @@
 # ТЕСТОВИЙ наряд A-11 (контур коду, fix7): зауваження власника на гейті A-17 («Повернути»), рішення власника 2026-11-16
 # (зауваження A-17), flow/decisions.md рядок 58 (вносить головна сесія). Джерело — 16 рядків tests/open-questions.md гілки
-# claude/eager-heisenberg-rm7c4i (128f038…0250f33). Перший коміт гілки — повернення гейта A-17: D-25…D-35 у package/demo/defects.md.
+# claude/eager-heisenberg-rm7c4i (2410a89…0250f33). Перший коміт гілки — повернення гейта A-17: D-25…D-35 у package/demo/defects.md.
 # Далі: A-12-8 -> A-13-7 -> A-14-10 -> A-15-full-6 -> A-16-9 -> A-16b-7 -> A-17-9.
 step: A-11
 scope: {kind: package, id: mebli}
@@ -19,6 +19,7 @@ params:
     - "D-28 (№8): попередження про від'ємну маржу з поясненням; підтвердження не блокувати"
     - "D-26 (№6): календарі учасників нагоди зі смарт-кнопки «Зустрічі»"
     - "D-30 (№11): «Почати замір» з події календаря замірника"
+    - "№17 (доробка власника 2026-11-16, передано менеджерською сесією): td_home_menu — вигляд у дусі EE 19 (власні стилі) і ширина чатера; у стенд — лише якщо тести/тури зелені й знімки 8 ролей без поломок"
 inputs:
   - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
   - {name: remarks, from: owner, path: "tests/open-questions.md@0250f33 (гілка claude/eager-heisenberg-rm7c4i), рядки 2026-11-16 №1–16", sha: 0250f33}
@@ -29,6 +30,7 @@ where:
   - package/addons/td_mebli_measure/
   - package/addons/td_mebli_install/
   - package/addons/td_mebli_demo/
+  - package/addons/td_home_menu/            # №17 (додано наряд-доповненням у гілці A-14-10)
   - package/addons/AC-COVERAGE.md
   - package/SPEC.md                         # §4.19 AC-135…AC-140 (A-08, прийнято з зауважень власника)
   - package/ALLOCATION.md                   # рядки AC-135…AC-140 (A-10)

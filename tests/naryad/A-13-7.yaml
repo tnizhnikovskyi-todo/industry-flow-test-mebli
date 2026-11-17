@@ -1,0 +1,26 @@
+# ТЕСТОВИЙ наряд A-13 (шаблони майстер-даних), спроба 7: зауваження власника A-17 №5 (D-25) — td/16 з усіма коефіцієнтами.
+# Рішення власника 2026-11-16 (зауваження A-17), flow/decisions.md рядок 58.
+step: A-13
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:master-data-template-builder"]
+model: opus
+effort: high
+params: {mode: fix, defects: ["D-25 (№5): td/16_td.mebli.part.rule.csv — додати len_d, wid_w, wid_h"]}
+inputs:
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons/, sha: HEAD}
+where:
+  - package/master-data/
+template: "master-data-template-builder: README.md + CSV"
+done: "td/16 має len_w, len_h, len_d, len_const, wid_w, wid_h, wid_d, wid_const; тест-імпорт — помилок 0 (A-14-10)"
+check: {mode: both, how: "тест-імпорт import.sh у налаштовану базу A (A-14-10) + SO → MO «Шафа-купе»", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 10, context_budget_tokens: 100000}
+client_data: none
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-12-8-test, branch: flow/A-13-7-test}
+attempt: 1
+returned_from: A-17
+git: {base: 5975caf, head: null, prev_tag: null}
+date: 2026-11-16
