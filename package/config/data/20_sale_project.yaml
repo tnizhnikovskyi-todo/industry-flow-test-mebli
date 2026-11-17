@@ -26,10 +26,12 @@
 - id: td_config.project_install
   kind: record
   model: project.project
-  values: {name: "Монтажі"}
-  ac: [AC-043, AC-095]
-  source: "addons/project/models/project_project.py (project.project); подання календаря задач — стандарт project"
+  values: {name: "Монтажі", td_install_project: true}
+  requires_module: td_mebli_install
+  ac: [AC-043, AC-095, AC-140]
+  source: "addons/project/models/project_project.py (project.project); подання календаря задач — стандарт project; td_mebli_install/models/install_project.py (td_install_project → стадії td_mebli_install.stage_install_*)"
   manual: false
+  note: "A-17 №16 (AI-47, рішення власника 2026-11-16, flow/decisions.md рядок 58): прапорець «Проєкт монтажів» дає проєкту стадії виїздів «Запланувати / Заплановано / Змонтовано / Акт підписано / Скасовано» (дані модуля, noupdate — клієнт перейменовує в B-04) і дату виїзду з «Дати доставки» замовлення"
 - id: td_config.product_install
   kind: record
   model: product.template

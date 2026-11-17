@@ -1,0 +1,27 @@
+# ТЕСТОВИЙ наряд A-12 (конфіг-пакет), спроба 8: зауваження власника A-17 №16 (D-35) — стадії проєкту «Монтажі».
+# Рішення власника 2026-11-16 (зауваження A-17), flow/decisions.md рядок 58.
+step: A-12
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:config-as-code"]
+model: opus
+effort: high
+params: {mode: fix, defects: ["D-35 (№16): проєкт «Монтажі» без стадій задач — прапорець td_install_project у td_config.project_install (AC-140)"]}
+inputs:
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+  - {name: addons, from: A-11, path: package/addons/, sha: HEAD}
+  - {name: decision, from: owner, path: "рішення власника 2026-11-16 (зауваження A-17), flow/decisions.md рядок 58", sha: null}
+where:
+  - package/config/
+template: "config-as-code/references/config-package-format.md"
+done: "td_config.project_install з td_install_project; apply.py plan 7 профілів без невідомих ключів; apply/повтор/read-back — A-14-10"
+check: {mode: both, how: "apply.py plan + A-14-10 (apply/повтор/compare/read-back)", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 60, lease_factor: 1.5, cost_limit_usd: 10, context_budget_tokens: 100000}
+client_data: none
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-11-fix7-test, branch: flow/A-12-8-test}
+attempt: 1
+returned_from: A-17
+git: {base: 5c0b160, head: null, prev_tag: null}
+date: 2026-11-16

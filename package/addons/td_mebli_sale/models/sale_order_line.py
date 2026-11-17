@@ -1,5 +1,6 @@
 from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.misc import formatLang
 
 AXES = ('width', 'height', 'depth')
 # AC-018 (tr/security.md §4): cost and margin are seen by the sales manager, the finance and the salesperson only when the
@@ -19,6 +20,10 @@ class SaleOrderLine(models.Model):
                            readonly=False, precompute=True)
     td_size_factor = fields.Float(string='Size Factor', compute='_compute_td_size_factor', store=True,
                                   precompute=True, digits=(16, 3))
+    td_dims_range = fields.Char(string='Size Limits, mm', compute='_compute_td_dims_range',
+                                help="The width, height and depth allowed for the product.")
+    # A-17 №8: the price of the line is below its planned cost (decoration of the line, the warning of the quotation)
+    td_below_cost = fields.Boolean(string='Below Cost', compute='_compute_td_below_cost')
     td_bom_id = fields.Many2one('mrp.bom', string='Order BoM', copy=False, index='btree_not_null',
                                 ondelete='set null')
     td_planned_material_cost = fields.Monetary(string='Planned Materials', compute='_compute_td_planned_cost',
@@ -83,6 +88,61 @@ class SaleOrderLine(models.Model):
         labels = dict(self.env['product.attribute']._fields['td_dimension']._description_selection(self.env))
         return (labels.get(axis) or axis).lower()
 
+    def _td_out_of_range(self):
+        """A-17 №7: every axis of the line outside the limits of the product: [(axis, value, low, high)]."""
+        self.ensure_one()
+        if not self.td_is_parametric:
+            return []
+        tmpl = self.product_id.product_tmpl_id
+        out = []
+        for axis in AXES:
+            value = self[f'td_{axis}']
+            low, high = tmpl[f'td_{axis}_min'], tmpl[f'td_{axis}_max']
+            if not low <= value <= high:
+                out.append((axis, value, low, high))
+        return out
+
+    def _td_out_of_range_text(self, out):
+        """«width 111 mm (allowed 800-2060 mm), height 111 mm (allowed 2000-2700 mm)» — all the axes at once."""
+        return ', '.join(self.env._("%(axis)s %(value)s mm (allowed %(low)s-%(high)s mm)", axis=self._td_axis_label(axis),
+                                    value=value, low=low, high=high) for axis, value, low, high in out)
+
+    @api.depends('product_id')
+    @api.depends_context('lang')
+    def _compute_td_dims_range(self):
+        """A-17 №7: the limits of the product next to the size columns, short: «W 800–2060 · H 2000–2700 · D 450–700»."""
+        for line in self:
+            tmpl = line.product_id.product_tmpl_id
+            if not line.td_is_parametric:
+                line.td_dims_range = False
+                continue
+            short = {'width': self.env._("W"), 'height': self.env._("H"), 'depth': self.env._("D")}
+            line.td_dims_range = ' · '.join(
+                f"{short[axis]} {tmpl[f'td_{axis}_min']}–{tmpl[f'td_{axis}_max']}" for axis in AXES)
+
+    @api.onchange('product_id', 'product_custom_attribute_value_ids', 'td_width', 'td_height', 'td_depth')
+    def _onchange_td_dims_warning(self):
+        """A-17 №7: the size out of the limits is shown while the size is typed (the line, the configurator), not only
+        when the quotation is saved; every wrong axis with its limits. The constraint below still blocks the save."""
+        if not self.td_is_parametric:
+            return None
+        bad = [axis for axis, raw in self._td_read_custom_dims().items() if raw and not raw.isdigit()]
+        out = self._td_out_of_range()
+        if not out and not bad:
+            return None
+        parts = []
+        if bad:
+            parts.append(self.env._("not a whole number of millimetres: %s",
+                                    ', '.join(self._td_axis_label(axis) for axis in bad)))
+        if out:
+            parts.append(self._td_out_of_range_text(out))
+        return {'warning': {
+            'title': self.env._("The size is out of the limits of the product"),
+            'message': self.env._("%(product)s: %(problems)s. The price and the specification follow the typed size; "
+                                  "the quotation is not saved until the size is corrected.",
+                                  product=self.product_id.product_tmpl_id.display_name, problems='; '.join(parts)),
+        }}
+
     @api.constrains('product_id', 'product_custom_attribute_value_ids', 'td_width', 'td_height', 'td_depth')
     def _check_td_dims(self):
         for line in self.filtered('td_is_parametric'):
@@ -92,14 +152,12 @@ class SaleOrderLine(models.Model):
                     raise ValidationError(self.env._(
                         "%(product)s: the %(axis)s must be a whole number of millimetres, got '%(raw)s'.",
                         product=tmpl.display_name, axis=line._td_axis_label(axis), raw=raw))
-            for axis in AXES:
-                value = line[f'td_{axis}']
-                low, high = tmpl[f'td_{axis}_min'], tmpl[f'td_{axis}_max']
-                if not low <= value <= high:
-                    raise ValidationError(self.env._(
-                        "%(product)s: the %(axis)s %(value)s mm is out of range %(low)s-%(high)s mm.",
-                        product=tmpl.display_name, axis=line._td_axis_label(axis), value=value,
-                        low=low, high=high))
+            out = line._td_out_of_range()
+            if out:
+                # A-17 №7: every axis out of the limits at once, with the limits
+                raise ValidationError(self.env._(
+                    "%(product)s: the size is out of the limits: %(problems)s.",
+                    product=tmpl.display_name, problems=line._td_out_of_range_text(out)))
 
     def _td_size_factor_for(self, width, height):
         tmpl = self.product_id.product_tmpl_id
@@ -251,3 +309,89 @@ class SaleOrderLine(models.Model):
             materials, operations = line._td_bom_unit_costs()
             cost = line.product_id.uom_id._compute_price(materials + operations, line.product_uom_id)
             line.purchase_price = line.currency_id.round(line._convert_to_sol_currency(cost, line.company_id.currency_id))
+
+    # ------------------------------------------------------------------
+    # A-17 №8: negative margin — a warning with the reason
+    # ------------------------------------------------------------------
+    @api.depends('price_subtotal', 'product_uom_qty', 'td_bom_id', 'purchase_price')
+    def _compute_td_below_cost(self):
+        for line in self:
+            # sudo: read only — the planned cost is hidden from a salesperson without the margin rights (AC-018); he sees
+            # only that the price is below it
+            data = line.sudo()
+            line.td_below_cost = bool(not line.display_type and data.purchase_price and data.product_uom_qty
+                                      and data.price_subtotal < data.purchase_price * data.product_uom_qty - 0.005)
+
+    def _td_cost_split(self):
+        """(does not depend on the size, follows the size, names of the parts that do not depend on the size) of one
+        unit, company currency: fittings and the fixed / per-part operations against the boards, the edge banding and
+        the operations by m2 of board or by metre of edge."""
+        self.ensure_one()
+        # sudo: read only — the order BoM (a salesperson has no manufacturing rights)
+        bom = self.sudo().td_bom_id
+        fixed = sized = 0.0
+        fixed_names = []
+        for bom_line in bom.bom_line_ids:
+            cost = bom_line.product_id.uom_id._compute_price(bom_line.product_id.standard_price,
+                                                             bom_line.product_uom_id) * bom_line.product_qty
+            if bom_line.td_from_parts:
+                sized += cost
+            else:
+                fixed += cost
+                fixed_names.append(bom_line.product_id.name)
+        for operation in bom.operation_ids:
+            if operation.td_time_basis in ('per_edge_m', 'per_board_m2'):
+                sized += operation.cost
+            else:
+                fixed += operation.cost
+                fixed_names.append(operation.name)
+        factor = 1.0 / (bom.product_qty or 1.0)
+        return fixed * factor, sized * factor, list(dict.fromkeys(fixed_names))
+
+    def _td_below_cost_text(self, with_amounts):
+        """The reason of the negative margin of the line, in the words of the salesperson (A-17 №8)."""
+        self.ensure_one()
+        _ = self.env._
+        line = self.sudo()  # read only: the planned cost (AC-018 hides it from a salesperson without the margin rights)
+        name = line.product_id.product_tmpl_id.display_name
+        parts = []
+        if line.td_is_parametric:
+            tmpl = line.product_id.product_tmpl_id
+            parts.append(_("%(product)s %(w)s × %(h)s × %(d)s mm: the price is below the planned cost. The price is "
+                           "%(pct)s %% of the base price: the size %(w)s × %(h)s mm against the nominal %(wn)s × %(hn)s mm "
+                           "(the depth does not change the price).",
+                           product=name, w=line.td_width, h=line.td_height, d=line.td_depth,
+                           pct=round(line.td_size_factor * 100), wn=tmpl.td_width_nominal, hn=tmpl.td_height_nominal))
+        else:
+            parts.append(_("%(product)s: the price is below the planned cost.", product=name))
+        currency = line.currency_id
+
+        def money(value):
+            # the format of the language of the user (uk_UA: «13 480,00 ₴»), as the amounts in the interface
+            return formatLang(self.env, value, currency_obj=currency)
+        # the price of the line was changed by hand or discounted: say it, it is often the reason
+        if line.discount:
+            parts.append(_("Discount %(discount)s %%.", discount=round(line.discount, 1)))
+        if line.technical_price_unit and line.currency_id.compare_amounts(line.price_unit, line.technical_price_unit):
+            parts.append(_("The unit price was changed by hand: %(price)s instead of %(computed)s.",
+                           price=money(line.price_unit), computed=money(line.technical_price_unit)))
+        fixed = sized = 0.0
+        names = []
+        if line.td_bom_id:
+            fixed, sized, names = line._td_cost_split()
+            if names:
+                parts.append(_("Do not get cheaper with a smaller size: %(names)s; boards, edge banding and their "
+                               "operations follow the size.", names=', '.join(names[:6])))
+        if with_amounts:
+            cost = line.purchase_price * line.product_uom_qty
+            margin = line.price_subtotal - cost
+            pct = (margin / line.price_subtotal * 100.0) if line.price_subtotal else 0.0
+            amounts = _("Price %(price)s, planned cost %(cost)s, margin %(margin)s (%(pct)s %%).",
+                        price=money(line.price_subtotal), cost=money(cost), margin=money(margin), pct=round(pct, 1))
+            if line.td_bom_id:
+                qty = line.product_uom_qty
+                amounts += ' ' + _("Of the cost, not depending on the size: %(fixed)s, following the size: %(sized)s.",
+                                   fixed=money(line._convert_to_sol_currency(fixed, line.company_id.currency_id) * qty),
+                                   sized=money(line._convert_to_sol_currency(sized, line.company_id.currency_id) * qty))
+            parts.append(amounts)
+        return ' '.join(parts)

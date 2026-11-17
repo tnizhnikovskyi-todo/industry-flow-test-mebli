@@ -1,4 +1,5 @@
 from odoo import api, fields, models
+from odoo.exceptions import AccessError
 
 
 class TdMebliMeasure(models.Model):
@@ -22,6 +23,9 @@ class TdMebliMeasure(models.Model):
     td_can_link = fields.Boolean(string='Can Link the Order', compute='_compute_td_can_link',
                                  help="Technical: the order and the opportunity are chosen by sales users only.")
     measurer_id = fields.Many2one('res.users', string='Measurer', default=lambda self: self.env.user, tracking=True)
+    # A-17 №11: the measurement meeting the sheet was started from («Start the Measurement» on the meeting)
+    event_id = fields.Many2one('calendar.event', string='Measurement Meeting', index='btree_not_null', ondelete='set null',
+                               copy=False, readonly=True)
     room = fields.Char(string='Room', help='Kitchen, hall, bedroom: where the furniture stands.')
     floor_slope_mm = fields.Integer(string='Floor Slope, mm', help='Difference of the floor level along the wall.')
     wall_angle_deg = fields.Float(string='Wall Angle, °', digits=(4, 1), default=90.0)
@@ -271,6 +275,43 @@ class CrmLead(models.Model):
             action.update(view_mode='form', views=[(False, 'form')], res_id=self.td_measure_ids.id)
         return action
 
+    def _td_calendar_partners(self):
+        """A-17 №6: whose calendars the smart button «Meetings» shows: the current user, the salesperson of the
+        opportunity, the internal attendees of its meetings, the measurers of its measurement sheets; no sheet yet —
+        every measurer of the company (group «Measurer»). The customer (an external contact) is not shown."""
+        self.ensure_one()
+        # sudo: read only — the attendees of the meetings, the measurers of the sheets and the members of the group
+        lead = self.sudo()
+        users = self.env.user | lead.user_id
+        users |= lead.calendar_event_ids.partner_ids.user_ids.filtered(lambda u: not u.share)
+        sheets = self.env['td.mebli.measure'].sudo().search([('lead_id', '=', self.id)])
+        if sheets:
+            users |= sheets.measurer_id
+        else:
+            group = self.env.ref('td_mebli_measure.group_td_mebli_measurer', raise_if_not_found=False)
+            if group:
+                users |= group.sudo().all_user_ids.filtered(
+                    lambda u: u.active and not u.share and lead.company_id in (u.company_ids or lead.company_id))
+        partners = users.filtered(lambda u: u.active and not u.share).partner_id
+        return partners - lead.partner_id
+
+    def action_schedule_meeting(self, smart_calendar=True):
+        """A-17 №6: the calendar of the opportunity shows the calendars of everybody linked to it (standard calendar
+        filters of the user, calendar.filters — checked); the standard action otherwise unchanged."""
+        action = super().action_schedule_meeting(smart_calendar=smart_calendar)
+        if len(self) == 1:
+            Filters = self.env['calendar.filters']
+            partners = self._td_calendar_partners() - self.env.user.partner_id
+            existing = Filters.with_context(active_test=False).search(
+                [('user_id', '=', self.env.user.id), ('partner_id', 'in', partners.ids)])
+            existing.filtered(lambda f: not f.active or not f.partner_checked).write(
+                {'active': True, 'partner_checked': True})
+            missing = partners - existing.partner_id
+            if missing:
+                Filters.create([{'user_id': self.env.user.id, 'partner_id': partner.id, 'partner_checked': True}
+                                for partner in missing])
+        return action
+
     def action_td_book_measure(self):
         """Position 9: book a measurement visit in a free window of the measurer (standard calendar meeting)."""
         self.ensure_one()
@@ -278,3 +319,50 @@ class CrmLead(models.Model):
         wizard._td_fill_slots()
         return {'type': 'ir.actions.act_window', 'res_model': wizard._name, 'res_id': wizard.id, 'view_mode': 'form',
                 'target': 'new', 'name': self.env._("Book a Measurement")}
+
+
+class CalendarEvent(models.Model):
+    _inherit = 'calendar.event'
+
+    td_measure_ids = fields.One2many('td.mebli.measure', 'event_id', string='Measurement Sheets')
+
+    def _td_measurer(self):
+        """The measurer of the meeting: its organizer when he is a measurer, else the first attendee of the group
+        «Measurer», else the current user (he started the measurement)."""
+        self.ensure_one()
+        group = self.env.ref('td_mebli_measure.group_td_mebli_measurer', raise_if_not_found=False)
+        if group:
+            # sudo: read only — the users of the attendees and their groups (res.groups is admin only)
+            measurers = group.sudo().all_user_ids
+            attendees = self.sudo().partner_ids.user_ids.filtered(lambda u: u in measurers)
+            if self.env.user in measurers and (self.env.user == self.user_id or self.env.user in attendees):
+                return self.env.user
+            if self.user_id in measurers:
+                return self.user_id
+            if attendees:
+                return attendees.sorted('id')[:1]
+        return self.env.user
+
+    def action_td_start_measure(self):
+        """A-17 №11: «Start the Measurement» on the measurement meeting (the measurer, «Measurements › My Calendar»):
+        the sheet of this meeting is opened, or created with the opportunity of the meeting and the measurer; the order
+        stays empty — the salesperson chooses it (AC-006, decision of the owner 2026-11-16)."""
+        self.ensure_one()
+        # the button is shown to the measurers only; the server checks it too (the method is callable by RPC)
+        if not self.env.user.has_group('td_mebli_measure.group_td_mebli_measurer'):
+            raise AccessError(self.env._("Only a measurer starts the measurement from the meeting."))
+        # sudo: read only — is there a sheet of this meeting already (also one of another measurer: no double)
+        sheet = self.env['td.mebli.measure'].sudo().search([('event_id', '=', self.id)], limit=1)
+        if not sheet:
+            # sudo: the opportunity is linked by the system — the measurer does not choose the opportunity or the order
+            # himself (td_can_link, AC-006) and has no right to read the opportunity; the sheet is his (measurer_id)
+            sheet = self.env['td.mebli.measure'].sudo().create({
+                'event_id': self.id,
+                'lead_id': self.sudo().opportunity_id.id,
+                'measurer_id': self._td_measurer().id,
+                'company_id': (self.sudo().opportunity_id.company_id or self.env.company).id,
+            })
+            sheet.message_post(body=self.env._("Started from the meeting %s.", self.sudo().display_name))
+        return {'type': 'ir.actions.act_window', 'res_model': 'td.mebli.measure', 'res_id': sheet.id,
+                'view_mode': 'form', 'views': [(False, 'form')], 'target': 'current',
+                'name': self.env._("Measurement Sheet")}

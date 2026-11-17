@@ -55,6 +55,13 @@
                 <field name="td_height" optional="show" readonly="not td_is_parametric" width="95px" groups="td_mebli_base.group_feature_configurator"/>
                 <field name="td_depth" optional="show" readonly="not td_is_parametric" width="95px" groups="td_mebli_base.group_feature_configurator"/>
                 <field name="td_size_factor" optional="hide" readonly="1" groups="td_mebli_base.group_feature_configurator"/>
+                <!-- A-17 №7: the limits of the product next to the sizes -->
+                <field name="td_dims_range" optional="show" width="170px" groups="td_mebli_base.group_feature_configurator"/>
+                <field name="td_below_cost" column_invisible="True"/>
+            </xpath>
+            <!-- A-17 №8: a line sold below its planned cost is red -->
+            <xpath expr="//field[@name='order_line']/list" position="attributes">
+                <attribute name="decoration-danger">td_below_cost</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']/list/field[@name='product_uom_qty']" position="after">
                 <button name="action_td_generate_bom" type="object" icon="fa-cogs" title="Build specification"
@@ -67,9 +74,27 @@
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_td_view_production" type="object" class="oe_stat_button" icon="fa-industry"
-                        invisible="td_production_count == 0" groups="sales_team.group_sale_salesman">
+                        invisible="td_production_count == 0" groups="sales_team.group_sale_salesman,!mrp.group_mrp_user">
+                    <!-- A-17 №15: a user with the manufacturing rights has the standard button of sale_mrp — one button each -->
                     <field name="td_production_count" widget="statinfo" string="Production"/>
                 </button>
+            </xpath>
+            <!-- A-17 №9 (decision of the owner 2026-11-16): one button «Print» with the list of every printed form of the
+                 order, in a quotation and in an order; the standard button (the quotation only) is replaced by it -->
+            <xpath expr="//header/button[@name='sale.action_report_saleorder']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//header/button[@name='sale.action_report_saleorder']" position="after">
+                <button name="action_td_print" type="object" string="Print" data-hotkey="i" icon="fa-print"
+                        invisible="not id"/>
+            </xpath>
+            <!-- A-17 №8: the negative margin with its reason (a warning, the confirmation is not blocked) -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-warning mb-0 td_margin_alert" role="alert" invisible="not td_margin_warning">
+                    <i class="fa fa-exclamation-triangle me-2" title="Below the planned cost"/>
+                    <strong>The price is below the planned cost:</strong>
+                    <field name="td_margin_warning" class="d-block mt-1"/>
+                </div>
             </xpath>
             <xpath expr="//group[@name='order_details']/field[@name='show_update_pricelist']" position="before">
                 <field name="td_launch_date" invisible="not td_launch_date" readonly="1"/>

@@ -9,7 +9,7 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Design Visual" name="td_design">
                     <field name="td_design_image" widget="image" class="td_design_image" options="{'size': [640, 0]}"/>
-                    <div class="text-muted small">The visual is printed in the quotation (Print › Quotation / Order) under the
+                    <div class="text-muted small">The visual is printed in the quotation (button Print › Quotation / Order) under the
                         order details.</div>
                 </page>
             </xpath>

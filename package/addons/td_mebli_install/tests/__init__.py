@@ -6,3 +6,4 @@ from . import test_g3
 from . import test_multicompany
 from . import test_a11_7
 from . import test_d19_salesperson_visits
+from . import test_a17_install_stages

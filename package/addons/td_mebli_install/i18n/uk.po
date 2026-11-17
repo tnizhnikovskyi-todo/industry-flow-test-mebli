@@ -199,6 +199,11 @@ msgid "Act"
 msgstr "Акт"
 
 #. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_act_signed
+msgid "Act Signed"
+msgstr "Акт підписано"
+
+#. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Act of an Installation Stage"
 msgstr "Акт етапу монтажу"
@@ -285,7 +290,7 @@ msgid "Cancellation Reason"
 msgstr "Причина скасування"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__cancelled model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__cancel
+#: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__cancelled model:ir.model.fields.selection,name:td_mebli_install.selection__td_mebli_accrual__state__cancel model:project.task.type,name:td_mebli_install.stage_install_cancelled
 msgid "Cancelled"
 msgstr "Скасовано"
 
@@ -455,7 +460,7 @@ msgid "Discard"
 msgstr "Скасувати"
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__display_name model:ir.model.fields,field_description:td_mebli_install.field_res_users__display_name model:ir.model.fields,field_description:td_mebli_install.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__display_name
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_project__display_name model:ir.model.fields,field_description:td_mebli_install.field_project_task__display_name model:ir.model.fields,field_description:td_mebli_install.field_res_users__display_name model:ir.model.fields,field_description:td_mebli_install.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_install.field_sale_order_line__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__display_name model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -539,7 +544,7 @@ msgid "Hours of every installer at the visit: the crew percent «By time» (VP-1
 msgstr "Години кожного монтажника на виїзді: % бригаді «За часом» (VP-14)."
 
 #. module: td_mebli_install
-#: model:ir.model.fields,field_description:td_mebli_install.field_project_task__id model:ir.model.fields,field_description:td_mebli_install.field_res_users__id model:ir.model.fields,field_description:td_mebli_install.field_sale_order__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__id
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_project__id model:ir.model.fields,field_description:td_mebli_install.field_project_task__id model:ir.model.fields,field_description:td_mebli_install.field_res_users__id model:ir.model.fields,field_description:td_mebli_install.field_sale_order__id model:ir.model.fields,field_description:td_mebli_install.field_sale_order_line__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_cancel__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_reason__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_act_crew__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_install_defect__id model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_pay_mark__id
 msgid "ID"
 msgstr "ID"
 
@@ -574,9 +579,14 @@ msgid "Installation Acts"
 msgstr "Акти монтажу"
 
 #. module: td_mebli_install
-#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_calendar_action model:ir.ui.menu,name:td_mebli_install.td_mebli_install_calendar_menu
+#: model:ir.actions.act_window,name:td_mebli_install.td_mebli_install_calendar_action model:ir.ui.menu,name:td_mebli_install.td_mebli_install_calendar_menu model:ir.ui.menu,name:td_mebli_install.td_mebli_install_calendar_sale_menu
 msgid "Installation Calendar"
 msgstr "Календар монтажів"
+
+#. module: td_mebli_install
+#: model:ir.model.fields,field_description:td_mebli_install.field_project_project__td_install_project
+msgid "Installation Project"
+msgstr "Проєкт монтажів"
 
 #. module: td_mebli_install
 #. odoo-python
@@ -585,7 +595,7 @@ msgid "Installation blocked: the payment of %(missing)s is not received. Contact
 msgstr "Монтаж заблоковано: не отримано доплату %(missing)s. Зверніться до менеджера"
 
 #. module: td_mebli_install
-#: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
+#: model:project.task.type,name:td_mebli_install.stage_install_installed model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Installed"
 msgstr "Змонтовано"
 
@@ -852,9 +862,19 @@ msgid "Places:"
 msgstr "Місць:"
 
 #. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_planned
+msgid "Planned"
+msgstr "Заплановано"
+
+#. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "Product"
 msgstr "Товар"
+
+#. module: td_mebli_install
+#: model:ir.model,name:td_mebli_install.model_project_project
+msgid "Project"
+msgstr "Проєкт"
 
 #. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
@@ -910,6 +930,11 @@ msgstr "Помилка доставки SMS"
 #: model:ir.model,name:td_mebli_install.model_sale_order
 msgid "Sales Order"
 msgstr "Замовлення на продаж"
+
+#. module: td_mebli_install
+#: model:ir.model,name:td_mebli_install.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Рядок замовлення на продаж"
 
 #. module: td_mebli_install
 #: model:ir.model.fields,help:td_mebli_install.field_td_mebli_install_act__order_id
@@ -1106,6 +1131,17 @@ msgid "The photos may be used for advertising (only with the consent of the cust
 msgstr "Фото можна використати для реклами (згода — в акті)."
 
 #. module: td_mebli_install
+#: model:ir.model.fields,help:td_mebli_install.field_project_project__td_install_project
+msgid "The project of the installation visits: its tasks get the stages To Plan, Planned, Installed, Act Signed, Cancelled, and the date of the visit from the delivery date of the order."
+msgstr "Проєкт виїздів на монтаж: його задачі отримують стадії «Запланувати», «Заплановано», «Змонтовано», «Акт підписано», «Скасовано» і дату виїзду з дати доставки замовлення."
+
+#. module: td_mebli_install
+#. odoo-python
+#: code:addons/td_mebli_install/models/act.py:0
+msgid "The salesperson changes only the date and the crew of a visit (not: %s)."
+msgstr "Менеджер змінює у виїзді лише дату й бригаду (не: %s)."
+
+#. module: td_mebli_install
 #. odoo-python
 #: code:addons/td_mebli_install/models/accrual.py:0
 msgid "The start of the period is after its end."
@@ -1141,6 +1177,11 @@ msgstr "Рядок часу"
 #: model:ir.model.fields,field_description:td_mebli_install.field_td_mebli_accrual_wizard__date_to
 msgid "To"
 msgstr "По"
+
+#. module: td_mebli_install
+#: model:project.task.type,name:td_mebli_install.stage_install_to_plan
+msgid "To Plan"
+msgstr "Запланувати"
 
 #. module: td_mebli_install
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.td_mebli_install_act_view_form
@@ -1286,11 +1327,3 @@ msgstr "усунено"
 #: model_terms:ir.ui.view,arch_db:td_mebli_install.report_install_act_document
 msgid "to be fixed"
 msgstr "усунути"
-
-#. module: td_mebli_install
-#. odoo-python
-#: code:addons/td_mebli_install/models/act.py:0
-msgid ""
-"The salesperson changes only the date and the crew of a visit (not: %s)."
-msgstr ""
-"Менеджер змінює у виїзді лише дату й бригаду (не: %s)."

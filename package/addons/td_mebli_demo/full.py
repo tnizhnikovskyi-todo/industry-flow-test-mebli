@@ -127,8 +127,9 @@ def _shop_history(env, by_center, team, rnd):
 
 def _installation_project(env):
     """Called before the orders: the installation service line of every order makes the visit task (sale_project)."""
+    # A-17 №16: the project of the installations has the stages of the visits (td_install_project, td_mebli_install)
     project = env['project.project'].create({'name': 'Монтажі', 'allow_billable': True,
-                                             'privacy_visibility': 'employees'})
+                                             'privacy_visibility': 'employees', 'td_install_project': True})
     product = env['product.product'].create({
         'name': INSTALL_PRODUCT, 'type': 'service', 'list_price': 0.0, 'standard_price': 0.0,
         'invoice_policy': 'delivery', 'service_type': 'manual', 'service_tracking': 'task_global_project',
@@ -527,6 +528,29 @@ def _calibrate_load(env, targets):
         center.resource_calendar_id = _section_calendar(env, center, round(weekly / parallel, 1))
 
 
+def _visit_stages(env):
+    """A-17 №16: the demo visits stand in the stages that match their documents (the date moves «To Plan» → «Planned»
+    by itself; a signed final act → «Act Signed»; a finished visit → «Installed»; a cancelled one → «Cancelled»)."""
+    stages = {key: env.ref(f'td_mebli_install.stage_install_{key}', raise_if_not_found=False)
+              for key in ('to_plan', 'planned', 'installed', 'act_signed', 'cancelled')}
+    if not all(stages.values()):
+        return
+    tasks = env['project.task'].search([('project_id.td_install_project', '=', True)])
+    for task in tasks:
+        if task.td_act_ids.filtered(lambda a: a.kind == 'final' and a.state == 'signed'):
+            stage = stages['act_signed']
+        elif task.state == '1_canceled':
+            stage = stages['cancelled']
+        elif task.state == '1_done':
+            stage = stages['installed']
+        elif task.date_deadline:
+            stage = stages['planned']
+        else:
+            stage = stages['to_plan']
+        if task.stage_id != stage:
+            task.with_context(td_install_stage_auto=True).stage_id = stage
+
+
 def seed_full(env, people, partners, orders, show, rnd):
     by_center, team, crew = _employees(env, people)
     crew_users = people['fitter'] | people['fitter2']
@@ -548,4 +572,5 @@ def seed_full(env, people, partners, orders, show, rnd):
     # wave 2 of the A box (decisions 42-47): own random sequence, the data above stays as it was
     from .wave2 import seed_wave2
     state['wave2'] = seed_wave2(env, people, orders, show, rnd)
+    _visit_stages(env)
     return state

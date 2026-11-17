@@ -126,6 +126,11 @@ msgid "Booking of a Measurement Visit"
 msgstr "Запис на замір"
 
 #. module: td_mebli_measure
+#: model:ir.model,name:td_mebli_measure.model_calendar_event
+msgid "Calendar Event"
+msgstr "Подія календаря"
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__td_can_link
 msgid "Can Link the Order"
 msgstr "Може пов'язати замовлення"
@@ -201,7 +206,7 @@ msgid "Difference of the floor level along the wall."
 msgstr "Перепад рівня підлоги вздовж стіни."
 
 #. module: td_mebli_measure
-#: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__display_name model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__display_name
+#: model:ir.model.fields,field_description:td_mebli_measure.field_calendar_event__display_name model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__display_name model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__display_name model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__display_name model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
@@ -290,7 +295,7 @@ msgid "Height, mm"
 msgstr "Висота, мм"
 
 #. module: td_mebli_measure
-#: model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__id model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__id
+#: model:ir.model.fields,field_description:td_mebli_measure.field_calendar_event__id model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__id model:ir.model.fields,field_description:td_mebli_measure.field_mrp_production__id model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_appliance__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_niche__id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__id
 msgid "ID"
 msgstr "ID"
 
@@ -355,12 +360,18 @@ msgid "Measurement Calendar"
 msgstr "Календар замірів"
 
 #. module: td_mebli_measure
-#: model:ir.model,name:td_mebli_measure.model_td_mebli_measure model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
+#: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__event_id
+msgid "Measurement Meeting"
+msgstr "Зустріч заміру"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0 model:ir.model,name:td_mebli_measure.model_td_mebli_measure model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_form
 msgid "Measurement Sheet"
 msgstr "Замір-лист"
 
 #. module: td_mebli_measure
-#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_action model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__td_measure_ids model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_ids model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_menu model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_list
+#: model:ir.actions.act_window,name:td_mebli_measure.td_mebli_measure_action model:ir.model.fields,field_description:td_mebli_measure.field_calendar_event__td_measure_ids model:ir.model.fields,field_description:td_mebli_measure.field_crm_lead__td_measure_ids model:ir.model.fields,field_description:td_mebli_measure.field_sale_order__td_measure_ids model:ir.ui.menu,name:td_mebli_measure.td_mebli_measure_menu model_terms:ir.ui.view,arch_db:td_mebli_measure.td_mebli_measure_view_list
 msgid "Measurement Sheets"
 msgstr "Замір-листи"
 
@@ -481,6 +492,12 @@ msgid "Number of messages with delivery error"
 msgstr "Кількість повідомлень з помилкою доставки"
 
 #. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "Only a measurer starts the measurement from the meeting."
+msgstr "Почати замір із зустрічі може лише замірник."
+
+#. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__lead_id model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_booking__lead_id
 msgid "Opportunity"
 msgstr "Нагода"
@@ -554,6 +571,17 @@ msgstr "Розміри ніші не можуть бути від'ємними."
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure_slot__start
 msgid "Start"
 msgstr "Початок"
+
+#. module: td_mebli_measure
+#: model_terms:ir.ui.view,arch_db:td_mebli_measure.calendar_event_form_td_measure_start
+msgid "Start the Measurement"
+msgstr "Почати замір"
+
+#. module: td_mebli_measure
+#. odoo-python
+#: code:addons/td_mebli_measure/models/measure.py:0
+msgid "Started from the meeting %s."
+msgstr "Створено із зустрічі %s."
 
 #. module: td_mebli_measure
 #: model:ir.model.fields,field_description:td_mebli_measure.field_td_mebli_measure__state

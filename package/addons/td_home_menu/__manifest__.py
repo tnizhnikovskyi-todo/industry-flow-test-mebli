@@ -4,7 +4,7 @@
     'description': 'Community only: a home screen with the tiles of the root menus (web_icon), search of an '
                    'application by name and keyboard navigation; it opens from the navbar button and after the login. '
                    'Written from scratch on OWL. If web_enterprise is installed, the module changes nothing.',
-    'version': '19.0.1.0.1',
+    'version': '19.0.1.0.3',
     'category': 'Hidden/Tools',
     'license': 'LGPL-3',
     'author': 'ToDo',

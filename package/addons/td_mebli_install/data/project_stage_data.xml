@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- A-17 №16 (AI-47): the stages of the installation visits. Linked to the project of the installations by its flag
+         «Installation project» (config package A-12, td_config.project_install; demo). noupdate: the customer renames them. -->
+    <record id="stage_install_to_plan" model="project.task.type">
+        <field name="name">To Plan</field>
+        <field name="sequence">1</field>
+    </record>
+    <record id="stage_install_planned" model="project.task.type">
+        <field name="name">Planned</field>
+        <field name="sequence">2</field>
+    </record>
+    <record id="stage_install_installed" model="project.task.type">
+        <field name="name">Installed</field>
+        <field name="sequence">3</field>
+    </record>
+    <record id="stage_install_act_signed" model="project.task.type">
+        <field name="name">Act Signed</field>
+        <field name="sequence">4</field>
+        <field name="fold" eval="True"/>
+    </record>
+    <record id="stage_install_cancelled" model="project.task.type">
+        <field name="name">Cancelled</field>
+        <field name="sequence">5</field>
+        <field name="fold" eval="True"/>
+    </record>
+</odoo>

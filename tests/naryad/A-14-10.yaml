@@ -1,0 +1,24 @@
+# ТЕСТОВИЙ наряд A-14 (0.4.0), спроба 10: гейти-замінники (як A-14-9) на diff 17268db..HEAD (A-11-fix7, A-12-8, A-13-7: зауваження власника A-17 — рішення власника 2026-11-16, flow/decisions.md рядок 58), режим перевірка; далі A-15-full-6
+step: A-14
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:gates-aggregator@0.4.0"]
+model: opus
+effort: medium
+params: {mode: перевірка}
+inputs:
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+where: package/CHECKS.md
+template: "немає — форма за SKILL.md"
+done: "CHECKS.md із новим SHA і кодом повернення; вердикт APPROVE"
+check: {mode: both, how: "flow-autocheck: checks/A-14.yaml + скрипти скіла", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 90, lease_factor: 1.5, cost_limit_usd: 15, context_budget_tokens: 60000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-13-7-test, branch: flow/A-14-10-test}
+attempt: 10
+returned_from: A-17
+git: {base: f270234, head: null, prev_tag: null}
+date: 2026-11-16

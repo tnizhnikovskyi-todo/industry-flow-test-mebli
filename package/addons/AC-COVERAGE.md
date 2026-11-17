@@ -25,7 +25,7 @@
 | AC-011 | td_mebli_mrp, td_mebli_sale | done | td_mebli_sale/tests/test_configurator_tour.py::test_configurator_dimensions; td_mebli_sale/tests/test_g1_sale.py::test_ac_n07_configurator_dimensions_are_box_b; td_mebli_demo/tests/test_scenario.py::test_d10_exclusions_of_the_configurator (A-11-7 / A-12-5, D-10: виключення — дані виробу) | INT | INT: поля розмірів рядка (`td_width/height/depth`, `td_size_factor`) — `groups="td_mebli_base.group_feature_configurator"` (VP-02, коробка B; хвіст G1/G2 закрито). Виключення атрибутів — дані A-12 |
 | AC-012 | td_mebli_mrp, td_mebli_sale | done | td_mebli_mrp/tests/test_order_bom.py::test_out_of_range; td_mebli_sale/tests/test_sale_line.py::test_invalid_dims | INT | INT: та сама feature-група конфігуратора; текст помилки розмірів — у `uk.po` (повнота — A-14) |
 | AC-013 | td_mebli_mrp, td_mebli_sale | done | td_mebli_mrp/tests/test_order_bom.py::test_generate, ::test_static_board_and_edge_of_the_template_are_not_counted_twice (спроба 4, CHECKS №28); td_mebli_sale/tests/test_sale_flow.py::test_confirm_creates_mo | зріз | без змін (зріз) |
-| AC-014 | td_mebli_sale | done | td_mebli_sale/tests/test_g1_sale.py::test_ac_014_three_products_three_boms_three_mos | G1 | G1: тест: 3 рядки-вироби → 3 специфікації, 3 МО, смарт-кнопка «Виробництво» = 3 |
+| AC-014 | td_mebli_sale | done | td_mebli_sale/tests/test_g1_sale.py::test_ac_014_three_products_three_boms_three_mos | G1 | G1: тест: 3 рядки-вироби → 3 специфікації, 3 МО, смарт-кнопка «Виробництво» = 3  A-11-fix7 (D-34, №15): наша кнопка `groups="sales_team.group_sale_salesman,!mrp.group_mrp_user"` — у кожного одна кнопка; тест `td_mebli_sale/tests/test_a17_owner.py::test_15_one_production_button` |
 | AC-015 | td_mebli_sale | done | td_mebli_sale/tests/test_sale_line.py::test_price; td_mebli_sale/tests/test_a11_7.py::test_d04_width_in_the_line_changes_the_price; тур test_configurator_tour (A-11-7) | зріз | ≤ 3 с — вимір A-15 |
 | AC-016 | td_mebli_sale | done | td_mebli_sale/tests/test_g1_sale.py::test_ac_016_ordinary_product_pricelist_price | G1 | G1: тест: звичайний товар — ціна прайсу, коефіцієнт 1 |
 | AC-017 | td_mebli_sale | done | td_mebli_sale/tests/test_sale_flow.py::test_margin; td_mebli_mrp/tests/test_order_bom.py::test_bom_cost; td_mebli_sale/tests/test_a11_7.py::test_d12_cost_tab (вкладка «Собівартість», A-11-7) | зріз | Видимість — AC-018 |
@@ -139,6 +139,13 @@
 | AC-132 | — | done | td_mebli_claim/tests/test_claim.py::TestClaimVisit.test_ac_132_plan_a_visit, td_mebli_claim/tests/test_claim.py::test_ac_132_order_without_installation | G3 | G3: «Запланувати виїзд» з рекламації: `project.task` у проєкті монтажів (`td_visit_kind='service'`, без акта/контролю доплати), `td_claim_id`, адреса; видно в календарі й денному плані |
 | AC-133 | td_mebli_shop | done | td_mebli_shop/tests/test_g2_shop.py::test_ac_133_paper_sheet_and_done_afterwards | G2 | G2: звіт «Наряд на замовлення» на МО (клас `td_mebli_report`; операції з полями відміток, деталі з QR і кодами етикеток) + кнопка «Зроблено заднім числом» у списку робочих завдань МО → рядок часу на інтервал з причиною, завдання «Зроблено», причина в чаті МО; майбутня дата — «Дата завершення не може бути в майбутньому». PDF через wkhtmltopdf у тесті не друкується (HTML-рендер) |
 | AC-134 | — | done | td_mebli_install/tests/test_g3.py::TestAccrualG3.test_ac_134_accruals_sheet | G3 | G3: QWeb «Відомість нарахувань» за працівниками й видами з причинами, підсумками, місцем підпису; лише підтверджені; клас `td_mebli_report` |
+| AC-135 | td_mebli_measure | done | td_mebli_measure/tests/test_a17_owner.py::test_06_no_measurement_yet_all_measurers; ::test_06_measurer_of_the_sheet_and_attendees | A-11-fix7 | №6 (D-26): `crm.lead.action_schedule_meeting` — позначені `calendar.filters` поточного, відповідального, внутрішніх учасників, замірника/усіх замірників; без покупця (AI-50) |
+| AC-136 | td_mebli_sale | done | td_mebli_sale/tests/test_a17_owner.py::test_07_warning_while_typing_every_axis; ::test_07_save_error_names_every_axis | A-11-fix7 | №7 (D-27): onchange-попередження всіх осей з межами, колонка `td_dims_range`, `_check_td_dims` — усі осі (AI-52) |
+| AC-137 | td_mebli_sale | done | td_mebli_sale/tests/test_a17_owner.py::test_08_negative_margin_warning_with_reason | A-11-fix7 | №8 (D-28): `sale.order.td_margin_warning`, `sale.order.line.td_below_cost` (червоний рядок), суми — лише MARGIN_GROUPS; підтвердження не блокується (AI-48) |
+| AC-138 | td_mebli_sale | done | td_mebli_sale/tests/test_a17_owner.py::test_09_print_button_with_the_list | A-11-fix7 | №9 (D-29): кнопка «Друк» → `td.mebli.print.wizard` (звіти `sale.order` з ⚙ → «Друк» користувача); стандартна кнопка прихована (AI-49) |
+| AC-139 | td_mebli_measure | done | td_mebli_measure/tests/test_a17_owner.py::test_11_start_the_measurement_from_the_meeting; ::test_11_button_for_the_measurer_only | A-11-fix7 | №11 (D-30): `calendar.event.action_td_start_measure`, поле `td.mebli.measure.event_id` (AI-51) |
+| AC-140 | td_mebli_install | done | td_mebli_install/tests/test_a17_install_stages.py (5 тестів) | A-11-fix7 | №16 (D-35): `project.project.td_install_project` + стадії `stage_install_*`, дата виїзду з `commitment_date`, авто-перехід «Заплановано» / «Акт підписано» (AI-47); конфіг A-12-8, демо `td_mebli_demo` |
+| AC-141 | td_home_menu | done | td_home_menu/tests/test_ee_look.py::TestEeLookSwitch; ::TestChatterResizeTour (тур `td_chatter_resize_tour`) | A-11-fix7 | №17 (доробка власника 2026-11-16): `static/src/ee_look/` (html.td_ee_look, іконка застосунку в навбарі), `static/src/chatter/` (ручка, localStorage `td_home_menu.chatter_width`), `ir.http.session_info` `td_ee_look` (AI-54) |
 | AC-N.01 | 15 модулів зрізу | done | —; td_mebli_base/tests/test_i18n_po.py; td_mebli_notify/tests/test_notify.py::test_d13_activity_in_the_language_of_the_salesperson (A-11-7, D-13) | G0, G1, G2, G3, G4 | G1: `i18n/uk.po` + `.pot` перегенеровано експортом з бази (`odoo-bin i18n export`), усі терміни перекладено (порожніх msgstr немає); тіла шаблонів листів і брифінгу — повний переклад G4: `i18n/uk.po` у всіх 10 модулях групи, усі рядки перекладено (нові `td_mebli_bas`, `td_mebli_migration`, 6 мостів; оновлено `td_mebli_ua`, `td_mebli_attendance`). Мости — файл написано вручну (на CE не встановлюються, експорт неможливий) G0, G2, G3: `uk.po` своїх модулів перекладено (експорт `i18n export`); повноту всіх модулів перевіряє A-14. |
 | AC-N.02 | — | code-no-test | — | зріз | функціональні тести обсягу (300 деталей, 300 етикеток); вимір часу — A-15/A-16 |
 | AC-N.03 | — | A-12 | — | зріз | конфіг; код не потрібен |
@@ -149,9 +156,9 @@
 
 ## Підсумок за станами
 
-| Стан | функціональні (125) | NFR (7) |
+| Стан | функціональні (132) | NFR (7) |
 |---|---|---|
-| done | 113 | 4 |
+| done | 120 (+7 A-17: AC-135…AC-141) | 4 |
 | partial | 1 (AC-131) | 0 |
 | code-no-test | 0 | 1 |
 | ee-bridge-code | 5 | 0 |
