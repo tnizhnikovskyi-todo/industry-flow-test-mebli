@@ -47,7 +47,8 @@ class TestA17Sale(TdMebliSaleCommon):
         new = line.new({'product_id': self.cabinet.id, 'td_width': 1000, 'td_height': 700, 'td_depth': 450},
                        origin=line)
         self.assertFalse(new._onchange_td_dims_warning())
-        self.assertEqual(line.td_dims_range.count('-'), 3)
+        self.assertEqual(line.td_dims_range.count('–'), 3)
+        self.assertIn('400–1200', line.td_dims_range)
 
     def test_07_save_error_names_every_axis(self):
         with self.assertRaises(ValidationError) as error:
@@ -69,6 +70,10 @@ class TestA17Sale(TdMebliSaleCommon):
         manager_text = order.with_user(self.sale_manager).td_margin_warning
         self.assertIn('%', manager_text)
         self.assertIn('nominal', manager_text)
+        self.assertIn('changed by hand', manager_text, "a price typed by hand is named as a reason")
+        self.assertRegex(manager_text, r'changed by hand: \S*[\d\s,.]+[.,]\d\d\s?\S* instead of',
+                         "amounts are formatted, not raw floats")
+        self.assertNotRegex(manager_text, r'\d\.\d instead of', "no raw float")
         self.assertIn('planned cost', manager_text)
         order.invalidate_recordset(['td_margin_warning'])
         salesman_text = order.with_user(self.salesman).td_margin_warning
