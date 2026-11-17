@@ -15,7 +15,7 @@ inputs:
   - {name: SPEC.md, from: A-08, path: package/SPEC.md, sha: HEAD}
   - {name: defects.md, from: A-15, path: package/demo/defects.md, sha: HEAD}
   - {name: AI-DECISIONS.md, from: A-03b, path: docs/industries/mebli/research/AI-DECISIONS.md, sha: HEAD}
-where: [package/ACCEPTANCE.md, package/backlog.md, tests/open-questions.md]   # беклог 1.1 (№1–4, №10) і статуси 16 рядків
+where: package/ACCEPTANCE.md   # беклог 1.1 і статуси 16 рядків закомічено раніше (4cb2f82, c7ea1d1)
 template: "немає — форма за SKILL.md"
 done: "чернетка ACCEPTANCE.md із SHA стенда, чек-листом приймання і рядком «власник тестує стенд за інструкціями A-16b»; автоперевірка checks/A-17.yaml без FAIL"
 check: {mode: both, how: "flow-autocheck: checks/A-17.yaml + скрипти скіла", audit_every_n: 10}
