@@ -145,6 +145,7 @@
 | AC-138 | td_mebli_sale | done | td_mebli_sale/tests/test_a17_owner.py::test_09_print_button_with_the_list | A-11-fix7 | №9 (D-29): кнопка «Друк» → `td.mebli.print.wizard` (звіти `sale.order` з ⚙ → «Друк» користувача); стандартна кнопка прихована (AI-49) |
 | AC-139 | td_mebli_measure | done | td_mebli_measure/tests/test_a17_owner.py::test_11_start_the_measurement_from_the_meeting; ::test_11_button_for_the_measurer_only | A-11-fix7 | №11 (D-30): `calendar.event.action_td_start_measure`, поле `td.mebli.measure.event_id` (AI-51) |
 | AC-140 | td_mebli_install | done | td_mebli_install/tests/test_a17_install_stages.py (5 тестів) | A-11-fix7 | №16 (D-35): `project.project.td_install_project` + стадії `stage_install_*`, дата виїзду з `commitment_date`, авто-перехід «Заплановано» / «Акт підписано» (AI-47); конфіг A-12-8, демо `td_mebli_demo` |
+| AC-141 | td_home_menu | done | td_home_menu/tests/test_ee_look.py::TestEeLookSwitch; ::TestChatterResizeTour (тур `td_chatter_resize_tour`) | A-11-fix7 | №17 (доробка власника 2026-11-16): `static/src/ee_look/` (html.td_ee_look, іконка застосунку в навбарі), `static/src/chatter/` (ручка, localStorage `td_home_menu.chatter_width`), `ir.http.session_info` `td_ee_look` (AI-54) |
 | AC-N.01 | 15 модулів зрізу | done | —; td_mebli_base/tests/test_i18n_po.py; td_mebli_notify/tests/test_notify.py::test_d13_activity_in_the_language_of_the_salesperson (A-11-7, D-13) | G0, G1, G2, G3, G4 | G1: `i18n/uk.po` + `.pot` перегенеровано експортом з бази (`odoo-bin i18n export`), усі терміни перекладено (порожніх msgstr немає); тіла шаблонів листів і брифінгу — повний переклад G4: `i18n/uk.po` у всіх 10 модулях групи, усі рядки перекладено (нові `td_mebli_bas`, `td_mebli_migration`, 6 мостів; оновлено `td_mebli_ua`, `td_mebli_attendance`). Мости — файл написано вручну (на CE не встановлюються, експорт неможливий) G0, G2, G3: `uk.po` своїх модулів перекладено (експорт `i18n export`); повноту всіх модулів перевіряє A-14. |
 | AC-N.02 | — | code-no-test | — | зріз | функціональні тести обсягу (300 деталей, 300 етикеток); вимір часу — A-15/A-16 |
 | AC-N.03 | — | A-12 | — | зріз | конфіг; код не потрібен |
@@ -155,9 +156,9 @@
 
 ## Підсумок за станами
 
-| Стан | функціональні (131) | NFR (7) |
+| Стан | функціональні (132) | NFR (7) |
 |---|---|---|
-| done | 119 (+6 A-17: AC-135…AC-140) | 4 |
+| done | 120 (+7 A-17: AC-135…AC-141) | 4 |
 | partial | 1 (AC-131) | 0 |
 | code-no-test | 0 | 1 |
 | ee-bridge-code | 5 | 0 |

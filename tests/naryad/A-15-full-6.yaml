@@ -1,0 +1,25 @@
+# ТЕСТОВИЙ наряд A-15 (демо-стенд), повний перепідйом 6: код A-11-fix7 (зауваження власника A-17 №6–9, 11, 15, 16 + доробка №17; рішення власника 2026-11-16, flow/decisions.md рядок 58) після A-14-10; окремий каталог доставки delivery-a17r, порт 8089
+step: A-15
+scope: {kind: package, id: mebli}
+executor: any
+access_profile: repo
+skill_ref: ["flow-package-build:demo-base-builder@0.4.0"]
+model: sonnet
+effort: medium
+params: {}
+inputs:
+  - {name: CHECKS.md, from: A-14, path: package/CHECKS.md, sha: HEAD}
+  - {name: ALLOCATION.md, from: A-10, path: package/ALLOCATION.md, sha: HEAD}
+where: package/demo/, package/templates/demo-README.md, docs/industries/mebli/research/AI-DECISIONS.md
+template: "немає — форма за SKILL.md"
+done: "стенд піднято up.sh з нуля з кодом A-11-fix7 (SHA у README), smoke, знімок -snap, скидання; проєкт «Монтажі» зі стадіями; сервер зупинено"
+check: {mode: both, how: "flow-autocheck: checks/A-15.yaml + скрипти скіла", audit_every_n: 10}
+limits: {max_attempts: 2, timeout_min: 90, lease_factor: 1.5, cost_limit_usd: 15, context_budget_tokens: 60000}
+client_data: none
+data_rule: "лише вигадані демо-дані; package/DATA_POLICY.md (none)"
+odoo_connections: []
+repo: {url: origin, base_branch: flow/A-14-10-test, branch: flow/A-15-full-6-test}
+attempt: 6
+returned_from: A-17
+git: {base: 5106ca9, head: null, prev_tag: null}
+date: 2026-11-16

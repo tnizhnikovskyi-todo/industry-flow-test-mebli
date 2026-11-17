@@ -1,4 +1,4 @@
 id,product_tmpl_id/id,sequence,name,qty,material_role,len_w,len_h,len_d,len_const,wid_w,wid_h,wid_d,wid_const,edge_long_sides,edge_short_sides
 td_md.td_mebli_part_rule_wardrobe_side,td_md.product_template_wardrobe_01,10,Бокова стінка,2,body_board,0,1,0,0,0,0,1,0,1,0
 td_md.td_mebli_part_rule_wardrobe_top,td_md.product_template_wardrobe_01,20,Дах і дно,2,body_board,1,0,0,-36,0,0,1,0,1,0
-td_md.td_mebli_part_rule_wardrobe_door,td_md.product_template_wardrobe_01,30,Полотно дверей-купе,2,facade_board,0,1,0,-60,0.5,0,0,30,0,0
+td_md.td_mebli_part_rule_wardrobe_back,td_md.product_template_wardrobe_01,30,Задня стінка,1,body_board,0,1,0,-4,1,0,0,-4,0,0
